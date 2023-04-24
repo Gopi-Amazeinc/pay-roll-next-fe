@@ -1,6 +1,6 @@
 import React from 'react';
 
-const New = () => {
+const Holidaydashboard = () => {
     return (
         <div>
             
@@ -8,4 +8,4 @@ const New = () => {
     );
 }
 
-export default New;
+export default Holidaydashboard;
