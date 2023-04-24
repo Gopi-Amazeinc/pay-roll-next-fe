@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import dashboard from "./dashboard.module.css";
-import leaveIcon from "../../public/leaveicon.png";
-import profile from "../../public/profileimg.png";
+import leaveIcon from "@/public/Images/leaveicon.png";
+import profile from "@/public/Images/profileimg.png";
 import { AiOutlineGift } from 'react-icons/ai'
 import { BiInjection } from 'react-icons/bi'
 

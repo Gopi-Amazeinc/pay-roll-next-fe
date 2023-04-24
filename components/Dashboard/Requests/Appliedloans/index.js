@@ -1,7 +1,7 @@
 const AppliedloansDashboard = () => {
     return (
         <div>
-            <h1>helllo</h1>
+            <h1>Dashboard is not for this Component</h1>
         </div>
     );
 }
