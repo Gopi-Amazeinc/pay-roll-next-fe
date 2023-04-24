@@ -1,5 +1,4 @@
-
-import Layout from '@/components/layout/index.js';
+import Layout from "@/components/layout/index"
 import React, { useEffect, useState } from 'react'
 import Link from "next/link"
 
@@ -58,8 +57,8 @@ function Appliedloans() {
                             <div className="col-lg-12 dashbutton bttn">
                                 <div className='col-lg-4 mx-2'><br />
                                     <div className='btn-group'>
-                                        <button onClick={toggleNewRequest} className='btn btnprimary'>New Request</button>
-                                        <button onClick={toggleApproved} className='btn btnprimary'>Approved</button>
+                                        <button onClick={toggleNewRequest} className="AddButton">New Request</button>
+                                        <button onClick={toggleApproved} className="AddButton">Approved</button>
 
                                     </div>
                                 </div><br />
