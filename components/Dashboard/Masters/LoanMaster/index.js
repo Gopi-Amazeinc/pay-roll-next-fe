@@ -1,14 +1,14 @@
 import React from "react";
-import Styles from "../LoanMaster/LoanMaster.module.css";
+import Styles from "../../../../styles/LoanMaster.module.css";
 import Link from "next/link";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import { ImCancelCircle } from "react-icons/im";
 import Layout from '@/components/Layout/index.js';
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import Enable from "../../../public/images/enable.png";
-import Disable from "../../../public/images/disable.png";
-import Cancel from "../../../public/images/cancel.png";
+import Enable from "../../../../public/Images/enable.png";
+import Disable from "../../../../public/Images/disable.png";
+import Cancel from "../../../../public/Images/cancel.png";
 import axios from "axios";
 import Swal from "sweetalert2";
 
