@@ -1,14 +1,13 @@
 const Footer = () => {
-
   const footer = {
     footer: {
-      position: 'fixed',
-      bottom: '0',
-      textAlign: 'center',
-      background: 'white',
-      zIndex:'999'
-    }
-  }
+      position: "fixed",
+      bottom: "0",
+      textAlign: "center",
+      background: "white",
+      zIndex: "999",
+    },
+  };
   return (
     <div className="container-fluid" style={footer.footer}>
       <div className="row">
@@ -17,7 +16,7 @@ const Footer = () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;
