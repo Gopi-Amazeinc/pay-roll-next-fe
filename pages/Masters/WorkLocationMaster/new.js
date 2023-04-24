@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Styles from "../../styles/WorkLocationMasterForm.module.css";
 import { useForm } from "react-hook-form";
-import Layout from "@/Components/layout";
+import Layout from '@/components/Layout/index.js';
 import Link from "next/link";
 import axios from "axios";
 import Swal from "sweetalert2";

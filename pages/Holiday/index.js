@@ -1,9 +1,9 @@
 import React from 'react';
-import Barangaydashboard from '@/componenets/Dashboard/masters/barangaydashboard'
+import Holidaydashboard from '@/componenets/Dashboard/Holiday/holidaydashboard'
 const Index = () => {
     return (
         <div>
-            <Barangaydashboard></Barangaydashboard>
+            <Holidaydashboard></Holidaydashboard>
         </div>
     );
 }

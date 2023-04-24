@@ -4,7 +4,7 @@ import Styles from '../../styles/PositionMasterDash.module.css'
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import table from "../../styles/table.module.css";
 import Link from "next/link";
-import Layout from "@/Components/layout";
+import Layout from '@/components/Layout/index.js';
 import axios from "axios";
 import Swal from "sweetalert2";
 const PositionMasterDash = () => {

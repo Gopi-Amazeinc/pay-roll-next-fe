@@ -1,0 +1,77 @@
+#card {
+    width: 68%;
+    margin: auto;
+    margin-top: 50px;
+    border: none;
+    font-size: 13px;
+    border-radius: 4px;
+
+}
+
+.img {
+    float: right;
+}
+
+.loginLink {
+    text-decoration: none;
+    font-weight: 30px;
+}
+
+#loginButton {
+    float: right;
+}
+
+.container-fluid {
+    background-color: royalblue;
+}
+.divNegate {
+    padding-left: 0px;
+    padding-right: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+}
+
+.logincard {
+    padding-left: 0px;
+    padding-right: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+    /* border: 0.5px solid black; */
+    border-top-left-radius: 10px;
+    border-bottom-left-radius: 10px;
+    background-color: white;
+    padding: 5%;
+}
+
+.loginbtn{
+    height: 40px;
+    background: #3247d5;
+    border: 2px solid #3247d5;
+    border-radius: 5px;
+    width: 100%;
+    color: white;
+    float: right;
+
+}
+.inputwrapper{
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+  }
+  .content {
+    position: absolute;
+    top: 20%;
+    left: 40%;
+    transform: translate(-50%, -50%);
+    color: white;
+    /* text-align: center; */
+    z-index: 1;
+  }
+  .anchorlink{
+    color: #0070f3;
+    text-decoration: none;
+  }
+  .anchorlink:hover {
+    text-decoration: underline;
+  }

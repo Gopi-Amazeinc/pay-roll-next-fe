@@ -2,7 +2,7 @@ import React from 'react'
 import Styles from '../LoanMaster/LoanMaster.module.css'
 import { useForm } from 'react-hook-form';
 import Link from 'next/link';
-import Layout from '@/Components/layout';
+import Layout from '@/components/Layout/index.js';
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";

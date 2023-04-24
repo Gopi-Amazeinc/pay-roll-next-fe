@@ -1,6 +1,6 @@
 import React from "react";
 import { useForm } from "react-hook-form";
-import Layout from "@/Components/layout";
+import Layout from '@/components/Layout/index.js';
 import { useEffect, useState } from "react";
 import SubsectionFormStyles from "../../styles/SubSectionMasterForm.module.css";
 import Link from "next/link";

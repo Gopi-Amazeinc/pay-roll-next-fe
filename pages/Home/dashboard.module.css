@@ -1,0 +1,38 @@
+.tabtrigger {
+    font-family: Poppins;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0px;
+    text-align: center;
+    color: #3247d5;
+    padding: 11px 20px;
+    position: relative;
+    z-index: 4;
+    cursor: pointer;
+    display: inline-block;
+    transition: color 250ms ease-in-out;
+    user-select: none;
+    border-left: 2px solid #3247d5;
+  }
+  
+  .tabtrigger.active {
+    color: #fff;
+    background: #3247d5;
+  }
+  
+  .btnCount{
+    box-sizing: border-box;
+    position: absolute;
+    width: 197px;
+    height: 50px;
+    background: #FFFFFF;
+    border: 1px solid #CACACA;
+    border-radius: 5px;
+    margin: 80px 0 0 15px;
+  }
+  #cardCeneter{
+    display: flex;
+    /* text-align: center; */
+    justify-content: center;
+    align-items: center;
+  }

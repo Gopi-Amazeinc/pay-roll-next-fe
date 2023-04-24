@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import React from 'react'
-import Layout from '@/Components/layout'
+import Layout from '@/components/Layout/index.js';
 import { useEffect, useState } from "react";
 import Styles from '../../styles/WorkLocationMasterForm.module.css'
 import axios from "axios";

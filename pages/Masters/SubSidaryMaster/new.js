@@ -2,7 +2,7 @@ import React from 'react'
 import { useForm } from 'react-hook-form';
 import subsidaryform from '../../styles/SubsidaryMasterForm.module.css'
 import Link from 'next/link';
-import Layout from '@/Components/layout'
+import Layout from '@/components/Layout/index.js';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';

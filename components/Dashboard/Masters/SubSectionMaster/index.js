@@ -2,7 +2,7 @@ import Link from "next/link";
 import React from "react";
 import Styles from "../../styles/SubSectionMaster.module.css";
 import { AiOutlinePlusCircle } from "react-icons/ai";
-import Layout from "@/Components/layout";
+import Layout from '@/components/Layout/index.js';
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
