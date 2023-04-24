@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Holidaydashboard = () => {
+const holidayform = () => {
     return (
         <div>
             
@@ -8,4 +8,4 @@ const Holidaydashboard = () => {
     );
 }
 
-export default Holidaydashboard;
+export default holidayform;
