@@ -5,8 +5,8 @@ import styles from "./login.module.css";
 import axios from "axios";
 import Swal from "sweetalert2";
 import eye from "@/public/Images/eye.svg";
-import Loginpage from "@/public/images/DigiLogin.png";
-import digiLogo from "@/public/images/DigiLogoBlue.png";
+import Loginpage from "@/public/Images/DigiLogin.png";
+import digiLogo from "@/public/Images/DigiLogoBlue.png";
 
 const Login = ({ makelogin }) => {
   let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
@@ -47,6 +47,7 @@ const Login = ({ makelogin }) => {
 
   // Written By:- Gopi -> Onsubmit login we are storing sessions
   const onSubmit = async (data) => {
+    debugger
     const res = await axios.get(
       hostURL +
         `Master/GetMyDetailsForLogin?EmailID=${data.Username}&Password=${data.Password}&roletype=${data.RoleID}`

@@ -1,12 +1,13 @@
 import Link from 'next/link'
 import { useEffect, useState } from 'react';
-import Styles from '../../styles/BarangayMasterDash.module.css'
+
 import { AiOutlinePlusCircle } from 'react-icons/ai'
+import Layout from '@/components/Layout/index.js';
 import axios from 'axios';
 import Swal from 'sweetalert2'
 
 
- const BarangayMasterDash = () => {
+export default function BarangayMasterDash() {
 
     const [barangaymaster, setbarangaymaster] = useState([]);
 
@@ -49,8 +50,8 @@ import Swal from 'sweetalert2'
         <Layout>
             <div>
                 <br />
-                <h5 id={Styles.h5}>Barangay Master</h5>
-                <div className='card shadow-lg p-4 rounded-3 mt-4' id={Styles.card}>
+                <h5>Barangay Master</h5>
+                <div className='card shadow-lg p-4 rounded-3 mt-4'>
                     <div className='row'>
                         <div className='col-lg-1'>
                             <p>Filter By</p>
@@ -64,13 +65,13 @@ import Swal from 'sweetalert2'
                 <div className='row mt-3'>
                     <div className='col-lg-9'></div>
                     <div className='col-lg-2'>
-                        <Link href="/Masters/barangaymasterform" id={Styles.addLink}><button id={Styles.addButton} onClick={clearData.bind(this)} > ADD NEW </button><AiOutlinePlusCircle size={15} /> </Link>
+                        <Link href="/Masters/barangaymasterform" ><button onClick={clearData.bind(this)} > ADD NEW </button><AiOutlinePlusCircle size={15} /> </Link>
 
                     </div>
                     <div className='col-lg-1'></div>
                 </div>
 
-                <table id={Styles.table} className='table table-sm table-striped mt-3 text-center'>
+                <table   className='table table-sm table-striped mt-3 text-center'>
                     <thead>
                         <tr className='bg-info text-white '>
 
@@ -92,10 +93,11 @@ import Swal from 'sweetalert2'
                                         <td>{data.name}</td>
                                         <td>
                                             <Link href="/Masters/barangaymasterform">
-                                                <button className={Styles.actionButton} onClick={getData.bind(this, data)} >Edit</button>
+                                                <button onClick={getData.bind(this, data)} >Edit</button>
                                             </Link>
                                             &nbsp;
-                                            <button className={Styles.actionButton} onClick={() => handleDelete(data.id)}>Delete</button>
+
+                                            <button onClick={() => handleDelete(data.id)}>Delete</button>
                                         </td>
                                     </tr>
                                 )
@@ -108,5 +110,3 @@ import Swal from 'sweetalert2'
         </Layout>
     )
 }
-
-export default BarangayMasterDash;

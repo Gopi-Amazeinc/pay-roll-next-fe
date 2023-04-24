@@ -1,14 +1,14 @@
 import React from "react";
-import Styles from "../LoanMaster/LoanMaster.module.css";
+
 import Link from "next/link";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import { ImCancelCircle } from "react-icons/im";
 import Layout from '@/components/Layout/index.js';
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import Enable from "../../../public/images/enable.png";
-import Disable from "../../../public/images/disable.png";
-import Cancel from "../../../public/images/cancel.png";
+import Enable from "../../../../public/Images/enable.png";
+import Disable from "../../../../public/Images/disable.png";
+import Cancel from "../../../../public/Images/cancel.png";
 import axios from "axios";
 import Swal from "sweetalert2";
 
@@ -68,9 +68,9 @@ const LoanMasterDash = () => {
       <div>
         <br />
         <br />
-        <p id={Styles.p}>Loan Type Dashboard</p>
+        <p className="Heading" >Loan Type Dashboard</p>
 
-        <div className="card shadow-lg p-4 rounded-4" id={Styles.card}>
+        <div className="card shadow-lg p-4 rounded-4">
           <div className="row">
             <div className="col-lg-1">
               <p>Filter By</p>
@@ -86,20 +86,20 @@ const LoanMasterDash = () => {
         </div>
         <div className="row">
           <div className="col-lg-9">
-            <p id={Styles.h5} className="text-primary fs-6 mt-3 fw-bold">
+            <p  className="text-primary fs-6 mt-3 fw-bold">
               SHOWING <span>{loanMaster.length} </span>RESULTS
             </p>
           </div>
           <div className="col-lg-2">
-            <Link href="/Masters/LoanMaster/loanmasterform" id={Styles.addLink}>
+            <Link href="/Masters/LoanMaster/loanmasterform" >
               {" "}
               <button
-                className="mt-3"
+                className="mt-3 AddButton"
                 onClick={clearData.bind(this)}
-                id={Styles.addButton}
+               
               >
                 {" "}
-                <AiOutlinePlusCircle id={Styles.icon} size={18} /> ADD{" "}
+                <AiOutlinePlusCircle  size={18} /> ADD{" "}
               </button>{" "}
             </Link>
           </div>
@@ -107,12 +107,13 @@ const LoanMasterDash = () => {
         </div>
 
         <div className="row ">
-          <table className=" table mt-3 table-striped " id={Styles.table}>
+          <table className=" table mt-3 table-striped table" >
             <thead>
-              <tr id={Styles.tr}>
-                <th className="text-white">Loan Type</th>
-                <th className="text-white">Description</th>
-                <th className="text-white">Action</th>
+              <tr className="tr">
+    
+                <th >Loan Type</th>
+                <th >Description</th>
+                <th >Action</th>
               </tr>
             </thead>
             <tbody>

@@ -1,7 +1,7 @@
 import React from 'react'
 import Employmentjobhistory from '@/components/Dashboard/Payroll/PayrollYTD/index'
 
-function index() {
+function PayrollYTD() {
     return (
         <div>
 
@@ -10,4 +10,4 @@ function index() {
     )
 }
 
-export default index
+export default PayrollYTD
