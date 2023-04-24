@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
-import Digilogo from "../public/DigiLogo.png";
-import Notification from "../public/notification.png";
+import Digilogo from "@/public/Images/DigiLogo.png";
+import Notification from "@/public/Images/notification.png";
 import HeaderStyles from "./header.module.css";
 import { FaCaretDown } from 'react-icons/fa';
 
