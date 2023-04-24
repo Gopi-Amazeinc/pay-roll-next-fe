@@ -6,7 +6,7 @@ import profile from "../../public/profileimg.png";
 import { AiOutlineGift } from 'react-icons/ai'
 import { BiInjection } from 'react-icons/bi'
 
-import Layout from '../../Components/layout.js';
+import Layout from '@/components/Layout/index.js';
 
 import * as XLSX from "xlsx";
 
