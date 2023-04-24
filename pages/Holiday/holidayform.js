@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Barangaydashboard = () => {
+const holidayform = () => {
     return (
         <div>
             
@@ -8,4 +8,4 @@ const Barangaydashboard = () => {
     );
 }
 
-export default Barangaydashboard;
+export default holidayform;
