@@ -2,11 +2,10 @@
   width: 85%;
   font-size: 15px;
   cursor: pointer;
-  font-weight: bold;
-  box-shadow: 1px 1px 17px 1px #3247d5;
   text-transform: uppercase;
   background: #3247d5;
   color: white;
+  border-radius: 10%;
 }
 
 .submit-button {
@@ -14,7 +13,6 @@
   width: 165px;
   height: 50px;
   border-radius: 5px;
-  font-family: "Poppins";
   font-style: normal;
   letter-spacing: .658333px;
   color: #fff;
