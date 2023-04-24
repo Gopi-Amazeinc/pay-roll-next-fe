@@ -4,9 +4,9 @@ import { useEffect, useState } from "react";
 import styles from "./login.module.css";
 import axios from "axios";
 import Swal from "sweetalert2";
-import eye from "../public/eye.svg";
-import Loginpage from "../public/images/DigiLogin.png";
-import digiLogo from "../public/images/DigiLogoBlue.png";
+import eye from "@/public/Images/eye.svg";
+import Loginpage from  '@/public/images/DigiLogin.png';
+import digiLogo from  '@/public/images/DigiLogoBlue.png';
 
 const Login = ({ makelogin }) => {
   let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
