@@ -1,9 +1,9 @@
+import Layout from "@/components/layout/index"
 import React, { useEffect, useState } from 'react'
 import Link from "next/link"
 import Layout from "@/components/layout/layout"
 
-
-const Appliedloans = () => {
+function Appliedloans() {
     const [newrequest, setNewRequest] = useState(false)
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [approved, setApproved] = useState(false)
@@ -58,8 +58,8 @@ const Appliedloans = () => {
                             <div className="col-lg-12 dashbutton bttn">
                                 <div className='col-lg-4 mx-2'><br />
                                     <div className='btn-group'>
-                                        <button onClick={toggleNewRequest} className='AddButton'>New Request</button>
-                                        <button onClick={toggleApproved} className='AddButton'>Approved</button>
+                                        <button onClick={toggleNewRequest} className="AddButton">New Request</button>
+                                        <button onClick={toggleApproved} className="AddButton">Approved</button>
 
                                     </div>
                                 </div><br />
