@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import React from 'react'
 import { useEffect, useState } from 'react';
-import Styles from '../OtMaster/OTRateDash.module.css'
+
 import { AiOutlinePlusCircle } from 'react-icons/ai'
 import Layout from '@/components/Layout/index';
 import axios from 'axios';
@@ -54,7 +54,7 @@ function OTRateDash() {
     return (
         <Layout>
             <div>
-                <p id={Styles.p}>OT Master</p>
+                <p className='Heading'>OT Master</p>
                 <div className='container-fluid'>
                     <div className='card p-4'>
                         <div className='row'>
@@ -70,15 +70,15 @@ function OTRateDash() {
                     <div className='row mt-4'>
                         <div className='col-lg-10'></div>
                         <div className='col-lg-2'>
-                            <button id={Styles.addButton} onClick={clearData.bind(this)}> <Link id={Styles.addLink} href="/Masters/otmaster"> <AiOutlinePlusCircle id={Styles.icon} size={18} /> ADD New</Link></button>
+                        <Link  href="/Masters/otmaster">  <button className='AddButton' onClick={clearData.bind(this)}>  <AiOutlinePlusCircle  size={18} /> ADD New</button></Link>
                         </div>
                     </div>
 
                     <div className='row '>
                         <div className='col-lg-12'>
-                            <table className='table table-bordered mt-4 text-center table-striped ' id={Styles.table}>
+                            <table className='table table-bordered mt-4 text-center table-striped table' >
                                 <thead>
-                                    <tr id={Styles.tr}>
+                                    <tr className='tr'>
                                         <th className='text-white'>Day</th>
                                         <th className='text-white'>	Normal</th>
                                         <th className='text-white'>	OT </th>
@@ -99,10 +99,10 @@ function OTRateDash() {
                                                     <td>{data.ndot}</td>
                                                     <td>
                                                         <Link href="/Masters/otmaster">
-                                                            <button id={Styles.actionButton} onClick={getData.bind(this, data)}>Edit</button>
+                                                            <button className='edit-btn' onClick={getData.bind(this, data)}>Edit</button>
                                                         </Link>
                                                         &nbsp; &nbsp; &nbsp;
-                                                        <button id={Styles.actionButton} onClick={() => handleDelete(data.id)}>Delete</button>
+                                                        <button className='edit-btn' onClick={() => handleDelete(data.id)}>Delete</button>
                                                     </td>
                                                 </tr>
                                             )
