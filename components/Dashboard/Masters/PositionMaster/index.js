@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { BiFilterAlt } from "react-icons/bi";
-import Styles from '../../styles/PositionMasterDash.module.css'
+
 import { AiOutlinePlusCircle } from "react-icons/ai";
-import table from "../../styles/table.module.css";
+
 import Link from "next/link";
 import Layout from '@/components/layout/layout.js';
 import axios from "axios";
@@ -65,7 +65,7 @@ const PositionMasterDash = () => {
   return (
     <Layout>
       <br></br>
-      <p id={Styles.title}>Position  Master</p>
+      <p className="Heading">Position  Master</p>
       <div className="container-fluid mt-4">
         <div className="row shadow-lg p-2 rounded-4 p-3 ">
           <div className="col-lg-2">
@@ -85,15 +85,15 @@ const PositionMasterDash = () => {
         </div>
         <div className="row mt-4">
           <div className="col-lg-8">
-            <p id={Styles.p}>SHOWING {positionMaster.length} RESULTS</p>
+            <p >SHOWING {positionMaster.length} RESULTS</p>
           </div>
           <div className="col-lg-2"></div>
           <div className="col-lg-2">
 
             <Link href="/Masters/positionmasterform"><button onClick={clearFormData.bind(this)}
 
-              className="btn btn-primary btn-sm  shadow-lg"
-              id={Styles.addNew}
+              className="btn btn-primary btn-sm  shadow-lg AddButton"
+              
             >  <AiOutlinePlusCircle />
               Add New
             </button></Link>
@@ -102,9 +102,9 @@ const PositionMasterDash = () => {
 
         <div className="container-fluid mt-4">
           <div className="row">
-            <table className={table.commonTable}>
+            <table className="table">
               <thead >
-                <tr >
+                <tr className="tr">
                   <th>Position Name</th>
                   <th>Description</th>
                   <th>Action</th>
@@ -120,11 +120,11 @@ const PositionMasterDash = () => {
                         <div className="row">
                           <div className="col-lg-2">
                             <Link href="/Masters/positionmasterform">
-                              <button id={Styles.actionBtn} onClick={getData.bind(this, data)}>Edit</button>
+                              <button className="edit-btn" onClick={getData.bind(this, data)}>Edit</button>
                             </Link>
                           </div>
                           <div className="col-lg-2">
-                            <button id={Styles.actionBtn} onClick={() => handleDelete(data.id)}>Delete</button>
+                            <button className="edit-btn" onClick={() => handleDelete(data.id)}>Delete</button>
                           </div>
                         </div>
                       </td>
