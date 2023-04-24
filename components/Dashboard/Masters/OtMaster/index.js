@@ -3,7 +3,7 @@ import React from 'react'
 import { useEffect, useState } from 'react';
 import Styles from '../OtMaster/OTRateDash.module.css'
 import { AiOutlinePlusCircle } from 'react-icons/ai'
-import Layout from '@/components/Layout/index';
+import Layout from '@/components/layout/layout';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 

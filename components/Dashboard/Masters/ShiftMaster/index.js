@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Styles from "../../styles/employmentJobHistory.module.css";
 import Link from "next/link";
-import Layout from '@/components/Layout/index.js';
+import Layout from '@/components/layout/layout.js';
 import axios from "axios";
 import Swal from 'sweetalert2';
 

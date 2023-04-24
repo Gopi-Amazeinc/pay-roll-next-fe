@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Link from "next/link"
-import Layout from "@/components/layout/index"
+import Layout from "@/components/layout/layout"
 
 
 const Appliedloans = () => {

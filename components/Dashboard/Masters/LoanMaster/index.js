@@ -3,7 +3,7 @@ import Styles from "../../../../styles/LoanMaster.module.css";
 import Link from "next/link";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import { ImCancelCircle } from "react-icons/im";
-import Layout from '@/components/Layout/index.js';
+import Layout from '@/components/layout/layout.js';
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Enable from "../../../../public/Images/enable.png";
