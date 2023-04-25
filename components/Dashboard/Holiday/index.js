@@ -1,6 +1,9 @@
 import React from 'react';
-import Layout from '../../layout/index.js'
+// import Layout from '@/components/layout/layout'
 import Styles from '../../../styles/Holidaydash.module.css'
+import { useState,useEffect } from 'react';
+import Link from 'next/link';
+import axios from 'axios';
 
 const Holidaydashboard = () => {
 
@@ -44,8 +47,7 @@ const Holidaydashboard = () => {
 
 
     return (
-        <Layout>
-            <div>
+                   <div>
                 <br></br> <p id={Styles.title}>Holiday Dashboard</p>{" "}
                 <div className="container-fluid mt-4">
                     <div className="row shadow-lg p-2 rounded-4 p-3 ">
@@ -123,7 +125,7 @@ const Holidaydashboard = () => {
                     </div>
                 </div>
             </div>
-        </Layout>
+        
     );
 }
 
