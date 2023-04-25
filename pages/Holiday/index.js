@@ -1,9 +1,12 @@
 import React from 'react';
-import Holidaydashboard from '@/componenets/Dashboard/Holiday/holidaydashboard'
+import Holidaydashboard from '@/components/Dashboard/Holiday/index.js'
+import Layout from '@/components/layout/layout'
 const Index = () => {
     return (
         <div>
+            <Layout>
             <Holidaydashboard></Holidaydashboard>
+            </Layout>
         </div>
     );
 }
