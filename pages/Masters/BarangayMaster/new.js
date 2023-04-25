@@ -5,7 +5,7 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
 import Swal from "sweetalert2";
-import Layout from "../../../components/layout/layout";
+import Layout from "@/components/layout/layout";
 
 const BarangayMasterForm = () => {
   const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;

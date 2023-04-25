@@ -76,7 +76,7 @@ const Holidaydashboard = () => {
                         <div className="col-lg-2">
 
 
-                            <Link href="/Holidays/holidayform"><button className="btn btn-primary btn-sm shadow-lg"
+                            <Link href="/Holiday/new"><button className="btn btn-primary btn-sm shadow-lg"
                                 id={Styles.addNew} onClick={clearData.bind(this)} > ADD new</button>
                                 {/* // onClick={() => setModalOpen(!modalOpen)}>   */}
                                 {/* <AiOutlinePlusCircle /> */}
