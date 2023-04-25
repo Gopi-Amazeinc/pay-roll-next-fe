@@ -1,12 +1,12 @@
 .AddButton {
   width: 85%;
-  height: 150%;
+  height: 40px;
   font-size: 15px;
   cursor: pointer;
   text-transform: uppercase;
   background: #3247d5;
   color: white;
-  border-radius: 25%;
+  border-radius: 5%;
 }
 
 .submit-button {
@@ -191,15 +191,18 @@
 #input {
   transform: scale(1.5);
 }
+
 .commonEditDelete {
   width: 20px;
   margin-left: 10%;
 }
+
 #h5 {
   /* font-family: Poppins; */
   margin-left: 20px;
   color: #3247d5;
 }
+
 .card {
   padding: 20px;
   background: #fff;
@@ -255,10 +258,13 @@
 .inputLabel {
   font-size: "16px";
 }
-#asterisk {
+
+
+#asterisk  {
   color: red;
   font-size: larger;
 }
+
 #label {
   font-weight: 600;
   font-size: 14px;

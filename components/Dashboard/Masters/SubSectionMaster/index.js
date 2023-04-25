@@ -80,7 +80,7 @@ const SubSectionMaster = () => {
           <Link
             className="btn btn-primary AddButton"
             
-            href="/Masters/subsectionmasterform"
+            href="/Masters/SubSectionMaster/new"
             onClick={clearData.bind(this)}
           >
             <AiOutlinePlusCircle size={18} /> ADD NEW
