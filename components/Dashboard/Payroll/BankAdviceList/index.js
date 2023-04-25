@@ -44,7 +44,7 @@ const BankAdviceList = () => {
             <div className="container-fluid mt-2">
                 <div className="row shadow-lg p-2 rounded-4 p-3">
                     <h3 style={{ color: "red" }}>In this component API wants to be bind..!</h3>
-                    <label id={Styles.title}>Normal Payroll - Bank Advice List</label>
+                    <label >Normal Payroll - Bank Advice List</label>
                     <hr></hr>
                     <div className="row">
                         <div className="col-lg-2">
@@ -106,7 +106,7 @@ const BankAdviceList = () => {
                     <div className="row">
                         <div className="col-lg-4"></div>
                         <div className="col-lg-4">
-                            <button className="btn" id={Styles.commonBtn} onClick={openModal}>Generate </button>
+                            <button className="btn" onClick={openModal}>Generate </button>
                         </div>
                         <div className="col-lg-4"></div>
                     </div>
@@ -153,7 +153,7 @@ const BankAdviceList = () => {
                             </table>
                             <div className="row" style={{ textAlign: "center" }}>
                                 <div className="col-lg-12">
-                                    <button type='button' className="btn" id={Styles.commonBtn} onClick={closeModal}>Close</button>
+                                    <button type='button' className="btn" onClick={closeModal}>Close</button>
                                 </div>
                             </div>
                         </div>

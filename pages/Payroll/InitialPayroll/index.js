@@ -1,5 +1,5 @@
 import React from 'react'
-import Layout from '@/components/Layout/index'
+import Layout from '@/components/layout/layout'
 const index = () => {
     let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL
 
