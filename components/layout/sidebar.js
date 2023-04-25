@@ -1077,7 +1077,7 @@ const Sidebar = ({ children, applyPageName }) => {
         {userRole == 6 && (
           <div>
             <hr></hr>
-            <Link href="/Holidays/Holidaysdash" className={styles.sidemenulink}>
+            <Link href="/Holiday" className={styles.sidemenulink}>
               <button
                 className={getStyle(201)}
                 onClick={updateActiveMenu.bind(this, {
