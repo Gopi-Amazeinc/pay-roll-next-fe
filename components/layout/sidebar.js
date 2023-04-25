@@ -511,7 +511,7 @@ const Sidebar = ({ children, applyPageName }) => {
                   </button>
                 </Link>
 
-                <Link href="/Payroll/finalpayrolldetails">
+                <Link href="/Payroll/RunFinalPayroll">
                   <button
                     className={getSubStyle(75)}
                     onClick={updateActiveMenu.bind(this, {
@@ -558,11 +558,11 @@ const Sidebar = ({ children, applyPageName }) => {
             <hr></hr>
             <button className={styles.sidemenu} onClick={toggleCompanyMenu}>
               <RiSettings4Line style={customStyles.icons} />
-              Company Tab
+              Company 
             </button>
             {displayComapnay && (
               <div>
-                <Link href="">
+                <Link href="/Company">
                   <button
                     className={getSubStyle(81)}
                     onClick={updateActiveMenu.bind(this, {
@@ -571,7 +571,7 @@ const Sidebar = ({ children, applyPageName }) => {
                     })}
                   >
                     <TbBrandCitymapper style={customStyles.icons} />
-                    Company Dashboard(yettoimplement)
+                    Company Details
                   </button>
                 </Link>
               </div>
