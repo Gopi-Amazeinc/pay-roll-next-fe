@@ -47,7 +47,7 @@ const Shiftdetails = () => {
                         {
                             shiftDetails.map((data) => {
                                 return (
-                                    <tr>
+                                    <tr key={data.id}>
                                         <td>{data.shiftDate}</td>
                                         <td>{data.endDate}</td>
                                         <td>{data.shiftName}</td>
