@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router'
 import React from 'react'
 import Link from "next/link";
-import Layout from "../../../components/layout/layout";
+import Layout from "@/components/layout/layout";
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import axios from 'axios'
