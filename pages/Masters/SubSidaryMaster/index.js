@@ -3,7 +3,7 @@ import Layout from '@/components/layout/layout.js';
 import SubsidaryMasterDash from '../../../components/Dashboard/Masters/SubSidaryMaster/index'
 function index() {
   return (
-    <SubsidaryMasterDash></SubsidaryMasterDash>
+   <Layout> <SubsidaryMasterDash></SubsidaryMasterDash></Layout>
   )
 }
 

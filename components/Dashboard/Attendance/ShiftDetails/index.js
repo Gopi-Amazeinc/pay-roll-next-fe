@@ -1,4 +1,4 @@
-import Layout from 'Components/layout/layout.js';
+// import Layout from 'Components/layout/layout.js';
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import axios from 'axios'

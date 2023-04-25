@@ -3,7 +3,7 @@ import Layout from '@/components/Layout/index';
 const FinalPayrollApproval = () => {
     return (
         <Layout>
-
+            <div></div>
         </Layout>
     )
 }
