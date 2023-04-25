@@ -413,7 +413,7 @@ const Sidebar = ({ children, applyPageName }) => {
                 Obasis Requests
               </button>
             </Link>
-            <Link href="/Requests/compensationtimeout">
+            <Link href="/Requests/Compensationtimeout">
               <button
                 className={getSubStyle(56)}
                 onClick={updateActiveMenu.bind(this, {
