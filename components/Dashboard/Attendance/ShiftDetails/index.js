@@ -1,4 +1,4 @@
-import Layout from 'Components/layout/layout.js';
+// import Layout from 'Components/layout/layout.js';
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import axios from 'axios'
@@ -18,7 +18,7 @@ const shiftdetails = () => {
         getShiftDetails();
     }, [])
     return (
-        <Layout>
+     <>
             <Link href="/Attendence/shiftdetails">My Weekly Shift</Link>
             {/* <div className={'card shadow-lg p-2 mt-3 mb-3 ' + Styles.card}> */}
             <div className='row'>
@@ -60,7 +60,7 @@ const shiftdetails = () => {
                     </tbody>
                 </table>
             </div>
-        </Layout >)
+        </>)
 }
 
 export default shiftdetails

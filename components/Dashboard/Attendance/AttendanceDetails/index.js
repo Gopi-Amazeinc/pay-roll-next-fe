@@ -1,6 +1,6 @@
 import Link from 'next/link'
 import React from 'react'
-import Layout from 'Components/layout/layout.js';
+// import Layout from 'Components/layout/layout.js';
 import { useEffect,useState } from 'react';
 import axios from 'axios';
 
@@ -29,7 +29,6 @@ function AttendenceDetails() {
 
   return (
 
-    <Layout>
       <div>
         <h1 style={{color:"red"}}>Data Binnding is Pending</h1>
         <div className='container'>
@@ -120,7 +119,7 @@ function AttendenceDetails() {
           </div>
         </div>
       </div>
-    </Layout>
+
   )
 }
 
