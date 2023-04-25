@@ -2,8 +2,7 @@ import React from 'react'
 import AttendanceCorrection from '@/components/Dashboard/Attendance/AttendanceCorrections';
 import Layout from '@/components/layout/layout.js'
 
-const AttendanceCorrectionForm = () => {
-    
+const AttendanceCorrectionForm = () => {    
     return (
         <Layout>
             <div>
