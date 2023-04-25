@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import axios from 'axios'
 // import Styles from '../../styles/shiftdetails.module.css'
+
 const shiftdetails = () => {
     const [shiftDetails, setShiftDetails] = useState([])
     let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
