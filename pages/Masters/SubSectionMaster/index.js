@@ -3,7 +3,7 @@ import Layout from '@/components/layout/layout.js';
 import SubSectionMaster from '../../../components/Dashboard/Masters/SubSectionMaster/index'
 function index() {
   return (
-    <SubSectionMaster></SubSectionMaster>
+   <Layout> <SubSectionMaster></SubSectionMaster></Layout>
   )
 }
 

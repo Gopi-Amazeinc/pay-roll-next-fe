@@ -1,4 +1,4 @@
-import Layout from "@/components/layout/index"
+import Layout from "@/components/layout/layout"
 import React from 'react'
 import { useForm } from 'react-hook-form'
 // import Styles from '../../styles/applyloans.module.css'

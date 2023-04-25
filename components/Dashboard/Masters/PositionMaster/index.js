@@ -63,7 +63,7 @@ const PositionMasterDash = () => {
   }
 
   return (
-    <Layout>
+    <div>
       <br></br>
       <p className="Heading">Position  Master</p>
       <div className="container-fluid mt-4">
@@ -138,7 +138,7 @@ const PositionMasterDash = () => {
           </div>
         </div>
       </div>
-    </Layout >
+    </div>
   )
 }
 

@@ -2,7 +2,7 @@ import Link from 'next/link'
 import React from 'react'
 import Layout from '@/components/layout/layout.js';
 import { useEffect, useState } from "react";
-import Styles from '../../styles/WorkLocationMasterForm.module.css'
+
 import axios from "axios";
 import Swal from 'sweetalert2'
 
@@ -45,9 +45,9 @@ let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
         sessionStorage.setItem("WorkLocationID", id);
       }
     return (
-        <Layout>
+        
             <div>
-                <h3 className='text-primary fs-5 mt-3'>Worklocation Master</h3>
+                <h3 className='text-primary fs-5 mt-3 Heading'>Worklocation Master</h3>
                 <div className='card p-3 border-0 shadow-lg rounded-3 mt-4'>
                     <div className='row'>
                         <div className='col-lg-1'>
@@ -61,14 +61,14 @@ let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
                 <div className='row mt-2'>
                     <div className='col-lg-10'></div>
                     <div className='col-lg-2 '>
-                        <Link href="/Masters/worklocationmasterform" id='AddButton' onClick={clearSession} className='btn btn-primary fw-bold'>Add New</Link>
+                        <Link href="/Masters/worklocationmasterform" id='AddButton' onClick={clearSession} className='btn btn-primary fw-bold AddButton'>Add New</Link>
                     </div>
                 </div>
                 <div className='row '>
 
                     <table className='table table-hover mt-4 ' >
                         <thead className='bg-info text-white '>
-                            <tr>
+                            <tr className='tr'>
                                 <th >Short Name</th>
                                 <th >Description</th>
                                 <th >Action</th>
@@ -83,9 +83,9 @@ let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
                                             <td>{data.description}</td>
                                             <td>
                                             <Link href='/Masters/worklocationmasterform'>
-                                            <button id={Styles.editbtn} onClick={edit.bind(this,data.id)}>Edit</button>
+                                            <button className='edit-btn' onClick={edit.bind(this,data.id)}>Edit</button>
                                             </Link>&nbsp;&nbsp;&nbsp;&nbsp;
-                                                <button id={Styles.editbtn} onClick={deleteWorkLocation.bind(this,data.id)}>Delete</button>
+                                                <button className='edit-btn' onClick={deleteWorkLocation.bind(this,data.id)}>Delete</button>
                                             </td>
                                         </tr>
                                     )
@@ -96,7 +96,7 @@ let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
                     </table>
                 </div>
             </div>
-        </Layout>
+       
     )
 }
 

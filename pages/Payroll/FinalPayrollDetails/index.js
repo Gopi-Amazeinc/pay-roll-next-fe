@@ -1,8 +1,12 @@
 import React from 'react'
+import Layout from '@/components/Layout/index'
+
 
 const FinalPayrollDetails = () => {
     return (
-        <div>index</div>
+        <Layout>
+            <div>index</div>
+        </Layout>
     )
 }
 
