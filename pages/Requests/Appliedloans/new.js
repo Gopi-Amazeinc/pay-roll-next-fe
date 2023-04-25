@@ -1,4 +1,4 @@
-import Layout from "@/components/layout/index"
+import Layout from "@/components/layout/layout"
 import React, { useEffect, useState } from 'react'
 import Link from "next/link"
 

@@ -1,4 +1,4 @@
-import Layout from "@/components/layout/index"
+import Layout from "@/components/layout/layout"
 import Link from "next/link";
 import ApplyLeaveDashboard from '@/components/Dashboard/Requests/Applyleave/index';
 
