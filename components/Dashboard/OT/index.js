@@ -86,7 +86,7 @@ const Myovertimedetails = () => {
                                     <div className="col-lg-1"></div>
                                     <div className="col-lg-3">
 
-                                        <Link href="/OT/appyot"><button className="submit-button mt-5" tabindex="0">Apply Overtime</button></Link>
+                                        <Link href="/OT/new"><button className="submit-button mt-5" tabindex="0">Apply Overtime</button></Link>
 
                                     </div>
                                 </div>

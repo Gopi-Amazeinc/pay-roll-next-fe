@@ -1,4 +1,4 @@
-import Layout from '@/Components/layout'
+import Layout from '@/components/layout/layout'
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 // import overtime from "../../styles/Requests/overtimedetailsform.module.css"
@@ -81,7 +81,8 @@ const Applyot = () => {
                   <div className='row' >
                      <div className='col-lg-3'>
                         <p>Supporting Documents</p>
-                        <div className={overtime.drop} >
+                        {/* <div className={overtime.drop} > */}
+                        <div>
                            <br />
                            <input type="file" id="undefined" multiple="" accept=".png,.jpg,.jpeg,application/pdf" />
 
@@ -121,9 +122,9 @@ const Applyot = () => {
                   <div className='modalbody'>
                      <div className="row">
                         <div className='col-lg-12'>
-                           <table className='table table-bordered mt-4 text-center table-striped ' id={Styles.table}>
+                           <table className='table table-bordered mt-4 text-center table-striped '>
                               <thead>
-                                 <tr id={Styles.tr}>
+                                 <tr >
                                     <th className='text-white'>OT Type</th>
                                     <th className='text-white'>No of Hours </th>
 
