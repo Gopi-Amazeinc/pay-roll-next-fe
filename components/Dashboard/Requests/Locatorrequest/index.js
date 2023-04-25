@@ -2,6 +2,7 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from 'react';
 import axios from "axios";
 import Styles from "@/styles/Locatorrequest.module.css";
+import Layout from "@/components/layout/layout"
 
 const Locatordashboard = () => {
     const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
@@ -157,27 +158,50 @@ const Locatordashboard = () => {
         return () => window.removeEventListener('resize', setTabPosition);
     }, [activeTabIndex]);
     return (
+        <Layout>
+            <div className='card p-3 border-0 shadow-lg rounded-3 mt-4'>
+                <div className='row'>
+                    <div className='col-lg-1'>
+                        <p>Filter By</p>
+                    </div>
 
-        <div className="row">
-            <div className="col-lg-8">
-                <div className={Styles.flex}>
-                    {tabsData.map((tab, idx) => {
-                        return (
-                            <button key={idx} ref={(el) => (tabsRef.current[idx] = el)} className={Styles.btn} onClick={() => setActiveTabIndex(idx)} >
-                                {tab.label}
-                            </button>
-                        );
-                    })}
+                    <div className='col-lg-3'>
+                        <p>From Date</p>
+                        <input type="date" className='form-control' />
+                    </div>
+
+                    <div className='col-lg-3'>
+                        <p>To Date</p>
+                        <input type="date" className='form-control' />
+                    </div>
+
+                    <div className='col-lg-4'><br /><p></p>
+                        <input type="text" className='form-control' placeholder="Search For date ,or Status" />
+                    </div>
+                </div>
+            </div><br />
+            <div className="row">
+                <div className="col-lg-8">
+                    <div className={Styles.flex}>
+                        {tabsData.map((tab, idx) => {
+                            return (
+                                <button key={idx} ref={(el) => (tabsRef.current[idx] = el)} className={Styles.btn} onClick={() => setActiveTabIndex(idx)} >
+                                    {tab.label}
+                                </button>
+                            );
+                        })}
+                    </div>
+                </div>
+                <div className="col-lg-4">
+                    <Link href="/Requests/Locatorrequest/new"><button className="btn btn-primary" >New Requests </button></Link>
+
+                </div>
+                <div className="py-4">
+                    {tabsData[activeTabIndex].content}
                 </div>
             </div>
-            <div className="col-lg-4">
-                <Link href="/Requests/locatorrequestsform"><button  className="btn btn-primary" >New Requests </button></Link>
+        </Layout>
 
-            </div>
-            <div className="py-4">
-                {tabsData[activeTabIndex].content}
-            </div>
-        </div>
     );
 }
 export default Locatordashboard;
