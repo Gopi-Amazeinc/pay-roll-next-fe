@@ -50,7 +50,7 @@ function StateMasterDashboard() {
         sessionStorage.setItem("stateID", id);
       }
     return (
-      <Layout>
+     
         <div className="p-3">
           <h3 className="text-primary fs-5 mt-3">Province Master</h3>
           <div className="card p-3 border-0 shadow-lg rounded-3 mt-4">
@@ -135,7 +135,7 @@ function StateMasterDashboard() {
             </tbody>
           </table>
         </div>
-      </Layout>
+     
     );
 }
 
