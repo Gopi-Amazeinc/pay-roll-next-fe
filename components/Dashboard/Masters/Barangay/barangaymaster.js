@@ -91,7 +91,7 @@ export default function BarangayMasterDash() {
                                         <td>{data.cityname}</td>
                                         <td>{data.name}</td>
                                         <td>
-                                            <Link href={`/Master/BarangayMaster/Edit/${data.id}`}>
+                                            <Link href={`/Masters/BarangayMaster/Edit/${data.id}`}>
                                                 <button onClick={getData.bind(this, data)} className='edit-btn' >Edit</button>
                                             </Link>
                                             &nbsp;

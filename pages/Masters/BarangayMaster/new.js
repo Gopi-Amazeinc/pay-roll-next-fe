@@ -42,6 +42,7 @@ const BarangayMasterForm = () => {
         if (data) {
             await axios.post(hostURL + "Master/InsertBarangayMaster", data);
             Swal.fire('Data Inserted successfully')
+            location.href("/Masters/BarangayMaster")
         }
     }
     return (

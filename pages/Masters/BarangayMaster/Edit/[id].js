@@ -1,14 +1,16 @@
+import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react';
-import Barangay from '../../../styles/BarangayMasterForm.module.css'
+import Barangay from '../../../../styles/BarangayMasterForm.module.css'
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import Link from 'next/link';
 import Swal from 'sweetalert2'
-import Layout from '../../../components/layout/layout'
+import Layout from '../../../../components/layout/layout'
 
+const BarangayEdit = () => {
 
-
-const BarangayMasterForm = () => {
+    const router = useRouter()
+    const { id } = router.query
 
     const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
 
@@ -32,7 +34,6 @@ const BarangayMasterForm = () => {
             // This API is used to fetch the data from CityType table
             res = await axios.get(hostURL + "Master/GetCityType");
             setCityData(res.data);
-            const id = sessionStorage.getItem("id");
             if (id) {
                 // This API is used to fetch the data from BarangayMaster ByID table
                 let response = await axios.get(hostURL + "Master/GetBarangayMasterByID?ID=" + id);
@@ -63,6 +64,8 @@ const BarangayMasterForm = () => {
         if (data) {
             await axios.post(hostURL + "Master/UpdateBarangayMaster", data);
             Swal.fire('Data Updated successfully')
+            location.href = "/Masters/BarangayMaster";
+            
         }
     }
 
@@ -141,16 +144,7 @@ const BarangayMasterForm = () => {
                             <div className="row">
                                 <div className="col-lg-11">
                                     <Link href="/Masters/barangaymasterdashboard"><button className='btn btn-primary' style={{ float: "right", marginLeft: "5px" }} tabindex="0">CANCEL</button></Link>
-                                    {
-                                        actionType == "insert" && (
-                                            <button type='submit' className='btn btn-primary' style={{ float: "right" }}>Save</button>
-                                        )
-                                    }
-                                    {
-                                        actionType == "update" && (
-                                            <button type='submit' className='btn btn-primary' style={{ float: "right" }}>Update</button>
-                                        )
-                                    }
+                                    <button type='submit' className='btn btn-primary' style={{ float: "right" }}>Update</button>
                                 </div>
 
                             </div>
@@ -164,5 +158,4 @@ const BarangayMasterForm = () => {
     )
 
 }
-
-export default BarangayMasterForm;
+export default BarangayEdit;
