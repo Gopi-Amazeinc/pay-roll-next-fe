@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import axios from 'axios'
-import Layout from '@/components/Layout/index'
 const InitialPayroll = () => {
     let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL
 
@@ -15,7 +14,7 @@ const InitialPayroll = () => {
         getInitialPayroll();
     }, [])
     return (
-        <Layout>
+        <>
             <br />
             <div className='row'>
                 <div className='col-lg-9'></div>
@@ -58,7 +57,7 @@ const InitialPayroll = () => {
                     </tbody>
                 </table>
             </div>
-        </Layout>
+        </>
     )
 }
 
