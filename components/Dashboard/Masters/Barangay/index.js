@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react';
 
 import { AiOutlinePlusCircle } from 'react-icons/ai'
-import Layout from '@/components/Layout/index.js';
+
 import axios from 'axios';
 import Swal from 'sweetalert2'
 
@@ -47,7 +47,6 @@ export default function BarangayMasterDash() {
 
 
     return (
-        <Layout>
             <div>
                 <br />
                 <h5>Barangay Master</h5>
@@ -107,6 +106,5 @@ export default function BarangayMasterDash() {
                     </tbody>
                 </table>
             </div>
-        </Layout>
     )
 }
