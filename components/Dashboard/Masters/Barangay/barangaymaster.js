@@ -2,7 +2,7 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react';
 
 import { AiOutlinePlusCircle } from 'react-icons/ai'
-import Layout from '@/components/Layout/index.js';
+
 import axios from 'axios';
 import Swal from 'sweetalert2'
 
@@ -47,31 +47,30 @@ export default function BarangayMasterDash() {
 
 
     return (
-        <Layout>
-            <div>
-                <br />
-                <h5>Barangay Master</h5>
-                <div className='card shadow-lg p-4 rounded-3 mt-4'>
-                    <div className='row'>
-                        <div className='col-lg-1'>
-                            <p>Filter By</p>
-                        </div>
-                        <div className='col-lg-4'>
-                            <input type="text" placeholder='Search' className='form-control form-control-sm' />
-                        </div>
+        <div className='container'>
+            <br />
+            <h5 className='Heading'>Barangay Master</h5>
+            <div className='card shadow-lg p-4 rounded-3 mt-4'>
+                <div className='row'>
+                    <div className='col-lg-1'>
+                        <p>Filter By</p>
+                    </div>
+                    <div className='col-lg-4'>
+                        <input type="text" placeholder='Search' className='form-control form-control-sm' />
                     </div>
                 </div>
+            </div>
 
-                <div className='row mt-3'>
-                    <div className='col-lg-9'></div>
-                    <div className='col-lg-2'>
-                        <Link href="/Masters/barangaymasterform" ><button onClick={clearData.bind(this)} > ADD NEW </button><AiOutlinePlusCircle size={15} /> </Link>
+            <div className='row mt-3'>
+                <div className='col-lg-9'></div>
+                <div className='col-lg-2'>
+                    <Link href="/Masters/BarangayMaster/new" ><button onClick={clearData.bind(this)} className=' submit-button' > ADD NEW </button> </Link>
 
-                    </div>
-                    <div className='col-lg-1'></div>
                 </div>
-
-                <table   className='table table-sm table-striped mt-3 text-center'>
+                <div className='col-lg-1'></div>
+            </div>
+            <div >
+                <table className='table table-striped mt-3'>
                     <thead>
                         <tr className='bg-info text-white '>
 
@@ -92,12 +91,12 @@ export default function BarangayMasterDash() {
                                         <td>{data.cityname}</td>
                                         <td>{data.name}</td>
                                         <td>
-                                            <Link href="/Masters/barangaymasterform">
-                                                <button onClick={getData.bind(this, data)} >Edit</button>
+                                            <Link href={`/Master/BarangayMaster/Edit/${data.id}`}>
+                                                <button onClick={getData.bind(this, data)} className='edit-btn' >Edit</button>
                                             </Link>
                                             &nbsp;
 
-                                            <button onClick={() => handleDelete(data.id)}>Delete</button>
+                                            <button onClick={() => handleDelete(data.id)} className='edit-btn'>Delete</button>
                                         </td>
                                     </tr>
                                 )
@@ -107,6 +106,6 @@ export default function BarangayMasterDash() {
                     </tbody>
                 </table>
             </div>
-        </Layout>
+        </div>
     )
 }

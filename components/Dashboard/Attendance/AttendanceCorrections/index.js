@@ -1,6 +1,6 @@
 import React from 'react'
 import { useState, useEffect } from 'react'
-import Layout from 'Components/layout/layout.js'
+// import Layout from 'Components/layout/layout.js'
 import Link from 'next/link'
 import axios from 'axios'
 import Swal from 'sweetalert2'
@@ -100,7 +100,7 @@ const Attendancecorrectiondashboard = () => {
 
 
     return (
-        <Layout>
+
             <div className='container'>
             <h2>Yet to bind</h2>
                 <h3 className='text-primary fs-5 mt-3'>Attendance Correction  </h3>
@@ -257,7 +257,7 @@ const Attendancecorrectiondashboard = () => {
                     }
                 </div>
             </div>
-        </Layout>
+
     )
 }
 export default Attendancecorrectiondashboard;

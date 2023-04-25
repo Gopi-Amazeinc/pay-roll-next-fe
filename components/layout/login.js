@@ -47,7 +47,6 @@ const Login = ({ makelogin }) => {
 
   // Written By:- Gopi -> Onsubmit login we are storing sessions
   const onSubmit = async (data) => {
-    debugger
     const res = await axios.get(
       hostURL +
         `Master/GetMyDetailsForLogin?EmailID=${data.Username}&Password=${data.Password}&roletype=${data.RoleID}`

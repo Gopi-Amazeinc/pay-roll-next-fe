@@ -6,7 +6,7 @@ const Id = () => {
   
     return (
         <div>
-            <p>Your logic for Company ID: {id}</p>
+            <p> your ID: {id}</p>
         </div>
     );
 }
