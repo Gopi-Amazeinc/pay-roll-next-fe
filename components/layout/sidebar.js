@@ -274,7 +274,7 @@ const Sidebar = ({ children, applyPageName }) => {
         </button>
         {displayOt && (
           <div>
-            <Link href="/OT/myovertimedetails" className={styles.sidemenulink}>
+            <Link href="/OT" className={styles.sidemenulink}>
               <button
                 className={getSubStyle(31)}
                 onClick={updateActiveMenu.bind(this, {
