@@ -175,7 +175,6 @@
   width: 90%;
   justify-content: center;
   /* font-family: Poppins; */
-  margin-left: 20px;
   font-size: 15px;
   border-radius: 10px;
   overflow: hidden;
@@ -200,15 +199,18 @@
   transform: scale(1.5);
 
 }
+
 .commonEditDelete {
   width: 20px;
   margin-left: 10%;
 }
+
 #h5 {
   /* font-family: Poppins; */
   margin-left: 20px;
   color: #3247d5;
 }
+
 .card {
   padding: 20px;
   background: #fff;
@@ -265,11 +267,30 @@
 
 .inputLabel {
   font-size: '16px'
-}#asterisk{
+}
+
+#asterisk {
   color: red;
   font-size: larger;
 }
-#label{
+
+#label {
   font-weight: 600;
   font-size: 14px;
+}
+
+.newPayrollBtn {
+  display: block;
+  width: 100%;
+  padding: 6px 20px 6px 20px;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #495057;
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid #ced4da;
+  border-radius: 0.25rem;
+  transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+  line-height: 14px;
+  text-decoration: none;
 }
