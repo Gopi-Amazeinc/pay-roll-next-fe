@@ -25,7 +25,7 @@ function Otmaster() {
       }
     }
     otList();
-  }, [1]);
+  }, []);
 
   function clearForm(otData = null) {
     let details = {
