@@ -3,6 +3,7 @@ import AttendanceCorrection from '@/components/Dashboard/Attendance/AttendanceCo
 import Layout from '@/components/layout/layout.js'
 
 const AttendanceCorrectionForm = () => {
+    
     return (
         <Layout>
             <div>

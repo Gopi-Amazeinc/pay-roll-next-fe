@@ -2,8 +2,6 @@ import React from "react";
 
 import Link from "next/link";
 import { AiOutlinePlusCircle } from "react-icons/ai";
-import { ImCancelCircle } from "react-icons/im";
-import Layout from '@/components/layout/layout';
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Enable from "../../../../public/Images/enable.png";
@@ -24,7 +22,8 @@ const LoanMasterDash = () => {
   };
   useEffect(() => {
     getData();
-  }, [1]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const getData = async () => {
     let res = await axios.get(hostURL + "Master/GetLoanMaster");
@@ -91,7 +90,7 @@ const LoanMasterDash = () => {
             </p>
           </div>
           <div className="col-lg-2">
-            <Link href="/Masters/LoanMaster/new.js" >
+            <Link href="/Masters/LoanMaster/new" >
               {" "}
               <button
                 className="mt-3 AddButton"

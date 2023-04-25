@@ -61,7 +61,7 @@ let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
                 <div className='row mt-2'>
                     <div className='col-lg-10'></div>
                     <div className='col-lg-2 '>
-                        <Link href="/Masters/worklocationmasterform" id='AddButton' onClick={clearSession} className='btn btn-primary fw-bold AddButton'>Add New</Link>
+                        <Link href="/Masters/WorkLocationMaster/new" id='AddButton' onClick={clearSession} className='btn btn-primary fw-bold AddButton'>Add New</Link>
                     </div>
                 </div>
                 <div className='row '>

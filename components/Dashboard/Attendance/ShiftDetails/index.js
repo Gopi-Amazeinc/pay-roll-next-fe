@@ -18,7 +18,7 @@ const Shiftdetails = () => {
         getShiftDetails();
     }, [])
     return (
-     <>
+        <>
             <Link href="/Attendence/shiftdetails">My Weekly Shift</Link>
             {/* <div className={'card shadow-lg p-2 mt-3 mb-3 ' + Styles.card}> */}
             <div className='row'>

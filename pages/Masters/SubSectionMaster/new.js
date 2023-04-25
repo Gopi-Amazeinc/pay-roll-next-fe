@@ -2,7 +2,7 @@ import React from "react";
 import { useForm } from "react-hook-form";
 import Layout from '@/components/layout/layout.js';
 import { useEffect, useState } from "react";
-import SubsectionFormStyles from "../../styles/SubSectionMasterForm.module.css";
+import SubsectionFormStyles from "../../../styles/SubSectionMasterForm.module.css";
 import Link from "next/link";
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -29,7 +29,7 @@ const SubSectionMasterForm = () => {
       }
     };
     getSubSectionMasterList();
-  }, [1]);
+  }, []);
 
   const onSubmit = async (data) => {
     debugger;
@@ -127,7 +127,7 @@ const SubSectionMasterForm = () => {
               <div className="row">
                 <div className="col-lg-7"></div>
                 <div className="col-lg-2">
-                  <Link href="/Masters/subsectionmaster">
+                  <Link href="/Masters/SubSectionMaster">
                     <button className={SubsectionFormStyles.button}>
                       Cancel
                     </button>

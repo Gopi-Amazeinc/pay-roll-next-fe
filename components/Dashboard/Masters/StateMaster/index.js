@@ -2,7 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 import Layout from '@/components/layout/layout.js';
 import { useEffect, useState } from "react";
-import Styles from '../../styles/statemasterdashboard.module.css'
+
 import axios from "axios";
 import Swal from 'sweetalert2'
 
@@ -87,7 +87,7 @@ function StateMasterDashboard() {
             <div className="col-lg-8"></div>
             <div className="col-lg-2">
               <Link
-                href="/Masters/statemasterform"
+                href="/Masters/StateMaster/new"
                 onClick={clearSession}
                 className="btn btn-primary"
               >
@@ -113,9 +113,9 @@ function StateMasterDashboard() {
                     <td>{data.short}</td>
                     <td>{data.description}</td>
                     <td>
-                      <Link href="/Masters/statemasterform">
+                      <Link href="/Masters/StateMaster/new">
                         <button
-                          id={Styles.editbtn}
+                          className='edit-btn'
                           onClick={edit.bind(this, data.id)}
                         >
                           Edit
@@ -123,7 +123,7 @@ function StateMasterDashboard() {
                       </Link>
                       &nbsp;&nbsp;&nbsp;&nbsp;
                       <button
-                        id={Styles.editbtn}
+                        className='edit-btn'
                         onClick={deleteState.bind(this, data.id)}
                       >
                         Delete

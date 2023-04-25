@@ -20,11 +20,11 @@ const InitialPayroll = () => {
             <div className='row'>
                 <div className='col-lg-9'></div>
                 <div className='col-lg-3'>
-                    <Link href="/Payroll/InitialPayroll/new"><button >New Payroll</button></Link>
+                    <Link style={{ textDecoration: "none" }} href="/Payroll/InitialPayroll/new"><button className='newPayrollBtn' >New Payroll</button></Link>
                 </div>
             </div>
             <div className='row'>
-                <p>Executed Initial Payroll Runs</p>
+                <p className='Heading'>Executed Initial Payroll Runs</p>
             </div>
             <div className='row'>
 

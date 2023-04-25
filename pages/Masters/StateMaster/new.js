@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Styles from "../../styles/statemasterdashboard.module.css";
+import Styles from "../../../styles/statemasterdashboard.module.css";
 import { useForm } from "react-hook-form";
 import Layout from '@/components/layout/layout.js';
 import Link from "next/link";
@@ -149,7 +149,7 @@ function StateMasterForm() {
             <div className="row ">
               <div className="col-lg-6"></div>
               <div className="col-lg-6">
-                <Link href="/Masters/statemasterdashboard">
+                <Link href="/Masters/StateMaster">
                   <button
                     type="button"
                     className="btn common-edit"

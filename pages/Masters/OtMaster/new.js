@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Styles from "../../../styles/employmentJobHistory.module.css";
+import Styles from '../../../styles/WorkLocationMasterForm.module.css'
 import Link from "next/link";
 import Layout from '@/components/layout/layout.js';
 import { useForm } from 'react-hook-form';
@@ -25,7 +25,7 @@ function Otmaster() {
       }
     }
     otList();
-  }, [1]);
+  }, []);
 
   function clearForm(otData = null) {
     let details = {
@@ -125,17 +125,17 @@ function Otmaster() {
                     <div className="col-lg-7">
                     </div>
                     <div className="col-lg-2">
-                      <Link href="/Masters/otratedashboard"><button id={Styles.addNew} style={{ color: 'white' }} tabindex="0">CANCEL</button></Link>
+                      <Link href="/Masters/OtMaster"><button className="AddButton" tabindex="0">CANCEL</button></Link>
                     </div>
                     <div className="col-lg-2">
                       {
                         actionType == "insert" && (
-                          <button type='submit' id={Styles.addNew} style={{ color: 'white' }} className='save-button'>Save</button>
+                          <button type='submit' className="AddButton"  >Save</button>
                         )
                       }
                       {
                         actionType == "update" && (
-                          <button type='submit' id={Styles.addNew} style={{ color: 'white' }} className='update-button'>Update</button>
+                          <button type='submit' className="AddButton" >Update</button>
                         )
                       }
 

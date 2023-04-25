@@ -1,6 +1,6 @@
 import React from 'react'
 import { useForm } from 'react-hook-form';
-import subsidaryform from '../../styles/SubsidaryMasterForm.module.css'
+import subsidaryform from '../../../styles/SubsidaryMasterForm.module.css'
 import Link from 'next/link';
 import Layout from '@/components/layout/layout.js';
 import axios from 'axios';
@@ -15,21 +15,21 @@ export default function SubsidaryMasterForm() {
 
     const [actionType, setActionType] = useState("insert");
 
-    useEffect(() => {
-        async function GetSubsidaryMaster() {
-            const id = sessionStorage.getItem("id");
-            if (id) {
-                // This API is used to fetch the data from GSubsidaryMaster based on id 
-                const response = await axios.get(hostURL + "Master/GetSubsidaryMasterByID?ID=" + id);
-                clearForm(response.data[0])
-            }
-            else {
-                clearForm();
-            }
-        }
+    useEffect(() => {        
         GetSubsidaryMaster();
+    }, []);
 
-    }, [1]);
+    async function GetSubsidaryMaster() {
+        const id = sessionStorage.getItem("id");
+        if (id) {
+            // This API is used to fetch the data from GSubsidaryMaster based on id 
+            const response = await axios.get(hostURL + "Master/GetSubsidaryMasterByID?ID=" + id);
+            clearForm(response.data[0])
+        }
+        else {
+            clearForm();
+        }
+    }
 
     function clearForm(userData = null) {
         let details = {
@@ -94,7 +94,7 @@ export default function SubsidaryMasterForm() {
                                     {errors.Description && <p className="error-message" style={{ color: "red" }}>{errors.Description.message}</p>}
                                 </div>
                                 <div className="col-lg-11 ">
-                                    <Link href="/Masters/subsidarymasterdashboard"><button className='btn btn-primary' style={{ float: "right", marginLeft: "5px" }} tabindex="0">CANCEL</button></Link>
+                                    <Link href="/Masters/SubSidaryMaster"><button className='btn btn-primary' style={{ float: "right", marginLeft: "5px" }} tabindex="0">CANCEL</button></Link>
                                     {
                                         actionType == "insert" && (
                                             <button type='submit' className='btn btn-primary' style={{ float: "right" }}>Save</button>

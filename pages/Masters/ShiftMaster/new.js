@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Styles from "../../styles/employmentJobHistory.module.css";
+import Styles from "../../../styles/employmentJobHistory.module.css";
 import Link from 'next/link';
 import Layout from '@/components/layout/layout.js';
 import { useForm } from 'react-hook-form';
@@ -25,7 +25,7 @@ function ShiftMasterForm() {
          }
       }
       getShiftList();
-   }, [1]);
+   }, []);
 
 
    function clearForm(otData = null) {
@@ -110,7 +110,7 @@ function ShiftMasterForm() {
                      <div className="row" style={{ marginBottom: "10px" }}>
                         <div className="col-lg-7"></div>
                         <div className="col-lg-2">
-                           <Link href="/Masters/shiftmaster" > <button className="btn btn-primary btn-sm shadow-lg" id={Styles.addNew}> Cancel</button></Link>
+                           <Link href="/Masters/ShiftMaster" > <button className="btn btn-primary btn-sm shadow-lg" id={Styles.addNew}> Cancel</button></Link>
                         </div>
                         <div className="col-lg-3">
                            {/* <button className="btn btn-primary btn-sm shadow-lg" style={{ marginLeft: "10px" }} id={Styles.addNew} >Save </button> */}
