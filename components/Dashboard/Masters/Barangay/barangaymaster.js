@@ -18,7 +18,7 @@ export default function BarangayMasterDash() {
   };
   useEffect(() => {
     getbarangaymaster();
-  }, [1]);
+  }, []);
 
   const getData = (data) => {
     sessionStorage.setItem("id", data.id);

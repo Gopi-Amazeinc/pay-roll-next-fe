@@ -82,7 +82,7 @@ const PositionMasterDetails = () => {
             }
         }
         getPositionMasterbyID();
-    }, [1]);
+    }, []);
 
     return (
         <Layout>
