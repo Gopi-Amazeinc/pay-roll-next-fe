@@ -1,13 +1,11 @@
 #table {
     width: 90%;
     justify-content: center;
-    font-family: Poppins;
     margin-left: 20px;
     font-size: 15px;
     border-radius: 10px;
     overflow: hidden;
     margin-left: 50px;
-    font-size: 13px;
 }
 
 #tr {
