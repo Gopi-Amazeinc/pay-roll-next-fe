@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Styles from "../../styles/WorkLocationMasterForm.module.css";
+
 import { useForm } from "react-hook-form";
 import Layout from '@/components/layout/layout.js';
 import Link from "next/link";
@@ -78,7 +78,7 @@ const customStyles = {
     <Layout>
       <div>
         <br></br>
-        <p id={Styles.title}>Work Location Master</p>
+        <p className="Heading">Work Location Master</p>
         <div className="container-fluid mt-4">
           <div className="row shadow-lg p-2 rounded-4 p-3 ">
             <div className="row ">
@@ -106,16 +106,16 @@ const customStyles = {
                 <div className="col-lg-6"></div>
                 <div className="col-lg-6">
                       <Link href='/Masters/worklocationmasterdashboard'>
-                        <button type='button' className='btn common-edit' id={Styles.btn}>Close</button></Link>
+                        <button type='button' className='btn common-edit edit-btn' id={Styles.btn}>Close</button></Link>
                                 
                                 {
                                     actionType == "insert" && (
-                                        <button type='submit' className='btn' id={Styles.btn}>Save</button>
+                                        <button type='submit' className='edit-btn' id={Styles.btn}>Save</button>
                                     )
                                 }
                                 {
                                     actionType == "update" && (
-                                        <button type='submit' className='btn' id={Styles.btn} >Update</button>
+                                        <button type='submit' className='edit-btn' id={Styles.btn} >Update</button>
                                     )
                                 }
                                 

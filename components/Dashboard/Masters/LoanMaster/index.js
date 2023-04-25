@@ -3,7 +3,7 @@ import React from "react";
 import Link from "next/link";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import { ImCancelCircle } from "react-icons/im";
-import Layout from '@/components/layout/layout.js';
+import Layout from '@/components/layout/layout';
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import Enable from "../../../../public/Images/enable.png";
@@ -91,7 +91,7 @@ const LoanMasterDash = () => {
             </p>
           </div>
           <div className="col-lg-2">
-            <Link href="/Masters/LoanMaster/loanmasterform" >
+            <Link href="/Masters/LoanMaster/new.js" >
               {" "}
               <button
                 className="mt-3 AddButton"
