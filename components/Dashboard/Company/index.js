@@ -1,5 +1,5 @@
 import React from 'react';
-import Layout from '../../layout/index.js'
+// import Layout from '../../layout/layout'
 import table from '../../../styles/company.module.css'
 import company from '../../../styles/company.module.css'
 import Link from 'next/link.js';
@@ -7,7 +7,7 @@ import Link from 'next/link.js';
 
 const Companydashboard = () => {
     return (
-        <Layout>
+        <>
             <div className="container">
                
               
@@ -60,7 +60,8 @@ const Companydashboard = () => {
                     </table>
                 </div>
             </div>
-        </Layout>
+            </>
+      
     );
 }
 
