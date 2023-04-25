@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import axios from 'axios'
+
 const InitialPayroll = () => {
     let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL
 

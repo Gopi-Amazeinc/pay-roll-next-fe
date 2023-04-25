@@ -77,7 +77,7 @@ const InitialPayrollDetails = () => {
     return (
         <div>
             <h3 style={{ color: "red" }}>For Delete operation Date wants to be formatted..!</h3>
-            <h3 className='text-primary fs-5 mt-3'>Initial Payroll Details</h3>
+            <h3 className='text-primary fs-5 mt-3 Heading'>Initial Payroll Details</h3>
             <div className='card p-3 border-0 shadow-lg rounded-3 mt-4'>
                 <div className='row'>
                     <div className='col-lg-1'>
@@ -116,16 +116,16 @@ const InitialPayrollDetails = () => {
             <div className='row '>
                 <div className='col-lg-4'> </div>
                 <div className='col-lg-5'>
-                    <h4 id={Styles.headingtext}>Employees in selected Period</h4>
+                    <h4 className='Heading' >Employees in selected Period</h4>
                 </div>
                 <div className='col-lg-3'>
-                    <button type='button' className='btn' id={Styles.commonBtn} onClick={() => handleDelete.bind(this, data)}>Delete</button>
+                    <button type='button' className='EditDelteBTN' onClick={() => handleDelete.bind(this, data)}>Delete</button>
                 </div>
 
                 <div className='col-lg-12'>
-                    <table className='table table-bordered mt-4 text-center table-striped ' id={Styles.table}>
+                    <table className='table table-bordered mt-4 text-center table-striped '>
                         <thead>
-                            <tr id={Styles.tr}>
+                            <tr >
                                 <th className='text-white'>Select</th>
                                 <th className='text-white'>Employee ID</th>
                                 <th className='text-white'>Staff ID</th>
@@ -178,9 +178,9 @@ const InitialPayrollDetails = () => {
                     <div className='modalbody'>
                         <div className="row">
                             <div className='col-lg-12'>
-                                <table className='table table-bordered mt-4 text-center table-striped ' id={Styles.table}>
+                                <table className='table table-bordered mt-4 text-center table-striped ' >
                                     <thead>
-                                        <tr id={Styles.tr}>
+                                        <tr >
                                             <th className='text-white'>Component Name</th>
                                             <th className='text-white'>Amount </th>
                                             <th className='text-white'>Component Type</th>

@@ -1,4 +1,3 @@
-import React, { Component } from 'react';
 import { useEffect, useState } from 'react';
 import Barangay from '../../../styles/BarangayMasterForm.module.css'
 import axios from 'axios';
@@ -33,17 +32,42 @@ const BarangayMasterForm = () => {
             // This API is used to fetch the data from CityType table
             res = await axios.get(hostURL + "Master/GetCityType");
             setCityData(res.data);
-
+            const id = sessionStorage.getItem("id");
+            if (id) {
+                // This API is used to fetch the data from BarangayMaster ByID table
+                let response = await axios.get(hostURL + "Master/GetBarangayMasterByID?ID=" + id);
+                clearForm(response.data[0]);
+                console.log(response.data);
+            }
+            else {
+                clearForm();
+            }
         }
         getData()
     }, [1]);
 
+
+
+    function clearForm(userData = null) {
+        let details = {
+            "ID": userData ? userData.id : "",
+            "CountryID": userData ? userData.countryID : "",
+            "ProvinceID": userData ? userData.provinceID : "",
+            "CityID": userData ? userData.cityID : "",
+            "Name": userData ? userData.name : "",
+        }
+        reset(details);
+    }
+
     async function onSubmit(data) {
         if (data) {
-            await axios.post(hostURL + "Master/InsertBarangayMaster", data);
-            Swal.fire('Data Inserted successfully')
+            await axios.post(hostURL + "Master/UpdateBarangayMaster", data);
+            Swal.fire('Data Updated successfully')
         }
     }
+
+
+
     return (
         <Layout>
             <div>
@@ -117,9 +141,16 @@ const BarangayMasterForm = () => {
                             <div className="row">
                                 <div className="col-lg-11">
                                     <Link href="/Masters/barangaymasterdashboard"><button className='btn btn-primary' style={{ float: "right", marginLeft: "5px" }} tabindex="0">CANCEL</button></Link>
-
-                                    <button type='submit' className='btn btn-primary' style={{ float: "right" }}>Save</button>
-
+                                    {
+                                        actionType == "insert" && (
+                                            <button type='submit' className='btn btn-primary' style={{ float: "right" }}>Save</button>
+                                        )
+                                    }
+                                    {
+                                        actionType == "update" && (
+                                            <button type='submit' className='btn btn-primary' style={{ float: "right" }}>Update</button>
+                                        )
+                                    }
                                 </div>
 
                             </div>
