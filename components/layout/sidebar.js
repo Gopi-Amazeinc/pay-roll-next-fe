@@ -813,7 +813,7 @@ const Sidebar = ({ children, applyPageName }) => {
                     </button>
                   </Link>
 
-                  <Link href="/Masters/StateMasterdashboard">
+                  <Link href="/Masters/StateMaster">
                     <button
                       className={getSubStyle(105)}
                       onClick={updateActiveMenu.bind(this, {
@@ -878,7 +878,7 @@ const Sidebar = ({ children, applyPageName }) => {
                     </button>
                   </Link>
 
-                  <Link href="/Masters/worklocationmasterdashboard/">
+                  <Link href="/Masters/WorkLocationMaster">
                     <button
                       className={getSubStyle(110)}
                       onClick={updateActiveMenu.bind(this, {
@@ -904,7 +904,7 @@ const Sidebar = ({ children, applyPageName }) => {
                     </button>
                   </Link>
 
-                  <Link href="/Masters/subsidarymasterdashboard">
+                  <Link href="/Masters/SubSidaryMaster">
                     <button
                       className={getSubStyle(112)}
                       onClick={updateActiveMenu.bind(this, {
@@ -917,7 +917,7 @@ const Sidebar = ({ children, applyPageName }) => {
                     </button>
                   </Link>
 
-                  <Link href="/Masters/otratedashboard">
+                  <Link href="/Masters/OtMaster">
                     <button
                       className={getSubStyle(113)}
                       onClick={updateActiveMenu.bind(this, {
@@ -930,7 +930,7 @@ const Sidebar = ({ children, applyPageName }) => {
                     </button>
                   </Link>
 
-                  <Link href="/Masters/positionmasterdashboard">
+                  <Link href="/Masters/PositionMaster">
                     <button
                       className={getSubStyle(114)}
                       onClick={updateActiveMenu.bind(this, {
@@ -969,7 +969,7 @@ const Sidebar = ({ children, applyPageName }) => {
                     </button>
                   </Link>
 
-                  <Link href="/Masters/subsectionmaster">
+                  <Link href="/Masters/SubSectionMaster">
                     <button
                       className={getSubStyle(117)}
                       onClick={updateActiveMenu.bind(this, {
