@@ -84,7 +84,7 @@ function CityMasterDash() {
 
 
   return (
-    <Layout>
+    <div>
       <div className="container">
         <div className="row">
           <div className="col-lg-6">
@@ -176,7 +176,7 @@ function CityMasterDash() {
           </table>
         </div>
       </div>
-    </Layout>
+    </div>
   );
 }
 

@@ -76,7 +76,7 @@ function ShiftMaster() {
           <div className="row mt-4">
             <div className="col-lg-10"></div>
             <div className="col-lg-2">
-              <Link href="/Masters/shiftmasterform"><button className="btn btn-primary btn-sm shadow-lgn AddButton" onClick={clearData.bind(this)} >Add New</button></Link>
+              <Link href="/Masters/ShiftMaster/new"><button className="btn btn-primary btn-sm shadow-lgn AddButton" onClick={clearData.bind(this)} >Add New</button></Link>
             </div>
           </div>
           <br />
@@ -103,7 +103,7 @@ function ShiftMaster() {
                         <td>{data.grace}</td>
                         <td>{data.shiftType}</td>
                         <td>
-                          <Link href="/Masters/shiftmasterform">
+                          <Link href="/Masters/ShiftMaster/new">
                             <button className="edit-btn" onClick={getData.bind(this, data)}>Edit</button>
                           </Link>
                           &nbsp; &nbsp; &nbsp;

@@ -91,7 +91,7 @@ const LoanMasterDash = () => {
             </p>
           </div>
           <div className="col-lg-2">
-            <Link href="/Masters/LoanMaster/new.js" >
+            <Link href="/Masters/LoanMaster/new" >
               {" "}
               <button
                 className="mt-3 AddButton"
