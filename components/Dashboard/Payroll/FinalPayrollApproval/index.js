@@ -58,7 +58,6 @@ function FinalPayrollApproval() {
                                 <div classeName='btn-group'>
                                     <button onClick={toggleNewRequest} className='toggleButton' >Normal Payroll</button>
                                     <button onClick={toggleApproved} className='toggleButton' >Final Payroll</button>
-
                                 </div>
                             </div><br />
                         </div>
