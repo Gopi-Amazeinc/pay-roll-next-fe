@@ -1,11 +1,11 @@
 import React from 'react'
-import Layout from '@/components/Layout/index';
 import Link from 'next/link'
 import Swal from 'sweetalert2';
 import { Button, Card, Collapse } from "reactstrap";
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
+import Layout from '@/components/layout/layout'
 
 const InitialPayrollForm = () => {
     const [collapseOpen, setCollapseOpen] = React.useState(false);
