@@ -125,17 +125,16 @@ const RunFinalPayroll = () => {
                         <div className='col-lg-1'></div>
                         <div className="col-lg-2 mt-3">
                             <br />
-                            <Button
-                                color="primary"
+                            <button
                                 type="button"
-                                id="collapseExample"
+                                className='EditDelteBTN'
                                 onClick={() => {
                                     setCollapseOpen(!collapseOpen);
                                     handleButtonClick();
                                 }}
                             >
                                 FETCH EMPLOYEES
-                            </Button>
+                            </button>
                         </div>
                         <div className="col-lg-2">
                             <p >Search <br ></br></p>
@@ -203,7 +202,7 @@ const RunFinalPayroll = () => {
             </div>
             <div id="employee1" className="row row" style={{ height: "500px" }}><div className="col-lg-12">
                 <Collapse isOpen={collapseOpen}>
-                    <table id="downloadaplication" className="table table-bordered fonttxt" style={{ height: "300px" }}>
+                    <table className="table table-bordered table-sm" style={{ height: "300px" }}>
                         <thead className='bg-info text-white ' >
                             <tr >
                                 <th >
