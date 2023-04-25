@@ -67,13 +67,13 @@ const Myovertimedetails = () => {
                         <div className="dashbutton bttn">
                             <div className="tab-slider--nav">
                                 <ul className="tab-slider--tabs"> */}
-                                    <h3>  My Overtime Details</h3>
-                                    {/* <li type="button" rel="tab111" className="tab-slider--trigger gray"> My Overtime Details</li>
+                    <h3>  My Overtime Details</h3>
+                    {/* <li type="button" rel="tab111" className="tab-slider--trigger gray"> My Overtime Details</li>
                                 </ul>
                             </div>
                         </div>
                     </div> */}
-                  
+
                     <div className="card shadow">
                         <div className="row">
 
