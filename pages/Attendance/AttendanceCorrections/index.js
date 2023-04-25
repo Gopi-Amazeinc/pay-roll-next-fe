@@ -1,6 +1,6 @@
 import React from 'react'
-import AttendanceCorrection from '@/components/Dashboard/Attendance/AttendanceCorrections/index';
-import Layout from '@/components/layout/layout.js'
+import AttendanceCorrection from '@/components/Dashboard/Attendance/AttendanceCorrections';
+import Layout from '@/components/layout/layout'
 
 const AttendanceCorrectionForm = () => {
     return (

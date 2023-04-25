@@ -329,7 +329,7 @@ const Sidebar = ({ children, applyPageName }) => {
             </Link>
 
             <Link
-              href="/Attendance/Attendancecorrections"
+              href="/Attendance/AttendanceCorrections"
               className={styles.sidemenulink}
             >
               <button
