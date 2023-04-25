@@ -297,7 +297,7 @@ const Sidebar = ({ children, applyPageName }) => {
         {displayAttendence && (
           <div>
             <Link
-              href="/Attendence/attendencedetails"
+              href="/Attendance/AttendanceDetails"
               className={styles.sidemenulink}
             >
               <button
@@ -313,7 +313,7 @@ const Sidebar = ({ children, applyPageName }) => {
             </Link>
 
             <Link
-              href="/Attendence/myteamovertimedetails"
+              href="/Attendance/OverTimeUnitsUpload"
               className={styles.sidemenulink}
             >
               <button
@@ -329,7 +329,7 @@ const Sidebar = ({ children, applyPageName }) => {
             </Link>
 
             <Link
-              href="/Attendence/attendencecorrectiondashboard"
+              href="/Attendance/Attendancecorrections"
               className={styles.sidemenulink}
             >
               <button
