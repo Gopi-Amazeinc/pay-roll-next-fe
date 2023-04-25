@@ -1,6 +1,8 @@
+import { useEffect, useState } from 'react'
 import React from 'react'
 import Layout from '@/components/layout/layout'
-const index = () => {
+import InitialPayroll from '@/components/Dashboard/Payroll/InitialPayrollDetails'
+const Index = () => {
     let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL
 
     const [intialPayroll, setInitialPayroll] = useState([]);
@@ -19,4 +21,4 @@ const index = () => {
     )
 }
 
-export default index
+export default Index
