@@ -69,42 +69,42 @@ export default function BarangayMasterDash() {
                 </div>
                 <div className='col-lg-1'></div>
             </div>
-        <div >
-            <table className='table table-striped mt-3'>
-                <thead>
-                    <tr className='bg-info text-white '>
+            <div >
+                <table className='table table-striped mt-3'>
+                    <thead>
+                        <tr className='bg-info text-white '>
 
-                        <th>Country Name</th>
-                        <th>Province Name</th>
-                        <th>City Name</th>
-                        <th>Barangay</th>
-                        <th>Action</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        barangaymaster.map((data, index) => {
-                            return (
-                                <tr className="text-dark" key={index}>
-                                    <td>{data.countryname}</td>
-                                    <td>{data.statename}</td>
-                                    <td>{data.cityname}</td>
-                                    <td>{data.name}</td>
-                                    <td>
-                                        <Link href="/Masters/barangaymasterform">
-                                            <button onClick={getData.bind(this, data)} className='edit-btn' >Edit</button>
-                                        </Link>
-                                        &nbsp;
+                            <th>Country Name</th>
+                            <th>Province Name</th>
+                            <th>City Name</th>
+                            <th>Barangay</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            barangaymaster.map((data, index) => {
+                                return (
+                                    <tr className="text-dark" key={index}>
+                                        <td>{data.countryname}</td>
+                                        <td>{data.statename}</td>
+                                        <td>{data.cityname}</td>
+                                        <td>{data.name}</td>
+                                        <td>
+                                            <Link href={`/Master/BarangayMaster/Edit/${data.id}`}>
+                                                <button onClick={getData.bind(this, data)} className='edit-btn' >Edit</button>
+                                            </Link>
+                                            &nbsp;
 
-                                        <button onClick={() => handleDelete(data.id)} className='edit-btn'>Delete</button>
-                                    </td>
-                                </tr>
-                            )
-                        })
-                    }
+                                            <button onClick={() => handleDelete(data.id)} className='edit-btn'>Delete</button>
+                                        </td>
+                                    </tr>
+                                )
+                            })
+                        }
 
-                </tbody>
-            </table>
+                    </tbody>
+                </table>
             </div>
         </div>
     )
