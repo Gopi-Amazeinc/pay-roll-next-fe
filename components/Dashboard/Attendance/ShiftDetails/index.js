@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import axios from 'axios'
 // import Styles from '../../styles/shiftdetails.module.css'
-const shiftdetails = () => {
+const Shiftdetails = () => {
     const [shiftDetails, setShiftDetails] = useState([])
     let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
     let staffID;
@@ -63,4 +63,4 @@ const shiftdetails = () => {
         </>)
 }
 
-export default shiftdetails
+export default Shiftdetails
