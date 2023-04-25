@@ -45,7 +45,6 @@ const Holidaydashboard = () => {
     };
 
 
-
     return (
                    <div>
                 <br></br> <p id={Styles.title}>Holiday Dashboard</p>{" "}

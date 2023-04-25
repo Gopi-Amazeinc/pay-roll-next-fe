@@ -1,14 +1,14 @@
 import React from 'react'
-import Layout from '@/components/Layout/index'
-import BankAdviceList from '@/components/Dashboard/Payroll/BankAdviceList'
+import Layout from '@/components/layout/layout'
+import BankAdviceListDashboard from '@/components/Dashboard/Payroll/BankAdviceList'
 
 
-const BankAdviceList = () => {
+const Index = () => {
     return (
         <Layout>
-            <BankAdviceList></BankAdviceList>
+            <BankAdviceListDashboard></BankAdviceListDashboard>
         </Layout>
     )
 }
 
-export default BankAdviceList
+export default Index

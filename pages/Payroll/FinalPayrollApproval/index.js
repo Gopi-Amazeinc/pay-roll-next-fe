@@ -1,11 +1,12 @@
 import React from 'react'
-import Layout from '@/components/Layout/index';
-const FinalPayrollApproval = () => {
+import Layout from '@/components/layout/layout'
+import FinalPayrollApproval from '@/components/Dashboard/Payroll/FinalPayrollApproval'
+const Index = () => {
     return (
         <Layout>
-            <div></div>
+            <FinalPayrollApproval></FinalPayrollApproval>
         </Layout>
     )
 }
 
-export default FinalPayrollApproval
+export default Index

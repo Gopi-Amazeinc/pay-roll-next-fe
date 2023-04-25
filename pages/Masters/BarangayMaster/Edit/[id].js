@@ -1,13 +1,16 @@
-import React, { Component } from "react";
+import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
-import Barangay from "../../../styles/BarangayMasterForm.module.css";
+import Barangay from "../../../../styles/BarangayMasterForm.module.css";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
 import Swal from "sweetalert2";
-import Layout from "../../../components/layout/layout";
+import Layout from "../../../../components/layout/layout";
 
-const BarangayMasterForm = () => {
+const BarangayEdit = () => {
+  const router = useRouter();
+  const { id } = router.query;
+
   const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
 
   const { register, handleSubmit, reset, formState } = useForm();
@@ -29,17 +32,39 @@ const BarangayMasterForm = () => {
       // This API is used to fetch the data from CityType table
       res = await axios.get(hostURL + "Master/GetCityType");
       setCityData(res.data);
+      if (id) {
+        // This API is used to fetch the data from BarangayMaster ByID table
+        let response = await axios.get(
+          hostURL + "Master/GetBarangayMasterByID?ID=" + id
+        );
+        clearForm(response.data[0]);
+        console.log(response.data);
+      } else {
+        clearForm();
+      }
     }
     getData();
   }, [1]);
 
+  function clearForm(userData = null) {
+    let details = {
+      ID: userData ? userData.id : "",
+      CountryID: userData ? userData.countryID : "",
+      ProvinceID: userData ? userData.provinceID : "",
+      CityID: userData ? userData.cityID : "",
+      Name: userData ? userData.name : "",
+    };
+    reset(details);
+  }
+
   async function onSubmit(data) {
     if (data) {
-      await axios.post(hostURL + "Master/InsertBarangayMaster", data);
-      Swal.fire("Data Inserted successfully");
-      location.href("/Masters/BarangayMaster");
+      await axios.post(hostURL + "Master/UpdateBarangayMaster", data);
+      Swal.fire("Data Updated successfully");
+      location.href = "/Masters/BarangayMaster";
     }
   }
+
   return (
     <Layout>
       <div>
@@ -160,13 +185,12 @@ const BarangayMasterForm = () => {
                       CANCEL
                     </button>
                   </Link>
-
                   <button
                     type="submit"
                     className="btn btn-primary"
                     style={{ float: "right" }}
                   >
-                    Save
+                    Update
                   </button>
                 </div>
               </div>
@@ -177,5 +201,4 @@ const BarangayMasterForm = () => {
     </Layout>
   );
 };
-
-export default BarangayMasterForm;
+export default BarangayEdit;
