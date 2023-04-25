@@ -29,7 +29,6 @@ function AttendenceDetails() {
 
   return (
 
-    <Layout>
       <div>
         <h1 style={{color:"red"}}>Data Binnding is Pending</h1>
         <div className='container'>
@@ -120,7 +119,7 @@ function AttendenceDetails() {
           </div>
         </div>
       </div>
-    </Layout>
+
   )
 }
 
