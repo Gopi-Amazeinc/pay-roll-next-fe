@@ -1,9 +1,12 @@
+import React from 'react'
+import Attendancedetails from '@/components/Dashboard/Attendance/AttendanceDetails/index'
 
 const AttendanceDetails = () => {
     return (
         <div>
-            <h1>helllo</h1>
+            <Attendancedetails></Attendancedetails>
         </div>
-    );
+    )
 }
-export default AttendanceDetails;
+
+export default AttendanceDetails
