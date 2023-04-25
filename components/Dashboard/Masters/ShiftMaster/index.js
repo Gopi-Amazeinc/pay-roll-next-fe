@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import Styles from "../../styles/employmentJobHistory.module.css";
+
 import Link from "next/link";
 import Layout from '@/components/layout/layout.js';
 import axios from "axios";
@@ -48,9 +48,9 @@ function ShiftMaster() {
   };
 
   return (
-    <Layout>
+    
       <div>
-        <br></br> <p id={Styles.title}>Shift Master</p>{" "}
+        <br></br> <p className="Heading">Shift Master</p>{" "}
         <div className="container-fluid mt-4">
           <div className="row shadow-lg p-2 rounded-4 p-3 ">
             <div className="col-lg-1">
@@ -76,14 +76,14 @@ function ShiftMaster() {
           <div className="row mt-4">
             <div className="col-lg-10"></div>
             <div className="col-lg-2">
-              <Link href="/Masters/shiftmasterform"><button className="btn btn-primary btn-sm shadow-lg" onClick={clearData.bind(this)} id={Styles.addNew}>Add New</button></Link>
+              <Link href="/Masters/shiftmasterform"><button className="btn btn-primary btn-sm shadow-lgn AddButton" onClick={clearData.bind(this)} >Add New</button></Link>
             </div>
           </div>
           <br />
           <div className="row">
-            <table className={Styles.commonTable}>
+            <table className="table">
               <thead>
-                <tr>
+                <tr className="tr">
                   <th> Short</th>
                   <th> Description</th>
                   <th> Shift Timings</th>
@@ -104,10 +104,10 @@ function ShiftMaster() {
                         <td>{data.shiftType}</td>
                         <td>
                           <Link href="/Masters/shiftmasterform">
-                            <button id={Styles.actionBtn} onClick={getData.bind(this, data)}>Edit</button>
+                            <button className="edit-btn" onClick={getData.bind(this, data)}>Edit</button>
                           </Link>
                           &nbsp; &nbsp; &nbsp;
-                          <button id={Styles.actionBtn} onClick={() => handleDelete(data.id)}>Delete</button>
+                          <button className="edit-btn" onClick={() => handleDelete(data.id)}>Delete</button>
                         </td>
                       </tr>
                     )
@@ -118,7 +118,7 @@ function ShiftMaster() {
           </div>
         </div>
       </div>
-    </Layout>
+    
   );
 }
 

@@ -52,7 +52,7 @@ function OTRateDash() {
 
 
     return (
-        <Layout>
+        
             <div>
                 <p className='Heading'>OT Master</p>
                 <div className='container-fluid'>
@@ -114,7 +114,7 @@ function OTRateDash() {
                     </div>
                 </div>
             </div>
-        </Layout>
+      
 
     )
 }
