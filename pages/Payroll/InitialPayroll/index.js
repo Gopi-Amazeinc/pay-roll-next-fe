@@ -1,5 +1,5 @@
 import React from 'react'
-import Layout from '@/components/layout'
+import Layout from '@/components/Layout/index'
 const index = () => {
     let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL
 
@@ -13,7 +13,9 @@ const index = () => {
         getInitialPayroll();
     }, [])
     return (
-        <InitialPayroll></InitialPayroll>
+        <Layout>
+            <InitialPayroll></InitialPayroll>
+        </Layout>
     )
 }
 

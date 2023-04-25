@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react'
-import Layout from '@/components/Layout/index';
 import Modal from 'react-modal';
 import { AiOutlineClose } from 'react-icons/ai'
 import * as XLSX from "xlsx";
@@ -106,7 +105,7 @@ const Employmentjobhistory = () => {
         getPayroll();
     }, [])
     return (
-        <Layout>
+        <div>
             <h4 className='Heading fs-3 m-3'>Payroll YTD Upload</h4>
             <div className='container'>
                 <div className='row shadow-lg rounded-3 mt-5 p-3'>
@@ -243,7 +242,7 @@ const Employmentjobhistory = () => {
                     </table>
                 </div>
             </div>
-        </Layout>
+        </div>
     )
 }
 
