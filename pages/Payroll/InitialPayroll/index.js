@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react'
 import React from 'react'
 import Layout from '@/components/layout/layout'
 import InitialPayroll from '@/components/Dashboard/Payroll/InitialPayrollDetails'
+import axios from 'axios'
 const Index = () => {
     let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL
 
