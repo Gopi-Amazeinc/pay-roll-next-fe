@@ -260,7 +260,7 @@
 }
 
 
-#asterisk  {
+#asterisk {
   color: red;
   font-size: larger;
 }
@@ -276,8 +276,9 @@
   padding: 8px;
   font-size: 15px;
 }
+
 .btn:hover {
-  background-color: #2e3c4e;
+  background-color: blue;
   color: white;
 }
 
@@ -290,7 +291,8 @@
   border-top-right-radius: 8px;
   border-bottom-right-radius: 8px;
 }
-thead{
+
+thead {
   background-color: #02cfff;
 }
 
@@ -305,7 +307,7 @@ thead{
   background-color: white;
 }
 
-.toggleButton:active {
+.toggleButton:focus {
   color: white;
   background-color: #3247d5;
 }

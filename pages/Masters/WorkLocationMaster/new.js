@@ -34,6 +34,7 @@ function WorkLocationMasterForm() {
 
   useEffect(() => {
     clearForm();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     ID = sessionStorage.getItem("WorkLocationID");
         if(ID){
           getWorkLocationMasterByID(); 
