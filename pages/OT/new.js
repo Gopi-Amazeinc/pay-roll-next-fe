@@ -102,7 +102,7 @@ const Applyot = () => {
                      </div>
                   </div >
                   <div className="d-flex justify-content-end w-100 mt-2 mb-2 pr-2">
-                     <Link href="/OT/myovertimedetails"> <button className="submit-button" >Cancel</button></Link>
+                     <Link href="/OT"> <button className="submit-button" >Cancel</button></Link>
                      <button className="submit-button">Submit</button><button data-toggle="modal" data-target="#mytestid" className="submit-button" onClick={openModal}>OT Details</button>
                   </div>
                </form>
