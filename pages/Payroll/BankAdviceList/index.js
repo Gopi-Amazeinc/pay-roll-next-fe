@@ -1,12 +1,12 @@
 import React from 'react'
 import Layout from '@/components/Layout/index'
-import BankAdviceList from '@/components/Dashboard/Payroll/BankAdviceList'
+import BankAdviceListDashboard from '@/components/Dashboard/Payroll/BankAdviceList'
 
 
 const BankAdviceList = () => {
     return (
         <Layout>
-            <BankAdviceList></BankAdviceList>
+            <BankAdviceListDashboard></BankAdviceListDashboard>
         </Layout>
     )
 }
