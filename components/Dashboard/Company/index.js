@@ -52,8 +52,8 @@ const Companydashboard = () => {
                                 </td>
                                 <td clasName={table.tabledetail}>Purego.ph</td>
                                 <td clasName={table.tabledetail}>884234924</td>
-                                <td><Link href="/configuration/companyform"><button className="edit-btn">Edit</button></Link><br /><br /><button className="edit-btn">Delete
-                                </button>
+                                <td><Link href="/configuration/companyform"><button className="edit-btn">Edit</button></Link><br /><br />
+                                <button className="edit-btn">Delete</button>
                                 </td>
                             </tr>
                         </tbody>
