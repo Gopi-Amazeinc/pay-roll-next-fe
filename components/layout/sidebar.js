@@ -459,7 +459,7 @@ const Sidebar = ({ children, applyPageName }) => {
             </button>
             {displayPayroll && (
               <div>
-                <Link href="/Payroll/executedInitialpayrollruns">
+                <Link href="/Payroll/InitialPayroll">
                   <button
                     className={getSubStyle(71)}
                     onClick={updateActiveMenu.bind(this, {
@@ -472,7 +472,7 @@ const Sidebar = ({ children, applyPageName }) => {
                   </button>
                 </Link>
 
-                <Link href="/Payroll/initialpayrolldetails">
+                <Link href="/Payroll/InitialPayrollDetails">
                   <button
                     className={getSubStyle(72)}
                     onClick={updateActiveMenu.bind(this, {
@@ -485,7 +485,7 @@ const Sidebar = ({ children, applyPageName }) => {
                   </button>
                 </Link>
 
-                <Link href="/Payroll/runpayroll">
+                <Link href="/Payroll/RunFinalPayroll">
                   <button
                     className={getSubStyle(73)}
                     onClick={updateActiveMenu.bind(this, {
@@ -498,7 +498,7 @@ const Sidebar = ({ children, applyPageName }) => {
                   </button>
                 </Link>
 
-                <Link href="/Payroll/payrolldashboard">
+                <Link href="/Payroll/FinalPayrollApproval">
                   <button
                     className={getSubStyle(74)}
                     onClick={updateActiveMenu.bind(this, {
@@ -511,7 +511,7 @@ const Sidebar = ({ children, applyPageName }) => {
                   </button>
                 </Link>
 
-                <Link href="/Payroll/RunFinalPayroll">
+                <Link href="/Payroll/FinalPayrollDetails">
                   <button
                     className={getSubStyle(75)}
                     onClick={updateActiveMenu.bind(this, {
@@ -524,7 +524,7 @@ const Sidebar = ({ children, applyPageName }) => {
                   </button>
                 </Link>
 
-                <Link href="/Payroll/bankadvicelist">
+                <Link href="/Payroll/BankAdviceList">
                   <button
                     className={getSubStyle(76)}
                     onClick={updateActiveMenu.bind(this, {
@@ -536,7 +536,7 @@ const Sidebar = ({ children, applyPageName }) => {
                     Bank advice list
                   </button>
                 </Link>
-                <Link href="/Payroll/employmentjobhistory">
+                <Link href="/Payroll/PayrollYTD">
                   <button
                     className={getSubStyle(77)}
                     onClick={updateActiveMenu.bind(this, {
@@ -558,7 +558,7 @@ const Sidebar = ({ children, applyPageName }) => {
             <hr></hr>
             <button className={styles.sidemenu} onClick={toggleCompanyMenu}>
               <RiSettings4Line style={customStyles.icons} />
-              Company 
+              Company
             </button>
             {displayComapnay && (
               <div>
@@ -1140,7 +1140,7 @@ const Sidebar = ({ children, applyPageName }) => {
                     <TbReportAnalytics
                       style={customStyles.icons}
                     />
-                  YTD Reports
+                    YTD Reports
                   </button>
                 </Link>
                 <Link href="/Reports/payslipreport">
@@ -1154,7 +1154,7 @@ const Sidebar = ({ children, applyPageName }) => {
                     <TbReport
                       style={customStyles.icons}
                     />
-                 Payslip
+                    Payslip
                   </button>
                 </Link>
               </div>
@@ -1189,7 +1189,7 @@ const Sidebar = ({ children, applyPageName }) => {
           </button>
         </Link>
       </div>
-     
+
     </div>
   );
 };
