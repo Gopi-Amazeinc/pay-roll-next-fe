@@ -3,7 +3,7 @@ import Layout from '@/components/Layout/index.js';
 import OTRateDash from '../../../components/Dashboard/Masters/OtMaster/index'
 function index() {
   return (
-    <OTRateDash></OTRateDash>
+   <Layout> <OTRateDash></OTRateDash></Layout>
   )
 }
 
