@@ -1,7 +1,6 @@
 import Layout from "@/components/layout/index"
 import React, { useEffect, useState } from 'react'
 import Link from "next/link"
-import Layout from "@/components/layout/layout"
 
 function Appliedloans() {
     const [newrequest, setNewRequest] = useState(false)
