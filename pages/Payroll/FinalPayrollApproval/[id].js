@@ -3,9 +3,7 @@ import Layout from '@/components/Layout/index.js';
 
 const ID = () => {
     return (
-        <Layout>
-
-        </Layout>
+        <div>ID</div>
     )
 }
 
