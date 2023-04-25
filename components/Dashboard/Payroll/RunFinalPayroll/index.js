@@ -1,4 +1,3 @@
-import Layout from '@/components/Layout/index'
 import React from 'react'
 import { Button, Card, Collapse } from "reactstrap";
 import { useEffect, useState } from 'react';
@@ -99,177 +98,176 @@ const RunFinalPayroll = () => {
     }
 
     return (
-        <Layout>
-            <div>
-                <br></br>
-                <br></br>
-                <br></br>
-                <div id={runpayroll.card} className="row card card1">
-                    <form>
-                        <div className="row">
-                            <div className="col-lg-3">
-                                <p>Select Paycode </p>
-                                <div className="dropdown">
-                                    <select id="PayCode" name="PayCode" className="form-select form-select-sm" {...register("PayCode", { required: true })}>
-                                        <option value="" disabled="">
-                                            Select Paycode </option>
-                                        {
-                                            paycode.map((data, index) => {
-                                                return (
-                                                    <option value={data.payCode} key={data.id}>{data.payCode}</option>
-                                                )
-                                            })
-                                        }
-                                    </select>
-                                </div>
-                            </div>
-                            <div className='col-lg-1'></div>
-                            <div className="col-lg-2 mt-3">
-                                <br />
-                                <Button
-                                    color="primary"
-                                    type="button"
-                                    id="collapseExample"
-                                    onClick={() => {
-                                        setCollapseOpen(!collapseOpen);
-                                        handleButtonClick();
-                                    }}
-                                >
-                                    FETCH EMPLOYEES
-                                </Button>
-                            </div>
-                            <div className="col-lg-2">
-                                <p >Search <br ></br></p>
-                                <input placeholder="Search" type="text" className="form-control form-control-sm"></input>
-                            </div>
-                            <div className="col-lg-2">
-                                <p >Select Position </p>
-                                <div className="dropdown">
-                                    <select id="Year" name="Year" className="form-control form-control-sm ">
-                                        {/* <br ></br> */}
-                                        <option value="Select" style={{ color: "#0C275A" }} disabled="">Select Position
-                                        </option>
-                                        {
-                                            position.map((data, index) => {
-                                                return (
-                                                    <option value={data.id} key={data.id}>{data.short}</option>
-                                                )
-                                            })
-                                        }
-                                    </select>
-                                </div>
-                            </div>
-                            <div className="col-lg-2">
-                                <p >Select Department </p>
-                                <div className="dropdown">
-                                    <select id="Year" name="Year" className="form-select form-select-sm ">
-                                        {/* <br ></br> */}
-                                        <option value="Select" style={{ color: " #0C275A" }} disabled="">Select Department
-                                        </option>
-                                        {
-                                            department.map((data, index) => {
-                                                return (
-                                                    <option value={data.id} key={data.id}>{data.department_name}</option>
-                                                )
-                                            })
-                                        }
-                                    </select>
-                                </div>
+
+        <div>
+            <br></br>
+            <br></br>
+            <br></br>
+            <div id={runpayroll.card} className="row card card1">
+                <form>
+                    <div className="row">
+                        <div className="col-lg-3">
+                            <p>Select Paycode </p>
+                            <div className="dropdown">
+                                <select id="PayCode" name="PayCode" className="form-select form-select-sm" {...register("PayCode", { required: true })}>
+                                    <option value="" disabled="">
+                                        Select Paycode </option>
+                                    {
+                                        paycode.map((data, index) => {
+                                            return (
+                                                <option value={data.payCode} key={data.id}>{data.payCode}</option>
+                                            )
+                                        })
+                                    }
+                                </select>
                             </div>
                         </div>
-                    </form>
+                        <div className='col-lg-1'></div>
+                        <div className="col-lg-2 mt-3">
+                            <br />
+                            <Button
+                                color="primary"
+                                type="button"
+                                id="collapseExample"
+                                onClick={() => {
+                                    setCollapseOpen(!collapseOpen);
+                                    handleButtonClick();
+                                }}
+                            >
+                                FETCH EMPLOYEES
+                            </Button>
+                        </div>
+                        <div className="col-lg-2">
+                            <p >Search <br ></br></p>
+                            <input placeholder="Search" type="text" className="form-control form-control-sm"></input>
+                        </div>
+                        <div className="col-lg-2">
+                            <p >Select Position </p>
+                            <div className="dropdown">
+                                <select id="Year" name="Year" className="form-control form-control-sm ">
+                                    {/* <br ></br> */}
+                                    <option value="Select" style={{ color: "#0C275A" }} disabled="">Select Position
+                                    </option>
+                                    {
+                                        position.map((data, index) => {
+                                            return (
+                                                <option value={data.id} key={data.id}>{data.short}</option>
+                                            )
+                                        })
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                        <div className="col-lg-2">
+                            <p >Select Department </p>
+                            <div className="dropdown">
+                                <select id="Year" name="Year" className="form-select form-select-sm ">
+                                    {/* <br ></br> */}
+                                    <option value="Select" style={{ color: " #0C275A" }} disabled="">Select Department
+                                    </option>
+                                    {
+                                        department.map((data, index) => {
+                                            return (
+                                                <option value={data.id} key={data.id}>{data.department_name}</option>
+                                            )
+                                        })
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="row">
+                <div className="col-lg-2">
                 </div>
-                <div class="row">
-                    <div className="col-lg-2">
-                    </div>
-                    <div className="col-lg-2">
-                    </div>
-                    <div className="col-lg-2">
-                        <br ></br>
-                        {
-                            runPayrollData && (
-                                <button type="button" id="btn_button" className="form-control CancelBTN" style={{ width: "70%" }}>Run Payroll</button>
-                            )
-                        }
-                    </div>
+                <div className="col-lg-2">
                 </div>
-                <br ></br>
-                <div className="row">
-                    <div className="col-lg-4">
-                    </div>
-                    <div className="col-lg-5">
-                    </div>
-                    <div className="col-lg-3">
-                    </div>
-                </div>
-                <div id="employee1" className="row row" style={{ height: "500px" }}><div className="col-lg-12">
-                    <Collapse isOpen={collapseOpen}>
-                        <table id="downloadaplication" className="table table-bordered fonttxt" style={{ height: "300px" }}>
-                            <thead className='bg-info text-white ' >
-                                <tr >
-                                    <th >
-                                        <input type="checkbox" onClick={handleRunpayrolldata} ></input>
-                                    </th>
-                                    <th >Employee ID</th>
-                                    <th >Employee Name</th>
-                                    <th>Position</th>
-                                    <th>Department</th>
-                                    <th >Email</th>
-                                    <th >Date Of Joining</th>
-                                    <th >Manager</th>
-                                </tr>
-                            </thead>
-                            <tbody >
-                                {
-                                    dashboard.map((data, index) => {
-                                        return (
-                                            <tr className="text-dark" key={index}>
-                                                <td ><input type='checkbox' onClick={handleRunpayrolldata} onChange={handlePayrollData.bind(this, data)} /></td>
-                                                <td>{data.employeID}</td>
-                                                <td>{data.name}</td>
-                                                <td>{data.role}</td>
-                                                <td>{data.department_name}</td>
-                                                <td>{data.emailID}</td>
-                                                <td>{data.joiningDate}</td>
-                                                <td>{data.supervisor}</td>
-                                            </tr>
-                                        )
-                                    })
-                                }
-                            </tbody>
-                        </table> </Collapse>
-                </div>
-                    <div className="text-right">
-                        <br></br>
-                    </div>
-                </div>
-                <br ></br><br ></br>
-                <div id="employee" className="row rowwidth collapse" >
-                    <div className="col-lg-12">
-                        <table id="downloadaplication" className="table table-bordered fonttxt" style={{ height: "300px" }}><thead ><tr ><th >
-                            <input type="checkbox">
-                            </input>
-                        </th>
-                            <th >Employee Id</th>
-                            <th >Employee Name</th>
-                            <th >Department</th>
-                            <th >Position</th>
-                            <th >Email</th>
-                            <th >Date Of Joining</th>
-                            <th >Manager</th>
-                        </tr>
-                        </thead>
-                            <tbody >
-
-                            </tbody>
-                        </table>
-                    </div>
-                    <div className="text-right">
-                        <br ></br>
-                    </div>
+                <div className="col-lg-2">
+                    <br ></br>
+                    {
+                        runPayrollData && (
+                            <button type="button" id="btn_button" className="form-control CancelBTN" style={{ width: "70%" }}>Run Payroll</button>
+                        )
+                    }
                 </div>
             </div>
-        </Layout>
+            <br ></br>
+            <div className="row">
+                <div className="col-lg-4">
+                </div>
+                <div className="col-lg-5">
+                </div>
+                <div className="col-lg-3">
+                </div>
+            </div>
+            <div id="employee1" className="row row" style={{ height: "500px" }}><div className="col-lg-12">
+                <Collapse isOpen={collapseOpen}>
+                    <table id="downloadaplication" className="table table-bordered fonttxt" style={{ height: "300px" }}>
+                        <thead className='bg-info text-white ' >
+                            <tr >
+                                <th >
+                                    <input type="checkbox" onClick={handleRunpayrolldata} ></input>
+                                </th>
+                                <th >Employee ID</th>
+                                <th >Employee Name</th>
+                                <th>Position</th>
+                                <th>Department</th>
+                                <th >Email</th>
+                                <th >Date Of Joining</th>
+                                <th >Manager</th>
+                            </tr>
+                        </thead>
+                        <tbody >
+                            {
+                                dashboard.map((data, index) => {
+                                    return (
+                                        <tr className="text-dark" key={index}>
+                                            <td ><input type='checkbox' onClick={handleRunpayrolldata} onChange={handlePayrollData.bind(this, data)} /></td>
+                                            <td>{data.employeID}</td>
+                                            <td>{data.name}</td>
+                                            <td>{data.role}</td>
+                                            <td>{data.department_name}</td>
+                                            <td>{data.emailID}</td>
+                                            <td>{data.joiningDate}</td>
+                                            <td>{data.supervisor}</td>
+                                        </tr>
+                                    )
+                                })
+                            }
+                        </tbody>
+                    </table> </Collapse>
+            </div>
+                <div className="text-right">
+                    <br></br>
+                </div>
+            </div>
+            <br ></br><br ></br>
+            <div id="employee" className="row rowwidth collapse" >
+                <div className="col-lg-12">
+                    <table id="downloadaplication" className="table table-bordered fonttxt" style={{ height: "300px" }}><thead ><tr ><th >
+                        <input type="checkbox">
+                        </input>
+                    </th>
+                        <th >Employee Id</th>
+                        <th >Employee Name</th>
+                        <th >Department</th>
+                        <th >Position</th>
+                        <th >Email</th>
+                        <th >Date Of Joining</th>
+                        <th >Manager</th>
+                    </tr>
+                    </thead>
+                        <tbody >
+
+                        </tbody>
+                    </table>
+                </div>
+                <div className="text-right">
+                    <br ></br>
+                </div>
+            </div>
+        </div>
     )
 }
 
