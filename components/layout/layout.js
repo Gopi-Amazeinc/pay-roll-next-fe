@@ -24,7 +24,7 @@ const Index = ({ children }) => {
     // if (pn) {
     //     setPageName(pn);
     // }
-  }, [1]);
+  }, []);
 
   const login = () => {
     setILogin("yes");

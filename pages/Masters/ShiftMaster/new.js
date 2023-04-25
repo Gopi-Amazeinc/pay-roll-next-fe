@@ -25,7 +25,7 @@ function ShiftMasterForm() {
          }
       }
       getShiftList();
-   }, [1]);
+   }, []);
 
 
    function clearForm(otData = null) {

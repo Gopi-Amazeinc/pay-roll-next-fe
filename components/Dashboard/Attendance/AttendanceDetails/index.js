@@ -35,7 +35,7 @@ const AttendenceDetails = () => {
       // }
     }
     getAttendenceByID();
-  }, [1]);
+  }, []);
 
   return (
 

@@ -15,21 +15,21 @@ export default function SubsidaryMasterForm() {
 
     const [actionType, setActionType] = useState("insert");
 
-    useEffect(() => {
-        async function GetSubsidaryMaster() {
-            const id = sessionStorage.getItem("id");
-            if (id) {
-                // This API is used to fetch the data from GSubsidaryMaster based on id 
-                const response = await axios.get(hostURL + "Master/GetSubsidaryMasterByID?ID=" + id);
-                clearForm(response.data[0])
-            }
-            else {
-                clearForm();
-            }
-        }
+    useEffect(() => {        
         GetSubsidaryMaster();
+    }, []);
 
-    }, [1]);
+    async function GetSubsidaryMaster() {
+        const id = sessionStorage.getItem("id");
+        if (id) {
+            // This API is used to fetch the data from GSubsidaryMaster based on id 
+            const response = await axios.get(hostURL + "Master/GetSubsidaryMasterByID?ID=" + id);
+            clearForm(response.data[0])
+        }
+        else {
+            clearForm();
+        }
+    }
 
     function clearForm(userData = null) {
         let details = {
