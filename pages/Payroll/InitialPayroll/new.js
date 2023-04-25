@@ -37,7 +37,7 @@ const InitialPayrollForm = () => {
             setDepartment(res.data);
         }
         getData()
-    }, [1]);
+    }, []);
 
     function handleData(data) {
         if (watch("PayCode")) {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from 'react-hook-form';
 import Layout from '@/components/layout/layout.js';
-import Styles from "../../styles/employmentJobHistory.module.css";
+import Styles from "../../../styles/employmentJobHistory.module.css";
 import axios from "axios";
 import Link from "next/link";
 import Swal from "sweetalert2";
@@ -82,7 +82,7 @@ const PositionMasterDetails = () => {
             }
         }
         getPositionMasterbyID();
-    }, [1]);
+    }, []);
 
     return (
         <Layout>
@@ -143,7 +143,7 @@ const PositionMasterDetails = () => {
                                         </div>
                                         <div className="col-lg-2">
 
-                                            <Link href="/Masters/positionmasterdashboard"> <button id={Styles.actionBtn} tabindex="0">CANCEL</button></Link>
+                                            <Link href="/Masters/PositionMasteR"> <button id={Styles.actionBtn} tabindex="0">CANCEL</button></Link>
                                         </div>
                                         <div className="col-lg-2">
                                             {actionType == "insert" && (
