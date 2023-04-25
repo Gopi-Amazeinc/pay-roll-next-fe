@@ -16,9 +16,17 @@ const AttendenceDetails = () => {
       const id = sessionStorage.getItem("id");
       if (id) {
         let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-        let res = await axios.get(
-          hostURL + "HR/GetAttendanceByEmployeeID?ID=" + id  // this Api is used for get the data by id  for updating exact value
-        );
+        let res = await axios.get(hostURL + "HR/GetAttendanceByEmployeeID",
+          {
+            params: {
+              userID: userID,
+              SDate: SDate,
+              EDate: EDate
+            }
+          });
+        // let res = await axios.get(
+        //   hostURL + "HR/GetAttendanceByEmployeeID?ID=" + id  // this Api is used for get the data by id  for updating exact value
+        // );
         setAttendence(res.data)
         clearForm(res.data[0]);
       }
@@ -27,7 +35,7 @@ const AttendenceDetails = () => {
       // }
     }
     getAttendenceByID();
-  }, [1]);
+  }, []);
 
   return (
 

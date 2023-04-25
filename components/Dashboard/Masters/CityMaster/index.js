@@ -18,7 +18,7 @@ function CityMasterDash() {
 
   useEffect(() => {
     getCityMaster();
-  }, [1]);
+  }, []);
 
   const getCityMasterData = (data) => {
     sessionStorage.setItem("id", data.id);

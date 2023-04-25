@@ -31,7 +31,7 @@ const BarangayMasterForm = () => {
       setCityData(res.data);
     }
     getData();
-  }, [1]);
+  }, []);
 
   async function onSubmit(data) {
     if (data) {

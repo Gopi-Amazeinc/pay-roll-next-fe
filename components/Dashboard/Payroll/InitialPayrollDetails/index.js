@@ -126,9 +126,9 @@ const InitialPayrollDetails = () => {
                 </div>
 
                 <div className='col-lg-12'>
-                    <table className='table table-bordered mt-4 text-center table-striped '>
+                    <table style={{ width: "80%" }} className='table table-bordered mt-4 text-cente table-smr table-striped '>
                         <thead>
-                            <tr >
+                            <tr className='tr' >
                                 <th className='text-white'>Select</th>
                                 <th className='text-white'>Employee ID</th>
                                 <th className='text-white'>Staff ID</th>
@@ -156,7 +156,7 @@ const InitialPayrollDetails = () => {
                                             <td>{data.baseSal}</td>
                                             <td>{data.componentValue}</td>
                                             <td>
-                                                <button className='btn btn-primary' onClick={openModal}>View Component Details</button>
+                                                <button className='submit-button ' onClick={openModal}>View Component Details</button>
                                             </td>
                                         </tr>
                                     )
@@ -181,7 +181,7 @@ const InitialPayrollDetails = () => {
                     <div className='modalbody'>
                         <div className="row">
                             <div className='col-lg-12'>
-                                <table className='table table-bordered mt-4 text-center table-striped ' >
+                                <table className='table  table-bordered mt-4 text-center table-striped ' >
                                     <thead>
                                         <tr >
                                             <th className='text-white'>Component Name</th>

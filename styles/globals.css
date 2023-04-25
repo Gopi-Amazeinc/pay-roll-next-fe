@@ -293,3 +293,19 @@
 thead{
   background-color: #02cfff;
 }
+
+.toggleButton {
+  color: #3247d5;
+  border: 1px solid #3247d5;
+  text-transform: uppercase;
+  font-weight: 700;
+  font-size: 12px;
+  cursor: pointer;
+  line-height: 20px;
+  background-color: white;
+}
+
+.toggleButton:active {
+  color: white;
+  background-color: #3247d5;
+}

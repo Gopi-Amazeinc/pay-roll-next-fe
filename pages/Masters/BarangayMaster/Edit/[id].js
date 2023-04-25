@@ -20,31 +20,32 @@ const BarangayEdit = () => {
   const [provincedata, setProvinceData] = useState([]);
   const [citydata, setCityData] = useState([]);
 
-  useEffect(() => {
-    async function getData() {
-      let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-      // This API is used to fetch the data from CountryType table
-      let res = await axios.get(hostURL + "Master/GetCountryType");
-      setCountryData(res.data);
-      // This API is used to fetch the data from StateType table
-      res = await axios.get(hostURL + "Master/GetStateType");
-      setProvinceData(res.data);
-      // This API is used to fetch the data from CityType table
-      res = await axios.get(hostURL + "Master/GetCityType");
-      setCityData(res.data);
-      if (id) {
-        // This API is used to fetch the data from BarangayMaster ByID table
-        let response = await axios.get(
-          hostURL + "Master/GetBarangayMasterByID?ID=" + id
-        );
-        clearForm(response.data[0]);
-        console.log(response.data);
-      } else {
-        clearForm();
-      }
-    }
+  useEffect(() => {   
     getData();
-  }, [1]);
+  }, []);
+
+  async function getData() {
+    let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+    // This API is used to fetch the data from CountryType table
+    let res = await axios.get(hostURL + "Master/GetCountryType");
+    setCountryData(res.data);
+    // This API is used to fetch the data from StateType table
+    res = await axios.get(hostURL + "Master/GetStateType");
+    setProvinceData(res.data);
+    // This API is used to fetch the data from CityType table
+    res = await axios.get(hostURL + "Master/GetCityType");
+    setCityData(res.data);
+    // if (id) {
+    //   // This API is used to fetch the data from BarangayMaster ByID table
+    //   let response = await axios.get(
+    //     hostURL + "Master/GetBarangayMasterByID?ID=" + id
+    //   );
+    //   clearForm(response.data[0]);
+    //   console.log(response.data);
+    // } else {
+    //   clearForm();
+    // }
+  }
 
   function clearForm(userData = null) {
     let details = {
