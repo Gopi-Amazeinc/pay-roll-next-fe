@@ -12,24 +12,25 @@ const InitialPayrollDetails = () => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [department, setDepartment] = useState([]);
 
+    const getData = async () => {
+        let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+        // This API is used for fetch the Departmnent data for Dashboard and  Dropdown
+        let res = await axios.get(hostURL + "Payroll/GetPreliminarySalary");
+        setPreliminarySalary(res.data);
+        // This API is used for fetch the Departmnent data for Dropdown
+        res = await axios.get(hostURL + "Master/GetDepartmentMaster");
+        setDepartment(res.data);
+    }
+
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
-        async function getData() {
-            let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-            // This API is used for fetch the Departmnent data for Dashboard and  Dropdown
-            let res = await axios.get(hostURL + "Payroll/GetPreliminarySalary");
-            setPreliminarySalary(res.data);
-            // This API is used for fetch the Departmnent data for Dropdown
-            res = await axios.get(hostURL + "Master/GetDepartmentMaster");
-            setDepartment(res.data);
-        }
-        getData()
+        getData();
     }, []);
     const handleData = (data) => {
         // let res = preliminarySalary.filter(data.staffID);
         // res = preliminarySalary.filter(data.endDate);
         // console.log(Object.values(res.data));
-        handleDelete(data.staffID, data.endDate);
+        handleDelete(data.staffID, data.endDateFormated);
     }
 
     const customStyles = {
@@ -54,16 +55,18 @@ const InitialPayrollDetails = () => {
         setIsOpen(false);
     }
 
-    const handleDelete = async (staffID, endDate) => {
+    const handleDelete = async (staffID, endDateFormated) => {
         try {
+            debugger;
             let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
             // This API is used to delete the dashboard data based on StaffID,EndDate
-            const res = await axios.get(hostURL + `Master/DeleteShiftMaster?staffID=${staffID}&Enddate=${endDate}`);
+            const res = await axios.get(hostURL + `Payroll/DeletePreliminary?staffID=${staffID}&Enddate=${endDateFormated}`);
             Swal.fire({
                 icon: "success",
                 title: "Hurray..",
                 text: "Data was Deleted...!",
             });
+            console.log(res.data);
             getData();
         } catch (error) {
             console.error(error);
@@ -119,13 +122,13 @@ const InitialPayrollDetails = () => {
                     <h4 className='Heading' >Employees in selected Period</h4>
                 </div>
                 <div className='col-lg-3'>
-                    <button type='button' className='EditDelteBTN' onClick={() => handleDelete.bind(this, data)}>Delete</button>
+                    <button type='button' className='EditDelteBTN' onClick={() => handleDelete.bind(this)}>Delete</button>
                 </div>
 
                 <div className='col-lg-12'>
-                    <table className='table table-bordered mt-4 text-center table-striped '>
+                    <table style={{ width: "80%" }} className='table table-bordered mt-4 text-cente table-smr table-striped '>
                         <thead>
-                            <tr >
+                            <tr className='tr' >
                                 <th className='text-white'>Select</th>
                                 <th className='text-white'>Employee ID</th>
                                 <th className='text-white'>Staff ID</th>
@@ -148,12 +151,12 @@ const InitialPayrollDetails = () => {
                                             <td>{data.employeID}</td>
                                             <td>{data.staffID}</td>
                                             <td>{data.name}</td>
-                                            <td>{data.endDate}</td>
+                                            <td>{data.endDateFormated}</td>
                                             <td>{data.department_name}</td>
                                             <td>{data.baseSal}</td>
                                             <td>{data.componentValue}</td>
                                             <td>
-                                                <button className='btn btn-primary' onClick={openModal}>View Component Details</button>
+                                                <button className='submit-button ' onClick={openModal}>View Component Details</button>
                                             </td>
                                         </tr>
                                     )
@@ -178,7 +181,7 @@ const InitialPayrollDetails = () => {
                     <div className='modalbody'>
                         <div className="row">
                             <div className='col-lg-12'>
-                                <table className='table table-bordered mt-4 text-center table-striped ' >
+                                <table className='table  table-bordered mt-4 text-center table-striped ' >
                                     <thead>
                                         <tr >
                                             <th className='text-white'>Component Name</th>

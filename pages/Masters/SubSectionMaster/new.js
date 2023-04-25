@@ -29,7 +29,7 @@ const SubSectionMasterForm = () => {
       }
     };
     getSubSectionMasterList();
-  }, [1]);
+  }, []);
 
   const onSubmit = async (data) => {
     debugger;

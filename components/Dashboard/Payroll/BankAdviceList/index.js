@@ -16,7 +16,7 @@ const BankAdviceList = () => {
             setDashboardData(res.data);
         }
         getData()
-    }, [1]);
+    }, []);
 
     const customStyles = {
         content: {

@@ -38,26 +38,26 @@ function FinalPayrollApproval() {
                             <div className="col-lg-4"></div>
                             <div className="col-lg-4"></div>
                             <div className="col-lg-3">
-                                <br /><Link href="/Payroll/runpayroll"><button className="form-control CancelBTN" style={{ width: "80%" }}>New Payroll</button></Link>
+                                <br /><Link style={{ textDecoration: "none" }} href="/Payroll/runpayroll"><button className="newPayrollBtn" style={{ width: "80%" }}>New Payroll</button></Link>
                             </div>
                         </div>
                         <br />
                         <div className="row">
                             <br />
                             <div className="col-lg-4">
-                                <p className="Heading1">Excecuted Payroll Runs For Approval </p>
+                                <p className="Heading">Excecuted Payroll Runs For Approval </p>
                             </div>
                             <div className="col-lg-5"></div>
                             <div className="col-lg-3">
-                                <p className="Heading1">Total Payroll Runs: 1</p>
+                                <p className="Heading">Total Payroll Runs: 1</p>
                             </div>
                         </div>
                         <div className="row">
                             <br />
                             <div className='col-lg-4 mx-2'><br />
                                 <div classeName='btn-group'>
-                                    <button onClick={toggleNewRequest} className='btn ' >Normal Payroll</button>
-                                    <button onClick={toggleApproved} className='btn '  >Final Payroll</button>
+                                    <button onClick={toggleNewRequest} className='toggleButton' >Normal Payroll</button>
+                                    <button onClick={toggleApproved} className='toggleButton' >Final Payroll</button>
 
                                 </div>
                             </div><br />
@@ -72,9 +72,9 @@ function FinalPayrollApproval() {
                                     <div id="tab1">
                                         <div className="row">
                                             <div className="col-lg-12">
-                                                <table className="table">
+                                                <table className="table table-sm">
                                                     <thead>
-                                                        <tr className="newFont">
+                                                        <tr className="tr text-white">
                                                             <th>Year</th>
                                                             <th>Month</th>
                                                             <th>Period</th>
