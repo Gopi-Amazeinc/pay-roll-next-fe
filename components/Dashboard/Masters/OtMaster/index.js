@@ -70,7 +70,7 @@ function OTRateDash() {
                     <div className='row mt-4'>
                         <div className='col-lg-10'></div>
                         <div className='col-lg-2'>
-                        <Link  href="/Masters/otmaster">  <button className='AddButton' onClick={clearData.bind(this)}>  <AiOutlinePlusCircle  size={18} /> ADD New</button></Link>
+                        <Link  href="/Masters/OtMaster/new">  <button className='AddButton' onClick={clearData.bind(this)}>  <AiOutlinePlusCircle  size={18} /> ADD New</button></Link>
                         </div>
                     </div>
 
@@ -98,7 +98,7 @@ function OTRateDash() {
                                                     <td>{data.nd}</td>
                                                     <td>{data.ndot}</td>
                                                     <td>
-                                                        <Link href="/Masters/otmaster">
+                                                        <Link href="/Masters/OtMaster/new">
                                                             <button className='edit-btn' onClick={getData.bind(this, data)}>Edit</button>
                                                         </Link>
                                                         &nbsp; &nbsp; &nbsp;

@@ -70,7 +70,7 @@ export default function SubsidaryMasterDash() {
                     <div className='col-lg-9'></div>
                     <div className='col-lg-2'>
 
-                        <Link  href="/Masters/subsidarymasterform"> <button className='AddButton' onClick={clearData.bind(this)}><AiOutlinePlusCircle  size={18} /> ADD New</button></Link>
+                        <Link  href="/Masters/SubSidaryMaster/new"> <button className='AddButton' onClick={clearData.bind(this)}><AiOutlinePlusCircle  size={18} /> ADD New</button></Link>
 
                     </div>
                     <div className='col-lg-1'></div>
