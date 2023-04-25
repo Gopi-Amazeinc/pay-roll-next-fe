@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
-import Layout from '@/components/Layout/index.js';
+import Layout from '@/components/layout/layout.js';
 import { useEffect, useState } from "react";
 import Styles from '../../styles/statemasterdashboard.module.css'
 import axios from "axios";

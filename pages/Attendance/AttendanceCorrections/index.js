@@ -1,9 +1,11 @@
-import AttendanceDetails from '@/components/Dashboard/Attendance/AttendanceDetails/Appliedloans/index';
-const Index = () => {
+import React from 'react'
+import AttendanceCorrection from '@/components/Dashboard/Attendance/AttendanceCorrections/index';
+
+const AttendanceCorrectionForm = () => {
     return (
         <div>
-            <AttendanceDetails></AttendanceDetails>
+            <AttendanceCorrection></AttendanceCorrection>
         </div>
     )
 }
-export default Index;
+export default AttendanceCorrectionForm;

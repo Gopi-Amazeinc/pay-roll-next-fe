@@ -1,5 +1,5 @@
 import React from 'react'
-import Layout from '@/components/Layout/index.js';
+import Layout from '@/components/layout/layout.js';
 import SubSectionMaster from '../../../components/Dashboard/Masters/SubSectionMaster/index'
 function index() {
   return (
