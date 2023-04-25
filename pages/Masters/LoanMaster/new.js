@@ -1,5 +1,5 @@
 import React from 'react'
-import Styles from '../LoanMaster/LoanMaster.module.css'
+import Styles from '../../../styles/LoanMasterForm.module.css'
 import { useForm } from 'react-hook-form';
 import Link from 'next/link';
 import Layout from '@/components/layout/layout.js';
@@ -117,7 +117,7 @@ function LoanMasterForm() {
               <div className="row">
                 <div className="col-lg-7"></div>
                 <div className="col-lg-2">
-                  <Link href="/Masters/loanmasterdashboard">
+                  <Link href="/Masters/LoanMaster">
                     <button className={Styles.button}>
                       Cancel
                     </button>

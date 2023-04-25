@@ -90,7 +90,7 @@ const PositionMasterDash = () => {
           <div className="col-lg-2"></div>
           <div className="col-lg-2">
 
-            <Link href="/Masters/positionmasterform"><button onClick={clearFormData.bind(this)}
+            <Link href="/Masters/PositionMaster/new"><button onClick={clearFormData.bind(this)}
 
               className="btn btn-primary btn-sm  shadow-lg AddButton"
               
@@ -119,7 +119,7 @@ const PositionMasterDash = () => {
                       <td>
                         <div className="row">
                           <div className="col-lg-2">
-                            <Link href="/Masters/positionmasterform">
+                            <Link href="/Masters/PositionMaster/new">
                               <button className="edit-btn" onClick={getData.bind(this, data)}>Edit</button>
                             </Link>
                           </div>
