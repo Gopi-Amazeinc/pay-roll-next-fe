@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from 'react-hook-form';
-import Layout from '@/components/Layout/index.js';
+import Layout from '@/components/layout/layout.js';
 import Styles from "../../styles/employmentJobHistory.module.css";
 import axios from "axios";
 import Link from "next/link";

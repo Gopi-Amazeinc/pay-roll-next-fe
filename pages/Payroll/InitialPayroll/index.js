@@ -1,7 +1,5 @@
-import React, { useEffect, useState } from 'react'
-import Link from 'next/link'
-import axios from 'axios'
-import InitialPayroll from '@/components/Dashboard/Payroll/InitialPayroll'
+import React from 'react'
+import Layout from '@/components/layout'
 const index = () => {
     let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL
 
