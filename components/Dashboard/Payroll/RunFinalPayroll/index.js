@@ -103,7 +103,7 @@ const RunFinalPayroll = () => {
             <br></br>
             <br></br>
             <br></br>
-            <div id={runpayroll.card} className="row card card1">
+            <div className="row card card1">
                 <form>
                     <div className="row">
                         <div className="col-lg-3">

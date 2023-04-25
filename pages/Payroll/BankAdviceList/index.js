@@ -1,9 +1,9 @@
 import React from 'react'
-import Layout from '@/components/Layout/index'
-import BankAdviceListDashboard from '@/components/Dashboard/Payroll/BankAdviceList'
+import Layout from '@/components/layout/layout'
+import BankAdviceList from '@/components/Dashboard/Payroll/BankAdviceList'
 
 
-const BankAdviceList = () => {
+const Index = () => {
     return (
         <Layout>
             <BankAdviceListDashboard></BankAdviceListDashboard>
@@ -11,4 +11,4 @@ const BankAdviceList = () => {
     )
 }
 
-export default BankAdviceList
+export default Index

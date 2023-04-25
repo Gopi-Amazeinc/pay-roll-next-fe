@@ -1,13 +1,13 @@
 import React from 'react'
-import Layout from '@/components/Layout/index'
+import Layout from '@/components/layout/layout'
+import FinalPayrollDetails from '@/components/Dashboard/Payroll/FinalPayrollDetails'
 
-
-const FinalPayrollDetails = () => {
+const Index = () => {
     return (
         <Layout>
-            <div>index</div>
+            <FinalPayrollDetails></FinalPayrollDetails>
         </Layout>
     )
 }
 
-export default FinalPayrollDetails
+export default Index
