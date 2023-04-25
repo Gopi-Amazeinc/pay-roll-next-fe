@@ -1,11 +1,12 @@
 .AddButton {
   width: 85%;
+  height: 150%;
   font-size: 15px;
   cursor: pointer;
   text-transform: uppercase;
   background: #3247d5;
   color: white;
-  border-radius: 10%;
+  border-radius: 25%;
 }
 
 .submit-button {
