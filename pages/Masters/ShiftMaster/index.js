@@ -3,7 +3,7 @@ import Layout from '@/components/Layout/index.js';
 import ShiftMaster from '../../../components/Dashboard/Masters/ShiftMaster/index'
 function index() {
   return (
-    <ShiftMaster></ShiftMaster>
+   <Layout> <ShiftMaster></ShiftMaster></Layout>
   )
 }
 

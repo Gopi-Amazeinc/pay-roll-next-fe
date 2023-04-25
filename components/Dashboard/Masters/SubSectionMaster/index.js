@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React from "react";
-import Styles from "../../styles/SubSectionMaster.module.css";
+
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import Layout from '@/components/Layout/index.js';
 import { useEffect, useState } from "react";
@@ -48,12 +48,12 @@ const SubSectionMaster = () => {
   };
 
   return (
-    <Layout>
+   <div>
       <br />
-      <h5 id={Styles.h5} className="text-primary fw-bold">
+      <h5  className="text-primary fw-bold Heading">
         SubSection Master
       </h5>
-      <div className="card p-3  shadow-lg rounded-4" id={Styles.card}>
+      <div className="card p-3 shadow-lg rounded-4">
         <div className="row">
           <div className="col-lg-1">
             <p>Filter By</p>
@@ -72,14 +72,14 @@ const SubSectionMaster = () => {
       </div>
       <div className="row mt-3">
         <div className="col-lg-7">
-        <p id={Styles.h5} className="text-primary fs-6 mt-3 fw-bold">
+        <p  className="text-primary fs-6 mt-3 fw-bold">
               SHOWING <span>{subsection.length} </span>RESULTS
             </p>
         </div>
         <div className="col-lg-4">
           <Link
-            className="btn btn-primary btn-sm "
-            id={Styles.addButton}
+            className="btn btn-primary AddButton"
+            
             href="/Masters/subsectionmasterform"
             onClick={clearData.bind(this)}
           >
@@ -91,9 +91,9 @@ const SubSectionMaster = () => {
       <br />
       <div className="container-fluid">
         <div className="row ">
-          <table className=" table table-sm  table-bordered " id={Styles.table}>
+          <table className=" table table-sm  table-bordered table">
             <thead>
-              <tr id={Styles.td} className="bg-info">
+              <tr  className="bg-info tr">
                 <th className="text-white">Short</th>
                 <th className="text-white">Description</th>
                 <th className="text-white">Action</th>
@@ -108,7 +108,7 @@ const SubSectionMaster = () => {
                     <td>
                       <Link href="/Masters/subsectionmasterform">
                         <button
-                          id={Styles.actionButton}
+                          className="edit-btn"
                           style={{ fontSize: "12px", marginRight: "5%" }}
                           onClick={getDataByID.bind(this, data)}
                         >
@@ -116,7 +116,7 @@ const SubSectionMaster = () => {
                         </button>
                       </Link>
                       <button
-                        id={Styles.actionButton}
+                        className="edit-btn"
                         style={{ fontSize: "12px" }}
                         onClick={() => handelDelete(data.id)}
                       >
@@ -130,7 +130,7 @@ const SubSectionMaster = () => {
           </table>
         </div>
       </div>
-    </Layout>
+</div>
   );
 };
 

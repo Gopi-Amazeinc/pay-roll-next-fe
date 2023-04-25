@@ -3,7 +3,7 @@ import Layout from '@/components/Layout/index.js';
 import LoanMasterDash from '../../../components/Dashboard/Masters/LoanMaster/index'
 function index() {
   return (
-<LoanMasterDash></LoanMasterDash>
+<Layout><LoanMasterDash></LoanMasterDash></Layout>
   )
 }
 

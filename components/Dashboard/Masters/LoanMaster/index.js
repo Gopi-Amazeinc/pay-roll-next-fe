@@ -64,7 +64,7 @@ const LoanMasterDash = () => {
     });
   };
   return (
-    <Layout>
+    
       <div>
         <br />
         <br />
@@ -158,7 +158,7 @@ const LoanMasterDash = () => {
           </table>
         </div>
       </div>
-    </Layout>
+    
   );
 };
 

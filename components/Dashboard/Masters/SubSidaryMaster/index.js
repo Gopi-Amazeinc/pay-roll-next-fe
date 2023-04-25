@@ -1,5 +1,5 @@
 import React from 'react'
-import Styles from '../../styles/SubsidaryMasterDash.module.css'
+
 import Link from 'next/link'
 import Layout from '@/components/Layout/index.js';
 import { AiOutlinePlusCircle } from 'react-icons/ai'
@@ -48,13 +48,13 @@ export default function SubsidaryMasterDash() {
 
 
     return (
-        <Layout>
+      
             <div>
                 <br /><br />
-                <p id={Styles.p}>SubsidaryMaster</p>
+                <p className='Heading'>SubsidaryMaster</p>
 
 
-                <div className='card shadow-lg p-4 rounded-3' id={Styles.card}>
+                <div className='card shadow-lg p-4 rounded-3' >
                     <div className='row'>
 
                         <div className='col-lg-1'>
@@ -70,7 +70,7 @@ export default function SubsidaryMasterDash() {
                     <div className='col-lg-9'></div>
                     <div className='col-lg-2'>
 
-                        <Link id={Styles.addLink} href="/Masters/subsidarymasterform"> <button id={Styles.addButton} onClick={clearData.bind(this)}><AiOutlinePlusCircle id={Styles.icon} size={18} /> ADD New</button></Link>
+                        <Link  href="/Masters/subsidarymasterform"> <button className='AddButton' onClick={clearData.bind(this)}><AiOutlinePlusCircle  size={18} /> ADD New</button></Link>
 
                     </div>
                     <div className='col-lg-1'></div>
@@ -79,9 +79,9 @@ export default function SubsidaryMasterDash() {
 
                 <div className='row '>
 
-                    <table className=' table   table-bordered mt-3 text-center table-striped table-striped-odd   ' id={Styles.table}>
+                    <table className=' table   table-bordered mt-3 text-center table-striped table-striped-odd   ' >
                         <thead>
-                            <tr id={Styles.tr}>
+                            <tr className='tr'>
                                 <th className='text-white'>Subsidiary Name</th>
                                 <th className='text-white'>Description</th>
                                 <th className='text-white'>Action</th>
@@ -101,11 +101,11 @@ export default function SubsidaryMasterDash() {
 
                                             <td>
                                                 <Link href="/Masters/subsidarymasterform">
-                                                    <button className="btn btn-primary" onClick={getData.bind(this, data)}>Edit</button>
+                                                    <button className="btn btn-primary edit-btn" onClick={getData.bind(this, data)}>Edit</button>
                                                 </Link>
                                                 &nbsp;
 
-                                                <button className="btn btn-danger" onClick={() => handleDelete(data.id)}>Delete</button>
+                                                <button className="btn btn-danger edit-btn" onClick={() => handleDelete(data.id)}>Delete</button>
                                             </td>
 
                                         </tr>
@@ -120,6 +120,6 @@ export default function SubsidaryMasterDash() {
 
 
             </div>
-        </Layout>
+      
     )
 }
