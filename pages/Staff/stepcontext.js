@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Index from './AddStaff/index'
 
 export const multiStepContext = React.createContext();
-const stepcontext = () => {
+const Stepcontext = () => {
     const [currentStep, setStep] = useState(1);
     const [userData, setUserData] = useState([]);
     const [finalData, setFinalData] = useState([]);
@@ -15,4 +15,4 @@ const stepcontext = () => {
   )
 }
 
-export default stepcontext
+export default Stepcontext

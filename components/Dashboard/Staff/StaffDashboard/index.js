@@ -1,5 +1,5 @@
 import React from "react";
-
+import Styles from "../../../../styles/StaffDashboard.module.css"
 function StaffDashbaord() {
   return (
     <div>
@@ -45,7 +45,7 @@ function StaffDashbaord() {
             </div>
 
             <div className="col-lg-3">
-              <button>Export Excel</button>
+              <button type="button" class="btn btn-primary">Export Excel</button>
             </div>
           </div>
         </div>
@@ -53,13 +53,13 @@ function StaffDashbaord() {
         <div>
           <div className="row">
             <div className="col-lg-6">
-              <p>Showing Result</p>
+              <p style={{marginTop:"2%"}}>Showing Result</p>
             </div>
             <div className="col-lg-3">
-              <button  type="button" class="btn btn-primary">ADD STAFF</button>
+              <button  type="button" class="btn btn-primary" style={{marginTop:"5%"}}>ADD STAFF</button>
             </div>
             <div className="col-lg-3">
-              <button  type="button" class="btn btn-primary" >UPLOAD STAFF</button>
+              <button  type="button" class="btn btn-primary" style={{marginTop:"5%"}}>UPLOAD STAFF</button>
             </div>
           </div>
         </div>
@@ -94,7 +94,7 @@ function StaffDashbaord() {
                     <td>Manjan@gmail.com</td>
                     <td>243567</td>
                     <td>
-                      <button>Diseble</button>
+                      <button className={Styles.buttonDE}>Disable</button>
                     </td>
                   </tr>
 
@@ -109,7 +109,7 @@ function StaffDashbaord() {
                     <td>Manjan@gmail.com</td>
                     <td>243567</td>
                     <td>
-                      <button>Diseble</button>
+                      <button className={Styles.buttonDE}>Diseble</button>
                     </td>
                   </tr>
 
@@ -125,7 +125,7 @@ function StaffDashbaord() {
                     <td>Manjan@gmail.com</td>
                     <td>243567</td>
                     <td>
-                      <button>Diseble</button>
+                      <button className={Styles.buttonDE}>Diseble</button>
                     </td>
                   </tr>
                 </tbody>

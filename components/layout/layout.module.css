@@ -9,6 +9,17 @@
     font-weight: 500;
 }
 
+.subsidemenu{
+    background-color: white;
+    color: #6c757d !important;
+    width: 100%;
+    padding: 4% 4% 4% 8%;
+    border: none;
+    text-align: left;
+    font-size: 15px;
+    font-weight: 500;
+}
+
 
 .sidemenuactive {
     background-color: #3a4be9;
@@ -36,6 +47,27 @@
     color: #f3f8ff !important;
     width: 100%;
     padding: 5% 5% 5% 15%;
+    border: none;
+    text-align: left;
+    font-size: 15px;
+    font-weight: 500;
+}
+
+.sidesubofsubmenuactive{
+    background-color: #3a4be9;
+    color: #f3f8ff !important;
+    width: 100%;
+    padding: 3% 3% 3% 16%;
+    border: none;
+    text-align: right;
+    font-size: 15px;
+    font-weight: 500;
+}
+.sidesubofsubmenu{
+    background-color: white;
+    color: #6c757d !important;
+    width: 100%;
+    padding: 5% 5% 5% 16%;
     border: none;
     text-align: left;
     font-size: 15px;
