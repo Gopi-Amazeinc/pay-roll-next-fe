@@ -1,10 +1,10 @@
 import React from "react";
-import citymaster from "../../styles/CityMasterDashboard.module.css";
+import citymaster from "@/styles/CityMasterDashboard.module.css";
 import Link from "next/link";
-import dynamic from "next/dynamic";
 import { useEffect, useState } from "react";
 import axios from 'axios'
 import Swal from "sweetalert2";
+import Layout from '../../../layout/layout'
 
 function CityMasterDash() {
 
@@ -84,7 +84,7 @@ function CityMasterDash() {
 
 
   return (
-    <div>
+    <Layout>
       <div className="container">
         <div className="row">
           <div className="col-lg-6">
@@ -131,7 +131,7 @@ function CityMasterDash() {
             </p>
           </div>
           <div className="col-md-2">
-            <Link href="/Masters/citymasterform">
+            <Link href="/Masters/CityMaster/new">
               <button className={citymaster.button} tabIndex="0" onClick={clearFormData.bind(this)}>
                 Add New
               </button>
@@ -164,7 +164,7 @@ function CityMasterDash() {
                       <td>{data.short}</td>
                       <td>{data.description}</td>
                       <td>
-                        <Link href="/Masters/citymasterform">
+                        <Link href={`/Masters/CityMaster/Edit/${data.id}`}>
                           <button className="btn btn-primary" onClick={getCityMasterData.bind(this, data)}>Edit</button></Link>
                         &nbsp;
                         <button className="btn btn-primary" onClick={() => DeleteCityMaster(data.id)}>Delete{" "}</button>
@@ -176,7 +176,7 @@ function CityMasterDash() {
           </table>
         </div>
       </div>
-    </div>
+    </Layout>
   );
 }
 
