@@ -21,20 +21,22 @@ const Shiftdetails = () => {
         <>
             <Link href="/Attendence/shiftdetails"> <h3> My Weekly Shift</h3></Link>
             <div className='card shadow-lg p-4 rounded-3 mt-4'>
-            <div className='row'>
-                <div className='col-lg-3'>
-                    <p >START DATE <span >*</span></p>
-                    <input type='date' className='form-control form-control-sm' />
+                <div className='row'>
+                    <div className='col-lg-3'>
+                        <p >START DATE <span >*</span></p>
+                        <input type='date' className='form-control form-control-sm' />
+                    </div>
+                    <div className='col-lg-3'>
+                        <p >END DATE <span >*</span></p>
+                        <input type='date' className='form-control form-control-sm' />
+                    </div>
+                    <div className="col-lg-3">
+                        <Link href=''><button>Add Shift Details</button></Link>
+                    </div>
                 </div>
-                <div className='col-lg-3'>
-                    <p >END DATE <span >*</span></p>
-                    <input type='date' className='form-control form-control-sm' />
-                </div>
-                .ol-lg-
-            </div>
             </div>
             <div className='row mt-3'>
-                <table >
+                <table className='table table-striped mt-3'  >
                     <thead>
                         <tr className='bg-info text-white'>
                             <th>START DATE</th>
