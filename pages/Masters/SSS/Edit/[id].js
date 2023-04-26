@@ -1,8 +1,8 @@
 import React from 'react'
-import SSSForm from './new'
+import SSSForm from '../new'
 import axios from 'axios'
 
-const ID = () => {
+const ID = ({ data }) => {
     return (
         <div>
             <SSSForm editData={data}></SSSForm>

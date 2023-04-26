@@ -7,7 +7,7 @@ import Link from "next/link";
 import axios from "axios";
 import Swal from "sweetalert2";
 
-const SubSectionMasterForm = () => {
+const SubSectionMasterForm = ({ editData }) => {
   let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
   const [actionType, setActionType] = useState("insert");
   // form validation rules
@@ -17,32 +17,26 @@ const SubSectionMasterForm = () => {
   // get functions to build form with useForm() hook
   useEffect(() => {
     const getSubSectionMasterList = async () => {
-      debugger;
-      const id = sessionStorage.getItem("id");
-      if (id) {
-        const response = await axios.get(
-          hostURL + "Master/GetSubSectionMasterByID?ID=" + id
-        );
-        clearForm(response.data[0]);
-      } else {
+      if (editData == "") {
         clearForm();
+      } else {
+        clearForm(editData);
       }
     };
     getSubSectionMasterList();
   }, []);
 
   const onSubmit = async (data) => {
-    debugger;
     console.log(data);
     if (actionType == "insert") {
       await axios.post(hostURL + "Master/InsertSubSectionMaster", data);
       Swal.fire("SubSectionMaster Inserted succefully!");
-      location.href = "/Masters/subsectionmaster";
+      location.href = "/Masters/SubSectionMaster";
     } else {
       let res = await axios.post(hostURL + "Master/UpdateSubSectionMaster", data);
       sessionStorage.removeItem("id");
       Swal.fire("SubSectionMaster updated succefully!");
-      location.href = "/Masters/subsectionmaster";
+      location.href = "/Masters/SubSectionMaster";
     }
   };
   const clearForm = (existingData = null) => {

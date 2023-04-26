@@ -109,7 +109,7 @@ export default function ComponentMappingDashboard() {
                       <td>{data.code}</td>
                       <td>{data.componentName}</td>
                       <td>
-                        <Link href="/Settings/componentmapping/new">
+                        <Link href={`/Settings/componentmapping/Edit/${data.id}`}>
                           <button className="btn btn-primary edit-btn" onClick={getData.bind(this, data)} >Edit</button>
                         </Link>
                         &nbsp;

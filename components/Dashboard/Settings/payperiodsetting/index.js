@@ -86,8 +86,8 @@ export default function PayperiodSettingsDash() {
                                         <td>{data.payrollRunType}</td>
                                         <td>{data.comments}</td>
                                         <td>
-                                            <Link href="/Settings/payperiodsetting/new">
-                                                <button className="btn btn-primary edit-btn" onClick={getData.bind(this, data)} >Edit</button>
+                                            <Link href={`/Settings/payperiodsetting/Edit/${data.id}`}>
+                                                <button className="btn btn-primary edit-btn"  >Edit</button>
                                             </Link>
                                             &nbsp;
 
