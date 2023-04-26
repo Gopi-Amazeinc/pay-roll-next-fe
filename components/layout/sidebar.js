@@ -392,7 +392,7 @@ const Sidebar = ({ children, applyPageName }) => {
                 Over Time Details
               </button>
             </Link>
-            <Link href="/Requests/Appliedloans">
+            <Link href="/Requests/Applyloans">
               <button
                 className={getSubStyle(53)}
                 onClick={updateActiveMenu.bind(this, {
