@@ -123,9 +123,9 @@ const Attendancecorrectiondashboard = () => {
             <div className='row mt-3'>
                 <div className='col-lg-4'>
                     <div className='btn-group'>
-                        <button onClick={togglePending} className='btn btn-primary '>Pending</button>
-                        <button onClick={toggleApproved} className='btn btn-primary'>Approved</button>
-                        <button onClick={toggleRejected} className='btn btn-primary'>Rejected</button>
+                        <button onClick={togglePending} className='toggleButton'>Pending</button>
+                        <button onClick={toggleApproved} className='toggleButton'>Approved</button>
+                        <button onClick={toggleRejected} className='toggleButton'>Rejected</button>
                     </div>
                 </div>
             </div>

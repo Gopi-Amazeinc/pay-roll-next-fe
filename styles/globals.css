@@ -306,9 +306,12 @@ thead {
   cursor: pointer;
   line-height: 20px;
   background-color: white;
+  padding: 8px;
+  font-size: 15px;
 }
 
 .toggleButton:focus {
   color: white;
   background-color: #3247d5;
 }
+
