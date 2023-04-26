@@ -125,7 +125,7 @@ function BrandMasterDashboard() {
                                                             <td>{data.short}</td>
                                                             <td>{data.description}</td>
                                                             <td>
-                                                                <Link href="/Masters/brandmasterform">
+                                                                <Link href={`/Masters/BrandMaster/Edit/${data.id}`}>
                                                                     <button
                                                                         className="btn btn-primary"
                                                                         onClick={getBandMasterData.bind(this, data)}
