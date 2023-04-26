@@ -19,7 +19,26 @@ const Shiftdetails = () => {
     }, [])
     return (
         <>
-            <Link href="/Attendence/shiftdetails"> <h3> My Weekly Shift</h3></Link>
+            <div className='row mt-3'>
+                <div className='col-lg-3 text-end'>
+                    <Link href="/Attendance/shiftdetails" className='Heading active' > My Weekly Shift</Link>
+                </div>
+                <div className='col-lg-3'>
+                    <Link href="/Attendance/MyTeamWeeklyShift" className='Heading active'> My Team Weekly Shift</Link>
+                </div>
+            </div>
+            {/* <div className="row">
+                <div className="col-lg-3">
+                    <Link href="/Attendence/shiftdetails"> <h3></h3></Link>
+
+                </div>
+                <div className="col-lg-3">
+
+                    <Link href="/Attendence/MyTeamWeeklyShift"> <h3> My Team Weekly Shift</h3></Link>
+                </div>
+            </div> */}
+
+
             <div className='card shadow-lg p-4 rounded-3 mt-4'>
                 <div className='row'>
                     <div className='col-lg-3'>

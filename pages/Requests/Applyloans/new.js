@@ -1,6 +1,8 @@
 import Layout from "@/components/layout/layout"
 import React from 'react'
 import { useForm } from 'react-hook-form'
+import Link from "next/link"
+
 // import Styles from '../../styles/applyloans.module.css'
 
 const Applyloans = () => {
@@ -9,7 +11,7 @@ const Applyloans = () => {
     return (
         <Layout>
             <h1 className='text-danger'>The binding is yet to be done for this component</h1>
-            <p>Apply Loan</p>
+            <h4 className="text-primary mx-2">Apply Loan</h4>
             <form onSubmit={handleSubmit()}>
                 <div className='card shadow-lg p-3'>
                     <div className='row'>
@@ -17,7 +19,7 @@ const Applyloans = () => {
                         <div className='col-lg-2'>
                             <p>Loan Type <span style={{ color: "red" }}>*</span></p>
                             <select className='form-select form-select-sm' {...register('loanType', {
-                                required: "loanType is required", pattern: { value: '^[A-Za-z0-9 ]+$',message: "Please enter a valid Position Name" }
+                                required: "loanType is required", pattern: { value: '^[A-Za-z0-9 ]+$', message: "Please enter a valid Position Name" }
                             })} >
                                 <option>Select Loan type</option>
                             </select>
@@ -72,10 +74,14 @@ const Applyloans = () => {
                     <div className='row mt-3'>
                         <div className='col-lg-8'></div>
                         <div className='col-lg-2'>
-                            <button className="close-button">Cancel</button>
+                            <Link href="/Requests/Applyloans">
+                                <button className="close-button">Cancel</button>
+                            </Link>
                         </div>
                         <div className='col-lg-2'>
-                            <button className="submit-button">submit</button>
+                            <Link href="/Requests/Applyloans">
+                                <button className="submit-button">submit</button>
+                            </Link>
                         </div>
                     </div>
 

@@ -1,60 +1,141 @@
-import { useEffect, useState } from "react";
-import axios from "axios";
+import React from "react";
+import Styles from "../../../../styles/StaffDashboard.module.css"
+function StaffDashbaord() {
+  return (
+    <div>
+      <div className="container">
+        <div className="card p-3 border-0 shadow-lg rounded-3 mt-4">
+          <div className="row">
+            <div className="col-lg-1">
+              <p>Filter By</p>
+            </div>
 
-export default function StaffDashboard() {
-  const [staff, setStaffData] = useState([]);
-  const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+            <div className="col-lg-2">
+              <select class="form-select" aria-label="Default select example">
+                <option selected>select Department</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+              </select>
+            </div>
+            <div className="col-lg-2">
+              <select class="form-select" aria-label="Default select example">
+                <option selected>Select Level</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+              </select>
+            </div>
 
-  const getStaff = async () => {
-    let res = await axios.get(hostURL + "");
-    setStaffData(res.data);
-  };
+            <div className="col-lg-2">
+              <select class="form-select" aria-label="Default select example">
+                <option selected>Select Position</option>
+                <option value="1">One</option>
+                <option value="2">Two</option>
+                <option value="3">Three</option>
+              </select>
+            </div>
 
-  useEffect(() => {
-    getStaff();
-  }, []);
+            <div className="col-lg-2">
+              <input
+                type="text"
+                class="form-control"
+                placeholder="Search for Staff"
+              />
+            </div>
 
-  const getData = (data) => {
-    sessionStorage.setItem("id", data.id);
-  };
-
-  const clearData = () => {
-    sessionStorage.setItem("id", "");
-  };
-  const handleDelete = async (id) => {
-    try {
-        let res = await axios.get(hostURL + ``);
-        console.log(res.data);
-        Swal.fire('Data deleted successfully')
-        getbarangaymaster();
-    } catch (error) {
-        console.error(error);
-        Swal.fire('failed to  delete data')
-    }
-};
-
-return (
-    <>
-     <div className="container">
-      <br />
-      <h5 className="Heading">Barangay Master</h5>
-      <div className="card shadow-lg p-4 rounded-3 mt-4">
-        <div className="row">
-          <div className="col-lg-1">
-            <p>Filter By</p>
+            <div className="col-lg-3">
+              <button type="button" class="btn btn-primary">Export Excel</button>
+            </div>
           </div>
-          <div className="col-lg-4">
-            <input
-              type="text"
-              placeholder="Search"
-              className="form-control form-control-sm"
-            />
+        </div>
+
+        <div>
+          <div className="row">
+            <div className="col-lg-6">
+              <p style={{marginTop:"2%"}}>Showing Result</p>
+            </div>
+            <div className="col-lg-3">
+              <button  type="button" class="btn btn-primary" style={{marginTop:"5%"}}>ADD STAFF</button>
+            </div>
+            <div className="col-lg-3">
+              <button  type="button" class="btn btn-primary" style={{marginTop:"5%"}}>UPLOAD STAFF</button>
+            </div>
+          </div>
+        </div>
+
+        <div className="row mt-4">
+          <div className="col-lg-12">
+            <div className="table-responsive">
+              <table className="table table-striped table-bordered ">
+                <thead className={"bg-info text-white "}>
+                  <tr style={{ whiteSpace: "nowrap" }}>
+                    <th>Employee Id</th>
+                    <th>Employee Name</th>
+                    <th>Department</th>
+                    <th>Level</th>
+                    <th>Gender</th>
+                    <th>Position</th>
+                    <th>Email</th>
+                    <th>Date Of Joining</th>
+                    <th>Manager</th>
+                    <th>Attendance Enable</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>243567</td>
+                    <td>Manjan</td>
+                    <td>243567</td>
+                    <td>Cse</td>
+                    <td>High</td>
+                    <td>Male</td>
+                    <td>Softwere</td>
+                    <td>Manjan@gmail.com</td>
+                    <td>243567</td>
+                    <td>
+                      <button className={Styles.buttonDE}>Disable</button>
+                    </td>
+                  </tr>
+
+                  <tr>
+                    <td>243567</td>
+                    <td>Manjan</td>
+                    <td>243567</td>
+                    <td>Cse</td>
+                    <td>High</td>
+                    <td>Male</td>
+                    <td>Softwere</td>
+                    <td>Manjan@gmail.com</td>
+                    <td>243567</td>
+                    <td>
+                      <button className={Styles.buttonDE}>Diseble</button>
+                    </td>
+                  </tr>
+
+
+                  <tr>
+                    <td>243567</td>
+                    <td>Manjan</td>
+                    <td>243567</td>
+                    <td>Cse</td>
+                    <td>High</td>
+                    <td>Male</td>
+                    <td>Softwere</td>
+                    <td>Manjan@gmail.com</td>
+                    <td>243567</td>
+                    <td>
+                      <button className={Styles.buttonDE}>Diseble</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
-      </div>
-      
-    </>
-)
-
+    </div>
+  );
 }
+
+export default StaffDashbaord;
