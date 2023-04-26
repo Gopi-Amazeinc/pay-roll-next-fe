@@ -1,11 +1,12 @@
 import React from 'react'
-import Styles from '../../../styles/LoanMasterForm.module.css'
+import Styles from 'styles/LoanMasterForm.module.css'
 import { useForm } from 'react-hook-form';
 import Link from 'next/link';
 import Layout from '@/components/layout/layout.js';
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
+
 function LoanMasterForm() {
 
   let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;

@@ -23,6 +23,7 @@ export default function SubsidaryMasterDash() {
 
     useEffect(() => {
         getSubsidaryMaster()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [1])
 
     const getData = (data) => {
