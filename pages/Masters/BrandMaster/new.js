@@ -15,10 +15,10 @@ function BrandMasterForm({ editData }) {
     console.log(editData)
 
     useEffect(() => {
-        if (editData.id) {
-            clearForm(editData);
-        } else {
+        if (editData == "") {
             clearForm();
+        } else {
+            clearForm(editData);
         }
     }, [1]);
 

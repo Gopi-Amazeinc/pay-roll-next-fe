@@ -28,10 +28,11 @@ function CityMasterForm({ editData }) {
             res = await axios.get(hostURL + "Master/GetStateType"); // this api call for master table this is used for DropDown data 
             setProvinceData(res.data);
 
-            if (editData.id) {
-                clearForm(editData);
-            } else {
+            if (editData == "") {
+
                 clearForm();
+            } else {
+                clearForm(editData);
             }
         }
 
