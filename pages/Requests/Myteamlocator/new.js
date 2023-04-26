@@ -3,8 +3,9 @@ import Layout from "@/components/layout/layout"
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
-
-
+import { BsCheckCircleFill } from 'react-icons/bs'
+import { RxCrossCircled } from 'react-icons/rx'
+import Swal from 'sweetalert2';
 import Myteamlocatordashboard from '@/components/Dashboard/Requests/Myteamlocator';
 
 const MyteamLocatordetails = ({ editData }) =>{

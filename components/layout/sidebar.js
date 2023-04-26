@@ -867,7 +867,7 @@ const Sidebar = ({ children, applyPageName }) => {
                     </button>
                   </Link>
 
-                  <Link href="/Masters/departmentmasterdashboard/">
+                  <Link href="/Masters/DepartmentMaster">
                     <button
                       className={getSubStyle(108)}
                       onClick={updateActiveMenu.bind(this, {
