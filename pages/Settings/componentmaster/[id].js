@@ -2,7 +2,7 @@ import React from 'react'
 
 function ID() {
   return (
-    <div>[id]</div>
+    <div>ID</div>
   )
 }
 

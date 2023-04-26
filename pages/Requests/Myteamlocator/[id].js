@@ -1,14 +1,22 @@
-import React from 'react';
 import { useRouter } from 'next/router'
-const Id = () => {
-    const router = useRouter()
-    const { id } = router.query
-
-    return (
-        <div>
-            <p> your ID: {id}</p>
-        </div>
-    );
+import MyteamLocatordetails from '../Myteamlocator/new';
+import axios from 'axios';
+const Myteamlocatoredit = ({ data }) => {
+    console.log(data)
+    return (        
+        < MyteamLocatordetails editData = { data } ></MyteamLocatordetails >        
+    )
 }
+export default Myteamlocatoredit;
 
-export default Id;
+export async function getServerSideProps(context) {
+    console.log(context);
+    const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+    debugger;
+    // Fetch data from external API 
+    await axios.post(hostURL + "Payroll/UpdateLocatorStatus?ID=" + context.params.id);
+    Swal.fire(" Locator Details Approved")
+    getStafflocator()
+    // Pass data to the page via props
+    return { props: { data } }
+}

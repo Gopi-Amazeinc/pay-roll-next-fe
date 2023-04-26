@@ -6,22 +6,18 @@ import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 
-function ShiftMasterForm() {
+function ShiftMasterForm({ editData }) {
    const { register, handleSubmit, reset, formState } = useForm();
    const { errors } = formState;
    const [actionType, setActionType] = useState("insert");
 
    useEffect(() => {
       async function getShiftList() {
-         const id = sessionStorage.getItem("id");
-         if (id) {
-            let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-             // This API is used to fetch the dashboard data from ShiftMaster table based on ID
-            const response = await axios.get(hostURL + "Master/GetShiftMasterByID?ID=" + id);
-            clearForm(response.data[0])
+         if (editData == "") {
+            clearForm(editData)
          }
          else {
-            clearForm();
+            clearForm(editData);
          }
       }
       getShiftList();
@@ -30,7 +26,6 @@ function ShiftMasterForm() {
 
    function clearForm(otData = null) {
       let details = {
-         "ID": otData ? otData.id : "",
          "Short": otData ? otData.short : "",
          "Description": otData ? otData.description : "",
          "ShiftTimeings": otData ? otData.shiftTimeings : "",
@@ -43,6 +38,7 @@ function ShiftMasterForm() {
 
    async function onSubmit(data) {
       let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+
       if (actionType == "insert") {
          // This API is used to insert the data to the ShiftMaster table
          await axios.post(hostURL + "Master/InsertShiftMaster", data);
@@ -51,15 +47,18 @@ function ShiftMasterForm() {
             title: "Hurray..",
             text: "Data was inserted...!",
          });
+         location.href = "/Masters/ShiftMaster"
       }
       else {
-          // This API is used to update the data in the ShiftMaster table
+         // This API is used to update the data in the ShiftMaster table
+         debugger
          await axios.post(hostURL + "Master/UpdateShiftMaster", data);
          Swal.fire({
             icon: "success",
             title: "Hurray..",
             text: "Data was updated...!",
          });
+         location.href = "/Masters/ShiftMaster"
       }
    }
    return (

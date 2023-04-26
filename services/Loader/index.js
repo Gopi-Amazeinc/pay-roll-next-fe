@@ -1,10 +1,10 @@
 import React from 'react';
-
+import "./loader.module.css";
 const Index = () => {
     return (
-        <div>
-            
-        </div>
+        <div id="pause">
+        <div id="spinner"></div>
+    </div>
     );
 }
 

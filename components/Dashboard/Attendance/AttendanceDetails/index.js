@@ -10,32 +10,26 @@ const AttendenceDetails = () => {
 
   const [Attendence, setAttendence] = useState([]);
 
-
-  useEffect(() => {
-    async function getAttendenceByID() {
-      const id = sessionStorage.getItem("id");
-      if (id) {
-        let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-        let res = await axios.get(hostURL + "HR/GetAttendanceByEmployeeID",
-          {
-            params: {
-              userID: userID,
-              SDate: SDate,
-              EDate: EDate
-            }
-          });
-        // let res = await axios.get(
-        //   hostURL + "HR/GetAttendanceByEmployeeID?ID=" + id  // this Api is used for get the data by id  for updating exact value
-        // );
-        setAttendence(res.data)
-        clearForm(res.data[0]);
+  function Attendance({ SDate, EDate }) {
+    useEffect(() => {
+      async function getAttendenceByID() {
+        const id = sessionStorage.getItem("userID");
+        if (id) {
+          let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+          let res = await axios.get(hostURL + "HR/GetAttendanceByEmployeeID?userID=" + userID + '&SDate=' + SDate + '&EDate=' + EDate);
+          // let res = await axios.get(
+          //   hostURL + "HR/GetAttendanceByEmployeeID?ID=" + id  // this Api is used for get the data by id  for updating exact value
+          // );
+          setAttendence(res.data)
+          clearForm(res.data[0]);
+        }
+        // else {
+        //   clearForm();
+        // }
       }
-      // else {
-      //   clearForm();
-      // }
-    }
-    getAttendenceByID();
-  }, []);
+      getAttendenceByID();
+    }, []);
+  }
 
   return (
 
@@ -45,10 +39,10 @@ const AttendenceDetails = () => {
         <div className='row mt-3'>
           <h2>Yet to bind</h2>
           <div className='col-lg-3 text-end'>
-            <Link className='Heading active' href="/Attendence/attendencedetails">My Attendence Details</Link>
+            <Link className='Heading active' href="/Attendance/AttendanceDetails">My Attendance Details</Link>
           </div>
           <div className='col-lg-3'>
-            <Link className='Heading active' href="/Attendence/myteamattendence">Company Attendence Details</Link>
+            <Link className='Heading active' href="/Attendance/MyTeamAttendanceDetails">Company Attendance Details</Link>
           </div>
         </div>
 
