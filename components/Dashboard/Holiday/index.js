@@ -4,6 +4,7 @@ import Styles from '../../../styles/Holidaydash.module.css'
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import axios from 'axios';
+import Swal from 'sweetalert2';
 
 const Holidaydashboard = () => {
 
