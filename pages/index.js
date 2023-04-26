@@ -3,9 +3,10 @@ import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import styles from '@/styles/Home.module.css'
 // import Layout from '../components/layout/index.js'
-import Layout from '@/components/layout/layout.js'
+import Layout from '@/components/layout/layout'
 
 export default function Home() {
+
   return (
     <>
       <Layout>
