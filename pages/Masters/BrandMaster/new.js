@@ -12,22 +12,14 @@ function BrandMasterForm({ editData }) {
     const { register, handleSubmit, watch, reset, formState: { errors }, } = useForm();
 
     const [actionType, setActionType] = useState("insert");
+    console.log(editData)
 
     useEffect(() => {
-        async function getBandMasterByID() {
-            debugger
-            if (editData.id) {
-                let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-                let res = await axios.get(
-                    hostURL + "Master/GetBrandMasterByID?ID=" + editData.id  // this Api is used for get the data by id  for updating exact value
-                );
-                clearForm(editData);
-            } else {
-                clearForm();
-            }
+        if (editData == "") {
+            clearForm();
+        } else {
+            clearForm(editData);
         }
-
-        getBandMasterByID();
     }, [1]);
 
     function clearForm(BandMasterData = null) {
@@ -69,8 +61,8 @@ function BrandMasterForm({ editData }) {
                                 <p>
                                     Short Name<i className="text-danger">*</i>
                                 </p>
-                                <input type="text" className="form-control" placeholder="Short Name"{...register('Name', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
-                                {errors.Name && <p className="error-message" style={{ color: "red" }}>{errors.Name.message}</p>}
+                                <input type="text" className="form-control" placeholder="Short Name"{...register('Short', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
+                                {errors.Short && <p className="error-message" style={{ color: "red" }}>{errors.Name.message}</p>}
                             </div>
 
                             <div className="col-lg-5">
@@ -80,9 +72,9 @@ function BrandMasterForm({ editData }) {
                                 <textarea
                                     className="form-control"
                                     placeholder="Description"
-                                    {...register('Name', { required: "Please add a Descrption Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Descrption Name" } })}
+                                    {...register('Description', { required: "Please add a Descrption Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Descrption Name" } })}
                                 ></textarea>
-                                {errors.Name && <p className="error-message" style={{ color: "red" }}>{errors.Name.message}</p>}
+                                {errors.Description && <p className="error-message" style={{ color: "red" }}>{errors.Name.message}</p>}
 
                             </div>
                         </div>
