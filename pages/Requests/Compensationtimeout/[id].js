@@ -6,7 +6,7 @@ const Id = () => {
   
     return (
         <div>
-            <p> your ID: {id}</p>
+            <p> ID was  {id}</p>
         </div>
     );
 }
