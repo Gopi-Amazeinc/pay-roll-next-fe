@@ -22,12 +22,12 @@ const BarangayMasterForm = ({ editData }) => {
 
     useEffect(() => {
 
-        if (editData.id) {
-            clearForm(editData);
-        }
-        else {
-            clearForm();
-        }
+        // if (editData.id) {
+        //     clearForm(editData);
+        // }
+        // else {
+        //     clearForm();
+        // }
 
         getData();
     }, [1]);
@@ -57,12 +57,12 @@ const BarangayMasterForm = ({ editData }) => {
         // This API is used to fetch the data from CityType table
         res = await axios.get(hostURL + "Master/GetCityType");
         setCityData(res.data);
-        debugger
-        if (editData.id) {
-            clearForm(editData);
+        if (editData == "") {
+
+            clearForm();
         }
         else {
-            clearForm();
+            clearForm(editData);
         }
     }
 
