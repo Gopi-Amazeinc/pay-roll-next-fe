@@ -18,6 +18,7 @@ function LeaveListDashboard() {
 
     const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
     
+    
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [pending, setPending] = useState(false)
@@ -148,6 +149,7 @@ function LeaveListDashboard() {
                 <div class="col-md-4"><a class="leavecol">Leave Balance</a></div>
             </div>
             <br />
+            
             <div class="row FilterClass ">
                 <div class="col-lg-4">
                     <div class="card shadow p-4">
