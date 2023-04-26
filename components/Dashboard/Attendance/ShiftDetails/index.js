@@ -30,8 +30,8 @@ const Shiftdetails = () => {
                         <p >END DATE <span >*</span></p>
                         <input type='date' className='form-control form-control-sm' />
                     </div>
-                    <div className="col-lg-3">
-                        <Link href=''><button>Add Shift Details</button></Link>
+                    <div className="col-lg-3 mt-4">
+                        <Link href="/Attendance/StaffShiftForm/new" ><button className='button'>Add Shift Details</button></Link>
                     </div>
                 </div>
             </div>
