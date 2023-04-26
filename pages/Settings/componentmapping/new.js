@@ -11,28 +11,35 @@ import Link from "next/link";
 import Layout from '@/components/layout/layout.js'
 
 
-function ComponentMappingForm() {
+function ComponentMappingForm({editData}) {
 
   const { register, handleSubmit, watch, reset, formState: { errors }, } = useForm();
   const [actionType, setActionType] = useState("insert");
 
-  useEffect(() => {
-    async function getComponentMappingByID() {
-      const id = sessionStorage.getItem("id");
-      if (id) {
-        let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-        let res = await axios.get(
-          hostURL + "Payroll/GetComponentMappingByID?ID=" + id  // this Api is used for get the data by id  for updating exact value
-        );
-        clearForm(res.data[0]);
-      } else {
-        clearForm();
-      }
-    }
-    getComponentMappingByID();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [1]);
+  // useEffect(() => {
+  //   async function getComponentMappingByID() {
+  //     const id = sessionStorage.getItem("id");
+  //     if (id) {
+  //       let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+  //       let res = await axios.get(
+  //         hostURL + "Payroll/GetComponentMappingByID?ID=" + id  // this Api is used for get the data by id  for updating exact value
+  //       );
+  //       clearForm(res.data[0]);
+  //     } else {
+  //       clearForm();
+  //     }
+  //   }
+  //   getComponentMappingByID();
+  // // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [1]);
 
+  useEffect(() => {
+        if (editData == "") {
+            clearForm();
+        } else {
+            clearForm(editData);
+        }
+    }, [1]);
 
 
   function clearForm(ComponentMappingData = null) {
