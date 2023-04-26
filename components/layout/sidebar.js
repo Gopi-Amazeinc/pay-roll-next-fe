@@ -616,7 +616,7 @@ const Sidebar = ({ children, applyPageName }) => {
                   </button>
                 </Link>
 
-                <Link href="/Settings/componentmappingdashboard">
+                <Link href="/Settings/componentmapping">
                   <button
                     className={getSubStyle(92)}
                     onClick={updateActiveMenu.bind(this, {
@@ -629,7 +629,7 @@ const Sidebar = ({ children, applyPageName }) => {
                   </button>
                 </Link>
 
-                <Link href="/Settings/bir2316mappingdashboard">
+                <Link href="/Settings/bir2316mapping">
                   <button
                     className={getSubStyle(93)}
                     onClick={updateActiveMenu.bind(this, {
@@ -642,7 +642,7 @@ const Sidebar = ({ children, applyPageName }) => {
                   </button>
                 </Link>
 
-                <Link href="/Settings/payperiodsettingsdashboard">
+                <Link href="/Settings/payperiodsetting">
                   <button
                     className={getSubStyle(94)}
                     onClick={updateActiveMenu.bind(this, {
