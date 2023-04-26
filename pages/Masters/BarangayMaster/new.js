@@ -22,12 +22,14 @@ const BarangayMasterForm = ({ editData }) => {
   const [citydata, setCityData] = useState([]);
   const [actionType, setAction] = useState("insert");
 
-  useEffect(() => {
-    if (editData.id) {
-      clearForm(editData);
-    } else {
-      clearForm();
-    }
+    useEffect(() => {
+
+        // if (editData.id) {
+        //     clearForm(editData);
+        // }
+        // else {
+        //     clearForm();
+        // }
 
     getData();
   }, [1]);
@@ -44,25 +46,25 @@ const BarangayMasterForm = ({ editData }) => {
     reset(details);
   }
 
-  async function getData() {
-    let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-    // This API is used to fetch the data from CountryType table
-    
-    let res = await axios.get(hostURL + "Master/GetCountryType");
-    setCountryData(res.data);
-    // This API is used to fetch the data from StateType table
-    res = await axios.get(hostURL + "Master/GetStateType");
-    setProvinceData(res.data);
-    // This API is used to fetch the data from CityType table
-    res = await axios.get(hostURL + "Master/GetCityType");
-    setCityData(res.data);
-    debugger;
-    if (editData.id) {
-      clearForm(editData);
-    } else {
-      clearForm();
+    async function getData() {
+        let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+        // This API is used to fetch the data from CountryType table 
+        let res = await axios.get(hostURL + "Master/GetCountryType");
+        setCountryData(res.data);
+        // This API is used to fetch the data from StateType table
+        res = await axios.get(hostURL + "Master/GetStateType");
+        setProvinceData(res.data);
+        // This API is used to fetch the data from CityType table
+        res = await axios.get(hostURL + "Master/GetCityType");
+        setCityData(res.data);
+        debugger
+        if (editData.id) {
+            clearForm(editData);
+        }
+        else {
+            clearForm();
+        }
     }
-  }
 
   async function onSubmit(data) {
     if (actionType == "insert") {
