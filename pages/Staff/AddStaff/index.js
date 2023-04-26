@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useContext} from 'react';
 import Layout from "../../../components/layout/layout";
 import EmployeeProfile from "../../../components/Dashboard/Staff/AddStaff/employeeprofile"
 import PositionDetails from '@/components/Dashboard/Staff/AddStaff/positiondetails';
@@ -12,11 +12,13 @@ import IDDetails from '@/components/Dashboard/Staff/AddStaff/iddetails';
 import Stepper from '@mui/material/Stepper';
 import Step from '@mui/material/Step';
 import StepLabel from '@mui/material/StepLabel';
+import { multiStepContext } from '@/pages/Staff/stepcontext';
 
 
 
 const Index = () => {
 
+// const {currentStep,finalData} = useContext(multiStepContext)
 
 function showStep(step){
     switch(step) {
@@ -43,7 +45,6 @@ function showStep(step){
 
     return (
         <Layout>
-            <h3>Add Staff Stepper goes here</h3>
             <Stepper activeStep={1} orientation='horizontal'>
                 <Step>
                     <StepLabel></StepLabel>
@@ -73,7 +74,7 @@ function showStep(step){
                     <StepLabel></StepLabel>
                 </Step>
             </Stepper>
-            {showStep(2)}
+            {showStep(1)}
 
 
         </Layout>

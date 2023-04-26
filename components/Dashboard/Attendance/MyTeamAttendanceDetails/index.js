@@ -18,8 +18,8 @@ const MyTeamAttendence = () => {
                         <Link className='Heading active' href="/Attendance/AttendanceDetails">My Attendence Details</Link>
                     </div>
                     <div className='col-lg-3'>
-            <Link className='Heading active' href="/Attendance/MyTeamAttendanceDetails">Company Attendance Details</Link>
-          </div>
+                        <Link className='Heading active' href="/Attendance/MyTeamAttendanceDetails">Company Attendance Details</Link>
+                    </div>
                 </div>
 
                 <div className='card p-3 border-0 shadow-lg rounded-3 mt-4'>
@@ -74,31 +74,31 @@ const MyTeamAttendence = () => {
                         </tr>
                     </thead>
                     <tbody>
-                  {
-                    MyTeamAttendence.map((data) => {
-                      return (
-                        <tr key={data.id}>
-                          <td>{data.date}</td>
-                          <td>{data.staffName}</td>
-                          <td>{data.position}</td>
-                          <td>{data.department}</td>
-                          <td>{data.signInType}</td>
-                          <td>{data.expectedInTime}</td>
-                          <td>{data.punchInTime}</td>
-                          <td>{data.punchinip}</td>
-                          <td>{data.punchedInForm}</td>
-                          <td>{data.signInType}</td>
-                          <td>{data.expectedOutTime}</td>
-                       
-                    
-                          {/* <td>
+                        {
+                            MyTeamAttendence.map((data) => {
+                                return (
+                                    <tr key={data.id}>
+                                        <td>{data.date}</td>
+                                        <td>{data.staffName}</td>
+                                        <td>{data.position}</td>
+                                        <td>{data.department}</td>
+                                        <td>{data.signInType}</td>
+                                        <td>{data.expectedInTime}</td>
+                                        <td>{data.punchInTime}</td>
+                                        <td>{data.punchinip}</td>
+                                        <td>{data.punchedInForm}</td>
+                                        <td>{data.signInType}</td>
+                                        <td>{data.expectedOutTime}</td>
+
+
+                                        {/* <td>
                               <button className='edit-btn'>Cancel</button>
                             </td> */}
-                        </tr>
-                      )
-                    })
-                  }
-                </tbody>
+                                    </tr>
+                                )
+                            })
+                        }
+                    </tbody>
                 </table>
             </div>
         </div>
