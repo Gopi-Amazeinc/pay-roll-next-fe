@@ -72,7 +72,7 @@ function New() {
               <div className="row mt-5">
                 <div className="col-lg-8"></div>
                 <div className="col-lg-2  text-end">
-                  <Link href="/Holidays/holidaysdash">
+                  <Link href="/Holiday">
                     <button type="submit" id="AddButton" className="btn btn-primary">Cancel</button>
                   </Link>
                 </div>
