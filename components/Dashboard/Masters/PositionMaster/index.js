@@ -52,16 +52,6 @@ const PositionMasterDash = () => {
   };
 
 
-
-  const getData = (data) => {
-    sessionStorage.setItem("id", data.id);
-    console.log(data.id)
-  }
-
-  const clearFormData = () => {
-    sessionStorage.setItem("id", "");
-  }
-
   return (
     <div>
       <br></br>
@@ -90,10 +80,10 @@ const PositionMasterDash = () => {
           <div className="col-lg-2"></div>
           <div className="col-lg-2">
 
-            <Link href="/Masters/PositionMaster/new"><button onClick={clearFormData.bind(this)}
+            <Link href="/Masters/PositionMaster/new"><button
 
               className="btn btn-primary btn-sm  shadow-lg AddButton"
-              
+
             >  <AiOutlinePlusCircle />
               Add New
             </button></Link>
@@ -119,8 +109,8 @@ const PositionMasterDash = () => {
                       <td>
                         <div className="row">
                           <div className="col-lg-2">
-                            <Link href="/Masters/PositionMaster/new">
-                              <button className="edit-btn" onClick={getData.bind(this, data)}>Edit</button>
+                            <Link href={`/Masters/PositionMaster/Edit/${data.id}`}>
+                              <button className="edit-btn" >Edit</button>
                             </Link>
                           </div>
                           <div className="col-lg-2">

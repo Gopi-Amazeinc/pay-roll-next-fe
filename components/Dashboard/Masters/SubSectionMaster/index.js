@@ -11,17 +11,11 @@ const SubSectionMaster = () => {
   let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
   const [subsection, SetSubsectionData] = useState([]);
 
-  const getDataByID = (data) => {
-    sessionStorage.setItem("id", data.id);
-  };
-  const clearData = () => {
-    sessionStorage.setItem("id", "");
-  };
   useEffect(() => {
     getData();
   }, []);
 
-  const getData= async ()=> {
+  const getData = async () => {
     let res = await axios.get(hostURL + "Master/GetSubSectionMaster");
     SetSubsectionData(res.data);
   }
@@ -41,16 +35,16 @@ const SubSectionMaster = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         await axios.get(hostURL + "Master/DeleteSubSectionMaster?ID=" + id)
-            Swal.fire("SubSection Deleted successfully.");
-            getData();
-    }
-});
+        Swal.fire("SubSection Deleted successfully.");
+        getData();
+      }
+    });
   };
 
   return (
-   <div>
+    <div>
       <br />
-      <h5  className="text-primary fw-bold Heading">
+      <h5 className="text-primary fw-bold Heading">
         SubSection Master
       </h5>
       <div className="card p-3 shadow-lg rounded-4">
@@ -72,16 +66,15 @@ const SubSectionMaster = () => {
       </div>
       <div className="row mt-3">
         <div className="col-lg-7">
-        <p  className="text-primary fs-6 mt-3 fw-bold">
-              SHOWING <span>{subsection.length} </span>RESULTS
-            </p>
+          <p className="text-primary fs-6 mt-3 fw-bold">
+            SHOWING <span>{subsection.length} </span>RESULTS
+          </p>
         </div>
         <div className="col-lg-4">
           <Link
             className="btn btn-primary AddButton"
-            
+
             href="/Masters/SubSectionMaster/new"
-            onClick={clearData.bind(this)}
           >
             <AiOutlinePlusCircle size={18} /> ADD NEW
           </Link>
@@ -93,7 +86,7 @@ const SubSectionMaster = () => {
         <div className="row ">
           <table className=" table table-sm  table-bordered table">
             <thead>
-              <tr  className="bg-info tr">
+              <tr className="bg-info tr">
                 <th className="text-white">Short</th>
                 <th className="text-white">Description</th>
                 <th className="text-white">Action</th>
@@ -106,11 +99,10 @@ const SubSectionMaster = () => {
                     <td>{data.short}</td>
                     <td>{data.description}</td>
                     <td>
-                      <Link href="/Masters/subsectionmasterform">
+                      <Link href={`/Masters/SubSectionMaster/Edit/${data.id}`}>
                         <button
                           className="edit-btn"
                           style={{ fontSize: "12px", marginRight: "5%" }}
-                          onClick={getDataByID.bind(this, data)}
                         >
                           Edit
                         </button>
@@ -130,7 +122,7 @@ const SubSectionMaster = () => {
           </table>
         </div>
       </div>
-</div>
+    </div>
   );
 };
 
