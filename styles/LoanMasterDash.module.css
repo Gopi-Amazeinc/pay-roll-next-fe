@@ -1,0 +1,79 @@
+#p {
+    font-family: Poppins;
+    font-weight: 700;
+    padding-left: 5px;
+    color: #3247d5;
+    margin-left: 20px;
+    font-size: 21px;
+}
+
+#addLink {
+    text-decoration: none;
+    color: white;
+    font-family: Poppins;
+    font-size: 15px;
+
+
+}
+
+#icon {
+    padding-bottom: 3px;
+}
+
+#addButton {
+    box-sizing: border-box;
+    border-radius: 5px;
+    font-family: Poppins;
+    font-style: normal;
+    letter-spacing: .658333px;
+    color: #fff;
+    background: #3247d5;
+    box-shadow: 1px 1px 17px 1px #3247d599;
+    border-radius: 4px solid #3247d5;
+    border: 2px solid #3247d5;
+    text-transform: uppercase;
+
+    justify-content: center;
+    font-weight: 400px;
+    padding: 5px 55px 5px 55px;
+
+}
+
+#table {
+    width: 90%;
+    justify-content: center;
+    font-family: Poppins;
+    margin-left: 20px;
+    font-size: 15px;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-left: 50px;
+    font-size: 16px;
+}
+
+#tr {
+    background-color: #02cfff;
+}
+
+#card {
+    width: 98%;
+    margin-left: 15px;
+}
+
+#input {
+    size: 100px;
+}
+
+#input {
+    transform: scale(1.5);
+
+}
+.commonEditDelete {
+    width: 20px;
+    margin-left: 10%;
+}
+#h5 {
+    font-family: Poppins;
+    margin-left: 20px;
+    color: #3247d5;
+}
