@@ -18,7 +18,7 @@ import { multiStepContext } from '@/pages/Staff/stepcontext';
 
 const Index = () => {
 
-const {currentStep,finalData} = useContext(multiStepContext)
+// const {currentStep,finalData} = useContext(multiStepContext)
 
 function showStep(step){
     switch(step) {
