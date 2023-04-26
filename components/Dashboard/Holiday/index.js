@@ -1,7 +1,7 @@
 import React from 'react';
-// import Layout from '@/components/layout/layout'
+import Layout from '@/components/layout/layout'
 import Styles from '../../../styles/Holidaydash.module.css'
-import { useState,useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import axios from 'axios';
 
@@ -46,85 +46,87 @@ const Holidaydashboard = () => {
 
 
     return (
-                   <div>
-                <br></br> <p id={Styles.title}>Holiday Dashboard</p>{" "}
-                <div className="container-fluid mt-4">
-                    <div className="row shadow-lg p-2 rounded-4 p-3 ">
-                        <div className="col-lg-1">
-                            <b>
-                                <p className="mt-2 text-center">
-                                    <>
-                                    </>
-                                    {/* <BiFilterAlt />  */}
-                                    Filter by:
-                                </p>
-                            </b>
-                        </div>
-
-                        <div className="col-lg-5">
-                            {/* <h6>Pay Date</h6> */}
-                            {/* <ReactDatePicker   className=" mt-2 form-control"></ReactDatePicker> */}
-                            <input
-                                type="search"
-                                className=" mt-2 form-control"
-                                placeholder="Search "
-                            />
-                        </div>
+        
+        <div>
+            <br></br> <p id={Styles.title}>Holiday Dashboard</p>{" "}
+            <div className="container-fluid mt-4">
+                <div className="row shadow-lg p-2 rounded-4 p-3 ">
+                    <div className="col-lg-1">
+                        <b>
+                            <p className="mt-2 text-center">
+                                <>
+                                </>
+                                {/* <BiFilterAlt />  */}
+                                Filter by:
+                            </p>
+                        </b>
                     </div>
-                    <div className="row mt-4">
-                        <div className="col-lg-10"></div>
-                        <div className="col-lg-2">
 
-
-                            <Link href="/Holiday/new"><button className="btn btn-primary btn-sm shadow-lg"
-                                id={Styles.addNew} onClick={clearData.bind(this)} > ADD new</button>
-                                {/* // onClick={() => setModalOpen(!modalOpen)}>   */}
-                                {/* <AiOutlinePlusCircle /> */}
-
-                            </Link>
-
-                        </div>
-                    </div>
-                    <br />
-                    <div className="row">
-                        <table className={Styles.commonTable}>
-                            <thead>
-                                <tr>
-                                    <th>Holiday</th>
-                                    <th>Holiday Description</th>
-                                    <th>Holiday Date</th>
-                                    <th>Attachment</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-
-                                {Holiday.map((data, index) => {
-                                    return (
-                                        <tr key={index}>
-                                            <td>{data.holiday}</td>
-                                            <td>{data.holidayDescription}</td>
-                                            <td>{data.holidayDate}</td>
-                                            <td>{data.attachment}</td>
-                                            <td>
-                                                <Link href="/Holidays/holidayform">
-                                                    <button className="btn btn-primary" onClick={getData.bind(this, data)} >Edit</button>
-                                                </Link>
-                                                &nbsp;
-
-                                                <button className="btn btn-primary" onClick={() => handleDelete(data.id)}>Delete</button>
-                                            </td>
-                                        </tr>
-                                    )
-                                })
-                                }
-
-                            </tbody>
-                        </table>
+                    <div className="col-lg-5">
+                        {/* <h6>Pay Date</h6> */}
+                        {/* <ReactDatePicker   className=" mt-2 form-control"></ReactDatePicker> */}
+                        <input
+                            type="search"
+                            className=" mt-2 form-control"
+                            placeholder="Search "
+                        />
                     </div>
                 </div>
+                <div className="row mt-4">
+                    <div className="col-lg-10"></div>
+                    <div className="col-lg-2">
+
+
+                        <Link href="/Holiday/holidayform"><button className="btn btn-primary btn-sm shadow-lg"
+                            id={Styles.addNew} onClick={clearData.bind(this)} > ADD new</button>
+                            {/* // onClick={() => setModalOpen(!modalOpen)}>   */}
+                            {/* <AiOutlinePlusCircle /> */}
+
+                        </Link>
+
+                    </div>
+                </div>
+                <br />
+                <div className="row">
+                    <table className={Styles.commonTable}>
+                        <thead>
+                            <tr>
+                                <th>Holiday</th>
+                                <th>Holiday Description</th>
+                                <th>Holiday Date</th>
+                                <th>Attachment</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            {Holiday.map((data, index) => {
+                                return (
+                                    <tr key={index}>
+                                        <td>{data.holiday}</td>
+                                        <td>{data.holidayDescription}</td>
+                                        <td>{data.holidayDate}</td>
+                                        <td>{data.attachment}</td>
+                                        <td>
+                                            <Link href={`/Holiday/edit/${data.id}`}>
+                                                <button className="btn btn-primary"  >Edit</button>
+                                            </Link>
+                                            &nbsp;
+
+                                            <button className="btn btn-primary" onClick={() => handleDelete(data.id)}>Delete</button>
+                                        </td>
+                                    </tr>
+                                )
+                            })
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
             </div>
+        </div>
         
+
     );
 }
 

@@ -1,19 +1,78 @@
 import React from 'react'
 import Layout from '@/components/layout/layout'
 import { useForm } from "react-hook-form";
-import axios from 'axios'
-import Link from 'next/link'
-import { useState, useEffect } from 'react'
+import axios from "axios";
+import Link from "next/link";
+import Swal from "sweetalert2";
+import { useState,useEffect } from 'react';
 
-function New() {
+
+function Holidayform({editData}) {
+
   const { register, handleSubmit, watch, reset, formState: { errors }, } = useForm();
+  const [actionType, setActionType] = useState("insert")
+
+  useEffect(() => {
+    if (editData == "") {
+      clearForm();
+  }
+  else {
+
+      clearForm(editData);
+  }
+  
+  
+  
+  // getHoliday();
+  }, [1]);
+
+
+  function clearForm(HolidaysData = null) {
+    debugger;
+    let details = {
+      "ID": HolidaysData ? HolidaysData.id : "",
+      "Holiday": HolidaysData ? HolidaysData.holiday : "",
+      "HolidayDescription": HolidaysData ? HolidaysData.holidayDescription : "",
+      "HolidayDate": HolidaysData ? HolidaysData.holidayDate : "",
+      "Attachment": HolidaysData ? HolidaysData.attachment : "",
+      "HolidayCategory": HolidaysData ? HolidaysData.holidayCategory : "",
+      "Region": HolidaysData ? HolidaysData.region : ""
+
+    };
+    reset(details);
+    setActionType(HolidaysData ? "update" : "insert");
+  }
+
+
+  async function onSubmit(data) {
+
+    console.log(data);
+    let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+    if (actionType == "insert") {
+      try {
+        await axios.post(hostURL + "HR/InsertHolidays", data); // this for insrting the data using inserting Api call 
+        Swal.fire('Data Inserted successfully')
+        location.href = "/Holiday";
+      } catch (error) {
+        alert("data not inserted")
+
+      }
+
+    } else {
+      await axios.post(hostURL + "HR/UpdateHolidays", data); // this is for updating or Modifiying the data using  Update Api call
+      Swal.fire('Updated successfully')
+      location.href = "/Holiday";
+    }
+  }
+
+
   return (
     <div>
       <Layout>
         <div>
           <h3 className="text-primary fs-5 mt-3">Holidays</h3>
           <div className="card p-3 border-0 shadow-lg rounded-3 mt-4">
-            <form onSubmit={handleSubmit()}>
+            <form onSubmit={handleSubmit(onSubmit)}>
               <div className="row">
                 <div className="col-lg-4">
                   <p>
@@ -79,17 +138,17 @@ function New() {
                 <div className="col-lg-2 ">
                   {/* <button id='AddButton' className='btn btn-primary'>Submit</button>
                  */}
+                  {actionType == "insert" && (
 
-
-                  <button type="submit" id='AddButton' className="btn btn-primary">
-                    Save
-                  </button>
-
-
-                  {/* <button type="submit" id='AddButton' className="btn btn-primary">
-                    Update
-                  </button> */}
-
+                    <button type="submit" id='AddButton' className="btn btn-primary">
+                      Save
+                    </button>
+                  )}
+                  {actionType == "update" && (
+                    <button type="submit" id='AddButton' className="btn btn-primary">
+                      Update
+                    </button>
+                  )}
                 </div>
               </div>
             </form>
@@ -100,7 +159,9 @@ function New() {
   )
 }
 
-export default New
+export default Holidayform
+
+
 
 
 
