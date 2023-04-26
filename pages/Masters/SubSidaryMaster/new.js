@@ -7,7 +7,7 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import Swal from 'sweetalert2';
 
-export default function SubsidaryMasterForm() {
+export default function SubsidaryMasterForm({ editData }) {
 
     const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
 
@@ -15,19 +15,16 @@ export default function SubsidaryMasterForm() {
 
     const [actionType, setActionType] = useState("insert");
 
-    useEffect(() => {        
+    useEffect(() => {
         GetSubsidaryMaster();
     }, []);
 
     async function GetSubsidaryMaster() {
-        const id = sessionStorage.getItem("id");
-        if (id) {
-            // This API is used to fetch the data from GSubsidaryMaster based on id 
-            const response = await axios.get(hostURL + "Master/GetSubsidaryMasterByID?ID=" + id);
-            clearForm(response.data[0])
+        if (editData == "") {
+            clearForm()
         }
         else {
-            clearForm();
+            clearForm(editData);
         }
     }
 
@@ -46,11 +43,13 @@ export default function SubsidaryMasterForm() {
             // This API is used to insert the data from SubsidaryMaster table
             await axios.post(hostURL + "Master/InsertSubsidaryMaster", data);
             Swal.fire('Data Inserted successfully')
+            location.href = "/Masters/SubSidaryMaster"
         }
         else {
             // This API is used to Update the data from SubsidaryMaster table
             await axios.post(hostURL + "Master/UpdateSubsidaryMaster", data);
             Swal.fire('Data Updated successfully')
+            location.href = "/Masters/SubSidaryMaster"
         }
     }
 
