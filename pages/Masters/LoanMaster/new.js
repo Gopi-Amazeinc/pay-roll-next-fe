@@ -6,7 +6,7 @@ import Layout from '@/components/layout/layout.js';
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
-function LoanMasterForm() {
+function LoanMasterForm({ editData }) {
 
   let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
   const [actionType, setActionType] = useState("insert");
@@ -14,22 +14,15 @@ function LoanMasterForm() {
   const { register, handleSubmit, reset, formState } = useForm();
   const { errors } = formState;
 
-  // get functions to build form with useForm() hook
   useEffect(() => {
-    getSubSectionMasterList();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    getLoanType();
   }, []);
 
-  const getSubSectionMasterList = async () => {
-    debugger;
-    const id = sessionStorage.getItem("id");
-    if (id) {
-      const response = await axios.get(
-        hostURL + "Master/GetLoanMasterByID?ID=" + id
-      );
-      clearForm(response.data[0]);
-    } else {
+  const getLoanType = async () => {
+    if (editData == "") {
       clearForm();
+    } else {
+      clearForm(editData);
     }
   };
 
@@ -39,12 +32,12 @@ function LoanMasterForm() {
     if (actionType == "insert") {
       await axios.post(hostURL + "Master/InsertLoanMaster", data);
       Swal.fire("SubSectionMaster Inserted succefully!");
-      location.href = "/Masters/loanmasterdashboard";
+      location.href = "/Masters/LoanType";
     } else {
       let res = await axios.post(hostURL + "Master/UpdateLoanMaster", data);
       sessionStorage.removeItem("id");
       Swal.fire("SubSectionMaster updated succefully!");
-      location.href = "/Masters/loanmasterdashboard";
+      location.href = "/Masters/LoanType";
     }
   };
   const clearForm = (existingData = null) => {
