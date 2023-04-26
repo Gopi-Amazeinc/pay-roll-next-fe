@@ -4,6 +4,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
+import Layout from '@/components/layout/layout'
 
 const SSSForm = ({ editData }) => {
     const yearOptions = [

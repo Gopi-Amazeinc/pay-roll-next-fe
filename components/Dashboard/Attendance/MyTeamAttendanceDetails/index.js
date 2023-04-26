@@ -1,14 +1,25 @@
 import Link from 'next/link';
 import React from 'react';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
 const MyTeamAttendence = () => {
+    const [MyTeamAttendence, setMyTeamAttendence] = useState([]);
+    const [userID, setUserID] = useState();
+
+
+
+
     return (
         <div>
             <div className='container'>
                 <div className='row mt-3'>
                     <div className='col-lg-3 text-end'>
-                        <Link className='Heading active' href="/Attendence/attendencedetails">My Attendence Details</Link>
+                        <Link className='Heading active' href="/Attendance/AttendanceDetails">My Attendence Details</Link>
                     </div>
+                    <div className='col-lg-3'>
+            <Link className='Heading active' href="/Attendance/MyTeamAttendanceDetails">Company Attendance Details</Link>
+          </div>
                 </div>
 
                 <div className='card p-3 border-0 shadow-lg rounded-3 mt-4'>
@@ -40,28 +51,54 @@ const MyTeamAttendence = () => {
                         </div>
 
                         <div className='col-lg-3'>
-                            <button className='btn btn-primary' id='AddButton'>Upload</button><br /><p></p>
-                            <button className='btn btn-primary' id='AddButton'>Export To Excel</button>
+                            <button className='button'>Upload</button><br /><p></p>
+                            <button className='button'>Export To Excel</button>
                         </div>
                     </div>
                 </div>
 
                 <table className='table table-hover mt-2 '>
                     <thead className='bg-info text-white '>
-                        <tr>
-                            <th>Date</th>
+                        <tr style={{ whiteSpace: 'nowrap' }}>
+                            <th >Date</th>
                             <th>Staff Name</th>
                             <th>Position</th>
                             <th>Department</th>
                             <th>Sign in Type</th>
                             <th>Expected in Time</th>
                             <th>Punch in Time</th>
-                            <th>Punch in Location/IP Address</th>
+                            <th >Punch in Location/IP Address</th>
                             <th>Punched in From</th>
                             <th>Sign in Type</th>
                             <th>Expected Out Time</th>
                         </tr>
                     </thead>
+                    <tbody>
+                  {
+                    MyTeamAttendence.map((data) => {
+                      return (
+                        <tr key={data.id}>
+                          <td>{data.date}</td>
+                          <td>{data.staffName}</td>
+                          <td>{data.position}</td>
+                          <td>{data.department}</td>
+                          <td>{data.signInType}</td>
+                          <td>{data.expectedInTime}</td>
+                          <td>{data.punchInTime}</td>
+                          <td>{data.punchinip}</td>
+                          <td>{data.punchedInForm}</td>
+                          <td>{data.signInType}</td>
+                          <td>{data.expectedOutTime}</td>
+                       
+                    
+                          {/* <td>
+                              <button className='edit-btn'>Cancel</button>
+                            </td> */}
+                        </tr>
+                      )
+                    })
+                  }
+                </tbody>
                 </table>
             </div>
         </div>
