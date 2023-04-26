@@ -209,7 +209,7 @@ const Sidebar = ({ children, applyPageName }) => {
               {displayStaff && (
                 <div>
                   <Link
-                    href="/Staff/addressdetailswizard"
+                    href="/Staff/StaffDashboard"
                     className={styles.sidemenulink}
                   >
                     <button
@@ -224,7 +224,7 @@ const Sidebar = ({ children, applyPageName }) => {
                     </button>
                   </Link>
                   <Link
-                    href="/Staff/addressdetailswizard"
+                    href="/Staff/AddStaff"
                     className={styles.sidemenulink}
                   >
                     <button
