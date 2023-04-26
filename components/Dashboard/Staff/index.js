@@ -1,4 +1,3 @@
-import Link from "next/link";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -36,6 +35,25 @@ export default function StaffDashboard() {
 
 return (
     <>
+     <div className="container">
+      <br />
+      <h5 className="Heading">Barangay Master</h5>
+      <div className="card shadow-lg p-4 rounded-3 mt-4">
+        <div className="row">
+          <div className="col-lg-1">
+            <p>Filter By</p>
+          </div>
+          <div className="col-lg-4">
+            <input
+              type="text"
+              placeholder="Search"
+              className="form-control form-control-sm"
+            />
+          </div>
+        </div>
+      </div>
+      </div>
+      
     </>
 )
 
