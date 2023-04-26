@@ -1,11 +1,24 @@
 import Layout from "@/components/layout/layout"
 import Link from "next/link";
 import ApplyLeaveDashboard from '@/components/Dashboard/Requests/Applyleave/index';
+import React, { useEffect, useState } from 'react'
+import axios from "axios";
 
 // import Astyle from 'styles//Requests//applyleave.module.css';
 import { BsArrowLeftSquare } from 'react-icons/bs'
 import DropZone from "@/pages/SharedComponent/dropzone";
-export default function ApplyLeave() {
+import { useForm } from 'react-hook-form';
+
+ const ApplyLeave =()=> {
+    const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+    const [leavetype, setLeaveType] = useState([])
+    const getDropdowndata = async () => {
+        const res = await axios.get(hostURL + "Master/GetLeaveType");
+        setLeaveType(res.data);
+    }
+    useEffect(() => {
+        getDropdowndata()
+    }, []);
     return (
         <Layout>
             <Link href="/Requests/leavelistdashboard" > <BsArrowLeftSquare /> Leave</Link >
@@ -17,10 +30,16 @@ export default function ApplyLeave() {
                     </div>
                     <div className="col-lg-2">
                         <label htmlFor="">Leave Type<i className='text-danger'>*</i> </label>
-                        <select className="form-control" >
-                            <option value="" disabled>select Leave Type</option>
-                            <option value="" > Leave Type</option>
-                            <option value="" > Leave Type1</option>
+                        <select id="Department" name="Department" className='form-select'>
+                            <option value="" disabled="">
+                                Select Leave Type </option>
+                            {
+                                leavetype.map((data, index) => {
+                                    return (
+                                        <option value={data.id} key={data.id}>{data.short}</option>
+                                    )
+                                })
+                            }
                         </select>
                     </div>
                     <div className="col-lg-2">
@@ -51,12 +70,13 @@ export default function ApplyLeave() {
                     </div>
                     <div className="col-lg-10">
                         <button className="submit-button">SAVE</button>
-                       <Link href="/Requests/leavelistdashboard"><button className="close-button">CANCEL</button></Link>
+                        <Link href="/Requests/leavelistdashboard"><button className="close-button">CANCEL</button></Link>
                     </div>
                 </div>
             </div><br />
             <ApplyLeaveDashboard></ApplyLeaveDashboard>
-            
+
         </Layout>
     )
 }
+export default ApplyLeave;

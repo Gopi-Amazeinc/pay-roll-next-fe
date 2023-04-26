@@ -209,7 +209,7 @@ const Sidebar = ({ children, applyPageName }) => {
               {displayStaff && (
                 <div>
                   <Link
-                    href="/Staff/addressdetailswizard"
+                    href="/Staff/StaffDashboard"
                     className={styles.sidemenulink}
                   >
                     <button
@@ -224,7 +224,7 @@ const Sidebar = ({ children, applyPageName }) => {
                     </button>
                   </Link>
                   <Link
-                    href="/Staff/addressdetailswizard"
+                    href="/Staff/AddStaff"
                     className={styles.sidemenulink}
                   >
                     <button
@@ -368,7 +368,7 @@ const Sidebar = ({ children, applyPageName }) => {
         </button>
         {displayRequests && (
           <div>
-            <Link href="/Requests/Applyleave">
+            <Link href="/Requests/Leaverequest">
               <button
                 className={getSubStyle(51)}
                 onClick={updateActiveMenu.bind(this, {

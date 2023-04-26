@@ -159,6 +159,14 @@ const Locatordashboard = () => {
     }, [activeTabIndex]);
     return (
         <Layout>
+            <div className='row mt-3'>
+                <div className='col-lg-3 text-end'>
+                    <Link className='Heading active' href="/Requests/Locatorrequest">My OBASIS Details</Link>
+                </div>
+                {/* <div className='col-lg-3'>
+                    <Link className='Heading active' href="/Requests/Myteamlocator">Company OBASIS Details</Link>
+                </div> */}
+            </div> <br />
             <div className='card p-3 border-0 shadow-lg rounded-3 mt-4'>
                 <div className='row'>
                     <div className='col-lg-1'>
