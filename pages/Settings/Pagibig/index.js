@@ -1,5 +1,5 @@
 import React from 'react'
-import Pagibig from '@/components/Dashboard/Masters/Pagibig'
+import Pagibig from '@/components/Dashboard/Settings/Pagibig'
 import Layout from '@/components/layout/layout'
 
 function index() {
