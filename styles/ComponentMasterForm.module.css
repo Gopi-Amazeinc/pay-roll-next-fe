@@ -1,0 +1,32 @@
+#card {
+    font-weight: bold;
+    width: 98%;
+    font-size: 14px;
+    margin-left: 9px;
+    font-family: Poppins;
+}
+
+#span {
+    color: red;
+    font-family: Poppins;
+}
+
+#saveButton {
+    width: 30%;
+    float: right;
+    background-color: #3247d5;
+}
+
+#cancelButton {
+    width: 30%;
+    background-color: #3247d5;
+}
+
+#h5 {
+    color: #3247d5;
+    margin-left: 15px;
+}
+
+#Placeholder {
+    font-weight: bold;
+}
