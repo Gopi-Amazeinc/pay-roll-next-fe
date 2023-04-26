@@ -5,7 +5,7 @@ import Layout from '@/components/layout/layout.js';
 import Link from "next/link";
 import axios from "axios";
 import Swal from "sweetalert2";
-function StateMasterForm() {
+function StateMasterForm({ editData }) {
   const [actionType, setActionType] = useState("insert");
   const [country, setCountryData] = useState([]);
   const { register, handleSubmit, reset, formState } = useForm();
@@ -17,35 +17,33 @@ function StateMasterForm() {
     if (actionType == "insert") {
       await axios.post(hostURL + "Master/InsertStateType", data);  //naveen.th@amazeinc.in, Insert API for State master, to add new data
       Swal.fire("Added succesfullly");
-      location.href = "/Masters/statemasterdashboard";
+      location.href = "/Masters/StateMaster/";
     } else {
       await axios.post(hostURL + "Master/UpdateStateType", data); //naveen.th@amazeinc.in, Update API for State master, to update data
       Swal.fire("Updated succesfullly");
       sessionStorage.removeItem("stateID");
-      location.href = "/Masters/statemasterdashboard";
+      location.href = "/Masters/StateMaster/";
     }
     await axios.get(hostURL + "Master/GetStateType");
   }
 
   useEffect(() => {
-    clearForm();
-    ID = sessionStorage.getItem("stateID");
-    if (ID) {
-      getStateMasterByID();
+
+    if (editData == "") {
+      clearForm();
+    }
+    else {
+      clearForm(editData);
     }
     getCountryList();
   }, []);
 
-  const getCountryList= async() =>{
+  const getCountryList = async () => {
     let res = await axios.get(hostURL + "Master/GetCountryType"); //naveen.th@amazeinc.in, Get API for country master, to fetch data
     console.log(res.data);
     setCountryData(res.data);
   }
 
-  const getStateMasterByID = async () => {
-    let res = await axios.get(hostURL + "Master/GetStateTypeByID?ID=" + ID); //naveen.th@amazeinc.in, Get by ID API for State master, to fetch  data
-    clearForm(res.data[0]);
-  };
   function clearForm(existingData = null) {
     let etty = {
       "ID": existingData ? existingData.id : "",
