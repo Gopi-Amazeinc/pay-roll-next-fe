@@ -353,7 +353,7 @@ const Sidebar = ({ children, applyPageName }) => {
         </button>
         {displayRequests && (
           <div>
-            <Link href="/Requests/Applyleave">
+            <Link href="/Requests/Leaverequest">
               <button
                 className={getSubStyle(51)}
                 onClick={updateActiveMenu.bind(this, {
