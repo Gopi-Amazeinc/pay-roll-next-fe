@@ -49,7 +49,7 @@ const SemiMonthlyTax = () => {
     return (
         <div>
             <div className='container'>
-                <h3 className='text-primary fs-4 mt-3'>Semi Monthly Tax</h3>
+                <h3 className='Heading mt-3'>Semi Monthly Tax</h3>
 
                 <div className='card p-3 border-0 shadow-lg rounded-3 mt-4'>
                     <div className='row'>
@@ -66,7 +66,7 @@ const SemiMonthlyTax = () => {
                 <div className='row'>
                     <div className='col-lg-10'></div>
                     <div className='col-lg-2 mt-2 text-end'>
-                        <Link href="/Masters/SemiMonthlyTax/new" onClick={removeItem} className='btn btn-primary'>Add New</Link>
+                        <Link href="/Masters/SemiAnnualTax/new" onClick={removeItem} className='btn text-white' style={{ backgroundColor: "#3247d5" }}>Add New</Link>
                     </div>
 
                     <table className='table table-hover mt-2 '>
@@ -95,8 +95,8 @@ const SemiMonthlyTax = () => {
                                             <td>{data.taxdeductionamount}</td>
                                             <td>{data.year}</td>
                                             <td>
-                                                <Link href={`/Masters/SemiMonthlyTax/Edit/${data.id}`}> <button type='submit' className="btn btn-primary AddButton mb-1">Edit</button></Link>
-                                                <button onClick={deleteAnnualtax.bind(this, data.id)} type='submit' className="btn btn-primary AddButton">Delete</button>
+                                                <Link href={`/Masters/SemiMonthlyTax/Edit/${data.id}`}> <button type='submit' className='edit-btn text-white ' style={{ backgroundColor: "#3247d5" }}>Edit</button></Link>
+                                                &nbsp;<button onClick={deleteAnnualtax.bind(this, data.id)} type='submit' className='edit-btn text-white ' style={{ backgroundColor: "#3247d5" }}>Delete</button>
                                             </td>
                                         </tr>
                                     )

@@ -4,6 +4,7 @@ import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2'
 import { useEffect, useState } from 'react';
+import Styles from '@/Styles/pagibig.module.css'
 
 const Pagibig = () => {
     const [pagibigconfigaration, setpagibigconfigaration] = useState([]);
@@ -45,9 +46,9 @@ const Pagibig = () => {
         <div>
             <div>
                 <br />
-                <p >PAGIBIG Configuration</p>
+                <p id={Styles.p}>PAGIBIG Configuration</p>
 
-                <div className='card shadow-lg p-4 rounded-2 mt-4' >
+                <div className='card shadow-lg p-4 rounded-2 mt-4' id={Styles.card}>
                     <div className='row'>
                         <div className='col-lg-1'></div>
                         <div className='col-lg-4'>
@@ -59,12 +60,12 @@ const Pagibig = () => {
                 <div className='row mt-3'>
                     <div className='col-lg-10'></div>
                     <div className='col-lg-2'>
-                        <Link href="/Configuration/pagibigadd"><button onClick={clearData.bind(this)} > ADD NEW </button></Link>
+                        <Link href="/Configuration/pagibigadd"><button className={Styles.addButton} onClick={clearData.bind(this)} > ADD NEW </button></Link>
                     </div>
 
                 </div>
 
-                <table className='table  table-striped mt-3 text-center'>
+                <table id={Styles.table} className='table  table-striped mt-3 text-center'>
                     <thead>
                         <tr className='bg-info text-white '>
                             <th>Taxable income low limit</th>
@@ -84,11 +85,11 @@ const Pagibig = () => {
                                     <td>{data.year}</td>
                                     <td>
                                         <Link href={`/Masters/Pagibig/Edit/${data.id}`}>
-                                            <button >Edit</button>
+                                            <button className={Styles.actionButton} >Edit</button>
                                         </Link>
                                         &nbsp;
 
-                                        <button onClick={() => handleDelete(data.id)}>Delete</button>
+                                        <button className={Styles.actionButton} onClick={() => handleDelete(data.id)}>Delete</button>
                                     </td>
                                 </tr>
                             )

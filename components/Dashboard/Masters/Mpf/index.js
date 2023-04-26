@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import axios from "axios";
 import Swal from 'sweetalert2';
+import Styles from '@/Styles/mpf.module.css'
 
 function Mpf() {
     const [mpfDetails, setMpfDetails] = useState([]);
@@ -49,8 +50,8 @@ function Mpf() {
         <div>
             <div>
                 <br />
-                <p >MPF Configuration</p>
-                <div className='card shadow-lg p-4 rounded-2 mt-4' >
+                <p id={Styles.p}>MPF Configuration</p>
+                <div className='card shadow-lg p-4 rounded-2 mt-4' id={Styles.card}>
                     <div className='row'>
                         <div className='col-lg-1'></div>
                         <div className='col-lg-4'>
@@ -61,10 +62,10 @@ function Mpf() {
                 <div className='row mt-3'>
                     <div className='col-lg-10'></div>
                     <div className='col-lg-2'>
-                        <Link href="/Configuration/mpfadd"  > <button onClick={clearData.bind(this)} > ADD NEW</button></Link>
+                        <Link href="/Configuration/mpfadd" id={Styles.addLink} > <button id={Styles.addButton} onClick={clearData.bind(this)} > ADD NEW</button></Link>
                     </div>
                 </div>
-                <table className='table  table-striped mt-3 text-center'>
+                <table id={Styles.table} className='table  table-striped mt-3 text-center'>
                     <thead>
                         <tr className='bg-info text-white '>
                             <th>Taxable income low limit</th>
@@ -89,9 +90,9 @@ function Mpf() {
                                         <td>{data.year}</td>
                                         <td>
                                             <Link href={`/Masters/Mpf/Edit/${data.id}`} style={{ marginRight: "10px" }}>
-                                                <button className='btn btn-sm' onClick={getData.bind(this, data)}>Edit</button>
+                                                <button id={Styles.actionButton} className='btn btn-sm' onClick={getData.bind(this, data)}>Edit</button>
                                             </Link>
-                                            <button className='btn btn-sm' onClick={() => handleDelete(data.id)}>Delete</button>
+                                            <button id={Styles.actionButton} className='btn btn-sm' onClick={() => handleDelete(data.id)}>Delete</button>
                                         </td>
                                     </tr>
                                 )

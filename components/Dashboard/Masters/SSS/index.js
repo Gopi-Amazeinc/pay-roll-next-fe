@@ -1,9 +1,9 @@
 import React from 'react'
 import Link from 'next/link';
-import { AiOutlinePlusCircle } from "react-icons/ai";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useEffect, useState } from 'react';
+import Styles from '@/Styles/sss.module.css'
 
 function SSS() {
     let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
@@ -51,9 +51,9 @@ function SSS() {
         <div>
             <div>
                 <br />
-                <p >SSS Configuration</p>
+                <p id={Styles.p}>SSS Configuration</p>
 
-                <div className='card shadow-lg p-4 rounded-2 mt-4' >
+                <div className='card shadow-lg p-4 rounded-2 mt-4' id={Styles.card}>
                     <div className='row'>
                         <div className='col-lg-1'></div>
                         <div className='col-lg-4'>
@@ -68,14 +68,14 @@ function SSS() {
 
                         <Link href="/Configuration/sssconfigadd"
                             onClick={clearData.bind(this)}
-                        >
-                            <button > <AiOutlinePlusCircle size={18} />  ADD </button></Link>
+                            id={Styles.addLink} >
+                            <button id={Styles.addButton} >  ADD </button></Link>
 
                     </div>
 
                 </div>
 
-                <table i className='table  table-striped mt-3 text-center'>
+                <table id={Styles.table} className='table  table-striped mt-3 text-center'>
                     <thead>
                         <tr className='bg-info text-white '>
                             <th>Taxable income Low Limit</th>
@@ -100,13 +100,15 @@ function SSS() {
                                     <td>
                                         <Link href={`/Masters/SSS/Edit/${data.id}`}>
                                             <button
+                                                id={Styles.actionButton}
                                                 style={{ fontSize: "12px", marginRight: "5%" }}
+
                                             >
                                                 Edit
                                             </button>
                                         </Link>
                                         <button
-
+                                            id={Styles.actionButton}
                                             style={{ fontSize: "12px" }}
                                             onClick={() => handelDelete(data.id)}
                                         >

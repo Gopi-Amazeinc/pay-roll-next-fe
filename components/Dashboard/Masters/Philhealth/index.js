@@ -2,6 +2,8 @@ import React from 'react'
 import Link from 'next/link'
 import { useEffect, useState } from "react";
 import axios from 'axios'
+import Styles from '@/Styles/philhealth.module.css'
+
 function Philhealth() {
 
     const [PhilhealthDash, setPhilhealthDash] = useState([]);
@@ -50,8 +52,8 @@ function Philhealth() {
         <div>
             <div>
                 <br />
-                <p >Philhealth Configuration</p>
-                <div className='card shadow-lg p-4 rounded-3 mt-4'>
+                <p id={Styles.p}>Philhealth Configuration</p>
+                <div className='card shadow-lg p-4 rounded-3 mt-4' id={Styles.card}>
                     <div className='row'>
                         <div className='col-lg-4'>
                             <input type="text" placeholder='Search..' className='form-control form-control-md' />

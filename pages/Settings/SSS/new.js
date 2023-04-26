@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
 import Layout from '@/components/layout/layout'
-
+import Styles from '@/Styles/sssconfigadd.module.css'
 const SSSForm = ({ editData }) => {
     const yearOptions = [
         { id: 1, year: "2023" },
@@ -87,7 +87,7 @@ const SSSForm = ({ editData }) => {
     return (
         <Layout>
             <div>
-                <div>
+                <div className={Styles.row}>
                     <div className="col-md-12">
                         <div className="row">
                             <div className="col-lg-3">
@@ -101,11 +101,11 @@ const SSSForm = ({ editData }) => {
                         </div>
                         <br />
                         <form onSubmit={handleSubmit(onSubmit)}>
-                            <div className="card shadow-lg p-3">
+                            <div id={Styles.card} className="card shadow-lg p-3">
                                 <div className="row">
                                     <div className="col-lg-3">
                                         <label className="fw-bold" style={customStyles.inputLabel}>
-                                            Taxable income low limit <span>*</span>
+                                            Taxable income low limit <span id={Styles.span}>*</span>
                                         </label>
                                         <input
                                             name="lowLimit"
@@ -121,7 +121,7 @@ const SSSForm = ({ editData }) => {
                                     </div>
                                     <div className="col-lg-3">
                                         <label className="fw-bold" style={customStyles.inputLabel}>
-                                            Taxable income high limit <span >*</span>
+                                            Taxable income high limit <span id={Styles.span}>*</span>
                                         </label>
                                         <input
                                             name="highLimit"
@@ -138,7 +138,7 @@ const SSSForm = ({ editData }) => {
                                     </div>
                                     <div className="col-lg-2">
                                         <label className="fw-bold" style={customStyles.inputLabel}>
-                                            SSS_EE value <span>*</span>
+                                            SSS_EE value <span id={Styles.span}>*</span>
                                         </label>
                                         <input
                                             name="Philhealth"
@@ -155,7 +155,7 @@ const SSSForm = ({ editData }) => {
                                     </div>
                                     <div className="col-lg-2">
                                         <label className="fw-bold" style={customStyles.inputLabel}>
-                                            SSS_ER value <span >*</span>
+                                            SSS_ER value <span id={Styles.span}>*</span>
                                         </label>
                                         <input
                                             name="Philhealth"
@@ -172,7 +172,7 @@ const SSSForm = ({ editData }) => {
                                     </div>
                                     <div className="col-lg-2">
                                         <label className="fw-bold" style={customStyles.inputLabel}>
-                                            SSS_EC value <span >*</span>
+                                            SSS_EC value <span id={Styles.span}>*</span>
                                         </label>
                                         <input
                                             name="Philhealth"
@@ -189,7 +189,7 @@ const SSSForm = ({ editData }) => {
                                     </div>
                                     <div className="col-lg-2">
                                         <label className="fw-bold" style={customStyles.inputLabel}>
-                                            Year<span >*</span>
+                                            Year<span id={Styles.span}>*</span>
                                         </label>
                                         <select className="form-select"
                                             {...register("Year", { required: true })}
@@ -216,14 +216,14 @@ const SSSForm = ({ editData }) => {
 
                                     <div className="col-lg-1">
                                         <Link href="/Configuration/sss">
-                                            <button >Cancel</button>
+                                            <button id={Styles.Cancel}>Cancel</button>
                                         </Link>
                                     </div>
                                     <div className="col-lg-1">
                                         {actionType == "insert" && (
                                             <button
                                                 type="submit"
-
+                                                id={Styles.Save}
                                             >
                                                 Save
                                             </button>
@@ -231,7 +231,7 @@ const SSSForm = ({ editData }) => {
                                         {actionType == "update" && (
                                             <button
                                                 type="submit"
-
+                                                id={Styles.Save}
                                             >
                                                 Update
                                             </button>

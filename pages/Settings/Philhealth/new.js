@@ -3,6 +3,8 @@ import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Link from 'next/link';
+import Styles from '@/Styles/philhealthadd.module.css'
+
 import Layout from '@/components/layout/layout'
 
 const PhilhealthForm = ({ editData }) => {
@@ -51,9 +53,9 @@ const PhilhealthForm = ({ editData }) => {
         <Layout>
             <div>
                 <br />
-                <p >Phihealth Configuration Form</p>
+                <p id={Styles.p}>Phihealth Configuration Form</p>
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    <div className="card shadow-lg p-3">
+                    <div id={Styles.card} className="card shadow-lg p-3">
                         <div className="row">
                             <div className="col-lg-3">
                                 <label>
