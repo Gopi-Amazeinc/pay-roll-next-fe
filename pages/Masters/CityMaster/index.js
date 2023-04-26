@@ -1,5 +1,5 @@
 import React from 'react'
-import CityMasterDash from '../../../components/Dashboard/Masters/CityMaster/index'
+import CityMasterDash from '../../../components/Dashboard/Masters/CityMaster/citymaster'
 
 const CityMaster = () => {
     return (
