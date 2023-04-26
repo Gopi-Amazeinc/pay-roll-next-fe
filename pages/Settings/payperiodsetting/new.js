@@ -4,8 +4,8 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import { useForm } from 'react-hook-form';
 import Link from 'next/link';
-
-export default function PayPeriodSettingform() {
+import Layout from '@/components/layout/layout.js';
+export default function PayPeriodSettingform({editData}) {
 
     const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
     const { register, handleSubmit, reset, formState } = useForm();
@@ -14,19 +14,27 @@ export default function PayPeriodSettingform() {
     const [actionType, setActionType] = useState("insert");
 
 
+    // useEffect(() => {
+    //     const GetPayperiodsettingByID = async () => {
+    //         debugger;
+    //         const id = sessionStorage.getItem("id");
+    //         if (id) {
+    //             const response = await axios.get(hostURL + "Payroll/GetPayPeriodSettingByID?ID=" + id);
+    //             clearForm(response.data[0]);
+    //         } else {
+    //             clearForm();
+    //         }
+    //     };
+    //     GetPayperiodsettingByID();
+    // // eslint-disable-next-line react-hooks/exhaustive-deps
+    // }, [1]);
+
     useEffect(() => {
-        const GetPayperiodsettingByID = async () => {
-            debugger;
-            const id = sessionStorage.getItem("id");
-            if (id) {
-                const response = await axios.get(hostURL + "Payroll/GetPayPeriodSettingByID?ID=" + id);
-                clearForm(response.data[0]);
-            } else {
-                clearForm();
-            }
-        };
-        GetPayperiodsettingByID();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+        if (editData == "") {
+            clearForm();
+        } else {
+            clearForm(editData);
+        }
     }, [1]);
 
     function clearForm(payperiodsetting = null) {
@@ -59,7 +67,7 @@ export default function PayPeriodSettingform() {
     }
 
     return (
-        
+        <Layout>
             <div>
                 <h3 className='text-primary fs-5 mt-3'>Pay Period Settings</h3>
                 <div className='container-fluid'>
@@ -136,7 +144,7 @@ export default function PayPeriodSettingform() {
                     </form>
                 </div>
             </div>
-        
+        </Layout>
     )
 }
 

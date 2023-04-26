@@ -5,7 +5,7 @@ import Layout from '@/components/layout/layout.js';
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import Swal from 'sweetalert2';
-function Otmaster() {
+function Otmaster({ editData }) {
 
   const { register, handleSubmit, reset, formState } = useForm();
   const { errors } = formState;
@@ -13,15 +13,11 @@ function Otmaster() {
 
   useEffect(() => {
     async function otList() {
-      const id = sessionStorage.getItem("id");
-      if (id) {
-        let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-        // This API is used to fetch the dashboard data from OTRates table based on ID
-        const response = await axios.get(hostURL + "Master/GetOTRatesByID?ID=" + id);
-        clearForm(response.data[0])
+      if (editData == "") {
+        clearForm()
       }
       else {
-        clearForm();
+        clearForm(editData);
       }
     }
     otList();
@@ -50,16 +46,18 @@ function Otmaster() {
         title: "Hurray..",
         text: "Data was inserted...!",
       });
+      location.href = "/Masters/OtMaster"
     }
     else {
       // This API is used to update the data in the OTRates table
+      debugger
       await axios.post(hostURL + "Master/UpdateOTRates", data);
       Swal.fire({
         icon: "success",
         title: "Hurray..",
         text: "Data was updated...!",
       });
-      <Link href="/Masters/otratedashboard"></Link>
+      location.href = "/Masters/OtMaster"
 
     }
   }

@@ -6,7 +6,7 @@ import axios from "axios";
 import Link from "next/link";
 import Swal from "sweetalert2";
 
-const PositionMasterDetails = () => {
+const PositionMasterDetails = ({ editData }) => {
 
     const { register, handleSubmit, reset, formState } = useForm();
     const { errors } = formState;
@@ -39,7 +39,7 @@ const PositionMasterDetails = () => {
             await axios.post(hostURL + 'Master/InsertRoleType', data); //gurukiran@amazeinc.in, api call to insert the data
             Swal.fire({ icon: "success", text: "Data Successfully added" })
 
-            location.href = ("/Masters/positionmasterdashboard");
+            location.href = "/Masters/PositionMaster";
         }
 
 
@@ -61,6 +61,7 @@ const PositionMasterDetails = () => {
                         'Your file has been updated.',
                         'success'
                     )
+                    location.href = "/Masters/PositionMaster";
                 }
             })
 
@@ -71,14 +72,11 @@ const PositionMasterDetails = () => {
     }
     useEffect(() => {
         async function getPositionMasterbyID() {
-            debugger
-            const id = sessionStorage.getItem("id");
-            if (id) {
-                const response = await axios.get(hostURL + 'Master/GetRoleTypeByID?ID=' + id); //getByID api call
-                clearForm(response.data[0])
+            if (editData == "") {
+                clearForm()
             }
             else {
-                clearForm();
+                clearForm(editData);
             }
         }
         getPositionMasterbyID();
@@ -143,7 +141,7 @@ const PositionMasterDetails = () => {
                                         </div>
                                         <div className="col-lg-2">
 
-                                            <Link href="/Masters/PositionMasteR"> <button id={Styles.actionBtn} tabindex="0">CANCEL</button></Link>
+                                            <Link href="/Masters/PositionMaster"> <button id={Styles.actionBtn} tabindex="0">CANCEL</button></Link>
                                         </div>
                                         <div className="col-lg-2">
                                             {actionType == "insert" && (
