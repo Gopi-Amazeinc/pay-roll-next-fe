@@ -162,10 +162,10 @@ const Myteamlocatordashboard = () => {
 
     return (
         <div>
-            <p>Here Aprroved and Rejected APi or Pending </p>
+            <h3 style={{color:"red"}}>Here Approved and Rejected API are yet to be done </h3>
             <div className='row mt-3'>
                 <div className='col-lg-3 text-end'>
-                    <Link className='Heading active' href="/Requests/locatordashboard">My OBASIS Details</Link>
+                    <Link className='Heading active' href="/Requests/Locatorrequest">My OBASIS Details</Link>
                 </div>
                 <div className='col-lg-3'>
                     <Link className='Heading active' href="/Requests/myteamlocatordetails">Company OBASIS Details</Link>
@@ -200,7 +200,7 @@ const Myteamlocatordashboard = () => {
                     <div className="flex ">
                         {tabsData.map((tab, idx) => {
                             return (
-                                <button key={idx} ref={(el) => (tabsRef.current[idx] = el)} className='btn' onClick={() => setActiveTabIndex(idx)} >
+                                <button key={idx} ref={(el) => (tabsRef.current[idx] = el)} className='btn btn-primary' onClick={() => setActiveTabIndex(idx)} >
                                     {tab.label}
                                 </button>
                             );

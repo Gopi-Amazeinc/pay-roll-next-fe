@@ -19,7 +19,7 @@ const SubSectionMaster = () => {
   };
   useEffect(() => {
     getData();
-  }, [1]);
+  }, []);
 
   const getData= async ()=> {
     let res = await axios.get(hostURL + "Master/GetSubSectionMaster");

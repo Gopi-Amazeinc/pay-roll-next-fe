@@ -35,7 +35,7 @@ const AttendenceDetails = () => {
       // }
     }
     getAttendenceByID();
-  }, [1]);
+  }, []);
 
   return (
 
@@ -45,10 +45,10 @@ const AttendenceDetails = () => {
         <div className='row mt-3'>
           <h2>Yet to bind</h2>
           <div className='col-lg-3 text-end'>
-            <Link className='Heading active' href="/Attendence/attendencedetails">My Attendence Details</Link>
+            <Link className='Heading active' href="/Attendance/AttendanceDetails">My Attendance Details</Link>
           </div>
           <div className='col-lg-3'>
-            <Link className='Heading active' href="/Attendence/myteamattendence">Company Attendence Details</Link>
+            <Link className='Heading active' href="/Attendance/MyTeamAttendanceDetails">Company Attendance Details</Link>
           </div>
         </div>
 

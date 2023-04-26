@@ -1,0 +1,28 @@
+.commonTable{
+    /* font-family: poppins; */
+    border-collapse: collapse;
+    width: 100%;
+    background-color: #ffffff;
+    border-radius: 15px;
+    /* font-size: 13px; */
+    /* font-style: normal; */
+    color: #0c275a;
+    line-height: 17px;
+    font-size: 14px;
+  }
+  .commonTable td,
+  .commonTable  th {
+    padding: 8px;
+    overflow-wrap: anywhere;
+  }  
+
+  .commonTable  tr {
+    border-bottom: 0.5px solid #737373;
+  }
+  .commonTable  th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: left;
+    background-color: #02cfff!important;
+    color: white;
+  }

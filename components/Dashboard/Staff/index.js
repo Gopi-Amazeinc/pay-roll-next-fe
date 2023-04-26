@@ -12,7 +12,7 @@ export default function StaffDashboard() {
 
   useEffect(() => {
     getStaff();
-  }, [1]);
+  }, []);
 
   const getData = (data) => {
     sessionStorage.setItem("id", data.id);
