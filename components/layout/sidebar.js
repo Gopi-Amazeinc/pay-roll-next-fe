@@ -255,11 +255,11 @@ const Sidebar = ({ children, applyPageName }) => {
                       className={getSubStyle(24)}
                       onClick={updateActiveMenu.bind(this, {
                         id: 24,
-                        name: "Payroll bulk upload",
+                        name: "Component Bulk Upload",
                       })}
                     >
                       <FiUpload style={customStyles.icons} />
-                      Payroll bulk upload
+                      Component Bulk Upload
                     </button>
                   </Link>
                 </div>
@@ -343,6 +343,21 @@ const Sidebar = ({ children, applyPageName }) => {
                 Attendance Correction
               </button>
             </Link>
+            <Link
+              href="/Attendance/ShiftDetails"
+              className={styles.sidemenulink}
+            >
+              <button
+                className={getSubStyle(44)}
+                onClick={updateActiveMenu.bind(this, {
+                  id: 44,
+                  name: "Shift Details",
+                })}
+              >
+                <BiCalendarExclamation style={customStyles.icons} />
+                Shift Details
+              </button>
+            </Link>
           </div>
         )}
 
@@ -353,7 +368,7 @@ const Sidebar = ({ children, applyPageName }) => {
         </button>
         {displayRequests && (
           <div>
-            <Link href="/Requests/Applyleave">
+            <Link href="/Requests/Leaverequest">
               <button
                 className={getSubStyle(51)}
                 onClick={updateActiveMenu.bind(this, {

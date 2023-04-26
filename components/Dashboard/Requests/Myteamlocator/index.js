@@ -27,6 +27,21 @@ const Myteamlocatordashboard = () => {
     useEffect(() => {
         getStafflocator()
     }, [1])
+
+
+    const approvRequest = async (id) => {
+        debugger;
+        await axios.post(hostURL + "Payroll/UpdateLocatorStatus?ID=" + id+"&ApproveStatus=Approved")
+        Swal.fire(" Locator Details Approved")
+        getStafflocator()
+    }
+    const handleRowSelect = (event, id) => {
+        if (id === 'all') {
+            setSelectedRows(event.target.checked ? Stafflocator.map(data => data.id) : []);
+        } else {
+            setSelectedRows(selectedRows.includes(id) ? selectedRows.filter(rowId => rowId !== id) : [...selectedRows, id]);
+        }
+    };
     const tabsData = [
         {
             label: 'PENDING',
@@ -162,7 +177,7 @@ const Myteamlocatordashboard = () => {
 
     return (
         <div>
-            <h3 style={{color:"red"}}>Here Approved and Rejected API are yet to be done </h3>
+            <h3 style={{ color: "red" }}>Here Approved and Rejected API are yet to be done </h3>
             <div className='row mt-3'>
                 <div className='col-lg-3 text-end'>
                     <Link className='Heading active' href="/Requests/Locatorrequest">My OBASIS Details</Link>

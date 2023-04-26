@@ -4,7 +4,11 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import Modal from 'react-modal';
 import { AiOutlineClose } from 'react-icons/ai'
-const Compensationtimeout = () => {
+import leave from "../../../../pages/Requests/Compensationtimeout/compensation.module.css"
+
+function Compensationtimeout() {
+
+
     const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -52,7 +56,126 @@ const Compensationtimeout = () => {
         },
     };
 
+
+    let staffID;
+
+    const getPendingData = async () => {
+        staffID = sessionStorage.getItem("userID");
+        const res = await axios.get(hostURL + "Payroll/GetPendingCompensationTimeOutByStaffID?UserID=" + staffID)
+        sessionStorage.setItem("supervisorID", res.data[0].supervisor)
+        getPending(res.data)
+    }
+
+    const getApprovedData = async () => {
+        staffID = sessionStorage.getItem("userID");
+        const res = await axios.get(hostURL + "Payroll/GetApproveCompensationTimeOutByStaffID?UserID=" + staffID)
+        getApproved(res.data)
+    }
+
+    const getRejectedData = async () => {
+        staffID = sessionStorage.getItem("userID");
+        const res = await axios.get(hostURL + "Payroll/GetRejectCompensationTimeOutByStaffID?UserID=" + staffID)
+        getRejected(res.data)
+    }
+
+    const getManagerApprovedData = async () => {
+        const res = await axios.get(hostURL + "Payroll/GetApproveCompensationTimeOutBySupervisor?UserID=" + sessionStorage.getItem("supervisorID"))
+        console.log(res.data)
+        getManagerApproved(res.data)
+    }
+
+    const getManagerRejectedData = async () => {
+        const res = await axios.get(hostURL + "Payroll/GetRejectCompensationTimeOutBySupervisor?UserID=" + sessionStorage.getItem("supervisorID"))
+        console.log(res.data)
+        getManagerRejected(res.data)
+    }
+
+    const getPendingCompensation = async () => {
+        staffID = sessionStorage.getItem("userID");
+        const res = await axios.get(hostURL + "Payroll/GetPendingCompensationTimeOutBySupervisor?UserID=" + sessionStorage.getItem("supervisorID"))
+        console.log(res.data)
+        getComponsation(res.data)
+    }
+
+    const Delete = (id) => {
+
+        Swal.fire({
+            title: 'Are You Sure To Cancel?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Cancel it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios.get(hostURL + "Payroll/DeleteCompensationTimeOut?id=" + id)
+                Swal.fire({
+                    icon: "success",
+                    titleText: "Cancelled Successfully"
+                })
+                getPendingData();
+            }
+        }
+        )
+    }
+
+    const approve = (id) => {
+        Swal.fire({
+            title: 'Confirm To Approve?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Approve it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                axios.post(hostURL + "Payroll/ApproveCompensationTimeOut?id=" + id)
+                Swal.fire({
+                    icon: "success",
+                    titleText: "Approved Successfully"
+                })
+                getPendingCompensation();
+            }
+        })
+    }
+    let id;
+    const reject = () => {
+        id = sessionStorage.getItem("id")
+        alert(id)
+        // Swal.fire({
+        //     title: 'Confirm To Reject?',
+        //     text: "You won't be able to revert this!",
+        //     icon: 'warning',
+        //     showCancelButton: true,
+        //     confirmButtonColor: '#3085d6',
+        //     cancelButtonColor: '#d33',
+        //     confirmButtonText: 'Yes, Reject it!'
+        // }).then((result) => {
+        //     if (result.isConfirmed) {
+        //         staffID = sessionStorage.getItem("userID");
+        //         axios.post(hostURL + "Payroll/RejectCompensationTimeOut?id=" + id)
+        //         Swal.fire({
+        //             icon: "success",
+        //             titleText: "Rejected Successfully"
+        //         })
+        //         getPendingCompensation();
+        //     }
+        // })
+    }
+
+    useEffect(() => {
+        getPendingData()
+        getPendingCompensation();
+        getApprovedData();
+        getRejectedData();
+        getManagerApprovedData();
+        getManagerRejectedData();
+    }, [1])
+
     return (
+
         <div className='container'>
             <h3 className='text-primary fs-5 mt-3'>Compensation Time Out</h3>
             <div className='card p-3 border-0 shadow-lg rounded-3 mt-4'>
@@ -66,7 +189,7 @@ const Compensationtimeout = () => {
                     </div>
 
                     <div className='col-lg-4'>
-                        <Link href="/Requests/compensationtimeoutform"><button className='btn btn-primary AddButton'>Add Compensation Time Out</button></Link>
+                        <Link href="/Requests/Compensationtimeout/new"><button className='btn btn-primary AddButton'>Add Compensation Time Out</button></Link>
                     </div>
                 </div>
             </div>
@@ -74,9 +197,9 @@ const Compensationtimeout = () => {
             <div className='row mt-3'>
                 <div className='col-lg-4'>
                     <div className='btn-group'>
-                        <button onClick={togglePending} className='btn btn-primary' >Pending</button>
-                        <button onClick={toggleApproved} className='btn btn-primary'  >Approved</button>
-                        <button onClick={toggleRejected} className='btn btn-primary' >Rejected</button>
+                        <button onClick={togglePending} className={'btn ' + leave.btn} >Pending</button>
+                        <button onClick={toggleApproved} className={'btn ' + leave.btn} >Approved</button>
+                        <button onClick={toggleRejected} className={'btn ' + leave.btn}>Rejected</button>
                     </div>
                 </div>
             </div>
@@ -103,7 +226,7 @@ const Compensationtimeout = () => {
                             <button type='submit' className=' edit-btn mt-5'>Cancel</button>
                         </div>
                         <div className='col-lg-2 mb-3'>
-                            <button type='submit' className='edit-btn mt-5'>Reject </button>
+                            <button onClick={reject} type='submit' className='edit-btn mt-5'>Reject </button>
                         </div>
                     </div>
                 </div>
@@ -312,6 +435,8 @@ const Compensationtimeout = () => {
                 }
             </div>
         </div>
+
     )
 }
+
 export default Compensationtimeout
