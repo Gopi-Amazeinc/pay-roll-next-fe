@@ -1,5 +1,5 @@
 import React from 'react'
-import Styles from "../../styles/payrollsummary.module.css";
+import Styles from "../../../styles/payrollsummary.module.css";
 import table from "/styles/table.module.css";
 
 import Layout from '@/components/layout/layout.js';
