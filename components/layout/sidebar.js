@@ -53,6 +53,7 @@ const Sidebar = ({ children, applyPageName }) => {
   let [displayComapnay, togleCompany] = useState(false);
   let [displayReports, togleReports] = useState(false);
   let [dispalyPagibig, togglePagibig] = useState(false)
+  let [dispalyTaxReports, toggleTaxReports] = useState(false)
   // let [displayHolidays, toggleHolidays] = useState(false)
   // sessionStorage.setItem("roleID", roleID);
 
@@ -141,6 +142,11 @@ const Sidebar = ({ children, applyPageName }) => {
   const togglePagibigMenu = () => {
     togglePagibig(!dispalyPagibig);
     sessionStorage.setItem("toggglePagibig", dispalyPagibig);
+  };
+
+  const toggleTaxReportsMenu = () => {
+    toggleTaxReports(!dispalyTaxReports);
+    sessionStorage.setItem("toggleTaxReports", dispalyTaxReports);
   };
 
   const toggleOtMenu = () => {
@@ -1238,7 +1244,7 @@ const Sidebar = ({ children, applyPageName }) => {
                         </button>
                       </Link>
 
-                      <Link href="/Reports/Pagibig/strlf">
+                      <Link href="/Reports/Pagibig/stlrf">
                         <button
                           className={getSubStyle(1006)}
                           onClick={updateActiveMenu.bind(this, {
@@ -1251,7 +1257,7 @@ const Sidebar = ({ children, applyPageName }) => {
                         </button>
                       </Link>
 
-                      <Link href="/Reports/Pagibig/strlfexcel">
+                      <Link href="/Reports/Pagibig/stlrfexcel">
                         <button
                           className={getSubStyle(1007)}
                           onClick={updateActiveMenu.bind(this, {
@@ -1261,6 +1267,29 @@ const Sidebar = ({ children, applyPageName }) => {
                         >
                           <TbReportAnalytics style={customStyles.icons} />
                           STLRF EXCEL
+                        </button>
+                      </Link>
+                    </div>
+                  )
+                }
+
+                <button className={styles.sidesubmenu} onClick={toggleTaxReportsMenu}>
+                  <TbReportSearch style={customStyles.icons} />
+                  Tax Reports
+                </button>
+                {
+                  dispalyTaxReports && (
+                    <div>
+                      <Link href="/Reports/TaxReports/withholdingtaxreport">
+                        <button
+                          className={getSubStyle(2001)}
+                          onClick={updateActiveMenu.bind(this, {
+                            id: 2001,
+                            name: "WITHHOLDING TAX",
+                          })}
+                        >
+                          <TbReportAnalytics style={customStyles.icons} />
+                          WithHolding Tax
                         </button>
                       </Link>
                     </div>
