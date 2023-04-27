@@ -82,7 +82,7 @@ function MpfForm({ editData }) {
                     <div className={'card shadow-lg p-3 ' + Styles.card}>
                         <div className='row'>
                             <div className='col-lg-3'>
-                                <label>Taxable income low limit <span id={Styles.span}>*</span></label>
+                                <label>Taxable income low limit <span className={Styles.span}>*</span></label>
                                 <input type="tel" placeholder="Enter Low limit" name="Taxiableincomelowlimit" id="Taxiableincomelowlimit" className="form-control " {...register("Taxiableincomelowlimit", { required: "This field is required", pattern: { value: '^[0-9 .]+$', message: "Please enter a valid Detail" } })} />
                                 {errors.Taxiableincomelowlimit && <p className="error-message" style={{ color: "red" }}>{errors.Taxiableincomelowlimit.message}</p>}
                             </div>

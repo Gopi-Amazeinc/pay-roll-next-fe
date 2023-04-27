@@ -89,9 +89,9 @@ function Philhealth() {
                                         <td>{data.phihealthvalue}</td>
                                         <td>{data.year}</td>
                                         <td>
-                                            <Link href={`/Settings/Philhealth/Edit/${data.id}`}><button className="actionButton"  > Edit</button></Link>
+                                            <Link href={`/Settings/Philhealth/Edit/${data.id}`}><button className={Styles.actionButton}> Edit</button></Link>
                                             &nbsp;
-                                            <button className="actionButton" onClick={() => DeletePhillhealth(data.id)} > Delete{" "}</button>
+                                            <button className={Styles.actionButton} onClick={() => DeletePhillhealth(data.id)} > Delete{" "}</button>
                                         </td>
                                     </tr>
                                 );

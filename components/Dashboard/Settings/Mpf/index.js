@@ -62,7 +62,7 @@ function Mpf() {
                 <div className='row mt-3'>
                     <div className='col-lg-10'></div>
                     <div className='col-lg-2'>
-                        <Link href="/Settings/Mpf/new" id={Styles.addLink} > <button id={Styles.addButton} onClick={clearData.bind(this)} > ADD NEW</button></Link>
+                        <Link href="/Settings/Mpf/new" className={Styles.addLink} > <button className={Styles.addButton} onClick={clearData.bind(this)} > ADD NEW</button></Link>
                     </div>
                 </div>
                 <table className={'table  table-striped mt-3 text-center ' + Styles.table}>
