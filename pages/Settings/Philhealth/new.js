@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Link from 'next/link';
 import Styles from '@/Styles/philhealthadd.module.css'
-
+import Swal from 'sweetalert2';
 import Layout from '@/components/layout/layout'
 
 const PhilhealthForm = ({ editData }) => {
@@ -43,10 +43,11 @@ const PhilhealthForm = ({ editData }) => {
             try {
                 await axios.post(hostURL + "HR/InsertPhihealthconfogaration", data);
             } catch (error) { }
+            Swal.fire("Added succesfullly");
             location.href = '/Settings/Philhealth';
         } else {
             await axios.post(hostURL + "HR/UpdatePhihealthconfogaration", data);
-            alert("updated");
+            Swal.fire("Updated succesfullly");
             location.href = '/Settings/Philhealth';
         }
     }
