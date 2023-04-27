@@ -60,7 +60,7 @@ const Pagibig = () => {
                 <div className='row mt-3'>
                     <div className='col-lg-10'></div>
                     <div className='col-lg-2'>
-                        <Link href="/Setiings/Pagibig/new"><button className={Styles.addButton} onClick={clearData.bind(this)} > ADD NEW </button></Link>
+                        <Link href="/Settings/Pagibig/new"><button className={Styles.addButton} onClick={clearData.bind(this)} > ADD NEW </button></Link>
                     </div>
 
                 </div>
