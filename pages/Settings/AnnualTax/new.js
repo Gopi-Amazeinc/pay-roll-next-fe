@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import axios from 'axios'
 import Link from "next/link";
 import Swal from 'sweetalert2';
-import Styles from '@/Styles/AnnualTaxForm.module.css'
+import Styles from '../../../styles/annualtaxform.module.css'
 
 
 const AnnualTaxForm = ({ editData }) => {

@@ -2,7 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 import { useEffect, useState } from "react";
 import axios from 'axios'
-import Styles from '@/Styles/philhealth.module.css'
+import Styles from '../../../../styles/philhealth.module.css'
 
 function Philhealth() {
 

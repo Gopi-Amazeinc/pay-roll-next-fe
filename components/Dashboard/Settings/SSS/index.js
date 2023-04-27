@@ -3,7 +3,7 @@ import Link from 'next/link';
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useEffect, useState } from 'react';
-import Styles from '@/Styles/sss.module.css'
+import Styles from '../../../../styles/sss.module.css'
 
 function SSS() {
     let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
