@@ -3,6 +3,7 @@ import Layout from '@/components/layout/layout'
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import Link from 'next/link';
 
 const SemiMonthlyTaxForm = ({ editData }) => {
 
@@ -15,7 +16,7 @@ const SemiMonthlyTaxForm = ({ editData }) => {
         console.log(JSON.stringify(data))
         if (actionType == "insert") {
             await axios.post(hostURL + "HR/InsertTaxconfigarationsemimonth", data) // Inserting new data [Shashank]
-            location.href = "/Masters/SemiMonthlyTax";
+            location.href = "/Settings/SemiMonthlyTax";
             Swal.fire({
                 icon: 'success',
                 title: 'Added Successfully',
@@ -37,7 +38,7 @@ const SemiMonthlyTaxForm = ({ editData }) => {
                         icon: "success",
                         titleText: "Updated Successfully"
                     })
-                    location.href = "/Masters/SemiMonthlyTax";
+                    location.href = "/Settings/SemiMonthlyTax";
 
                 }
             })
@@ -74,7 +75,7 @@ const SemiMonthlyTaxForm = ({ editData }) => {
     }, [1]);
     return (
         <Layout>
-            <h3 className='text-primary fs-5 mt-3'>Semi Monthly Form</h3>
+            <h3 className='Heading mt-3'>Semi Monthly Form</h3>
             <div className='container'>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className='row  mt-4 shadow-lg rounded-3 p-3 '>
@@ -136,17 +137,17 @@ const SemiMonthlyTaxForm = ({ editData }) => {
                         <div className='col-lg-2 mt-2 text-end'>
                             {
                                 actionType == "insert" && (
-                                    <button type='submit' className='btn btn-primary AddButton'>Save</button>
+                                    <button type='submit' className=' AddButton'>Save</button>
                                 )
                             }
                             {
                                 actionType == "update" && (
-                                    <button type="submit" className='btn btn-primary AddButton'>Update</button>
+                                    <button type="submit" className=' AddButton'>Update</button>
                                 )
                             }
                         </div>
                         <div className='col-lg-2 mt-2'>
-                            <button className='btn btn-primary AddButton'>Cancel</button>
+                            <Link href='/Settings/SemiMonthlyTax'><button className=' AddButton'>Cancel</button></Link>
                         </div>
 
                     </div>

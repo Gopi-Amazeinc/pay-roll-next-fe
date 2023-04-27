@@ -1,6 +1,6 @@
 import React from 'react'
-import Layout from '@/Components/layout';
-import Style from '../../../styles/ReportsStyle/m1excel.module.css';
+import Layout from '../../../components/layout/layout';
+import Style from '../../../styles/m1excel.module.css';
 
 function M1excel() {
   return (
@@ -43,7 +43,7 @@ function M1excel() {
               </select>
             </div>
             <div className='col-lg-2'>
-            <select id="Department" name="Department" className='form-select'>
+              <select id="Department" name="Department" className='form-select'>
                 <option value="" disabled=""> Select </option>
                 <option>1</option>
                 <option>2</option>

@@ -58,7 +58,7 @@ const AnnualTax = () => {
                 <div className='row'>
                     <div className='col-lg-10'></div>
                     <div className='col-lg-2 mt-2 text-end'>
-                        <Link href="/Masters/AnnualTax/new" onClick={clearSession} className='btn text-white' style={{ backgroundColor: "#3247d5" }} >Add New</Link>
+                        <Link href="/Settings/AnnualTax/new" onClick={clearSession} className='btn text-white' style={{ backgroundColor: "#3247d5" }} >Add New</Link>
                     </div>
 
                     <table className='table table-hover mt-2 '>
@@ -88,7 +88,7 @@ const AnnualTax = () => {
                                             <td>{data.taxdeductionamount}</td>
                                             <td>{data.year}</td>
                                             <td>
-                                                <Link href={`/Masters/AnnualTax/Edit/${data.id}`}>
+                                                <Link href={`/Settings/AnnualTax/Edit/${data.id}`}>
                                                     <button
                                                         className='edit-btn text-white ' style={{ backgroundColor: "#3247d5" }}
                                                     // onClick={edit.bind(this, data.id)}

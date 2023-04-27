@@ -1,6 +1,6 @@
 import React from 'react'
-import Layout from '@/Components/layout';
-import Style from '../../../styles/ReportsStyle/pagibigmonthly.module.css';
+import Layout from '../../../components/layout/layout';
+import Style from '../../../styles/pagibigmonthly.module.css';
 
 
 function Pagibigmonthly() {

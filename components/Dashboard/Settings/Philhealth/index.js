@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { useEffect, useState } from "react";
 import axios from 'axios'
 import Styles from '../../../../styles/philhealth.module.css'
+import Swal from 'sweetalert2';
 
 function Philhealth() {
 
@@ -40,7 +41,7 @@ function Philhealth() {
                 hostURL + `HR/DeletePhihealthconfogaration?id=${id}`
             );
             console.log(res.data);
-            alert("Data Deleted Sucessfully");
+            Swal.fire("Deleted succesfullly");
             getPhilhealthDash();
         } catch (error) {
             console.error(error);
@@ -52,8 +53,8 @@ function Philhealth() {
         <div>
             <div>
                 <br />
-                <p id={Styles.p}>Philhealth Configuration</p>
-                <div className='card shadow-lg p-4 rounded-3 mt-4' id={Styles.card}>
+                <p className={Styles.p}>Philhealth Configuration</p>
+                <div className={'card shadow-lg p-4 rounded-3 mt-4 ' + Styles.card}>
                     <div className='row'>
                         <div className='col-lg-4'>
                             <input type="text" placeholder='Search..' className='form-control form-control-md' />
@@ -64,7 +65,7 @@ function Philhealth() {
                 <div className='row mt-3'>
                     <div className='col-lg-11'></div>
                     <div className='col-lg-1'>
-                        <Link href="/Configuration/philhealthadd" >  <button onClick={clearFormData.bind(this)}>  ADD </button></Link>
+                        <Link href="/Settings/Philhealth/new" >  <button className={Styles.addButton} onClick={clearFormData.bind(this)}>  ADD </button></Link>
                     </div>
 
                 </div>
@@ -89,9 +90,9 @@ function Philhealth() {
                                         <td>{data.phihealthvalue}</td>
                                         <td>{data.year}</td>
                                         <td>
-                                            <Link href={`/Masters/Philhealth/Edit/${data.id}`}><button className="btn btn-primary"  > Edit</button></Link>
+                                            <Link href={`/Settings/Philhealth/Edit/${data.id}`}><button className={Styles.actionButton}> Edit</button></Link>
                                             &nbsp;
-                                            <button className="btn btn-primary" onClick={() => DeletePhillhealth(data.id)} > Delete{" "}</button>
+                                            <button className={Styles.actionButton} onClick={() => DeletePhillhealth(data.id)} > Delete{" "}</button>
                                         </td>
                                     </tr>
                                 );

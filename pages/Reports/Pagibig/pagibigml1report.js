@@ -1,6 +1,6 @@
 import React from 'react'
-import Layout from '@/Components/layout';
-import Style from '../../../styles/ReportsStyle/pagibigml1.module.css';
+import Layout from '../../../components/layout/layout';
+import Style from '../../../styles/pagibigml1.module.css';
 
 function Pagibigml1report() {
   return (

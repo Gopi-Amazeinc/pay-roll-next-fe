@@ -1,6 +1,6 @@
 import React from 'react'
-import Layout from '@/Components/layout';
-import Style from '../../../styles/ReportsStyle/m1mcrf.module.css';
+import Layout from '../../../components/layout/layout';
+import Style from '../../../styles/m1mcrf.module.css';
 
 function M1mcrf() {
   return (

@@ -1,6 +1,6 @@
 import React from 'react'
-import Layout from '@/Components/layout';
-import Style from '../../../styles/ReportsStyle/pagibigp2.module.css';
+import Layout from '../../../components/layout/layout';
+import Style from '../../../styles/pagibigp2.module.css';
 
 
 function Pagibigp2report() {

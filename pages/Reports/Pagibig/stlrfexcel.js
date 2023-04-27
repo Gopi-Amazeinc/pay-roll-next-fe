@@ -1,6 +1,6 @@
 import React from 'react'
-import Layout from '@/Components/layout';
-import Style from '../../../styles/ReportsStyle/strlfexcel.module.css';
+import Layout from '../../../components/layout/layout';
+import Style from '../../../styles/strlfexcel.module.css';
 
 function Stlrfexcel() {
   return (
