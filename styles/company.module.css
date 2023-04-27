@@ -47,3 +47,15 @@
     overflow: visible;
     margin: 0;
 }
+
+
+.button {
+    width: 50%;
+    height: 40px;
+    font-size: 15px;
+    cursor: pointer;
+    text-transform: uppercase;
+    background: #3247d5;
+    color: white;
+    border-radius: 5%;
+  }
