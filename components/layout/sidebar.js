@@ -1150,16 +1150,16 @@ const Sidebar = ({ children, applyPageName }) => {
             </button>
             {displayReports && (
               <div>
-                <Link href="/Reports/monthlyreport">
+                <Link href="/Reports/Pagibig">
                   <button
                     className={getSubStyle(501)}
                     onClick={updateActiveMenu.bind(this, {
                       id: 501,
-                      name: "Monthly Report",
+                      name: "Pagibig",
                     })}
                   >
                     <TbReportAnalytics style={customStyles.icons} />
-                    Monthly Report
+                    Pagibig
                   </button>
                 </Link>
 
