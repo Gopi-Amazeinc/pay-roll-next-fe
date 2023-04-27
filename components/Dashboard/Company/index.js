@@ -18,8 +18,10 @@ const Companydashboard = () => {
                             SHOWING <span></span>RESULTS
                         </p>
                     </div>
-                    <div className="col-md-2">
-                        
+                    <div className="col-md-4">
+                       <Link href="/Company/companyform">
+                       <button className={company.button}>ADD NEW</button>
+                       </Link>
                     </div>
                 </div>
                 <br />
@@ -52,7 +54,7 @@ const Companydashboard = () => {
                                 </td>
                                 <td clasName={table.tabledetail}>Purego.ph</td>
                                 <td clasName={table.tabledetail}>884234924</td>
-                                <td><Link href="/configuration/companyform"><button className="edit-btn">Edit</button></Link><br /><br />
+                                <td><Link href="/Company/companyform"><button className="edit-btn">Edit</button></Link><br /><br />
                                 <button className="edit-btn">Delete</button>
                                 </td>
                             </tr>
