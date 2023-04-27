@@ -1,9 +1,46 @@
-import React from "react";
+import React,{useState,useEffect} from "react";
 import Styles from "../../../../styles/StaffDashboard.module.css"
+import axios from "axios";
+import {BiEdit} from "react-icons/bi"
+
+
 function StaffDashbaord() {
+
+  const [staff, setStaffData] = useState([]);
+  const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+
+  useEffect(() => {
+    getStaffDetails();
+  }, []);
+
+  const getStaffDetails = async () => {
+    let res = await axios.get(hostURL + "HR/GetMyDetails");
+    setStaffData(res.data);
+  }
+  const getData = (data) => {
+    sessionStorage.setItem("id", data.id);
+  };
+  const clearData = () => {
+    sessionStorage.setItem("id", "");
+  };
+  const handleDelete = async (id) => {
+    try {
+      let res = await axios.get(
+        hostURL + ``
+      );
+      console.log(res.data);
+      Swal.fire("Data deleted successfully");
+      getbarangaymaster();
+    } catch (error) {
+      console.error(error);
+      Swal.fire("Failed to delete data");
+    }
+  };
+
   return (
     <div>
       <div className="container">
+      <h5 className="Heading">Staff Dashboard</h5>
         <div className="card p-3 border-0 shadow-lg rounded-3 mt-4">
           <div className="row">
             <div className="col-lg-1">
@@ -80,54 +117,40 @@ function StaffDashbaord() {
                     <th>Date Of Joining</th>
                     <th>Manager</th>
                     <th>Attendance Enable</th>
+                    <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
-                    <td>243567</td>
-                    <td>Manjan</td>
-                    <td>243567</td>
-                    <td>Cse</td>
-                    <td>High</td>
-                    <td>Male</td>
-                    <td>Softwere</td>
-                    <td>Manjan@gmail.com</td>
-                    <td>243567</td>
-                    <td>
-                      <button className={Styles.buttonDE}>Disable</button>
-                    </td>
-                  </tr>
+                {staff.map((data, index) => {
+              return (
+                <tr className="text-dark" key={index}>
+                  <td>{data.employeID}</td>
+                  <td>{data.name}</td>
+                  <td>{data.department_name}</td>
+                  <td>{data.level}</td>
+                  <td>{data.gender}</td>
+                  <td>{data.role}</td>
+                  <td>{data.emailID}</td>
+                  <td>{data.joiningDate}</td>
+                  <td>{data.manager}</td>
+                  <td>
+                    {/* <Link href={`/Masters/BarangayMaster/Edit/${data.id}`}> */}
+                      <button
+                        onClick={getData.bind(this, data)}
+                        className="enableDisableBtn"
+                      >
+                        Disable
+                      </button>
+                    {/* </Link> */}
+                    
+                  </td>
+                  <td>
+                      <BiEdit/>
+                  </td>
+                </tr>
+              );
+            })}
 
-                  <tr>
-                    <td>243567</td>
-                    <td>Manjan</td>
-                    <td>243567</td>
-                    <td>Cse</td>
-                    <td>High</td>
-                    <td>Male</td>
-                    <td>Softwere</td>
-                    <td>Manjan@gmail.com</td>
-                    <td>243567</td>
-                    <td>
-                      <button className={Styles.buttonDE}>Diseble</button>
-                    </td>
-                  </tr>
-
-
-                  <tr>
-                    <td>243567</td>
-                    <td>Manjan</td>
-                    <td>243567</td>
-                    <td>Cse</td>
-                    <td>High</td>
-                    <td>Male</td>
-                    <td>Softwere</td>
-                    <td>Manjan@gmail.com</td>
-                    <td>243567</td>
-                    <td>
-                      <button className={Styles.buttonDE}>Diseble</button>
-                    </td>
-                  </tr>
                 </tbody>
               </table>
             </div>
