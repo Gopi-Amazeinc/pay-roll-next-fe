@@ -50,7 +50,7 @@ function Mpf() {
         <div>
             <div>
                 <br />
-                <p id={Styles.p}>MPF Configuration</p>
+                <p className={Styles.p}>MPF Configuration</p>
                 <div className='card shadow-lg p-4 rounded-2 mt-4' id={Styles.card}>
                     <div className='row'>
                         <div className='col-lg-1'></div>
@@ -62,10 +62,10 @@ function Mpf() {
                 <div className='row mt-3'>
                     <div className='col-lg-10'></div>
                     <div className='col-lg-2'>
-                        <Link href="/Configuration/mpfadd" id={Styles.addLink} > <button id={Styles.addButton} onClick={clearData.bind(this)} > ADD NEW</button></Link>
+                        <Link href="/Settings/Mpf/new" id={Styles.addLink} > <button id={Styles.addButton} onClick={clearData.bind(this)} > ADD NEW</button></Link>
                     </div>
                 </div>
-                <table id={Styles.table} className='table  table-striped mt-3 text-center'>
+                <table className={'table  table-striped mt-3 text-center ' + Styles.table}>
                     <thead>
                         <tr className='bg-info text-white '>
                             <th>Taxable income low limit</th>
@@ -89,10 +89,10 @@ function Mpf() {
                                         <td>{data.mpF_Ecvalue}</td>
                                         <td>{data.year}</td>
                                         <td>
-                                            <Link href={`/Masters/Mpf/Edit/${data.id}`} style={{ marginRight: "10px" }}>
-                                                <button id={Styles.actionButton} className='btn btn-sm' onClick={getData.bind(this, data)}>Edit</button>
+                                            <Link href={`/Settings/Mpf/Edit/${data.id}`} style={{ marginRight: "10px" }}>
+                                                <button className={Styles.actionButton} onClick={getData.bind(this, data)}>Edit</button>
                                             </Link>
-                                            <button id={Styles.actionButton} className='btn btn-sm' onClick={() => handleDelete(data.id)}>Delete</button>
+                                            <button className={Styles.actionButton} onClick={() => handleDelete(data.id)}>Delete</button>
                                         </td>
                                     </tr>
                                 )

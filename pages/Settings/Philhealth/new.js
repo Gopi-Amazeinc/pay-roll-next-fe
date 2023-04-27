@@ -43,9 +43,11 @@ const PhilhealthForm = ({ editData }) => {
             try {
                 await axios.post(hostURL + "HR/InsertPhihealthconfogaration", data);
             } catch (error) { }
+            location.href = '/Settings/Philhealth';
         } else {
             await axios.post(hostURL + "HR/UpdatePhihealthconfogaration", data);
             alert("updated");
+            location.href = '/Settings/Philhealth';
         }
     }
 
@@ -144,7 +146,7 @@ const PhilhealthForm = ({ editData }) => {
                         <div className="row">
                             <div className="col-lg-10"></div>
                             <div className="col-lg-1">
-                                <Link href="/Configuration/philhealth">
+                                <Link href="/Settings/Philhealth">
                                     <button >Cancel</button>
                                 </Link>
                                 {/* <button id={Styles.Save}>Save</button> */}

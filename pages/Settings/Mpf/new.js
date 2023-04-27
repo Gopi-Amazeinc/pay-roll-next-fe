@@ -59,6 +59,7 @@ function MpfForm({ editData }) {
                 title: "Hurray..",
                 text: "Data was inserted...!",
             });
+            location.href = '/Settings/Mpf';
         }
         else {
             // This API is used to update the data in the MPFConfogoration table
@@ -68,6 +69,7 @@ function MpfForm({ editData }) {
                 title: "Hurray..",
                 text: "Data was updated...!",
             });
+            location.href = '/Settings/Mpf';
         }
     }
 
@@ -75,9 +77,9 @@ function MpfForm({ editData }) {
         <Layout>
             <div>
                 <br />
-                <p id={Styles.p}>MPF Configuration Form</p>
+                <p className={Styles.p}>MPF Configuration Form</p>
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    <div id={Styles.card} className='card shadow-lg p-3'>
+                    <div className={'card shadow-lg p-3 ' + Styles.card}>
                         <div className='row'>
                             <div className='col-lg-3'>
                                 <label>Taxable income low limit <span id={Styles.span}>*</span></label>
@@ -85,27 +87,27 @@ function MpfForm({ editData }) {
                                 {errors.Taxiableincomelowlimit && <p className="error-message" style={{ color: "red" }}>{errors.Taxiableincomelowlimit.message}</p>}
                             </div>
                             <div className='col-lg-3'>
-                                <label>Taxable income high limit <span id={Styles.span}>*</span></label>
+                                <label>Taxable income high limit <span className={Styles.span}>*</span></label>
                                 <input type="tel" placeholder="Enter High limit" name="Taxiableincomehighlimit" id="Taxiableincomehighlimit" className="form-control " {...register("Taxiableincomehighlimit", { required: "This field is required", pattern: { value: '^[0-9 .]+$', message: "Please enter a valid Detail" } })} />
                                 {errors.Taxiableincomehighlimit && <p className="error-message" style={{ color: "red" }}>{errors.Taxiableincomehighlimit.message}</p>}
                             </div>
                             <div className='col-lg-2'>
-                                <label>MPF EE value <span id={Styles.span}>*</span></label>
+                                <label>MPF EE value <span className={Styles.span}>*</span></label>
                                 <input type="tel" placeholder="Enter MPF EE value" name="MPF_EEvalue" id="MPF_EEvalue" className="form-control " {...register("MPF_EEvalue", { required: "This field is required", pattern: { value: '^[0-9 .]+$', message: "Please enter a valid Detail" } })} />
                                 {errors.MPF_EEvalue && <p className="error-message" style={{ color: "red" }}>{errors.MPF_EEvalue.message}</p>}
                             </div>
                             <div className='col-lg-2'>
-                                <label>MPF ER value<span id={Styles.span}>*</span></label>
+                                <label>MPF ER value<span className={Styles.span}>*</span></label>
                                 <input type="text" placeholder="Enter MPF ER value" name="MPF_ERvalue" id="MPF_ERvalue" className="form-control " {...register("MPF_ERvalue", { required: "This field is required", pattern: { value: '^[0-9 .]+$', message: "Please enter a valid Detail" } })} />
                                 {errors.MPF_ERvalue && <p className="error-message" style={{ color: "red" }}>{errors.MPF_ERvalue.message}</p>}
                             </div>
                             <div className='col-lg-2'>
-                                <label>MPF EC value <span id={Styles.span}>*</span></label>
+                                <label>MPF EC value <span className={Styles.span}>*</span></label>
                                 <input type="text" placeholder="Enter MPF EC value" name="MPF_Ecvalue" id="MPF_Ecvalue" className="form-control " {...register("MPF_Ecvalue", { required: "This field is required", pattern: { value: '^[0-9 .]+$', message: "Please enter a valid Detail" } })} />
                                 {errors.MPF_Ecvalue && <p className="error-message" style={{ color: "red" }}>{errors.MPF_Ecvalue.message}</p>}
                             </div>
                             <div className='col-lg-2'>
-                                <label>Year<span id={Styles.span}>*</span></label>
+                                <label>Year<span className={Styles.span}>*</span></label>
                                 <select className="form-control" {...register("Year", { required: true })}>
                                     <option >Select year</option>
                                     <option>2023</option>
@@ -121,17 +123,17 @@ function MpfForm({ editData }) {
                         <div className='row'>
                             <div className='col-lg-10'></div>
                             <div className='col-lg-1'>
-                                <Link href='/Configuration/mpf'><button id={Styles.Cancel}>Cancel</button></Link>
+                                <Link href='/Settings/Mpf'><button className={Styles.Cancel}>Cancel</button></Link>
                             </div>
                             <div className='col-lg-1'>
                                 {
                                     actionType == "insert" && (
-                                        <button type='submit' id={Styles.Save} >Save</button>
+                                        <button type='submit' className={Styles.Save} >Save</button>
                                     )
                                 }
                                 {
                                     actionType == "update" && (
-                                        <button type='submit' id={Styles.Save} >Update</button>
+                                        <button type='submit' className={Styles.Save} >Update</button>
                                     )
                                 }
                             </div>

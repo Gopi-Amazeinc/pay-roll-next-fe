@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import Swal from 'sweetalert2'
 import Link from 'next/link'
-
 const SemiMonthlyTax = () => {
     let [dashboard, setDashboard] = useState([])
     let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
@@ -66,7 +65,7 @@ const SemiMonthlyTax = () => {
                 <div className='row'>
                     <div className='col-lg-10'></div>
                     <div className='col-lg-2 mt-2 text-end'>
-                        <Link href="/Masters/SemiAnnualTax/new" onClick={removeItem} className='btn text-white' style={{ backgroundColor: "#3247d5" }}>Add New</Link>
+                        <Link href="/Settings/SemiMonthlyTax/new" onClick={removeItem} className='btn text-white' style={{ backgroundColor: "#3247d5" }}>Add New</Link>
                     </div>
 
                     <table className='table table-hover mt-2 '>
@@ -95,7 +94,7 @@ const SemiMonthlyTax = () => {
                                             <td>{data.taxdeductionamount}</td>
                                             <td>{data.year}</td>
                                             <td>
-                                                <Link href={`/Masters/SemiMonthlyTax/Edit/${data.id}`}> <button type='submit' className='edit-btn text-white ' style={{ backgroundColor: "#3247d5" }}>Edit</button></Link>
+                                                <Link href={`/Settings/SemiMonthlyTax/Edit/${data.id}`}> <button type='submit' className='edit-btn text-white ' style={{ backgroundColor: "#3247d5" }}>Edit</button></Link>
                                                 &nbsp;<button onClick={deleteAnnualtax.bind(this, data.id)} type='submit' className='edit-btn text-white ' style={{ backgroundColor: "#3247d5" }}>Delete</button>
                                             </td>
                                         </tr>

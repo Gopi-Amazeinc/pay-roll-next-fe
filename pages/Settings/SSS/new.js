@@ -46,12 +46,12 @@ const SSSForm = ({ editData }) => {
         if (actionType == "insert") {
             await axios.post(hostURL + "HR/InsertSSSconfogaration", data);
             Swal.fire("sss Inserted succefully!");
-            location.href = "/Configuration/sss";
+            location.href = "/Settings/SSS";
         } else {
             let res = await axios.post(hostURL + "HR/UpdateSSSconfogaration", data);
             sessionStorage.removeItem("id");
             Swal.fire("sss updated succefully!");
-            location.href = "/Configuration/sss";
+            location.href = "/Settings/SSS";
         }
     };
     const clearForm = (existingData = null) => {
@@ -215,7 +215,7 @@ const SSSForm = ({ editData }) => {
                                     <div className="col-lg-9"></div>
 
                                     <div className="col-lg-1">
-                                        <Link href="/Configuration/sss">
+                                        <Link href="/Settings/SSS">
                                             <button id={Styles.Cancel}>Cancel</button>
                                         </Link>
                                     </div>

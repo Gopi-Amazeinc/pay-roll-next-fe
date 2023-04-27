@@ -33,10 +33,12 @@ const PagibigForm = ({ editData }) => {
             await axios.post(hostURL + "HR/InsertPagibigconfogaration", data);
             Swal.fire('Data Inserted successfully')
             console.log("Inserted data:", data);
+            location.href = '/Settings/Pagibig';
         }
         else {
             await axios.post(hostURL + "HR/UpdatePagibigconfogaration", data);
             Swal.fire('Data Updated successfully')
+            location.href = '/Settings/Pagibig';
         }
     }
 
