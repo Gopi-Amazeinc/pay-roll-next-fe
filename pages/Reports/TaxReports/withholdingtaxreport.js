@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Layout from '../../../components/layout/layout';
 import Styles from '../../../styles/withholdingtaxreport.module.css'
-const withholdingtaxreport = () => {
+const Withholdingtaxreport = () => {
     const [generate, setToggleGenerate] = useState(false);
     const getToggle = () => {
         setToggleGenerate(!generate);
@@ -97,4 +97,4 @@ const withholdingtaxreport = () => {
         </Layout >)
 }
 
-export default withholdingtaxreport
+export default Withholdingtaxreport
