@@ -52,6 +52,7 @@ const Sidebar = ({ children, applyPageName }) => {
   let [displayRequests, toggleRequests] = useState(false);
   let [displayComapnay, togleCompany] = useState(false);
   let [displayReports, togleReports] = useState(false);
+  let [dispalyPagibig, togglePagibig] = useState(false)
   // let [displayHolidays, toggleHolidays] = useState(false)
   // sessionStorage.setItem("roleID", roleID);
 
@@ -135,6 +136,11 @@ const Sidebar = ({ children, applyPageName }) => {
   const togleReportsMeanu = () => {
     togleReports(!displayReports);
     sessionStorage.setItem("togleReports", displayReports);
+  };
+
+  const togglePagibigMenu = () => {
+    togglePagibig(!dispalyPagibig);
+    sessionStorage.setItem("toggglePagibig", dispalyPagibig);
   };
 
   const toggleOtMenu = () => {
@@ -1152,18 +1158,107 @@ const Sidebar = ({ children, applyPageName }) => {
             </button>
             {displayReports && (
               <div>
-                <Link href="/Reports/Pagibig">
-                  <button
-                    className={getSubStyle(501)}
-                    onClick={updateActiveMenu.bind(this, {
-                      id: 501,
-                      name: "Pagibig",
-                    })}
-                  >
-                    <TbReportAnalytics style={customStyles.icons} />
-                    Pagibig
-                  </button>
-                </Link>
+                <button className={styles.sidesubmenu} onClick={togglePagibigMenu}>
+                  <TbReportSearch style={customStyles.icons} />
+                  Pagibig
+                </button>
+                {
+                  dispalyPagibig && (
+                    <div>
+                      <Link href="/Reports/Pagibig/pagibigmonthly">
+                        <button
+                          className={getSubStyle(1001)}
+                          onClick={updateActiveMenu.bind(this, {
+                            id: 1001,
+                            name: "PAGIBIG MONTHLY",
+                          })}
+                        >
+                          <TbReportAnalytics style={customStyles.icons} />
+                          PAGIBIG MONTHLY
+                        </button>
+                      </Link>
+
+                      <Link href="/Reports/Pagibig/m1excel">
+                        <button
+                          className={getSubStyle(1002)}
+                          onClick={updateActiveMenu.bind(this, {
+                            id: 1002,
+                            name: "M1-Excel",
+                          })}
+                        >
+                          <TbReportAnalytics style={customStyles.icons} />
+                          M1-EXCEL
+                        </button>
+                      </Link>
+
+                      <Link href="/Reports/Pagibig/m1mcrf">
+                        <button
+                          className={getSubStyle(1003)}
+                          onClick={updateActiveMenu.bind(this, {
+                            id: 1003,
+                            name: "M1 MCRF",
+                          })}
+                        >
+                          <TbReportAnalytics style={customStyles.icons} />
+                          M1-MCRF
+                        </button>
+                      </Link>
+
+                      <Link href="/Reports/Pagibig/pagibigml1report">
+                        <button
+                          className={getSubStyle(1004)}
+                          onClick={updateActiveMenu.bind(this, {
+                            id: 1004,
+                            name: "ML1-REPORT",
+                          })}
+                        >
+                          <TbReportAnalytics style={customStyles.icons} />
+                          ML1-REPORT
+                        </button>
+                      </Link>
+
+
+                      <Link href="/Reports/Pagibig/pagibigp2report">
+                        <button
+                          className={getSubStyle(1005)}
+                          onClick={updateActiveMenu.bind(this, {
+                            id: 1005,
+                            name: "P2-4",
+                          })}
+                        >
+                          <TbReportAnalytics style={customStyles.icons} />
+                          P2-4
+                        </button>
+                      </Link>
+
+                      <Link href="/Reports/Pagibig/strlf">
+                        <button
+                          className={getSubStyle(1006)}
+                          onClick={updateActiveMenu.bind(this, {
+                            id: 1006,
+                            name: "STLRF",
+                          })}
+                        >
+                          <TbReportAnalytics style={customStyles.icons} />
+                          STLRF
+                        </button>
+                      </Link>
+
+                      <Link href="/Reports/Pagibig/strlfexcel">
+                        <button
+                          className={getSubStyle(1007)}
+                          onClick={updateActiveMenu.bind(this, {
+                            id: 1007,
+                            name: "STLRF EXCEL",
+                          })}
+                        >
+                          <TbReportAnalytics style={customStyles.icons} />
+                          STLRF EXCEL
+                        </button>
+                      </Link>
+                    </div>
+                  )
+                }
 
                 <Link href="/Reports/payrollsummary">
                   <button
