@@ -1,7 +1,6 @@
 import React, { useState } from 'react'
 import Layout from '../../../components/layout/layout';
-
-const bir2316 = () => {
+function Bir1700() {
     let [generateState, setState] = useState(false)
 
     const toggleState = () => {
@@ -14,7 +13,7 @@ const bir2316 = () => {
                     <div className='row'>
                         <div className='col-lg-4'></div>
                         <div className='col-lg-4'>
-                            <p className='header-style'>1604-CF</p>
+                            <p className='header-style'>BIR 1700</p>
                         </div>
                         <div className='col-lg-4'></div>
                     </div>
@@ -23,7 +22,7 @@ const bir2316 = () => {
                     <div className='row'>
                         <div className='col-lg-3'></div>
                         <div className='col-lg-3'>
-                            <p className='fw-bold fs-6'>Year</p>
+                            <p className=' fs-6'>Select Year</p>
                         </div>
                         <div className='col-lg-2'>
                             <select className='form-select'>
@@ -40,18 +39,13 @@ const bir2316 = () => {
                     <div className='row mt-3'>
                         <div className='col-lg-3'></div>
                         <div className='col-lg-3'>
-                            <p className='fw-bold fs-6'>Amended Return?</p>
+                            <p className=' fs-6'>Signatory Person</p>
                         </div>
                         <div className='col-lg-2'>
-                            <div className='form-check form-check-inline'>
-                                <label className='form-check-label'>Yes</label>
-                                <input className='form-check-input' type='radio' name='Amended Return' />
-                            </div>
-
-                            <div className='form-check form-check-inline'>
-                                <label className='form-check-label'>No</label>
-                                <input className='form-check-input' type='radio' name='Amended Return' />
-                            </div>
+                            <select className='form-select'>
+                                <option value="">Select</option>
+                                <option>HR</option>
+                            </select>
                         </div>
                         <div className='col-lg-3'></div>
                     </div>
@@ -60,7 +54,7 @@ const bir2316 = () => {
                     <div className='row mt-3'>
                         <div className='col-lg-3'></div>
                         <div className='col-lg-3'>
-                            <p className='fw-bold fs-6'>Search</p>
+                            <p className='fs-6'>Search</p>
                         </div>
                         <div className='col-lg-2'>
                             <input className='form-control' placeholder='Search' />
@@ -72,7 +66,7 @@ const bir2316 = () => {
                 </div>
 
 
-                <table className='table table-striped table-bordered mt-4'>
+                <table className='table table-striped mt-4 table-bordered'>
 
                     <thead className='bg-info text-white'>
                         <tr>
@@ -83,23 +77,23 @@ const bir2316 = () => {
                             <th>Employee ID</th>
                             <th>Name</th>
                             <th>Employee Status</th>
-                            <th><input type="checkbox" />Substitute</th>
+                            <th><input type='checkbox' /> Substitute</th>
                             <th>Posting Status</th>
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td><input type='checkbox' /></td>
+                            <td><input type="checkbox" /></td>
                             <td>00010348</td>
-                            <td>admin s</td>
+                            <td>admin s	</td>
                             <td>Active</td>
                             <td><input type='checkbox' /></td>
                             <td>Unposted</td>
                         </tr>
                         <tr>
-                            <td><input type='checkbox' /></td>
+                            <td><input type="checkbox" /></td>
                             <td>00010348</td>
-                            <td>Anup</td>
+                            <td>admin s	</td>
                             <td>Active</td>
                             <td><input type='checkbox' /></td>
                             <td>Unposted</td>
@@ -132,4 +126,4 @@ const bir2316 = () => {
     )
 }
 
-export default bir2316
+export default Bir1700
