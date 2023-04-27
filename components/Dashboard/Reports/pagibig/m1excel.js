@@ -1,6 +1,6 @@
 import React from 'react'
-import Layout from '@/Components/layout';
-import Style from '../../../styles/ReportsStyle/m1excel.module.css';
+import Layout from '../../../layout/layout';
+import Style from '../../../../styles/m1excel.module.css';
 
 function M1excel() {
   return (
