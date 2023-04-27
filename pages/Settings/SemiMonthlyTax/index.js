@@ -1,5 +1,5 @@
 import React from 'react'
-import SemiMonthlyTax from '@/components/Dashboard/Masters/SemiMonthlyTax'
+import SemiMonthlyTax from '@/components/Dashboard/Settings/SemiMonthlyTax'
 import Layout from '@/components/layout/layout'
 
 

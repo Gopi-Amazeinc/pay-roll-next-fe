@@ -4,7 +4,7 @@ import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2'
 import { useEffect, useState } from 'react';
-import Styles from '@/Styles/pagibig.module.css'
+import Styles from '../../../../styles/pagibig.module.css'
 
 const Pagibig = () => {
     const [pagibigconfigaration, setpagibigconfigaration] = useState([]);

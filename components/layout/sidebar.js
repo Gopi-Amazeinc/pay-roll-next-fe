@@ -34,7 +34,6 @@ import { TbReportAnalytics } from "react-icons/tb";
 import { TbReport } from "react-icons/tb";
 import { AiOutlineHome } from "react-icons/ai";
 
-
 const Sidebar = ({ children, applyPageName }) => {
   let roleID;
   let [userRole, setUserRole] = useState();
@@ -45,6 +44,8 @@ const Sidebar = ({ children, applyPageName }) => {
   let [displayAttendence, toggleAttendence] = useState(false);
   let [displayLoans, toggleLoans] = useState(false);
   let [displayPayroll, togglePayRoll] = useState(false);
+  let [displayIntialRun, toggleIntialRun] = useState(false);
+  let [displayFinalRun, toggleFinalRun] = useState(false);
   let [displaySettings, toggleSettings] = useState(false);
   let [displayConfiguration, toggleConfiguration] = useState(false);
   let [displayMasters, toggleMasters] = useState(false);
@@ -119,6 +120,11 @@ const Sidebar = ({ children, applyPageName }) => {
     else return styles["sidesubmenu"];
   };
 
+  const getSubofSubStyle = (menuID) => {
+    if (menuID == activeMenu) return styles["sidesubofsubmenuactive"];
+    else return styles["sidesubofsubmenu"];
+  };
+
   const customStyles = {
     icons: {
       fontSize: "20px",
@@ -163,6 +169,14 @@ const Sidebar = ({ children, applyPageName }) => {
   const togglePayRollMenu = () => {
     togglePayRoll(!displayPayroll);
     sessionStorage.setItem("togglePayroll", displayPayroll);
+  };
+  const toggleIntialRunMenu = () => {
+    toggleIntialRun(!displayIntialRun);
+    sessionStorage.setItem("toggleIntialRun", displayIntialRun);
+  };
+  const toggleFinalRunMenu = () => {
+    toggleFinalRun(!displayFinalRun);
+    sessionStorage.setItem("toggleFinalRun", displayFinalRun);
   };
   const toggleCompanyMenu = () => {
     togleCompany(!displayComapnay);
@@ -223,10 +237,7 @@ const Sidebar = ({ children, applyPageName }) => {
                       Staff Dashboard
                     </button>
                   </Link>
-                  <Link
-                    href="/Staff/AddStaff"
-                    className={styles.sidemenulink}
-                  >
+                  <Link href="/Staff/AddStaff" className={styles.sidemenulink}>
                     <button
                       className={getSubStyle(22)}
                       onClick={updateActiveMenu.bind(this, {
@@ -238,7 +249,10 @@ const Sidebar = ({ children, applyPageName }) => {
                       Add Staff
                     </button>
                   </Link>
-                  <Link href="/Staff/staffsalarycomponent">
+                  <Link
+                    href="/Staff/staffsalarycomponent"
+                    className={styles.sidemenulink}
+                  >
                     <button
                       className={getSubStyle(23)}
                       onClick={updateActiveMenu.bind(this, {
@@ -250,7 +264,7 @@ const Sidebar = ({ children, applyPageName }) => {
                       Staff Salary
                     </button>
                   </Link>
-                  <Link href="/Staff/">
+                  <Link href="/Staff/ComponentBulkUpload">
                     <button
                       className={getSubStyle(24)}
                       onClick={updateActiveMenu.bind(this, {
@@ -283,7 +297,7 @@ const Sidebar = ({ children, applyPageName }) => {
                 })}
               >
                 <BiCalendarCheck style={customStyles.icons} />
-                Over time details
+                Over Time Details
               </button>
             </Link>
           </div>
@@ -473,71 +487,92 @@ const Sidebar = ({ children, applyPageName }) => {
               Payroll
             </button>
             {displayPayroll && (
-              <div>
-                <Link href="/Payroll/InitialPayroll">
-                  <button
-                    className={getSubStyle(71)}
-                    onClick={updateActiveMenu.bind(this, {
-                      id: 71,
-                      name: "Initial payroll",
-                    })}
-                  >
-                    <GiReceiveMoney style={customStyles.icons} />
-                    Initial payroll Summary
-                  </button>
-                </Link>
+              <>
+                <button
+                  className={styles.subsidemenu}
+                  onClick={toggleIntialRunMenu}
+                >
+                  <GiMoneyStack style={customStyles.icons} />
+                  Initial Run
+                </button>
+                {displayIntialRun && (
+                  <div>
+                    <Link href="/Payroll/InitialPayroll">
+                      <button
+                        className={getSubofSubStyle(710)}
+                        onClick={updateActiveMenu.bind(this, {
+                          id: 710,
+                          name: " payroll Summary",
+                        })}
+                      >
+                        <GiReceiveMoney style={customStyles.icons} />
+                        Payroll Summary
+                      </button>
+                    </Link>
 
-                <Link href="/Payroll/InitialPayrollDetails">
-                  <button
-                    className={getSubStyle(72)}
-                    onClick={updateActiveMenu.bind(this, {
-                      id: 72,
-                      name: "Initial payroll details",
-                    })}
-                  >
-                    <GiTakeMyMoney style={customStyles.icons} />
-                    Initial payroll details
-                  </button>
-                </Link>
+                    <Link href="/Payroll/InitialPayrollDetails">
+                      <button
+                        className={getSubofSubStyle(711)}
+                        onClick={updateActiveMenu.bind(this, {
+                          id: 711,
+                          name: "payroll details",
+                        })}
+                      >
+                        <GiTakeMyMoney style={customStyles.icons} />
+                        Payroll Details
+                      </button>
+                    </Link>
+                  </div>
+                )}
+                <button
+                  className={styles.subsidemenu}
+                  onClick={toggleFinalRunMenu}
+                >
+                  <GiMoneyStack style={customStyles.icons} />
+                  final Run
+                </button>
+                {displayFinalRun && (
+                  <>
+                    <Link href="/Payroll/RunFinalPayroll">
+                      <button
+                        className={getSubofSubStyle(721)}
+                        onClick={updateActiveMenu.bind(this, {
+                          id: 721,
+                          name: "Run final payroll",
+                        })}
+                      >
+                        <HiOutlinePlay style={customStyles.icons} />
+                        Run Payroll
+                      </button>
+                    </Link>
 
-                <Link href="/Payroll/RunFinalPayroll">
-                  <button
-                    className={getSubStyle(73)}
-                    onClick={updateActiveMenu.bind(this, {
-                      id: 73,
-                      name: "Run final payroll",
-                    })}
-                  >
-                    <HiOutlinePlay style={customStyles.icons} />
-                    Run final payroll
-                  </button>
-                </Link>
+                    <Link href="/Payroll/FinalPayrollApproval">
+                      <button
+                        className={getSubofSubStyle(722)}
+                        onClick={updateActiveMenu.bind(this, {
+                          id: 722,
+                          name: "Final payroll approval",
+                        })}
+                      >
+                        <HiOutlineDocumentText style={customStyles.icons} />
+                        Final Approval
+                      </button>
+                    </Link>
 
-                <Link href="/Payroll/FinalPayrollApproval">
-                  <button
-                    className={getSubStyle(74)}
-                    onClick={updateActiveMenu.bind(this, {
-                      id: 74,
-                      name: "Final payroll approval",
-                    })}
-                  >
-                    <HiOutlineDocumentText style={customStyles.icons} />
-                    Final payroll approval
-                  </button>
-                </Link>
-
-                <Link href="/Payroll/FinalPayrollDetails">
-                  <button
-                    className={getSubStyle(75)}
-                    onClick={updateActiveMenu.bind(this, {
-                      id: 75,
-                      name: "Final payroll details",
-                    })}
-                  >
-                    <HiOutlineDocumentSearch style={customStyles.icons} />
-                    Final payroll details
-                  </button>
-                </Link>
+                    <Link href="/Payroll/FinalPayrollDetails">
+                      <button
+                        className={getSubofSubStyle(723)}
+                        onClick={updateActiveMenu.bind(this, {
+                          id: 723,
+                          name: "Final payroll details",
+                        })}
+                      >
+                        <HiOutlineDocumentSearch style={customStyles.icons} />
+                        Final Details
+                      </button>
+                    </Link>
+                  </>
+                )}
 
                 <Link href="/Payroll/BankAdviceList">
                   <button
@@ -563,7 +598,7 @@ const Sidebar = ({ children, applyPageName }) => {
                     Payroll YTD upload
                   </button>
                 </Link>
-              </div>
+              </>
             )}
           </div>
         )}
@@ -1123,9 +1158,7 @@ const Sidebar = ({ children, applyPageName }) => {
                       name: "Monthly Report",
                     })}
                   >
-                    <TbReportAnalytics
-                      style={customStyles.icons}
-                    />
+                    <TbReportAnalytics style={customStyles.icons} />
                     Monthly Report
                   </button>
                 </Link>
@@ -1138,9 +1171,7 @@ const Sidebar = ({ children, applyPageName }) => {
                       name: "Payroll Summary",
                     })}
                   >
-                    <TbReport
-                      style={customStyles.icons}
-                    />
+                    <TbReport style={customStyles.icons} />
                     Payroll Summary
                   </button>
                 </Link>
@@ -1152,9 +1183,7 @@ const Sidebar = ({ children, applyPageName }) => {
                       name: " YTD Reports",
                     })}
                   >
-                    <TbReportAnalytics
-                      style={customStyles.icons}
-                    />
+                    <TbReportAnalytics style={customStyles.icons} />
                     YTD Reports
                   </button>
                 </Link>
@@ -1166,9 +1195,7 @@ const Sidebar = ({ children, applyPageName }) => {
                       name: " Payslip",
                     })}
                   >
-                    <TbReport
-                      style={customStyles.icons}
-                    />
+                    <TbReport style={customStyles.icons} />
                     Payslip
                   </button>
                 </Link>
@@ -1204,7 +1231,6 @@ const Sidebar = ({ children, applyPageName }) => {
           </button>
         </Link>
       </div>
-
     </div>
   );
 };

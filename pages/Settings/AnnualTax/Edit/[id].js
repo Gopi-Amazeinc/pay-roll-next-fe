@@ -1,5 +1,5 @@
 import React from 'react'
-import AnnualTaxForm from '../../../Masters/AnnualTax/new';
+import AnnualTaxForm from '../new';
 import axios from 'axios';
 
 

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import axios from "axios";
 import Swal from 'sweetalert2';
-import Styles from '@/Styles/mpf.module.css'
+import Styles from '../../../../styles/mpf.module.css'
 
 function Mpf() {
     const [mpfDetails, setMpfDetails] = useState([]);

@@ -1,5 +1,5 @@
 import React from 'react'
-import Mpf from '@/components/Dashboard/Masters/Mpf'
+import Mpf from '@/components/Dashboard/Settings/Mpf'
 import Layout from '@/components/layout/layout'
 function Index() {
     return (
