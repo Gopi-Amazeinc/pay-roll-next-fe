@@ -75,7 +75,7 @@ const SemiMonthlyTaxForm = ({ editData }) => {
     }, [1]);
     return (
         <Layout>
-            <h3 className='text-primary fs-5 mt-3'>Semi Monthly Form</h3>
+            <h3 className='Heading mt-3'>Semi Monthly Form</h3>
             <div className='container'>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div className='row  mt-4 shadow-lg rounded-3 p-3 '>
@@ -137,17 +137,17 @@ const SemiMonthlyTaxForm = ({ editData }) => {
                         <div className='col-lg-2 mt-2 text-end'>
                             {
                                 actionType == "insert" && (
-                                    <button type='submit' className='btn btn-primary AddButton'>Save</button>
+                                    <button type='submit' className=' AddButton'>Save</button>
                                 )
                             }
                             {
                                 actionType == "update" && (
-                                    <button type="submit" className='btn btn-primary AddButton'>Update</button>
+                                    <button type="submit" className=' AddButton'>Update</button>
                                 )
                             }
                         </div>
                         <div className='col-lg-2 mt-2'>
-                            <Link href='/Settings/SemiMonthlyTax'><button className='btn btn-primary AddButton'>Cancel</button></Link>
+                            <Link href='/Settings/SemiMonthlyTax'><button className=' AddButton'>Cancel</button></Link>
                         </div>
 
                     </div>

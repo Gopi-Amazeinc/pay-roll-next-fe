@@ -5,7 +5,7 @@ import Swal from 'sweetalert2';
 import { useForm } from 'react-hook-form';
 import Link from 'next/link';
 import Layout from '@/components/layout/layout.js';
-export default function PayPeriodSettingform({editData}) {
+export default function PayPeriodSettingform({ editData }) {
 
     const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
     const { register, handleSubmit, reset, formState } = useForm();
@@ -59,17 +59,19 @@ export default function PayPeriodSettingform({editData}) {
             await axios.post(hostURL + "Payroll/InsertPayPeriodSetting", data);
             Swal.fire('data inserted successfully')
             console.log("Inserted data:", data);
+            location.href = '/Settings/PayperiodSetting';
         }
         else {
             await axios.post(hostURL + "Payroll/UpdatePayPeriodSetting", data);
             Swal.fire('Data Updated successfully')
+            location.href = '/Settings/PayperiodSetting';
         }
     }
 
     return (
         <Layout>
             <div>
-                <h3 className='text-primary fs-5 mt-3'>Pay Period Settings</h3>
+                <h3 className='Heading  mt-3'>Pay Period Settings</h3>
                 <div className='container-fluid'>
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <div className='row  mt-4 shadow-lg rounded-3 p-3 '>
@@ -127,15 +129,15 @@ export default function PayPeriodSettingform({editData}) {
                             <div className='col-lg-6'></div>
 
                             <div className="col-lg-11">
-                                <Link href="/Settings/payperiodsetting"><button className='btn btn-primary' style={{ float: "right", marginLeft: "5px" }} tabindex="0">CANCEL</button></Link>
+                                <Link href="/Settings/PayperiodSetting"><button className='submit-button ' style={{ float: "right", marginLeft: "5px" }} tabindex="0">CANCEL</button></Link>
                                 {
                                     actionType == "insert" && (
-                                        <button type='submit' className='btn btn-primary' style={{ float: "right" }}>Save</button>
+                                        <button type='submit' className='submit-button ' style={{ float: "right" }}>Save</button>
                                     )
                                 }
                                 {
                                     actionType == "update" && (
-                                        <button type='submit' className='btn btn-primary' style={{ float: "right" }}>Update</button>
+                                        <button type='submit' className='submit-button ' style={{ float: "right" }}>Update</button>
                                     )
                                 }
                             </div>
