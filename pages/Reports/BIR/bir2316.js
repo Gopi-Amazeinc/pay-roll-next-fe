@@ -83,10 +83,28 @@ const bir2316 = () => {
                             <th>Employee ID</th>
                             <th>Name</th>
                             <th>Employee Status</th>
-                            <th>Substitute</th>
+                            <th><input type="checkbox" />Substitute</th>
                             <th>Posting Status</th>
                         </tr>
                     </thead>
+                    <tbody>
+                        <tr>
+                            <td><input type='checkbox' /></td>
+                            <td>00010348</td>
+                            <td>admin s</td>
+                            <td>Active</td>
+                            <td><input type='checkbox' /></td>
+                            <td>Unposted</td>
+                        </tr>
+                        <tr>
+                            <td><input type='checkbox' /></td>
+                            <td>00010348</td>
+                            <td>Anup</td>
+                            <td>Active</td>
+                            <td><input type='checkbox' /></td>
+                            <td>Unposted</td>
+                        </tr>
+                    </tbody>
                 </table>
 
                 <div className='row mt-2'>

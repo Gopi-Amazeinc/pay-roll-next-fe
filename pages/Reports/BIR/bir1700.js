@@ -66,7 +66,7 @@ function Bir1700() {
                 </div>
 
 
-                <table className='table table-striped mt-4'>
+                <table className='table table-striped mt-4 table-bordered'>
 
                     <thead className='bg-info text-white'>
                         <tr>

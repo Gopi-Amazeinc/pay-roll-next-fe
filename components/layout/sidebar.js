@@ -744,7 +744,7 @@ const Sidebar = ({ children, applyPageName }) => {
                   </button>
                 </Link>
 
-            
+
 
               </div>
             )}
@@ -866,7 +866,7 @@ const Sidebar = ({ children, applyPageName }) => {
                 <RiUserStarLine style={customStyles.icons} />
                 Masters
               </button>
-             { userRole == 9 && displayMasters && (
+              {userRole == 9 && displayMasters && (
                 <div>
                   <Link href="/Masters/LeaveType">
                     <button
@@ -1106,10 +1106,10 @@ const Sidebar = ({ children, applyPageName }) => {
 
                   {/* code ends for data configuration here */}
                 </div>
-             )}
-              { userRole == 17 && displayMasters && (
-<>
-    {/* <Link href="/Settings/componentmaster">
+              )}
+              {userRole == 17 && displayMasters && (
+                <>
+                  {/* <Link href="/Settings/componentmaster">
                   <button
                     className={getSubStyle(91)}
                     onClick={updateActiveMenu.bind(this, {
@@ -1122,36 +1122,36 @@ const Sidebar = ({ children, applyPageName }) => {
                   </button>
                 </Link> */}
 
-<Link href="/Settings/componentmapping">
-                  <button
-                    className={getSubStyle(92)}
-                    onClick={updateActiveMenu.bind(this, {
-                      id: 92,
-                      name: "Component mapping",
-                    })}
-                  >
-                    <TbBrandCitymapper style={customStyles.icons} />
-                    Component mapping
-                  </button>
-                </Link>
+                  <Link href="/Settings/componentmapping">
+                    <button
+                      className={getSubStyle(92)}
+                      onClick={updateActiveMenu.bind(this, {
+                        id: 92,
+                        name: "Component mapping",
+                      })}
+                    >
+                      <TbBrandCitymapper style={customStyles.icons} />
+                      Component mapping
+                    </button>
+                  </Link>
 
-                <Link href="/Settings/bir2316mapping">
-                  <button
-                    className={getSubStyle(93)}
-                    onClick={updateActiveMenu.bind(this, {
-                      id: 93,
-                      name: "BIR2316 Master",
-                    })}
-                  >
-                    <TbBrandCitymapper style={customStyles.icons} />
-                    BIR2316 Master
-                  </button>
-                </Link>
-</>
+                  <Link href="/Settings/bir2316mapping">
+                    <button
+                      className={getSubStyle(93)}
+                      onClick={updateActiveMenu.bind(this, {
+                        id: 93,
+                        name: "BIR2316 Master",
+                      })}
+                    >
+                      <TbBrandCitymapper style={customStyles.icons} />
+                      BIR2316 Master
+                    </button>
+                  </Link>
+                </>
               )}
             </div>
-              )}
-          {/* )} */}
+          )}
+        {/* )} */}
         {userRole == 6 && (
           <div>
             <hr></hr>
@@ -1373,6 +1373,33 @@ const Sidebar = ({ children, applyPageName }) => {
                         >
                           <TbReportAnalytics style={customStyles.icons} />
                           Alpha List
+                        </button>
+                      </Link>
+
+                      <Link href="/Reports/BIR/bir1604f">
+                        <button
+                          className={getSubStyle(3006)}
+                          onClick={updateActiveMenu.bind(this, {
+                            id: 3006,
+                            name: " BIR 1604-F",
+                          })}
+                        >
+                          <TbReportAnalytics style={customStyles.icons} />
+                          BIR 1604-F
+                        </button>
+                      </Link>
+
+
+                      <Link href="/Reports/BIR/bir1700">
+                        <button
+                          className={getSubStyle(3007)}
+                          onClick={updateActiveMenu.bind(this, {
+                            id: 3007,
+                            name: " BIR 1700",
+                          })}
+                        >
+                          <TbReportAnalytics style={customStyles.icons} />
+                          BIR 1700
                         </button>
                       </Link>
                     </div>
