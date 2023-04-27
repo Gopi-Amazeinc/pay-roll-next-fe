@@ -72,7 +72,7 @@ const bir2316 = () => {
                 </div>
 
 
-                <table className='table table-striped mt-4'>
+                <table className='table table-striped table-bordered mt-4'>
 
                     <thead className='bg-info text-white'>
                         <tr>
