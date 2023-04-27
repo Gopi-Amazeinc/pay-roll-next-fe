@@ -1,16 +1,62 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import table from '../../../styles/company.module.css'
 import company from '../../../styles/company.module.css'
 import Link from 'next/link.js';
+import axios from 'axios';
 
 
 const Companydashboard = () => {
-    return (
+
+
+    const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+
+    const [Company, setCompany]=useState([]);
+
+
+   async function getCompany(){
+    let res =  await axios.get(hostURL + "Payroll/GetCompanyAddressDetails");
+    setCompany(res.data);
+    }
+
+    useEffect(()=>{
+        getCompany()
+    },[1]
+)
+
+function getdata(){
+    sessionStorage.setItem("id", data.id);
+
+}
+
+function  Cleardata(){
+    sessionStorage.setItem("id","");
+
+}
+
+
+async function DeleteComany(id){
+    try{
+        let res = await axios.get(hostURL + `HR/DeleteHolidays?id=${id}`);
+        console.log(res.data);
+        Swal.fire('Data deleted successfully')
+        getCompany();
+
+    }
+    catch (error){
+        console.error(error);
+        Swal.fire('failed to  delete data')
+
+    }
+
+};
+
+
+
+    return(
    <div>
             <div className="container">
                
-              
                 <br />
                 <div className="row">
                     <div className="col-md-10">
@@ -44,20 +90,29 @@ const Companydashboard = () => {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr className="newFont">
-                                <td style={{ width: "10%" }}></td>
-                                <td clasName={table.tabledetail}>Ayala Land, Inc.</td>
-                                <td clasName={table.tabledetail}>E commerce</td>
-                                <td clasName={table.tabledetail}>NA</td>
-                                <td clasName={table.tabledetail}>900 Warehouse 1, Romauldez Street, Tabacalera Compound, Brgay, 664-A
-                                    Paco Manila
-                                </td>
-                                <td clasName={table.tabledetail}>Purego.ph</td>
-                                <td clasName={table.tabledetail}>884234924</td>
-                                <td><Link href="/Company/companyform"><button className="edit-btn">Edit</button></Link><br /><br />
-                                <button className="edit-btn">Delete</button>
-                                </td>
-                            </tr>
+                            { Company.map((data,index)=>{
+                                return(
+                                    <tr key={index}>
+                                        <td>{data.company_Logo}</td>
+                                        <td>{data.company_Name}</td>
+                                        <td>{data.nature_Of_Business}</td>
+                                        <td>{data.subsidiaryName}</td>
+                                        <td>{data.address1}</td>
+                                        <td>{data.email}</td>
+                                        <td>{data.phone}</td>
+                                        <td>
+                                        <Link href={`/Company/${data.id}`}>
+                                                <button className="btn btn-primary">Edit</button>
+                                            </Link>
+                                            &nbsp;
+
+                                            <button className="btn btn-primary" onClick={() => DeleteComany(data.id)}>Delete</button>
+                                        </td>
+                                    </tr>
+                                )
+                            })
+
+                            }
                         </tbody>
                     </table>
                 </div>
