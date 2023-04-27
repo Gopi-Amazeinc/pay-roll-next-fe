@@ -46,12 +46,12 @@ const SSSForm = ({ editData }) => {
         if (actionType == "insert") {
             await axios.post(hostURL + "HR/InsertSSSconfogaration", data);
             Swal.fire("sss Inserted succefully!");
-            location.href = "/Configuration/sss";
+            location.href = "/Settings/SSS";
         } else {
             let res = await axios.post(hostURL + "HR/UpdateSSSconfogaration", data);
             sessionStorage.removeItem("id");
             Swal.fire("sss updated succefully!");
-            location.href = "/Configuration/sss";
+            location.href = "/Settings/SSS";
         }
     };
     const clearForm = (existingData = null) => {
@@ -105,7 +105,7 @@ const SSSForm = ({ editData }) => {
                                 <div className="row">
                                     <div className="col-lg-3">
                                         <label className="fw-bold" style={customStyles.inputLabel}>
-                                            Taxable income low limit <span id={Styles.span}>*</span>
+                                            Taxable income low limit <span className={Styles.span}>*</span>
                                         </label>
                                         <input
                                             name="lowLimit"
@@ -121,7 +121,7 @@ const SSSForm = ({ editData }) => {
                                     </div>
                                     <div className="col-lg-3">
                                         <label className="fw-bold" style={customStyles.inputLabel}>
-                                            Taxable income high limit <span id={Styles.span}>*</span>
+                                            Taxable income high limit <span className={Styles.span}>*</span>
                                         </label>
                                         <input
                                             name="highLimit"
@@ -138,7 +138,7 @@ const SSSForm = ({ editData }) => {
                                     </div>
                                     <div className="col-lg-2">
                                         <label className="fw-bold" style={customStyles.inputLabel}>
-                                            SSS_EE value <span id={Styles.span}>*</span>
+                                            SSS_EE value <span className={Styles.span}>*</span>
                                         </label>
                                         <input
                                             name="Philhealth"
@@ -155,7 +155,7 @@ const SSSForm = ({ editData }) => {
                                     </div>
                                     <div className="col-lg-2">
                                         <label className="fw-bold" style={customStyles.inputLabel}>
-                                            SSS_ER value <span id={Styles.span}>*</span>
+                                            SSS_ER value <span className={Styles.span}>*</span>
                                         </label>
                                         <input
                                             name="Philhealth"
@@ -172,7 +172,7 @@ const SSSForm = ({ editData }) => {
                                     </div>
                                     <div className="col-lg-2">
                                         <label className="fw-bold" style={customStyles.inputLabel}>
-                                            SSS_EC value <span id={Styles.span}>*</span>
+                                            SSS_EC value <span className={Styles.span}>*</span>
                                         </label>
                                         <input
                                             name="Philhealth"
@@ -189,7 +189,7 @@ const SSSForm = ({ editData }) => {
                                     </div>
                                     <div className="col-lg-2">
                                         <label className="fw-bold" style={customStyles.inputLabel}>
-                                            Year<span id={Styles.span}>*</span>
+                                            Year<span className={Styles.span}>*</span>
                                         </label>
                                         <select className="form-select"
                                             {...register("Year", { required: true })}
@@ -215,15 +215,15 @@ const SSSForm = ({ editData }) => {
                                     <div className="col-lg-9"></div>
 
                                     <div className="col-lg-1">
-                                        <Link href="/Configuration/sss">
-                                            <button id={Styles.Cancel}>Cancel</button>
+                                        <Link href="/Settings/SSS">
+                                            <button className={Styles.Cancel}>Cancel</button>
                                         </Link>
                                     </div>
                                     <div className="col-lg-1">
                                         {actionType == "insert" && (
                                             <button
                                                 type="submit"
-                                                id={Styles.Save}
+                                                className={Styles.Save}
                                             >
                                                 Save
                                             </button>
@@ -231,7 +231,7 @@ const SSSForm = ({ editData }) => {
                                         {actionType == "update" && (
                                             <button
                                                 type="submit"
-                                                id={Styles.Save}
+                                                className={Styles.Save}
                                             >
                                                 Update
                                             </button>

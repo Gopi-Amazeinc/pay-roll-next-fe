@@ -43,9 +43,11 @@ const PhilhealthForm = ({ editData }) => {
             try {
                 await axios.post(hostURL + "HR/InsertPhihealthconfogaration", data);
             } catch (error) { }
+            location.href = '/Settings/Philhealth';
         } else {
             await axios.post(hostURL + "HR/UpdatePhihealthconfogaration", data);
             alert("updated");
+            location.href = '/Settings/Philhealth';
         }
     }
 
@@ -53,13 +55,13 @@ const PhilhealthForm = ({ editData }) => {
         <Layout>
             <div>
                 <br />
-                <p id={Styles.p}>Phihealth Configuration Form</p>
+                <p className={Styles.p}>Phihealth Configuration Form</p>
                 <form onSubmit={handleSubmit(onSubmit)}>
                     <div id={Styles.card} className="card shadow-lg p-3">
                         <div className="row">
                             <div className="col-lg-3">
                                 <label>
-                                    Taxable income low limit <span >*</span>
+                                    Taxable income low limit <span className={Styles.span} >*</span>
                                 </label>
                                 <input
                                     name="lowLimit"
@@ -79,7 +81,7 @@ const PhilhealthForm = ({ editData }) => {
                             </div>
                             <div className="col-lg-3">
                                 <label>
-                                    Taxable income high limit <span>*</span>
+                                    Taxable income high limit <span className={Styles.span}>*</span>
                                 </label>
                                 <input
                                     name="highLimit"
@@ -99,7 +101,7 @@ const PhilhealthForm = ({ editData }) => {
                             </div>
                             <div className="col-lg-2">
                                 <label>
-                                    Phihealth value <span>*</span>
+                                    Phihealth value <span className={Styles.span}>*</span>
                                 </label>
                                 <input
                                     name="Philhealth"
@@ -119,7 +121,7 @@ const PhilhealthForm = ({ editData }) => {
                             </div>
                             <div className="col-lg-2">
                                 <label>
-                                    Year<span>*</span>
+                                    Year<span className={Styles.span}>*</span>
                                 </label>
                                 <select
                                     className="form-select"
@@ -144,8 +146,8 @@ const PhilhealthForm = ({ editData }) => {
                         <div className="row">
                             <div className="col-lg-10"></div>
                             <div className="col-lg-1">
-                                <Link href="/Configuration/philhealth">
-                                    <button >Cancel</button>
+                                <Link href="/Settings/Philhealth">
+                                    <button className={Styles.Cancel} >Cancel</button>
                                 </Link>
                                 {/* <button id={Styles.Save}>Save</button> */}
                             </div>
@@ -155,7 +157,7 @@ const PhilhealthForm = ({ editData }) => {
                                         <button
                                             type="submit"
 
-                                            className="btn btn-primary"
+                                            className={Styles.Save}
                                         >
                                             Save
                                         </button>
@@ -166,7 +168,7 @@ const PhilhealthForm = ({ editData }) => {
                                         <button
                                             type="submit"
 
-                                            className="btn btn-primary"
+                                            className={Styles.Save}
                                         >
                                             Update
                                         </button>
