@@ -6,7 +6,7 @@ const Myteamlocatoredit = ({ data }) => {
     return (        
         < MyteamLocatordetails editData = { data } ></MyteamLocatordetails >        
     )
-}
+} 
 export default Myteamlocatoredit;
 
 export async function getServerSideProps(context) {
