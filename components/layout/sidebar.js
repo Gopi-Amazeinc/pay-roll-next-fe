@@ -650,6 +650,93 @@ const Sidebar = ({ children, applyPageName }) => {
             </button>
             {displaySettings && (
               <div>
+                <Link href="/Settings/Payperiodsetting">
+                  <button
+                    className={getSubStyle(91)}
+                    onClick={updateActiveMenu.bind(this, {
+                      id: 91,
+                      name: "Pay period ",
+                    })}
+                  >
+                    <TbBrandCitymapper style={customStyles.icons} />
+                    Pay period 
+                  </button>
+                </Link>
+                <Link href="/Settings/Annualtax">
+                    <button
+                      className={getSubStyle(92)}
+                      onClick={updateActiveMenu.bind(this, {
+                        id: 92,
+                        name: "Annual tax",
+                      })}
+                    >
+                      <TbReceiptTax style={customStyles.icons} />
+                      Annual tax
+                    </button>
+                  </Link>
+                  <Link href="/Settings/Semitax">
+                    <button
+                      className={getSubStyle(93)}
+                      onClick={updateActiveMenu.bind(this, {
+                        id: 93,
+                        name: "Semi monthly tax",
+                      })}
+                    >
+                      <TbReceiptTax style={customStyles.icons} />
+                      Semi monthly tax
+                    </button>
+                  </Link>
+                  <Link href="/Settings/SSS">
+                    <button
+                      className={getSubStyle(94)}
+                      onClick={updateActiveMenu.bind(this, {
+                        id: 94,
+                        name: "SSS",
+                      })}
+                    >
+                      <MdOutlineAutoAwesomeMotion style={customStyles.icons} />
+                      SSS
+                    </button>
+                  </Link> 
+                  <Link href="/Settings/Philhealth">
+                    <button
+                      className={getSubStyle(121)}
+                      onClick={updateActiveMenu.bind(this, {
+                        id: 121,
+                        name: "Philhealth",
+                      })}
+                    >
+                      <TbReceiptTax style={customStyles.icons} />
+                      Philhealth
+                    </button>
+                  </Link>
+
+                  <Link href="/Settings/mpf">
+                    <button
+                      className={getSubStyle(122)}
+                      onClick={updateActiveMenu.bind(this, {
+                        id: 122,
+                        name: "MPF",
+                      })}
+                    >
+                      <MdOutlineAutoAwesomeMotion style={customStyles.icons} />
+                      MPF
+                    </button>
+                  </Link>
+
+                  <Link href="/Settings/pagibig">
+                    <button
+                      className={getSubStyle(123)}
+                      onClick={updateActiveMenu.bind(this, {
+                        id: 123,
+                        name: "Pagibig",
+                      })}
+                    >
+                      <MdOutlineAutoAwesomeMosaic style={customStyles.icons} />
+                      Pagibig
+                    </button>
+                  </Link>
+
                 <Link href="/Settings/componentmaster">
                   <button
                     className={getSubStyle(91)}
@@ -689,18 +776,6 @@ const Sidebar = ({ children, applyPageName }) => {
                   </button>
                 </Link>
 
-                <Link href="/Settings/payperiodsetting">
-                  <button
-                    className={getSubStyle(94)}
-                    onClick={updateActiveMenu.bind(this, {
-                      id: 94,
-                      name: "Pay period setting",
-                    })}
-                  >
-                    <TbBrandCitymapper style={customStyles.icons} />
-                    Pay period setting
-                  </button>
-                </Link>
               </div>
             )}
           </div>
@@ -1045,79 +1120,6 @@ const Sidebar = ({ children, applyPageName }) => {
                   </Link>
                   {/* added code from configuartion here */}
 
-                  <Link href="/Configuration/annualtax">
-                    <button
-                      className={getSubStyle(118)}
-                      onClick={updateActiveMenu.bind(this, {
-                        id: 118,
-                        name: "Annual tax",
-                      })}
-                    >
-                      <TbReceiptTax style={customStyles.icons} />
-                      Annual tax
-                    </button>
-                  </Link>
-                  <Link href="/Configuration/semitax">
-                    <button
-                      className={getSubStyle(119)}
-                      onClick={updateActiveMenu.bind(this, {
-                        id: 119,
-                        name: "Semi monthly tax",
-                      })}
-                    >
-                      <TbReceiptTax style={customStyles.icons} />
-                      Semi monthly tax
-                    </button>
-                  </Link>
-                  <Link href="/Configuration/sss">
-                    <button
-                      className={getSubStyle(120)}
-                      onClick={updateActiveMenu.bind(this, {
-                        id: 120,
-                        name: "SSS",
-                      })}
-                    >
-                      <MdOutlineAutoAwesomeMotion style={customStyles.icons} />
-                      SSS
-                    </button>
-                  </Link>
-                  <Link href="/Configuration/philhealth">
-                    <button
-                      className={getSubStyle(121)}
-                      onClick={updateActiveMenu.bind(this, {
-                        id: 121,
-                        name: "Philhealth",
-                      })}
-                    >
-                      <TbReceiptTax style={customStyles.icons} />
-                      Philhealth
-                    </button>
-                  </Link>
-                  <Link href="/Configuration/mpf">
-                    <button
-                      className={getSubStyle(122)}
-                      onClick={updateActiveMenu.bind(this, {
-                        id: 122,
-                        name: "MPF",
-                      })}
-                    >
-                      <MdOutlineAutoAwesomeMotion style={customStyles.icons} />
-                      MPF
-                    </button>
-                  </Link>
-
-                  <Link href="/Configuration/pagibig">
-                    <button
-                      className={getSubStyle(123)}
-                      onClick={updateActiveMenu.bind(this, {
-                        id: 123,
-                        name: "Pagibig",
-                      })}
-                    >
-                      <MdOutlineAutoAwesomeMosaic style={customStyles.icons} />
-                      Pagibig
-                    </button>
-                  </Link>
                   <Link href="/Configuration/dailyrate">
                     <button
                       className={getSubStyle(124)}
@@ -1127,7 +1129,7 @@ const Sidebar = ({ children, applyPageName }) => {
                       })}
                     >
                       <MdOutlineAutoAwesomeMosaic style={customStyles.icons} />
-                      Daily rate
+                      Daily rate(D)
                     </button>
                   </Link>
 
