@@ -46,9 +46,9 @@ const Pagibig = () => {
         <div>
             <div>
                 <br />
-                <p id={Styles.p}>PAGIBIG Configuration</p>
+                <p className={Styles.p}>PAGIBIG Configuration</p>
 
-                <div className='card shadow-lg p-4 rounded-2 mt-4' id={Styles.card}>
+                <div className={'card shadow-lg p-4 rounded-2 mt-4 ' + Styles.card}>
                     <div className='row'>
                         <div className='col-lg-1'></div>
                         <div className='col-lg-4'>
@@ -60,12 +60,12 @@ const Pagibig = () => {
                 <div className='row mt-3'>
                     <div className='col-lg-10'></div>
                     <div className='col-lg-2'>
-                        <Link href="/Configuration/pagibigadd"><button className={Styles.addButton} onClick={clearData.bind(this)} > ADD NEW </button></Link>
+                        <Link href="/Setiings/Pagibig/new"><button className={Styles.addButton} onClick={clearData.bind(this)} > ADD NEW </button></Link>
                     </div>
 
                 </div>
 
-                <table id={Styles.table} className='table  table-striped mt-3 text-center'>
+                <table className='table  table-striped mt-3 text-center'>
                     <thead>
                         <tr className='bg-info text-white '>
                             <th>Taxable income low limit</th>
@@ -84,7 +84,7 @@ const Pagibig = () => {
                                     <td>{data.pagibigvalue}</td>
                                     <td>{data.year}</td>
                                     <td>
-                                        <Link href={`/Masters/Pagibig/Edit/${data.id}`}>
+                                        <Link href={`/Settings/Pagibig/Edit/${data.id}`}>
                                             <button className={Styles.actionButton} >Edit</button>
                                         </Link>
                                         &nbsp;
