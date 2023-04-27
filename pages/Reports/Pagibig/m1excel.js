@@ -1,41 +1,24 @@
 import React from 'react'
-import Layout from '@/Components/layout';
-import Style from '../../../styles/ReportsStyle/strlfexcel.module.css';
+import Layout from '../../../components/layout/layout';
+import Style from '../../../styles/m1excel.module.css';
 
-function Stlrfexcel() {
+function M1excel() {
   return (
     <Layout>
       <div className='container-fluid'>
         <div className='card p-3 border-0 shadow-lg rounded-3 mt-4'>
           <div className='row '>
             <div className='col-lg-12'>
-              <h4 style={{ color: "blue", textAlign: "center" }}>Pag-IBIG Short-term Loan Remittance Excel</h4>
+              <h4 style={{ color: "blue", textAlign: "center" }}>M1-EXCEL</h4>
               <hr></hr>
             </div>
-          </div>
-          <div className='row'>
             <div className='col-lg-2'></div>
             <div className='col-lg-3'>
-              <label style={{ float: "right" }}>Loan Type:</label>
+              <label style={{ float: "right" }}>Select Start Month & Year & Payperiod</label>
             </div>
             <div className='col-lg-2'>
               <select id="Department" name="Department" className='form-select'>
-                <option value="" disabled=""> Select Loan</option>
-                <option>HDMF Loan</option>
-                <option>Calamity Loan</option>
-              </select>
-            </div>
-            <div className='col-lg-3'></div>
-            <div className='col-lg-2'></div>
-          </div><br></br>
-          <div className='row'>
-            <div className='col-lg-2'></div>
-            <div className='col-lg-3'>
-              <label style={{ float: "right" }}>Select Start Month & Year</label>
-            </div>
-            <div className='col-lg-2'>
-              <select id="Department" name="Department" className='form-select'>
-                <option value="" disabled="">Select Month</option>
+                <option value="" disabled="">Select</option>
                 <option>January</option>
                 <option>February</option>
                 <option>March</option>
@@ -52,30 +35,20 @@ function Stlrfexcel() {
             </div>
             <div className='col-lg-2'>
               <select id="Department" name="Department" className='form-select'>
-                <option value="" disabled=""> Select Year</option>
+                <option value="" disabled=""> Select </option>
                 <option>2023</option>
                 <option>2022</option>
                 <option>2021</option>
                 <option>2020</option>
               </select>
             </div>
-            <div className='col-lg-3'></div>
-          </div><br></br>
-          <div className='row'>
-            <div className='col-lg-2'></div>
-            <div className='col-lg-3'>
-              <label style={{ float: "right" }}>Signatory Person:</label>
-            </div>
             <div className='col-lg-2'>
               <select id="Department" name="Department" className='form-select'>
-                <option value="" disabled=""> Select Person</option>
-                <option>Admin</option>
-                <option>HR</option>
-                <option>Finance</option>
+                <option value="" disabled=""> Select </option>
+                <option>1</option>
+                <option>2</option>
               </select>
             </div>
-            <div className='col-lg-3'></div>
-            <div className='col-lg-2'></div>
           </div>
           <div className='row' style={{ textAlign: "center" }}>
             <div className='col-lg-12'>
@@ -88,4 +61,4 @@ function Stlrfexcel() {
   )
 }
 
-export default Stlrfexcel
+export default M1excel

@@ -1,15 +1,15 @@
 import React from 'react'
-import Layout from '@/Components/layout';
-import Style from '../../../styles/ReportsStyle/stlrf.module.css';
+import Layout from '../../../components/layout/layout';
+import Style from '../../../styles/strlfexcel.module.css';
 
-function Stlrf() {
+function Stlrfexcel() {
   return (
     <Layout>
       <div className='container-fluid'>
         <div className='card p-3 border-0 shadow-lg rounded-3 mt-4'>
           <div className='row '>
             <div className='col-lg-12'>
-              <h4 style={{ color: "blue", textAlign: "center" }}>Pag-IBIG Short-term Loan Remittance Form</h4>
+              <h4 style={{ color: "blue", textAlign: "center" }}>Pag-IBIG Short-term Loan Remittance Excel</h4>
               <hr></hr>
             </div>
           </div>
@@ -88,4 +88,4 @@ function Stlrf() {
   )
 }
 
-export default Stlrf
+export default Stlrfexcel

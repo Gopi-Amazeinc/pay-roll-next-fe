@@ -52,6 +52,7 @@ const Sidebar = ({ children, applyPageName }) => {
   let [displayRequests, toggleRequests] = useState(false);
   let [displayComapnay, togleCompany] = useState(false);
   let [displayReports, togleReports] = useState(false);
+  let [dispalyPagibig, togglePagibig] = useState(false)
   // let [displayHolidays, toggleHolidays] = useState(false)
   // sessionStorage.setItem("roleID", roleID);
 
@@ -135,6 +136,11 @@ const Sidebar = ({ children, applyPageName }) => {
   const togleReportsMeanu = () => {
     togleReports(!displayReports);
     sessionStorage.setItem("togleReports", displayReports);
+  };
+
+  const togglePagibigMenu = () => {
+    togglePagibig(!dispalyPagibig);
+    sessionStorage.setItem("toggglePagibig", dispalyPagibig);
   };
 
   const toggleOtMenu = () => {
@@ -638,6 +644,93 @@ const Sidebar = ({ children, applyPageName }) => {
             </button>
             {displaySettings && (
               <div>
+                <Link href="/Settings/Payperiodsetting">
+                  <button
+                    className={getSubStyle(91)}
+                    onClick={updateActiveMenu.bind(this, {
+                      id: 91,
+                      name: "Pay period ",
+                    })}
+                  >
+                    <TbBrandCitymapper style={customStyles.icons} />
+                    Pay period 
+                  </button>
+                </Link>
+                <Link href="/Settings/Annualtax">
+                    <button
+                      className={getSubStyle(92)}
+                      onClick={updateActiveMenu.bind(this, {
+                        id: 92,
+                        name: "Annual tax",
+                      })}
+                    >
+                      <TbReceiptTax style={customStyles.icons} />
+                      Annual tax
+                    </button>
+                  </Link>
+                  <Link href="/Settings/Semitax">
+                    <button
+                      className={getSubStyle(93)}
+                      onClick={updateActiveMenu.bind(this, {
+                        id: 93,
+                        name: "Semi monthly tax",
+                      })}
+                    >
+                      <TbReceiptTax style={customStyles.icons} />
+                      Semi monthly tax
+                    </button>
+                  </Link>
+                  <Link href="/Settings/SSS">
+                    <button
+                      className={getSubStyle(94)}
+                      onClick={updateActiveMenu.bind(this, {
+                        id: 94,
+                        name: "SSS",
+                      })}
+                    >
+                      <MdOutlineAutoAwesomeMotion style={customStyles.icons} />
+                      SSS
+                    </button>
+                  </Link> 
+                  <Link href="/Settings/Philhealth">
+                    <button
+                      className={getSubStyle(121)}
+                      onClick={updateActiveMenu.bind(this, {
+                        id: 121,
+                        name: "Philhealth",
+                      })}
+                    >
+                      <TbReceiptTax style={customStyles.icons} />
+                      Philhealth
+                    </button>
+                  </Link>
+
+                  <Link href="/Settings/mpf">
+                    <button
+                      className={getSubStyle(122)}
+                      onClick={updateActiveMenu.bind(this, {
+                        id: 122,
+                        name: "MPF",
+                      })}
+                    >
+                      <MdOutlineAutoAwesomeMotion style={customStyles.icons} />
+                      MPF
+                    </button>
+                  </Link>
+
+                  <Link href="/Settings/pagibig">
+                    <button
+                      className={getSubStyle(123)}
+                      onClick={updateActiveMenu.bind(this, {
+                        id: 123,
+                        name: "Pagibig",
+                      })}
+                    >
+                      <MdOutlineAutoAwesomeMosaic style={customStyles.icons} />
+                      Pagibig
+                    </button>
+                  </Link>
+
                 <Link href="/Settings/componentmaster">
                   <button
                     className={getSubStyle(91)}
@@ -677,18 +770,6 @@ const Sidebar = ({ children, applyPageName }) => {
                   </button>
                 </Link>
 
-                <Link href="/Settings/payperiodsetting">
-                  <button
-                    className={getSubStyle(94)}
-                    onClick={updateActiveMenu.bind(this, {
-                      id: 94,
-                      name: "Pay period setting",
-                    })}
-                  >
-                    <TbBrandCitymapper style={customStyles.icons} />
-                    Pay period setting
-                  </button>
-                </Link>
               </div>
             )}
           </div>
@@ -1033,79 +1114,6 @@ const Sidebar = ({ children, applyPageName }) => {
                   </Link>
                   {/* added code from configuartion here */}
 
-                  <Link href="/Configuration/annualtax">
-                    <button
-                      className={getSubStyle(118)}
-                      onClick={updateActiveMenu.bind(this, {
-                        id: 118,
-                        name: "Annual tax",
-                      })}
-                    >
-                      <TbReceiptTax style={customStyles.icons} />
-                      Annual tax
-                    </button>
-                  </Link>
-                  <Link href="/Configuration/semitax">
-                    <button
-                      className={getSubStyle(119)}
-                      onClick={updateActiveMenu.bind(this, {
-                        id: 119,
-                        name: "Semi monthly tax",
-                      })}
-                    >
-                      <TbReceiptTax style={customStyles.icons} />
-                      Semi monthly tax
-                    </button>
-                  </Link>
-                  <Link href="/Configuration/sss">
-                    <button
-                      className={getSubStyle(120)}
-                      onClick={updateActiveMenu.bind(this, {
-                        id: 120,
-                        name: "SSS",
-                      })}
-                    >
-                      <MdOutlineAutoAwesomeMotion style={customStyles.icons} />
-                      SSS
-                    </button>
-                  </Link>
-                  <Link href="/Configuration/philhealth">
-                    <button
-                      className={getSubStyle(121)}
-                      onClick={updateActiveMenu.bind(this, {
-                        id: 121,
-                        name: "Philhealth",
-                      })}
-                    >
-                      <TbReceiptTax style={customStyles.icons} />
-                      Philhealth
-                    </button>
-                  </Link>
-                  <Link href="/Configuration/mpf">
-                    <button
-                      className={getSubStyle(122)}
-                      onClick={updateActiveMenu.bind(this, {
-                        id: 122,
-                        name: "MPF",
-                      })}
-                    >
-                      <MdOutlineAutoAwesomeMotion style={customStyles.icons} />
-                      MPF
-                    </button>
-                  </Link>
-
-                  <Link href="/Configuration/pagibig">
-                    <button
-                      className={getSubStyle(123)}
-                      onClick={updateActiveMenu.bind(this, {
-                        id: 123,
-                        name: "Pagibig",
-                      })}
-                    >
-                      <MdOutlineAutoAwesomeMosaic style={customStyles.icons} />
-                      Pagibig
-                    </button>
-                  </Link>
                   <Link href="/Configuration/dailyrate">
                     <button
                       className={getSubStyle(124)}
@@ -1115,7 +1123,7 @@ const Sidebar = ({ children, applyPageName }) => {
                       })}
                     >
                       <MdOutlineAutoAwesomeMosaic style={customStyles.icons} />
-                      Daily rate
+                      Daily rate(D)
                     </button>
                   </Link>
 
@@ -1150,18 +1158,107 @@ const Sidebar = ({ children, applyPageName }) => {
             </button>
             {displayReports && (
               <div>
-                <Link href="/Reports/Pagibig">
-                  <button
-                    className={getSubStyle(501)}
-                    onClick={updateActiveMenu.bind(this, {
-                      id: 501,
-                      name: "Pagibig",
-                    })}
-                  >
-                    <TbReportAnalytics style={customStyles.icons} />
-                    Pagibig
-                  </button>
-                </Link>
+                <button className={styles.sidesubmenu} onClick={togglePagibigMenu}>
+                  <TbReportSearch style={customStyles.icons} />
+                  Pagibig
+                </button>
+                {
+                  dispalyPagibig && (
+                    <div>
+                      <Link href="/Reports/Pagibig/pagibigmonthly">
+                        <button
+                          className={getSubStyle(1001)}
+                          onClick={updateActiveMenu.bind(this, {
+                            id: 1001,
+                            name: "PAGIBIG MONTHLY",
+                          })}
+                        >
+                          <TbReportAnalytics style={customStyles.icons} />
+                          PAGIBIG MONTHLY
+                        </button>
+                      </Link>
+
+                      <Link href="/Reports/Pagibig/m1excel">
+                        <button
+                          className={getSubStyle(1002)}
+                          onClick={updateActiveMenu.bind(this, {
+                            id: 1002,
+                            name: "M1-Excel",
+                          })}
+                        >
+                          <TbReportAnalytics style={customStyles.icons} />
+                          M1-EXCEL
+                        </button>
+                      </Link>
+
+                      <Link href="/Reports/Pagibig/m1mcrf">
+                        <button
+                          className={getSubStyle(1003)}
+                          onClick={updateActiveMenu.bind(this, {
+                            id: 1003,
+                            name: "M1 MCRF",
+                          })}
+                        >
+                          <TbReportAnalytics style={customStyles.icons} />
+                          M1-MCRF
+                        </button>
+                      </Link>
+
+                      <Link href="/Reports/Pagibig/pagibigml1report">
+                        <button
+                          className={getSubStyle(1004)}
+                          onClick={updateActiveMenu.bind(this, {
+                            id: 1004,
+                            name: "ML1-REPORT",
+                          })}
+                        >
+                          <TbReportAnalytics style={customStyles.icons} />
+                          ML1-REPORT
+                        </button>
+                      </Link>
+
+
+                      <Link href="/Reports/Pagibig/pagibigp2report">
+                        <button
+                          className={getSubStyle(1005)}
+                          onClick={updateActiveMenu.bind(this, {
+                            id: 1005,
+                            name: "P2-4",
+                          })}
+                        >
+                          <TbReportAnalytics style={customStyles.icons} />
+                          P2-4
+                        </button>
+                      </Link>
+
+                      <Link href="/Reports/Pagibig/strlf">
+                        <button
+                          className={getSubStyle(1006)}
+                          onClick={updateActiveMenu.bind(this, {
+                            id: 1006,
+                            name: "STLRF",
+                          })}
+                        >
+                          <TbReportAnalytics style={customStyles.icons} />
+                          STLRF
+                        </button>
+                      </Link>
+
+                      <Link href="/Reports/Pagibig/strlfexcel">
+                        <button
+                          className={getSubStyle(1007)}
+                          onClick={updateActiveMenu.bind(this, {
+                            id: 1007,
+                            name: "STLRF EXCEL",
+                          })}
+                        >
+                          <TbReportAnalytics style={customStyles.icons} />
+                          STLRF EXCEL
+                        </button>
+                      </Link>
+                    </div>
+                  )
+                }
 
                 <Link href="/Reports/payrollsummary">
                   <button
