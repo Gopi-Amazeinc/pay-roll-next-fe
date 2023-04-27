@@ -657,7 +657,7 @@ const Sidebar = ({ children, applyPageName }) => {
             </button>
             {displaySettings && (
               <div>
-                <Link href="/Settings/Payperiodsetting">
+                <Link href="/Settings/PayperiodSetting">
                   <button
                     className={getSubStyle(91)}
                     onClick={updateActiveMenu.bind(this, {
@@ -669,7 +669,7 @@ const Sidebar = ({ children, applyPageName }) => {
                     Pay period
                   </button>
                 </Link>
-                <Link href="/Settings/Annualtax">
+                <Link href="/Settings/AnnualTax">
                   <button
                     className={getSubStyle(92)}
                     onClick={updateActiveMenu.bind(this, {
@@ -681,7 +681,7 @@ const Sidebar = ({ children, applyPageName }) => {
                     Annual tax
                   </button>
                 </Link>
-                <Link href="/Settings/Semitax">
+                <Link href="/Settings/SemiMonthlyTax">
                   <button
                     className={getSubStyle(93)}
                     onClick={updateActiveMenu.bind(this, {
@@ -718,7 +718,7 @@ const Sidebar = ({ children, applyPageName }) => {
                   </button>
                 </Link>
 
-                <Link href="/Settings/mpf">
+                <Link href="/Settings/Mpf">
                   <button
                     className={getSubStyle(122)}
                     onClick={updateActiveMenu.bind(this, {
@@ -731,7 +731,7 @@ const Sidebar = ({ children, applyPageName }) => {
                   </button>
                 </Link>
 
-                <Link href="/Settings/pagibig">
+                <Link href="/Settings/Pagibig">
                   <button
                     className={getSubStyle(123)}
                     onClick={updateActiveMenu.bind(this, {
