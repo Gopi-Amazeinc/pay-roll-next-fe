@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { useEffect, useState } from "react";
 import axios from 'axios'
 import Styles from '../../../../styles/philhealth.module.css'
+import Swal from 'sweetalert2';
 
 function Philhealth() {
 
@@ -40,7 +41,7 @@ function Philhealth() {
                 hostURL + `HR/DeletePhihealthconfogaration?id=${id}`
             );
             console.log(res.data);
-            alert("Data Deleted Sucessfully");
+            Swal.fire("Deleted succesfullly");
             getPhilhealthDash();
         } catch (error) {
             console.error(error);
