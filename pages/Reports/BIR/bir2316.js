@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import Layout from '../../../components/layout/layout';
 
-const bir2316 = () => {
+const Bir2316 = () => {
     let [generateState, setState] = useState(false)
 
     const toggleState = () => {
@@ -132,4 +132,4 @@ const bir2316 = () => {
     )
 }
 
-export default bir2316
+export default Bir2316

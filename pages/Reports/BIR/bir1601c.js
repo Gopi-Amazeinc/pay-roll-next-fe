@@ -2,7 +2,7 @@ import Layout from '../../../components/layout/layout';
 import React, { useState } from 'react'
 import Styles from '../../../styles/bir1601c.module.css'
 
-const bir1601c = () => {
+const Bir1601c = () => {
     const [toggle, setToggle] = useState(false)
     const getToggle = () => {
         setToggle(!toggle)
@@ -75,4 +75,4 @@ const bir1601c = () => {
     )
 }
 
-export default bir1601c
+export default Bir1601c
