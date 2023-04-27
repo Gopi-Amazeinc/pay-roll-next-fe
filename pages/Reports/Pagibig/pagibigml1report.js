@@ -1,21 +1,20 @@
 import React from 'react'
-import Layout from '@/Components/layout';
-import Style from '../../../styles/ReportsStyle/pagibigp2.module.css';
+import Layout from '../../../components/layout/layout';
+import Style from '../../../styles/pagibigml1.module.css';
 
-
-function Pagibigp2report() {
+function Pagibigml1report() {
   return (
     <Layout>
       <div className='container-fluid'>
         <div className='card p-3 border-0 shadow-lg rounded-3 mt-4'>
           <div className='row '>
             <div className='col-lg-12'>
-              <h4 style={{ color: "blue", textAlign: "center" }}>HDMF P2-4</h4>
+              <h4 style={{ color: "blue", textAlign: "center" }}>HDMF ML-1 Report</h4>
               <hr></hr>
             </div>
             <div className='col-lg-2'></div>
             <div className='col-lg-3'>
-              <label style={{ float: "right" }}>Select Start Month & Year</label>
+              <label style={{ float: "right" }}>Select Start Month & Year </label>
             </div>
             <div className='col-lg-2'>
               <select id="Department" name="Department" className='form-select'>
@@ -56,4 +55,4 @@ function Pagibigp2report() {
   )
 }
 
-export default Pagibigp2report
+export default Pagibigml1report
