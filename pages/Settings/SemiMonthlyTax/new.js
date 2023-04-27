@@ -3,6 +3,7 @@ import Layout from '@/components/layout/layout'
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import Link from 'next/link';
 
 const SemiMonthlyTaxForm = ({ editData }) => {
 
