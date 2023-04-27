@@ -3,7 +3,7 @@ import Link from 'next/link';
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useEffect, useState } from 'react';
-import Styles from '@/Styles/sss.module.css'
+import Styles from '../../../../styles/sss.module.css'
 
 function SSS() {
     let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
@@ -51,9 +51,9 @@ function SSS() {
         <div>
             <div>
                 <br />
-                <p id={Styles.p}>SSS Configuration</p>
+                <p className={Styles.p}>SSS Configuration</p>
 
-                <div className='card shadow-lg p-4 rounded-2 mt-4' id={Styles.card}>
+                <div className={'card shadow-lg p-4 rounded-2 mt-4 ' + Styles.card}>
                     <div className='row'>
                         <div className='col-lg-1'></div>
                         <div className='col-lg-4'>
@@ -66,10 +66,10 @@ function SSS() {
                     <div className='col-lg-11'></div>
                     <div className='col-lg-1'>
 
-                        <Link href="/Configuration/sssconfigadd"
+                        <Link href="/Settings/SSS/new"
                             onClick={clearData.bind(this)}
-                            id={Styles.addLink} >
-                            <button id={Styles.addButton} >  ADD </button></Link>
+                            className={Styles.addLink} >
+                            <button className={Styles.addButton} >  ADD </button></Link>
 
                     </div>
 
@@ -98,9 +98,9 @@ function SSS() {
                                     <td>{data.ssS_Ecvalue}</td>
                                     <td>{data.year}</td>
                                     <td>
-                                        <Link href={`/Masters/SSS/Edit/${data.id}`}>
+                                        <Link href={`/Settings/SSS/Edit/${data.id}`}>
                                             <button
-                                                id={Styles.actionButton}
+                                                className={Styles.actionButton}
                                                 style={{ fontSize: "12px", marginRight: "5%" }}
 
                                             >
@@ -108,7 +108,7 @@ function SSS() {
                                             </button>
                                         </Link>
                                         <button
-                                            id={Styles.actionButton}
+                                            className={Styles.actionButton}
                                             style={{ fontSize: "12px" }}
                                             onClick={() => handelDelete(data.id)}
                                         >

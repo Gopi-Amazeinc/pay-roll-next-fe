@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import axios from 'axios'
 import Link from "next/link";
 import Swal from 'sweetalert2';
-import Styles from '@/Styles/AnnualTaxForm.module.css'
+import Styles from '../../../styles/annualtaxform.module.css'
 
 
 const AnnualTaxForm = ({ editData }) => {
@@ -18,12 +18,12 @@ const AnnualTaxForm = ({ editData }) => {
         if (actionType == "insert") {
             await axios.post(hostURL + "HR/InsertTaxconfigaration", data); //naveen.th@amazeinc.in, Insert API for tax configuration, to add new data
             Swal.fire("Added succesfullly");
-            location.href = "/Masters/AnnualTax";
+            location.href = "/Settings/AnnualTax";
         } else {
             await axios.post(hostURL + "HR/UpdateTaxconfigaration", data); //naveen.th@amazeinc.in, Update API for tax configuration, to update data
             Swal.fire("Updated succesfullly");
             sessionStorage.removeItem("annualTaxID");
-            location.href = "/Masters/AnnualTax";
+            location.href = "/Settings/AnnualTax";
         }
         await axios.get(hostURL + "HR/GetTaxconfigaration");
     }
@@ -254,7 +254,7 @@ const AnnualTaxForm = ({ editData }) => {
                         <div className="row ">
                             <div className="col-lg-6"></div>
                             <div className="col-lg-6">
-                                <Link href="/Masters/AnnualTax">
+                                <Link href="/Settings/AnnualTax">
                                     <button
                                         type="button"
                                         className={'mx-3 ' + Styles.SaveCloseBtn}

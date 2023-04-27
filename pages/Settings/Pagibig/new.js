@@ -33,10 +33,12 @@ const PagibigForm = ({ editData }) => {
             await axios.post(hostURL + "HR/InsertPagibigconfogaration", data);
             Swal.fire('Data Inserted successfully')
             console.log("Inserted data:", data);
+            location.href = '/Settings/Pagibig';
         }
         else {
             await axios.post(hostURL + "HR/UpdatePagibigconfogaration", data);
             Swal.fire('Data Updated successfully')
+            location.href = '/Settings/Pagibig';
         }
     }
 
@@ -56,27 +58,27 @@ const PagibigForm = ({ editData }) => {
         <Layout>
             <div>
                 <br />
-                <p id={Styles.p}>Phihealth Configuration Form</p>
+                <p className={Styles.p}>Pagibig Form</p>
                 <div className={Styles.card}>
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <div className="row">
                             <div className="col-lg-3">
-                                <label className={Styles.labels} >Taxable income low limit <span id={Styles.span}>*</span></label>
+                                <label className={Styles.labels} >Taxable income low limit <span className={Styles.span}>*</span></label>
                                 <input type="text" className={Styles.selecter}  {...register('Taxiableincomelowlimit', { required: true })} />
                             </div>
 
                             <div className="col-lg-3">
-                                <label className={Styles.labels}>Taxable income high limit <span id={Styles.span}>*</span></label>
+                                <label className={Styles.labels}>Taxable income high limit <span className={Styles.span}>*</span></label>
                                 <input type="text" className={Styles.selecter}  {...register('Taxiableincomehighlimit', { required: true })} />
                             </div>
 
                             <div className="col-lg-3">
-                                <label className={Styles.labels}>Pagibig value <span id={Styles.span}>*</span></label> <br />
+                                <label className={Styles.labels}>Pagibig value <span className={Styles.span}>*</span></label> <br />
                                 <input type="text" className={Styles.selecter}  {...register('Pagibigvalue', { required: true })} />
                             </div>
 
                             <div className="col-lg-3">
-                                <label className={Styles.labels}>Year<span id={Styles.span}>*</span></label>
+                                <label className={Styles.labels}>Year<span className={Styles.span}>*</span></label>
                                 <select className={Styles.selecter}   {...register('Year', { required: true })}   >
                                     <option>2023</option>
                                     <option>2024</option>
@@ -90,15 +92,15 @@ const PagibigForm = ({ editData }) => {
                         <br />
                         <div className="row">
                             <div className="col-lg-11">
-                                <Link href="/Configuration/pagibig"><button className='btn btn-primary' style={{ float: "right", marginLeft: "5px" }} tabindex="0">CANCEL</button></Link>
+                                <Link href="/Configuration/pagibig"><button className={Styles.Cancel} style={{ float: "right", marginLeft: "5px" }} tabindex="0">CANCEL</button></Link>
                                 {
                                     actionType == "insert" && (
-                                        <button type='submit' className='btn btn-primary' style={{ float: "right" }}>Save</button>
+                                        <button type='submit' className={Styles.Save} style={{ float: "right" }}>Save</button>
                                     )
                                 }
                                 {
                                     actionType == "update" && (
-                                        <button type='submit' className='btn btn-primary' style={{ float: "right" }}>Update</button>
+                                        <button type='submit' className={Styles.Save} style={{ float: "right" }}>Update</button>
                                     )
                                 }
                             </div>

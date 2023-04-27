@@ -3,6 +3,7 @@ import Layout from '@/components/layout/layout'
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import Link from 'next/link';
 
 const SemiMonthlyTaxForm = ({ editData }) => {
 
@@ -15,7 +16,7 @@ const SemiMonthlyTaxForm = ({ editData }) => {
         console.log(JSON.stringify(data))
         if (actionType == "insert") {
             await axios.post(hostURL + "HR/InsertTaxconfigarationsemimonth", data) // Inserting new data [Shashank]
-            location.href = "/Masters/SemiMonthlyTax";
+            location.href = "/Settings/SemiMonthlyTax";
             Swal.fire({
                 icon: 'success',
                 title: 'Added Successfully',
@@ -37,7 +38,7 @@ const SemiMonthlyTaxForm = ({ editData }) => {
                         icon: "success",
                         titleText: "Updated Successfully"
                     })
-                    location.href = "/Masters/SemiMonthlyTax";
+                    location.href = "/Settings/SemiMonthlyTax";
 
                 }
             })
@@ -146,7 +147,7 @@ const SemiMonthlyTaxForm = ({ editData }) => {
                             }
                         </div>
                         <div className='col-lg-2 mt-2'>
-                            <button className='btn btn-primary AddButton'>Cancel</button>
+                            <Link href='/Settings/SemiMonthlyTax'><button className='btn btn-primary AddButton'>Cancel</button></Link>
                         </div>
 
                     </div>
