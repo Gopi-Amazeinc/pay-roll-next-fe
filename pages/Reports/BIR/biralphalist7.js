@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Layout from '../../../components/layout/layout';
-const biralphalist7 = () => {
+const Biralphalist7 = () => {
     let [generateState, setState] = useState(false)
 
     const toggleState = () => {
@@ -159,4 +159,4 @@ const biralphalist7 = () => {
     )
 }
 
-export default biralphalist7
+export default Biralphalist7
