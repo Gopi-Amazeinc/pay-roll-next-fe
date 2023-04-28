@@ -37,6 +37,10 @@ function Dashboard() {
   }
   console.log(workType);
 
+  const handlePunchin = () => {
+    setModalOpen(!modalOpen);
+  }
+
 
   return (
     <Layout>
@@ -410,13 +414,13 @@ function Dashboard() {
                       <div className="col-lg-6">
                         <ModalFooter>
                           {/* {actionType == "Punchin" ? ( */}
-                            <button color="primary" type="button" className="button" onClick={() => handlePunchin()} >
-                              Punchin
-                            </button>
+                          <button color="primary" type="button" className="button" onClick={() => handlePunchin()} >
+                            Punchin
+                          </button>
                           {/* ) : ( */}
-                            <button color="primary" type="button" className="button" >
-                              PunchOut
-                            </button>
+                          <button color="primary" type="button" className="button" >
+                            PunchOut
+                          </button>
                           {/* )} */}
                         </ModalFooter>
                       </div>
