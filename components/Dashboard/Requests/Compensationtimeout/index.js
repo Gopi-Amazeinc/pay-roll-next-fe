@@ -28,16 +28,7 @@ const Compensationtimeout = () => {
         ModalIsOpen(true)
     }
 
-    const togglePending = () => {
-        debugger
-        console.log("ssss")
-        // e.preventDefault();
-        console.log("ssss")
-        setPending(true)
-        setRejected(false)
-        setApproved(false)
-
-    }
+   
 
 
     const toggleApproved = (e) => {
@@ -207,7 +198,7 @@ const Compensationtimeout = () => {
             <div className='row mt-3'>
                 <div className='col-lg-4'>
                     <div className='btn-group'>
-                        <button onClick={() => togglePending()} className={leave.btn} >Pending</button>
+                       
                         <button onClick={toggleApproved} className={leave.btn} >Approved</button>
                         <button onClick={toggleRejected} className={leave.btn}>Rejected</button>
                     </div>
