@@ -17,8 +17,8 @@ const localizer = momentLocalizer(moment);
 function LeaveListDashboard() {
 
     const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-    
-    
+
+
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [pending, setPending] = useState(false)
@@ -71,15 +71,16 @@ function LeaveListDashboard() {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
         async function getData() {
+           const staffID = sessionStorage.getItem("userID")
             let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
             //get api is not working
-            const { dataApproved } = await axios.get(hostURL + "Employee/GetApprovedStaffLeavesByStaffID")
+            const { dataApproved } = await axios.get(hostURL + "Employee/GetApprovedStaffLeavesByStaffID?ID=" +staffID + "TypeID=1&Sdate=2022-02-01&Edate=2099-02-01") 
             setApprovedData(dataApproved);
             // get api is not working
-            const { dataPending } = await axios.get(hostURL + "Employee/GetPendingStaffLeavesByStaffID")
+            const { dataPending } = await axios.get(hostURL + "Employee/GetPendingStaffLeavesByStaffID?ID=" +staffID + "TypeID=1&Sdate=2022-02-01&Edate=2099-02-01")
             setPendingData(dataPending);
             //get api is not working
-            const { dataRejected } = await axios.get(hostURL + "Employee/GetRejectedStaffLeavesByStaffID")
+            const { dataRejected } = await axios.get(hostURL + "Employee/GetRejectedStaffLeavesByStaffID?ID=" +staffID + "TypeID=1&Sdate=2022-02-01&Edate=2099-02-01")
             setRejectedData(dataRejected);
 
 
@@ -149,7 +150,7 @@ function LeaveListDashboard() {
                 <div class="col-md-4"><a class="leavecol">Leave Balance</a></div>
             </div>
             <br />
-            
+
             <div class="row FilterClass ">
                 <div class="col-lg-4">
                     <div class="card shadow p-4">
@@ -267,17 +268,18 @@ function LeaveListDashboard() {
                                 </tr>
                             </thead>
                             <tbody>
-                                {pendingdata?.map((data) => {
-                                    return (
-                                        <tr key={data.id}>
-                                            <td>{data.Date}</td>
-                                            <td>{data.StartTime}</td>
-                                            <td>{data.EndTime}</td>
-                                            <td>{data.Comments}</td>
-                                            <td>{data.status}</td>
-                                        </tr>
-                                    );
-                                })}
+                                {
+                                    pendingdata.map((data) => {
+                                        return (
+                                            <tr key={data.id}>
+                                                <td>{data.Date}</td>
+                                                <td>{data.StartTime}</td>
+                                                <td>{data.EndTime}</td>
+                                                <td>{data.Comments}</td>
+                                                <td>{data.status}</td>
+                                            </tr>
+                                        );
+                                    })}
                             </tbody>
                         </table>
                     )}
@@ -296,17 +298,18 @@ function LeaveListDashboard() {
                                 </tr>
                             </thead>
                             <tbody>
-                                {approveddata?.map((data) => {
-                                    return (
-                                        <tr key={data.id}>
-                                            <td>{data.Date}</td>
-                                            <td>{data.StartTime}</td>
-                                            <td>{data.EndTime}</td>
-                                            <td>{data.Comments}</td>
-                                            <td>{data.status}</td>
-                                        </tr>
-                                    );
-                                })}
+                                {
+                                    approveddata.map((data) => {
+                                        return (
+                                            <tr key={data.id}>
+                                                <td>{data.Date}</td>
+                                                <td>{data.StartTime}</td>
+                                                <td>{data.EndTime}</td>
+                                                <td>{data.Comments}</td>
+                                                <td>{data.status}</td>
+                                            </tr>
+                                        );
+                                    })}
                             </tbody>
                         </table>
                     )}
@@ -325,17 +328,18 @@ function LeaveListDashboard() {
                                 </tr>
                             </thead>
                             <tbody>
-                                {rejecteddata?.map((data) => {
-                                    return (
-                                        <tr key={data.id}>
-                                            <td>{data.Date}</td>
-                                            <td>{data.StartTime}</td>
-                                            <td>{data.EndTime}</td>
-                                            <td>{data.Comments}</td>
-                                            <td>{data.status}</td>
-                                        </tr>
-                                    );
-                                })}
+                                {
+                                    rejecteddata.map((data) => {
+                                        return (
+                                            <tr key={data.id}>
+                                                <td>{data.Date}</td>
+                                                <td>{data.StartTime}</td>
+                                                <td>{data.EndTime}</td>
+                                                <td>{data.Comments}</td>
+                                                <td>{data.status}</td>
+                                            </tr>
+                                        );
+                                    })}
                             </tbody>
                         </table>
                     )}
