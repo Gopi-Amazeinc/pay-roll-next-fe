@@ -22,18 +22,18 @@ const ApplyLeave = () => {
         getDropdowndata()
     }, []);
 
-    async function onSubmit(data){
-      try {
-        debugger;
-        await axios.post(hostURL + "HR/InsertStaffLeaves", data);
+    async function onSubmit(data) {
+        try {
+            debugger;
+            await axios.post(hostURL + "HR/InsertStaffLeaves", data);
             Swal.fire({
                 icon: "success",
                 title: "Hurray..",
                 text: "Data was inserted...!",
             });
-      } catch (error) {
-        Swal.fire("Data not inserted");
-      }
+        } catch (error) {
+            Swal.fire("Data not inserted");
+        }
     }
     return (
         <Layout>
@@ -82,7 +82,8 @@ const ApplyLeave = () => {
                         <div className="col-lg-12">
                             <label htmlFor="">Attachment</label>
                             <div className="col-lg-2">
-                                <DropZone {...register("MedicalUrl", { required: true })} />
+                                {/* <DropZone {...register("MedicalUrl", { required: true })} /> */}
+                                <input type="text" className="form-control" {...register("MedicalUrl", { required: true })} />
                             </div>
                         </div>
                         <div className="col-lg-10">
