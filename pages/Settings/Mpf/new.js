@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import Link from 'next/link';
-import Styles from '@/Styles/mpfadd.module.css'
+import Styles from '../../../styles/mpfadd.module.css'
 
 function MpfForm({ editData }) {
     const { register, handleSubmit, reset, formState } = useForm();
