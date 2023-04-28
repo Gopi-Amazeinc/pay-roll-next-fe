@@ -1,9 +1,15 @@
-import React from 'react'
+import React,{useState} from 'react'
 import Layout from '../../../components/layout/layout';
 import Style from '../../../styles/pagibigmonthly.module.css';
 
 
 function Pagibigmonthly() {
+
+  let [generateState, setState] = useState(false)
+
+  const toggleState = () => {
+    setState(true)
+  }
   return (
     <Layout>
       <div className='container-fluid'>
@@ -15,7 +21,7 @@ function Pagibigmonthly() {
             </div>
             <div className='col-lg-2'></div>
             <div className='col-lg-3'>
-              <label style={{float:"right"}}>Select Start Month & Year</label>
+              <label style={{ float: "right" }}>Select Start Month & Year</label>
             </div>
             <div className='col-lg-2'>
               <select id="Department" name="Department" className='form-select'>
@@ -43,14 +49,26 @@ function Pagibigmonthly() {
                 <option>2020</option>
               </select>
             </div>
-            <div className='col-lg-2'></div>            
+            <div className='col-lg-2'></div>
           </div>
-          <div className='row' style={{textAlign:"center"}}>
+          <div className='row' style={{ textAlign: "center" }}>
             <div className='col-lg-12'>
-                    <button className={Style.generatebutton} >GENERATE</button>
+              <button className={Style.generatebutton} onClick={toggleState}  >GENERATE</button>
             </div>
           </div>
         </div>
+
+        {
+          generateState && (
+            <div className='row mt-4'>
+              <div className='col-lg-4'></div>
+              <div className='col-lg-4'></div>
+              <div className='col-lg-4'>
+                <button className='EditDelteBTN'>convert to pdf</button>
+              </div>
+            </div>
+          )
+        }
       </div>
     </Layout>
   )
