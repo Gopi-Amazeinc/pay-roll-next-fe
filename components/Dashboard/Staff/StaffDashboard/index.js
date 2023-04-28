@@ -1,5 +1,4 @@
 import React,{useState,useEffect} from "react";
-import Styles from "../../../../styles/StaffDashboard.module.css"
 import axios from "axios";
 import {BiEdit} from "react-icons/bi"
 
@@ -48,16 +47,16 @@ function StaffDashbaord() {
             </div>
 
             <div className="col-lg-2">
-              <select class="form-select" aria-label="Default select example">
-                <option selected>select Department</option>
+              <select className="form-select" aria-label="Default select example">
+                <option >select Department</option>
                 <option value="1">One</option>
                 <option value="2">Two</option>
                 <option value="3">Three</option>
               </select>
             </div>
             <div className="col-lg-2">
-              <select class="form-select" aria-label="Default select example">
-                <option selected>Select Level</option>
+              <select className="form-select" aria-label="Default select example">
+                <option >Select Level</option>
                 <option value="1">One</option>
                 <option value="2">Two</option>
                 <option value="3">Three</option>
@@ -65,8 +64,8 @@ function StaffDashbaord() {
             </div>
 
             <div className="col-lg-2">
-              <select class="form-select" aria-label="Default select example">
-                <option selected>Select Position</option>
+              <select className="form-select" aria-label="Default select example">
+                <option >Select Position</option>
                 <option value="1">One</option>
                 <option value="2">Two</option>
                 <option value="3">Three</option>
@@ -76,13 +75,13 @@ function StaffDashbaord() {
             <div className="col-lg-2">
               <input
                 type="text"
-                class="form-control"
+                className="form-control"
                 placeholder="Search for Staff"
               />
             </div>
 
             <div className="col-lg-3">
-              <button type="button" class="btn btn-primary">Export Excel</button>
+              <button type="button" className="btn btn-primary">Export Excel</button>
             </div>
           </div>
         </div>
@@ -93,10 +92,10 @@ function StaffDashbaord() {
               <p style={{marginTop:"2%"}}>Showing Result</p>
             </div>
             <div className="col-lg-3">
-              <button  type="button" class="btn btn-primary" style={{marginTop:"5%"}}>ADD STAFF</button>
+              <button  type="button" className="btn btn-primary" style={{marginTop:"5%"}}>ADD STAFF</button>
             </div>
             <div className="col-lg-3">
-              <button  type="button" class="btn btn-primary" style={{marginTop:"5%"}}>UPLOAD STAFF</button>
+              <button  type="button" className="btn btn-primary" style={{marginTop:"5%"}}>UPLOAD STAFF</button>
             </div>
           </div>
         </div>

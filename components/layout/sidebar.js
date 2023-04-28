@@ -269,7 +269,7 @@ const Sidebar = ({ children, applyPageName }) => {
                     </button>
                   </Link>
                   <Link
-                    href="/Staff/staffsalarycomponent"
+                    href="/Staff/StaffSalary"
                     className={styles.sidemenulink}
                   >
                     <button
@@ -858,15 +858,15 @@ const Sidebar = ({ children, applyPageName }) => {
             )}
           </div>
         )} */}
-        {userRole == 9 ||
-          userRole == 17 && (
+        {(userRole == 9 ||
+          userRole == 17) && (
             <div>
               <hr></hr>
               <button className={styles.sidemenu} onClick={toggleMastersMenu}>
                 <RiUserStarLine style={customStyles.icons} />
                 Masters
               </button>
-              {userRole == 9 && displayMasters && (
+              {(userRole == 9 && displayMasters )&& (
                 <div>
                   <Link href="/Masters/LeaveType">
                     <button
@@ -1107,7 +1107,7 @@ const Sidebar = ({ children, applyPageName }) => {
                   {/* code ends for data configuration here */}
                 </div>
               )}
-              {userRole == 17 && displayMasters && (
+              {(userRole == 17 && displayMasters )&& (
                 <>
                   {/* <Link href="/Settings/componentmaster">
                   <button

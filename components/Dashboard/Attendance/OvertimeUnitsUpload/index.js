@@ -59,7 +59,7 @@ const MyTeamOverTimeDetail = () => {
                       <div className='row'>
                         <ModalFooter>
 
-                          <button color="primary" type="button">
+                          <button color="primary" type="button" className='button'>
                             Upload Staff
                           </button>
                         </ModalFooter>
@@ -71,7 +71,7 @@ const MyTeamOverTimeDetail = () => {
                           filename="users table"
                           sheet="users"
                           currentTableRef={tableRef.current}>
-                          <button type="button" className="form-control CancelBTN">Export To Excel </button>
+                          <button type="button" className="button">Export To Excel </button>
                         </DownloadTableExcel>
                       </div>
                     </div>
@@ -91,7 +91,7 @@ const MyTeamOverTimeDetail = () => {
             sheet="users"
             currentTableRef={tableRef.current}
           >
-            <button>Export to Excel</button>
+            <button className='button'>Export to Excel</button>
           </DownloadTableExcel>
 
           </div>
