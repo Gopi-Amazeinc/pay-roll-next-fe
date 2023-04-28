@@ -269,7 +269,7 @@ const Sidebar = ({ children, applyPageName }) => {
                     </button>
                   </Link>
                   <Link
-                    href="/Staff/staffsalarycomponent"
+                    href="/Staff/StaffSalary"
                     className={styles.sidemenulink}
                   >
                     <button
