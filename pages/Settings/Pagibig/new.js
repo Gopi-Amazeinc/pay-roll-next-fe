@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
-import Styles from '@/Styles/pagibigadd.module.css'
+import Styles from '../../../styles/pagibigadd.module.css'
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2'
