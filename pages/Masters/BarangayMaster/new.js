@@ -23,14 +23,6 @@ const BarangayMasterForm = ({ editData }) => {
   const [actionType, setAction] = useState("insert");
 
     useEffect(() => {
-
-        // if (editData.id) {
-        //     clearForm(editData);
-        // }
-        // else {
-        //     clearForm();
-        // }
-
     getData();
   }, [1]);
 
@@ -58,11 +50,11 @@ const BarangayMasterForm = ({ editData }) => {
         res = await axios.get(hostURL + "Master/GetCityType");
         setCityData(res.data);
         debugger
-        if (editData.id) {
-            clearForm(editData);
+        if (editData == "") {
+            clearForm();
         }
         else {
-            clearForm();
+            clearForm(editData);
         }
     }
 
