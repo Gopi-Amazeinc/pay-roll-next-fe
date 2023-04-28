@@ -5,7 +5,7 @@ import Swal from "sweetalert2";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
 import Layout from '@/components/layout/layout'
-import Styles from '@/Styles/sssconfigadd.module.css'
+import Styles from '../../../Styles/sssconfigadd.module.css'
 const SSSForm = ({ editData }) => {
     const yearOptions = [
         { id: 1, year: "2023" },

@@ -1,5 +1,5 @@
 import React from 'react'
-import Styles from 'styles/LoanMasterForm.module.css'
+import Styles from '../../../styles/LoanMasterForm.module.css'
 import { useForm } from 'react-hook-form';
 import Link from 'next/link';
 import Layout from '@/components/layout/layout.js';
