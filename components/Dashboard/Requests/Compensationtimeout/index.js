@@ -6,12 +6,11 @@ import Modal from 'react-modal';
 import { AiOutlineClose } from 'react-icons/ai'
 import leave from "../../../../pages/Requests/Compensationtimeout/compensation.module.css"
 
-function Compensationtimeout() {
+const Compensationtimeout = () => {
 
 
     const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
 
-    // eslint-disable-next-line react-hooks/rules-of-hooks
     const [pending, setPending] = useState(false)
     const [approved, setApproved] = useState(false)
     const [rejected, setRejected] = useState(false)
@@ -30,18 +29,26 @@ function Compensationtimeout() {
     }
 
     const togglePending = () => {
+        debugger
+        console.log("ssss")
+        // e.preventDefault();
+        console.log("ssss")
         setPending(true)
         setRejected(false)
         setApproved(false)
+
     }
 
-    const toggleApproved = () => {
+
+    const toggleApproved = (e) => {
+        e.preventDefault();
         setApproved(true)
         setPending(false)
         setRejected(false)
     }
 
-    const toggleRejected = () => {
+    const toggleRejected = (e) => {
+        e.preventDefault();
         setRejected(true)
         setApproved(false)
         setPending(false)
@@ -187,19 +194,22 @@ function Compensationtimeout() {
                     <div className='col-lg-5'>
                         <input type="text" className='form-control' placeholder='Search...' />
                     </div>
-
-                    <div className='col-lg-4'>
-                        <Link href="/Requests/Compensationtimeout/new"><button className='btn btn-primary AddButton'>Add Compensation Time Out</button></Link>
-                    </div>
+                    {
+                        sessionStorage.getItem("roleID") != "2" && (
+                            <div className='col-lg-4'>
+                                <Link href="/Requests/Compensationtimeout/new"><button className='btn btn-primary AddButton'>Add Compensation Time Out</button></Link>
+                            </div>
+                        )
+                    }
                 </div>
             </div>
 
             <div className='row mt-3'>
                 <div className='col-lg-4'>
                     <div className='btn-group'>
-                        <button onClick={togglePending} className={'btn ' + leave.btn} >Pending</button>
-                        <button onClick={toggleApproved} className={'btn ' + leave.btn} >Approved</button>
-                        <button onClick={toggleRejected} className={'btn ' + leave.btn}>Rejected</button>
+                        <button onClick={() => togglePending()} className={leave.btn} >Pending</button>
+                        <button onClick={toggleApproved} className={leave.btn} >Approved</button>
+                        <button onClick={toggleRejected} className={leave.btn}>Rejected</button>
                     </div>
                 </div>
             </div>
