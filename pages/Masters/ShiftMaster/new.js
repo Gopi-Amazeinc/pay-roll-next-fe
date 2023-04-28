@@ -11,31 +11,6 @@ function ShiftMasterForm({ editData }) {
    const { errors } = formState;
    const [actionType, setActionType] = useState("insert");
 
-   useEffect(() => {
-      async function getShiftList() {
-         if (editData == "") {
-            clearForm(editData)
-         }
-         else {
-            clearForm(editData);
-         }
-      }
-      getShiftList();
-   }, []);
-
-
-   function clearForm(otData = null) {
-      let details = {
-         "Short": otData ? otData.short : "",
-         "Description": otData ? otData.description : "",
-         "ShiftTimeings": otData ? otData.shiftTimeings : "",
-         "Grace": otData ? otData.grace : "",
-         "ShiftType": otData ? otData.shiftType : ""
-      }
-      reset(details);
-      setActionType(otData ? "update" : 'insert')
-   }
-
    async function onSubmit(data) {
       let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
 
@@ -52,7 +27,7 @@ function ShiftMasterForm({ editData }) {
       else {
          // This API is used to update the data in the ShiftMaster table
          debugger
-         await axios.post(hostURL + "Master/UpdateShiftMaster", data);
+         let dsfdsfd = await axios.post(hostURL + "Master/UpdateShiftMaster/", data);
          Swal.fire({
             icon: "success",
             title: "Hurray..",
@@ -61,6 +36,28 @@ function ShiftMasterForm({ editData }) {
          location.href = "/Masters/ShiftMaster"
       }
    }
+
+   function clearForm(otData = null) {
+      let details = {
+         "ID":otData ? otData.id : "",
+         "Short": otData ? otData.short : "",
+         "Description": otData ? otData.description : "",
+         "ShiftTimeings": otData ? otData.shiftTimeings : "",
+         "Grace": otData ? otData.grace : "",
+         "ShiftType": otData ? otData.shiftType : ""
+      }
+      reset(details);
+      setActionType(otData ? "update" : 'insert')
+   }
+
+   useEffect(() => {
+      if (editData == "") {
+         clearForm()
+      }
+      else {
+         clearForm(editData);
+      }
+   }, []);
    return (
       <Layout>
          <div className="container-fluid">

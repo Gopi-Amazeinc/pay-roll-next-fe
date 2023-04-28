@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
+import { useRouter } from "next/router";
 
 function CityMasterForm({ editData }) {
     const [countryData, setCountryData] = useState([]);
@@ -57,14 +58,13 @@ function CityMasterForm({ editData }) {
         console.log(data);
         let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
         if (actionType == "insert") {
-            try {
                 await axios.post(hostURL + "Master/InsertCityType", data); // this for insrting the data using inserting Api call 
                 Swal.fire({
                     icon: "success",
                     title: "Hurray...",
                     text: "Data was added..!",
                 });
-            } catch (error) { }
+                location.href="/Masters/CityMaster"
         } else {
             await axios.post(hostURL + "Master/UpdateCityType", data); //  this is for updating or Modifiying the data using  Update Api call
             Swal.fire({
@@ -72,6 +72,7 @@ function CityMasterForm({ editData }) {
                 title: "Hurray...",
                 text: "Data was Updated..!",
             });
+            location.href="/Masters/CityMaster"
         }
     }
 
