@@ -45,7 +45,7 @@ function ShiftMaster() {
     <div>
       <br></br> <p className="Heading">Shift Master</p>{" "}
       <div className="container-fluid mt-4">
-        <div className="row shadow-lg p-2 rounded-4 p-3 ">
+        <div className="row shadow-lg  rounded-4 p-4 ">
           <div className="col-lg-1">
             <b>
               <p className="mt-2 text-center">
@@ -69,13 +69,13 @@ function ShiftMaster() {
         <div className="row mt-4">
           <div className="col-lg-10"></div>
           <div className="col-lg-2">
-            <Link href="/Masters/ShiftMaster/new"><button className="btn btn-primary btn-sm shadow-lgn AddButton" >Add New</button></Link>
+            <Link href="/Masters/ShiftMaster/new"><button className=" AddButton" >Add New</button></Link>
           </div>
         </div>
         <br />
         <div className="row">
-          <table className="table">
-            <thead>
+          <table className="table table-striped table-hover mt-4">
+            <thead className="th">
               <tr className="tr">
                 <th> Short</th>
                 <th> Description</th>

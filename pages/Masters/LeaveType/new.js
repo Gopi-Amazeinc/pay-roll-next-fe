@@ -62,15 +62,15 @@ function LeaveTypeForm({ editData }) {
 
     return (
         <Layout>
-            <div>
+            <div className='container'>
                 <div className={leaveform.row}>
                     <div className="col-md-12">
                         <div className="row">
                             <div className="col-lg-2">
-                                <br />
+
                                 <h3 className="text-primary fs-5 mt-3 fw-bold">
                                     Leave Details
-                                </h3>
+                                </h3><p></p>
                             </div>
                             <div className="col-lg-8"></div>
                             <div className="col-lg-2"></div>
@@ -82,7 +82,7 @@ function LeaveTypeForm({ editData }) {
                                     <div className="col-md-2">
                                         <label className="fw-bold" style={customStyles.inputLabel}>
                                             Leave Type<span style={{ color: "red" }}>*</span>
-                                        </label>
+                                        </label><p></p>
                                         <input
                                             type="text"
                                             className="form-control"
@@ -96,10 +96,11 @@ function LeaveTypeForm({ editData }) {
                                         )}
                                     </div>
 
+
                                     <div className="col-md-4">
                                         <label className="fw-bold" style={customStyles.inputLabel}>
                                             Leave Description<span style={{ color: "red" }}>*</span>
-                                        </label>
+                                        </label><p></p>
                                         <textarea
                                             className="form-control"
                                             name="Description"
@@ -115,38 +116,40 @@ function LeaveTypeForm({ editData }) {
                                         )}
                                     </div>
                                 </div>
+                                <br />
+                                <br />
+                                <div className="row">
+                                    <div className="col-lg-7"></div>
+                                    <div className="col-lg-2">
+                                        <Link href="/Masters/subsectionmaster">
+                                            <button className={leaveform.button}>
+                                                Cancel
+                                            </button>
+                                        </Link>
+                                    </div>
+                                    <div className="col-lg-2">
+                                        {actionType == "insert" && (
+                                            <button
+                                                type="submit"
+                                                className={leaveform.button}
+                                            >
+                                                Submit
+                                            </button>
+                                        )}
+                                        {actionType == "update" && (
+                                            <button
+                                                type="submit"
+                                                className={leaveform.button}
+                                            >
+                                                Update
+                                            </button>
+                                        )}
+                                    </div>
+                                </div>
                             </div>
 
-                            <br />
-                            <br />
-                            <div className="row">
-                                <div className="col-lg-7"></div>
-                                <div className="col-lg-2">
-                                    <Link href="/Masters/subsectionmaster">
-                                        <button className={leaveform.button}>
-                                            Cancel
-                                        </button>
-                                    </Link>
-                                </div>
-                                <div className="col-lg-2">
-                                    {actionType == "insert" && (
-                                        <button
-                                            type="submit"
-                                            className={leaveform.button}
-                                        >
-                                            Save
-                                        </button>
-                                    )}
-                                    {actionType == "update" && (
-                                        <button
-                                            type="submit"
-                                            className={leaveform.button}
-                                        >
-                                            Update
-                                        </button>
-                                    )}
-                                </div>
-                            </div>
+
+
                         </form>
                     </div>
                 </div>

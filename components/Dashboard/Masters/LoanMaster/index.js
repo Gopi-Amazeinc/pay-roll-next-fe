@@ -21,7 +21,7 @@ const LoanMasterDash = () => {
   };
   useEffect(() => {
     getData();
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getData = async () => {
@@ -62,101 +62,102 @@ const LoanMasterDash = () => {
     });
   };
   return (
-    
-      <div>
-        <br />
-        <br />
-        <p className="Heading" >Loan Type Dashboard</p>
 
-        <div className="card shadow-lg p-4 rounded-4">
-          <div className="row">
-            <div className="col-lg-1">
-              <p>Filter By</p>
-            </div>
-            <div className="col-lg-5">
-              <input
-                type="text"
-                className="form-control form-control-md "
-                placeholder="Search"
-              />
-            </div>
-          </div>
-        </div>
+    <div className="container">
+      <p></p>
+
+      <p className="Heading" >Loan Type Dashboard</p>
+
+      <div className="card shadow-lg p-4 rounded-4 mx-0">
         <div className="row">
-          <div className="col-lg-9">
-            <p  className="text-primary fs-6 mt-3 fw-bold">
-              SHOWING <span>{loanMaster.length} </span>RESULTS
-            </p>
+          <div className="col-lg-1">
+            <p>Filter By</p>
           </div>
-          <div className="col-lg-2">
-            <Link href="/Masters/LoanMaster/new" >
-              {" "}
-              <button
-                className="mt-3 AddButton"
-                onClick={clearData.bind(this)}
-               
-              >
-                {" "}
-                <AiOutlinePlusCircle  size={18} /> ADD{" "}
-              </button>{" "}
-            </Link>
+          <div className="col-lg-5">
+            <input
+              type="text"
+              className="form-control form-control-md "
+              placeholder="Search"
+            />
           </div>
-          <div className="col-lg-1"></div>
-        </div>
-
-        <div className="row ">
-          <table className=" table mt-3 table-striped table" >
-            <thead>
-              <tr className="tr">
-    
-                <th >Loan Type</th>
-                <th >Description</th>
-                <th >Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {loanMaster.map((data, index) => {
-                return (
-                  <tr className="text-dark" key={index}>
-                    <td>{data.type}</td>
-                    <td>{data.description}</td>
-                    <td>
-                      <span onClick={() => enableDisableLoanType(data)}>
-                        {data.enable_Disable ? (
-                          <Image
-                            className="img-fluid "
-                            src={Enable}
-                            alt="Digi Office"
-                            width={50}
-                            height={60}
-                          />
-                        ) : (
-                          <Image
-                            className="img-fluid "
-                            src={Disable}
-                            alt="Digi Office"
-                            width={50}
-                            height={60}
-                          />
-                        )}
-                      </span>
-                      <Image
-                        className="img-fluid"
-                        onClick={() => handelDelete(data.id)}
-                        src={Cancel}
-                        alt="Digi Office"
-                        width={30}
-                        height={60}
-                      />
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
         </div>
       </div>
-    
+      <div className="row">
+        <div className="col-lg-9">
+          <p className="text-primary fs-6 mt-3 fw-bold">
+            SHOWING <span>{loanMaster.length} </span>RESULTS
+          </p>
+        </div>
+        <div className="col-lg-1"></div>
+        <div className="col-lg-2">
+          <Link href="/Masters/LoanMaster/new" >
+            {" "}
+            <button
+              className="mt-3 AddButton"
+              onClick={clearData.bind(this)}
+
+            >
+              {" "}
+              <AiOutlinePlusCircle size={18} /> ADD{" "}
+            </button>{" "}
+          </Link>
+        </div>
+
+      </div>
+
+      <div className="row ">
+        <table className=" table mt-3 table-striped table mx-3 " >
+          <thead className="th">
+            <tr className="tr">
+
+              <th >Loan Type</th>
+              <th >Description</th>
+              <th >Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {loanMaster.map((data, index) => {
+              return (
+                <tr className="text-dark" key={index}>
+                  <td>{data.type}</td>
+                  <td>{data.description}</td>
+                  <td>
+                    <span onClick={() => enableDisableLoanType(data)}>
+                      {data.enable_Disable ? (
+                        <Image
+                          className="img-fluid "
+                          src={Enable}
+                          alt="Digi Office"
+                          width={50}
+                          height={60}
+                        />
+                      ) : (
+                        <Image
+                          className="img-fluid "
+                          src={Disable}
+                          alt="Digi Office"
+                          width={50}
+                          height={60}
+                        />
+                      )}
+                    </span>
+                    <Image
+                      className="img-fluid"
+                      onClick={() => handelDelete(data.id)}
+                      src={Cancel}
+                      alt="Digi Office"
+                      width={30}
+                      height={60}
+                    />
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </div>
+
   );
 };
 

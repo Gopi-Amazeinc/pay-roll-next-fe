@@ -1,12 +1,19 @@
 .AddButton {
-  width: 85%;
+  width: 200px;
   height: 40px;
-  font-size: 15px;
-  cursor: pointer;
-  text-transform: uppercase;
+  box-sizing: border-box;
+  border-radius: 5px;
+  font-family: Poppins;
+  font-style: normal;
+  letter-spacing: .658333px;
+  color: #fff;
   background: #3247d5;
-  color: white;
-  border-radius: 5%;
+  box-shadow: 1px 1px 17px 1px #3247d599;
+  border-radius: 5px solid #3247d5;
+  border: 2px solid #3247d5;
+  text-transform: uppercase;
+  font-size: inherit;
+    line-height: inherit;
 }
 
 .submit-button {
@@ -207,11 +214,15 @@
   border-radius: 10px;
   overflow: hidden;
   font-size: 16px;
+
+
+}
+.th{
+  background-color: #02cfff!important;
+  color: #fff;
+
 }
 
-.tr {
-  background-color: #02cfff;
-}
 
 .card {
   width: 98%;

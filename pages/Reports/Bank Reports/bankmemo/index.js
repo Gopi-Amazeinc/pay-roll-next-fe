@@ -4,26 +4,21 @@ export default function Bankmemo() {
     return (
         <Layout>
             <div>
-                <div className="col-lg-10" >
+                <div className="col-lg-10">
                     <br />
-
-
                     <div className="col-lg-12 dashbutton bttn">
                         <div className="tab-slider--nav">
                             <ul className="tab-slider--tabs">
                                 <button type='button' className='btn btn-primary'>Normal Payroll</button>
                             </ul>
                         </div>
-
                     </div>
-
                     <div className="tab-slider--container">
                         <div id="tab1">
                             <div role="dialog" className="container-fluid">
                                 <div className=" card shadow modal-dialog modal-lg">
                                     <div className="modal-content">
                                         <div className="modal-header">
-
                                             <p className="modal-title Heading1 mx-3" style={{
                                                 paddingLeft: "5px",
                                                 fontSize: "19px",
@@ -81,7 +76,6 @@ export default function Bankmemo() {
                             </div>
                         </div>
                     </div>
-
                 </div>
                 <button id="payroll11" hidden="" data-toggle="modal" data-target="#payroll5" className="edit"></button>
                 <button id="payroll13" hidden="" data-toggle="modal" data-target="#payroll12" className="edit"></button>
@@ -145,9 +139,7 @@ export default function Bankmemo() {
                         </div>
                     </div>
                 </div>
-
             </div>
-
         </Layout >
     )
 }

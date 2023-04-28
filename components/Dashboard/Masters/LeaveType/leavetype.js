@@ -41,7 +41,7 @@ function LeaveTypeDashboard() {
             <div>
                 <div class="row">
                     <div class="col-lg-4">
-                        <br />
+
                         <h3 class="text-primary fs-5 mt-3 fw-bold">Leave Type </h3>
                     </div>
                     <div class="col-lg-4"></div>
@@ -75,7 +75,7 @@ function LeaveTypeDashboard() {
                     </div>
                     <div class="col-md-2">
                         <Link href="/Masters/LeaveType/new">
-                            <button class={leavetypeStyles.button} tabindex="0">
+                            <button class="AddButton" tabindex="0">
                                 Add New
                             </button>
                         </Link>
@@ -87,7 +87,7 @@ function LeaveTypeDashboard() {
                     <div class="col-md-12">
                         <div class="container-fluid">
                             <table class="table table-striped table-hover mt-4">
-                                <thead class="bg-info text-white">
+                                <thead class="bg-info text-white th">
                                     <tr>
                                         <th>Leave Type</th>
                                         <th>Description</th>

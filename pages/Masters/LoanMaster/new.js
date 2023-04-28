@@ -40,12 +40,12 @@ function LoanMasterForm() {
     if (actionType == "insert") {
       await axios.post(hostURL + "Master/InsertLoanMaster", data);
       Swal.fire("SubSectionMaster Inserted succefully!");
-      location.href = "/Masters/loanmasterdashboard";
+      location.href = "/Masters/LoanMaster";
     } else {
       let res = await axios.post(hostURL + "Master/UpdateLoanMaster", data);
       sessionStorage.removeItem("id");
       Swal.fire("SubSectionMaster updated succefully!");
-      location.href = "/Masters/loanmasterdashboard";
+      location.href = "/Masters/LoanMaster";
     }
   };
   const clearForm = (existingData = null) => {
@@ -73,14 +73,15 @@ function LoanMasterForm() {
   return (
     <Layout>
       <div>
-        <h4 className='text-primary '>Loan Type</h4>
+        <p></p>
+        <h4 className='text-primary '>Loan Type</h4><br /><br />
         <form onSubmit={handleSubmit(onSubmit)} >
           <div className={Styles.card}>
             <div className="row">
               <div className="col-md-2">
                 <label className="fw-bold" style={customStyles.inputLabel}>
                   Loan Type<span style={{ color: "red" }}>*</span>
-                </label>
+                </label><p></p>
                 <input
                   type="text"
                   className="form-control"
@@ -90,14 +91,14 @@ function LoanMasterForm() {
                 {errors.Type && (
                   <span style={customStyles.errorMsg}>
                     Please Loan Type
-                  </span>
+                  </span> 
                 )}
               </div>
 
               <div className="col-md-4">
                 <label className="fw-bold" style={customStyles.inputLabel}>
                   Description<span style={{ color: "red" }}>*</span>
-                </label>
+                </label><p></p>
                 <textarea
                   className="form-control"
                   name="Description"
@@ -111,40 +112,43 @@ function LoanMasterForm() {
                     Please Enter Description
                   </span>
                 )}
+                    <br />
+          <br />
+              </div>
+          
+            </div>
+            <div className="row">
+              <div className="col-lg-8"></div>
+              <div className="col-lg-2">
+                <Link href="/Masters/LoanMaster">
+                  <button className={Styles.button}>
+                    Cancel
+                  </button>
+                </Link>
+              </div>
+              <div className="col-lg-2">
+                {actionType == "insert" && (
+                  <button
+                    type="submit"
+                    className={Styles.button}
+                  >
+                    Save
+                  </button>
+                )}
+                {actionType == "update" && (
+                  <button
+                    type="submit"
+                    className={Styles.button}
+                  >
+                    Update
+                  </button>
+                )}
               </div>
             </div>
           </div>
 
-          <br />
-          <br />
-          <div className="row">
-            <div className="col-lg-7"></div>
-            <div className="col-lg-2">
-              <Link href="/Masters/LoanMaster">
-                <button className={Styles.button}>
-                  Cancel
-                </button>
-              </Link>
-            </div>
-            <div className="col-lg-2">
-              {actionType == "insert" && (
-                <button
-                  type="submit"
-                  className={Styles.button}
-                >
-                  Save
-                </button>
-              )}
-              {actionType == "update" && (
-                <button
-                  type="submit"
-                  className={Styles.button}
-                >
-                  Update
-                </button>
-              )}
-            </div>
-          </div>
+         
+
         </form>
       </div >
     </Layout>
