@@ -29,7 +29,12 @@ const Compensationtimeout = () => {
     }
 
    
-
+    const togglePending = (e) => {
+        e.preventDefault();
+        setPending(true)
+        setApproved(false)
+        setRejected(false)
+    }
 
     const toggleApproved = (e) => {
         e.preventDefault();
@@ -198,7 +203,7 @@ const Compensationtimeout = () => {
             <div className='row mt-3'>
                 <div className='col-lg-4'>
                     <div className='btn-group'>
-                       
+                        <button onClick={togglePending} className={leave.btn} >Pending</button>
                         <button onClick={toggleApproved} className={leave.btn} >Approved</button>
                         <button onClick={toggleRejected} className={leave.btn}>Rejected</button>
                     </div>
