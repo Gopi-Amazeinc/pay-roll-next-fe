@@ -1,8 +1,14 @@
-import React from 'react'
+import React,{useState} from 'react'
 import Layout from '../../../components/layout/layout';
 import Style from '../../../styles/pagibigml1.module.css';
 
 function Pagibigml1report() {
+
+  let [generateState, setState] = useState(false)
+
+  const toggleState = () => {
+    setState(true)
+  }
   return (
     <Layout>
       <div className='container-fluid'>
@@ -46,10 +52,22 @@ function Pagibigml1report() {
           </div>
           <div className='row' style={{ textAlign: "center" }}>
             <div className='col-lg-12'>
-              <button className={Style.generatebutton} >GENERATE</button>
+              <button className={Style.generatebutton} onClick={toggleState}  >GENERATE</button>
             </div>
           </div>
         </div>
+
+        {
+          generateState && (
+            <div className='row mt-4'>
+              <div className='col-lg-4'></div>
+              <div className='col-lg-4'></div>
+              <div className='col-lg-4'>
+                <button className='EditDelteBTN'>convert to pdf</button>
+              </div>
+            </div>
+          )
+        }
       </div>
     </Layout>
   )
