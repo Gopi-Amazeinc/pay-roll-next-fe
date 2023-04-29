@@ -4,10 +4,10 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import Link from "next/link";
 import Swal from "sweetalert2";
-import { useState,useEffect } from 'react';
+import { useState, useEffect } from 'react';
 
 
-function Holidayform({editData}) {
+function Holidayform({ editData }) {
 
   const { register, handleSubmit, watch, reset, formState: { errors }, } = useForm();
   const [actionType, setActionType] = useState("insert")
@@ -15,15 +15,15 @@ function Holidayform({editData}) {
   useEffect(() => {
     if (editData == "") {
       clearForm();
-  }
-  else {
+    }
+    else {
 
       clearForm(editData);
-  }
-  
-  
-  
-  // getHoliday();
+    }
+
+
+
+    // getHoliday();
   }, [1]);
 
 
@@ -132,7 +132,7 @@ function Holidayform({editData}) {
                 <div className="col-lg-8"></div>
                 <div className="col-lg-2  text-end">
                   <Link href="/Holiday">
-                    <button type="submit" id="AddButton" className="btn btn-primary">Cancel</button>
+                    <button type="submit" id="AddButton" className="submit-button">Cancel</button>
                   </Link>
                 </div>
                 <div className="col-lg-2 ">
@@ -140,12 +140,12 @@ function Holidayform({editData}) {
                  */}
                   {actionType == "insert" && (
 
-                    <button type="submit" id='AddButton' className="btn btn-primary">
+                    <button type="submit" className="submit-button">
                       Save
                     </button>
                   )}
                   {actionType == "update" && (
-                    <button type="submit" id='AddButton' className="btn btn-primary">
+                    <button type="submit" className="submit-button">
                       Update
                     </button>
                   )}

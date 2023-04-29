@@ -3,7 +3,7 @@ import React from 'react'
 import { useForm } from 'react-hook-form'
 import Link from "next/link"
 
-// import Styles from '../../styles/applyloans.module.css'
+import styles from '../../Requests/Applyloans/applyloans.module.css'
 
 const Applyloans = () => {
     const { register, formState, handleSubmit } = useForm();
@@ -17,7 +17,7 @@ const Applyloans = () => {
                     <div className='row'>
 
                         <div className='col-lg-2'>
-                            <p>Loan Type <span style={{ color: "red" }}>*</span></p>
+                            <p className={styles.p}>Loan Type <span style={{ color: "red" }}>*</span></p>
                             <select className='form-select form-select-sm' {...register('loanType', {
                                 required: "loanType is required", pattern: { value: '^[A-Za-z0-9 ]+$', message: "Please enter a valid Position Name" }
                             })} >
@@ -27,7 +27,7 @@ const Applyloans = () => {
 
                         </div>
                         <div className='col-lg-2'>
-                            <p>Loan Amount<span style={{ color: "red" }}>*</span></p>
+                            <p className={styles.p}>Loan Amount<span style={{ color: "red" }}>*</span></p>
                             <input type='text' placeholder='Loan Amount' {...register('loanAmount', {
                                 required: "Loan amount  is required", pattern: {
 
@@ -41,7 +41,7 @@ const Applyloans = () => {
 
                         </div>
                         <div className='col-lg-2'>
-                            <p>Tenure <span style={{ color: "red" }}>*</span></p>
+                            <p className={styles.p}>Tenure <span style={{ color: "red" }}>*</span></p>
                             <input type='text' placeholder='Tenure' {...register('Tenure', {
                                 required: "Tenure is required", pattern: {
 
@@ -55,7 +55,7 @@ const Applyloans = () => {
 
                         </div>
                         <div className='col-lg-4'>
-                            <p>Comments<span style={{ color: "red" }}>*</span></p>
+                            <p className={styles.p}>Comments<span style={{ color: "red" }}>*</span></p>
                             <textarea rows={3} className='form-control' {...register('Comments', {
                                 required: "Comments is required", pattern: {
 
@@ -75,7 +75,7 @@ const Applyloans = () => {
                         <div className='col-lg-8'></div>
                         <div className='col-lg-2'>
                             <Link href="/Requests/Applyloans">
-                                <button className="close-button">Cancel</button>
+                                <button className="submit-button">Cancel</button>
                             </Link>
                         </div>
                         <div className='col-lg-2'>
