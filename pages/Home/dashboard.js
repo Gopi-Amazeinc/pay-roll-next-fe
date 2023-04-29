@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import Image from "next/image";
 import dashboard from "./dashboard.module.css";
 import leaveIcon from "@/public/Images/leaveIcon.png";
@@ -9,6 +9,10 @@ import Link from "next/link";
 import Layout from "@/components/layout/layout.js";
 import advertising1 from "@/public/Images/advertising.png"
 import { Modal, ModalBody, ModalFooter } from 'reactstrap';
+import { BiEdit } from "react-icons/bi";
+
+import Swal from 'sweetalert2';
+import axios from 'axios';
 
 function Dashboard() {
   let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
@@ -24,6 +28,16 @@ function Dashboard() {
   const [punchintime, setPunchintime] = useState(false);
   const [actionType, setActionType] = useState("punchin");
   const [workType, setWorkType] = useState();
+  const [localIPAddress, setLocalIPAddress] = useState("");
+  useEffect(() => {
+    const getLocalIPAddress = async () => {
+      const response = await fetch("https://api.ipify.org/?format=json");
+      const data = await response.json();
+      setLocalIPAddress(data.ip);
+    };
+
+    getLocalIPAddress();
+  }, []);
 
   const modelopen = () => {
     setModalOpen(!modalOpen);
@@ -35,11 +49,41 @@ function Dashboard() {
     console.log(value)
     setWorkType(value);
   }
-  console.log(workType);
-
-  const handlePunchin = () => {
+  
+  // const handlePunchin = () => {
+  //   setModalOpen(!modalOpen);
+  // }
+  // TODO: Written By: Gopi -> Add code to punchhin user or staff
+  const handlePunchin = async () => {
+debugger
     setModalOpen(!modalOpen);
-  }
+    // if (punchintime != true) {
+    //   Swal.fire("Already Punched In for the day");
+    // } else (workType == undefined || workType == null) {
+    //   Swal.fire("Please Fill Work Type");
+    // }
+    
+      
+      const ipaddress = localIPAddress;
+      var options = { hour12: false };
+      var date = new Date();
+      var entity = {
+        UserID: sessionStorage.getItem("userID"),
+        SigninDate: date.toLocaleString("en-US", options),
+        SigninLocation: "Office",
+        StatusID: 1,
+        punchinip: ipaddress == undefined || null ? "101.120.111.222" : ipaddress,
+        ApprovalStatus: "Manager Pending HR Pending",
+        WorkType: parseInt(workType),
+      };
+      let res = await axios.post(hostURL + "HR/InsertAttendanceWeb", entity);
+      const punchinId = res.data || res;
+      if (punchinId) {
+        sessionStorage.setItem("PunchINid", punchinId);
+        Swal.fire("Punched In Successfully");
+      }
+    // }
+  };
 
 
   return (
@@ -57,14 +101,11 @@ function Dashboard() {
           <div className="col-md-4">
             <div className="row">
               <div className="col-md-12">
-                <div className="card  mb-4">
+                <div className="card  p-0 mb-4">
                   <div className="card-body" style={{ backgroundColor: "#FBB584" }} >
                     <div className="d-flex align-items-center">
                       <Image src={leaveIcon} alt="Leave icon" width={20} height={20} />
-                      <h5 className="card-title ml-2 mb-0" style={{ color: "white" }}
-                      >
-                        Leaves
-                      </h5>
+                      <h5 className="card-title ml-2 mb-0" style={{ color: "white" }}> Leaves</h5>
                     </div>
                     <p
                       className="card-subtitle mt-1 mb-0"
@@ -73,36 +114,38 @@ function Dashboard() {
                       Always file your leaves on time
                     </p>
                   </div>
-                  <br></br>
-                  <div className="row">
-                    <div className="col-md-6">
-                      <button className="btn btn-outline-secondary w-100 btnCount">
-                        {count} Pending
-                      </button>
+                  <div className="card-body">
+                    <div className="row">
+                      <div className="col-md-6">
+                        <button className="btn btn-outline-secondary w-100 btnCount">
+                          {count} Pending
+                        </button>
+                      </div>
+                      <div className="col-md-6">
+                        <button className="btn  btn-outline-secondary  w-100">
+                          {count} Pending
+                        </button>
+                      </div>
                     </div>
-                    <div className="col-md-6">
-                      <button className="btn  btn-outline-secondary  w-100">
-                        {count} Pending
-                      </button>
-                    </div>
-                  </div>
 
-                  <br></br>
+                    <br></br>
 
-                  <div className="row">
-                    <div className="col-md-6">
-                      <button className="btn btn-outline-secondary w-100">
-                        {count} Pending
-                      </button>
-                    </div>
-                    <div className="col-md-6">
-                      <button className="btn btn-outline-secondary w-100">
-                        {count} Pending
-                      </button>
-                      <br></br>
+                    <div className="row">
+                      <div className="col-md-6">
+                        <button className="btn btn-outline-secondary w-100">
+                          {count} Pending
+                        </button>
+                      </div>
+                      <div className="col-md-6">
+                        <button className="btn btn-outline-secondary w-100">
+                          {count} Pending
+                        </button>
+                        <br></br>
+                      </div>
                     </div>
                   </div>
                 </div>
+
               </div>
             </div>
 
@@ -122,24 +165,17 @@ function Dashboard() {
                 </div>
               </div>
             </div>
+
           </div>
           <div className="col-lg-4">
-            <div className="card  mb-4">
+            <div className="card p-0  mb-4" style={{ borderRadius: "10px !important" }}>
               <div className="card-body" style={{ backgroundColor: "#B96AE9" }}>
                 <div className="d-flex align-items-center">
                   <AiOutlineGift style={{ color: "white", fontSize: "25px" }} />
-                  {/* <FaAiOutlineGiftBeer/> */}
-                  {/* <Imagetaking
-                      src={leaveIcon}
-                      alt="Leave icon"
-                      width={20}
-                      height={20}
-                    /> */}
                   <h5 className="card-title ml-2 mb-0" style={{ color: "white" }} > Celebrants</h5>
                 </div>
                 <p className="card-subtitle mt-1 mb-0" style={{ color: "white" }}>  Get to know who are the celebrants  </p>
               </div>
-
               <div className="col-lg-6">
                 <div className="row">
                   <br />
@@ -165,23 +201,12 @@ function Dashboard() {
             <div className="card mb-3 " id={dashboard.cardCeneter}>
               <div className="card-body mb-1">
                 <div className="d-flex align-items-center">
-                  <Image
-                    src={profile}
-                    alt="Picture of the author"
-                    width={100}
-                    height={100}
-                  />
+                  <Image src={profile} alt="Picture of the author" width={100} height={100} />
                 </div>
                 <h5 className="card-title ml-2 mb-0">{name}</h5>
                 <p className="card-subtitle mt-1 mb-1">{email}</p>
 
-                <Image
-                  src={profile}
-                  alt="Picture of the author"
-                  width={100}
-                  height={100}
-                  className="mb-4"
-                />
+                <Image src={profile} alt="Picture of the author" width={100} height={100} className="mb-4" />
                 <div className="mb-4">
                   <button className="btn btn-primary ">View My Profile</button>
                 </div>
@@ -192,15 +217,12 @@ function Dashboard() {
         {/* second line of code  */}
         <div className="row">
           <div className="col-md-6 ">
-            <div className="card mb-4">
-              <div
-                className="card-header text-white "
-                style={{ backgroundColor: "#18D7C0" }}
-              >
+            <div className="card p-0 mb-4">
+              <div className="card-header text-white " style={{ backgroundColor: "#18D7C0" }} >
                 <BiInjection style={{ color: "white", fontSize: "25px" }} />
-                <h5 className="card-title ml-2 mb-0" style={{ color: "white" }}>
+                <span className="card-title ml-2 mb-0" style={{ color: "white", fontSize: "24px" }}>
                   COVID-19 Vaccination
-                </h5>
+                </span>
                 <p className="card-subtitle mt-1 mb-1">
                   update covid vaccination
                 </p>
@@ -215,7 +237,8 @@ function Dashboard() {
                     <Link href=""> <button className="button">Upload</button></Link>
                   </div>
                   <div className="col-md-3">
-                    <button className="button">Edit</button>
+                    <button className="button">
+                      <BiEdit style={{ color: "white", fontSize: "25px" }} />                    </button>
                   </div>
                 </div>
                 <hr></hr>
@@ -228,7 +251,9 @@ function Dashboard() {
                     <Link href="#"> <button className="button">Upload</button></Link>
                   </div>
                   <div className="col-md-3">
-                    <button className="button">Edit</button>
+                    <button className="button">
+                      <BiEdit style={{ color: "white", fontSize: "25px" }} />
+                    </button>
                   </div>
                 </div>
                 <hr></hr>
@@ -241,7 +266,9 @@ function Dashboard() {
                     <Link href=""> <button className="button">Upload</button></Link>
                   </div>
                   <div className="col-md-3">
-                    <button className="button">Edit</button>
+                    <button className="button">
+                      <BiEdit style={{ color: "white", fontSize: "25px" }} />
+                    </button>
                   </div>
                 </div>
                 {/* </div> */}
@@ -263,7 +290,7 @@ function Dashboard() {
               <div className="card-body">
                 <div className="row">
                   <div className="col-md-4">
-                    <Image src={advertising1} alt="" style={{ width: "100%", height: "32vh" }} />
+                    <Image src={advertising1} alt="" style={{ width: "100%", height: "24vh" }} />
                   </div>
                 </div>
               </div>
@@ -281,13 +308,11 @@ function Dashboard() {
         <div className="row">
           <div className="col-lg-1"></div>
           <div className="col-lg-5 ">
-            <div className="card">
+            <div className="card p-0">
               <div className="card-header  text-white" style={{ backgroundColor: "#70be51" }}  >
-                <div className="col-md-2">
-                  <Image src={leaveIcon} alt="Leave icon" width={20} height={20} />
-                </div>
-                <div className="col-md-10">  Overtime
-                  <p className="card-subtitle mt-1 mb-1"> Always file your Overtime on time  </p>
+                <span> <Image src={leaveIcon} alt="Leave icon" width={25} height={20} /> <span style={{ fontSize: "20px" }}>Overtime</span>  </span>
+                <div className="col-md-10">
+                  <p style={{ marginRight: "20px" }}>  Always file your Overtime on time</p>
                 </div>
               </div>
               <div className="card-body">
@@ -323,21 +348,14 @@ function Dashboard() {
             </div>
           </div>
           <div className="col-lg-5 ">
-            <div className="card">
+            <div className="card p-0">
               <div className="card-header bg-primary text-white">
-                <div className="col-lg-2">
-                  <Image
-                    src={leaveIcon}
-                    alt="Leave icon"
-                    width={20}
-                    height={20}
-                  />
-                </div>
+                <span> <Image src={leaveIcon} alt="Leave icon" width={25} height={20} /> <span style={{ fontSize: "20px" }}>Leaves</span>  </span>
+
                 <div className="col-md-10">
-                  Leaves
-                  <p className="card-subtitle mt-1 mb-1">
-                    Always file your leaves on time
-                  </p>
+
+                  <p style={{ marginRight: "20px" }}>  Always file your leaves on time</p>
+
                 </div>
               </div>
               <div className="card-body">
@@ -388,10 +406,23 @@ function Dashboard() {
             <p className="card-subtitle mt-1 mb-0" style={{ color: "white" }}>Always Register Your Attendance</p>
           </div>
           <div className="card-body" style={{ borderRadius: "0 0 10px 10px" }}>
-            <div className="col-lg-6">
+            <div className="col-lg-12">
+              <div className="row">
+                <div className="col-lg-6">
+                  <button className="button" style={{ marginBottom: "10px" }} onClick={() => modelopen()}  >PUNCH IN</button>
+                </div>
+                <div className="col-lg-6">
+                  <span>PunchIn time </span>
+                </div>
+                <div className="col-lg-6">
+                  <button className="button" onClick={() => setModalOpen(!modalOpen)}>PUNCH OUT</button>
+                </div>
+                <div className="col-lg-6">
+                  <span>PunchOut Time </span>
+                </div>
+              </div>
 
-              <button className="button" style={{ marginBottom: "10px" }} onClick={() => modelopen()}  >PUNCH IN</button>
-              <button className="button" onClick={() => setModalOpen(!modalOpen)}>PUNCH OUT</button>
+
 
               <Modal toggle={() => setModalOpen(!modalOpen)} isOpen={modalOpen}>
                 <div className=" modal-header">

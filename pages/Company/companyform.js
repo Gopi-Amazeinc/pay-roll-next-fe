@@ -1,8 +1,14 @@
 import React from "react";
-import Layout from '@/components/layout/layout'
-import styles from "../../styles/CompanyForm.module.css"
+import Layout from "@/components/layout/layout";
+import styles from "../../styles/CompanyForm.module.css";
+import Dropzone from "../SharedComponent/dropzone";
+import { useForm } from "react-hook-form";
 
 function Companyform() {
+
+  const { register, handleSubmit, watch, reset, formState: { errors }, } = useForm();
+
+
   return (
     <>
       <Layout>
