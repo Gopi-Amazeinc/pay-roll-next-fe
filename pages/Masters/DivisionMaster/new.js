@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form';
 import Layout from '../../../components/layout/layout'
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import Link from 'next/link';
 function DivDivisionMaster({ editData }) {
     let [actionType, setActionType] = useState("insert")
     let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
@@ -69,8 +70,8 @@ function DivDivisionMaster({ editData }) {
     return (
         <Layout>
             <div className="container">
-                <h3 className='text-primary fs-5 mt-3'>Division Master</h3>
-                <div className='card p-3 border-0 shadow-lg rounded-3 mt-4 mb-5'>
+                <h3 className='Heading'>Division Master</h3>
+                <div className='card p-3 border-0 shadow rounded-3 mt-3 mx-0'>
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <div className="row ">
                             <div className="col-lg-4">
@@ -108,24 +109,26 @@ function DivDivisionMaster({ editData }) {
                             </div>
                         </div>
                         <br></br>
-                        <div className="row ">
+                        <div className="row">
                             <div className="col-lg-8"></div>
-                            <div className="col-lg-2 text-end">
-                                <button
-                                    type="button"
-                                    className="btn btn-primary AddButton" >
-                                    Close
-                                </button>
+                            <div className="col-lg-2">
+                                <Link href="/Masters/DivisionMaster">
+                                    <button
+                                        type="button"
+                                        className="AddButton" >
+                                        Close
+                                    </button>
+                                </Link>
                             </div>
                             <div className="col-lg-2">
                                 {
                                     actionType == "insert" && (
-                                        <button type='submit' className="btn btn-primary AddButton">Save</button>
+                                        <button type='submit' className="AddButton">Save</button>
                                     )
                                 }
                                 {
                                     actionType == "update" && (
-                                        <button type='submit' className="btn btn-primary AddButton">Update</button>
+                                        <button type='submit' className="AddButton">Update</button>
                                     )
                                 }
                             </div>

@@ -46,10 +46,9 @@ function DivisionMasterDashboard() {
     return (
         <Layout>
             <div>
-                <br></br>
-                <p id={Styles.title}>Division Master</p>
-                <div className="container-fluid mt-4">
-                    <div className="row shadow-lg p-2 rounded-4 p-3 ">
+                <p className="Heading">Division Master</p>
+                <div className="container mt-4">
+                    <div className="row shadow p-2 rounded-3 ">
                         <div className="col-lg-1">
                             <b>
                                 <p className="mt-2 text-center">
@@ -68,23 +67,20 @@ function DivisionMasterDashboard() {
                     </div>
                     <div className="row mt-4">
                         <div className="col-lg-8">
-                            <p id={Styles.p}>SHOWING {divisionData.length} RESULTS</p>
+                            <p className="Heading fs-6">SHOWING {divisionData.length} RESULTS</p>
                         </div>
                         <div className="col-lg-2"></div>
                         <div className="col-lg-2">
                             <Link href="/Masters/DivisionMaster/new"> <button
-                                className="btn btn-primary btn-sm  shadow-lg"
-                                id={Styles.addNew}
+                                className="AddButton"
                             > <AiOutlinePlusCircle />
                                 Add New
                             </button></Link>
                         </div>
                     </div>
-
-                    <div className="container-fluid mt-4">
                         <div className="row">
-                            <table className={table.commonTable}>
-                                <thead>
+                            <table className="table table-striped mt-3">
+                                <thead className="bg-info text-white">
                                     <tr>
                                         <th>Short Name</th>
                                         <th>Description</th>
@@ -99,8 +95,8 @@ function DivisionMasterDashboard() {
                                                     <td>{data.short}</td>
                                                     <td>{data.description}</td>
                                                     <td>
-                                                        <Link href={`/Masters/DivisionMaster/Edit/${data.id}`}><button className='btn btn-primary mx-3'>Edit</button></Link>
-                                                        <button className='btn btn-primary ' onClick={deleteDivision.bind(this, data.id)}>Delete</button>
+                                                        <Link href={`/Masters/DivisionMaster/Edit/${data.id}`}><button className='edit-btn mx-2'>Edit</button></Link>
+                                                        <button className='edit-btn' onClick={deleteDivision.bind(this, data.id)}>Delete</button>
                                                     </td>
                                                 </tr>
                                             )
@@ -111,7 +107,6 @@ function DivisionMasterDashboard() {
                         </div>
                     </div>
                 </div>
-            </div>
         </Layout>
     )
 }

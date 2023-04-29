@@ -72,10 +72,9 @@ function WorkLocationMasterForm({ editData }) {
   return (
     <Layout>
       <div>
-        <br></br>
         <p className="Heading">Work Location Master</p>
-        <div className="container-fluid mt-4">
-          <div className="row shadow-lg p-2 rounded-4 p-3 ">
+        <div className="container mt-4">
+          <div className="row shadow p-2 rounded-4 ">
             <div className="row ">
               <div className="col-lg-4" >
                 <label id={Styles.label}>Short Name<span id={Styles.asterisk}>* </span></label>
@@ -97,12 +96,13 @@ function WorkLocationMasterForm({ editData }) {
                 </div>
               </div>
               <br></br>
-              <div className="row ">
-                <div className="col-lg-6"></div>
-                <div className="col-lg-6">
+              <div className="row mx-0">
+                <div className="col-lg-8"></div>
+                <div className="col-lg-2">
                   <Link href='/Masters/WorkLocationMaster'>
                     <button type='button' className='btn common-edit edit-btn' id={Styles.btn}>Close</button></Link>
-
+                </div>
+                <div className="col-lg-2">
                   {
                     actionType == "insert" && (
                       <button type='submit' className='edit-btn' id={Styles.btn}>Save</button>
@@ -113,7 +113,6 @@ function WorkLocationMasterForm({ editData }) {
                       <button type='submit' className='edit-btn' id={Styles.btn} >Update</button>
                     )
                   }
-
                 </div>
               </div>
             </form>

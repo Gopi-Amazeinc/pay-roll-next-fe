@@ -55,11 +55,10 @@ export default function SubsidaryMasterForm({ editData }) {
 
     return (
         <Layout>
-            <div>
-                <div className="container-fluid">
-                    <div className={subsidaryform.row}>
+                <div className="container">
+                    <div className="row">
                         <div className="col-lg-4">
-                            <h3 className="text-primary fs-5 mt-3 fw-bold">Subsidiary Master Details</h3>
+                            <h3 className="Heading">Subsidiary Master Details</h3>
                         </div>
                         <div className="col-lg-6">
                         </div>
@@ -67,24 +66,23 @@ export default function SubsidaryMasterForm({ editData }) {
                         </div>
                     </div>
                     <br />
-                    <div className={subsidaryform.card}>
+                    <div className="card border-0 mx-0">
                         <form onSubmit={handleSubmit(onSubmit)}>
                             <div className="row">
                                 <div className="col-lg-4">
-                                    <label className='fw-bold' >Subsidiary Description<span className={subsidaryform.span}>*</span></label> <br />
-                                    <input type="text" style={{ width: "100%", padding: "7px", borderRadius: "3px", marginTop: "10px" }} {...register('Name', {
+                                    <label>Subsidiary Description<span className={subsidaryform.span}>*</span></label> <br />
+                                    <input type="text" className="form-control" {...register('Name', {
                                         required: "Please add a Subsidiary Name", pattern: {
                                             value: '^[A-Za-z0-9 ]+$',
                                             message: "Please enter a valid Subsidiary Name"
                                         }
-                                    })} placeholder="Subsidiary Name" name="Name" id="Name" className={subsidaryform.fileds} />
+                                    })} placeholder="Subsidiary Name" />
                                     {errors.Name && <p className="error-message" style={{ color: "red" }}>{errors.Name.message}</p>}
 
                                 </div>
-                                <div className="col-lg-1"></div>
-                                <div className="col-lg-7" style={{ marginBottom: "20px" }}>
-                                    <label className='fw-bold' >Subsidiary Description<span className={subsidaryform.span}>*</span></label> <br />
-                                    <textarea style={{ marginTop: "10px" }} name="Description" rows="2" cols="70" type="text"{...register('Description', {
+                                <div className="col-lg-4" style={{ marginBottom: "20px" }}>
+                                    <label >Subsidiary Description<span className={subsidaryform.span}>*</span></label> <br />
+                                    <textarea className="form-control"{...register('Description', {
                                         required: "Please add a Description", pattern: {
                                             value: '^[A-Za-z0-9 ]+$',
                                             message: "Please enter a Description"
@@ -92,25 +90,29 @@ export default function SubsidaryMasterForm({ editData }) {
                                     })} placeholder='Description' />
                                     {errors.Description && <p className="error-message" style={{ color: "red" }}>{errors.Description.message}</p>}
                                 </div>
-                                <div className="col-lg-11 ">
-                                    <Link href="/Masters/SubSidaryMaster"><button className='btn btn-primary' style={{ float: "right", marginLeft: "5px" }} tabindex="0">CANCEL</button></Link>
-                                    {
-                                        actionType == "insert" && (
-                                            <button type='submit' className='btn btn-primary' style={{ float: "right" }}>Save</button>
-                                        )
-                                    }
-                                    {
-                                        actionType == "update" && (
-                                            <button type='submit' className='btn btn-primary' style={{ float: "right" }}>Update</button>
-                                        )
-                                    }
+                                <div className='row'>
+                                    <div className='col-lg-8'></div>
+                                    <div className="col-lg-2">
+                                        <Link href="/Masters/SubSidaryMaster"><button className='AddButton'>CANCEL</button></Link>
+                                    </div>
+                                    <div className='col-lg-2'>
+                                        {
+                                            actionType == "insert" && (
+                                                <button type='submit' className='AddButton'>Save</button>
+                                            )
+                                        }
+                                        {
+                                            actionType == "update" && (
+                                                <button type='submit' className='AddButton'>Update</button>
+                                            )
+                                        }
+                                    </div>
                                 </div>
                             </div>
                         </form>
 
                     </div>
                 </div>
-            </div>
         </Layout >
     )
 }

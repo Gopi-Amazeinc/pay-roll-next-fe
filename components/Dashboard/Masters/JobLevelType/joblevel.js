@@ -42,8 +42,8 @@ function LevelTypeDash() {
     return (
         <Layout>
             <div className='container'>
-                <h3 className='text-primary fs-5 mt-3'>Job Level Type</h3>
-                <div className='card p-3 border-0 shadow-lg rounded-3 mt-4'>
+                <h3 className='Heading'>Job Level Type</h3>
+                <div className='card p-3 border-0 rounded-3 mt-4 mx-0'>
                     <div className='row p-3'>
                         <div className='col-lg-1'>
                             <p>Filter By</p>
@@ -59,15 +59,15 @@ function LevelTypeDash() {
                     </div>
                 </div>
                 <div className='row mt-3'>
-                    <div className='col-lg-2 text-primary fs-6 fw-bold'>
+                    <div className='col-lg-2 Heading fs-6 '>
                         <h6>SHOWING {dashboard.length} RESULTS</h6>
                     </div>
                     <div className='col-lg-8'></div>
                     <div className='col-lg-2 mt-2 text-end'>
-                        <Link href="/Masters/JobLevel/new"  className='btn btn-primary AddButton'>Add New</Link>
+                        <Link href="/Masters/JobLevel/new" ><button className='AddButton'>Add New</button></Link>
                     </div>
 
-                    <table className='table table-hover mt-4 '>
+                    <table className='table table-striped mt-4 '>
                         <thead className='bg-info text-white '>
                             <tr>
                                 <th>Leave Type</th>
@@ -83,8 +83,8 @@ function LevelTypeDash() {
                                             <td>{data.short}</td>
                                             <td>{data.description}</td>
                                             <td>
-                                                <Link href={`/Masters/JobLevel/Edit/${data.id}`}><button className='btn btn-primary mx-3'>Edit</button></Link>
-                                                <button className='btn btn-primary ' onClick={deleteLevelType.bind(this, data.id)}>Delete</button>
+                                                <Link href={`/Masters/JobLevel/Edit/${data.id}`}><button className='edit-btn mx-1'>Edit</button></Link>
+                                                <button className='edit-btn ' onClick={deleteLevelType.bind(this, data.id)}>Delete</button>
                                             </td>
                                         </tr>
                                     )

@@ -22,7 +22,7 @@ const BarangayMasterForm = ({ editData }) => {
   const [citydata, setCityData] = useState([]);
   const [actionType, setAction] = useState("insert");
 
-    useEffect(() => {
+  useEffect(() => {
     getData();
   }, [1]);
 
@@ -38,25 +38,25 @@ const BarangayMasterForm = ({ editData }) => {
     reset(details);
   }
 
-    async function getData() {
-        let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-        // This API is used to fetch the data from CountryType table 
-        let res = await axios.get(hostURL + "Master/GetCountryType");
-        setCountryData(res.data);
-        // This API is used to fetch the data from StateType table
-        res = await axios.get(hostURL + "Master/GetStateType");
-        setProvinceData(res.data);
-        // This API is used to fetch the data from CityType table
-        res = await axios.get(hostURL + "Master/GetCityType");
-        setCityData(res.data);
-        debugger
-        if (editData == "") {
-            clearForm();
-        }
-        else {
-            clearForm(editData);
-        }
+  async function getData() {
+    let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+    // This API is used to fetch the data from CountryType table 
+    let res = await axios.get(hostURL + "Master/GetCountryType");
+    setCountryData(res.data);
+    // This API is used to fetch the data from StateType table
+    res = await axios.get(hostURL + "Master/GetStateType");
+    setProvinceData(res.data);
+    // This API is used to fetch the data from CityType table
+    res = await axios.get(hostURL + "Master/GetCityType");
+    setCityData(res.data);
+    debugger
+    if (editData == "") {
+      clearForm();
     }
+    else {
+      clearForm(editData);
+    }
+  }
 
   async function onSubmit(data) {
     if (actionType == "insert") {
@@ -74,7 +74,7 @@ const BarangayMasterForm = ({ editData }) => {
       <div className="container">
         <div className="row">
           <div className="col-lg-5">
-            <h3 className="text-primary fs-5 mt-3 fw-bold">Barangay Details</h3>
+            <h3 className="Heading">Barangay Details</h3>
           </div>
           <div className="col-lg-3"></div>
           <div className="col-lg-2"></div>
@@ -174,23 +174,23 @@ const BarangayMasterForm = ({ editData }) => {
                 )}
               </div>
             </div>
-            <br />
+            <br /> 
             <div className="row">
-              <div className="col-lg-11">
-                <Link href="/Masters/barangaymasterdashboard">
+              <div className="col-lg-8"></div>
+              <div className="col-lg-2">
+                <Link href="/Masters/BarangayMaster">
                   <button
-                    className="btn btn-primary"
-                    style={{ float: "right", marginLeft: "5px" }}
-                    tabindex="0"
+                    className="AddButton"
                   >
                     CANCEL
                   </button>
                 </Link>
+              </div>
+              <div className="col-lg-2">
                 {actionType == "insert" && (
                   <button
                     type="submit"
-                    className="btn btn-primary"
-                    style={{ float: "right" }}
+                    className="AddButton"
                   >
                     Save
                   </button>
@@ -198,8 +198,7 @@ const BarangayMasterForm = ({ editData }) => {
                 {actionType == "update" && (
                   <button
                     type="submit"
-                    className="btn btn-primary"
-                    style={{ float: "right" }}
+                    className="AddButton"
                   >
                     Update
                   </button>
