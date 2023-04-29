@@ -79,16 +79,19 @@ const ApplyLeave = () => {
                     </div>
                     <br />
                     <div className="row">
-                        <div className="col-lg-12">
-                            <label htmlFor="">Attachment</label>
-                            <div className="col-lg-2">
-                                {/* <DropZone {...register("MedicalUrl", { required: true })} /> */}
-                                <input type="text" className="form-control" {...register("MedicalUrl", { required: true })} />
-                            </div>
+                        <label htmlFor="">Attachment</label>
+                        <div className="col-lg-3">
+                            {/* <DropZone {...register("MedicalUrl", { required: true })} /> */}
+                            <input type="text" className="form-control" {...register("MedicalUrl", { required: true })} />
                         </div>
-                        <div className="col-lg-10">
-                            <button type="submit" className="submit-button">SAVE</button>
+                    </div>
+                    <div className="row">
+                        <div className="col-lg-8"></div>
+                        <div className="col-lg-2">
                             <Link href="/Requests/Leaverequest"><button type="submit" className="close-button">CANCEL</button></Link>
+                        </div>
+                        <div className="col-lg-2" style={{ float: "right" }}>
+                            <button type="submit" className="submit-button">SAVE</button>
                         </div>
                     </div>
                 </form>
