@@ -28,7 +28,7 @@ function Holidayform({ editData }) {
 
 
   function clearForm(HolidaysData = null) {
-    debugger;
+   
     let details = {
       "ID": HolidaysData ? HolidaysData.id : "",
       "Holiday": HolidaysData ? HolidaysData.holiday : "",

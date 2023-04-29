@@ -380,7 +380,7 @@ function Companyform() {
         <div class="shadow-lg p-3 mb-5 bg-white rounded">
           <div className="row">
             <div className="col-lg-2">
-              <p className={styles.p}>TAX COMPUTATIONS</p>
+            <p className={styles.p}>TAX COMPUTATIONS</p>
             </div>
             <div className="col-lg-10"></div>
           </div>
