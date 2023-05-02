@@ -59,9 +59,9 @@ export default function PayperiodSettingsDash() {
                     <Link href="/Settings/PayperiodSetting/new" > <button className=' AddButton' onClick={clearData.bind(this)}>Add New</button> </Link>
                 </div>
 
-                <table className='table table-hover text-center mt-2 table-sm' >
+                <table className='table table-hover text-center mt-2 table-sm' style={{ width: " 80%", }}  >
                     <thead className='bg-info text-white '>
-                        <tr className='tr'>
+                        <tr style={{ whiteSpace: "nowrap" }}>
                             <th>Pay Code</th>
                             <th>Pay Period</th>
                             <th>Attendance Coverage Startdate</th>
