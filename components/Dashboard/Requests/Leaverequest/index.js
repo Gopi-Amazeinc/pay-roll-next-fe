@@ -59,27 +59,34 @@ function LeaveListDashboard() {
 
     }
 
+    // const dateFormat = () => {
+    //     var StartDate = new Date();
+    //     let Sdate = StartDate.toISOString().slice(0, 10);
+    //     var EndDate = new Date();
+    //     let Edate = EndDate.toISOString().slice(0, 10);
+    //     getPendingData(Sdate, Edate);
+    //     getApprovedData(Sdate, Edate);
+    //     getRejectedData(Sdate, Edate);
+    // }
+
 
     const [pendingdata, setPendingData] = useState([])
     const [approveddata, setApprovedData] = useState([])
     const [rejecteddata, setRejectedData] = useState([])
 
     const getPendingData = async () => {
-        debugger;
         const staffID = sessionStorage.getItem("userID")
         const res = await axios.get(hostURL + "Employee/GetPendingStaffLeavesByStaffID?ID=" + staffID + "&TypeID=1&Sdate=" + Sdate + "&Edate=" + Edate)
         setPendingData(res.data);
         console.log(res.data);
     }
     const getApprovedData = async () => {
-        debugger;
         const staffID = sessionStorage.getItem("userID")
         const res = await axios.get(hostURL + "Employee/GetApprovedStaffLeavesByStaffID?ID=" + staffID + "&TypeID=1&Sdate=" + Sdate + "&Edate=" + Edate)
         setApprovedData(res.data);
         console.log(res.data);
     }
     const getRejectedData = async () => {
-        debugger;
         const staffID = sessionStorage.getItem("userID")
         const res = await axios.get(hostURL + "Employee/GetRejectedStaffLeavesByStaffID?ID=" + staffID + "&TypeID=1&Sdate=" + Sdate + "&Edate=" + Edate)
         setRejectedData(res.data);
@@ -150,7 +157,7 @@ function LeaveListDashboard() {
 
 
                 </div>
-                <div class="col-md-4"><a className="leavecol">Leave Balance</a></div>
+                <div className="col-md-4"><a className="leavecol">Leave Balance</a></div>
             </div>
             <br />
 
@@ -160,11 +167,11 @@ function LeaveListDashboard() {
                         <div className="row">
                             <div className="col-lg-6">
                                 <p>START DATE:</p>
-                                <input id="date" name="date" type="date" onkeydown="return false" placeholder="Duration" className="form-control " />
+                                <input id="date" name="date" type="date"  placeholder="Duration" className="form-control " />
                             </div>
                             <div className="col-lg-6">
                                 <p>END DATE:</p>
-                                <input id="date" name="date" type="date" placeholder="Duration" onkeydown="return false" className="form-control " />
+                                <input id="date" name="date" type="date" placeholder="Duration"  onKeyDown="return false" className="form-control " />
                             </div>
 
                             <div className="col-lg-12 searchtxt mt-4"><br /><input type="search" placeholder="Search for date , Leave Type or Status" className="form-control " /></div>
@@ -172,21 +179,23 @@ function LeaveListDashboard() {
                     </div>
                     <br /><br />
                 </div>
-                <div className="col-lg-8 rw-bg">
-                    <div className="row  shadow p-3" style={{ marginBottom: "3px" }}>
-                        <div className="col-lg-4 ">
-                            <div className="card shadow">
-                                <p className="para"><b className="number"> </b> Sick Leave </p>
+                <div className="col-lg-8">
+                    <div className="card shadow">
+                        <div className="row" style={{ marginBottom: "3px" }}>
+                            <div className="col-lg-4 ">
+                                <div className="card shadow p-1">
+                                    <p className="para"><b className="number"> </b> Sick Leave </p>
+                                </div>
                             </div>
-                        </div>
-                        <div className='col-lg-4'>
+                            <div className='col-lg-4'>
+                                <div className="card shadow p-1">
+                                    <p className="para"><b className="number"></b> Vacation Leave</p>
 
-                        </div>
-                        <div className="col-lg-4 ">
-                            <div className="card shadow">
-                                <p className="para"><b className="number"></b> Vacation Leave</p>
-
-                            </div> <br /><br /><br /><br /><br /><br />
+                                </div>
+                            </div>
+                            <div className="col-lg-4 ">
+                                <br /><br /><br /><br /><br /><br /><br /><br />
+                            </div>
                         </div>
                     </div>
                 </div>

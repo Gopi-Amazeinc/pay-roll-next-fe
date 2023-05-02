@@ -25,7 +25,6 @@ const ApplyLeave = () => {
     async function onSubmit(data) {
         try {
             debugger;
-            const StaffID = sessionStorage.getItem('EmployeeID');
             await axios.post(hostURL + "HR/InsertStaffLeaves", data);
             Swal.fire({
                 icon: "success",
