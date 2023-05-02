@@ -74,13 +74,13 @@ function LeaveListDashboard() {
            const staffID = sessionStorage.getItem("userID")
             let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
             //get api is not working
-            const { dataApproved } = await axios.get(hostURL + "Employee/GetApprovedStaffLeavesByStaffID?ID=" +staffID + "TypeID=1&Sdate=2022-02-01&Edate=2099-02-01") 
+            const { dataApproved } = await axios.get(hostURL + "Employee/GetApprovedStaffLeavesByStaffID?ID=" +staffID + "TypeID=1&Sdate=2023-02-01&Edate=2099-02-01") 
             setApprovedData(dataApproved);
             // get api is not working
-            const { dataPending } = await axios.get(hostURL + "Employee/GetPendingStaffLeavesByStaffID?ID=" +staffID + "TypeID=1&Sdate=2022-02-01&Edate=2099-02-01")
+            const { dataPending } = await axios.get(hostURL + "Employee/GetPendingStaffLeavesByStaffID?ID=" +staffID + "TypeID=1&Sdate=2023-02-01&Edate=2099-02-01")
             setPendingData(dataPending);
             //get api is not working
-            const { dataRejected } = await axios.get(hostURL + "Employee/GetRejectedStaffLeavesByStaffID?ID=" +staffID + "TypeID=1&Sdate=2022-02-01&Edate=2099-02-01")
+            const { dataRejected } = await axios.get(hostURL + "Employee/GetRejectedStaffLeavesByStaffID?ID=" +staffID + "TypeID=1&Sdate=2023-02-01&Edate=2099-02-01")
             setRejectedData(dataRejected);
 
 
