@@ -866,7 +866,7 @@ const Sidebar = ({ children, applyPageName }) => {
                 <RiUserStarLine style={customStyles.icons} />
                 Masters
               </button>
-              {(userRole == 9 && displayMasters )&& (
+              {(userRole == 9 && displayMasters) && (
                 <div>
                   <Link href="/Masters/LeaveType">
                     <button
@@ -1107,7 +1107,7 @@ const Sidebar = ({ children, applyPageName }) => {
                   {/* code ends for data configuration here */}
                 </div>
               )}
-              {(userRole == 17 && displayMasters )&& (
+              {(userRole == 17 && displayMasters) && (
                 <>
                   {/* <Link href="/Settings/componentmaster">
                   <button
@@ -1408,7 +1408,7 @@ const Sidebar = ({ children, applyPageName }) => {
 
 
 
-                <Link href="/Reports/payrollsummary">
+                <Link href="/Reports/PayrollSummary/payrollsummary">
                   <button
                     className={getSubStyle(502)}
                     onClick={updateActiveMenu.bind(this, {
