@@ -25,6 +25,7 @@ const ApplyLeave = () => {
     async function onSubmit(data) {
         try {
             debugger;
+            const StaffID = sessionStorage.getItem('EmployeeID');
             await axios.post(hostURL + "HR/InsertStaffLeaves", data);
             Swal.fire({
                 icon: "success",
@@ -73,16 +74,20 @@ const ApplyLeave = () => {
                             <input type="date" className="form-control" {...register("EDateOfLeave", { required: true })} />
                         </div>
                         <div className="col-lg-2">
-                            <label htmlFor="">Covering </label>
-                            <input type="text" className="form-control" placeholder="Covering Staff" />
+                            <label>Staff ID</label>
+                            <input type="text" className="form-control" value={sessionStorage.getItem("userID")}  disabled/>
                         </div>
                     </div>
                     <br />
                     <div className="row">
-                        <label htmlFor="">Attachment</label>
                         <div className="col-lg-3">
+                            <label htmlFor="">Attachment</label>
                             {/* <DropZone {...register("MedicalUrl", { required: true })} /> */}
                             <input type="text" className="form-control" {...register("MedicalUrl", { required: true })} />
+                        </div>
+                        <div className="col-lg-2">
+
+
                         </div>
                     </div>
                     <div className="row">
