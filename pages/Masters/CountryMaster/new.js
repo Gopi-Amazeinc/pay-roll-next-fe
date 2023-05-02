@@ -76,9 +76,9 @@ function CountryMasterForm({ editData }) {
         <Layout>
             <div>
                 <br></br>
-                <p id={Styles.title}>Country Master Details</p>
-                <div className="container-fluid mt-4">
-                    <div className="row shadow-lg p-2 rounded-4 p-3 ">
+                <p className="Heading">Country Master Details</p>
+                <div className="container mt-2">
+                    <div className="row shadow p-2 rounded-3 ">
                         <div className="row ">
                             <div className="col-lg-4" >
                                 <label id={Styles.label}>Country<span id={Styles.asterisk}>* </span></label>
@@ -101,12 +101,13 @@ function CountryMasterForm({ editData }) {
                                 </div>
                             </div>
                             <br></br>
-                            <div className="row ">
-                                <div className="col-lg-6"></div>
-                                <div className="col-lg-6">
-                                    <Link href='/Masters/countrymasterdashboard'>
+                            <div className="row mx-0">
+                                <div className="col-lg-8"></div>
+                                <div className="col-lg-2">
+                                    <Link href='/Masters/CountryMaster'>
                                         <button type='button' className='btn common-edit' id={Styles.btn}>Close</button></Link>
-
+                                </div>
+                                <div className="col-lg-2">
                                     {
                                         actionType == "insert" && (
                                             <button type='submit' className='btn' id={Styles.btn}>Save</button>
@@ -117,8 +118,10 @@ function CountryMasterForm({ editData }) {
                                             <button type='submit' className='btn' id={Styles.btn} >Update</button>
                                         )
                                     }
-
                                 </div>
+
+
+
                             </div>
                         </form>
                     </div>

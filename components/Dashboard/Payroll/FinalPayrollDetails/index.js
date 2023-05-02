@@ -80,7 +80,7 @@ const FinalPayrollDetails = () => {
     return (
         <div>
             <h3 style={{ color: "red" }}>For Delete operation Date wants to be formatted..!</h3>
-            <h3 className='text-primary fs-5 mt-3 Heading'>Final Payroll Details</h3>
+            <h3 className=' mt-3 Heading'>Final Payroll Details</h3>
             <div className='card p-3 border-0 shadow-lg rounded-3 mt-4'>
                 <div className='row'>
                     <div className='col-lg-1'>
@@ -126,7 +126,7 @@ const FinalPayrollDetails = () => {
                 </div>
 
                 <div className='col-lg-12'>
-                    <table style={{ width: "80%" }} className='table table-bordered mt-4 text-cente table-smr table-striped '>
+                    <table style={{ width: "80%", whiteSpace: "nowrap" }} className='table table-sm mt-4 text-center '>
                         <thead>
                             <tr className='tr' >
                                 <th className='text-white'>Select</th>

@@ -45,9 +45,9 @@ function StateMasterDashboard() {
   }
   return (
 
-    <div className="p-3">
-      <h3 className="text-primary fs-5 mt-3">Province Master</h3>
-      <div className="card p-3 border-0 shadow-lg rounded-3 mt-4">
+    <div className="container">
+      <h3 className="Heading">Province Master</h3>
+      <div className="card p-3 border-0 shadow rounded-3 mt-4 mx-0">
         <div className="row">
           <div className="col-lg-1">
             <p>Filter By</p>
@@ -76,20 +76,20 @@ function StateMasterDashboard() {
 
       <div className="row mt-4">
         <div className="col-lg-2">
-          <p className="text-primary fs-6 fw-bold">SHOWING RESULTS</p>
+          <p className="Heading fs-6 ">SHOWING RESULTS</p>
         </div>
         <div className="col-lg-8"></div>
-        <div className="col-lg-2">
+        <div className="col-lg-2 mx-0">
           <Link
             href="/Masters/StateMaster/new"
-            className="btn btn-primary"
+
           >
-            Add New
+            <button className="AddButton">Add New</button>
           </Link>
         </div>
       </div>
 
-      <table className="table table-hover mt-4 ">
+      <table className="table table-hover mt-4 mx-0">
         <thead className="bg-info text-white ">
           <tr>
             <th>Country</th>

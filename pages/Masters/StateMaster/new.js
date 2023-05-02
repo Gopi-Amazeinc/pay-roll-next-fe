@@ -76,8 +76,8 @@ function StateMasterForm({ editData }) {
   return (
     <Layout>
       <div>
-        <h3 className="text-primary fs-5 mt-3">Province Details</h3>
-        <div className="card p-3 border-0 shadow-lg rounded-3 mt-4">
+        <h3 className="Heading fs-5 mt-3">Province Details</h3>
+        <div className="card p-3 border-0 shadow rounded-3 mt-4 mx-0">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="row">
               <div className="col-lg-3">
@@ -144,9 +144,9 @@ function StateMasterForm({ editData }) {
               </div>
             </div>
             <br></br>
-            <div className="row ">
-              <div className="col-lg-6"></div>
-              <div className="col-lg-6">
+            <div className="row mx-0">
+              <div className="col-lg-8"></div>
+              <div className="col-lg-2">
                 <Link href="/Masters/StateMaster">
                   <button
                     type="button"
@@ -156,7 +156,8 @@ function StateMasterForm({ editData }) {
                     Close
                   </button>
                 </Link>
-
+              </div>
+              <div className="col-lg-2">
                 {actionType == "insert" && (
                   <button type="submit" className="btn" id={Styles.btn}>
                     Save

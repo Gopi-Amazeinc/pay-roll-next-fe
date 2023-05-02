@@ -47,20 +47,24 @@ function OTRateDash() {
 
         <div>
             <p className='Heading'>OT Master</p>
-            <div className='container-fluid'>
-                <div className='card p-4'>
+            <div className='container'>
+                <div className='card border-0 p-3 mx-0'>
                     <div className='row'>
                         <div className='col-lg-1'>
                             <p>Filter by</p>
                         </div>
                         <div className='col-lg-4'>
-                            <input type="text" placeholder="Search" className='form-control form-control-sm' />
+                            <input type="text" placeholder="Search" className='form-control' />
                         </div>
                         <div className='col-lg-7'></div>
                     </div>
                 </div>
                 <div className='row mt-4'>
-                    <div className='col-lg-10'></div>
+                    <div className='col-lg-10'>
+                        <p className="Heading fs-6 mt-2">
+                            SHOWING <span></span>RESULTS
+                        </p>
+                    </div>
                     <div className='col-lg-2'>
                         <Link href="/Masters/OtMaster/new">  <button className='AddButton'>  <AiOutlinePlusCircle size={18} /> ADD New</button></Link>
                     </div>

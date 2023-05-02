@@ -77,9 +77,9 @@ const DepartmentMasterForm = ({ editData }) => {
 
     return (
         <Layout>
-            <h5 className='fw-bold ' id={Styles.h5}>Department Master</h5>
+            <h5 className="Heading">Department Master</h5>
             <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="card shadow-lg mt-4 p-3" id={Styles.card}>
+                <div className="card shadow p-3 border-0 mx-0 mt-3">
                     <div className="row ">
                         <div className="col-lg-2">
                             <label >Department Name<span id={Styles.span}>*</span></label>
@@ -121,16 +121,16 @@ const DepartmentMasterForm = ({ editData }) => {
                         </div>
                     </div>
                     <br /><br />
-                    <div className="row">
+                    <div className="row mx-0">
                         <div className="col-lg-8"></div>
 
                         <div className="col-lg-2">
-                            <Link href="/Masters/departmentmasterdashboard" className=" btn btn-primary form-control  shadow-lg" >Cancel</Link>
+                            <Link href="/Masters/DepartmentMaster"  ><button className="AddButton">Cancel</button></Link>
                         </div>
                         <div className="col-lg-2">
                             {actionType == "insert" && (
 
-                                <button type="submit" id={Styles.actionBtn} className="btn btn-primary">
+                                <button type="submit" className="AddButton">
 
                                     Save
 
@@ -140,7 +140,7 @@ const DepartmentMasterForm = ({ editData }) => {
 
                             {actionType == "update" && (
 
-                                <button type="submit" id='AddButton' className="btn btn-primary">
+                                <button type="submit" className="AddButton">
 
                                     Update
 

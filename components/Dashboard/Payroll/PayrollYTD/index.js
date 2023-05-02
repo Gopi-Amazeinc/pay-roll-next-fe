@@ -4,6 +4,7 @@ import { AiOutlineClose } from 'react-icons/ai'
 import * as XLSX from "xlsx";
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import Styles from '../../../../styles/payrollytd.module.css'
 
 
 const Employmentjobhistory = () => {
@@ -106,10 +107,10 @@ const Employmentjobhistory = () => {
     }, [])
     return (
         <div>
-            <h4 className='Heading fs-3 m-3'>Payroll YTD Upload</h4>
+            <h4 className='Heading  m-3'>Payroll YTD Upload</h4>
             <div className='container'>
                 <div className='row shadow-lg rounded-3 mt-5 p-3'>
-                    <div className='col-lg-1 fs-5'>
+                    <div className='col-lg-1 '>
                         <p>Filter By</p>
                     </div>
                     <div className='col-lg-6'>
@@ -194,10 +195,10 @@ const Employmentjobhistory = () => {
                     </Modal>
 
                     <div className='col-lg-2'>
-                        <button type='submit' onClick={handleModalOpen} className='submit-button'>Payroll YTD</button>
+                        <button type='submit' onClick={handleModalOpen} className={Styles.button}>Payroll YTD</button>
                     </div>
                     <div className='col-lg-2'>
-                        <button type='submit' className='submit-button'>Payroll History</button>
+                        <button type='submit' className={Styles.button}>Payroll History</button>
                     </div>
                 </div>
 
@@ -229,10 +230,10 @@ const Employmentjobhistory = () => {
                                             <td>{data.joiningDate}</td>
                                             <td></td>
                                             <td>
-                                                <button className='AddButton'>Payroll History</button>
+                                                <button className={Styles.upload}>Payroll History</button>
                                             </td>
                                             <td>
-                                                <button onClick={handlePayrollYTD.bind(this, data)} className='submit-button'>PayrollYTD</button>
+                                                <button onClick={handlePayrollYTD.bind(this, data)} className={Styles.upload}>PayrollYTD</button>
                                             </td>
                                         </tr>
                                     )
@@ -242,7 +243,7 @@ const Employmentjobhistory = () => {
                     </table>
                 </div>
             </div>
-        </div>
+        </div >
     )
 }
 
