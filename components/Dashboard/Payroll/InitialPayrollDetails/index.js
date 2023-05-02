@@ -11,6 +11,14 @@ const InitialPayrollDetails = () => {
     const [preliminarySalary, setPreliminarySalary] = useState([]);
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [department, setDepartment] = useState([]);
+    const [selectedRows, setSelectedRows] = useState([]);
+    const handleRowSelect = (event, id) => {
+        if (id === 'all') {
+            setSelectedRows(event.target.checked ? preliminarySalary.map(data => data.id) : []);
+        } else {
+            setSelectedRows(selectedRows.includes(id) ? selectedRows.filter(rowId => rowId !== id) : [...selectedRows, id]);
+        }
+    };
 
     const getData = async () => {
         let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
@@ -126,9 +134,10 @@ const InitialPayrollDetails = () => {
                 </div>
 
                 <div className='col-lg-12'>
-                    <table style={{ width: "80%" }} className='table table-bordered mt-4 text-cente table-smr table-striped '>
+                    <span>Select All <input type="checkbox" checked={selectedRows.length === preliminarySalary.length} onChange={e => handleRowSelect(e, 'all')} /></span>
+                    <table style={{ width: "80%" }} className='table  mt-4 text-cente table-smr table-striped  text-center'>
                         <thead>
-                            <tr className='tr' >
+                            <tr className='tr' style={{ whiteSpace: 'nowrap' }}>
                                 <th className='text-white'>Select</th>
                                 <th className='text-white'>Employee ID</th>
                                 <th className='text-white'>Staff ID</th>
@@ -146,7 +155,7 @@ const InitialPayrollDetails = () => {
                                     return (
                                         <tr className="text-dark" key={index}>
                                             <td>
-                                                <input type="checkbox" onChange={handleData.bind(this, data)} />
+                                                <input type="checkbox" checked={selectedRows.includes(data.id)} onChange={e => handleRowSelect(e, data.id)} />
                                             </td>
                                             <td>{data.employeID}</td>
                                             <td>{data.staffID}</td>
@@ -156,7 +165,7 @@ const InitialPayrollDetails = () => {
                                             <td>{data.baseSal}</td>
                                             <td>{data.componentValue}</td>
                                             <td>
-                                                <button className='submit-button ' onClick={openModal}>View Component Details</button>
+                                                <button className='submit-button fw-bold ' onClick={openModal}>View Component Details</button>
                                             </td>
                                         </tr>
                                     )

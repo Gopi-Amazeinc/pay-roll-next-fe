@@ -69,7 +69,7 @@ function LeaveListDashboard() {
     const [rejecteddata, setRejectedData] = useState([])
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
-    useEffect(() => {
+        fect(() => {
         async function getData() {
            const staffID = sessionStorage.getItem("userID")
             let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
