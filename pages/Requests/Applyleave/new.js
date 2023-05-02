@@ -88,7 +88,7 @@ const ApplyLeave = () => {
                     <div className="row">
                         <div className="col-lg-8"></div>
                         <div className="col-lg-2">
-                            <Link href="/Requests/Leaverequest"><button type="submit" className="close-button">CANCEL</button></Link>
+                            <Link href="/Requests/Leaverequest"><button type="submit" className="submit-button">CANCEL</button></Link>
                         </div>
                         <div className="col-lg-2" style={{ float: "right" }}>
                             <button type="submit" className="submit-button">SAVE</button>
