@@ -149,6 +149,7 @@ const InitialPayrollForm = () => {
                                 <Button
                                     style={{ background: "#3247d5" }}
                                     type="button"
+                                    className='fw-bold'
                                     id="collapseExample"
                                     onClick={() => {
                                         setCollapseOpen(!collapseOpen),
