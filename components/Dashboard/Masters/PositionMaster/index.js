@@ -53,11 +53,10 @@ const PositionMasterDash = () => {
 
 
   return (
-    <div>
-      <br></br>
+    <div className="container">
       <p className="Heading">Position  Master</p>
-      <div className="container-fluid mt-4">
-        <div className="row shadow-lg p-2 rounded-4 p-3 ">
+      <div className="container mt-3">
+        <div className="row shadow p-2 rounded-3 ">
           <div className="col-lg-2">
             <b>
               <p className="mt-2 text-center">
@@ -75,14 +74,14 @@ const PositionMasterDash = () => {
         </div>
         <div className="row mt-4">
           <div className="col-lg-8">
-            <p >SHOWING {positionMaster.length} RESULTS</p>
+            <p className="Heading fs-6">SHOWING {positionMaster.length} RESULTS</p>
           </div>
           <div className="col-lg-2"></div>
           <div className="col-lg-2">
 
             <Link href="/Masters/PositionMaster/new"><button
 
-              className="btn btn-primary btn-sm  shadow-lg AddButton"
+              className=" AddButton"
 
             >  <AiOutlinePlusCircle />
               Add New

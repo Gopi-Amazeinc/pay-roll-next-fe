@@ -41,7 +41,6 @@ const SSSForm = ({ editData }) => {
     // }, [1]);
 
     const onSubmit = async (data) => {
-        debugger;
         console.log(data);
         if (actionType == "insert") {
             await axios.post(hostURL + "HR/InsertSSSconfogaration", data);
@@ -49,7 +48,6 @@ const SSSForm = ({ editData }) => {
             location.href = "/Settings/SSS";
         } else {
             let res = await axios.post(hostURL + "HR/UpdateSSSconfogaration", data);
-            sessionStorage.removeItem("id");
             Swal.fire("sss updated succefully!");
             location.href = "/Settings/SSS";
         }
@@ -58,7 +56,7 @@ const SSSForm = ({ editData }) => {
         let etty = {
             ID: existingData ? existingData.id : "",
             Taxiableincomelowlimit: existingData ? existingData.taxiableincomelowlimit : "",
-            Taxableincomehighlimit: existingData ? existingData.taxiableincomehighlimit : "",
+            Taxiableincomehighlimit: existingData ? existingData.taxiableincomehighlimit : "",
             SSS_EEvalue: existingData ? existingData.ssS_EEvalue : "",
             SSS_ERvalue: existingData ? existingData.ssS_ERvalue : "",
             SSS_Ecvalue: existingData ? existingData.ssS_Ecvalue : "",
@@ -127,7 +125,7 @@ const SSSForm = ({ editData }) => {
                                             name="highLimit"
                                             type="text"
                                             className={`form-control mt-2`}
-                                            {...register("Taxableincomehighlimit", { required: true })}
+                                            {...register("Taxiableincomehighlimit", { required: true })}
 
                                         />
                                         {errors.Taxableincomehighlimit && (

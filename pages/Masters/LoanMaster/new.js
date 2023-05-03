@@ -22,7 +22,6 @@ function LoanMasterForm() {
   }, []);
 
   const getSubSectionMasterList = async () => {
-    debugger;
     const id = sessionStorage.getItem("id");
     if (id) {
       const response = await axios.get(
@@ -74,7 +73,7 @@ function LoanMasterForm() {
     <Layout>
       <div>
         <p></p>
-        <h4 className='text-primary '>Loan Type</h4><br /><br />
+        <h4 className='Heading mb-4'>Loan Type</h4>
         <form onSubmit={handleSubmit(onSubmit)} >
           <div className={Styles.card}>
             <div className="row">
@@ -121,7 +120,7 @@ function LoanMasterForm() {
               <div className="col-lg-8"></div>
               <div className="col-lg-2">
                 <Link href="/Masters/LoanMaster">
-                  <button className={Styles.button}>
+                  <button className="AddButton">
                     Cancel
                   </button>
                 </Link>
@@ -130,7 +129,7 @@ function LoanMasterForm() {
                 {actionType == "insert" && (
                   <button
                     type="submit"
-                    className={Styles.button}
+                    className="AddButton"
                   >
                     Save
                   </button>
@@ -138,7 +137,7 @@ function LoanMasterForm() {
                 {actionType == "update" && (
                   <button
                     type="submit"
-                    className={Styles.button}
+                    className="AddButton"
                   >
                     Update
                   </button>
@@ -146,9 +145,6 @@ function LoanMasterForm() {
               </div>
             </div>
           </div>
-
-         
-
         </form>
       </div >
     </Layout>

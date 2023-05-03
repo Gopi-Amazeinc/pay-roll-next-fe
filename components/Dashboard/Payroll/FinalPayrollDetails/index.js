@@ -4,6 +4,7 @@ import Swal from 'sweetalert2';
 import axios from 'axios'
 import Link from 'next/link'
 import { DownloadTableExcel } from 'react-export-table-to-excel';
+import Styles from '../.././../../styles/finalpayrolldetails.module.css'
 
 
 const FinalPayrollDetails = () => {
@@ -21,6 +22,14 @@ const FinalPayrollDetails = () => {
         res = await axios.get(hostURL + "Master/GetDepartmentMaster");
         setDepartment(res.data);
     }
+    const [selectedRows, setSelectedRows] = useState([]);
+    const handleRowSelect = (event, id) => {
+        if (id === 'all') {
+            setSelectedRows(event.target.checked ? preliminarySalary.map(data => data.id) : []);
+        } else {
+            setSelectedRows(selectedRows.includes(id) ? selectedRows.filter(rowId => rowId !== id) : [...selectedRows, id]);
+        }
+    };
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
@@ -80,7 +89,7 @@ const FinalPayrollDetails = () => {
     return (
         <div>
             <h3 style={{ color: "red" }}>For Delete operation Date wants to be formatted..!</h3>
-            <h3 className='text-primary fs-5 mt-3 Heading'>Final Payroll Details</h3>
+            <h3 className=' mt-3 Heading'>Finalization   Payroll Details</h3>
             <div className='card p-3 border-0 shadow-lg rounded-3 mt-4'>
                 <div className='row'>
                     <div className='col-lg-1'>
@@ -116,17 +125,30 @@ const FinalPayrollDetails = () => {
                     </div>
                 </div>
             </div><br /><br />
+            <div className='row'>
+                <div className='col-lg-10'></div>
+                <div className='col-lg-2'>Total Amount:</div>
+            </div>
+            <br />
+            <br />
+            <div className='row'>
+                <div className='col-lg-9'></div>
+                <div className='col-lg-3'>
+
+                    <button type='button' className='EditDelteBTN fw-bold' onClick={() => handleDelete.bind(this)}>Delete</button>
+
+
+                </div>
+            </div>
             <div className='row '>
                 <div className='col-lg-4'> </div>
                 <div className='col-lg-5'>
                     <h4 className='Heading' >Employees in selected Period</h4>
                 </div>
-                <div className='col-lg-3'>
-                    <button type='button' className='EditDelteBTN' onClick={() => handleDelete.bind(this)}>Delete</button>
-                </div>
 
                 <div className='col-lg-12'>
-                    <table style={{ width: "80%" }} className='table table-bordered mt-4 text-cente table-smr table-striped '>
+                    <span>Select All <input type="checkbox" checked={selectedRows.length === preliminarySalary.length} onChange={e => handleRowSelect(e, 'all')} /></span>
+                    <table style={{ width: "80%", whiteSpace: "nowrap" }} className='table table-sm mt-4 text-center '>
                         <thead>
                             <tr className='tr' >
                                 <th className='text-white'>Select</th>
@@ -146,7 +168,7 @@ const FinalPayrollDetails = () => {
                                     return (
                                         <tr className="text-dark" key={index}>
                                             <td>
-                                                <input type="checkbox" onChange={handleData.bind(this, data)} />
+                                                <input type="checkbox" checked={selectedRows.includes(data.id)} onChange={handleData.bind(this, data)} />
                                             </td>
                                             <td>{data.employeID}</td>
                                             <td>{data.staffID}</td>
@@ -156,7 +178,7 @@ const FinalPayrollDetails = () => {
                                             <td>{data.baseSal}</td>
                                             <td>{data.componentValue}</td>
                                             <td>
-                                                <button className='submit-button ' onClick={openModal}>View Component Details</button>
+                                                <button className={Styles.actionButton} onClick={openModal}>View Component Details</button>
                                             </td>
                                         </tr>
                                     )

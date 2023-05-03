@@ -10,6 +10,13 @@ import timesheet from "../../../pages/Requests/Timesheet/timesheet.module.css"
 
 const Timesheetdetails = () => {
     const { register, handleSubmit, reset, formState: { errors }, } = useForm();
+    const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+
+    const InsertData = async () => {
+        await axios.post(hostURL + "Payroll/InsertCompensationTimeOut", data);
+        Swal.fire("Data Inserted successfully");
+        location.href = "/Requests/Timesheet";
+    }
     return (
         <div>
             <Layout>

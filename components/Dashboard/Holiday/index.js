@@ -47,7 +47,7 @@ const Holidaydashboard = () => {
 
 
     return (
-        
+
         <div>
             <br></br> <p id={Styles.title}>Holiday Dashboard</p>{" "}
             <div className="container-fluid mt-4">
@@ -110,11 +110,11 @@ const Holidaydashboard = () => {
                                         <td>{data.attachment}</td>
                                         <td>
                                             <Link href={`/Holiday/edit/${data.id}`}>
-                                                <button className="btn btn-primary"  >Edit</button>
+                                                <button className="editDeleteBtnTable">Edit</button>
                                             </Link>
                                             &nbsp;
 
-                                            <button className="btn btn-primary" onClick={() => handleDelete(data.id)}>Delete</button>
+                                            <button className="editDeleteBtnTable" onClick={() => handleDelete(data.id)}>Delete</button>
                                         </td>
                                     </tr>
                                 )
@@ -126,7 +126,7 @@ const Holidaydashboard = () => {
                 </div>
             </div>
         </div>
-        
+
 
     );
 }

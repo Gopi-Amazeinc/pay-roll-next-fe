@@ -40,7 +40,7 @@ export default function PayperiodSettingsDash() {
 
     return (
 
-        <div>
+        <div className='container'>
             <h3 className=' mt-3 Heading'>Pay Period Settings</h3>
             <div className='card p-3 border-0 shadow-lg rounded-3 mt-4'>
                 <div className='row'>
@@ -53,15 +53,16 @@ export default function PayperiodSettingsDash() {
                     </div>
                 </div>
             </div>
-            <div className='row'>
+            <div className='row '>
                 <div className='col-lg-10'></div>
-                <div className='col-lg-2 mt-2 text-end'>
-                    <Link href="/Settings/PayperiodSetting/new" > <button className=' AddButton' onClick={clearData.bind(this)}>Add New</button> </Link>
+                <div className='col-lg-2 mt-4 text-end'>
+                    <Link href="/Settings/PayperiodSetting/new" > <button className={Styles.addButton} onClick={clearData.bind(this)}>Add New</button> </Link>
                 </div>
-
-                <table className='table table-hover text-center mt-2 table-sm' >
+            </div>
+            < div className='table-responsive'>
+                <table className='table mt-4 table-striped text-center ' >
                     <thead className='bg-info text-white '>
-                        <tr className='tr'>
+                        <tr style={{ whiteSpace: "nowrap" }}>
                             <th>Pay Code</th>
                             <th>Pay Period</th>
                             <th>Attendance Coverage Startdate</th>

@@ -15,7 +15,7 @@ function GroupMaster() {
 
     async function getData() {
         let res = await axios.get(
-          hostURL +"Master/GetGroupMaster"  //naveen.th@amazeinc.in, Get API for group master dashboard, to fetch data
+            hostURL + "Master/GetGroupMaster"  //naveen.th@amazeinc.in, Get API for group master dashboard, to fetch data
         );
         setGroupMasterData(res.data);
     }
@@ -29,20 +29,20 @@ function GroupMaster() {
             confirmButtonColor: "#3085d6",
             cancelButtonColor: "#d33",
             confirmButtonText: "Yes, delete it!",
-          }).then((result) => {
+        }).then((result) => {
             if (result.isConfirmed) {
                 axios.get(hostURL + "Master/DeleteGroupMaster?ID=" + id); //naveen.th@amazeinc.in, Delete API for Group master dashboard, to delete data by ID
-                getData(); 
+                getData();
             }
-          });
+        });
     }
 
     return (
         <Layout>
             <div>
-                <h3 className='text-primary fs-5 mt-3'>Group Master</h3>
-                <div className='card p-3 border-0 shadow-lg rounded-3 mt-4'>
-                    <div className='row p-3'>
+                <h3 className='Heading'>Group Master</h3>
+                <div className='card p-3 border-0  rounded-3 mt-4 mx-0'>
+                    <div className='row'>
                         <div className='col-lg-1'>
                             <p>Filter By</p>
                         </div>
@@ -52,13 +52,16 @@ function GroupMaster() {
                     </div>
                 </div>
                 <div className='row mt-3'>
-                    <div className='col-lg-2 text-primary fs-6 fw-bold'>
+                    <div className='col-lg-2 Heading'>
                         <h6>SHOWING RESULTS</h6>
                     </div>
                     <div className='col-lg-8'></div>
                     <div className='col-lg-2 mt-2 text-end'>
-                        <Link href="/Masters/GroupMaster/new"  id='AddButton' className='btn btn-primary fw-bold'>
-                            Add
+                        <Link href="/Masters/GroupMaster/new" >
+                            <button className='AddButton'>
+                                Add
+                            </button>
+
                         </Link>
                     </div>
                 </div>
@@ -72,14 +75,14 @@ function GroupMaster() {
                     </thead>
                     <tbody>
                         {
-                            groupMaster.map((data,index) => {
+                            groupMaster.map((data, index) => {
                                 return (
                                     <tr key={index}>
                                         <td>{data.short}</td>
                                         <td>{data.description}</td>
                                         <td>
                                             <Link href={`/Masters/GroupMaster/Edit/${data.id}`}>
-                                                <button  id={Styles.editbtn}>Edit</button> 
+                                                <button id={Styles.editbtn}>Edit</button>
                                             </Link>&nbsp;&nbsp;&nbsp;&nbsp;
                                             <button onClick={deleteGroupData.bind(this, data.id)} id={Styles.editbtn}>Delete</button>
                                         </td>

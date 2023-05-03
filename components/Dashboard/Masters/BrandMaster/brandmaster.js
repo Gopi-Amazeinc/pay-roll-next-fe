@@ -1,7 +1,7 @@
 import React from "react";
 import brandmaster from "../../../../styles/BrandMasterDashboard.module.css";
 import Link from "next/link";
-import Layout  from "../../../../components/layout/layout";
+import Layout from "../../../../components/layout/layout";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -61,12 +61,12 @@ function BrandMasterDashboard() {
     return (
         <Layout>
             <div>
-                <div className="container-fluid">
+                <div className="container">
                     <div className="row">
                         <div className="col-md-12">
                             <div className="row">
                                 <div className="col-lg-6">
-                                    <h3 className="text-primary fs-5 mt-3 fw-bold">
+                                    <h3 className="Heading">
                                         Brand Master
                                     </h3>
                                 </div>
@@ -89,13 +89,15 @@ function BrandMasterDashboard() {
                             </div>
                             <br />
                             <div className="row">
-                                <div className="col-md-10"></div>
+                                <div className="col-md-10">
+                                    <p className="Heading fs-6 mt-2">
+                                        SHOWING <span></span>RESULTS
+                                    </p>
+                                </div>
                                 <div className="col-md-2">
                                     <Link href="/Masters/BrandMaster/new">
                                         <button
-                                            className={brandmaster.button}
-                                            tabindex="0"
-                                            onClick={clearFormData.bind(this)}
+                                            className="AddButton"
                                         >
                                             Add New
                                         </button>
@@ -106,53 +108,48 @@ function BrandMasterDashboard() {
                             <div className="alignForm"></div>
                             <div className="row">
                                 <div className="col-md-12">
-                                    <div className="container-fluid">
-                                        <br />
-                                        <table class="table table-bordered text">
-                                            <thead>
-                                                <tr class="head">
-                                                    <th class="col-md-4">Short Name</th>
-                                                    <th class="col-md-4">Description</th>
-                                                    <th class="col-md-4" style={{ textAlign: "center" }}>
-                                                        Action
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {BrandMaster.map((data) => {
-                                                    return (
-                                                        <tr key={data.id}>
-                                                            <td>{data.short}</td>
-                                                            <td>{data.description}</td>
-                                                            <td>
-                                                                <Link href={`/Masters/BrandMaster/Edit/${data.id}`}>
-                                                                    <button
-                                                                        className="btn btn-primary"
-                                                                        onClick={getBandMasterData.bind(this, data)}
-                                                                    >
-                                                                        Edit
-                                                                    </button>
-                                                                </Link>
-                                                                &nbsp;
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr class="head">
+                                                <th >Short Name</th>
+                                                <th >Description</th>
+                                                <th >
+                                                    Action
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {BrandMaster.map((data) => {
+                                                return (
+                                                    <tr key={data.id}>
+                                                        <td>{data.short}</td>
+                                                        <td>{data.description}</td>
+                                                        <td>
+                                                            <Link href={`/Masters/BrandMaster/Edit/${data.id}`}>
                                                                 <button
-                                                                    className="btn btn-primary"
-                                                                    onClick={() => DeleteBandMaster(data.id)}
+                                                                    className="edit-btn"
                                                                 >
-                                                                    Delete{" "}
+                                                                    Edit
                                                                 </button>
-                                                            </td>
-                                                        </tr>
-                                                    );
-                                                })}
-                                            </tbody>
-                                        </table>
-                                    </div>
+                                                            </Link>
+                                                            &nbsp;
+                                                            <button
+                                                                className="edit-btn"
+                                                                onClick={() => DeleteBandMaster(data.id)}
+                                                            >
+                                                                Delete{" "}
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                );
+                                            })}
+                                        </tbody>
+                                    </table>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <br />
             </div>
         </Layout>
     );

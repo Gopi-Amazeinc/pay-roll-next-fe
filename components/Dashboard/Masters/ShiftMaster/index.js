@@ -44,7 +44,7 @@ function ShiftMaster() {
 
     <div>
       <br></br> <p className="Heading">Shift Master</p>{" "}
-      <div className="container-fluid mt-4">
+      <div className="container mt-4">
         <div className="row shadow-lg  rounded-4 p-4 ">
           <div className="col-lg-1">
             <b>

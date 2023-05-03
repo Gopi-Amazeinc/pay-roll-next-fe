@@ -17,7 +17,6 @@ const RunFinalPayroll = () => {
     const [runPayrollDashboard, setRunPayrollDashboardData] = useState("");
 
 
-
     useEffect(() => {
         async function getData() {
             let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
@@ -122,12 +121,12 @@ const RunFinalPayroll = () => {
                                 </select>
                             </div>
                         </div>
-                        <div className='col-lg-1'></div>
+                        {/* <div className='col-lg-1'></div> */}
                         <div className="col-lg-2 mt-3">
                             <br />
                             <button
                                 type="button"
-                                className='EditDelteBTN'
+                                className='EditDelteBTN fw-bold'
                                 onClick={() => {
                                     setCollapseOpen(!collapseOpen);
                                     handleButtonClick();
@@ -202,12 +201,14 @@ const RunFinalPayroll = () => {
             </div>
             <div id="employee1" className="row row" style={{ height: "500px" }}><div className="col-lg-12">
                 <Collapse isOpen={collapseOpen}>
+
                     <table className="table table-bordered table-sm" style={{ height: "300px" }}>
                         <thead className='bg-info text-white ' >
                             <tr >
                                 <th >
                                     <input type="checkbox" onClick={handleRunpayrolldata} ></input>
                                 </th>
+
                                 <th >Employee ID</th>
                                 <th >Employee Name</th>
                                 <th>Position</th>
