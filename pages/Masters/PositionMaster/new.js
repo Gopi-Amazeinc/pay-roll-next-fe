@@ -20,6 +20,7 @@ const PositionMasterDetails = ({ editData }) => {
     function clearForm(positionMasterData = null) {
         debugger
         let details = {
+            
             "ID": positionMasterData ? positionMasterData.id : "",
             "Short": positionMasterData ? positionMasterData.short : "",
             "Description": positionMasterData ? positionMasterData.description : "",
