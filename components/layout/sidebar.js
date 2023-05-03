@@ -1432,12 +1432,12 @@ const Sidebar = ({ children, applyPageName }) => {
                     YTD Reports
                   </button>
                 </Link>
-                <Link href="/Reports/payslipreport">
+                <Link href="/Reports/Payslip">
                   <button
                     className={getSubStyle(504)}
                     onClick={updateActiveMenu.bind(this, {
                       id: 504,
-                      name: " Payslip",
+                      name: "Payslip",
                     })}
                   >
                     <TbReport style={customStyles.icons} />
