@@ -23,9 +23,9 @@ const Shiftdetails = () => {
                 <div className='col-lg-3 text-end'>
                     <Link href="/Attendance/shiftdetails" className='Heading active' > My Weekly Shift</Link>
                 </div>
-                <div className='col-lg-3'>
+                {/* <div className='col-lg-3'>
                     <Link href="/Attendance/MyTeamWeeklyShift" className='Heading active'> My Team Weekly Shift</Link>
-                </div>
+                </div> */}
             </div>
             {/* <div className="row">
                 <div className="col-lg-3">

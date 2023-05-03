@@ -12,9 +12,8 @@ const Index = () => {
   const [pending, setPending] = useState(false)
   const [approved, setApproved] = useState(false)
   const [rejected, setRejected] = useState(false);
-  const [newPending, setnewPendingData] = useState([]);
+  const [newDashboard, setNewDashboardData] = useState([]);
   const [newApproved, setnewApprovedData] = useState([]);
-  const [newRejected, setnewRejectedData] = useState([]);
   const togglePending = () => {
     setPending(true)
     setApproved(false)
@@ -34,19 +33,6 @@ const Index = () => {
     setPending(false)
 
   }
-
-  const getTimeSheet = async () => {
-    let res = await axios.get(hostURL + "Payroll/GetPendingTimeSheetDetailsforweb");
-    setnewPendingData(res.data);
-    res = await axios.get(hostURL + "Payroll/GetApproveTimeSheetDetailsforweb");
-    setnewApprovedData(res.data);
-    res = await axios.get(hostURL + "Payroll/GetRejectTimeSheetDetailsforweb");
-    setnewRejectedData(res.data);
-  }
-
-  useEffect(() => {
-    getTimeSheet()
-  }, [1])
 
 
   return (
@@ -100,12 +86,11 @@ const Index = () => {
             <thead className='bg-info text-white'>
               <tr>
                 <th>Date</th>
-                <th>Name</th>
-                {/* <th>Start Time</th>
+                <th>Start Time</th>
                 <th>End Time</th>
-                <th>No Of Hours</th>
+                <th>No of Hours</th>
                 <th>Task</th>
-                <th>Attachment</th> */}
+                <th>Attachment</th>
                 <th>Comments</th>
                 <th>Status</th>
               </tr>
@@ -113,20 +98,17 @@ const Index = () => {
 
             <tbody>
               {
-                newPending.map((data) => {
+                newDashboard.map((data) => {
                   return (
                     <tr key={data.id}>
-                      <td>{data.filterdate}</td>
-                      {/* <td>{data.startTime}</td>
-                      <td>{data.endTime}</td>
-                      <td>{data.noOfHrs}</td>
-                      <td>{data.task}</td> */}
-                      <td>{data.name}</td>
+                      <td>{data.date}</td>
+                      <td>{data.actuval_StartTime}</td>
+                      <td>{data.actuval_EndTime}</td>
                       <td>{data.comments}</td>
                       <td>{data.status}</td>
-                      {/* <td>
-                        <button  className='edit-btn'>Cancel</button>
-                      </td> */}
+                      <td>
+                        <button onClick={Delete.bind(this, data.id)} className='edit-btn'>Cancel</button>
+                      </td>
                     </tr>
                   )
                 })
@@ -142,10 +124,10 @@ const Index = () => {
               <tr>
                 <th>Date</th>
                 <th>Start Time</th>
-                {/* <th>End Time</th>
+                <th>End Time</th>
                 <th>No of Hours</th>
                 <th>Task</th>
-                <th>Attachment</th> */}
+                <th>Attachment</th>
                 <th>Comments</th>
                 <th>Status</th>
               </tr>
@@ -159,8 +141,7 @@ const Index = () => {
                       <td>{data.date}</td>
                       <td>{data.actuval_StartTime}</td>
                       <td>{data.actuval_EndTime}</td>
-                      <td>{data.comments}</td>
-                      <td>{data.status}</td>
+
                     </tr>
                   )
                 })
@@ -176,10 +157,10 @@ const Index = () => {
               <tr>
                 <th>Date</th>
                 <th>Start Time</th>
-                {/* <th>End Time</th>
+                <th>End Time</th>
                 <th>No of Hours</th>
                 <th>Task</th>
-                <th>Attachment</th> */}
+                <th>Attachment</th>
                 <th>Comments</th>
                 <th>Status</th>
               </tr>
@@ -187,14 +168,13 @@ const Index = () => {
 
             <tbody>
               {
-                newRejected.map((data) => {
+                newApproved.map((data) => {
                   return (
                     <tr key={data.id}>
                       <td>{data.date}</td>
-                      <td>{data.filterdate}</td>
-                      {/* <td>{data.actuval_EndTime}</td> */}
-                      <td>{data.comments}</td>
-                      <td>{data.status}</td>
+                      <td>{data.actuval_StartTime}</td>
+                      <td>{data.actuval_EndTime}</td>
+
                     </tr>
                   )
                 })
