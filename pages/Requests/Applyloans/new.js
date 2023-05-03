@@ -3,7 +3,7 @@ import React from 'react'
 import { useForm } from 'react-hook-form'
 import Link from "next/link"
 import axios from "axios"
-// import Styles from '../../styles/applyloans.module.css'
+import styles from "../../../styles/applyloans.module.css"
 
 const Applyloans = () => {
     const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
@@ -43,7 +43,7 @@ const Applyloans = () => {
     // ),[]}
     return (
         <Layout>
-            <h1 className='text-danger'>The binding is yet to be done for this component</h1>
+         
             <h4 className="text-primary mx-2">Apply Loan</h4>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className='card shadow-lg p-3'>
