@@ -24,7 +24,11 @@ const Header = ({ makelogout }) => {
   const [mm, setMm] = useState("");
   const [ampm, setAmpm] = useState("");
 
-
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setTime(new Date());
+    }, 1000);
+  }, []);
   useEffect(() => {
     const temp = time.toLocaleString("en-US", { hour: "2-digit", minute: "numeric", hour12: true });
     const temp1 = temp.split(":");
@@ -60,13 +64,13 @@ const Header = ({ makelogout }) => {
           <p><span className={HeaderStyles.time}>{hh}:</span > <span className={HeaderStyles.time}>{mm}:</span ><span className={HeaderStyles.time} >{ampm}</span></p>
         </div>
         <div className="col-lg-1 text-white ">
-          
+
         </div>
         <div className="col-lg-1 mt-3 text-white">
           {/* <h4 onClick={makelogout}>logout </h4> */}
         </div>
         <div className="col-lg-2  mt-3 text-white">
-        <Image className={HeaderStyles.notification} src={Notification} alt="notificatons" width={35} height={35} />
+          <Image className={HeaderStyles.notification} src={Notification} alt="notificatons" width={35} height={35} />
           <div >
             <div className={HeaderStyles.dropdown} style={{ float: "left" }}>
               <button className={HeaderStyles.logout} >  Hi {userName} <FaCaretDown style={{ cursor: "pointer" }} /> </button>
