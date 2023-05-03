@@ -43,7 +43,7 @@ const Applyloans = () => {
     // ),[]}
     return (
         <Layout>
-            <h1 className='text-danger'>The binding is yet to be done for this component</h1>
+         
             <h4 className="text-primary mx-2">Apply Loan</h4>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className='card shadow-lg p-3'>
