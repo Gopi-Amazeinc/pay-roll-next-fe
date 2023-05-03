@@ -158,7 +158,7 @@ debugger
                       Announcement Title
                     </h5>
                     <p className="card-text">Announcement content goes here.</p>
-                    <Link className={dashboard.announcement} href="">See All < RiArrowDropDownLine style={{ fontSize: "30px" }} /> </Link>
+                    <Link className={dashboard.announcement} href="/Announcement">See All < RiArrowDropDownLine style={{ fontSize: "30px" }} /> </Link>
                   </div>
                 </div>
               </div>
