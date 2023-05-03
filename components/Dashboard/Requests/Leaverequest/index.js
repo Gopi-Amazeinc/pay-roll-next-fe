@@ -17,14 +17,13 @@ const localizer = momentLocalizer(moment);
 function LeaveListDashboard() {
 
     const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+    var date = new Date();
+    let Sdate = date.toISOString().slice(0, 10);
+    var edate = new Date();
+    let Edate = edate.toISOString().slice(0, 10);
 
-
-
-    // eslint-disable-next-line react-hooks/rules-of-hooks
     const [pending, setPending] = useState(false)
-    // eslint-disable-next-line react-hooks/rules-of-hooks
     const [approved, setApproved] = useState(false)
-    // eslint-disable-next-line react-hooks/rules-of-hooks
     const [rejected, setRejected] = useState(false)
     const togglePending = () => {
         setPending(true)
@@ -44,7 +43,6 @@ function LeaveListDashboard() {
     }
 
     const [calender, setCalender] = useState(false)
-    // eslint-disable-next-line react-hooks/rules-of-hooks
     const [listview, setListView] = useState(false)
     const toggleCalender = () => {
         setCalender(true)
@@ -61,31 +59,43 @@ function LeaveListDashboard() {
 
     }
 
+    // const dateFormat = () => {
+    //     var StartDate = new Date();
+    //     let Sdate = StartDate.toISOString().slice(0, 10);
+    //     var EndDate = new Date();
+    //     let Edate = EndDate.toISOString().slice(0, 10);
+    //     getPendingData(Sdate, Edate);
+    //     getApprovedData(Sdate, Edate);
+    //     getRejectedData(Sdate, Edate);
+    // }
+
 
     const [pendingdata, setPendingData] = useState([])
-    // eslint-disable-next-line react-hooks/rules-of-hooks
     const [approveddata, setApprovedData] = useState([])
-    // eslint-disable-next-line react-hooks/rules-of-hooks
     const [rejecteddata, setRejectedData] = useState([])
 
-    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const getPendingData = async () => {
+        const staffID = sessionStorage.getItem("userID")
+        const res = await axios.get(hostURL + "Employee/GetPendingStaffLeavesByStaffID?ID=" + staffID + "&TypeID=1&Sdate=" + Sdate + "&Edate=" + Edate)
+        setPendingData(res.data);
+        console.log(res.data);
+    }
+    const getApprovedData = async () => {
+        const staffID = sessionStorage.getItem("userID")
+        const res = await axios.get(hostURL + "Employee/GetApprovedStaffLeavesByStaffID?ID=" + staffID + "&TypeID=1&Sdate=" + Sdate + "&Edate=" + Edate)
+        setApprovedData(res.data);
+        console.log(res.data);
+    }
+    const getRejectedData = async () => {
+        const staffID = sessionStorage.getItem("userID")
+        const res = await axios.get(hostURL + "Employee/GetRejectedStaffLeavesByStaffID?ID=" + staffID + "&TypeID=1&Sdate=" + Sdate + "&Edate=" + Edate)
+        setRejectedData(res.data);
+        console.log(res.data);
+    }
     useEffect(() => {
-        async function getData() {
-           const staffID = sessionStorage.getItem("userID")
-            let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-            //get api is not working
-            const { dataApproved } = await axios.get(hostURL + "Employee/GetApprovedStaffLeavesByStaffID?ID=" +staffID + "TypeID=1&Sdate=2022-02-01&Edate=2099-02-01") 
-            setApprovedData(dataApproved);
-            // get api is not working
-            const { dataPending } = await axios.get(hostURL + "Employee/GetPendingStaffLeavesByStaffID?ID=" +staffID + "TypeID=1&Sdate=2022-02-01&Edate=2099-02-01")
-            setPendingData(dataPending);
-            //get api is not working
-            const { dataRejected } = await axios.get(hostURL + "Employee/GetRejectedStaffLeavesByStaffID?ID=" +staffID + "TypeID=1&Sdate=2022-02-01&Edate=2099-02-01")
-            setRejectedData(dataRejected);
-
-
-        }
-        getData();
+        getPendingData();
+        getApprovedData();
+        getRejectedData();
     }, [])
 
     const events = [
@@ -137,60 +147,62 @@ function LeaveListDashboard() {
 
     return (
 
-        <div class="col-md-12">
-            <div class="row">
-                <div class="col-md-7">
+        <div className="col-md-12">
+            <div className="row">
+                <div className="col-md-7">
                     <h3>Get Api is not Working for Approval Reject and Pending</h3>
                     <Link className="Heading " href="/Requests/leavelistdashboard"><u> My Leave Details</u></Link>
 
-                    <Link href="/Requests/hrleaverequest" class="Heading mx-5" ><u>All Staff Leave Details</u></Link>
+                    <Link href="/Requests/hrleaverequest" className="Heading mx-5" ><u>All Staff Leave Details</u></Link>
 
 
                 </div>
-                <div class="col-md-4"><a class="leavecol">Leave Balance</a></div>
+                <div className="col-md-4"><a className="leavecol">Leave Balance</a></div>
             </div>
             <br />
 
-            <div class="row FilterClass ">
-                <div class="col-lg-4">
-                    <div class="card shadow p-4">
-                        <div class="row">
-                            <div class="col-lg-6">
+            <div className="row FilterClass ">
+                <div className="col-lg-4">
+                    <div className="card shadow p-4">
+                        <div className="row">
+                            <div className="col-lg-6">
                                 <p>START DATE:</p>
-                                <input id="date" name="date" type="date" onkeydown="return false" placeholder="Duration" class="form-control " />
+                                <input id="date" name="date" type="date"  placeholder="Duration" className="form-control " />
                             </div>
-                            <div class="col-lg-6">
+                            <div className="col-lg-6">
                                 <p>END DATE:</p>
-                                <input id="date" name="date" type="date" placeholder="Duration" onkeydown="return false" class="form-control " />
+                                <input id="date" name="date" type="date" placeholder="Duration"  onKeyDown="return false" className="form-control " />
                             </div>
 
-                            <div class="col-lg-12 searchtxt mt-4"><br /><input type="search" placeholder="Search for date , Leave Type or Status" class="form-control " /></div>
+                            <div className="col-lg-12 searchtxt mt-4"><br /><input type="search" placeholder="Search for date , Leave Type or Status" className="form-control " /></div>
                         </div>
                     </div>
                     <br /><br />
                 </div>
-                <div class="col-lg-8 rw-bg">
-                    <div class="row  shadow p-3" style={{ marginBottom: "3px" }}>
-                        <div class="col-lg-4 ">
-                            <div class="card shadow">
-                                <p class="para"><b class="number"> </b> Sick Leave </p>
+                <div className="col-lg-8">
+                    <div className="card shadow">
+                        <div className="row" style={{ marginBottom: "3px" }}>
+                            <div className="col-lg-4 ">
+                                <div className="card shadow p-1">
+                                    <p className="para"><b className="number"> </b> Sick Leave </p>
+                                </div>
                             </div>
-                        </div>
-                        <div className='col-lg-4'>
+                            <div className='col-lg-4'>
+                                <div className="card shadow p-1">
+                                    <p className="para"><b className="number"></b> Vacation Leave</p>
 
-                        </div>
-                        <div class="col-lg-4 ">
-                            <div class="card shadow">
-                                <p class="para"><b class="number"></b> Vacation Leave</p>
-
-                            </div> <br /><br /><br /><br /><br /><br />
+                                </div>
+                            </div>
+                            <div className="col-lg-4 ">
+                                <br /><br /><br /><br /><br /><br /><br /><br />
+                            </div>
                         </div>
                     </div>
                 </div>
 
             </div>
-            <div class="row">
-                <div class="col-md-4">
+            <div className="row">
+                <div className="col-md-4">
                     <div className='row mt-3'>
                         <div className='col-lg-4 mx-5'>
                             <div className='btn-group'>
@@ -202,8 +214,8 @@ function LeaveListDashboard() {
                     </div>
                     <br />
                 </div>
-                <div class="col-md-4"></div>
-                <div class="col-md-4">
+                <div className="col-md-4"></div>
+                <div className="col-md-4">
                     <Link href="/Requests/Applyleave/new"><button className="submit-button m" tabindex="0"> Apply Leave</button>
                     </Link>
                 </div>
@@ -259,12 +271,8 @@ function LeaveListDashboard() {
                                 <tr>
                                     <th>From Date</th>
                                     <th>To Date</th>
-                                    <th>Leave Type</th>
                                     <th>Leave Reason</th>
-                                    <th>Leave Days Count</th>
-                                    <th>Attachment</th>
-                                    <th>Stage & Status</th>
-                                    <th>Action</th>
+                                    <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -272,10 +280,9 @@ function LeaveListDashboard() {
                                     pendingdata.map((data) => {
                                         return (
                                             <tr key={data.id}>
-                                                <td>{data.Date}</td>
-                                                <td>{data.StartTime}</td>
-                                                <td>{data.EndTime}</td>
-                                                <td>{data.Comments}</td>
+                                                <td>{data.sDateOfLeave}</td>
+                                                <td>{data.eDateOfLeave}</td>
+                                                <td>{data.leaveReason}</td>
                                                 <td>{data.status}</td>
                                             </tr>
                                         );
@@ -290,11 +297,8 @@ function LeaveListDashboard() {
                                 <tr>
                                     <th>From Date</th>
                                     <th>To Date</th>
-                                    <th>Leave Type</th>
                                     <th>Leave Reason</th>
-                                    <th>Leave Days Count</th>
-                                    <th>Attachment</th>
-                                    <th>Stage & Status</th>
+                                    <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -302,10 +306,9 @@ function LeaveListDashboard() {
                                     approveddata.map((data) => {
                                         return (
                                             <tr key={data.id}>
-                                                <td>{data.Date}</td>
-                                                <td>{data.StartTime}</td>
-                                                <td>{data.EndTime}</td>
-                                                <td>{data.Comments}</td>
+                                                <td>{data.sDateOfLeave}</td>
+                                                <td>{data.eDateOfLeave}</td>
+                                                <td>{data.leaveReason}</td>
                                                 <td>{data.status}</td>
                                             </tr>
                                         );
@@ -320,11 +323,8 @@ function LeaveListDashboard() {
                                 <tr>
                                     <th>From Date</th>
                                     <th>To Date</th>
-                                    <th>Leave Type</th>
                                     <th>Leave Reason</th>
-                                    <th>Leave Days Count</th>
-                                    <th>Attachment</th>
-                                    <th>Stage & Status</th>
+                                    <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -332,10 +332,9 @@ function LeaveListDashboard() {
                                     rejecteddata.map((data) => {
                                         return (
                                             <tr key={data.id}>
-                                                <td>{data.Date}</td>
-                                                <td>{data.StartTime}</td>
-                                                <td>{data.EndTime}</td>
-                                                <td>{data.Comments}</td>
+                                                <td>{data.sDateOfLeave}</td>
+                                                <td>{data.eDateOfLeave}</td>
+                                                <td>{data.leaveReason}</td>
                                                 <td>{data.status}</td>
                                             </tr>
                                         );

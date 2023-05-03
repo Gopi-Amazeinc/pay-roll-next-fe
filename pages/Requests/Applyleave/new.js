@@ -73,22 +73,26 @@ const ApplyLeave = () => {
                             <input type="date" className="form-control" {...register("EDateOfLeave", { required: true })} />
                         </div>
                         <div className="col-lg-2">
-                            <label htmlFor="">Covering </label>
-                            <input type="text" className="form-control" placeholder="Covering Staff" />
+                            <label>Staff ID</label>
+                            <input type="text" className="form-control" value={sessionStorage.getItem("userID")} disabled/>
                         </div>
                     </div>
                     <br />
                     <div className="row">
-                        <label htmlFor="">Attachment</label>
                         <div className="col-lg-3">
+                            <label htmlFor="">Attachment</label>
                             {/* <DropZone {...register("MedicalUrl", { required: true })} /> */}
                             <input type="text" className="form-control" {...register("MedicalUrl", { required: true })} />
+                        </div>
+                        <div className="col-lg-2">
+
+
                         </div>
                     </div>
                     <div className="row">
                         <div className="col-lg-8"></div>
                         <div className="col-lg-2">
-                            <Link href="/Requests/Leaverequest"><button type="submit" className="close-button">CANCEL</button></Link>
+                            <Link href="/Requests/Leaverequest"><button type="submit" className="submit-button">CANCEL</button></Link>
                         </div>
                         <div className="col-lg-2" style={{ float: "right" }}>
                             <button type="submit" className="submit-button">SAVE</button>

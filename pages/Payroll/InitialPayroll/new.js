@@ -119,7 +119,7 @@ const InitialPayrollForm = () => {
     return (
         <Layout>
             <div>
-                <h3 className='text-primary fs-5 mt-5'>Initial Payroll</h3>
+                <h3 className='Heading mt-5'>Initial Payroll</h3>
                 <div className="row card card1 mb-1">
                     <form>
                         <div className="row">
@@ -147,8 +147,9 @@ const InitialPayrollForm = () => {
                             <div className="col-lg-2 mt-3">
                                 <br />
                                 <Button
-                                    color="primary"
+                                    style={{ background: "#3247d5" }}
                                     type="button"
+                                    className='fw-bold'
                                     id="collapseExample"
                                     onClick={() => {
                                         setCollapseOpen(!collapseOpen),
