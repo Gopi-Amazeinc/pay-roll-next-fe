@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import Image from "next/image";
 import dashboard from "./dashboard.module.css";
 import leaveIcon from "@/public/Images/leaveIcon.png";
@@ -13,6 +13,8 @@ import { Modal, ModalBody, ModalFooter } from 'reactstrap';
 import { BiEdit } from "react-icons/bi";
 import { RiArrowDropDownLine } from "react-icons/ri";
 
+import Swal from 'sweetalert2';
+import axios from 'axios';
 
 function Dashboard() {
   let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
@@ -28,6 +30,16 @@ function Dashboard() {
   const [punchintime, setPunchintime] = useState(false);
   const [actionType, setActionType] = useState("punchin");
   const [workType, setWorkType] = useState();
+  const [localIPAddress, setLocalIPAddress] = useState("");
+  useEffect(() => {
+    const getLocalIPAddress = async () => {
+      const response = await fetch("https://api.ipify.org/?format=json");
+      const data = await response.json();
+      setLocalIPAddress(data.ip);
+    };
+
+    getLocalIPAddress();
+  }, []);
 
   const modelopen = () => {
     setModalOpen(!modalOpen);
@@ -39,11 +51,41 @@ function Dashboard() {
     console.log(value)
     setWorkType(value);
   }
-  console.log(workType);
-
-  const handlePunchin = () => {
+  
+  // const handlePunchin = () => {
+  //   setModalOpen(!modalOpen);
+  // }
+  // TODO: Written By: Gopi -> Add code to punchhin user or staff
+  const handlePunchin = async () => {
+debugger
     setModalOpen(!modalOpen);
-  }
+    // if (punchintime != true) {
+    //   Swal.fire("Already Punched In for the day");
+    // } else (workType == undefined || workType == null) {
+    //   Swal.fire("Please Fill Work Type");
+    // }
+    
+      
+      const ipaddress = localIPAddress;
+      var options = { hour12: false };
+      var date = new Date();
+      var entity = {
+        UserID: sessionStorage.getItem("userID"),
+        SigninDate: date.toLocaleString("en-US", options),
+        SigninLocation: "Office",
+        StatusID: 1,
+        punchinip: ipaddress == undefined || null ? "101.120.111.222" : ipaddress,
+        ApprovalStatus: "Manager Pending HR Pending",
+        WorkType: parseInt(workType),
+      };
+      let res = await axios.post(hostURL + "HR/InsertAttendanceWeb", entity);
+      const punchinId = res.data || res;
+      if (punchinId) {
+        sessionStorage.setItem("PunchINid", punchinId);
+        Swal.fire("Punched In Successfully");
+      }
+    // }
+  };
 
 
 

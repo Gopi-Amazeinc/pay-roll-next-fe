@@ -23,7 +23,8 @@ export default Id;
 export async function getServerSideProps(context) {
     console.log(context);
     const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-    let response = await axios.get(hostURL + "HR/GetHolidaysByID?ID=" + context.params.id);
+    let response = await axios.get(hostURL + "HR/GetHolidaysByID?id=" + context.params.id);
     const data = response.data[0];
+    console.log(response)
     return { props: { data } }
 }

@@ -66,82 +66,79 @@ function GroupMasterForm({ editData }) {
 
     return (
         <Layout>
-            <div>
-                <br></br>
-                <p id={Styles.title}>Group Master</p>
-                <div className="container-fluid mt-4">
-                    <div className="row shadow-lg p-2 rounded-4 p-3 ">
+            <p className='Heading'>Group Master</p>
+            <div className="container">
+                <div className="card p-4 border-0 rounded-3 mt-3 mx-0">
+                    <div className="row ">
+                        <div className="col-lg-4" >
+                            <label id={Styles.label}>Name<span id={Styles.asterisk}>* </span></label>
+                        </div>
+                        <div className="col-lg-4" >
+                            <label id={Styles.label}>Description<span id={Styles.asterisk}>* </span></label>
+                        </div>
+                    </div>
+                    <form onSubmit={handleSubmit(onSubmit)}>
                         <div className="row ">
-                            <div className="col-lg-4" >
-                                <label id={Styles.label}>Name<span id={Styles.asterisk}>* </span></label>
+                            <div className="col-lg-4">
+                                <input
+                                    name="Short"
+                                    className="form-control"
+                                    type="text"
+                                    {...register("Short", { required: true })}
+                                    placeholder="Short Name"
+                                />
+                                <div>
+                                    {errors.Short && (
+                                        <span style={customStyles.errorMsg}>
+                                            Please enter name
+                                        </span>
+                                    )}
+                                </div>
                             </div>
-                            <div className="col-lg-4" >
-                                <label id={Styles.label}>Description<span id={Styles.asterisk}>* </span></label>
+                            <div className="col-lg-4">
+                                <textarea
+                                    name="Description"
+                                    className="form-control"
+                                    {...register("Description", { required: true })}
+                                    placeholder="Description"
+                                />
+                                <div>
+                                    {errors.Description && (
+                                        <span style={customStyles.errorMsg}>
+                                            Please enter description
+                                        </span>
+                                    )}
+                                </div>
                             </div>
                         </div>
-                        <form onSubmit={handleSubmit(onSubmit)}>
-                            <div className="row ">
-                                <div className="col-lg-4">
-                                    <input
-                                        name="Short"
-                                        className="form-control"
-                                        type="text"
-                                        {...register("Short", { required: true })}
-                                        placeholder="Short Name"
-                                    />
-                                    <div>
-                                        {errors.Short && (
-                                            <span style={customStyles.errorMsg}>
-                                                Please enter name
-                                            </span>
-                                        )}
-                                    </div>
-                                </div>
-                                <div className="col-lg-4">
-                                    <textarea
-                                        name="Description"
-                                        className="form-control"
-                                        {...register("Description", { required: true })}
-                                        placeholder="Description"
-                                    />
-                                    <div>
-                                        {errors.Description && (
-                                            <span style={customStyles.errorMsg}>
-                                                Please enter description
-                                            </span>
-                                        )}
-                                    </div>
-                                </div>
+                        <br></br>
+                        <div className="row ">
+                            <div className="col-lg-8"></div>
+                            <div className="col-lg-2">
+                                <Link href='/Masters/GroupMaster'><button
+                                    type="button"
+                                    className="AddButton"
+                                >
+                                    Close
+                                </button></Link>
                             </div>
-                            <br></br>
-                            <div className="row ">
-                                <div className="col-lg-6"></div>
-                                <div className="col-lg-6">
-                                    <Link href='/Masters/groupmaster'><button
-                                        type="button"
-                                        className="btn common-edit"
-                                        id={Styles.btn}
-                                    >
-                                        Close
-                                    </button></Link>
-                                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                    {actionType == "insert" && (
-                                        <button type="submit" className="btn" id={Styles.btn}>
-                                            Save
-                                        </button>
-                                    )}
-                                    {actionType == "update" && (
-                                        <button type="submit" className="btn" id={Styles.btn}>
-                                            Update
-                                        </button>
-                                    )}
-                                </div>
+                        
+                            <div className='col-lg-2'>
+                                {actionType == "insert" && (
+                                    <button type="submit" className="AddButton" >
+                                        Save
+                                    </button>
+                                )}
+                                {actionType == "update" && (
+                                    <button type="submit" className="AddButton" >
+                                        Update
+                                    </button>
+                                )}
                             </div>
-                        </form>
-                    </div>
+                        </div>
+                    </form>
                 </div>
             </div>
-
         </Layout>
     );
 }

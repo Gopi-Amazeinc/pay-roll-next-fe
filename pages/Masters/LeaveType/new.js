@@ -68,7 +68,7 @@ function LeaveTypeForm({ editData }) {
                         <div className="row">
                             <div className="col-lg-2">
 
-                                <h3 className="text-primary fs-5 mt-3 fw-bold">
+                                <h3 className="Heading">
                                     Leave Details
                                 </h3><p></p>
                             </div>
@@ -119,10 +119,10 @@ function LeaveTypeForm({ editData }) {
                                 <br />
                                 <br />
                                 <div className="row">
-                                    <div className="col-lg-7"></div>
+                                    <div className="col-lg-8"></div>
                                     <div className="col-lg-2">
-                                        <Link href="/Masters/subsectionmaster">
-                                            <button className={leaveform.button}>
+                                        <Link href="/Masters/LeaveType">
+                                            <button className="AddButton">
                                                 Cancel
                                             </button>
                                         </Link>
@@ -131,7 +131,7 @@ function LeaveTypeForm({ editData }) {
                                         {actionType == "insert" && (
                                             <button
                                                 type="submit"
-                                                className={leaveform.button}
+                                                className="AddButton"
                                             >
                                                 Submit
                                             </button>
@@ -139,7 +139,7 @@ function LeaveTypeForm({ editData }) {
                                         {actionType == "update" && (
                                             <button
                                                 type="submit"
-                                                className={leaveform.button}
+                                                className="AddButton"
                                             >
                                                 Update
                                             </button>
@@ -147,14 +147,10 @@ function LeaveTypeForm({ editData }) {
                                     </div>
                                 </div>
                             </div>
-
-
-
                         </form>
                     </div>
                 </div>
             </div>
-
         </Layout>
     )
 }

@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React, { useState } from 'react'
 import Layout from '../../../components/layout/layout';
 import Style from '../../../styles/m1excel.module.css';
 
@@ -69,6 +69,24 @@ function M1excel() {
               <div className='col-lg-4'></div>
               <div className='col-lg-4'>
                 <button className='EditDelteBTN'>convert to pdf</button>
+              </div>
+              <div class="col-lg-12">
+                <table id="downloadaplication" class="table table-bordered fonttxt">
+                  <thead >
+                    <tr class="newFont">
+                      <th >Pag-IBIG ID/RTN</th>
+                      <th >ACCOUNT NO. </th>
+                      <th >MEMBERSHIP PROGRAM</th>
+                      <th >LAST NAME</th>
+                      <th >FIRST NAME</th>
+                      <th >PERCOV</th>
+                      <th >EE SHARE</th>
+                      <th >ER SHARE</th>
+                      <th >REMARKS</th>
+                    </tr>
+
+                  </thead>
+                </table>
               </div>
             </div>
           )

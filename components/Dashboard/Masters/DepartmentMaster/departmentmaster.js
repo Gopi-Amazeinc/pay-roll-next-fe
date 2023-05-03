@@ -55,24 +55,19 @@ const DepartmentMasterDashboard = () => {
 
     return (
         <Layout>
-            <div>
-                <br></br> <p id={Styles.title}>Department Master</p>{" "}
-                <div className="container-fluid mt-4">
+            <div><p className="Heading">Department Master</p>{" "}
+                <div className="container mt-2">
                     <div className="row shadow-lg p-2 rounded-4 p-3 ">
                         <div className="col-lg-1">
                             <b>
                                 <p className="mt-2 text-center">
-                                    <>
-                                    </>
-                                    {/* <BiFilterAlt />  */}
+                                  
                                     Filter by:
                                 </p>
                             </b>
                         </div>
 
                         <div className="col-lg-5">
-                            {/* <h6>Pay Date</h6> */}
-                            {/* <ReactDatePicker   className=" mt-2 form-control"></ReactDatePicker> */}
                             <input
                                 type="search"
                                 className=" mt-2 form-control"
@@ -86,8 +81,7 @@ const DepartmentMasterDashboard = () => {
 
 
                             <Link href="/Masters/DepartmentMaster/new"><button
-                                className="btn btn-primary btn-sm shadow-lg"
-                                id={Styles.addNew}
+                                className="AddButton shadow"
                             >
                                 {/* <AiOutlinePlusCircle /> */}
                                 ADD new
@@ -97,8 +91,8 @@ const DepartmentMasterDashboard = () => {
                     </div>
                     <br />
                     <div className="row">
-                        <table className={Styles.commonTable}>
-                            <thead>
+                        <table className="table table-striped">
+                            <thead className="bg-info text-white">
                                 <tr>
                                     <th>Department Name</th>
                                     <th>Department Description</th>
@@ -116,12 +110,12 @@ const DepartmentMasterDashboard = () => {
 
                                                 <td>
                                                     <div className="row">
-                                                        <div className="col-lg-4">
-                                                            <Link href={`/Masters/DepartmentMaster/Edit/${data.id}`}>   <button id={Styles.actionBtn} >Edit</button></Link>
+                                                        <div className="col-lg-3">
+                                                            <Link href={`/Masters/DepartmentMaster/Edit/${data.id}`}>   <button className="edit-btn" >Edit</button></Link>
                                                         </div>
 
-                                                        <div className="col-lg-4">
-                                                            <button id={Styles.actionBtn} onClick={() => handleDelete(data.id)}>Delete</button>
+                                                        <div className="col-lg-3">
+                                                            <button className="edit-btn" onClick={() => handleDelete(data.id)}>Delete</button>
                                                         </div>
                                                     </div>
                                                 </td>

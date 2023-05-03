@@ -20,14 +20,6 @@ export default function BarangayMasterDash() {
     getbarangaymaster();
   }, []);
 
-  const getData = (data) => {
-    sessionStorage.setItem("id", data.id);
-  };
-
-  const clearData = () => {
-    sessionStorage.setItem("id", "");
-  };
-
   const handleDelete = async (id) => {
     try {
       // This API is used to delete the BarangayMaster data based on ID
@@ -45,9 +37,8 @@ export default function BarangayMasterDash() {
 
   return (
     <div className="container">
-      <br />
       <h5 className="Heading">Barangay Master</h5>
-      <div className="card shadow-lg p-4 rounded-3 mt-4">
+      <div className="card shadow p-3 rounded-3 mt-4 mx-0">
         <div className="row">
           <div className="col-lg-1">
             <p>Filter By</p>
@@ -56,17 +47,21 @@ export default function BarangayMasterDash() {
             <input
               type="text"
               placeholder="Search"
-              className="form-control form-control-sm"
+              className="form-control"
             />
           </div>
         </div>
       </div>
 
       <div className="row mt-3">
-        <div className="col-lg-9"></div>
+        <div className="col-lg-10">
+          <p className="Heading fs-6 mt-2">
+            SHOWING <span></span>RESULTS
+          </p>
+        </div>
         <div className="col-lg-2">
           <Link href="/Masters/BarangayMaster/new">
-            <button onClick={clearData.bind(this)} className=" submit-button">
+            <button className=" AddButton">
               {" "}
               ADD NEW{" "}
             </button>{" "}
@@ -96,7 +91,6 @@ export default function BarangayMasterDash() {
                   <td>
                     <Link href={`/Masters/BarangayMaster/Edit/${data.id}`}>
                       <button
-                        onClick={getData.bind(this, data)}
                         className="edit-btn"
                       >
                         Edit

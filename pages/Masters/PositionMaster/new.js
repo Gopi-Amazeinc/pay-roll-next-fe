@@ -20,6 +20,7 @@ const PositionMasterDetails = ({ editData }) => {
     function clearForm(positionMasterData = null) {
         debugger
         let details = {
+            
             "ID": positionMasterData ? positionMasterData.id : "",
             "Short": positionMasterData ? positionMasterData.short : "",
             "Description": positionMasterData ? positionMasterData.description : "",
@@ -137,16 +138,16 @@ const PositionMasterDetails = ({ editData }) => {
                                     </div>
                                     <br />
                                     <div className="row">
-                                        <div className="col-lg-7">
+                                        <div className="col-lg-8">
                                         </div>
                                         <div className="col-lg-2">
 
-                                            <Link href="/Masters/PositionMaster"> <button id={Styles.actionBtn} tabindex="0">CANCEL</button></Link>
+                                            <Link href="/Masters/PositionMaster"> <button className="AddButton">CANCEL</button></Link>
                                         </div>
                                         <div className="col-lg-2">
                                             {actionType == "insert" && (
 
-                                                <button type="submit" id={Styles.actionBtn} className="btn btn-primary">
+                                                <button type="submit" className="AddButton">
 
                                                     Save
 
@@ -156,7 +157,7 @@ const PositionMasterDetails = ({ editData }) => {
 
                                             {actionType == "update" && (
 
-                                                <button type="submit" id='AddButton' className="btn btn-primary">
+                                                <button type="submit" className="AddButton">
 
                                                     Update
 

@@ -20,16 +20,6 @@ function CityMasterDash() {
     getCityMaster();
   }, []);
 
-  const getCityMasterData = (data) => {
-    sessionStorage.setItem("id", data.id);
-    console.log(data.id);
-  };
-
-  const clearFormData = () => {
-    sessionStorage.setItem("id", "");
-  };
-
-
   // async function DeleteCityMaster(id) {
   //   debugger;
   //   try {
@@ -89,13 +79,13 @@ function CityMasterDash() {
         <div className="row">
           <div className="col-lg-6">
             <br />
-            <h3 className="text-primary fs-5 mt-3 fw-bold">City Master</h3>
+            <h3 className="Heading">City Master</h3>
           </div>
           <div className="col-lg-4"></div>
           <div className="col-lg-2"></div>
         </div>
         <br />
-        <div className={citymaster.card}>
+        <div className="card border-0 rounded-3 mx-0">
           <div className="row">
             <div className="col-lg-1">
               <p>Filter By</p>
@@ -126,13 +116,13 @@ function CityMasterDash() {
         <br />
         <div className="row">
           <div className="col-md-10">
-            <p className="text-primary fs-6 mt-3 fw-bold">
+            <p className="Heading fs-6 mt-2">
               SHOWING <span></span>RESULTS
             </p>
           </div>
           <div className="col-md-2">
             <Link href="/Masters/CityMaster/new">
-              <button className={citymaster.button} tabIndex="0" onClick={clearFormData.bind(this)}>
+              <button className="AddButton" tabIndex="0">
                 Add New
               </button>
             </Link>
@@ -144,7 +134,7 @@ function CityMasterDash() {
       <div className="alignForm"></div>
       <div className="row">
         <div className="col-md-12">
-          <table class="table table-striped table-hover mt-4">
+          <table class="table table-striped table-hover ">
             <thead className="bg-info text-white ">
               <tr>
                 <th>Country Name</th>
@@ -165,9 +155,9 @@ function CityMasterDash() {
                       <td>{data.description}</td>
                       <td>
                         <Link href={`/Masters/CityMaster/Edit/${data.id}`}>
-                          <button className="btn btn-primary" onClick={getCityMasterData.bind(this, data)}>Edit</button></Link>
+                          <button className="edit-btn">Edit</button></Link>
                         &nbsp;
-                        <button className="btn btn-primary" onClick={() => DeleteCityMaster(data.id)}>Delete{" "}</button>
+                        <button className="edit-btn" onClick={() => DeleteCityMaster(data.id)}>Delete{" "}</button>
                       </td>
                     </tr>
                   );
