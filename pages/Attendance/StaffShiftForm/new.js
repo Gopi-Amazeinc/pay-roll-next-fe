@@ -7,6 +7,8 @@ const New = () => {
     const [staffshift, setStaffShift] = useState([]);
     // const [selectedOption, setSelectedOption] = useState('');
     const { register, handleSubmit, watch, reset, formState } = useForm();
+    const { errors } = formState;
+
     const getShiftname = async () => {
         let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
         const res = await axios.get(hostURL + 'Master/GetShiftMaster')
@@ -38,15 +40,22 @@ const New = () => {
 
                             <div className="col-lg-2">
                                 <label htmlFor="">Start Date</label>
-                                <input type="date" name="" id="" className='form-control' />
+                                <input type="date" name="" id="" className='form-control' {...register("startDate", { required: true })} />
+                                {
+                                    errors.startDate && <p className='text-danger'> Start Date is Required</p>
+                                }
                             </div>
+
                             <div className="col-lg-2">
                                 <label htmlFor="">End Date</label>
-                                <input type="date" name="" id="" className='form-control' />
+                                <input type="date" name="" id="" className='form-control'  {...register("endDate", { required: true })} />
+                                {
+                                    errors.endDate && <p className='text-danger'> End Date is Required</p>
+                                }
                             </div>
                             <div className="col-lg-2">
                                 <label htmlFor="">ShiftName</label>
-                                <select name="" id="" className='form-select' onChange={getshiftTimings}>
+                                <select name="" id="" className='form-select' onChange={getshiftTimings}  {...register("shiftName", { required: true })}>
                                     < option >Select</option>
                                     {
                                         staffshift.map((data, index) => {
@@ -55,17 +64,25 @@ const New = () => {
                                             )
                                         })
                                     }
-
+                                    {
+                                        errors.shiftName && <p className='text-danger'> Shift Name is Required</p>
+                                    }
 
                                 </select>
                             </div>
                             <div className="col-lg-2">
                                 <label htmlFor="">Start Time</label>
-                                <input type="text" value={startTime} disabled className='form-control' />
+                                <input type="text" value={startTime} disabled className='form-control'  {...register("startTime", { required: true })} />
+                                {
+                                    errors.startTime && <p className='text-danger'> Start Time is Required</p>
+                                }
                             </div>
                             <div className="col-lg-2">
                                 <label htmlFor="">End Time</label>
-                                <input type="text" value={endTime} disabled className='form-control' />
+                                <input type="text" value={endTime} disabled className='form-control'   {...register("endTime", { required: true })} />
+                                {
+                                    errors.endTime && <p className='text-danger'> End Time is Required</p>
+                                }
                             </div>
                         </div>
                         <br />
