@@ -3,7 +3,7 @@ import React from 'react'
 import { useForm } from 'react-hook-form'
 import Link from "next/link"
 import axios from "axios"
-// import Styles from '../../styles/applyloans.module.css'
+import styles from "../../../styles/applyloans.module.css"
 
 const Applyloans = () => {
     const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
