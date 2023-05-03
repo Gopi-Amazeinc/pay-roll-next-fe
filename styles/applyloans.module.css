@@ -1,0 +1,18 @@
+.submitBtn {
+    color: white;
+    background-color: #3247d5;
+    padding: 3px 55px 3px 55px;
+    line-height: 15px;
+}
+
+.cancelBtn {
+    color: white;
+    background-color: #3247d5;
+    padding: 3px 55px 3px 55px;
+    line-height: 15px;
+    float: right;
+}
+
+.span {
+    color: red;
+}
