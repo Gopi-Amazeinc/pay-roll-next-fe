@@ -38,56 +38,56 @@ function LeaveTypeDashboard() {
     };
     return (
         <Layout>
-            <div>
-                <div class="row">
-                    <div class="col-lg-4">
-
-                        <h3 class="text-primary fs-5 mt-3 fw-bold">Leave Type </h3>
+            <div className="container">
+                <div className="row">
+                    <div className="col-lg-4">
+                        <h3 className=" Heading">Leave Type </h3>
                     </div>
-                    <div class="col-lg-4"></div>
-                    <div class="col-lg-2"></div>
+                    <div className="col-lg-4"></div>
+                    <div className="col-lg-2"></div>
                 </div>
                 <br />
-                <div class={leavetypeStyles.card}>
+                <div className={leavetypeStyles.card}>
                     <br></br>
-                    <div class="row">
-                        <div class="col-lg-1">
-                            <p class="filter">Filter By</p>
+                    <div className="row">
+                        <div className="col-lg-1">
+                            <p className="filter">Filter By</p>
                         </div>
-                        <div class="col-lg-5" style={{ marginLeft: "15px" }}>
+                        <div className="col-lg-5" style={{ marginLeft: "15px" }}>
                             <input
                                 type="text"
                                 placeholder="Search"
                                 id="term"
-                                class="form-control"
+                                className="form-control"
                             ></input>
                         </div>
-                        <div class="col-lg-3" style={{ textAlign: "center" }}></div>
+                        <div className="col-lg-3" style={{ textAlign: "center" }}></div>
                     </div>
                     <br></br>
                 </div>
                 <br></br>
-                <div class="row">
-                    <div class="col-md-10">
-                        <p class="text-primary fs-6 mt-3 fw-bold">
+                <div className="row">
+                    <div className="col-md-6">
+                        <p className="text-primary fs-6 mt-3 fw-bold">
                             SHOWING <span>{leaveTypeData.length} </span>RESULTS
                         </p>
                     </div>
-                    <div class="col-md-2">
+                    <div className="col-md-4"></div>
+                    <div className="col-md-1">
                         <Link href="/Masters/LeaveType/new">
-                            <button class="AddButton" tabindex="0">
+                            <button className="AddButton" tabindex="0">
                                 Add New
                             </button>
                         </Link>
                     </div>
                 </div>
                 <br></br>
-                <div class="row" style={{ marginLeft: "-99px" }}></div>
-                <div class="row">
-                    <div class="col-md-12">
-                        <div class="container-fluid">
-                            <table class="table table-striped table-hover mt-4">
-                                <thead class="bg-info text-white th">
+                <div className="row" style={{ marginLeft: "-99px" }}></div>
+                <div className="row">
+                    <div className="col-md-12">
+                        <div className="container-fluid">
+                            <table className="table table-striped table-hover mt-4">
+                                <thead className="bg-info text-white th">
                                     <tr>
                                         <th>Leave Type</th>
                                         <th>Description</th>
@@ -97,7 +97,7 @@ function LeaveTypeDashboard() {
                                 <tbody>
                                     {leaveTypeData.map((data, index) => {
                                         return (
-                                            <tr className="text-dark" key={index}>
+                                            <tr classNameName="text-dark" key={index}>
                                                 <td>{data.short}</td>
                                                 <td>{data.description}</td>
                                                 <td>
@@ -124,7 +124,7 @@ function LeaveTypeDashboard() {
                             </table>
                         </div>
                     </div>
-                    <div class="col-md-1"></div>
+                    <div className="col-md-1"></div>
                 </div>
             </div>
         </Layout>

@@ -44,7 +44,6 @@ const LoanMasterDash = () => {
   };
 
   const handelDelete = (id) => {
-    debugger;
     Swal.fire({
       title: "Are you sure want to delete ?",
       text: "",
@@ -84,7 +83,7 @@ const LoanMasterDash = () => {
       </div>
       <div className="row">
         <div className="col-lg-9">
-          <p className="text-primary fs-6 mt-3 fw-bold">
+          <p className="Heading fs-6 mt-3">
             SHOWING <span>{loanMaster.length} </span>RESULTS
           </p>
         </div>

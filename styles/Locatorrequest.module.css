@@ -1,35 +1,41 @@
 #table {
-    width: 90%;
-    justify-content: center;
-    margin-left: 20px;
-    font-size: 15px;
-    border-radius: 10px;
-    overflow: hidden;
-    margin-left: 50px;
+  width: 90%;
+  justify-content: center;
+  margin-left: 20px;
+  font-size: 15px;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-left: 50px;
 }
 
 #tr {
-    background-color: #02cfff;
+  background-color: #02cfff;
 }
 
 .btn {
-    background-color: #fff;
-    border-color: blue;
-    padding: 8px;
-    font-size: 15px;
+  background-color: #fff;
+  border-color: blue;
+  padding: 8px;
+  font-size: 15px;
 }
 
 .btn:hover {
-    background-color: #2E3C4E;
-    color: white;
+  background-color: #2e3c4e;
+  color: white;
 }
 
 .btn:first-child {
-    border-top-left-radius: 8px;
-    border-bottom-left-radius: 8px;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
 }
 
 .btn:last-child {
-    border-top-right-radius: 8px;
-    border-bottom-right-radius: 8px;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+.p {
+  font-size: 13px;
+  font-weight: 700;
+  color: #0c275a;
+  font-family: "Poppins", sans-serif;
 }

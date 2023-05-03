@@ -58,7 +58,7 @@ const Locatordashboard = () => {
                                                         data.statusID === 2 ? 'Manager Rejected' : ' '}</b>
                                             }
                                             </td>
-                                            <td><button className="btn btn-primary">Cancel</button></td>
+                                            <td><button className="editDeleteBtnTable">Cancel</button></td>
                                         </tr>
                                     )
                                 })
@@ -189,8 +189,8 @@ const Locatordashboard = () => {
                 </div>
             </div><br />
             <div className="row">
-                <div className="col-lg-8">
-                    <div className={Styles.flex}>
+                <div className="col-lg-9">
+                    <div className={Styles.flex}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         {tabsData.map((tab, idx) => {
                             return (
                                 <button key={idx} ref={(el) => (tabsRef.current[idx] = el)} className={Styles.btn} onClick={() => setActiveTabIndex(idx)} >
@@ -200,8 +200,8 @@ const Locatordashboard = () => {
                         })}
                     </div>
                 </div>
-                <div className="col-lg-4">
-                    <Link href="/Requests/Locatorrequest/new"><button className="btn btn-primary" >New Requests </button></Link>
+                <div className="col-lg-3">
+                    <Link href="/Requests/Locatorrequest/new"><button className="submit-button">New Requests </button></Link>
 
                 </div>
                 <div className="py-4">

@@ -40,13 +40,6 @@ function CountryMasterDash() {
         });
     }
 
-    const clearSession = async () => {
-        sessionStorage.setItem("countryID", "")
-    }
-    const edit = async (id) => {
-        sessionStorage.setItem("countryID", id);
-    }
-
 
 
 
@@ -82,9 +75,7 @@ function CountryMasterDash() {
                         <div className="col-lg-2">
                             <Link href="/Masters/CountryMaster/new">
                                 <button
-                                    className="btn btn-primary btn-sm  shadow-lg"
-                                    id={Styles.addNew}
-                                    onClick={clearSession}
+                                    className="AddButton"
                                 >
                                     {" "}
                                     <AiOutlinePlusCircle />
@@ -113,7 +104,6 @@ function CountryMasterDash() {
                                                 <Link href={`/Masters/CountryMaster/Edit/${data.id}`}>
                                                     <button
                                                         id={Styles.editbtn}
-                                                        onClick={edit.bind(this, data.id)}
                                                     >
                                                         Edit
                                                     </button>

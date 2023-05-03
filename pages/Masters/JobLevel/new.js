@@ -3,6 +3,7 @@ import { useForm } from "react-hook-form";
 import Layout from '../../../components/layout/layout';
 import axios from "axios";
 import Swal from "sweetalert2";
+import Link from "next/link";
 function LevelTypeForm({ editData }) {
 
     const { register, handleSubmit, reset, formState: { errors }, } = useForm();
@@ -73,8 +74,8 @@ function LevelTypeForm({ editData }) {
     return (
         <Layout>
             <div className="container">
-                <h3 className='text-primary fs-5 mt-3'>Job Level Type Details</h3>
-                <div className='card p-3 border-0 shadow-lg rounded-3 mt-4 mb-5'>
+                <h3 className='Heading'>Job Level Type Details</h3>
+                <div className='card p-4 border-0 rounded-3 mt-4 mx-0'>
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <div className="row ">
                             <div className="col-lg-4">
@@ -114,21 +115,23 @@ function LevelTypeForm({ editData }) {
                         <br></br>
                         <div className="row ">
                             <div className="col-lg-8"></div>
-                            <div className="col-lg-2 text-end">
-                                <button
-                                    type="button"
-                                    className="btn btn-primary AddButton" >
-                                    Close
-                                </button>
+                            <div className="col-lg-2 ">
+                                <Link href="/Masters/JobLevel">
+                                    <button
+                                        type="button"
+                                        className=" AddButton" >
+                                        Close
+                                    </button>
+                                </Link>
                             </div>
                             <div className="col-lg-2">
                                 {actionType == "insert" && (
-                                    <button type="submit" className="btn btn-primary AddButton" >
+                                    <button type="submit" className="AddButton" >
                                         Save
                                     </button>
                                 )}
                                 {actionType == "update" && (
-                                    <button type="submit" className="btn btn-primary AddButton" >
+                                    <button type="submit" className="AddButton" >
                                         Update
                                     </button>
                                 )}

@@ -41,8 +41,8 @@ function WorkLocationMasterDash() {
     return (
 
         <div>
-            <h3 className='text-primary fs-5 mt-3 Heading'>Worklocation Master</h3>
-            <div className='card p-3 border-0 shadow-lg rounded-3 mt-4'>
+            <h3 className=' Heading'>Worklocation Master</h3>
+            <div className='card p-3 border-0 shadow rounded-3 mt-3 mx-0'>
                 <div className='row'>
                     <div className='col-lg-1'>
                         <p>Filter By</p>
@@ -52,45 +52,44 @@ function WorkLocationMasterDash() {
                     </div>
                 </div>
             </div>
-            <div className='row mt-2'>
-                <div className='col-lg-10'></div>
+            <div className='row mt-3'>
+                <div className='col-lg-10'>
+                    <p className="Heading fs-6 mt-2">
+                        SHOWING <span></span>RESULTS
+                    </p>
+                </div>
                 <div className='col-lg-2 '>
-                    <Link href="/Masters/WorkLocationMaster/new" id='AddButton' className='btn btn-primary fw-bold AddButton'>Add New</Link>
+                    <Link href="/Masters/WorkLocationMaster/new"  ><button className='AddButton'>Add New</button></Link>
                 </div>
             </div>
-            <div className='row '>
-
-                <table className='table table-hover mt-4 ' >
-                    <thead className='bg-info text-white '>
-                        <tr className='tr'>
-                            <th >Short Name</th>
-                            <th >Description</th>
-                            <th >Action</th>
-                        </tr>
-                    </thead>
-                    <tbody >
-                        {
-                            workLocation.map((data, index) => {
-                                return (
-                                    <tr className="text-dark" key={index}>
-                                        <td>{data.short}</td>
-                                        <td>{data.description}</td>
-                                        <td>
-                                            <Link href={`/Masters/WorkLocationMaster/Edit/${data.id}`}>
-                                                <button className='edit-btn'>Edit</button>
-                                            </Link>&nbsp;&nbsp;&nbsp;&nbsp;
-                                            <button className='edit-btn' onClick={deleteWorkLocation.bind(this, data.id)}>Delete</button>
-                                        </td>
-                                    </tr>
-                                )
-                            })
-                        }
-
-                    </tbody>
-                </table>
-            </div>
+            <table className='table table-striped mt-4 mx-0' >
+                <thead className='bg-info text-white '>
+                    <tr>
+                        <th >Short Name</th>
+                        <th >Description</th>
+                        <th >Action</th>
+                    </tr>
+                </thead>
+                <tbody >
+                    {
+                        workLocation.map((data, index) => {
+                            return (
+                                <tr className="text-dark" key={index}>
+                                    <td>{data.short}</td>
+                                    <td>{data.description}</td>
+                                    <td>
+                                        <Link href={`/Masters/WorkLocationMaster/Edit/${data.id}`}>
+                                            <button className='edit-btn'>Edit</button>
+                                        </Link>&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <button className='edit-btn' onClick={deleteWorkLocation.bind(this, data.id)}>Delete</button>
+                                    </td>
+                                </tr>
+                            )
+                        })
+                    }
+                </tbody>
+            </table>
         </div>
-
     )
 }
 

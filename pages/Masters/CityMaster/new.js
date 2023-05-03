@@ -79,8 +79,8 @@ function CityMasterForm({ editData }) {
     return (
         <Layout>
             <div className="container">
-                <h3 className="text-primary fs-5 mt-3">City Details</h3>
-                <div className="card p-3 border-0 shadow-lg rounded-3 mt-4">
+                <h3 className="Heading fs-5">City Details</h3>
+                <div className="card p-3 border-0 shadow rounded-3 mt-4 mx-0">
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <div className="row">
                             <div className="col-lg-2">
@@ -155,26 +155,22 @@ function CityMasterForm({ editData }) {
                             </div>
                         </div>
 
-                        <div className="row mt-5">
+                        <div className="row mt-5 mx-0">
                             <div className="col-lg-8"></div>
-                            <div className="col-lg-2  text-end">
-                                <Link href="/Masters/citymasterdashboard">
+                            <div className="col-lg-2 ">
+                                <Link href="/Masters/CityMaster">
                                     {" "}
-                                    <button id="AddButton" className="btn btn-primary">
+                                    <button className="AddButton">
                                         Cancel
                                     </button>
                                 </Link>
                             </div>
+                            
                             <div className="col-lg-2 ">
-                                {/* <button id="AddButton" className="btn btn-primary">
-                  Submit
-                </button> */}
-
                                 {actionType == "insert" && (
                                     <button
                                         type="submit"
-                                        id="AddButton"
-                                        className="btn btn-primary"
+                                        className="AddButton"
                                     >
                                         Save
                                     </button>
@@ -182,8 +178,7 @@ function CityMasterForm({ editData }) {
                                 {actionType == "update" && (
                                     <button
                                         type="submit"
-                                        id="AddButton"
-                                        className="btn btn-primary"
+                                        className="AddButton"
                                     >
                                         Update
                                     </button>
