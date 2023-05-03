@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React, { useState } from 'react'
 import Layout from '../../../components/layout/layout';
 import Style from '../../../styles/pagibigmonthly.module.css';
 
@@ -65,6 +65,29 @@ function Pagibigmonthly() {
               <div className='col-lg-4'></div>
               <div className='col-lg-4'>
                 <button className='EditDelteBTN'>convert to pdf</button>
+              </div>
+              <div className="col-lg-12">
+                <table id="downloadaplication" class="table table-bordered fonttxt">
+                  <thead >
+                    <tr class="newFont">
+                      <th >LAST NAME</th>
+                      <th >FIRST NAME</th>
+                      <th >Pag-IBIG ID/RTN</th>
+                      <th >EE SHARE</th>
+                      <th >ER SHARE</th>
+                      <th >Total Contribution</th>
+                    </tr>
+
+                    <tr >
+                      <td ></td>
+                      <td ></td>
+                      <td class="leftmargin">Grand Total</td>
+                      <td class="leftmargin">0</td>
+                      <td class="leftmargin">0</td>
+                      <td class="leftmargin">0</td>
+                    </tr>
+                  </thead>
+                </table>
               </div>
             </div>
           )
