@@ -4,6 +4,12 @@ import Digilogo from "@/public/Images/DigiLogo.png";
 import Notification from "@/public/Images/notification.png";
 import HeaderStyles from "./header.module.css";
 import { FaCaretDown } from "react-icons/fa";
+import { AiOutlineSetting } from "react-icons/ai";
+import { FiLogOut } from "react-icons/fi";
+import { CgProfile } from "react-icons/cg";
+import Link from "next/link";
+
+
 
 const Header = ({ makelogout }) => {
   const [userName, setUserName] = useState();
@@ -14,13 +20,19 @@ const Header = ({ makelogout }) => {
   }, []);
 
   const [time, setTime] = useState(new Date());
+  const [hh, setHh] = useState("");
+  const [mm, setMm] = useState("");
+  const [ampm, setAmpm] = useState("");
+
 
   useEffect(() => {
-    const intervalID = setInterval(() => {
-      setTime(new Date());
-    }, 1000);
-    return () => clearInterval(intervalID);
-  }, []);
+    const temp = time.toLocaleString("en-US", { hour: "2-digit", minute: "numeric", hour12: true });
+    const temp1 = temp.split(":");
+    setHh(temp1[0]);
+    const temp2 = temp1[1].split(" ");
+    setMm(temp2[0]);
+    setAmpm(temp2[1]);
+  }, [time]);
 
   const formattedTime = time
     .toLocaleTimeString([], {
@@ -30,7 +42,6 @@ const Header = ({ makelogout }) => {
     })
     .toUpperCase();
 
-  const dropdownclick = () => {};
 
   return (
     <div className="header">
@@ -45,30 +56,26 @@ const Header = ({ makelogout }) => {
           />
         </div>
         <div className="col-lg-6 mt-3 text-white ">
-          <h3>{formattedTime}</h3>
+
+          <p><span className={HeaderStyles.time}>{hh}:</span > <span className={HeaderStyles.time}>{mm}:</span ><span className={HeaderStyles.time} >{ampm}</span></p>
         </div>
-        <div className="col-lg-1 text-white text-end">
-          <Image
-            className="img-fluid mt-3"
-            src={Notification}
-            alt="notificatons"
-            width={35}
-            height={35}
-          />
+        <div className="col-lg-1 text-white ">
+          
         </div>
         <div className="col-lg-1 mt-3 text-white">
-          <h4 onClick={makelogout}>logout </h4>
+          {/* <h4 onClick={makelogout}>logout </h4> */}
         </div>
         <div className="col-lg-2  mt-3 text-white">
-          <div className="dropdown">
-            <h4>
-              Hi {userName} <FaCaretDown style={{ cursor: "pointer" }} />
-              {/* <div class="dropdown-content">
-                <a href="#">Option 1</a>
-                <a href="#">Option 2</a>
-                <a href="#">Option 3</a>
-                </div>  */}
-            </h4>
+        <Image className={HeaderStyles.notification} src={Notification} alt="notificatons" width={35} height={35} />
+          <div >
+            <div className={HeaderStyles.dropdown} style={{ float: "left" }}>
+              <button className={HeaderStyles.logout} >  Hi {userName} <FaCaretDown style={{ cursor: "pointer" }} /> </button>
+              <div className={HeaderStyles.dropdowncontent} style={{ left: "0" }}>
+                <Link className={HeaderStyles.profile} href="/Staff/AddStaff"> <h6> <CgProfile /> &nbsp; &nbsp; My Profile</h6> </Link>
+                <h6 style={{ whiteSpace: "nowrap" }}> <AiOutlineSetting /> &nbsp; &nbsp; Account Setting</h6>
+                <h6 onClick={makelogout} style={{ color: "red" }} ><FiLogOut /> &nbsp; &nbsp; logout</h6>
+              </div>
+            </div>
           </div>
         </div>
       </div>
