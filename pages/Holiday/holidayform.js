@@ -109,7 +109,7 @@ function Holidayform({ editData }) {
                   <p>
                     Attachment<i className="text-danger">*</i>
                   </p>
-                  <input type="text" className="form-control" placeholder="Attachment"{...register('Attachment', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
+                  <input type="text" className="form-control" placeholder="Attachment"{...register('Attachment', { required: "Please add a Short Name", pattern: { message: "Please enter a valid Short Name" } })} />
                   {errors.Name && <p className="error-message" style={{ color: "red" }}>{errors.Name.message}</p>}
                 </div>
                 <div className="col-lg-4">

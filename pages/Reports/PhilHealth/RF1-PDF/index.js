@@ -3,6 +3,12 @@ import React, { useEffect, useState } from "react";
 import Layout from '@/components/layout/layout.js';
 
 function RF1PDF() {
+    let [tableState, setState] = useState(false)
+
+    const toggleTable = () => {
+        setState(!tableState)
+    }
+
     return (
         <Layout>
             <div>
@@ -83,7 +89,7 @@ function RF1PDF() {
                                     <div className="row">
                                         <div className="col-lg-6"></div>
                                         <div className="col-lg-5">
-                                            <button className="submit-button mt-5" tabindex="0">GENERATE</button>
+                                            <button onClick={toggleTable} className='EditDelteBTN'>Generate</button>
                                         </div>
                                     </div>
                                 </div>
@@ -91,6 +97,16 @@ function RF1PDF() {
                         </div>
                     </div>
                 </div>
+                {
+                    tableState && (
+                        <div className='row mt-4'>
+                            <div className='col-lg-4'></div>
+                            <div className='col-lg-4'></div>
+                            <div className='col-lg-4'>
+                                <button className='EditDelteBTN'>export to excel</button>
+                            </div>
+                        </div>
+                    )}
             </div>
         </Layout>
     );

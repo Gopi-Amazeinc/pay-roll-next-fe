@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Link from 'next/link';
-import Styles from '../../../Styles/philhealthadd.module.css'
+import Styles from '../../../styles/philhealthadd.module.css'
 import Swal from 'sweetalert2';
 import Layout from '@/components/layout/layout'
 

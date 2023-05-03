@@ -4,6 +4,13 @@ import React, { useEffect, useState } from 'react'
 import Layout from '@/components/layout/layout.js';
 
 function RFreport() {
+
+    let [tableState, setState] = useState(false)
+
+    const toggleTable = () => {
+        setState(!tableState)
+    }
+
     return (
         <Layout>
             <div >
@@ -55,7 +62,7 @@ function RFreport() {
                                 <div className="col-lg-1"></div>
                                 <div className="col-lg-4">
 
-                                    <button className="submit-button mt-5" tabindex="0">GENERATE</button>
+                                    <button onClick={toggleTable} className='edit-btn'>fetch</button>
 
                                 </div>
                             </div>
@@ -71,7 +78,32 @@ function RFreport() {
                         </div>
                     </div>
                 </div>
+                {
+                    tableState && (
+                        <div className='row mt-4'>
+                            <div className='col-lg-4'></div>
+                            <div className='col-lg-4'></div>
+                            <div className='col-lg-4'>
+                                <button className='EditDelteBTN'>export to excel</button>
+                            </div>
 
+
+                            <table className='table table-striped mt-5'>
+                                <thead className='bg-info text-white'>
+                                    <tr>
+                                        <th>Last Name</th>
+                                        <th>First Name</th>
+                                        <th>PhilHealth No</th>
+                                        <th>Actual Salary</th>
+                                        <th>Base Monthly salary</th>
+                                        <th>Birth Date</th>
+                                        <th>Employee Share</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </div>
+                    )
+                }
             </div>
         </Layout>
     )

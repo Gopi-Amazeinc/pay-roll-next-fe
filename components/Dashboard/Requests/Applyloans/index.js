@@ -1,12 +1,13 @@
 import { useState, useEffect } from "react"
 import loan from "../../../../pages/Requests/Applyloans/applyloans.module.css"
 import Link from "next/link"
-
+import axios from "axios"
+import Swal from "sweetalert2";
 const ApplyloansDashboard = () => {
     const [newrequest, setNewRequest] = useState(false)
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [approved, setApproved] = useState(false)
-    const [newDashboard, setNewDashboardData] = useState([]);
+    const [Applyloans, setApplyLoans] = useState([]);
     const [newApproved, setnewApprovedData] = useState([]);
     const toggleNewRequest = () => {
         setNewRequest(true)
@@ -18,6 +19,64 @@ const ApplyloansDashboard = () => {
         setApproved(true)
         setNewRequest(false)
 
+    }
+    const getApplyLoans = async () => {
+        let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+        let res = await axios.get(hostURL + "Payroll/GetEmployeeLoans"); //This Api is useed for Get the Dashborad data band Master
+        setApplyLoans(res.data);
+    };
+
+    useEffect(() => {
+        getApplyLoans();
+    }, [1]);
+
+    const getnewApprovedData = async () => {
+        let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+        let res = await axios.get(hostURL + "Payroll/GetEmployeeLoans"); //This Api is useed for Get the Dashborad data band Master
+        setnewApprovedData(res.data);
+    };
+
+    useEffect(() => {
+        getnewApprovedData();
+    }, [1]);
+
+    const getApplyLoansData = (data) => {
+        sessionStorage.setItem("id", data.id);
+        console.log(data.id);
+    };
+
+    const clearFormData = () => {
+        sessionStorage.setItem("id", "");
+    };
+
+    async function DeleteApplyLoans(id) {
+        debugger;
+        try {
+            let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+            Swal.fire({
+                title: "Are you sure?",
+                text: "You won't be able to revert this!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Yes, delete it!",
+            }).then((res) => {
+                if (res) {
+                    axios.get(hostURL + `Payroll/DeleteEmployeeLoans?id=${id}`);  // this is for deleting the data for dashborad using delete api call         
+                }
+                getApplyLoans();
+            });
+            // const res = await axios.get(
+            //   hostURL + `Master/DeleteBrandMaster?id=${id}`
+            // );
+            // console.log(res.data);
+            // alert("Data Deleted Sucessfully");
+            // getBrandMaster();
+        } catch (error) {
+            console.error(error);
+            alert("Failed to delete data");
+        }
     }
     return (
         <>
@@ -50,8 +109,8 @@ const ApplyloansDashboard = () => {
                 <div className="col-lg-9"></div>
                 <div className="col-lg-3">
                     <Link href="/Requests/Applyloans/new">
-                    <button className={loan.addButton}>Add New</button>
-                    </Link> 
+                        <button className={loan.addButton}>Add New</button>
+                    </Link>
                 </div>
             </div>
 
@@ -61,9 +120,14 @@ const ApplyloansDashboard = () => {
                         <thead className='bg-info text-white'>
                             <tr>
                                 <th>Date</th>
-                                <th>Start Time</th>
-                                <th>End Time</th>
+                                <th>Loan Approved Date</th>
+                                <th>Loan Start Date</th>
+                                <th>Loan End Date</th>
+                                <th>Loan Type</th>
+                                <th>Loan Amount</th>
+                                <th>Tenure</th>
                                 <th>Comments</th>
+                                <th>HR Comments</th>
                                 <th>Status</th>
                                 <th>Action</th>
                             </tr>
@@ -71,16 +135,60 @@ const ApplyloansDashboard = () => {
 
                         <tbody>
                             {
-                                newDashboard.map((data) => {
+                                Applyloans.map((data) => {
                                     return (
                                         <tr key={data.id}>
-                                            <td>{data.date}</td>
-                                            <td>{data.actuval_StartTime}</td>
-                                            <td>{data.actuval_EndTime}</td>
-                                            <td>{data.comments}</td>
-                                            <td>{data.status}</td>
+                                            <td>{data.modifiedDate}</td>
                                             <td>
-                                                <button onClick={Delete.bind(this, data.id)} className='edit-btn'>Cancel</button>
+                                                {
+                                                    data.approvedDate && (
+                                                        data.approvedDate
+                                                    )
+                                                }
+                                                {
+                                                    !data.approvedDate && (
+                                                        "Yet to approve"
+                                                    )
+                                                }
+                                            </td>
+                                            <td>
+                                                {
+                                                    data.loanstartdate && (
+                                                        data.loanstartdate
+                                                    )
+                                                }
+                                                {
+                                                    !data.loanstartdate && (
+                                                        "Yet to approve"
+                                                    )
+                                                }
+
+                                            </td>
+                                            <td>{
+                                                data.loanenddate && (
+                                                    data.loanenddate
+                                                )}
+                                                {
+                                                    !data.loanenddate && (
+                                                        "Yet to approve"
+                                                    )
+                                                }
+                                            </td>
+
+                                            <td>{data.loanType}</td>
+                                            <td>{data.loanAmount}</td>
+                                            <td>{data.period}</td>
+                                            <td>{data.comments}</td>
+                                            <td>{data.managerComments}</td>
+                                            <td>{data.status}</td>
+
+                                            <td>
+                                                <button
+                                                    className="btn btn-primary"
+                                                    onClick={() => DeleteApplyLoans(data.id)}
+                                                >
+                                                    Delete{" "}
+                                                </button>
                                             </td>
                                         </tr>
                                     )
@@ -96,11 +204,18 @@ const ApplyloansDashboard = () => {
                         <thead className='bg-info text-white'>
                             <tr>
                                 <th>Date</th>
-                                <th>Start Time</th>
-                                <th>End Time</th>
-                                {/* <th>Comments</th>
+                                <th>Loan Approved Date</th>
+                                <th>Loan Start Date</th>
+                                <th>Loan End Date</th>
+                                <th>Loan Type</th>
+                                <th>Loan Amount</th>
+                                <th>Comments</th>
+                                <th>Manager Comments</th>
+                                <th>HR Comments</th>
+                                <th>Finance Comments</th>
+                                <th>Payroll Comments</th>
                                 <th>Status</th>
-                                <th>Action</th> */}
+
                             </tr>
                         </thead>
 
@@ -109,9 +224,18 @@ const ApplyloansDashboard = () => {
                                 newApproved.map((data) => {
                                     return (
                                         <tr key={data.id}>
-                                            <td>{data.date}</td>
-                                            <td>{data.actuval_StartTime}</td>
-                                            <td>{data.actuval_EndTime}</td>
+                                            <td>{data.modifiedDate}</td>
+                                            <td>{data.approvedDate}</td>
+                                            <td>{data.loanstartdate}</td>
+                                            <td>{data.loanenddate}</td>
+                                            <td>{data.loanType}</td>
+                                            <td>{data.loanAmount}</td>
+                                            <td>{data.comments}</td>
+                                            <td>{data.managerComments}</td>
+                                            <td>{data.hRComments}</td>
+                                            <td>{data.financeComments}</td>
+                                            <td>{data.payrollComments}</td>
+                                            <td>{data.status}</td>
                                             {/* <td>{data.comments}</td>
                                             <td>{data.status}</td>
                                             <td>
