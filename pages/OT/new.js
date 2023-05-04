@@ -6,6 +6,7 @@ import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import Styles from "@../../../pages/OT/Ot.module.css"
+import Link from 'next/link';
 const OverTimeDetails = () => {
   const { register, handleSubmit, watch, reset, formState } = useForm();
   const [dashboardData, setDashboardData] = useState([]);
@@ -118,7 +119,9 @@ const OverTimeDetails = () => {
             <div className='row mt-4'>
               <div className='col-lg-6'></div>
               <div className='col-lg-2'>
-                <button className='submit-button' style={{ float: "right" }}>Cancel</button>
+                <Link href="/OT">
+                  <button className='submit-button' style={{ float: "right" }}>Cancel</button>
+                </Link>
               </div>
               <div className='col-lg-2'>
                 <button className='submit-button' onClick={insertDetails}>Submit</button>
@@ -167,150 +170,150 @@ const OverTimeDetails = () => {
                       <>
                         <td key={index}>
                           <tr>
-                            <td>Normal OT</td>24
+                            <td>Normal OT</td>
                           </tr>
                           <tr>
-                            <td>Night OT </td>23
+                            <td>Night OT </td>
                           </tr>
                           <tr>
-                            <td> Excess Night OT </td>22
+                            <td> Excess Night OT </td>
                           </tr>
                           <tr>
-                            <td> Excess Normal OT </td>21
+                            <td> Excess Normal OT </td>
                           </tr>
                           <tr>
-                            <td>Rest Normal OT </td>20
+                            <td>Rest Normal OT </td>
                           </tr>
                           <tr>
-                            <td> Rest Night OT </td>19
+                            <td> Rest Night OT </td>
                           </tr>
                           <tr>
-                            <td> Excess Rest Normal OT </td>18
+                            <td> Excess Rest Normal OT </td>
                           </tr>
                           <tr>
-                            <td> Rest Excess Night OT </td>17
+                            <td> Rest Excess Night OT </td>
                           </tr>
                           <tr>
-                            <td> Legal Night OT </td>16
+                            <td> Legal Night OT </td>
                           </tr>
                           <tr>
-                            <td> Legal Normal OT </td>15
+                            <td> Legal Normal OT </td>
                           </tr>
                           <tr>
-                            <td> Legal Excess Normal OT </td>13
+                            <td> Legal Excess Normal OT </td>
                           </tr>
                           <tr>
-                            <td>Legal Excess Night OT </td>12
+                            <td>Legal Excess Night OT </td>
                           </tr>
                           <tr>
-                            <td> Special Night OT </td>11
+                            <td> Special Night OT </td>
                           </tr>
                           <tr>
-                            <td> Special Normal OT </td>10
+                            <td> Special Normal OT </td>
                           </tr>
                           <tr>
-                            <td> Special Excess Normal OT </td>9
+                            <td> Special Excess Normal OT </td>
                           </tr>
                           <tr>
-                            <td> Special Excess Night OT </td>8
+                            <td> Special Excess Night OT </td>
                           </tr>
                           <tr>
-                            <td> Special Rest Night OT </td>8
+                            <td> Special Rest Night OT </td>
                           </tr>
                           <tr>
                             <td>Special Rest Normal OT </td>7
                           </tr>
                           <tr>
-                            <td> Special Rest Excess Normal OT </td>6
+                            <td> Special Rest Excess Normal OT </td>
                           </tr>
                           <tr>
-                            <td> Special Rest Excess Night OT </td>5
+                            <td> Special Rest Excess Night OT </td>
                           </tr>
                           <tr>
-                            <td> Legal Rest Night OT </td>4
+                            <td> Legal Rest Night OT </td>
                           </tr>
                           <tr>
-                            <td> Legal Rest Normal OT </td>3
+                            <td> Legal Rest Normal OT </td>
                           </tr>
                           <tr>
-                            <td> Legal Excess Rest Normal OT </td>2
+                            <td> Legal Excess Rest Normal OT </td>
                           </tr>
                           <tr>
-                            <td> Legal Excess Rest Night OT </td>1
+                            <td> Legal Excess Rest Night OT </td>
                           </tr>
                         </td>
                         <td key={index}>
                           <tr>
-                            <td>{data.normalOT}</td>1
+                            <td>{data.normalOT}</td>
                           </tr>
                           <tr>
-                            <td>{data.nightOt}</td>2
+                            <td>{data.nightOt}</td>
                           </tr>
                           <tr>
-                            <td>{data.exccessNightOt}</td>3
+                            <td>{data.exccessNightOt}</td>
                           </tr>
                           <tr>
-                            <td>{data.exccessNormalOt}</td>4
+                            <td>{data.exccessNormalOt}</td>
                           </tr>
                           <tr>
-                            <td>{data.restNormalOT}</td>5
+                            <td>{data.restNormalOT}</td>
                           </tr>
                           <tr>
-                            <td>{data.restNightOt}</td>6
+                            <td>{data.restNightOt}</td>
                           </tr>
                           <tr>
-                            <td>{data.exccessRestNormalOt}</td>7
+                            <td>{data.exccessRestNormalOt}</td>
                           </tr>
                           <tr>
-                            <td>{data.restExccessNightOt}</td>9
+                            <td>{data.restExccessNightOt}</td>
                           </tr>
                           <tr>
-                            <td>{data.legalNightOt}</td>10
+                            <td>{data.legalNightOt}</td>
                           </tr>
                           <tr>
-                            <td>{data.legalNormalOT}</td>11
+                            <td>{data.legalNormalOT}</td>
                           </tr>
                           <tr>
-                            <td>{data.legalExccessNormalOt}</td>13
+                            <td>{data.legalExccessNormalOt}</td>
                           </tr>
                           <tr>
-                            <td>{data.legalExccessNightOt}</td>13
+                            <td>{data.legalExccessNightOt}</td>
                           </tr>
                           <tr>
-                            <td>{data.specialNightOt}</td>14
+                            <td>{data.specialNightOt}</td>
                           </tr>
                           <tr>
-                            <td>{data.specialNormalOT}</td>14
+                            <td>{data.specialNormalOT}</td>
                           </tr>
                           <tr>
-                            <td>{data.specialExccessNormalOt}</td>15
+                            <td>{data.specialExccessNormalOt}</td>
                           </tr>
                           <tr>
-                            <td>{data.specialExccessNightOt}</td>16
+                            <td>{data.specialExccessNightOt}</td>
                           </tr>
                           <tr>
-                            <td>{data.specialRestNightOt}</td>17
+                            <td>{data.specialRestNightOt}</td>
                           </tr>
                           <tr>
-                            <td>{data.specialRestNormalOT}</td>18
+                            <td>{data.specialRestNormalOT}</td>
                           </tr>
                           <tr>
-                            <td>{data.specialRestExccessNormalOt}</td>19
+                            <td>{data.specialRestExccessNormalOt}</td>
                           </tr>
                           <tr>
-                            <td>{data.specialRestExccessNightOt}</td>20
+                            <td>{data.specialRestExccessNightOt}</td>
                           </tr>
                           <tr>
-                            <td>{data.legalRestNightOt}</td>21
+                            <td>{data.legalRestNightOt}</td>
                           </tr>
                           <tr>
-                            <td>{data.legalRestNormalOT}</td>22
+                            <td>{data.legalRestNormalOT}</td>
                           </tr>
                           <tr>
-                            <td>{data.legalExccessRestNormalOt}</td>23
+                            <td>{data.legalExccessRestNormalOt}</td>
                           </tr>
                           <tr>
-                            <td>{data.legalExccessRestNightOt}</td>24
+                            <td>{data.legalExccessRestNightOt}</td>
                           </tr>
                         </td>
                       </>

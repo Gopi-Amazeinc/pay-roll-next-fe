@@ -1,8 +1,13 @@
 import React from 'react'
-
-const Index=()=> {
+import Layout from '@/components/layout/layout'
+import OvertimeDashboard from '@/components/Dashboard/Requests/OverTimeDetails'
+const Index = () => {
   return (
-    <div>Index</div>
+    <div>
+      <Layout>
+        <OvertimeDashboard></OvertimeDashboard>
+      </Layout>
+    </div>
   )
 }
 
