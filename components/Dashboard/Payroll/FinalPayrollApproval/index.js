@@ -20,12 +20,14 @@ function FinalPayrollApproval() {
     }
     const [pendingdata, setPendingData] = useState([])
     useEffect(() => {
-        async function getData() {
-            const { dataPending } = await axios.get(hostURL + "Payroll/GetEmployeeSalary")
-            setPendingData(dataPending);
-        }
         getData();
     }, [])
+    const getData = async () => {
+        const res = await axios.get(hostURL + "Payroll/GetEmployeeSalary")
+        setPendingData(res.data);
+        console.log("Pending", res.data)
+    }
+
     return (
         <div>
             <div className='container-fluid'>
@@ -38,7 +40,7 @@ function FinalPayrollApproval() {
                             <div className="col-lg-4"></div>
                             <div className="col-lg-4"></div>
                             <div className="col-lg-3">
-                                <br /><Link style={{ textDecoration: "none" }} href="/Payroll/runpayroll"><button className='newPayrollBtn' style={{ width: "80%" }}>New Payroll</button></Link>
+                                <br /><Link style={{ textDecoration: "none" }} href="/Payroll/RunFinalPayroll"><button className='newPayrollBtn' style={{ width: "80%" }}>New Payroll</button></Link>
                             </div>
                         </div>
                         <br />
