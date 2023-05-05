@@ -1668,7 +1668,7 @@ const Sidebar = ({ children, applyPageName }) => {
         </Link>
         <hr></hr>
         <Link
-          href="/SupportTickets/supportticketdashboard"
+          href="/SupportTickets"
           className={styles.sidemenulink}
         >
           <button
