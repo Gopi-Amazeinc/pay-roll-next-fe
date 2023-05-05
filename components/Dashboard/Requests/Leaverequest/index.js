@@ -167,11 +167,11 @@ function LeaveListDashboard() {
                         <div className="row">
                             <div className="col-lg-6">
                                 <p>START DATE:</p>
-                                <input id="date" name="date" type="date"  placeholder="Duration" className="form-control " />
+                                <input id="date" name="date" type="date" placeholder="Duration" className="form-control " />
                             </div>
                             <div className="col-lg-6">
                                 <p>END DATE:</p>
-                                <input id="date" name="date" type="date" placeholder="Duration"  onKeyDown="return false" className="form-control " />
+                                <input id="date" name="date" type="date" placeholder="Duration" onKeyDown="return false" className="form-control " />
                             </div>
 
                             <div className="col-lg-12 searchtxt mt-4"><br /><input type="search" placeholder="Search for date , Leave Type or Status" className="form-control " /></div>
@@ -252,9 +252,9 @@ function LeaveListDashboard() {
                         <div className='row mt-3'>
                             <div className='col-lg-4'>
                                 <div className='btn-group'>
-                                    <button onClick={togglePending} className={'btn ' + leave.btn} role="button" aria-pressed="true">Pending</button>
-                                    <button onClick={toggleApproved} className={'btn ' + leave.btn} role="button" aria-pressed="true">Approved</button>
-                                    <button onClick={toggleRejected} className={'btn ' + leave.btn}>Rejected</button>
+                                    <button onClick={togglePending} className="toggleButton" role="button" aria-pressed="true">Pending</button>
+                                    <button onClick={toggleApproved} className="toggleButton" role="button" aria-pressed="true">Approved</button>
+                                    <button onClick={toggleRejected} className="toggleButton">Rejected</button>
                                     <br /><br />
                                 </div>
                             </div>
