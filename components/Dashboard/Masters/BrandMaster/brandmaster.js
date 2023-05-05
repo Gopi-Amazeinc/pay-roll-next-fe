@@ -137,7 +137,7 @@ function BrandMasterDashboard() {
                                                                 className="edit-btn"
                                                                 onClick={() => DeleteBandMaster(data.id)}
                                                             >
-                                                                Delete{" "}
+                                                                Delete
                                                             </button>
                                                         </td>
                                                     </tr>

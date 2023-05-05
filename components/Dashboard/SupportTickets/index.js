@@ -64,7 +64,7 @@ const SupportTicketDashboard = ()  => {
                 className="btn btn-primary btn-sm  shadow-lg"
                 id={Styles.addNew} onClick={ClearData.bind(this)}
               >
-                {" "}
+                
                 <AiOutlinePlusCircle />
                 Add
               </button></Link>
