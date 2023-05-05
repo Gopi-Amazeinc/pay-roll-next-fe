@@ -7,9 +7,14 @@ import axios from "axios";
 const AttendenceDetails = () => {
   const [Attendence, setAttendence] = useState([]);
   const [userID, setUserID] = useState();
+  const [roleID, setRoleID] = useState();
   let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
   // function Attendance() {
   useEffect(() => {
+    const userid = sessionStorage.getItem("userID");
+    const roleid = sessionStorage.getItem("roleID");
+    setUserID(userid);
+    setRoleID(roleid);
     async function getAttendenceByID() {
       debugger;
       // const userid = sessionStorage.getItem("userID");
@@ -45,6 +50,7 @@ const AttendenceDetails = () => {
               My Attendance Details
             </Link>
           </div>
+          {roleID == 2 && (   
           <div className="col-lg-3">
             <Link
               className="Heading active"
@@ -53,6 +59,7 @@ const AttendenceDetails = () => {
               Company Attendance Details
             </Link>
           </div>
+          )}
         </div>
 
         <div className="card p-3 border-0 shadow-lg rounded-3 mt-4">
