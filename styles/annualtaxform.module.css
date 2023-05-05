@@ -1,0 +1,14 @@
+.SaveCloseBtn {
+    text-transform: uppercase;
+    font-weight: 400;
+    text-shadow: none;
+    letter-spacing: .5px;
+    background-color: #3247d5;
+    color: #fff;
+    border-radius: 5px;
+    border: none;
+    font-size: 12px;
+    font-weight: 700;
+    float: right;
+    padding: 5px 35px 5px 35px;
+}

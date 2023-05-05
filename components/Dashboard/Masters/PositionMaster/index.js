@@ -4,7 +4,7 @@ import { BiFilterAlt } from "react-icons/bi";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 
 import Link from "next/link";
-import Layout from '@/components/layout/layout.js';
+
 import axios from "axios";
 import Swal from "sweetalert2";
 const PositionMasterDash = () => {
@@ -52,22 +52,11 @@ const PositionMasterDash = () => {
   };
 
 
-
-  const getData = (data) => {
-    sessionStorage.setItem("id", data.id);
-    console.log(data.id)
-  }
-
-  const clearFormData = () => {
-    sessionStorage.setItem("id", "");
-  }
-
   return (
-    <div>
-      <br></br>
+    <div className="container">
       <p className="Heading">Position  Master</p>
-      <div className="container-fluid mt-4">
-        <div className="row shadow-lg p-2 rounded-4 p-3 ">
+      <div className="container mt-3">
+        <div className="row shadow p-2 rounded-3 ">
           <div className="col-lg-2">
             <b>
               <p className="mt-2 text-center">
@@ -85,15 +74,15 @@ const PositionMasterDash = () => {
         </div>
         <div className="row mt-4">
           <div className="col-lg-8">
-            <p >SHOWING {positionMaster.length} RESULTS</p>
+            <p className="Heading fs-6">SHOWING {positionMaster.length} RESULTS</p>
           </div>
           <div className="col-lg-2"></div>
           <div className="col-lg-2">
 
-            <Link href="/Masters/PositionMaster/new"><button onClick={clearFormData.bind(this)}
+            <Link href="/Masters/PositionMaster/new"><button
 
-              className="btn btn-primary btn-sm  shadow-lg AddButton"
-              
+              className=" AddButton"
+
             >  <AiOutlinePlusCircle />
               Add New
             </button></Link>
@@ -119,8 +108,8 @@ const PositionMasterDash = () => {
                       <td>
                         <div className="row">
                           <div className="col-lg-2">
-                            <Link href="/Masters/PositionMaster/new">
-                              <button className="edit-btn" onClick={getData.bind(this, data)}>Edit</button>
+                            <Link href={`/Masters/PositionMaster/Edit/${data.id}`}>
+                              <button className="edit-btn" >Edit</button>
                             </Link>
                           </div>
                           <div className="col-lg-2">

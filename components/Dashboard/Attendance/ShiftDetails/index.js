@@ -19,21 +19,43 @@ const Shiftdetails = () => {
     }, [])
     return (
         <>
-            <Link href="/Attendence/shiftdetails">My Weekly Shift</Link>
-            {/* <div className={'card shadow-lg p-2 mt-3 mb-3 ' + Styles.card}> */}
-            <div className='row'>
-                <div className='col-lg-3'>
-                    <p >START DATE <span >*</span></p>
-                    <input type='date' className='form-control form-control-sm' />
+            <div className='row mt-3'>
+                <div className='col-lg-3 text-end'>
+                    <Link href="/Attendance/shiftdetails" className='Heading active' > My Weekly Shift</Link>
                 </div>
-                <div className='col-lg-3'>
-                    <p >END DATE <span >*</span></p>
-                    <input type='date' className='form-control form-control-sm' />
+                {/* <div className='col-lg-3'>
+                    <Link href="/Attendance/MyTeamWeeklyShift" className='Heading active'> My Team Weekly Shift</Link>
+                </div> */}
+            </div>
+            {/* <div className="row">
+                <div className="col-lg-3">
+                    <Link href="/Attendence/shiftdetails"> <h3></h3></Link>
+
+                </div>
+                <div className="col-lg-3">
+
+                    <Link href="/Attendence/MyTeamWeeklyShift"> <h3> My Team Weekly Shift</h3></Link>
+                </div>
+            </div> */}
+
+
+            <div className='card shadow-lg p-4 rounded-3 mt-4'>
+                <div className='row'>
+                    <div className='col-lg-3'>
+                        <p >START DATE <span >*</span></p>
+                        <input type='date' className='form-control form-control-sm' />
+                    </div>
+                    <div className='col-lg-3'>
+                        <p >END DATE <span >*</span></p>
+                        <input type='date' className='form-control form-control-sm' />
+                    </div>
+                    <div className="col-lg-3 mt-4">
+                        <Link href="/Attendance/StaffShiftForm/new" ><button className='button'>Add Shift Details</button></Link>
+                    </div>
                 </div>
             </div>
-            {/* </div> */}
             <div className='row mt-3'>
-                <table >
+                <table className='table table-striped mt-3'  >
                     <thead>
                         <tr className='bg-info text-white'>
                             <th>START DATE</th>

@@ -49,7 +49,7 @@ const Login = ({ makelogin }) => {
   const onSubmit = async (data) => {
     const res = await axios.get(
       hostURL +
-        `Master/GetMyDetailsForLogin?EmailID=${data.Username}&Password=${data.Password}&roletype=${data.RoleID}`
+      `Master/GetMyDetailsForLogin?EmailID=${data.Username}&Password=${data.Password}&roletype=${data.RoleID}`
     );
     if (res.data.length > 0 && res.status === 200) {
       sessionStorage.setItem("userID", res.data[0].id);

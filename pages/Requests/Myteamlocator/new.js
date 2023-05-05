@@ -1,9 +1,9 @@
+import React from 'react'
 
-const New = () => {
-    return (
-        <div>
-           
-        </div>
-    )
+const MyTeamlocator =()=> {
+  return (
+    <div>MyTeamlocator</div>
+  )
 }
-export default New;
+
+export default MyTeamlocator

@@ -38,7 +38,7 @@ function FinalPayrollApproval() {
                             <div className="col-lg-4"></div>
                             <div className="col-lg-4"></div>
                             <div className="col-lg-3">
-                                <br /><Link style={{ textDecoration: "none" }} href="/Payroll/runpayroll"><button className="newPayrollBtn" style={{ width: "80%" }}>New Payroll</button></Link>
+                                <br /><Link style={{ textDecoration: "none" }} href="/Payroll/runpayroll"><button className='newPayrollBtn' style={{ width: "80%" }}>New Payroll</button></Link>
                             </div>
                         </div>
                         <br />
@@ -58,7 +58,6 @@ function FinalPayrollApproval() {
                                 <div classeName='btn-group'>
                                     <button onClick={toggleNewRequest} className='toggleButton' >Normal Payroll</button>
                                     <button onClick={toggleApproved} className='toggleButton' >Final Payroll</button>
-
                                 </div>
                             </div><br />
                         </div>
@@ -120,6 +119,19 @@ function FinalPayrollApproval() {
                             }
 
                         </div>
+                        {
+                            finalpayroll && (
+                                <table className='table table-sm'>
+                                    <thead>
+                                        <tr className='text-white'>
+                                            <th>Name</th>
+                                            <th>Role</th>
+                                            <th>	Payroll Run Type</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                            )
+                        }
                     </div>
 
                     <br />

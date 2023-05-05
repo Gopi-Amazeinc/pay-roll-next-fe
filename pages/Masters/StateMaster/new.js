@@ -5,7 +5,7 @@ import Layout from '@/components/layout/layout.js';
 import Link from "next/link";
 import axios from "axios";
 import Swal from "sweetalert2";
-function StateMasterForm() {
+function StateMasterForm({ editData }) {
   const [actionType, setActionType] = useState("insert");
   const [country, setCountryData] = useState([]);
   const { register, handleSubmit, reset, formState } = useForm();
@@ -17,35 +17,33 @@ function StateMasterForm() {
     if (actionType == "insert") {
       await axios.post(hostURL + "Master/InsertStateType", data);  //naveen.th@amazeinc.in, Insert API for State master, to add new data
       Swal.fire("Added succesfullly");
-      location.href = "/Masters/statemasterdashboard";
+      location.href = "/Masters/StateMaster/";
     } else {
       await axios.post(hostURL + "Master/UpdateStateType", data); //naveen.th@amazeinc.in, Update API for State master, to update data
       Swal.fire("Updated succesfullly");
       sessionStorage.removeItem("stateID");
-      location.href = "/Masters/statemasterdashboard";
+      location.href = "/Masters/StateMaster/";
     }
     await axios.get(hostURL + "Master/GetStateType");
   }
 
   useEffect(() => {
-    clearForm();
-    ID = sessionStorage.getItem("stateID");
-    if (ID) {
-      getStateMasterByID();
+
+    if (editData == "") {
+      clearForm();
+    }
+    else {
+      clearForm(editData);
     }
     getCountryList();
   }, []);
 
-  const getCountryList= async() =>{
+  const getCountryList = async () => {
     let res = await axios.get(hostURL + "Master/GetCountryType"); //naveen.th@amazeinc.in, Get API for country master, to fetch data
     console.log(res.data);
     setCountryData(res.data);
   }
 
-  const getStateMasterByID = async () => {
-    let res = await axios.get(hostURL + "Master/GetStateTypeByID?ID=" + ID); //naveen.th@amazeinc.in, Get by ID API for State master, to fetch  data
-    clearForm(res.data[0]);
-  };
   function clearForm(existingData = null) {
     let etty = {
       "ID": existingData ? existingData.id : "",
@@ -78,8 +76,8 @@ function StateMasterForm() {
   return (
     <Layout>
       <div>
-        <h3 className="text-primary fs-5 mt-3">Province Details</h3>
-        <div className="card p-3 border-0 shadow-lg rounded-3 mt-4">
+        <h3 className="Heading fs-5 mt-3">Province Details</h3>
+        <div className="card p-3 border-0 shadow rounded-3 mt-4 mx-0">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="row">
               <div className="col-lg-3">
@@ -146,9 +144,9 @@ function StateMasterForm() {
               </div>
             </div>
             <br></br>
-            <div className="row ">
-              <div className="col-lg-6"></div>
-              <div className="col-lg-6">
+            <div className="row mx-0">
+              <div className="col-lg-8"></div>
+              <div className="col-lg-2">
                 <Link href="/Masters/StateMaster">
                   <button
                     type="button"
@@ -158,7 +156,8 @@ function StateMasterForm() {
                     Close
                   </button>
                 </Link>
-
+              </div>
+              <div className="col-lg-2">
                 {actionType == "insert" && (
                   <button type="submit" className="btn" id={Styles.btn}>
                     Save

@@ -11,17 +11,11 @@ const SubSectionMaster = () => {
   let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
   const [subsection, SetSubsectionData] = useState([]);
 
-  const getDataByID = (data) => {
-    sessionStorage.setItem("id", data.id);
-  };
-  const clearData = () => {
-    sessionStorage.setItem("id", "");
-  };
   useEffect(() => {
     getData();
   }, []);
 
-  const getData= async ()=> {
+  const getData = async () => {
     let res = await axios.get(hostURL + "Master/GetSubSectionMaster");
     SetSubsectionData(res.data);
   }
@@ -41,19 +35,18 @@ const SubSectionMaster = () => {
     }).then(async (result) => {
       if (result.isConfirmed) {
         await axios.get(hostURL + "Master/DeleteSubSectionMaster?ID=" + id)
-            Swal.fire("SubSection Deleted successfully.");
-            getData();
-    }
-});
+        Swal.fire("SubSection Deleted successfully.");
+        getData();
+      }
+    });
   };
 
   return (
-   <div>
-      <br />
-      <h5  className="text-primary fw-bold Heading">
+    <div className="container">
+      <h5 className=" Heading">
         SubSection Master
       </h5>
-      <div className="card p-3 shadow-lg rounded-4">
+      <div className="card p-3 border-0 rounded-3 mx-0">
         <div className="row">
           <div className="col-lg-1">
             <p>Filter By</p>
@@ -71,32 +64,32 @@ const SubSectionMaster = () => {
         </div>
       </div>
       <div className="row mt-3">
-        <div className="col-lg-7">
-        <p  className="text-primary fs-6 mt-3 fw-bold">
-              SHOWING <span>{subsection.length} </span>RESULTS
-            </p>
+        <div className="col-lg-8">
+          <p className="Heading fs-6">
+            SHOWING <span>{subsection.length} </span>RESULTS
+          </p>
         </div>
-        <div className="col-lg-4">
+        <div className="col-lg-2"></div>
+        <div className="col-lg-2">
           <Link
-            className="btn btn-primary AddButton"
-            
+
             href="/Masters/SubSectionMaster/new"
-            onClick={clearData.bind(this)}
           >
-            <AiOutlinePlusCircle size={18} /> ADD NEW
+
+            <button className=" AddButton"> <AiOutlinePlusCircle size={18} /> ADD NEW</button>
           </Link>
         </div>
       </div>
       <br />
       <br />
-      <div className="container-fluid">
+      <div className="container">
         <div className="row ">
-          <table className=" table table-sm  table-bordered table">
-            <thead>
-              <tr  className="bg-info tr">
-                <th className="text-white">Short</th>
-                <th className="text-white">Description</th>
-                <th className="text-white">Action</th>
+          <table className=" table table-striped ">
+            <thead className="bg-info text-white ">
+              <tr>
+                <th>Short</th>
+                <th>Description</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
@@ -106,11 +99,10 @@ const SubSectionMaster = () => {
                     <td>{data.short}</td>
                     <td>{data.description}</td>
                     <td>
-                      <Link href="/Masters/subsectionmasterform">
+                      <Link href={`/Masters/SubSectionMaster/Edit/${data.id}`}>
                         <button
                           className="edit-btn"
                           style={{ fontSize: "12px", marginRight: "5%" }}
-                          onClick={getDataByID.bind(this, data)}
                         >
                           Edit
                         </button>
@@ -130,7 +122,7 @@ const SubSectionMaster = () => {
           </table>
         </div>
       </div>
-</div>
+    </div>
   );
 };
 

@@ -6,31 +6,40 @@ import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 
-function ShiftMasterForm() {
+function ShiftMasterForm({ editData }) {
    const { register, handleSubmit, reset, formState } = useForm();
    const { errors } = formState;
    const [actionType, setActionType] = useState("insert");
 
-   useEffect(() => {
-      async function getShiftList() {
-         const id = sessionStorage.getItem("id");
-         if (id) {
-            let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-             // This API is used to fetch the dashboard data from ShiftMaster table based on ID
-            const response = await axios.get(hostURL + "Master/GetShiftMasterByID?ID=" + id);
-            clearForm(response.data[0])
-         }
-         else {
-            clearForm();
-         }
-      }
-      getShiftList();
-   }, []);
+   async function onSubmit(data) {
+      let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
 
+      if (actionType == "insert") {
+         // This API is used to insert the data to the ShiftMaster table
+         await axios.post(hostURL + "Master/InsertShiftMaster", data);
+         Swal.fire({
+            icon: "success",
+            title: "Hurray..",
+            text: "Data was inserted...!",
+         });
+         location.href = "/Masters/ShiftMaster"
+      }
+      else {
+         // This API is used to update the data in the ShiftMaster table
+         debugger
+         let dsfdsfd = await axios.post(hostURL + "Master/UpdateShiftMaster/", data);
+         Swal.fire({
+            icon: "success",
+            title: "Hurray..",
+            text: "Data was updated...!",
+         });
+         location.href = "/Masters/ShiftMaster"
+      }
+   }
 
    function clearForm(otData = null) {
       let details = {
-         "ID": otData ? otData.id : "",
+         "ID":otData ? otData.id : "",
          "Short": otData ? otData.short : "",
          "Description": otData ? otData.description : "",
          "ShiftTimeings": otData ? otData.shiftTimeings : "",
@@ -41,30 +50,17 @@ function ShiftMasterForm() {
       setActionType(otData ? "update" : 'insert')
    }
 
-   async function onSubmit(data) {
-      let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-      if (actionType == "insert") {
-         // This API is used to insert the data to the ShiftMaster table
-         await axios.post(hostURL + "Master/InsertShiftMaster", data);
-         Swal.fire({
-            icon: "success",
-            title: "Hurray..",
-            text: "Data was inserted...!",
-         });
+   useEffect(() => {
+      if (editData == "") {
+         clearForm()
       }
       else {
-          // This API is used to update the data in the ShiftMaster table
-         await axios.post(hostURL + "Master/UpdateShiftMaster", data);
-         Swal.fire({
-            icon: "success",
-            title: "Hurray..",
-            text: "Data was updated...!",
-         });
+         clearForm(editData);
       }
-   }
+   }, []);
    return (
       <Layout>
-         <div className="container-fluid">
+         <div className="container">
             <div className="row">
                <div className="col-md-12">
                   <div className="row">
@@ -77,9 +73,9 @@ function ShiftMasterForm() {
                      </div>
                   </div>
                </div>
-               <div className="card">
+               <div className="card border-0 shadow mt-2 mx-0">
                   <form onSubmit={handleSubmit(onSubmit)}>
-                     <div className="row leavereq">
+                     <div className="row">
                         <div className="col-md-2">
                            <label >Short<span style={{ color: "red" }}>*</span></label>
                            <input type="text" placeholder="Enter Shift Name" name="Short" id="Short" className="form-control " {...register("Short", { required: "This field is required", pattern: { value: '^[A-Za-z0-9 ]+$', message: "Please enter a valid Detail" } })} />
@@ -107,21 +103,21 @@ function ShiftMasterForm() {
                         </div>
                      </div>
                      <br></br>
-                     <div className="row" style={{ marginBottom: "10px" }}>
-                        <div className="col-lg-7"></div>
-                        <div className="col-lg-2">
-                           <Link href="/Masters/ShiftMaster" > <button className="btn btn-primary btn-sm shadow-lg" id={Styles.addNew}> Cancel</button></Link>
+                     <div className="row mx-0" style={{ marginBottom: "5px" }}>
+                        <div className="col-lg-8"></div>
+                        <div className="col-lg-2 ">
+                           <Link href="/Masters/ShiftMaster" > <button className="AddButton"> Cancel</button></Link>
                         </div>
-                        <div className="col-lg-3">
+                        <div className="col-lg-2 ">
                            {/* <button className="btn btn-primary btn-sm shadow-lg" style={{ marginLeft: "10px" }} id={Styles.addNew} >Save </button> */}
                            {
                               actionType == "insert" && (
-                                 <button type='submit' id={Styles.addNew} style={{ color: 'white' }} className="btn btn-primary btn-sm shadow-lg">Save</button>
+                                 <button type='submit' style={{ color: 'white' }} className="AddButton">Save</button>
                               )
                            }
                            {
                               actionType == "update" && (
-                                 <button type='submit' id={Styles.addNew} style={{ color: 'white' }} className="btn btn-primary btn-sm shadow-lg">Update</button>
+                                 <button type='submit' style={{ color: 'white' }} className="AddButton">Update</button>
                               )
                            }
                         </div>
