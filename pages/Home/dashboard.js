@@ -283,7 +283,7 @@ function Dashboard() {
                 <h4 className={dashboard.profilename}>{userName}</h4>
                 <p className={dashboard.profilemail}>{userEmail}</p>
 
-                <Image src={images} alt="Picture of the author" width={100} height={80} className={dashboard.profileimg} />
+                <Image src={images} alt="Picture of the author" width={100} height={80} className={dashboard.profileimg1} />
 
                 <div className={dashboard.profile}>
                   <Link href="/Staff/AddStaff">

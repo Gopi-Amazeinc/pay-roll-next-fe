@@ -41,7 +41,6 @@ const ApplyLeave = () => {
   return (
     <Layout>
       <Link href="/Requests/Leaverequest">
-    
         <BsArrowLeftSquare /> Leave
       </Link>
       <div className="card p-3 border-0 shadow-lg  mt-4">
@@ -54,7 +53,7 @@ const ApplyLeave = () => {
 
             <div className="col-lg-2">
               <label htmlFor="">
-                Leave Type<i className="text-danger">*</i>{" "}
+                Leave Type<i className="text-danger">*</i>
               </label>
               <select
                 id="Department"
@@ -63,7 +62,7 @@ const ApplyLeave = () => {
                 {...register("LeaveType", { required: true })}
               >
                 <option value="" disabled="">
-                  Select Leave Type{" "}
+                  Select Leave Type
                 </option>
                 {leavetype.map((data, index) => {
                   return (
@@ -76,7 +75,7 @@ const ApplyLeave = () => {
             </div>
             <div className="col-lg-2">
               <label htmlFor="">
-                Leave Reason<i className="text-danger">*</i>{" "}
+                Leave Reason<i className="text-danger">*</i>
               </label>
               <textarea
                 cols="20"

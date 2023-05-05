@@ -88,7 +88,7 @@ const FinalPayrollDetails = () => {
     };
     return (
         <div>
-            <h3 style={{ color: "red" }}>For Delete operation Date wants to be formatted..!</h3>
+            <h6 >Delete operation issue</h6>
             <h3 className=' mt-3 Heading'>Finalization   Payroll Details</h3>
             <div className='card p-3 border-0 shadow-lg rounded-3 mt-4'>
                 <div className='row'>
@@ -148,7 +148,7 @@ const FinalPayrollDetails = () => {
 
                 <div className='col-lg-12'>
                     <span>Select All <input type="checkbox" checked={selectedRows.length === preliminarySalary.length} onChange={e => handleRowSelect(e, 'all')} /></span>
-                    <table style={{ width: "80%", whiteSpace: "nowrap" }} className='table table-sm mt-4 text-center '>
+                    <table style={{ whiteSpace: "nowrap" }} className='table table-sm mt-4 text-center '>
                         <thead>
                             <tr className='tr' >
                                 <th className='text-white'>Select</th>

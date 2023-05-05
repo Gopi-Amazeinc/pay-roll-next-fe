@@ -49,7 +49,7 @@ const Holidaydashboard = () => {
     return (
 
         <div>
-            <br></br> <p id={Styles.title}>Holiday Dashboard</p>{" "}
+            <br></br> <p id={Styles.title}>Holiday Dashboard</p>
             <div className="container-fluid mt-4">
                 <div className="row shadow-lg p-2 rounded-4 p-3 ">
                     <div className="col-lg-1">

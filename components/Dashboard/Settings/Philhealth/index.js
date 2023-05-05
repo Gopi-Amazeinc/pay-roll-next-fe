@@ -92,7 +92,7 @@ function Philhealth() {
                                         <td>
                                             <Link href={`/Settings/Philhealth/Edit/${data.id}`}><button className={Styles.actionButton}> Edit</button></Link>
                                             &nbsp;
-                                            <button className={Styles.actionButton} onClick={() => DeletePhillhealth(data.id)} > Delete{" "}</button>
+                                            <button className={Styles.actionButton} onClick={() => DeletePhillhealth(data.id)} > Delete</button>
                                         </td>
                                     </tr>
                                 );
