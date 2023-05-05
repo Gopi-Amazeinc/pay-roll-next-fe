@@ -15,6 +15,8 @@ const New = () => {
         setStaffShift(res.data)
     }
 
+
+
     let [startTime, setStartTime] = useState("");
     let [endTime, setEndTime] = useState("");
     const getshiftTimings = (event) => {
@@ -23,6 +25,16 @@ const New = () => {
         setStartTime(startTime)
         setEndTime(endTime)
     }
+
+    const onSubmit = async (data) => {
+        const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+
+        await axios.post(hostURL + "HR/InsertStaffShiftDetails", data)
+        alert("inserted")
+
+        console.log(JSON.stringify(data))
+    }
+
     useEffect(() => {
         getShiftname();
     }, [])
@@ -33,7 +45,7 @@ const New = () => {
                 <div className="col-lg-12">
                     <h3 className='Heading'>Add Shift Details</h3>
                 </div>
-                <form>
+                <form onSubmit={handleSubmit(onSubmit)}>
                     <div className="card shadow-lg mt-3">
                         <div className="row">
 
@@ -55,34 +67,29 @@ const New = () => {
                             </div>
                             <div className="col-lg-2">
                                 <label htmlFor="">ShiftName</label>
-                                <select name="" id="" className='form-select' onChange={getshiftTimings}  {...register("shiftName", { required: true })}>
-                                    < option >Select</option>
+                                <select name="" id="" className='form-select' {...register('shiftName')} onChange={getshiftTimings} >
+                                    < option   >Select</option>
                                     {
                                         staffshift.map((data, index) => {
                                             return (
-                                                <option key={index} value={`${data.starttime},${data.endtime},${data.id}`} >{data.description}</option>
+                                                <option key={index} value={`${data.starttime},${data.endtime}`} >{data.description}</option>
                                             )
                                         })
                                     }
-                                    {
-                                        errors.shiftName && <p className='text-danger'> Shift Name is Required</p>
-                                    }
+
 
                                 </select>
+
                             </div>
                             <div className="col-lg-2">
                                 <label htmlFor="">Start Time</label>
-                                <input type="text" value={startTime} disabled className='form-control'  {...register("startTime", { required: true })} />
-                                {
-                                    errors.startTime && <p className='text-danger'> Start Time is Required</p>
-                                }
+                                <input type="text" {...register('startTime', { required: true })} value={startTime} className='form-control' />
+
                             </div>
                             <div className="col-lg-2">
                                 <label htmlFor="">End Time</label>
-                                <input type="text" value={endTime} disabled className='form-control'   {...register("endTime", { required: true })} />
-                                {
-                                    errors.endTime && <p className='text-danger'> End Time is Required</p>
-                                }
+                                <input type="text" name='' {...register('endTime', { required: true })} value={endTime} className='form-control' />
+
                             </div>
                         </div>
                         <br />
