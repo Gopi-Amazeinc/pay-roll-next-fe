@@ -74,7 +74,7 @@ const ApplyLeave = () => {
                         </div>
                         <div className="col-lg-2">
                             <label>Staff ID</label>
-                            <input type="text" className="form-control" value={sessionStorage.getItem("userID")} disabled/>
+                            <input type="text" className="form-control" value={sessionStorage.getItem("userID")} disabled />
                         </div>
                     </div>
                     <br />
