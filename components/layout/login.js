@@ -5,7 +5,7 @@ import styles from "./login.module.css";
 import axios from "axios";
 import Swal from "sweetalert2";
 import eye from "@/public/eye.svg";
-import Loginpage from "@/public/Images/DigiLogin.png";
+import Loginpage from "/public/Images/DigiLogin.png";
 import digiLogo from "@/public/Images/DigiLogoBlue.png";
 
 const Login = ({ makelogin }) => {
