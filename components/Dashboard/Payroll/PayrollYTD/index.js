@@ -72,7 +72,7 @@ const Employmentjobhistory = () => {
                 icon: "success",
                 text: "Uploaded Successfully"
             })
-            location.href = "/Payroll/employmentjobhistory"
+            location.href = "/Payroll/PayrollYTD"
         }
     }
 
@@ -91,7 +91,7 @@ const Employmentjobhistory = () => {
                 icon: "success",
                 text: "Uploaded Successfully"
             })
-            location.href = "/Payroll/employmentjobhistory"
+            location.href = "/Payroll/PayrollYTD"
         }
     }
 
