@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import dashboard from "./dashboard.module.css";
 import leaveIcon from "@/public/Images/leaveIcon.png";
@@ -51,39 +51,39 @@ function Dashboard() {
     console.log(value)
     setWorkType(value);
   }
-  
+
   // const handlePunchin = () => {
   //   setModalOpen(!modalOpen);
   // }
   // TODO: Written By: Gopi -> Add code to punchhin user or staff
   const handlePunchin = async () => {
-debugger
+    debugger
     setModalOpen(!modalOpen);
     // if (punchintime != true) {
     //   Swal.fire("Already Punched In for the day");
     // } else (workType == undefined || workType == null) {
     //   Swal.fire("Please Fill Work Type");
     // }
-    
-      
-      const ipaddress = localIPAddress;
-      var options = { hour12: false };
-      var date = new Date();
-      var entity = {
-        UserID: sessionStorage.getItem("userID"),
-        SigninDate: date.toLocaleString("en-US", options),
-        SigninLocation: "Office",
-        StatusID: 1,
-        punchinip: ipaddress == undefined || null ? "101.120.111.222" : ipaddress,
-        ApprovalStatus: "Manager Pending HR Pending",
-        WorkType: parseInt(workType),
-      };
-      let res = await axios.post(hostURL + "HR/InsertAttendanceWeb", entity);
-      const punchinId = res.data || res;
-      if (punchinId) {
-        sessionStorage.setItem("PunchINid", punchinId);
-        Swal.fire("Punched In Successfully");
-      }
+
+
+    const ipaddress = localIPAddress;
+    var options = { hour12: false };
+    var date = new Date();
+    var entity = {
+      UserID: sessionStorage.getItem("userID"),
+      SigninDate: date.toLocaleString("en-US", options),
+      SigninLocation: "Office",
+      StatusID: 1,
+      punchinip: ipaddress == undefined || null ? "101.120.111.222" : ipaddress,
+      ApprovalStatus: "Manager Pending HR Pending",
+      WorkType: parseInt(workType),
+    };
+    let res = await axios.post(hostURL + "HR/InsertAttendanceWeb", entity);
+    const punchinId = res.data || res;
+    if (punchinId) {
+      sessionStorage.setItem("PunchINid", punchinId);
+      Swal.fire("Punched In Successfully");
+    }
     // }
   };
 
@@ -126,7 +126,7 @@ debugger
                       </div>
                       <div className="col-md-6">
                         <button className={dashboard.pendingbtn}>
-                          {count} Pending
+                          {count} Rejected
                         </button>
                       </div>
                     </div>
@@ -136,12 +136,12 @@ debugger
                     <div className="row">
                       <div className="col-md-6">
                         <button className={dashboard.pendingbtn}>
-                          {count} Pending
+                          {count} Cancelled
                         </button>
                       </div>
                       <div className="col-md-6">
                         <button className={dashboard.pendingbtn}>
-                          {count} Pending
+                          {count} Approved
                         </button>
                         <br></br>
                       </div>
@@ -182,9 +182,9 @@ debugger
                       <ul className="tab-slider--tabs">
                         <li rel="tab1" onClick={() => setViewMode("tab1")}>
                           All
-                        </li>
+                        </li>   </ul>
 
-                      </ul>
+
                     </div>
                   </div>
                 </div>
@@ -274,7 +274,7 @@ debugger
                 <p className={dashboard.profilemail}>{email}</p>
 
                 <Image src={images} alt="Picture of the author" width={100} height={80} className={dashboard.profileimg} />
-               
+
                 <div className={dashboard.profile}>
                   <Link href="/Staff/AddStaff">
                     <button className={dashboard.viewmyprofile}>View My Profile</button></Link>
@@ -359,7 +359,7 @@ debugger
                       <button className="button" onClick={() => modelopen()}> <BiEdit style={{ color: "white", fontSize: "25px" }} /> </button>
                     </div>
                   </div>
-                  {/* ---------------modal for vaccination--------------------                */}
+                  {/* TODO---------------modal for vaccination--------------------                */}
                   {/* <Modal toggle={() => modelopen(!modelopen)} isOpen={modelopen}>
                     <div className="modal-header">
                       <h5 className="modal-title">
@@ -416,7 +416,7 @@ debugger
                     </div>
                     <div className="col-md-6">
                       <button className={dashboard.pendingbtn}>
-                        {count} Pending
+                        {count} Rejected
                       </button>
                     </div>
                   </div>
@@ -424,12 +424,12 @@ debugger
                   <div className="row">
                     <div className="col-md-6">
                       <button className={dashboard.pendingbtn}>
-                        {count} Pending
+                        {count} Cancelled
                       </button>
                     </div>
                     <div className="col-md-6">
                       <button className={dashboard.pendingbtn}>
-                        {count} Pending
+                        {count} Approved
                       </button>
                       <br></br>
                     </div>
@@ -454,7 +454,7 @@ debugger
                     </div>
                     <div className="col-md-6">
                       <button className={dashboard.pendingbtn}>
-                        {count} Pending
+                        {count} Rejected
                       </button>
                     </div>
                   </div>
@@ -464,12 +464,12 @@ debugger
                   <div className="row">
                     <div className="col-md-6">
                       <button className={dashboard.pendingbtn}>
-                        {count} Pending
+                        {count} Cancelled
                       </button>
                     </div>
                     <div className="col-md-6">
                       <button className={dashboard.pendingbtn}>
-                        {count} Pending
+                        {count} Approved
                       </button>
                       <br></br>
                     </div>

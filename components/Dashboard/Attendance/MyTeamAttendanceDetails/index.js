@@ -7,7 +7,22 @@ const MyTeamAttendence = () => {
     const [MyTeamAttendence, setMyTeamAttendence] = useState([]);
     const [userID, setUserID] = useState();
 
+    let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
 
+    useEffect(() => {
+      async function getAttendenceByID() {
+        debugger
+        // const userid = sessionStorage.getItem("userID");
+        const SupervisorID = 10348;
+        const SDate = '2023-10-10';
+        const EDate = "2023-11-11";
+        if (userID) {
+          let res = await axios.get(hostURL + "HR/GetAttendanceByManagerID?SupervisorID=" + SupervisorID + '&SDate=' + SDate + '&EDate=' + EDate);
+          setAttendence(res.data);
+        }
+      }
+      getAttendenceByID();
+    }, []);
 
 
     return (
@@ -21,6 +36,7 @@ const MyTeamAttendence = () => {
                         <Link className='Heading active' href="/Attendance/MyTeamAttendanceDetails">Company Attendance Details</Link>
                     </div>
                 </div>
+                <h3>API Issue In Company AttendanceDetails</h3>
 
                 <div className='card p-3 border-0 shadow-lg rounded-3 mt-4'>
                     <div className='row'>

@@ -56,7 +56,7 @@ const SSSForm = ({ editData }) => {
         let etty = {
             ID: existingData ? existingData.id : "",
             Taxiableincomelowlimit: existingData ? existingData.taxiableincomelowlimit : "",
-            Taxiableincomehighlimit: existingData ? existingData.taxiableincomehighlimit : "",
+            taxiableincomehighlimit: existingData ? existingData.taxiableincomehighlimit : "",
             SSS_EEvalue: existingData ? existingData.ssS_EEvalue : "",
             SSS_ERvalue: existingData ? existingData.ssS_ERvalue : "",
             SSS_Ecvalue: existingData ? existingData.ssS_Ecvalue : "",
@@ -125,7 +125,7 @@ const SSSForm = ({ editData }) => {
                                             name="highLimit"
                                             type="text"
                                             className={`form-control mt-2`}
-                                            {...register("Taxiableincomehighlimit", { required: true })}
+                                            {...register("taxiableincomehighlimit", { required: true })}
 
                                         />
                                         {errors.Taxableincomehighlimit && (
