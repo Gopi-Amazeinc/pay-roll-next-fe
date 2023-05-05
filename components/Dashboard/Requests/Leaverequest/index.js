@@ -150,7 +150,7 @@ function LeaveListDashboard() {
         <div className="col-md-12">
             <div className="row">
                 <div className="col-md-7">
-                    <h3>Get Api is not Working for Approval Reject and Pending</h3>
+                    <h5>Api is not Working for Approval Reject and Pending</h5>
                     <Link className="Heading " href="/Requests/leavelistdashboard"><u> My Leave Details</u></Link>
 
                     <Link href="/Requests/hrleaverequest" className="Heading mx-5" ><u>All Staff Leave Details</u></Link>

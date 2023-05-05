@@ -192,8 +192,8 @@ const Compensationtimeout = () => {
                     </div>
                     {
                         sessionStorage.getItem("roleID") != "2" && (
-                            <div className='col-lg-4'>
-                                <Link href="/Requests/Compensationtimeout/new"><button className='btn btn-primary AddButton'>Add Compensation Time Out</button></Link>
+                            <div className='col-lg-6'>
+                                <Link href="/Requests/Compensationtimeout/new"><button className='submit-button'>Add Compensation Time Out</button></Link>
                             </div>
                         )
                     }

@@ -12,6 +12,7 @@ const OverTimeDetails = () => {
   const [dashboardData, setDashboardData] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
 
+
   const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
 
   const openEditModal = () => {
@@ -42,6 +43,7 @@ const OverTimeDetails = () => {
     setDashboardData(res.data);
     console.log(res.data);
     onSubmit(res.data);
+    sessionStorage.setItem("Date", date);
   }
 
   async function onSubmit(data) {
@@ -52,18 +54,63 @@ const OverTimeDetails = () => {
 
     }
   }
-  const filterDetails = () => {
-    debugger;
-    let res = dashboardData.filter(x => x.dashboardData == watch("StartTime"))[0].nightOt;
-    console.log(res.data);
-  }
+  // let staffID;
+  // staffID = sessionStorage.getItem("StaffID")
+
+  // let Date;
+  // Date = sessionStorage.getItem("Date")
+
+  // function clearForm() {
+  //   let details = {
+  //     "StaffID": sessionStorage.getItem("userID"),
+  //     "Date": sessionStorage.getItem("Date"),
+  //     "StartTime": "2023/03/04" + watch("StartTime"),
+  //     "EndTime": "2023/03/04" + watch("EndTime"),
+  //     "noofhours": "",
+  //     "NightOT": dashboardData.filter(x => x.dashboardData == nightOt)[0].nightOt,
+  //     "Comments": watch("Comments"),
+  //     "Attachment": watch("Attachment"),
+  //     "NSD_REGULAR": dashboardData.filter(x => x.dashboardData == nsD_REGULAR)[0].nsD_REGULAR,
+  //     "ExccessNightOt": dashboardData.filter(x => x.dashboardData == exccessNightOt)[0].exccessNightOt,
+  //     "ExccessNormalOt": dashboardData.filter(x => x.dashboardData == exccessNormalOt)[0].exccessNormalOt,
+  //     "RestNightOt": dashboardData.filter(x => x.dashboardData == restNightOt)[0].restNightOt,
+  //     "RestNormalOT": dashboardData.filter(x => x.dashboardData == restNormalOT)[0].restNormalOT,
+  //     "ExccessRestNormalOt": dashboardData.filter(x => x.dashboardData == exccessRestNormalOt)[0].exccessRestNormalOt,
+  //     "RestExccessNightOt": dashboardData.filter(x => x.dashboardData == restExccessNightOt)[0].restExccessNightOt,
+  //     "LegalNightOt": dashboardData.filter(x => x.dashboardData == legalNightOt)[0].legalNightOt,
+  //     "LegalNormalOT": dashboardData.filter(x => x.dashboardData == legalNormalOT)[0].legalNormalOT,
+  //     "LegalExccessNormalOt": dashboardData.filter(x => x.dashboardData == legalExccessNormalOt)[0].legalExccessNormalOt,
+  //     "LegalExccessNightOt": dashboardData.filter(x => x.dashboardData == legalExccessNightOt)[0].legalExccessNightOt,
+  //     "SpecialNightOt": dashboardData.filter(x => x.dashboardData == specialNightOt)[0].specialNightOt,
+  //     "SpecialNormalOT": dashboardData.filter(x => x.dashboardData == specialNormalOT)[0].specialNormalOT,
+  //     "SpecialExccessNormalOt": dashboardData.filter(x => x.dashboardData == specialExccessNormalOt)[0].specialExccessNormalOt,
+  //     "SpecialExccessNightOt": dashboardData.filter(x => x.dashboardData == specialExccessNightOt)[0].specialExccessNightOt,
+  //     "SpecialRestNightOt": dashboardData.filter(x => x.dashboardData == specialRestNightOt)[0].specialRestNightOt,
+  //     "SpecialRestNormalOT": dashboardData.filter(x => x.dashboardData == specialRestNormalOT)[0].specialRestNormalOT,
+  //     "SpecialRestExccessNormalOt": dashboardData.filter(x => x.dashboardData == specialRestExccessNormalOt)[0].specialRestExccessNormalOt,
+  //     "SpecialRestExccessNightOt": dashboardData.filter(x => x.dashboardData == specialRestExccessNightOt)[0].specialRestExccessNightOt,
+  //     "LegalRestNightOt": dashboardData.filter(x => x.dashboardData == legalRestNightOt)[0].legalRestNightOt,
+  //     "LegalRestNormalOT": dashboardData.filter(x => x.dashboardData == legalRestNormalOT)[0].legalRestNormalOT,
+  //     "LegalExccessRestNormalOt": dashboardData.filter(x => x.dashboardData == legalExccessRestNormalOt)[0].legalExccessRestNormalOt,
+  //     "LegalExccessRestNightOt": dashboardData.filter(x => x.dashboardData == legalExccessRestNightOt)[0].legalExccessRestNightOt
+  //   }
+  //   reset(details);
+  //   insertDetails(details)
+
+  // }
+
+
+
+  // useEffect(() => {
+  //   clearForm()
+  // }, [])
+
   const insertDetails = async () => {
-    debugger;
+
     try {
-      filterDetails();
-      await axios.post(hostURL + "HR/InsertStaffOverTimeDetails", dashboardData);
+      await axios.post(hostURL + "HR/InsertStaffOverTimeDetails", details);
       Swal.fire('Data Inserted successfully')
-      console.log("Inserted data:", dashboardData);
+      console.log("Inserted data:", details);
       location.href = ("/OT");
 
     }
@@ -74,8 +121,9 @@ const OverTimeDetails = () => {
 
   return (
     <Layout>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="shadow-lg p-3 mb-5 bg-white rounded">
+      <h5>Insert  operation is not Done</h5>
+      <form onSubmit={handleSubmit(insertDetails)}>
+        <div className="shadow-lg p-3 mt-3 mb-5 bg-white rounded">
           <div>
             <h4 style={{ color: "blue" }}>Add Actual Time</h4>
             <div className='row mt-4'>
@@ -99,7 +147,7 @@ const OverTimeDetails = () => {
                 <input type='time' className='form-control' name='time' min="00:00" max="23:59" step="1" {...register('StartTime', { required: true })} />
               </div>
               <div className='col-lg-2'>
-                <input type='time' className='form-control' min="00:00" max="23:59" step="1" {...register('EndTime', { required: true })} />
+                <input type="time" className='form-control' name='time' min="00:00" max="23:59" step="1" {...register('EndTime', { required: true })} />
               </div>
               <div className='col-lg-2'>
                 <button className='submit-button' onClick={getDetails}>Click</button>
@@ -116,7 +164,7 @@ const OverTimeDetails = () => {
             </div>
             <div className='row'>
               <div className='col-lg-4'>
-                <input type='file' className='form-control' {...register('Upload', { required: true })}></input>
+                <input type='file' className='form-control' {...register('Attachments', { required: true })}></input>
               </div>
               <div className='col-lg-4'>
                 <textarea className='form-control' placeholder='Write here...' {...register('Comments', { required: true })}></textarea>
@@ -228,7 +276,7 @@ const OverTimeDetails = () => {
                             <td> Special Rest Night OT </td>
                           </tr>
                           <tr>
-                            <td>Special Rest Normal OT </td>7
+                            <td>Special Rest Normal OT </td>
                           </tr>
                           <tr>
                             <td> Special Rest Excess Normal OT </td>

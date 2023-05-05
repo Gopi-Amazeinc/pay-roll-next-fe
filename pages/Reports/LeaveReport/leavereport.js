@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import Id from '@/pages/Requests/Compensationtimeout/[id]';
 import { DownloadTableExcel } from 'react-export-table-to-excel';
 import { useRef } from 'react';
+import axios from 'axios';
 
 
 
@@ -15,7 +16,14 @@ function Leavereport() {
 
   const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
 
+    var date = new Date();
+    let Sdate = date.toISOString().slice(0, 10);
+    var edate = new Date();
+    let Edate = edate.toISOString().slice(0, 10);
+
+
    async function getLeaveReport(){
+    const staffID = sessionStorage.getItem("userID")
     let res = await axios.get(hostURL + "https://103.12.1.103/PayRollRevampAPI/Employee/GetStaffLeaves?ID=" + staffID + "&TypeID=1&Sdate=" + Sdate + "&Edate=" + Edate);
     setLeaveReport(res.data);
     console.log(res.data);
@@ -28,11 +36,15 @@ function Leavereport() {
     }, [])
 
 
+    
+
+
 
 
     return (
         <>
             <Layout>
+                <h4 style={{color:"red"}}>Api Issue</h4>
                 <br></br>
                 <div>
                     <h4>My Leaves Report</h4>

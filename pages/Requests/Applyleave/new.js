@@ -14,14 +14,14 @@ const ApplyLeave = () => {
   const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
   const { register, handleSubmit, reset, formState } = useForm();
   const [leavetype, setLeaveType] = useState([]);
-  const [userID,setUserId ] = useState();
+  const [userID, setUserId] = useState();
   const getDropdowndata = async () => {
     const res = await axios.get(hostURL + "Master/GetLeaveType");
     setLeaveType(res.data);
   };
   useEffect(() => {
     const userid = sessionStorage.getItem("userID");
-setUserId(userid)
+    setUserId(userid);
     getDropdowndata();
   }, []);
 
@@ -41,7 +41,7 @@ setUserId(userid)
   return (
     <Layout>
       <Link href="/Requests/Leaverequest">
-        {" "}
+    
         <BsArrowLeftSquare /> Leave
       </Link>
       <div className="card p-3 border-0 shadow-lg  mt-4">

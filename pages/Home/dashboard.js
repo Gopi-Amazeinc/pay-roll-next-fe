@@ -20,7 +20,14 @@ function Dashboard() {
   let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
   const count = 1;
 
-  const name = "Anup";
+  const [userName, setUserName] = useState();
+
+  useEffect(() => {
+    const Loginname = sessionStorage.getItem("userName");
+    setUserName(Loginname);
+  }, []);
+
+  // const userName = "Anup";
   const email = "anup@amazeinc.in";
 
   const [viewMode, setViewMode] = useState("tab1");
@@ -270,10 +277,10 @@ function Dashboard() {
                 <div className={dashboard.profileimg}>
                   <Image src={profile} alt="Picture of the author" width={100} height={100} />
                 </div>
-                <h4 className={dashboard.profilename}>{name}</h4>
+                <h4 className={dashboard.profilename}>{userName}</h4>
                 <p className={dashboard.profilemail}>{email}</p>
 
-                <Image src={images} alt="Picture of the author" width={100} height={80} className={dashboard.profileimg} />
+                <Image src={images} alt="Picture of the author" width={100} height={80} className={dashboard.profileimg1} />
 
                 <div className={dashboard.profile}>
                   <Link href="/Staff/AddStaff">
@@ -359,7 +366,7 @@ function Dashboard() {
                       <button className="button" onClick={() => modelopen()}> <BiEdit style={{ color: "white", fontSize: "25px" }} /> </button>
                     </div>
                   </div>
-                  {/* ---------------modal for vaccination--------------------                */}
+                  {/* TODO---------------modal for vaccination--------------------                */}
                   {/* <Modal toggle={() => modelopen(!modelopen)} isOpen={modelopen}>
                     <div className="modal-header">
                       <h5 className="modal-title">
