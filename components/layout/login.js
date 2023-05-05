@@ -54,6 +54,7 @@ const Login = ({ makelogin }) => {
     if (res.data.length > 0 && res.status === 200) {
       sessionStorage.setItem("userID", res.data[0].id);
       sessionStorage.setItem("userName", res.data[0].name);
+      sessionStorage.setItem("email", res.data[0].email);
       sessionStorage.setItem("roleID", res.data[0].login);
       makelogin();
     }

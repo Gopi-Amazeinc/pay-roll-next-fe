@@ -21,14 +21,17 @@ function Dashboard() {
   const count = 1;
 
   const [userName, setUserName] = useState();
+  const [userEmail, setUserEmail] = useState();
 
   useEffect(() => {
     const Loginname = sessionStorage.getItem("userName");
     setUserName(Loginname);
+    const Loginemail = sessionStorage.getItem("email");
+    setUserEmail(Loginemail);
   }, []);
 
   // const userName = "Anup";
-  const email = "anup@amazeinc.in";
+  // const email = "anup@amazeinc.in";
 
   const [viewMode, setViewMode] = useState("tab1");
 
@@ -278,7 +281,7 @@ function Dashboard() {
                   <Image src={profile} alt="Picture of the author" width={100} height={100} />
                 </div>
                 <h4 className={dashboard.profilename}>{userName}</h4>
-                <p className={dashboard.profilemail}>{email}</p>
+                <p className={dashboard.profilemail}>{userEmail}</p>
 
                 <Image src={images} alt="Picture of the author" width={100} height={80} className={dashboard.profileimg} />
 
