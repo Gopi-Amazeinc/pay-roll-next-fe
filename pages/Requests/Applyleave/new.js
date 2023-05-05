@@ -21,7 +21,7 @@ const ApplyLeave = () => {
   };
   useEffect(() => {
     const userid = sessionStorage.getItem("userID");
-    setUserId(userid)
+    setUserId(userid);
     getDropdowndata();
   }, []);
 
@@ -41,7 +41,7 @@ const ApplyLeave = () => {
   return (
     <Layout>
       <Link href="/Requests/Leaverequest">
-        {" "}
+    
         <BsArrowLeftSquare /> Leave
       </Link>
       <div className="card p-3 border-0 shadow-lg  mt-4">
