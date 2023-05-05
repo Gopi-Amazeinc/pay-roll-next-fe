@@ -316,7 +316,8 @@ const Sidebar = ({ children, applyPageName }) => {
               )}
             </div>
           ))}
-
+{userRole ==17 && (
+  <>
         <hr></hr>
         <button className={styles.sidemenu} onClick={toggleOtMenu}>
           <BiCalendar style={customStyles.icons} />
@@ -338,6 +339,8 @@ const Sidebar = ({ children, applyPageName }) => {
             </Link>
           </div>
         )}
+        </>
+)}
 
         <hr></hr>
         <button className={styles.sidemenu} onClick={toggleAttendenceMenu}>
