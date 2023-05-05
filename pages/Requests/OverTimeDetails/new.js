@@ -121,6 +121,7 @@ const OverTimeDetails = () => {
 
   return (
     <Layout>
+      <h5>Insert  operation is not Done</h5>
       <form onSubmit={handleSubmit(insertDetails)}>
         <div className="shadow-lg p-3 mt-3 mb-5 bg-white rounded">
           <div>
@@ -275,7 +276,7 @@ const OverTimeDetails = () => {
                             <td> Special Rest Night OT </td>
                           </tr>
                           <tr>
-                            <td>Special Rest Normal OT </td>7
+                            <td>Special Rest Normal OT </td>
                           </tr>
                           <tr>
                             <td> Special Rest Excess Normal OT </td>
