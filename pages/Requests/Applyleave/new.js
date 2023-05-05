@@ -21,7 +21,7 @@ const ApplyLeave = () => {
   };
   useEffect(() => {
     const userid = sessionStorage.getItem("userID");
-    setUserId(userid)
+    setUserId(userid);
     getDropdowndata();
   }, []);
 
