@@ -37,7 +37,7 @@ const Index = () => {
   return (
     <div className="container">
       <br />
-      <h4>ComponentMaster,upload, disable/enable api's pending </h4>
+      <h4>ComponentMaster,upload, disable/enable APIs pending </h4>
       <h5 className="Heading">Upload Payroll Component</h5>
       <div className="card shadow-lg p-4 rounded-3 mt-4">
         <div className="row">

@@ -89,7 +89,7 @@ const Index = () => {
   return (
     <Layout>
     <div className="container">
-      <h5>API's yet to be provided</h5>
+      <h5>APIs yet to be provided</h5>
       <div>
       <p>Page {pgNo} / 9</p>
         {pgNo == 1 ? <EmployeeProfile /> : pgNo == 2 ? <PositionDetails /> : pgNo==3 ? <ContactDetails/>: 
