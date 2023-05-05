@@ -496,6 +496,8 @@ const Sidebar = ({ children, applyPageName }) => {
           </div>
         )}
 
+{ userRole == 17 && (
+  <>
         <hr></hr>
 
         <button className={styles.sidemenu} onClick={toggleLoansMenu}>
@@ -518,6 +520,8 @@ const Sidebar = ({ children, applyPageName }) => {
             </Link>
           </div>
         )}
+        </>
+)}
         {userRole == 17 && (
           <div>
             <hr></hr>
@@ -1184,6 +1188,23 @@ const Sidebar = ({ children, applyPageName }) => {
             </Link>
           </div>
         )}
+          {userRole == 6 && (
+          <>
+            <hr></hr>
+            <Link href="/Announcement" className={styles.sidemenulink}>
+              <button
+                className={getStyle(501)}
+                onClick={updateActiveMenu.bind(this, {
+                  id: 501,
+                  name: "Announcement",
+                })}
+              >
+                <HiOutlineTicket style={customStyles.icons} />
+                Announcement
+              </button>
+            </Link>
+          </>
+        )}
         {userRole == 17 && (
           <div>
             <hr></hr>
@@ -1661,23 +1682,7 @@ const Sidebar = ({ children, applyPageName }) => {
             Support tickets
           </button>
         </Link>
-        {userRole == 6 && (
-          <>
-            <hr></hr>
-            <Link href="/Announcement" className={styles.sidemenulink}>
-              <button
-                className={getStyle(501)}
-                onClick={updateActiveMenu.bind(this, {
-                  id: 501,
-                  name: "Announcement",
-                })}
-              >
-                <HiOutlineTicket style={customStyles.icons} />
-                Announcement
-              </button>
-            </Link>
-          </>
-        )}
+      
       </div>
     </div>
   );
