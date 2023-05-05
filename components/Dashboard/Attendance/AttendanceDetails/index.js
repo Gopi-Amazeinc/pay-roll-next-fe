@@ -8,7 +8,6 @@ const AttendenceDetails = () => {
   const [Attendence, setAttendence] = useState([]);
   const [userID, setUserID] = useState();
   const [roleID, setRoleID] = useState();
-  const [roleID, setRoleID] = useState();
   let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
   // function Attendance() {
   useEffect(() => {
