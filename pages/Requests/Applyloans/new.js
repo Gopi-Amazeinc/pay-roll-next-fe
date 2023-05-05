@@ -7,20 +7,20 @@ import styles from "../../../styles/applyloans.module.css"
 
 const Applyloans = () => {
     const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-    const { register, formState,watch, handleSubmit } = useForm();
+    const { register, formState, watch, handleSubmit } = useForm();
     const { errors } = formState;
     const onSubmit = async (data) => {
         debugger
         let ddd = [
             {
                 "StaffID": sessionStorage.getItem('userID'),
-                 "LoanType": watch('loanType'),
-                "LoanAmount":watch('loanAmount') ,
+                "LoanType": watch('loanType'),
+                "LoanAmount": watch('loanAmount'),
                 "Comments": watch('Comments'),
                 "Period": watch('Tenure'),
-                "Status":'Manager Pending',
-                "EmiAmount":"",
-                "Attachment":"",
+                "Status": 'Manager Pending',
+                "EmiAmount": "",
+                "Attachment": "",
             }
         ];
         //ddd.push(data);
@@ -43,7 +43,7 @@ const Applyloans = () => {
     // ),[]}
     return (
         <Layout>
-         
+
             <h4 className="text-primary mx-2">Apply Loan</h4>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className='card shadow-lg p-3'>

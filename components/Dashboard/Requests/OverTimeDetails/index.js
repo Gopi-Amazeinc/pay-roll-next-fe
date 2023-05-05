@@ -12,6 +12,7 @@ const Index = () => {
     const [rejected, setRejected] = useState(false);
     const [newDashboard, setNewDashboardData] = useState([]);
     const [newApproved, setnewApprovedData] = useState([]);
+    const [newRejected, setnewRejectedData] = useState([]);
     const togglePending = () => {
         setPending(true)
         setApproved(false)
@@ -31,6 +32,28 @@ const Index = () => {
         setPending(false)
 
     }
+
+    const getPendingDetails = async () => {
+        const res = await axios.get(hostURL + "Payroll/GetPendingStaffOverTimeDetails")
+        setNewDashboardData(res.data);
+        console.log("Pending", res.data);
+    }
+    const getApprovedDetails = async () => {
+        const res = await axios.get(hostURL + "Payroll/GetApproveStaffOverTimeDetails")
+        setnewApprovedData(res.data);
+        console.log("Approved", res.data);
+    }
+    const getRejectedDetails = async () => {
+        const res = await axios.get(hostURL + "Payroll/GetRejectStaffOverTimeDetails")
+        setnewRejectedData(res.data);
+        console.log("Rejected", res.data);
+    }
+    useEffect(() => {
+        getPendingDetails();
+        getApprovedDetails();
+        getRejectedDetails();
+    }, [])
+    
 
 
     return (
@@ -167,7 +190,7 @@ const Index = () => {
 
                         <tbody>
                             {
-                                newApproved.map((data) => {
+                                newRejected.map((data) => {
                                     return (
                                         <tr key={data.id}>
                                             <td>{data.date}</td>

@@ -1,7 +1,7 @@
 import React from 'react'
 import Layout from '@/components/layout/layout'
 import Styles from "../../../styles/LeaveReport.module.css"
-import { useEffect,useState } from 'react'
+import { useEffect, useState } from 'react'
 import Id from '@/pages/Requests/Compensationtimeout/[id]';
 import { DownloadTableExcel } from 'react-export-table-to-excel';
 import { useRef } from 'react';
@@ -10,10 +10,22 @@ import { useRef } from 'react';
 
 function Leavereport() {
 
-    const [LeaveReport,setLeaveReport] = useState ([]);
+    const [LeaveReport, setLeaveReport] = useState([]);
     const tableRef = useRef(null);
 
+  const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
 
+   async function getLeaveReport(){
+    let res = await axios.get(hostURL + "https://103.12.1.103/PayRollRevampAPI/Employee/GetStaffLeaves?ID=" + staffID + "&TypeID=1&Sdate=" + Sdate + "&Edate=" + Edate);
+    setLeaveReport(res.data);
+    console.log(res.data);
+   
+    }
+
+    useEffect(() => {
+        getLeaveReport();
+      
+    }, [])
 
 
 
@@ -42,12 +54,12 @@ function Leavereport() {
                         <br />
                         <div className="col-lg-4">
                             <br></br>
-                        <DownloadTableExcel
-                          filename="Leave Report"
-                          sheet="users"
-                          currentTableRef={tableRef.current}>
-                          <button type="button" className="button">Download</button>
-                        </DownloadTableExcel>
+                            <DownloadTableExcel
+                                filename="Leave Report"
+                                sheet="users"
+                                currentTableRef={tableRef.current}>
+                                <button type="button" className="button">Download</button>
+                            </DownloadTableExcel>
                         </div>
                     </div>
                 </div>
@@ -67,16 +79,16 @@ function Leavereport() {
                             </tr>
                         </thead>
                         <tbody>
-                            { LeaveReport.map((data,index)=>{
-                                return(
-                                <tr key={index}>
-                                    <td>{data.fromDate}</td>
-                                    <td>{data.toDate}</td>
-                                    <td>{data.leaveType}</td>
-                                    <td>{data.leaveReason}</td>
-                                    <td>{data.leaveDaysCount}</td>
-                                    <td>{data.stageAndStatus}</td>
-                                </tr>
+                            {LeaveReport.map((data, index) => {
+                                return (
+                                    <tr key={index}>
+                                        <td>{data.fromDate}</td>
+                                        <td>{data.toDate}</td>
+                                        <td>{data.leaveType}</td>
+                                        <td>{data.leaveReason}</td>
+                                        <td>{data.leaveDaysCount}</td>
+                                        <td>{data.stageAndStatus}</td>
+                                    </tr>
                                 )
 
                             })
