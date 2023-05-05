@@ -61,7 +61,7 @@ const Index = () => {
             <h5>Data is not there</h5>
             <div className='row'>
                 <div className='col-lg-3 mt-3 text-primary fs-6 fw-bold'>
-                    <h4>My OvertimeDetails</h4>
+                    <h4 className='Heading'>My OvertimeDetails</h4>
                 </div>
             </div>
             <div className='card p-3 border-0 shadow-lg rounded-3 mt-4'>
@@ -95,9 +95,9 @@ const Index = () => {
                 <div className="col-lg-12 dashbutton bttn">
                     <div className='col-lg-4 mx-2'><br />
                         <div className='btn-group'>
-                            <button onClick={togglePending} className={loan.tabBtn}>Pending</button>
-                            <button onClick={toggleApproved} className={loan.tabBtn}>Approved</button>
-                            <button onClick={toggleRejected} className={loan.tabBtn}>Rejected</button>
+                            <button onClick={togglePending} className="toggleButton">Pending</button>
+                            <button onClick={toggleApproved} className="toggleButton">Approved</button>
+                            <button onClick={toggleRejected} className="toggleButton">Rejected</button>
                         </div>
                     </div>
                     <br />

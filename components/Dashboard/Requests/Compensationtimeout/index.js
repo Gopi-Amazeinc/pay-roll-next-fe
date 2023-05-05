@@ -180,7 +180,7 @@ const Compensationtimeout = () => {
     return (
 
         <div className='container'>
-            <h3 className='text-primary fs-5 mt-3'>Compensation Time Out</h3>
+            <h3 className='Heading'>Compensation Time Out</h3>
             <div className='card p-3 border-0 shadow-lg rounded-3 mt-4'>
                 <div className='row p-3'>
                     <div className='col-lg-1'>
@@ -203,9 +203,9 @@ const Compensationtimeout = () => {
             <div className='row mt-3'>
                 <div className='col-lg-4'>
                     <div className='btn-group'>
-                        <button onClick={togglePending} className={leave.btn} >Pending</button>
-                        <button onClick={toggleApproved} className={leave.btn} >Approved</button>
-                        <button onClick={toggleRejected} className={leave.btn}>Rejected</button>
+                        <button onClick={togglePending} className='toggleButton' >Pending</button>
+                        <button onClick={toggleApproved} className='toggleButton'  >Approved</button>
+                        <button onClick={toggleRejected} className='toggleButton' >Rejected</button>
                     </div>
                 </div>
             </div>
@@ -239,7 +239,7 @@ const Compensationtimeout = () => {
             </Modal>
 
             <div className='row mt-3'>
-                <div className='col-lg-2 text-primary fs-6 fw-bold'>
+                <div className='Heading'>
                     <h6>Showing Results</h6>
                 </div>
                 {
