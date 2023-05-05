@@ -27,8 +27,9 @@
     "react-hook-form": "^7.43.9",
     "react-icons": "^4.8.0",
     "react-modal": "^3.16.1",
+    "react-time-picker": "^6.0.4",
     "reactstrap": "^9.1.9",
-    "sweetalert2": "^11.7.3",
+    "sweetalert2": "^11.4.8",
     "xlsx": "^0.18.5"
   }
 }
