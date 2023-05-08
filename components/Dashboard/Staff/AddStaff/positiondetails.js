@@ -309,9 +309,7 @@ function PositionDetails() {
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <div className='row'>
+                <div className='row'>
                 <div className='col-lg-4'></div>
                 <div className='mt-3 mb-3 col-lg-3'>
                     <button className='btn btn-primary' id='AddButton'>Submit</button>
@@ -319,13 +317,16 @@ function PositionDetails() {
                 <div className='col-lg-5'></div>
 
                 <div className='col-lg-9'></div>
-                <div className='col-lg-3'>
+                {/* <div className='col-lg-3'>
                     <div className='btn-group mb-3 mt-2 ms-5'>
                         <button className='btn btn-secondary'>Previous</button>
                         <button className='btn btn-primary'>Next</button>
                     </div>
-                </div>
+                </div> */}
             </div>
+            </div>
+
+            
         </div>
     )
 }

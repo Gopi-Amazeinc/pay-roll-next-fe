@@ -89,7 +89,7 @@ function EmploymentHistory() {
                 </table>
             </div>
 
-            <div className='row'>
+            {/* <div className='row'>
                 <div className='col-lg-9'></div>
                 <div className='col-lg-3'>
                     <div className='btn-group mb-3 mt-2 ms-5'>
@@ -97,7 +97,7 @@ function EmploymentHistory() {
                         <button className='btn btn-primary'>Next</button>
                     </div>
                 </div>
-            </div>
+            </div> */}
         </div>
     )
 }
