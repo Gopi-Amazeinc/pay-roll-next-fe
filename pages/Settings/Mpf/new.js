@@ -1,15 +1,14 @@
 import Layout from '@/components/layout/layout'
-import React, { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import Link from 'next/link';
 import Styles from '../../../styles/mpfadd.module.css'
 
-function MpfForm({ editData }) {
+function MpfForm({ }) {
     const { register, handleSubmit, reset, formState } = useForm();
     const { errors } = formState;
-    const [actionType, setActionType] = useState("insert");
+
 
     // useEffect(() => {
     //     async function getMpfList() {
@@ -27,50 +26,18 @@ function MpfForm({ editData }) {
     //     getMpfList();
     // }, [1]);
 
-    useEffect(() => {
-        if (editData == "") {
-            clearForm();
-        } else {
-            clearForm(editData);
-        }
-    }, [1]);
-
-    function clearForm(mpfData = null) {
-        let details = {
-            "ID": mpfData ? mpfData.id : "",
-            "Taxiableincomelowlimit": mpfData ? mpfData.taxiableincomelowlimit : "",
-            "Taxiableincomehighlimit": mpfData ? mpfData.taxiableincomehighlimit : "",
-            "MPF_EEvalue": mpfData ? mpfData.mpF_EEvalue : "",
-            "MPF_ERvalue": mpfData ? mpfData.mpF_ERvalue : "",
-            "MPF_Ecvalue": mpfData ? mpfData.mpF_Ecvalue : "",
-            "Year": mpfData ? mpfData.year : ""
-        }
-        reset(details);
-        setActionType(mpfData ? "update" : 'insert')
-    }
 
     async function onSubmit(data) {
         let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-        if (actionType == "insert") {
-            // This API is used to insert the data to the MPFConfogoration table
-            await axios.post(hostURL + "HR/InsertMPFconfogaration", data);
-            Swal.fire({
-                icon: "success",
-                title: "Hurray..",
-                text: "Data was inserted...!",
-            });
-            location.href = '/Settings/Mpf';
-        }
-        else {
-            // This API is used to update the data in the MPFConfogoration table
-            await axios.post(hostURL + "HR/UpdateMPFconfogaration", data);
-            Swal.fire({
-                icon: "success",
-                title: "Hurray..",
-                text: "Data was updated...!",
-            });
-            location.href = '/Settings/Mpf';
-        }
+        // This API is used to insert the data to the MPFConfogoration table
+        await axios.post(hostURL + "HR/InsertMPFconfogaration", data);
+        Swal.fire({
+            icon: "success",
+            title: "Hurray..",
+            text: "Data was inserted...!",
+        });
+        location.href = '/Settings/Mpf';
+
     }
 
     return (
@@ -126,16 +93,9 @@ function MpfForm({ editData }) {
                                 <Link href='/Settings/Mpf'><button className={Styles.Cancel}>Cancel</button></Link>
                             </div>
                             <div className='col-lg-1'>
-                                {
-                                    actionType == "insert" && (
-                                        <button type='submit' className={Styles.Save} >Save</button>
-                                    )
-                                }
-                                {
-                                    actionType == "update" && (
-                                        <button type='submit' className={Styles.Save} >Update</button>
-                                    )
-                                }
+
+                                <button type='submit' className={Styles.Save} >Save</button>
+
                             </div>
                         </div>
 
