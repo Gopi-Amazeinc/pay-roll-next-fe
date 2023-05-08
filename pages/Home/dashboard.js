@@ -305,7 +305,7 @@ const Dashboard=()=> {
                       <>
                     <div className="col-lg-7">
                       <button
-                        className={dashboard.button1}
+                        className={dashboard.punchin}
                         onClick={() => modelopen()}
                       >
                         PUNCH IN
@@ -334,7 +334,7 @@ const Dashboard=()=> {
 
                     <div className="col-lg-7">
                       <button
-                        className={dashboard.button1}
+                        className={dashboard.punchin}
                         onClick={() => setModalOpen(!modalOpen)}
                       >
                         PUNCH OUT

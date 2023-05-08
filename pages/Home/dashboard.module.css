@@ -82,24 +82,28 @@ button.close:hover {
 }
 
 
-.button1 {
-  width: 200px;
-  height: 50px;
-  left: 16px;
-  top: 73px;
-  background: #FFFFFF;
-  border: 2.63333px solid #3247D5;
-  border-radius: 6.58333px;
-  font-style: normal;
-  font-weight: 600;
+.punchin {
+  background-color: #3247d5;
+  color: #fff;
+  border-radius: 5px;
+  border: none;
+  text-transform: uppercase;
+  /* font-family: Poppins; */
+  text-shadow: none;
+  padding: 8px;
+  width: auto;
   font-size: 16px;
-  line-height: 17px;
-  letter-spacing: 0.658333px;
-  color: #3247D5;
-  margin-top: 10px;
+  font-weight: 500;
+  cursor: pointer;
+  /* font-family: Poppins; */
+  text-transform: none;
+  overflow: visible;
+  margin: 0;
+  width: 100%;
+  margin-top: 20px;
 }
 
-.buttonclick{
+.buttonclick {
   background: #FFFFFF;
   border: 2.63333px solid #3247D5;
   width: 200px;
@@ -116,6 +120,7 @@ button.close:hover {
   letter-spacing: 0.658333px;
   color: #3247D5;
 }
+
 .card1 {
   flex: 0 0 37%;
   max-width: 37%;
@@ -150,6 +155,7 @@ button.close:hover {
   margin-left: 100px;
   width: 100px;
 }
+
 .profileimg1 {
   align-items: center;
   margin-left: 3px;
@@ -165,7 +171,7 @@ button.close:hover {
 
 .viewmyprofile {
   border-radius: 5px;
- font-style: normal;
+  font-style: normal;
   letter-spacing: .658333px;
   color: #fff;
   background: #3247d5;
@@ -180,21 +186,25 @@ button.close:hover {
 .profile {
   margin-top: 53px;
 }
-.announcement{
+
+.announcement {
   text-decoration: none;
   float: right;
   margin-top: 60px;
   font-weight: bold;
 }
-.card-title{
+
+.card-title {
   margin-top: 0px;
 }
-.holiday{
+
+.holiday {
   text-decoration: none;
   float: right;
   margin-top: 150px;
   font-weight: bold;
 }
-.cardheader{
+
+.cardheader {
   font-weight: 700;
 }
