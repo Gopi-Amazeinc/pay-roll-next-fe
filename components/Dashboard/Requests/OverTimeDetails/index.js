@@ -226,6 +226,9 @@ const Index = () => {
                                             <td>{data.date}</td>
                                             <td>{data.startTime}</td>
                                             <td>{data.endTime}</td>
+                                            <td>
+                                                <button className='edit-btn'>Details</button>
+                                            </td>
                                             <td>{data.comments}</td>
                                             <td>{data.status}</td>
                                             <td>
@@ -251,7 +254,7 @@ const Index = () => {
                                 <th>End Time</th>
                                 <th>OT Details</th>
                                 {/* <th>Attachment</th> */}
-                                {/* <th>Purpose</th> */}
+                                <th>Purpose</th>
                                 <th>Status</th>
                                 <th>Actions</th>
                             </tr>
@@ -287,7 +290,7 @@ const Index = () => {
                                 <th>End Time</th>
                                 <th>OT Details</th>
                                 {/* <th>Attachment</th> */}
-                                {/* <th>Purpose</th> */}
+                                <th>Purpose</th>
                                 <th>Status</th>
                                 <th>Actions</th>
                             </tr>
@@ -321,7 +324,7 @@ const Index = () => {
                                 <th>End Time</th>
                                 <th>OT Details</th>
                                 {/* <th>Attachment</th> */}
-                                {/* <th>Purpose</th> */}
+                                <th>Purpose</th>
                                 <th>Status</th>
                                 <th>Actions</th>
                             </tr>
@@ -335,6 +338,9 @@ const Index = () => {
                                             <td>{data.date}</td>
                                             <td>{data.startTime}</td>
                                             <td>{data.endTime}</td>
+                                            <td>
+                                                <button className='edit-btn'>Details</button>
+                                            </td>
                                             <td>{data.comments}</td>
                                             <td>{data.status}</td>
                                             <td>
