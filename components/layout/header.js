@@ -50,31 +50,33 @@ const Header = ({ makelogout }) => {
   return (
     <div className="header">
       <div className="row" style={{ background: "#3247d5" }}>
-        <div className="col-lg-2 mt-2">
+        <div className="col-lg-2 mt-1">
           <Image
             className="img-fluid "
             src={Digilogo}
             alt="Digi Office"
             width={145}
-            height={53}
+            height={45}
           />
         </div>
-        <div className="col-lg-6 mt-3 text-white ">
+        <div className="col-lg-6 text-white ">
 
-          <p><span className={HeaderStyles.time}>{hh}:</span > <span className={HeaderStyles.time}>{mm}:</span ><span className={HeaderStyles.time} >{ampm}</span></p>
+          <p className={HeaderStyles.time1}><span className={HeaderStyles.time}>{hh}:</span > <span className={HeaderStyles.time}>{mm}:</span ><span className={HeaderStyles.time} >{ampm}</span></p>
         </div>
         <div className="col-lg-1 text-white ">
 
         </div>
-        <div className="col-lg-1 mt-3 text-white">
+        {/* <div className="col-lg-1 mt-2 text-white"> */}
           {/* <h4 onClick={makelogout}>logout </h4> */}
-        </div>
-        <div className="col-lg-2  mt-3 text-white">
-          <Image className={HeaderStyles.notification} src={Notification} alt="notificatons" width={35} height={35} />
-          <div >
+        {/* </div> */}
+        <div className="col-lg-3  mt-2 text-white" style={{ float: "right" }}>
+          <Image className={HeaderStyles.notification} src={Notification} alt="notificatons" width={33} height={30} />
+          <div className={HeaderStyles.dropdown1} >
             <div className={HeaderStyles.dropdown} style={{ float: "left" }}>
               <button className={HeaderStyles.logout} >  Hi {userName} <FaCaretDown style={{ cursor: "pointer" }} /> </button>
-              <div className={HeaderStyles.dropdowncontent} style={{ left: "0" }}>
+
+              <div className={HeaderStyles.dropdowncontent} >
+
                 <Link className={HeaderStyles.profile} href="/Staff/AddStaff"> <h6> <CgProfile /> &nbsp; &nbsp; My Profile</h6> </Link>
                 <h6 style={{ whiteSpace: "nowrap" }}> <AiOutlineSetting /> &nbsp; &nbsp; Account Setting</h6>
                 <h6 onClick={makelogout} style={{ color: "red" }} ><FiLogOut /> &nbsp; &nbsp; logout</h6>

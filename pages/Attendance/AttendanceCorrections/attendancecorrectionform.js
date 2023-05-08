@@ -25,7 +25,7 @@ export default function AttendanceCorrectionform() {
         // const formData = { ...data, Attendance: Attendance };
         // console.log("form data", formData);
         debugger
-        await axios.post(hostURL + "Payroll/InsertAttendanceCorrection", data);       
+        await axios.post(hostURL + "Payroll/InsertAttendanceCorrection", data);
         Swal.fire('Data Inserted successfully');
         location.href = "/Attendance/AttendanceCorrections";
         console.log("Inserted data:", data);
@@ -33,7 +33,7 @@ export default function AttendanceCorrectionform() {
 
     function clearForm(existingData = null) {
         var StafID = sessionStorage.getItem("userID")
-        
+
         let etty = {
             "StaffID": StafID,
             "SDate": existingData ? existingData.SDate : "",
@@ -45,9 +45,9 @@ export default function AttendanceCorrectionform() {
         setActionType(existingData ? "update" : 'insert');
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         clearForm()
-    },[1])
+    }, [1])
 
     return (
         <Layout>
@@ -94,7 +94,7 @@ export default function AttendanceCorrectionform() {
 }
 
 
-    
-    
-    
+
+
+
 
