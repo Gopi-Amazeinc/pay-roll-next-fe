@@ -80,12 +80,12 @@ const Header = ({ makelogout }) => {
             <div className={HeaderStyles.dropdown} style={{ float: "left" }}>
               <Image className={HeaderStyles.notification} src={Notification} alt="notificatons" width={33} height={30} />
 
-   
-                <span className={HeaderStyles.initial}>{initial}</span>
+
+              <span className={HeaderStyles.initial}>{initial}</span>
 
 
 
-              <button className={HeaderStyles.logout} >  Hi {userName} <FaCaretDown style={{ cursor: "pointer" }} /> </button>
+              <button className={HeaderStyles.logout} >  Hi {userName}! <FaCaretDown style={{ cursor: "pointer" }} /> </button>
 
               <div className={HeaderStyles.dropdowncontent} >
 

@@ -4,48 +4,19 @@ import { useForm } from 'react-hook-form';
 import leaveform from '../../../styles/LeaveTypeForm.module.css'
 import Layout from '../../../components/layout/layout'
 import axios from "axios";
-import { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 
-function LeaveTypeForm({ editData }) {
+function LeaveTypeForm() {
 
     let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-    const [actionType, setActionType] = useState("insert");
 
     const { register, handleSubmit, reset, formState } = useForm();
     const { errors } = formState;
 
-
-    useEffect(() => {
-        if (editData == "") {
-            clearForm();
-        } else {
-            clearForm(editData);
-        }
-    }, [1]);
-
     const onSubmit = async (data) => {
-        debugger;
-        console.log(data);
-        if (actionType == "insert") {
-            await axios.post(hostURL + "Master/InsertLeaveTypeMaster", data);
-            Swal.fire("SubSectionMaster Inserted succefully!");
-            location.href = "/Masters/LeaveType";
-        } else {
-            let res = await axios.post(hostURL + "Master/UpdateLeaveTypeMaster", data);
-            sessionStorage.removeItem("id");
-            Swal.fire("SubSectionMaster updated succefully!");
-            location.href = "/Masters/LeaveType";
-        }
-    };
-    const clearForm = (existingData = null) => {
-        let etty = {
-            ID: existingData ? existingData.id : "",
-            Short: existingData ? existingData.short : "",
-            Description: existingData ? existingData.description : "",
-        };
-        reset(etty);
-        setActionType(existingData ? "update" : "insert");
+        await axios.post(hostURL + "Master/InsertLeaveTypeMaster", data);
+        Swal.fire("SubSectionMaster Inserted succefully!");
+        location.href = "/Masters/LeaveType";
     };
     const customStyles = {
         errorMsg: {
@@ -57,8 +28,6 @@ function LeaveTypeForm({ editData }) {
             fontSize: "16px",
         },
     };
-
-
 
     return (
         <Layout>
@@ -128,22 +97,12 @@ function LeaveTypeForm({ editData }) {
                                         </Link>
                                     </div>
                                     <div className="col-lg-2">
-                                        {actionType == "insert" && (
-                                            <button
-                                                type="submit"
-                                                className="AddButton"
-                                            >
-                                                Submit
-                                            </button>
-                                        )}
-                                        {actionType == "update" && (
-                                            <button
-                                                type="submit"
-                                                className="AddButton"
-                                            >
-                                                Update
-                                            </button>
-                                        )}
+                                        <button
+                                            type="submit"
+                                            className="AddButton"
+                                        >
+                                            Submit
+                                        </button>
                                     </div>
                                 </div>
                             </div>

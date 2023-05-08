@@ -2,52 +2,22 @@ import React from "react";
 import Link from "next/link";
 import Layout from "../../../components/layout/layout";
 import { useForm } from "react-hook-form";
-import { useEffect, useState } from "react";
 import axios from 'axios'
+import Swal from "sweetalert2";
 
 
 
-function BrandMasterForm({ editData }) {
+function BrandMasterForm() {
 
     const { register, handleSubmit, watch, reset, formState: { errors }, } = useForm();
-
-    const [actionType, setActionType] = useState("insert");
-    console.log(editData)
-
-    useEffect(() => {
-        if (editData == "") {
-            clearForm();
-        } else {
-            clearForm(editData);
-        }
-    }, [1]);
-
-    function clearForm(BandMasterData = null) {
-        let details = {
-            "ID": BandMasterData ? BandMasterData.id : "",
-            "Short": BandMasterData ? BandMasterData.short : "",
-            "Description": BandMasterData ? BandMasterData.description : "",
-        };
-        reset(details);
-        setActionType(BandMasterData ? "update" : "insert");
-    }
+    let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
 
     async function onSubmit(data) {
-        console.log(data);
-        let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-        if (actionType == "insert") {
-            try {
 
-                await axios.post(hostURL + "Master/InsertBrandMaster", data); // this for insrting the data using inserting Api call 
-            } catch (error) {
+        await axios.post(hostURL + "Master/InsertBrandMaster", data);
+        Swal.fire("Inserted")
+        router.push("/Masters/BrandMaster")
 
-            }
-
-
-        } else {
-            await axios.post(hostURL + "Master/UpdateBrandMaster", data); // this is for updating or Modifiying the data using  Update Api call
-            alert("updated");
-        }
     }
 
     return (
@@ -72,9 +42,9 @@ function BrandMasterForm({ editData }) {
                                 <textarea
                                     className="form-control"
                                     placeholder="Description"
-                                    {...register('Description', { required: "Please add a Descrption Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Descrption Name" } })}
+                                    {...register('Description', { required: true, })}
                                 ></textarea>
-                                {errors.Description && <p className="error-message" style={{ color: "red" }}>{errors.Name.message}</p>}
+                                {errors.Description && <p className="text-danger" >Please enter a valid Descrption Name</p>}
 
                             </div>
                         </div>
@@ -83,20 +53,15 @@ function BrandMasterForm({ editData }) {
                             <div className="col-lg-8"></div>
                             <div className="col-lg-2">
                                 <Link href="/Masters/BrandMaster">
-                                    <button type="submit"className="AddButton">Cancel</button>
+                                    <button type="submit" className="AddButton">Cancel</button>
                                 </Link>
                             </div>
                             <div className="col-lg-2 ">
-                                {actionType == "insert" && (
-                                    <button type="submit" className="AddButton">
-                                        Save
-                                    </button>
-                                )}
-                                {actionType == "update" && (
-                                    <button type="submit" className="AddButton">
-                                        Update
-                                    </button>
-                                )}
+
+                                <button type="submit" className="AddButton">
+                                    Save
+                                </button>
+
                             </div>
                         </div>
                     </form>

@@ -125,7 +125,7 @@ const Attendancecorrectiondashboard = () => {
 
           <div className="col-lg-4">
             <Link href="/Attendance/AttendanceCorrections/attendancecorrectionform">
-              <button className="btn btn-primary">
+              <button className="button">
                 Add Attendance Correction
               </button>
             </Link>

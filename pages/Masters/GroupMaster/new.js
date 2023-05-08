@@ -5,45 +5,18 @@ import axios from 'axios';
 import Layout from '../../../components/layout/layout';
 import Styles from '../../../styles/groupMasterForm.module.css'
 import Swal from 'sweetalert2'
-function GroupMasterForm({ editData }) {
-    const [actionType, setActionType] = useState("insert");
+function GroupMasterForm() {
     const { register, handleSubmit, reset, formState } = useForm();
     const { errors } = formState;
     let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
 
     async function onSubmit(data) {
-        if (actionType == "insert") {
             await axios.post(hostURL + "Master/InsertGroupMaster", data);   //naveen.th@amazeinc.in, Insert API for group master, to add new data
             Swal.fire('Added Successfully')
             location.href = "/Masters/GroupMaster";
-        }
-        else {
-            await axios.post(hostURL + "Master/UpdateGroupMaster", data);  //naveen.th@amazeinc.in, Update API for group master, to update existing data
-            Swal.fire('Updated Successfully')
-            sessionStorage.removeItem("groupMasterID");
-            location.href = "/Masters/GroupMaster";
-        }
+      
     }
-    useEffect(() => {
-
-        if (editData == "") {
-            clearForm();
-        }
-        else {
-            clearForm(editData);
-        }
-    }, []);
-
-    function clearForm(existingData = null) {
-        let etty = {
-            "ID": existingData ? existingData.id : "",
-            "Short": existingData ? existingData.short : "",
-            "Description": existingData ? existingData.description : "",
-        }
-        reset(etty);
-        setActionType(existingData ? "update" : 'insert');
-    }
-
+ 
     const customStyles = {
         content: {
             top: '50%',
@@ -124,16 +97,11 @@ function GroupMasterForm({ editData }) {
                             </div>
                         
                             <div className='col-lg-2'>
-                                {actionType == "insert" && (
+                           
                                     <button type="submit" className="AddButton" >
                                         Save
                                     </button>
-                                )}
-                                {actionType == "update" && (
-                                    <button type="submit" className="AddButton" >
-                                        Update
-                                    </button>
-                                )}
+                                
                             </div>
                         </div>
                     </form>
