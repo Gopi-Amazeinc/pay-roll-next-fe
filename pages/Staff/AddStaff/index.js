@@ -17,7 +17,7 @@ const Index = () => {
   function changePathName(data){
     setPgNo(data)
 
-    document.getElementById(data).style.color = "green"
+    // document.getElementById(data).style.color = "green"
 
     
   }
