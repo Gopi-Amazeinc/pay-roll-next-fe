@@ -55,16 +55,16 @@ export default function BarangayMasterDash() {
 
       <div className="row mt-3">
         <div className="col-lg-10">
-          <p className="Heading fs-6 mt-2">
+          <p className="Heading">
             SHOWING <span></span>RESULTS
           </p>
         </div>
         <div className="col-lg-2">
           <Link href="/Masters/BarangayMaster/new">
             <button className=" AddButton">
-              {" "}
-              ADD NEW{" "}
-            </button>{" "}
+              
+              ADD NEW
+            </button>
           </Link>
         </div>
         <div className="col-lg-1"></div>

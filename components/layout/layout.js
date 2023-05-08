@@ -53,7 +53,7 @@ const Index = ({ children }) => {
         </Head>
         <div className="container-fluid">
           <div className="row" style={{ overflowX: "hidden" }}>
-            <div className="col-lg-12" style={{ height: "10vh" }}>
+            <div className="col-lg-12" style={{ height: "9vh" }}>
               <Header makelogout={logout}></Header>
             </div>
           </div>
@@ -70,10 +70,10 @@ const Index = ({ children }) => {
                 height: "90vh",
                 overflowY: "auto",
                 overflowX: "auto",
-                background: '#e5f3f5"',
+                background: "#e5f3f5",
               }}
             >
-              <main>
+              <main >
                 {children}
                 <br></br>
               </main>

@@ -7,7 +7,8 @@ import Link from "next/link";
 import Swal from "sweetalert2";
 import Layout from "@/components/layout/layout";
 
-const BarangayMasterForm = ({ editData }) => {
+const BarangayMasterForm = () => {
+  debugger
   const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
 
   const {
@@ -20,23 +21,10 @@ const BarangayMasterForm = ({ editData }) => {
   const [countrydata, setCountryData] = useState([]);
   const [provincedata, setProvinceData] = useState([]);
   const [citydata, setCityData] = useState([]);
-  const [actionType, setAction] = useState("insert");
 
   useEffect(() => {
     getData();
   }, [1]);
-
-  function clearForm(userData = null) {
-    let details = {
-      ID: userData ? userData.id : "",
-      CountryID: userData ? userData.countryID : "",
-      ProvinceID: userData ? userData.provinceID : "",
-      CityID: userData ? userData.cityID : "",
-      Name: userData ? userData.name : "",
-    };
-    setAction(userData ? "update" : "insert");
-    reset(details);
-  }
 
   async function getData() {
     let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
@@ -49,25 +37,12 @@ const BarangayMasterForm = ({ editData }) => {
     // This API is used to fetch the data from CityType table
     res = await axios.get(hostURL + "Master/GetCityType");
     setCityData(res.data);
-    debugger
-    if (editData == "") {
-      clearForm();
-    }
-    else {
-      clearForm(editData);
-    }
   }
 
   async function onSubmit(data) {
-    if (actionType == "insert") {
-      await axios.post(hostURL + "Master/InsertBarangayMaster", data);
-      Swal.fire("Data Inserted successfully");
-      location.href = "/Masters/BarangayMaster";
-    } else {
-      await axios.post(hostURL + "Master/UpdateBarangayMaster", data);
-      Swal.fire("Updated successfully");
-      location.href = "/Masters/BarangayMaster";
-    }
+    await axios.post(hostURL + "Master/InsertBarangayMaster", data);
+    Swal.fire("Data Inserted successfully");
+    location.href = "/Masters/BarangayMaster";
   }
   return (
     <Layout>
@@ -174,7 +149,7 @@ const BarangayMasterForm = ({ editData }) => {
                 )}
               </div>
             </div>
-            <br /> 
+            <br />
             <div className="row">
               <div className="col-lg-8"></div>
               <div className="col-lg-2">
@@ -187,22 +162,12 @@ const BarangayMasterForm = ({ editData }) => {
                 </Link>
               </div>
               <div className="col-lg-2">
-                {actionType == "insert" && (
-                  <button
-                    type="submit"
-                    className="AddButton"
-                  >
-                    Save
-                  </button>
-                )}
-                {actionType == "update" && (
-                  <button
-                    type="submit"
-                    className="AddButton"
-                  >
-                    Update
-                  </button>
-                )}
+                <button
+                  type="submit"
+                  className="AddButton"
+                >
+                  Save
+                </button>
               </div>
             </div>
           </form>

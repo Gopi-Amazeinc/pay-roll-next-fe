@@ -22,6 +22,19 @@ function StaffDashbaord() {
   const clearData = () => {
     sessionStorage.setItem("id", "");
   };
+  const enableDisableStaff = async (data) => {
+    let entity = {
+      StaffID: data.employeID,
+      AttendanceEnable: !data.attendanceEnable,
+    };
+    await axios.post(hostURL + "Payroll/UpdateAttendanceEnableDisable", entity);
+    if (etty.AttendanceEnable == true) {
+      Swal.fire("Attendance enabled");
+    } else {
+      Swal.fire("Attendance disabled");
+    }
+    getData();
+  };
   const handleDelete = async (id) => {
     try {
       let res = await axios.get(
@@ -39,6 +52,7 @@ function StaffDashbaord() {
   return (
     <div>
       <div className="container">
+      <h5>Masters, disable/enable, edit APIs pending</h5>
       <h5 className="Heading">Staff Dashboard</h5>
         <div className="card p-3 border-0 shadow-lg rounded-3 mt-4">
           <div className="row">
@@ -133,15 +147,25 @@ function StaffDashbaord() {
                   <td>{data.joiningDate}</td>
                   <td>{data.manager}</td>
                   <td>
-                    {/* <Link href={`/Masters/BarangayMaster/Edit/${data.id}`}> */}
-                      <button
+                    <span onClick={() => enableDisableStaff(data)}>
+                      {data.AttendanceEnable ? (
+                        <button
                         onClick={getData.bind(this, data)}
                         className="enableDisableBtn"
                       >
                         Disable
-                      </button>
-                    {/* </Link> */}
-                    
+                      </button>  
+                      ) : (
+                        <button
+                        onClick={getData.bind(this, data)}
+                        className="enableDisableBtn"
+                      >
+                        Enable
+                      </button>  
+                      )}
+
+                    </span>
+                                        
                   </td>
                   <td>
                       <BiEdit/>

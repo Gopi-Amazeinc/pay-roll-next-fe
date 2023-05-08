@@ -209,8 +209,8 @@ const InitialPayrollForm = () => {
                         <div className='col-lg-2'>
                             {
                                 runPayroll && (
-                                    <Link href="/Payroll/InitialPayroll">
-                                        <button>Run Payroll</button>
+                                    <Link href="/Payroll/InitialPayroll" style={{ textDecoration: "none" }}>
+                                        <button className="form-control CancelBTN">Run Payroll</button>
                                     </Link>
 
                                 )

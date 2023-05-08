@@ -5,7 +5,7 @@ import styles from "./login.module.css";
 import axios from "axios";
 import Swal from "sweetalert2";
 import eye from "@/public/eye.svg";
-import Loginpage from "@/public/Images/DigiLogin.png";
+import Loginpage from "/public/Images/DigiLogin.png";
 import digiLogo from "@/public/Images/DigiLogoBlue.png";
 
 const Login = ({ makelogin }) => {
@@ -54,6 +54,7 @@ const Login = ({ makelogin }) => {
     if (res.data.length > 0 && res.status === 200) {
       sessionStorage.setItem("userID", res.data[0].id);
       sessionStorage.setItem("userName", res.data[0].name);
+      sessionStorage.setItem("email", res.data[0].email);
       sessionStorage.setItem("roleID", res.data[0].login);
       makelogin();
     }

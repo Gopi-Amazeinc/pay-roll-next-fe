@@ -90,24 +90,24 @@ const LoanMasterDash = () => {
         <div className="col-lg-1"></div>
         <div className="col-lg-2">
           <Link href="/Masters/LoanMaster/new" >
-            {" "}
+
             <button
               className="mt-3 AddButton"
               onClick={clearData.bind(this)}
 
             >
-              {" "}
-              <AiOutlinePlusCircle size={18} /> ADD{" "}
-            </button>{" "}
+
+              <AiOutlinePlusCircle size={18} /> ADD
+            </button>
           </Link>
         </div>
 
       </div>
 
-      <div className="row ">
-        <table className=" table mt-3 table-striped table mx-3 " >
-          <thead className="th">
-            <tr className="tr">
+      <div className="row mx-0">
+        <table className=" table mt-3 table-striped  " >
+          <thead >
+            <tr >
 
               <th >Loan Type</th>
               <th >Description</th>

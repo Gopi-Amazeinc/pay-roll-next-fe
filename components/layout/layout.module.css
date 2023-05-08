@@ -22,8 +22,8 @@
 
 
 .sidemenuactive {
-    background-color: #3a4be9;
-    color: #f3f8ff !important;
+    background-color: white;
+    color: #3a4be9 !important;
     width: 100%;
     padding: 5%;
     border: none;
@@ -43,8 +43,8 @@
     font-weight: 500;
 }
 .sidesubmenuactive{
-    background-color: #3a4be9;
-    color: #f3f8ff !important;
+    background-color:white;
+    color: #3a4be9 !important;
     width: 100%;
     padding: 5% 5% 5% 15%;
     border: none;
@@ -54,8 +54,8 @@
 }
 
 .sidesubofsubmenuactive{
-    background-color: #3a4be9;
-    color: #f3f8ff !important;
+    background-color:white;
+    color: #3a4be9 !important;
     width: 100%;
     padding: 3% 3% 3% 16%;
     border: none;

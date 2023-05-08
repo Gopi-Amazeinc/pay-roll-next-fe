@@ -316,7 +316,8 @@ const Sidebar = ({ children, applyPageName }) => {
               )}
             </div>
           ))}
-
+{userRole ==17 && (
+  <>
         <hr></hr>
         <button className={styles.sidemenu} onClick={toggleOtMenu}>
           <BiCalendar style={customStyles.icons} />
@@ -338,6 +339,8 @@ const Sidebar = ({ children, applyPageName }) => {
             </Link>
           </div>
         )}
+        </>
+)}
 
         <hr></hr>
         <button className={styles.sidemenu} onClick={toggleAttendenceMenu}>
@@ -430,7 +433,7 @@ const Sidebar = ({ children, applyPageName }) => {
                 Leave Requests
               </button>
             </Link>
-            <Link href="/Requests/Overtimedetails">
+            <Link href="/Requests/OverTimeDetails">
               <button
                 className={getSubStyle(52)}
                 onClick={updateActiveMenu.bind(this, {
@@ -454,7 +457,7 @@ const Sidebar = ({ children, applyPageName }) => {
                 Loan Requests
               </button>
             </Link>
-            <Link href="/Requests/timesheet">
+            <Link href="/Requests/Timesheet">
               <button
                 className={getSubStyle(54)}
                 onClick={updateActiveMenu.bind(this, {
@@ -463,7 +466,7 @@ const Sidebar = ({ children, applyPageName }) => {
                 })}
               >
                 <RiFileUserLine style={customStyles.icons} />
-                Timesheet Requests(doubt)
+                Timesheet Requests(clarify)
               </button>
             </Link>
             <Link href="/Requests/Locatorrequest">
@@ -493,6 +496,8 @@ const Sidebar = ({ children, applyPageName }) => {
           </div>
         )}
 
+{ userRole == 17 && (
+  <>
         <hr></hr>
 
         <button className={styles.sidemenu} onClick={toggleLoansMenu}>
@@ -501,7 +506,7 @@ const Sidebar = ({ children, applyPageName }) => {
         </button>
         {displayLoans && (
           <div>
-            <Link href="/Loans/teamloans">
+            <Link href="/Loans">
               <button
                 className={getSubStyle(61)}
                 onClick={updateActiveMenu.bind(this, {
@@ -515,6 +520,8 @@ const Sidebar = ({ children, applyPageName }) => {
             </Link>
           </div>
         )}
+        </>
+)}
         {userRole == 17 && (
           <div>
             <hr></hr>
@@ -674,7 +681,7 @@ const Sidebar = ({ children, applyPageName }) => {
             </button>
             {displaySettings && (
               <div>
-                <Link href="/Settings/PayperiodSetting">
+                <Link href="/Settings/payperiodsetting">
                   <button
                     className={getSubStyle(91)}
                     onClick={updateActiveMenu.bind(this, {
@@ -1103,7 +1110,7 @@ const Sidebar = ({ children, applyPageName }) => {
                 </Link>
                 {/* added code from configuartion here */}
 
-                <Link href="/Configuration/dailyrate">
+                {/* <Link href="/Configuration/dailyrate">
                   <button
                     className={getSubStyle(124)}
                     onClick={updateActiveMenu.bind(this, {
@@ -1114,7 +1121,7 @@ const Sidebar = ({ children, applyPageName }) => {
                     <MdOutlineAutoAwesomeMosaic style={customStyles.icons} />
                     Daily rate(D)
                   </button>
-                </Link>
+                </Link> */}
 
                 {/* code ends for data configuration here */}
               </div>
@@ -1180,6 +1187,23 @@ const Sidebar = ({ children, applyPageName }) => {
               </button>
             </Link>
           </div>
+        )}
+          {userRole == 6 && (
+          <>
+            <hr></hr>
+            <Link href="/Announcement" className={styles.sidemenulink}>
+              <button
+                className={getStyle(501)}
+                onClick={updateActiveMenu.bind(this, {
+                  id: 501,
+                  name: "Announcement",
+                })}
+              >
+                <HiOutlineTicket style={customStyles.icons} />
+                Announcement
+              </button>
+            </Link>
+          </>
         )}
         {userRole == 17 && (
           <div>
@@ -1528,6 +1552,21 @@ const Sidebar = ({ children, applyPageName }) => {
                         R1-A
                       </button>
                     </Link>
+                    {userRole == 6 && (
+                    <>
+                    <Link href="/Reports/LeaveReport">
+                      <button
+                        className={getSubofSubStyle(4126)}
+                        onClick={updateActiveMenu.bind(this, {
+                          id: 4126,
+                          name: "LeaveReport",
+                        })}
+                      >
+                        <TbReportAnalytics style={customStyles.icons} />
+                        Leave Report
+                      </button>
+                    </Link></>
+                    )}
                   </div>
                 )}
                  <button className={styles.subsidemenu} onClick={togglePhilhealthMenu}>
@@ -1629,7 +1668,7 @@ const Sidebar = ({ children, applyPageName }) => {
         </Link>
         <hr></hr>
         <Link
-          href="/SupportTickets/supportticketdashboard"
+          href="/SupportTickets"
           className={styles.sidemenulink}
         >
           <button
@@ -1643,23 +1682,7 @@ const Sidebar = ({ children, applyPageName }) => {
             Support tickets
           </button>
         </Link>
-        {userRole == 6 && (
-          <>
-            <hr></hr>
-            <Link href="/Announcement" className={styles.sidemenulink}>
-              <button
-                className={getStyle(501)}
-                onClick={updateActiveMenu.bind(this, {
-                  id: 501,
-                  name: "Announcement",
-                })}
-              >
-                <HiOutlineTicket style={customStyles.icons} />
-                Announcement
-              </button>
-            </Link>
-          </>
-        )}
+      
       </div>
     </div>
   );

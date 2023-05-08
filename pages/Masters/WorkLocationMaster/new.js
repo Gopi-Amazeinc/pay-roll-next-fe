@@ -6,49 +6,20 @@ import Link from "next/link";
 import axios from "axios";
 import Swal from "sweetalert2";
 
-function WorkLocationMasterForm({ editData }) {
-  const [actionType, setActionType] = useState("insert");
+function WorkLocationMasterForm() {
+
   const { register, handleSubmit, reset, formState } = useForm();
   const { errors } = formState;
   let ID
   let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
 
   async function onSubmit(data) {
-    if (actionType == "insert") {
-      await axios.post(hostURL + "Master/InsertWorkingLocationMaster", data); //naveen.th@amazeinc.in, Insert API for Working location master, to add new data
-      Swal.fire(
-        'Added succesfullly'
-      );
-      location.href = "/Masters/WorkLocationMaster";
-    }
-    else {
-      await axios.post(hostURL + "Master/UpdateWorkingLocationMaster", data); //naveen.th@amazeinc.in, Update API for Working location master, to update existing data
-      Swal.fire(
-        "Updated succesfullly"
-      );
-      sessionStorage.removeItem("WorkLocationID");
-      location.href = "/Masters/WorkLocationMaster";
-    }
-    await axios.get(hostURL + "Master/GetWorkingLocationMaster"); //naveen.th@amazeinc.in, Get API for Working location master dashboard, to fetch new updated data
-  }
 
-  useEffect(() => {
-    if (editData == "") {
-      clearForm();
-    }
-    else {
-      clearForm(editData);
-    }
-  }, []);
-
-  function clearForm(existingData = null) {
-    let etty = {
-      "ID": existingData ? existingData.id : "",
-      "Short": existingData ? existingData.short : "",
-      "Description": existingData ? existingData.description : "",
-    }
-    reset(etty);
-    setActionType(existingData ? "update" : 'insert');
+    await axios.post(hostURL + "Master/InsertWorkingLocationMaster", data); //naveen.th@amazeinc.in, Insert API for Working location master, to add new data
+    Swal.fire(
+      'Added succesfullly'
+    );
+    location.href = "/Masters/WorkLocationMaster";
   }
   const customStyles = {
     content: {
@@ -103,16 +74,9 @@ function WorkLocationMasterForm({ editData }) {
                     <button type='button' className='btn common-edit edit-btn' id={Styles.btn}>Close</button></Link>
                 </div>
                 <div className="col-lg-2">
-                  {
-                    actionType == "insert" && (
-                      <button type='submit' className='edit-btn' id={Styles.btn}>Save</button>
-                    )
-                  }
-                  {
-                    actionType == "update" && (
-                      <button type='submit' className='edit-btn' id={Styles.btn} >Update</button>
-                    )
-                  }
+
+                  <button type='submit' className='edit-btn' id={Styles.btn}>Save</button>
+
                 </div>
               </div>
             </form>

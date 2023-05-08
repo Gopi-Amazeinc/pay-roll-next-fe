@@ -13,6 +13,7 @@ function Companyform() {
     <>
       <Layout>
         <div>
+        <h4 style={{color:"red"}}>Api Issue</h4>
           <br />
           <h4 style={{ color: "blue" }}>Company Profile</h4>
         </div>

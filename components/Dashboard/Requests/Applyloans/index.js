@@ -80,7 +80,8 @@ const ApplyloansDashboard = () => {
     }
     return (
         <>
-            <div className='card p-4 border-0 shadow-lg mt-2 mb-2'>
+        <h4 className="Heading">Apply Loans </h4>
+            <div className='card p-4 border-0 shadow-lg mt-4'>
                 <div className="row">
                     <div className="col-lg-1">
                         <label>Filter By</label>
@@ -94,8 +95,8 @@ const ApplyloansDashboard = () => {
                 <div className="col-lg-12 dashbutton bttn">
                     <div className='col-lg-4 mx-2'><br />
                         <div className='btn-group'>
-                            <button onClick={toggleNewRequest} className={loan.tabBtn}>New Request</button>
-                            <button onClick={toggleApproved} className={loan.tabBtn}>Approved</button>
+                            <button onClick={toggleNewRequest} className='toggleButton'>New Request</button>
+                            <button onClick={toggleApproved} className='toggleButton'>Approved</button>
                         </div>
                     </div><br />
                 </div>
@@ -187,7 +188,7 @@ const ApplyloansDashboard = () => {
                                                     className="btn btn-primary"
                                                     onClick={() => DeleteApplyLoans(data.id)}
                                                 >
-                                                    Delete{" "}
+                                                    Delete
                                                 </button>
                                             </td>
                                         </tr>

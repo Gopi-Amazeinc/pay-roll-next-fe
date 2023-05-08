@@ -51,12 +51,12 @@ const Attendancecorrectiondashboard = () => {
     //let staffID = "20540";
     const res = await axios.get(
       hostURL +
-        "Payroll/GetPendingAttendanceCorrectionByStaffID?userID=" +
-        staffID +
-        "&SDate=" +
-        SDate +
-        "&EDate=" +
-        EDate
+      "Payroll/GetPendingAttendanceCorrectionByStaffID?userID=" +
+      staffID +
+      "&SDate=" +
+      SDate +
+      "&EDate=" +
+      EDate
     );
     console.log(res);
     setpendingDashboardData(res.data);
@@ -124,9 +124,9 @@ const Attendancecorrectiondashboard = () => {
           </div>
 
           <div className="col-lg-4">
-            <Link href="/Attendence/attendancecorrectionform">
-              <button className="btn btn-primary">
-                Add Attendance Correction{" "}
+            <Link href="/Attendance/AttendanceCorrections/attendancecorrectionform">
+              <button className="button">
+                Add Attendance Correction
               </button>
             </Link>
           </div>

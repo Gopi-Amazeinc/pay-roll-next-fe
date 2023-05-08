@@ -193,7 +193,7 @@ const Locatordashboard = () => {
                     <div className={Styles.flex}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                         {tabsData.map((tab, idx) => {
                             return (
-                                <button key={idx} ref={(el) => (tabsRef.current[idx] = el)} className={Styles.btn} onClick={() => setActiveTabIndex(idx)} >
+                                <button key={idx} ref={(el) => (tabsRef.current[idx] = el)} className='toggleButton' onClick={() => setActiveTabIndex(idx)} >
                                     {tab.label}
                                 </button>
                             );

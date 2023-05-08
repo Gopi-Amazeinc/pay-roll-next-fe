@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
-import { useRouter } from "next/router";
+
 
 function CityMasterForm({ editData }) {
     const [countryData, setCountryData] = useState([]);
@@ -17,7 +17,6 @@ function CityMasterForm({ editData }) {
         reset,
         formState: { errors },
     } = useForm();
-    const [actionType, setActionType] = useState("insert");
 
     useEffect(() => {
         async function getDropdownData() {
@@ -28,52 +27,23 @@ function CityMasterForm({ editData }) {
 
             res = await axios.get(hostURL + "Master/GetStateType"); // this api call for master table this is used for DropDown data 
             setProvinceData(res.data);
-
-            if (editData == "") {
-
-                clearForm();
-            } else {
-                clearForm(editData);
-            }
         }
 
         getDropdownData();
     }, [1]);
 
-    function clearForm(userData = null) {
-        debugger;
-        let details = {
-            ID: userData ? userData.id : "",
-            CountryID: userData ? userData.countryID : "",
-            StateID: userData ? userData.stateID : "",
-            // City:userData ? userData.city : "",
-            Short: userData ? userData.short : "",
-            Description: userData ? userData.description : "",
-        };
-        reset(details);
-        setActionType(userData ? "update" : "insert");
-    }
 
     async function onSubmit(data) {
         console.log(data);
         let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-        if (actionType == "insert") {
-                await axios.post(hostURL + "Master/InsertCityType", data); // this for insrting the data using inserting Api call 
-                Swal.fire({
-                    icon: "success",
-                    title: "Hurray...",
-                    text: "Data was added..!",
-                });
-                location.href="/Masters/CityMaster"
-        } else {
-            await axios.post(hostURL + "Master/UpdateCityType", data); //  this is for updating or Modifiying the data using  Update Api call
-            Swal.fire({
-                icon: "success",
-                title: "Hurray...",
-                text: "Data was Updated..!",
-            });
-            location.href="/Masters/CityMaster"
-        }
+        await axios.post(hostURL + "Master/InsertCityType", data); // this for insrting the data using inserting Api call 
+        Swal.fire({
+            icon: "success",
+            title: "Hurray...",
+            text: "Data was added..!",
+        });
+        location.href = "/Masters/CityMaster"
+
     }
 
     return (
@@ -165,24 +135,14 @@ function CityMasterForm({ editData }) {
                                     </button>
                                 </Link>
                             </div>
-                            
+
                             <div className="col-lg-2 ">
-                                {actionType == "insert" && (
-                                    <button
-                                        type="submit"
-                                        className="AddButton"
-                                    >
-                                        Save
-                                    </button>
-                                )}
-                                {actionType == "update" && (
-                                    <button
-                                        type="submit"
-                                        className="AddButton"
-                                    >
-                                        Update
-                                    </button>
-                                )}
+                                <button
+                                    type="submit"
+                                    className="AddButton"
+                                >
+                                    Save
+                                </button>
                             </div>
                         </div>
                     </form>

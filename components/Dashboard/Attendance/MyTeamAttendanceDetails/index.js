@@ -36,6 +36,7 @@ const MyTeamAttendence = () => {
                         <Link className='Heading active' href="/Attendance/MyTeamAttendanceDetails">Company Attendance Details</Link>
                     </div>
                 </div>
+                <h6>API Issue In Company AttendanceDetails</h6>
 
                 <div className='card p-3 border-0 shadow-lg rounded-3 mt-4'>
                     <div className='row'>

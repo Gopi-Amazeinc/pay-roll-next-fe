@@ -7,24 +7,31 @@ import axios from "axios";
 const AttendenceDetails = () => {
   const [Attendence, setAttendence] = useState([]);
   const [userID, setUserID] = useState();
+  const [roleID, setRoleID] = useState();
   let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
   // function Attendance() {
   useEffect(() => {
+    const userid = sessionStorage.getItem("userID");
+    const roleid = sessionStorage.getItem("roleID");
+    setUserID(userid);
+    setRoleID(roleid);
     async function getAttendenceByID() {
       debugger;
       // const userid = sessionStorage.getItem("userID");
+      const roleid = sessionStorage.getItem("roleID");
+      setRoleID(roleid)
       const userID = 10348;
       const SDate = "2023-10-10";
       const EDate = "2023-11-11";
       if (userID) {
         let res = await axios.get(
           hostURL +
-            "HR/GetAttendanceByEmployeeID?userID=" +
-            userID +
-            "&SDate=" +
-            SDate +
-            "&EDate=" +
-            EDate
+          "HR/GetAttendanceByEmployeeID?userID=" +
+          userID +
+          "&SDate=" +
+          SDate +
+          "&EDate=" +
+          EDate
         );
         setAttendence(res.data);
       }
@@ -37,46 +44,48 @@ const AttendenceDetails = () => {
     <div>
       <div className="container">
         <div className="row mt-3">
-          <div className="col-lg-3 text-end">
-            <Link
-              className="Heading active"
-              href="/Attendance/AttendanceDetails"
-            >
-              My Attendance Details
-            </Link>
+          <div className="col-lg-3 ">
+            <Link className="Heading active" href="/Attendance/AttendanceDetails"  >   My Attendance Details  </Link>
           </div>
-          <div className="col-lg-3">
-            <Link
-              className="Heading active"
-              href="/Attendance/MyTeamAttendanceDetails"
-            >
-              Company Attendance Details
-            </Link>
-          </div>
+          {roleID == 9 && (
+            <>
+              <div className="col-lg-3">
+                <Link
+                  className="Heading active"
+                  href="/Attendance/MyTeamAttendanceDetails"
+                >
+                  Company Attendance Details
+                </Link>
+              </div>
+            </>
+          )}
         </div>
+        <div className="Filter" style={{marginLeft:"0px"}}>
 
-        <div className="card p-3 border-0 shadow-lg rounded-3 mt-4">
-          <div className="row">
-            <div className="col-lg-1">
-              <p>Filter By</p>
-            </div>
 
-            <div className="col-lg-3">
-              <p>Start Date</p>
-              <input type="date" className="form-control" />
-            </div>
+          <div className="card p-3  border-0 shadow-lg rounded-3 mt-4">
+            <div className="row">
+              <div className="col-lg-1">
+                <p>Filter By</p>
+              </div>
 
-            <div className="col-lg-3">
-              <p>End Date</p>
-              <input type="date" className="form-control" />
-            </div>
+              <div className="col-lg-3">
+                <p>Start Date</p>
+                <input type="date" className="form-control" />
+              </div>
 
-            <div className="col-lg-2">
-              <br />
-              <p></p>
-              <button className="btn btn-primary" id="AddButton">
-                Download
-              </button>
+              <div className="col-lg-3">
+                <p>End Date</p>
+                <input type="date" className="form-control" />
+              </div>
+
+              <div className="col-lg-2">
+                <br />
+                <p></p>
+                <button className="btn btn-primary" id="AddButton">
+                  Download
+                </button>
+              </div>
             </div>
           </div>
         </div>

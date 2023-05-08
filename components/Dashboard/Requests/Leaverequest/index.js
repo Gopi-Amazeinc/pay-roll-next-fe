@@ -99,42 +99,42 @@ function LeaveListDashboard() {
     }, [])
 
     const events = [
-        {
-            id: 0,
-            title: "Board meeting",
-            start: new Date(2018, 0, 29, 9, 0, 0),
-            end: new Date(2018, 0, 29, 13, 0, 0),
-            resourceId: 1
-        },
-        {
-            id: 1,
-            title: "MS training",
-            allDay: true,
-            start: new Date(2018, 0, 29, 14, 0, 0),
-            end: new Date(2018, 0, 29, 16, 30, 0),
-            resourceId: 2
-        },
-        {
-            id: 2,
-            title: "Team lead meeting",
-            start: new Date(2018, 0, 29, 8, 30, 0),
-            end: new Date(2018, 0, 29, 12, 30, 0),
-            resourceId: 3
-        },
-        {
-            id: 11,
-            title: "Birthday Party",
-            start: new Date(2018, 0, 30, 7, 0, 0),
-            end: new Date(2018, 0, 30, 10, 30, 0),
-            resourceId: 4
-        }
+        // {
+        //     id: 0,
+        //     title: "Board meeting",
+        //     start: new Date(2018, 0, 29, 9, 0, 0),
+        //     end: new Date(2018, 0, 29, 13, 0, 0),
+        //     resourceId: 1
+        // },
+        // {
+        //     id: 1,
+        //     title: "MS training",
+        //     allDay: true,
+        //     start: new Date(2018, 0, 29, 14, 0, 0),
+        //     end: new Date(2018, 0, 29, 16, 30, 0),
+        //     resourceId: 2
+        // },
+        // {
+        //     id: 2,
+        //     title: "Team lead meeting",
+        //     start: new Date(2018, 0, 29, 8, 30, 0),
+        //     end: new Date(2018, 0, 29, 12, 30, 0),
+        //     resourceId: 3
+        // },
+        // {
+        //     id: 11,
+        //     title: "Birthday Party",
+        //     start: new Date(2018, 0, 30, 7, 0, 0),
+        //     end: new Date(2018, 0, 30, 10, 30, 0),
+        //     resourceId: 4
+        // }
     ];
 
     const resourceMap = [
-        { resourceId: 1, resourceTitle: "Board room" },
-        { resourceId: 2, resourceTitle: "Training room" },
-        { resourceId: 3, resourceTitle: "Meeting room 1" },
-        { resourceId: 4, resourceTitle: "Meeting room 2" }
+        // { resourceId: 1, resourceTitle: "Board room" },
+        // { resourceId: 2, resourceTitle: "Training room" },
+        // { resourceId: 3, resourceTitle: "Meeting room 1" },
+        // { resourceId: 4, resourceTitle: "Meeting room 2" }
     ];
 
     const styles = {
@@ -150,7 +150,7 @@ function LeaveListDashboard() {
         <div className="col-md-12">
             <div className="row">
                 <div className="col-md-7">
-                    <h3>Get Api is not Working for Approval Reject and Pending</h3>
+                    <h5>Api is not Working for Approval Reject and Pending</h5>
                     <Link className="Heading " href="/Requests/leavelistdashboard"><u> My Leave Details</u></Link>
 
                     <Link href="/Requests/hrleaverequest" className="Heading mx-5" ><u>All Staff Leave Details</u></Link>
@@ -167,11 +167,11 @@ function LeaveListDashboard() {
                         <div className="row">
                             <div className="col-lg-6">
                                 <p>START DATE:</p>
-                                <input id="date" name="date" type="date"  placeholder="Duration" className="form-control " />
+                                <input id="date" name="date" type="date" placeholder="Duration" className="form-control " />
                             </div>
                             <div className="col-lg-6">
                                 <p>END DATE:</p>
-                                <input id="date" name="date" type="date" placeholder="Duration"  onKeyDown="return false" className="form-control " />
+                                <input id="date" name="date" type="date" placeholder="Duration" onKeyDown="return false" className="form-control " />
                             </div>
 
                             <div className="col-lg-12 searchtxt mt-4"><br /><input type="search" placeholder="Search for date , Leave Type or Status" className="form-control " /></div>
@@ -252,9 +252,9 @@ function LeaveListDashboard() {
                         <div className='row mt-3'>
                             <div className='col-lg-4'>
                                 <div className='btn-group'>
-                                    <button onClick={togglePending} className={'btn ' + leave.btn} role="button" aria-pressed="true">Pending</button>
-                                    <button onClick={toggleApproved} className={'btn ' + leave.btn} role="button" aria-pressed="true">Approved</button>
-                                    <button onClick={toggleRejected} className={'btn ' + leave.btn}>Rejected</button>
+                                    <button onClick={togglePending} className="toggleButton" role="button" aria-pressed="true">Pending</button>
+                                    <button onClick={toggleApproved} className="toggleButton" role="button" aria-pressed="true">Approved</button>
+                                    <button onClick={toggleRejected} className="toggleButton">Rejected</button>
                                     <br /><br />
                                 </div>
                             </div>
