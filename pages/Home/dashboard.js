@@ -400,7 +400,7 @@ const Dashboard=()=> {
                     src={profile}
                     alt="Picture of the author"
                     width={100}
-                    height={100}
+                    height={80}
                   />
                 </div>
                 <h4 className={dashboard.profilename}>{userName}</h4>

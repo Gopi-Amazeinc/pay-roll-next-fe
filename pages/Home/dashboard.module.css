@@ -148,8 +148,8 @@ button.close:hover {
 
 .profileimg {
   align-items: center;
-  margin-left: 30px;
-  width: 130px;
+  margin-left: 100px;
+  width: 100px;
 }
 .profileimg1 {
   align-items: center;
@@ -174,11 +174,12 @@ button.close:hover {
   border-radius: 5px solid #3247d5;
   border: 2px solid #3247d5;
   padding: 8px 20px 8px 20px;
+  margin-left: 70px;
 
 }
 
 .profile {
-  margin-top: 80px;
+  margin-top: 53px;
 }
 .announcement{
   text-decoration: none;
