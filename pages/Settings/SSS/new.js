@@ -1,12 +1,12 @@
 import React from 'react'
-import { useEffect, useState } from "react";
+
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
 import Layout from '@/components/layout/layout'
 import Styles from '../../../styles/sssconfigadd.module.css'
-const SSSForm = ({ editData }) => {
+const SSSForm = ({ }) => {
     const yearOptions = [
         { id: 1, year: "2023" },
         { id: 2, year: "2023" },
@@ -18,7 +18,6 @@ const SSSForm = ({ editData }) => {
     ];
 
     let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-    const [actionType, setActionType] = useState("insert");
     // form validation rules
     const { register, handleSubmit, reset, formState } = useForm();
     const { errors } = formState;
@@ -41,30 +40,13 @@ const SSSForm = ({ editData }) => {
     // }, [1]);
 
     const onSubmit = async (data) => {
-        console.log(data);
-        if (actionType == "insert") {
-            await axios.post(hostURL + "HR/InsertSSSconfogaration", data);
-            Swal.fire("sss Inserted succefully!");
-            location.href = "/Settings/SSS";
-        } else {
-            let res = await axios.post(hostURL + "HR/UpdateSSSconfogaration", data);
-            Swal.fire("sss updated succefully!");
-            location.href = "/Settings/SSS";
-        }
+
+        await axios.post(hostURL + "HR/InsertSSSconfogaration", data);
+        Swal.fire("sss Inserted succefully!");
+        location.href = "/Settings/SSS";
+
     };
-    const clearForm = (existingData = null) => {
-        let etty = {
-            ID: existingData ? existingData.id : "",
-            Taxiableincomelowlimit: existingData ? existingData.taxiableincomelowlimit : "",
-            taxiableincomehighlimit: existingData ? existingData.taxiableincomehighlimit : "",
-            SSS_EEvalue: existingData ? existingData.ssS_EEvalue : "",
-            SSS_ERvalue: existingData ? existingData.ssS_ERvalue : "",
-            SSS_Ecvalue: existingData ? existingData.ssS_Ecvalue : "",
-            Year: existingData ? existingData.year : "",
-        };
-        reset(etty);
-        setActionType(existingData ? "update" : "insert");
-    };
+
     const customStyles = {
         errorMsg: {
             fontSize: "12px",
@@ -75,13 +57,7 @@ const SSSForm = ({ editData }) => {
             fontSize: "16px",
         },
     };
-    useEffect(() => {
-        if (editData == "") {
-            clearForm();
-        } else {
-            clearForm(editData);
-        }
-    }, [1]);
+
     return (
         <Layout>
             <div>
@@ -218,22 +194,13 @@ const SSSForm = ({ editData }) => {
                                         </Link>
                                     </div>
                                     <div className="col-lg-1">
-                                        {actionType == "insert" && (
-                                            <button
-                                                type="submit"
-                                                className={Styles.Save}
-                                            >
-                                                Save
-                                            </button>
-                                        )}
-                                        {actionType == "update" && (
-                                            <button
-                                                type="submit"
-                                                className={Styles.Save}
-                                            >
-                                                Update
-                                            </button>
-                                        )}
+                                        <button
+                                            type="submit"
+                                            className={Styles.Save}
+                                        >
+                                            Save
+                                        </button>
+
                                     </div>
                                 </div>
                             </div>

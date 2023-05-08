@@ -25,11 +25,14 @@ function AnnoucementDash() {
 
   const [upcommingdashboard, setupcommingdashboard] = useState([]);
   const [completedashboard, setcompletedashboard] = useState([]);
+  let BuildingID = sessionStorage.getItem("buildingID");
+  // console.log(completedashboard)
+  // console.log("buildingID",BuildingID)
 
   const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
 
   async function getupcomingdata() {
-    let res = await axios.get(hostURL + "HR/GetCompleteAnnouncementsByBuildingID?BuildingID=" + buildingID);
+    let res = await axios.get(hostURL + "HR/GetCompleteAnnouncementsByBuildingID?BuildingID="+BuildingID);
     setcompletedashboard(res.data);
     console.log(res.data);
   }
@@ -86,8 +89,8 @@ function AnnoucementDash() {
 
                   <th>Announcement Date</th>
                   <th>Announcement Time</th>
-                  <th>Description</th>
-                  <th>Reason</th>
+                  <th>Announcement</th>
+                  <th>Announcement Description</th>
                   <th>Venue</th>
 
                 </tr>
@@ -98,11 +101,11 @@ function AnnoucementDash() {
                   completedashboard.map((data) => {
                     return (
                       <tr key={data.id}>
-                        <td>{data.name}</td>
-                        <td>{data.filterdate}</td>
-                        <td>{data.description}</td>
+                        <td>{data.dateTime}</td>
+                        <td>{data.time}</td>
                         <td>{data.reason}</td>
-                        <td>{data.venue}</td>
+                        <td>{data.description}</td>
+                        <td>{data.venue} {sessionStorage.setItem("buildingID",data.buildingID)}</td>
                         <td></td>
                       </tr>
                     )

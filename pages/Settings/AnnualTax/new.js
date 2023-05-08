@@ -7,51 +7,23 @@ import Swal from 'sweetalert2';
 import Styles from '../../../styles/annualtaxform.module.css'
 
 
-const AnnualTaxForm = ({ editData }) => {
-    const [actionType, setActionType] = useState("insert");
-    const { register, handleSubmit, reset, formState } = useForm();
-    const { errors } = formState;
-    let ID;
-    let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+const AnnualTaxForm = () => {
 
-    async function onSubmit(data) {
-        if (actionType == "insert") {
-            await axios.post(hostURL + "HR/InsertTaxconfigaration", data); //naveen.th@amazeinc.in, Insert API for tax configuration, to add new data
-            Swal.fire("Added succesfullly");
-            location.href = "/Settings/AnnualTax";
-        } else {
-            await axios.post(hostURL + "HR/UpdateTaxconfigaration", data); //naveen.th@amazeinc.in, Update API for tax configuration, to update data
-            Swal.fire("Updated succesfullly");
-            sessionStorage.removeItem("annualTaxID");
-            location.href = "/Settings/AnnualTax";
-        }
-        await axios.get(hostURL + "HR/GetTaxconfigaration");
-    }
-    useEffect(() => {
-        if (editData == "") {
-            clearForm();
-        } else {
-            clearForm(editData);
-        }
-    }, [1]);
-    // const getAnnualTaxByID = async () => {
-    //     let res = await axios.get(hostURL + "HR/GetTaxconfigarationByID?ID=" + ID);  //naveen.th@amazeinc.in, Get by ID API for tax configuration, to fetch data
-    //     clearForm(res.data[0]);
-    // };
-    function clearForm(existingData = null) {
-        let etty = {
-            "ID": existingData ? existingData.id : "",
-            "Taxlowlevellimit": existingData ? existingData.taxlowlevellimit : "",
-            "Taxhighlevellimit": existingData ? existingData.taxhighlevellimit : "",
-            "slab": existingData ? existingData.slab : "",
-            "Percentage": existingData ? existingData.percentage : "",
-            "Taxexcessamount": existingData ? existingData.taxexcessamount : "",
-            "Taxdeductionamount": existingData ? existingData.taxdeductionamount : "",
-            "Year": existingData ? existingData.year : "",
-        };
-        reset(etty);
-        setActionType(existingData ? "update" : "insert");
-    }
+
+    const { register, handleSubmit, watch, reset, formState: { errors }, } = useForm();
+ 
+  
+ async  function onSubmit (data)  {
+
+    await axios.post(hostURL + "HR/InsertTaxconfigaration", data) // inserting new division master data [Shashank]
+    location.href = "/Settings/AnnualTax";
+    Swal.fire({
+        icon: 'success',
+        title: 'Added Successfully',
+    })
+
+}
+
     const customStyles = {
         content: {
             top: "50%",
@@ -266,7 +238,7 @@ const AnnualTaxForm = ({ editData }) => {
 
 
 
-                                {actionType == "insert" && (
+                                {/* {actionType == "insert" && (
                                     <button type="submit" className={Styles.SaveCloseBtn}>
                                         Save
                                     </button>
@@ -276,7 +248,8 @@ const AnnualTaxForm = ({ editData }) => {
                                     <button type="submit" className={Styles.SaveCloseBtn} >
                                         Update
                                     </button>
-                                )}
+                                )} */}
+                                <button type='submit' className={Styles.SaveCloseBtn}>Save</button>
                             </div>
                         </div>
                     </form>

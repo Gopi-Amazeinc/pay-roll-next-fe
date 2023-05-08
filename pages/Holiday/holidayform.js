@@ -7,63 +7,23 @@ import Swal from "sweetalert2";
 import { useState, useEffect } from 'react';
 
 
-function Holidayform({ editData }) {
+function Holidayform() {
 
   const { register, handleSubmit, watch, reset, formState: { errors }, } = useForm();
-  const [actionType, setActionType] = useState("insert")
+ 
+  
+ async  function onSubmit (data)  {
 
-  useEffect(() => {
-    if (editData == "") {
-      clearForm();
-    }
-    else {
+    await axios.post(hostURL + "HR/InsertHolidays", data) // inserting new division master data [Shashank]
+    location.href = "/Holiday"
+    Swal.fire({
+        icon: 'success',
+        title: 'Added Successfully',
+    })
 
-      clearForm(editData);
-    }
+}
 
-
-
-    // getHoliday();
-  }, [1]);
-
-
-  function clearForm(HolidaysData = null) {
-   
-    let details = {
-      "ID": HolidaysData ? HolidaysData.id : "",
-      "Holiday": HolidaysData ? HolidaysData.holiday : "",
-      "HolidayDescription": HolidaysData ? HolidaysData.holidayDescription : "",
-      "HolidayDate": HolidaysData ? HolidaysData.holidayDate : "",
-      "Attachment": HolidaysData ? HolidaysData.attachment : "",
-      "HolidayCategory": HolidaysData ? HolidaysData.holidayCategory : "",
-      "Region": HolidaysData ? HolidaysData.region : ""
-
-    };
-    reset(details);
-    setActionType(HolidaysData ? "update" : "insert");
-  }
-
-
-  async function onSubmit(data) {
-
-    console.log(data);
-    let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-    if (actionType == "insert") {
-      try {
-        await axios.post(hostURL + "HR/InsertHolidays", data); // this for insrting the data using inserting Api call 
-        Swal.fire('Data Inserted successfully')
-        location.href = "/Holiday";
-      } catch (error) {
-        alert("data not inserted")
-
-      }
-
-    } else {
-      await axios.post(hostURL + "HR/UpdateHolidays", data); // this is for updating or Modifiying the data using  Update Api call
-      Swal.fire('Updated successfully')
-      location.href = "/Holiday";
-    }
-  }
+ 
 
 
   return (
@@ -138,17 +98,7 @@ function Holidayform({ editData }) {
                 <div className="col-lg-2 ">
                   {/* <button id='AddButton' className='btn btn-primary'>Submit</button>
                  */}
-                  {actionType == "insert" && (
-
-                    <button type="submit" className="submit-button">
-                      Save
-                    </button>
-                  )}
-                  {actionType == "update" && (
-                    <button type="submit" className="submit-button">
-                      Update
-                    </button>
-                  )}
+                  <button type='submit' className="AddButton">Save</button>
                 </div>
               </div>
             </form>

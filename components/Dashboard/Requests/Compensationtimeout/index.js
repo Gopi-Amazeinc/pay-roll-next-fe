@@ -28,7 +28,7 @@ const Compensationtimeout = () => {
         ModalIsOpen(true)
     }
 
-   
+
     const togglePending = (e) => {
         e.preventDefault();
         setPending(true)

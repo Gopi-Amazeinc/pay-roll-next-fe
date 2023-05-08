@@ -60,69 +60,68 @@ const OverTimeDetails = () => {
   // let Date;
   // Date = sessionStorage.getItem("Date")
 
-  // function clearForm() {
-  //   let details = {
-  //     "StaffID": sessionStorage.getItem("userID"),
-  //     "Date": sessionStorage.getItem("Date"),
-  //     "StartTime": "2023/03/04" + watch("StartTime"),
-  //     "EndTime": "2023/03/04" + watch("EndTime"),
-  //     "noofhours": "",
-  //     "NightOT": dashboardData.filter(x => x.dashboardData == nightOt)[0].nightOt,
-  //     "Comments": watch("Comments"),
-  //     "Attachment": watch("Attachment"),
-  //     "NSD_REGULAR": dashboardData.filter(x => x.dashboardData == nsD_REGULAR)[0].nsD_REGULAR,
-  //     "ExccessNightOt": dashboardData.filter(x => x.dashboardData == exccessNightOt)[0].exccessNightOt,
-  //     "ExccessNormalOt": dashboardData.filter(x => x.dashboardData == exccessNormalOt)[0].exccessNormalOt,
-  //     "RestNightOt": dashboardData.filter(x => x.dashboardData == restNightOt)[0].restNightOt,
-  //     "RestNormalOT": dashboardData.filter(x => x.dashboardData == restNormalOT)[0].restNormalOT,
-  //     "ExccessRestNormalOt": dashboardData.filter(x => x.dashboardData == exccessRestNormalOt)[0].exccessRestNormalOt,
-  //     "RestExccessNightOt": dashboardData.filter(x => x.dashboardData == restExccessNightOt)[0].restExccessNightOt,
-  //     "LegalNightOt": dashboardData.filter(x => x.dashboardData == legalNightOt)[0].legalNightOt,
-  //     "LegalNormalOT": dashboardData.filter(x => x.dashboardData == legalNormalOT)[0].legalNormalOT,
-  //     "LegalExccessNormalOt": dashboardData.filter(x => x.dashboardData == legalExccessNormalOt)[0].legalExccessNormalOt,
-  //     "LegalExccessNightOt": dashboardData.filter(x => x.dashboardData == legalExccessNightOt)[0].legalExccessNightOt,
-  //     "SpecialNightOt": dashboardData.filter(x => x.dashboardData == specialNightOt)[0].specialNightOt,
-  //     "SpecialNormalOT": dashboardData.filter(x => x.dashboardData == specialNormalOT)[0].specialNormalOT,
-  //     "SpecialExccessNormalOt": dashboardData.filter(x => x.dashboardData == specialExccessNormalOt)[0].specialExccessNormalOt,
-  //     "SpecialExccessNightOt": dashboardData.filter(x => x.dashboardData == specialExccessNightOt)[0].specialExccessNightOt,
-  //     "SpecialRestNightOt": dashboardData.filter(x => x.dashboardData == specialRestNightOt)[0].specialRestNightOt,
-  //     "SpecialRestNormalOT": dashboardData.filter(x => x.dashboardData == specialRestNormalOT)[0].specialRestNormalOT,
-  //     "SpecialRestExccessNormalOt": dashboardData.filter(x => x.dashboardData == specialRestExccessNormalOt)[0].specialRestExccessNormalOt,
-  //     "SpecialRestExccessNightOt": dashboardData.filter(x => x.dashboardData == specialRestExccessNightOt)[0].specialRestExccessNightOt,
-  //     "LegalRestNightOt": dashboardData.filter(x => x.dashboardData == legalRestNightOt)[0].legalRestNightOt,
-  //     "LegalRestNormalOT": dashboardData.filter(x => x.dashboardData == legalRestNormalOT)[0].legalRestNormalOT,
-  //     "LegalExccessRestNormalOt": dashboardData.filter(x => x.dashboardData == legalExccessRestNormalOt)[0].legalExccessRestNormalOt,
-  //     "LegalExccessRestNightOt": dashboardData.filter(x => x.dashboardData == legalExccessRestNightOt)[0].legalExccessRestNightOt
-  //   }
-  //   reset(details);
-  //   insertDetails(details)
-
-  // }
-
-
-
-  // useEffect(() => {
-  //   clearForm()
-  // }, [])
-
-  const insertDetails = async () => {
-
+  async function clearForm() {
+    let details = {
+      "StaffID": sessionStorage.getItem("userID"),
+      "Date": sessionStorage.getItem("Date"),
+      "StartTime": sessionStorage.getItem("Date") + watch("StartTime"),
+      "EndTime": sessionStorage.getItem("Date") + watch("EndTime"),
+      "noofhours": "",
+      "NightOT": dashboardData[0].nightOt == null ? 0 : dashboardData[0].nightOt,
+      "Comments": watch("Comments"),
+      "Attachment": watch("Attachment"),
+      "NSD_REGULAR": dashboardData[0].nsD_REGULAR == null ? 0 : dashboardData[0].nsD_REGULAR,
+      "ExccessNightOt": dashboardData[0].exccessNightOt == null ? 0 : dashboardData[0].exccessNightOt,
+      "ExccessNormalOt": dashboardData[0].exccessNormalOt == null ? 0 : dashboardData[0].exccessNormalOt,
+      "RestNightOt": dashboardData[0].restNightOt == null ? 0 : dashboardData[0].restNightOt,
+      "RestNormalOT": dashboardData[0].restNormalOT == null ? 0 : dashboardData[0].restNormalOT,
+      "ExccessRestNormalOt": dashboardData[0].exccessRestNormalOt == null ? 0 : dashboardData[0].exccessRestNormalOt,
+      "RestExccessNightOt": dashboardData[0].restExccessNightOt == null ? 0 : dashboardData[0].restExccessNightOt,
+      "LegalNightOt": dashboardData[0].legalNightOt == null ? 0 : dashboardData[0].legalNightOt,
+      "LegalNormalOT": dashboardData[0].legalNormalOT == null ? 0 : dashboardData[0].legalNormalOT,
+      "LegalExccessNormalOt": dashboardData[0].legalExccessNormalOt == null ? 0 : dashboardData[0].legalExccessNormalOt,
+      "LegalExccessNightOt": dashboardData[0].legalExccessNightOt == null ? 0 : dashboardData[0].legalExccessNightOt,
+      "SpecialNightOt": dashboardData[0].specialNightOt == null ? 0 : dashboardData[0].specialNightOt,
+      "SpecialNormalOT": dashboardData[0].specialNormalOT == null ? 0 : dashboardData[0].specialNormalOT,
+      "SpecialExccessNormalOt": dashboardData[0].specialExccessNormalOt == null ? 0 : dashboardData[0].specialExccessNormalOt,
+      "SpecialExccessNightOt": dashboardData[0].specialExccessNightOt == null ? 0 : dashboardData[0].specialExccessNightOt,
+      "SpecialRestNightOt": dashboardData[0].specialRestNightOt == null ? 0 : dashboardData[0].specialRestNightOt,
+      "SpecialRestNormalOT": dashboardData[0].specialRestNormalOT == null ? 0 : dashboardData[0].specialRestNormalOT,
+      "SpecialRestExccessNormalOt": dashboardData[0].specialRestExccessNormalOt == null ? 0 : dashboardData[0].specialRestExccessNormalOt,
+      "SpecialRestExccessNightOt": dashboardData[0].specialRestExccessNightOt == null ? 0 : dashboardData[0].specialRestExccessNightOt,
+      "LegalRestNightOt": dashboardData[0].legalRestNightOt == null ? 0 : dashboardData[0].legalRestNightOt,
+      "LegalRestNormalOT": dashboardData[0].legalRestNormalOT == null ? 0 : dashboardData[0].legalRestNormalOT,
+      "LegalExccessRestNormalOt": dashboardData[0].legalExccessRestNormalOt == null ? 0 : dashboardData[0].legalExccessRestNormalOt,
+      "LegalExccessRestNightOt": dashboardData[0].legalExccessRestNightOt == null ? 0 : dashboardData[0].legalExccessRestNightOt
+      // "Status": "Manager Pending"
+    }
+    console.log("Modal Data", details);
     try {
+      debugger;
       await axios.post(hostURL + "HR/InsertStaffOverTimeDetails", details);
       Swal.fire('Data Inserted successfully')
       console.log("Inserted data:", details);
-      location.href = ("/OT");
-
     }
     catch {
       Swal.fire("Insert is not working");
     }
+
+    // location.href = ("/Requests/OverTimeDetails");
   }
+
+  // const insertDetails = async () => {
+  //   try {
+  //     debugger;
+  //     clearForm();
+  //   }
+  //   catch {
+  //     Swal.fire("Insert is not working");
+  //   }
+  // }
 
   return (
     <Layout>
-      <h5>Insert  operation is not Done</h5>
-      <form onSubmit={handleSubmit(insertDetails)}>
+      <form onSubmit={handleSubmit(clearForm)}>
         <div className="shadow-lg p-3 mt-3 mb-5 bg-white rounded">
           <div>
             <h4 style={{ color: "blue" }}>Add Actual Time</h4>
@@ -179,7 +178,7 @@ const OverTimeDetails = () => {
                 </Link>
               </div>
               <div className='col-lg-2'>
-                <button className='submit-button' onClick={insertDetails}>Submit</button>
+                <button className='submit-button'>Submit</button>
               </div>
               <div className='col-lg-2'>
                 <button className='submit-button' onClick={openEditModal} style={{ float: "left" }}>OT Details</button>

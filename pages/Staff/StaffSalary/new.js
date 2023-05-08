@@ -6,7 +6,7 @@ import Link from 'next/link';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 
-function AddStaffSalaryForm({editData}) {
+const AddStaffSalaryForm = () => {
     let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL
 
     const { register, handleSubmit, reset, formState } = useForm();
@@ -22,12 +22,6 @@ function AddStaffSalaryForm({editData}) {
      async function getData() {
         let res = await axios.get(hostURL + "HR/GetAllStaffNew"); // This API is used for fetch the  data for Dropdown
         setStaff(res.data);
-        if (editData == "") {
-           clearForm()
-        }
-        else{
-          clearForm(editData)
-        }
      }
 
      function clearForm(staffSalary = null) {
@@ -43,32 +37,10 @@ function AddStaffSalaryForm({editData}) {
      }
 
     async function onSubmit(data) {
-       console.log(data);
-       if (actionType == "insert") {
           await axios.post(hostURL + 'Payroll/UpdateDe_minimis_Detailsforstaff', data);
           Swal.fire({ icon: "success", text: "Data Successfully added" })
           location.href = ("/Payroll/staffsalarycomponent");
-       }
-       else {
-          Swal.fire({
-             title: 'Are you sure?',
-             text: "You won't be able to revert this!",
-             icon: 'warning',
-             showCancelButton: true,
-             confirmButtonColor: '#3085d6',
-             cancelButtonColor: '#d33',
-             confirmButtonText: 'Yes, Update it!'
-          }).then((result) => {
-             if (result.isConfirmed) {
-                axios.post(hostURL + 'Payroll/UpdateDe_minimis_Detailsforstaff', data);
-                Swal.fire(
-                   'Updated!',
-                   'Your file has been updated.',
-                   'success'
-                )
-             }
-          })
-       }
+       
     }
     
     
@@ -130,25 +102,11 @@ function AddStaffSalaryForm({editData}) {
                                <div className='col-lg-8'></div>
                                <div className="col-lg-2">
  
-                                  {actionType == "insert" && (
- 
                                      <button type="submit" className="btn btn-primary AddButton">
  
                                         Save
  
                                      </button>
- 
-                                  )}
- 
-                                  {actionType == "update" && (
- 
-                                     <button type="submit" className="btn btn-primary AddButton">
- 
-                                        Update
- 
-                                     </button>
- 
-                                  )}
  
                                </div>
  
