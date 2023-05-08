@@ -12,6 +12,12 @@ import advertising1 from "@/public/Images/advertising.png"
 import { Modal, ModalBody, ModalFooter } from 'reactstrap';
 import { BiEdit } from "react-icons/bi";
 import { RiArrowDropDownLine } from "react-icons/ri";
+// import GaugeChart from 'react-gauge-chart';
+import dynamic from "next/dynamic";
+const GaugeChart = dynamic(
+  () => import('react-gauge-chart'),
+  { ssr: false }
+);
 
 import Swal from 'sweetalert2';
 import axios from 'axios';
@@ -282,8 +288,20 @@ function Dashboard() {
                 </div>
                 <h4 className={dashboard.profilename}>{userName}</h4>
                 <p className={dashboard.profilemail}>{userEmail}</p>
-
-                <Image src={images} alt="Picture of the author" width={100} height={80} className={dashboard.profileimg1} />
+                <div>
+        <GaugeChart
+          id="gauge-chart6"
+          nrOfLevels={1}
+          colors={['#f2efe6']}
+          arcWidth={0.1}
+          percent={0.37}
+          textColor={'black'}
+          needleColor={"#ffff"}
+          needleBaseColor={"#ffff"}
+          // hideText={true} // If you want to hide the text
+        />
+      </div>
+                {/* <Image src={images} alt="Picture of the author" width={100} height={80} className={dashboard.profileimg1} /> */}
 
                 <div className={dashboard.profile}>
                   <Link href="/Staff/AddStaff">
