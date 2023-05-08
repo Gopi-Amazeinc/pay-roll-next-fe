@@ -274,7 +274,7 @@
   border: 1px solid rgba(0, 0, 0, 0.125);
 }
 
-/* .button {
+.button {
   background-color: #3247d5;
   color: #fff;
   border-radius: 5px;
@@ -291,7 +291,7 @@
   overflow: visible;
   margin: 0;
   width: 100%;
-} */
+}
 
 #link {
   color: white;
