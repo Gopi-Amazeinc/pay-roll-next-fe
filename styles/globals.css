@@ -274,13 +274,12 @@
   border: 1px solid rgba(0, 0, 0, 0.125);
 }
 
-.button {
+/* .button {
   background-color: #3247d5;
   color: #fff;
   border-radius: 5px;
   border: none;
   text-transform: uppercase;
-  /* font-family: Poppins; */
   text-shadow: none;
   letter-spacing: 0.5px;
   padding: 8px;
@@ -288,12 +287,11 @@
   font-size: 16px;
   font-weight: 500;
   cursor: pointer;
-  /* font-family: Poppins; */
   text-transform: none;
   overflow: visible;
   margin: 0;
   width: 100%;
-}
+} */
 
 #link {
   color: white;
