@@ -5,36 +5,20 @@ import Layout from '@/components/layout/layout.js';
 import Link from "next/link";
 import axios from "axios";
 import Swal from "sweetalert2";
-function StateMasterForm({ editData }) {
-  const [actionType, setActionType] = useState("insert");
+function StateMasterForm() {
   const [country, setCountryData] = useState([]);
   const { register, handleSubmit, reset, formState } = useForm();
   const { errors } = formState;
-  let ID;
+
   let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
 
   async function onSubmit(data) {
-    if (actionType == "insert") {
       await axios.post(hostURL + "Master/InsertStateType", data);  //naveen.th@amazeinc.in, Insert API for State master, to add new data
       Swal.fire("Added succesfullly");
       location.href = "/Masters/StateMaster/";
-    } else {
-      await axios.post(hostURL + "Master/UpdateStateType", data); //naveen.th@amazeinc.in, Update API for State master, to update data
-      Swal.fire("Updated succesfullly");
-      sessionStorage.removeItem("stateID");
-      location.href = "/Masters/StateMaster/";
-    }
-    await axios.get(hostURL + "Master/GetStateType");
   }
 
   useEffect(() => {
-
-    if (editData == "") {
-      clearForm();
-    }
-    else {
-      clearForm(editData);
-    }
     getCountryList();
   }, []);
 
@@ -44,16 +28,7 @@ function StateMasterForm({ editData }) {
     setCountryData(res.data);
   }
 
-  function clearForm(existingData = null) {
-    let etty = {
-      "ID": existingData ? existingData.id : "",
-      "Short": existingData ? existingData.short : "",
-      "Description": existingData ? existingData.description : "",
-      "CountryID": existingData ? existingData.countryID : "",
-    };
-    reset(etty);
-    setActionType(existingData ? "update" : "insert");
-  }
+
   const customStyles = {
     content: {
       top: "50%",
@@ -158,16 +133,11 @@ function StateMasterForm({ editData }) {
                 </Link>
               </div>
               <div className="col-lg-2">
-                {actionType == "insert" && (
+               
                   <button type="submit" className="btn" id={Styles.btn}>
                     Save
                   </button>
-                )}
-                {actionType == "update" && (
-                  <button type="submit" className="btn" id={Styles.btn}>
-                    Update
-                  </button>
-                )}
+                
               </div>
             </div>
           </form>

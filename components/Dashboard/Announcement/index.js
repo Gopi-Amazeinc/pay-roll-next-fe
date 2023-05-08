@@ -2,7 +2,14 @@ import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
+
 function AnnoucementDash() {
+
+
+
+
+  
+
   const [upcomming, setupcomming] = useState(false);
   const [completed, setcompleted] = useState(false);
 
@@ -22,7 +29,7 @@ function AnnoucementDash() {
   const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
 
   async function getupcomingdata() {
-    let res = await axios.get(hostURL + "HR/GetCompleteAnnouncementsByBuildingID?BuildingID=57");
+    let res = await axios.get(hostURL + "HR/GetCompleteAnnouncementsByBuildingID?BuildingID=" + buildingID);
     setcompletedashboard(res.data);
     console.log(res.data);
   }
@@ -76,13 +83,13 @@ function AnnoucementDash() {
             <table className='table table-hover'>
               <thead className='bg-info text-white'>
                 <tr>
-                  
+
                   <th>Announcement Date</th>
                   <th>Announcement Time</th>
                   <th>Description</th>
                   <th>Reason</th>
                   <th>Venue</th>
-                  
+
                 </tr>
               </thead>
 

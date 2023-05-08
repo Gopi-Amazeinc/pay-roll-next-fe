@@ -21,7 +21,6 @@ const BarangayMasterForm = () => {
   const [countrydata, setCountryData] = useState([]);
   const [provincedata, setProvinceData] = useState([]);
   const [citydata, setCityData] = useState([]);
-  const [actionType, setAction] = useState("insert");
 
   useEffect(() => {
     getData();

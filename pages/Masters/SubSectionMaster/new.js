@@ -1,53 +1,28 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import Layout from '@/components/layout/layout.js';
-import { useEffect, useState } from "react";
-import SubsectionFormStyles from "../../../styles/SubSectionMasterForm.module.css";
 import Link from "next/link";
 import axios from "axios";
 import Swal from "sweetalert2";
 
-const SubSectionMasterForm = ({ editData }) => {
+const SubSectionMasterForm = () => {
   let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-  const [actionType, setActionType] = useState("insert");
+
   // form validation rules
   const { register, handleSubmit, reset, formState } = useForm();
   const { errors } = formState;
 
   // get functions to build form with useForm() hook
-  useEffect(() => {
-    const getSubSectionMasterList = async () => {
-      if (editData == "") {
-        clearForm();
-      } else {
-        clearForm(editData);
-      }
-    };
-    getSubSectionMasterList();
-  }, []);
+
 
   const onSubmit = async (data) => {
-    console.log(data);
-    if (actionType == "insert") {
-      await axios.post(hostURL + "Master/InsertSubSectionMaster", data);
-      Swal.fire("SubSectionMaster Inserted succefully!");
-      location.href = "/Masters/SubSectionMaster";
-    } else {
-      let res = await axios.post(hostURL + "Master/UpdateSubSectionMaster", data);
-      sessionStorage.removeItem("id");
-      Swal.fire("SubSectionMaster updated succefully!");
-      location.href = "/Masters/SubSectionMaster";
-    }
+
+    await axios.post(hostURL + "Master/InsertSubSectionMaster", data);
+    Swal.fire("SubSectionMaster Inserted succefully!");
+    location.href = "/Masters/SubSectionMaster";
+
   };
-  const clearForm = (existingData = null) => {
-    let etty = {
-      ID: existingData ? existingData.id : "",
-      Short: existingData ? existingData.short : "",
-      Description: existingData ? existingData.description : "",
-    };
-    reset(etty);
-    setActionType(existingData ? "update" : "insert");
-  };
+
   const customStyles = {
     errorMsg: {
       fontSize: "12px",
@@ -124,22 +99,14 @@ const SubSectionMasterForm = ({ editData }) => {
                   </Link>
                 </div>
                 <div className="col-lg-2">
-                  {actionType == "insert" && (
-                    <button
-                      type="submit"
-                      className="AddButton"
-                    >
-                      Save
-                    </button>
-                  )}
-                  {actionType == "update" && (
-                    <button
-                      type="submit"
-                      className="AddButton"
-                    >
-                      Update
-                    </button>
-                  )}
+
+                  <button
+                    type="submit"
+                    className="AddButton"
+                  >
+                    Save
+                  </button>
+
                 </div>
               </div>
             </div>
