@@ -7,52 +7,27 @@ import Swal from 'sweetalert2'
 import { useEffect, useState } from 'react';
 import Layout from '@/components/layout/layout'
 
-const PagibigForm = ({ editData }) => {
-    const { register, handleSubmit, reset, formState } = useForm();
-    const { errors } = formState;
-
-    const [actionType, setActionType] = useState("insert");
-
-
-    const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+const PagibigForm = ({ }) => {
 
 
 
-
-    useEffect(() => {
-        if (editData == "") {
-            clearForm();
-        } else {
-            clearForm(editData);
-        }
-    }, [1]);
+    const { register, handleSubmit, watch, reset, formState: { errors }, } = useForm();
 
 
     async function onSubmit(data) {
-        if (actionType == "insert") {
-            await axios.post(hostURL + "HR/InsertPagibigconfogaration", data);
-            Swal.fire('Data Inserted successfully')
-            console.log("Inserted data:", data);
-            location.href = '/Settings/Pagibig';
-        }
-        else {
-            await axios.post(hostURL + "HR/UpdatePagibigconfogaration", data);
-            Swal.fire('Data Updated successfully')
-            location.href = '/Settings/Pagibig';
-        }
+
+        await axios.post(hostURL + "HR/InsertPagibigconfogaration", data) // inserting new division master data [Shashank]
+        location.href = '/Settings/Pagibig';
+        Swal.fire({
+            icon: 'success',
+            title: 'Added Successfully',
+        })
+
     }
 
-    function clearForm(userData = null) {
-        let details = {
-            "ID": userData ? userData.id : "",
-            "Taxiableincomelowlimit": userData ? userData.taxiableincomelowlimit : "",
-            "Taxiableincomehighlimit": userData ? userData.taxiableincomehighlimit : "",
-            "Pagibigvalue": userData ? userData.pagibigvalue : "",
-            "Year": userData ? userData.year : "",
-        }
-        reset(details);
-        setActionType(userData ? "update" : 'insert')
-    }
+
+
+
 
     return (
         <Layout>
@@ -93,7 +68,7 @@ const PagibigForm = ({ editData }) => {
                         <div className="row">
                             <div className="col-lg-11">
                                 <Link href="/Settings/Pagibig"><button className={Styles.Cancel} style={{ float: "right", marginLeft: "5px" }} tabindex="0">CANCEL</button></Link>
-                                {
+                                {/* {
                                     actionType == "insert" && (
                                         <button type='submit' className={Styles.Save} style={{ float: "right" }}>Save</button>
                                     )
@@ -102,7 +77,9 @@ const PagibigForm = ({ editData }) => {
                                     actionType == "update" && (
                                         <button type='submit' className={Styles.Save} style={{ float: "right" }}>Update</button>
                                     )
-                                }
+                                } */}
+
+                                <button type='submit' className={Styles.Save} style={{ float: "right" }}>Save</button>
                             </div>
                         </div>
 
