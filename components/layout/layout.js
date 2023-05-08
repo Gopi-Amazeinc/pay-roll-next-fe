@@ -70,10 +70,10 @@ const Index = ({ children }) => {
                 height: "90vh",
                 overflowY: "auto",
                 overflowX: "auto",
-                background: '#e5f3f5"',
+                background: "#e5f3f5",
               }}
             >
-              <main>
+              <main >
                 {children}
                 <br></br>
               </main>
