@@ -301,9 +301,11 @@ const Dashboard=()=> {
               >
                 <div className="col-lg-12">
                   <div className="row">
+                    { actionType == null ? (
+                      <>
                     <div className="col-lg-7">
                       <button
-                        className={dashboard.button1}
+                        className={dashboard.punchin}
                         onClick={() => modelopen()}
                       >
                         PUNCH IN
@@ -312,10 +314,27 @@ const Dashboard=()=> {
                     <div className="col-lg-4 mt-3 ">
                       <span> PunchIn time </span>
                     </div>
+                  </>
+                    ) : (
+                      <>
+                       <div className="col-lg-7">
+                      <button
+                        className={dashboard.buttonclick}
+                        // onClick={() => modelopen()}
+                      >
+                        PUNCH IN
+                      </button>
+                    </div>
+                    <div className="col-lg-4 mt-3 ">
+                      <span> Dynamic Time</span>
+                    </div>
+                      </>
+
+                    )}
 
                     <div className="col-lg-7">
                       <button
-                        className={dashboard.button1}
+                        className={dashboard.punchin}
                         onClick={() => setModalOpen(!modalOpen)}
                       >
                         PUNCH OUT
@@ -360,7 +379,7 @@ const Dashboard=()=> {
                         <div className="row">
                           <div className="col-lg-6">
                             <ModalFooter>
-                              {actionType === "Punchin" || actionType === "" ? (
+                              {actionType == null ? (
                               <button
                                 color="primary"
                                 type="button"
