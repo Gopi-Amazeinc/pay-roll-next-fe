@@ -29,6 +29,18 @@ function Dashboard() {
   const [userName, setUserName] = useState();
   const [userEmail, setUserEmail] = useState();
 
+  // function getGaugeColors(percent) {
+  //   if (percent <= 0.25) {
+  //     return ['#f2efe6', '#ff0000'];
+  //   } else if (percent <= 0.75) {
+  //     return ['#f2efe6', '#ff0000'];
+  //   } else {
+  //     return ['#f2efe6', '#00cc00'];
+  //   }
+  // }
+  // const percent= 0.35;
+  //   const colors = getGaugeColors(percent);
+
   useEffect(() => {
     const Loginname = sessionStorage.getItem("userName");
     setUserName(Loginname);
@@ -292,12 +304,19 @@ function Dashboard() {
         <GaugeChart
           id="gauge-chart6"
           nrOfLevels={1}
-          colors={['#f2efe6']}
+          colors={["#f2f0f0"]}
+          // colors={[
+          //   '#f2efe6', // 0-25%
+          //   '#f2efe6', // 25-50%
+          //   '#f29f05', // 50-75%
+          //   '#f23e3e'  // 75-100%
+          // ]}
+          // arcBackgroundColor="#0074D9" 
           arcWidth={0.1}
-          percent={0.37}
+          percent={0.23}
           textColor={'black'}
-          needleColor={"#ffff"}
-          needleBaseColor={"#ffff"}
+          needleColor={"#111"}
+          needleBaseColor={"#111"}
           // hideText={true} // If you want to hide the text
         />
       </div>
