@@ -18,6 +18,8 @@ const AttendenceDetails = () => {
     async function getAttendenceByID() {
       debugger;
       // const userid = sessionStorage.getItem("userID");
+      const roleid = sessionStorage.getItem("roleID");
+      setRoleID(roleid)
       const userID = 10348;
       const SDate = "2023-10-10";
       const EDate = "2023-11-11";
@@ -50,7 +52,8 @@ const AttendenceDetails = () => {
               My Attendance Details
             </Link>
           </div>
-          {roleID == 2 && (   
+          {roleID== 9 && (
+            <>
           <div className="col-lg-3">
             <Link
               className="Heading active"
@@ -59,6 +62,7 @@ const AttendenceDetails = () => {
               Company Attendance Details
             </Link>
           </div>
+          </>
           )}
         </div>
 
