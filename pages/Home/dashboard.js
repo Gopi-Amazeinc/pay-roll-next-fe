@@ -43,6 +43,8 @@ const Dashboard=()=> {
     setUserName(Loginname);
     const Loginemail = sessionStorage.getItem("email");
     setUserEmail(Loginemail);
+    const punchinID = sessionStorage.getItem("StaffPunchedinID");
+    setActionType(punchinID);
   }, []);
 
   // const userName = "Anup";
@@ -53,7 +55,7 @@ const Dashboard=()=> {
   const [items, setItems] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [punchintime, setPunchintime] = useState(false);
-  const [actionType, setActionType] = useState("punchin");
+  const [actionType, setActionType] = useState("");
   const [workType, setWorkType] = useState();
   const [localIPAddress, setLocalIPAddress] = useState("");
   useEffect(() => {
@@ -103,9 +105,10 @@ const Dashboard=()=> {
       WorkType: parseInt(workType),
     };
     let res = await axios.post(hostURL + "HR/InsertAttendanceWeb", entity);
-    const punchinId = res.data || res;
-    if (punchinId) {
-      sessionStorage.setItem("PunchINid", punchinId);
+    const staffPunchedinID = res.data || res;
+    if (staffPunchedinID) {
+      sessionStorage.setItem("StaffPunchedinID", staffPunchedinID);
+      // setPunchintime(punchinId);
       Swal.fire("Punched In Successfully");
     }
     // }
@@ -357,7 +360,7 @@ const Dashboard=()=> {
                         <div className="row">
                           <div className="col-lg-6">
                             <ModalFooter>
-                              {/* {actionType == "Punchin" ? ( */}
+                              {actionType === "Punchin" || actionType === "" ? (
                               <button
                                 color="primary"
                                 type="button"
@@ -366,7 +369,7 @@ const Dashboard=()=> {
                               >
                                 Punchin
                               </button>
-                              {/* ) : ( */}
+                               ) : ( 
                               <button
                                 color="primary"
                                 type="button"
@@ -374,7 +377,7 @@ const Dashboard=()=> {
                               >
                                 PunchOut
                               </button>
-                              {/* )} */}
+                               )} 
                             </ModalFooter>
                           </div>
                         </div>
