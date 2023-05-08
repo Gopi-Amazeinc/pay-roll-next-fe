@@ -12,61 +12,11 @@ export default function PayPeriodSettingform({ editData }) {
     const { register, handleSubmit, reset, formState } = useForm();
     const { errors } = formState;
 
-    const [actionType, setActionType] = useState("insert");
-
-
-    // useEffect(() => {
-    //     const GetPayperiodsettingByID = async () => {
-    //         debugger;
-    //         const id = sessionStorage.getItem("id");
-    //         if (id) {
-    //             const response = await axios.get(hostURL + "Payroll/GetPayPeriodSettingByID?ID=" + id);
-    //             clearForm(response.data[0]);
-    //         } else {
-    //             clearForm();
-    //         }
-    //     };
-    //     GetPayperiodsettingByID();
-    // // eslint-disable-next-line react-hooks/exhaustive-deps
-    // }, [1]);
-
-    useEffect(() => {
-        if (editData == "") {
-            clearForm();
-        } else {
-            clearForm(editData);
-        }
-    }, [1]);
-
-    function clearForm(payperiodsetting = null) {
-        let details = {
-            "ID": payperiodsetting ? payperiodsetting.id : "",
-            "PayCode": payperiodsetting ? payperiodsetting.payCode : "",
-            "PayPeriod": payperiodsetting ? payperiodsetting.payPeriod : "",
-            "AttendanceCoverageStartdate": payperiodsetting ? payperiodsetting.attendanceCoverageStartdate : "",
-            "AttendanceCoverageEndDate": payperiodsetting ? payperiodsetting.attendanceCoverageEndDate : "",
-            "PayrollStartDate": payperiodsetting ? payperiodsetting.payrollStartDate : "",
-            "PayrollEndDate": payperiodsetting ? payperiodsetting.payrollEndDate : "",
-            "PayrollRunType": payperiodsetting ? payperiodsetting.payrollRunType : "",
-            "PayDate": payperiodsetting ? payperiodsetting.payDate : "",
-            "Comments": payperiodsetting ? payperiodsetting.comments : "",
-        }
-        reset(details);
-        setActionType(payperiodsetting ? "update" : 'insert')
-    }
-
     async function onSubmit(data) {
-        if (actionType == "insert") {
-            await axios.post(hostURL + "Payroll/InsertPayPeriodSetting", data);
-            Swal.fire('data inserted successfully')
-            console.log("Inserted data:", data);
-            location.href = '/Settings/PayperiodSetting';
-        }
-        else {
-            await axios.post(hostURL + "Payroll/UpdatePayPeriodSetting", data);
-            Swal.fire('Data Updated successfully')
-            location.href = '/Settings/PayperiodSetting';
-        }
+        await axios.post(hostURL + "Payroll/InsertPayPeriodSetting", data);
+        Swal.fire('data inserted successfully')
+        console.log("Inserted data:", data);
+        location.href = '/Settings/payperiodsetting';
     }
 
     return (
@@ -131,18 +81,9 @@ export default function PayPeriodSettingform({ editData }) {
 
                             <div className="col-lg-11">
 
-                                {
-                                    actionType == "insert" && (
-                                        <button type='submit' className={Styles.submitBtn} style={{ float: "right" }}>Submit</button>
-                                    )
-                                }
+                                <button type='submit' className={Styles.submitBtn} style={{ float: "right" }}>Submit</button>
 
-                                {
-                                    actionType == "update" && (
-                                        <button type='submit' className={Styles.submitBtn} style={{ float: "right" }}>Update</button>
-                                    )
-                                }
-                                <Link href="/Settings/PayperiodSetting"><button className={Styles.submitBtn} style={{ float: "right", marginLeft: "5px" }} tabindex="0">CANCEL</button></Link>
+                                <Link href="/Settings/payperiodsetting"><button className={Styles.submitBtn} style={{ float: "right", marginLeft: "5px" }} tabindex="0">CANCEL</button></Link>
                             </div>
 
                         </div>

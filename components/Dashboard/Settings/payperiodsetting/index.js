@@ -56,7 +56,7 @@ export default function PayperiodSettingsDash() {
             <div className='row '>
                 <div className='col-lg-10'></div>
                 <div className='col-lg-2 mt-4 text-end'>
-                    <Link href="/Settings/PayperiodSetting/new" > <button className={Styles.addButton} onClick={clearData.bind(this)}>Add New</button> </Link>
+                    <Link href="/Settings/payperiodsetting/new" > <button className={Styles.addButton} onClick={clearData.bind(this)}>Add New</button> </Link>
                 </div>
             </div>
             < div className='table-responsive'>
@@ -86,7 +86,7 @@ export default function PayperiodSettingsDash() {
                                     <td>{data.payrollEndDate}</td>
                                     <td>{data.payrollRunType}</td>
                                     <td>{data.comments}</td>
-                                    <td> <Link href={`/Settings/PayperiodSetting/Edit/${data.id}`}>
+                                    <td> <Link href={`/Settings/payperiodsetting/Edit/${data.id}`}>
                                         <button className='upload mb-2' >Edit</button>
                                     </Link>
                                         <button className='upload ' onClick={() => handleDelete(data.id)}>Delete</button>

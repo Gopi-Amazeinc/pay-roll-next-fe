@@ -3,98 +3,38 @@ import React, { useState, useEffect } from "react";
 import Styles from "../../../styles/employmentJobHistory.module.css";
 import leaveform from '../../../styles/LeaveTypeForm.module.css'
 
-// import { yupResolver } from '@hookform/resolvers/yup';
-// import * as Yup from 'yup';
+
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import Link from "next/link";
 import Layout from '@/components/layout/layout.js'
 
 
-function ComponentMappingForm({editData}) {
+function ComponentMappingForm({ }) {
 
   const { register, handleSubmit, watch, reset, formState: { errors }, } = useForm();
-  const [actionType, setActionType] = useState("insert");
-
-  // useEffect(() => {
-  //   async function getComponentMappingByID() {
-  //     const id = sessionStorage.getItem("id");
-  //     if (id) {
-  //       let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-  //       let res = await axios.get(
-  //         hostURL + "Payroll/GetComponentMappingByID?ID=" + id  // this Api is used for get the data by id  for updating exact value
-  //       );
-  //       clearForm(res.data[0]);
-  //     } else {
-  //       clearForm();
-  //     }
-  //   }
-  //   getComponentMappingByID();
-  // // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [1]);
-
-  useEffect(() => {
-        if (editData == "") {
-            clearForm();
-        } else {
-            clearForm(editData);
-        }
-    }, [1]);
-
-
-  function clearForm(ComponentMappingData = null) {
-    let details = {
-      "ID": ComponentMappingData ? ComponentMappingData.id : "",
-      "PayrollComponentType": ComponentMappingData ? ComponentMappingData.payrollComponentType : "",
-      "Code": ComponentMappingData ? ComponentMappingData.code : "",
-      "ComponentName": ComponentMappingData ? ComponentMappingData.componentName : "",
-      "TaxFlag": ComponentMappingData ? ComponentMappingData.taxFlag : "",
-      "NinetyThousandTaxExemption": ComponentMappingData ? ComponentMappingData.ninetyThousandTaxExemption : "",
-      "PayrollPeriod": ComponentMappingData ? ComponentMappingData.payrollPeriod : "",
-      "Effeactivedate": ComponentMappingData ? ComponentMappingData.effeactivedate : "",
-      "Enable": ComponentMappingData ? ComponentMappingData.enable : "",
-      "PrintOnPaySlip": ComponentMappingData ? ComponentMappingData.printOnPaySlip : ""
-    };
-    reset(details);
-    setActionType(ComponentMappingData ? "update" : "insert");
-  }
-
 
 
   async function onSubmit(data) {
     debugger
     console.log(data);
     let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-    if (actionType == "insert") {
-      try {
-        debugger;
-        await axios.post(hostURL + "Payroll/InsertComponentMapping", data); // this for insrting the data using inserting Api call 
-        alert("data inserted")
-      } 
-     
-      catch (error) {
-        alert ("data not inserted")
-      }
+    try {
+      debugger;
+      await axios.post(hostURL + "Payroll/InsertComponentMapping", data); // this for insrting the data using inserting Api call 
+      alert("data inserted")
     }
-     else {
-      await axios.post(hostURL + "Payroll/UpdateComponentMapping", data); // this is for updating or Modifiying the data using  Update Api call
-      alert("updated");
+
+    catch (error) {
+      alert("data not inserted")
     }
   }
-
-
-
-
-
-
-
-
 
 
   return (
     <Layout>
 
-      <div className="container-fluid">
+      <div className="container">
         <div className="row">
           <div className="col-lg-4">
             <h3 className="Heading">Component Mapping</h3>
@@ -144,7 +84,7 @@ function ComponentMappingForm({editData}) {
                 <label>
                   Component Name<span style={{ color: "red" }}>*</span>
                 </label>
-                <select {...register('ComponentName', { required: "Please add a ComponentName"  })}
+                <select {...register('ComponentName', { required: "Please add a ComponentName" })}
                   id="ComponentName"
                   name="ComponentName"
                   className="form-control "
@@ -250,7 +190,7 @@ function ComponentMappingForm({editData}) {
 
               <div className="col-lg-2">
                 <label>Effeactive Date*</label>
-                <input {...register('Effeactivedate', { required: "Please add a Effeactivedate"})}
+                <input {...register('Effeactivedate', { required: "Please add a Effeactivedate" })}
                   id="Effeactivedate"
                   name="Effeactivedate"
                   className="form-control "
@@ -336,20 +276,9 @@ function ComponentMappingForm({editData}) {
             <div className="row">
               <div className="col-lg-10"></div>
               <div className="col-lg-1">
-                {/* <button className="button" id={Styles.actionBtn}>Submit</button> */}
-                {
-                  actionType == "insert" && (
-                    <button type="submit" id={Styles.actionBtn} className="btn btn-primary"> Save </button>
-                  )
 
-                }
+                <button type="submit" id={Styles.actionBtn} className="btn btn-primary"> Save </button>
 
-                {
-
-                  actionType == "update" && (
-                    <button type="submit" id={Styles.actionBtn} className="btn btn-primary">Update</button>
-                  )
-                }
               </div>
               <div className="col-lg-1">
                 {/* <button

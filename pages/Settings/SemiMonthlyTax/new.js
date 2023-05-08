@@ -5,74 +5,24 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import Link from 'next/link';
 
-const SemiMonthlyTaxForm = ({ editData }) => {
+const SemiMonthlyTaxForm = ({ }) => {
 
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
-    let [actionType, setActionType] = useState("insert")
+
     let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-    let ID;
+
 
     const onSubmit = async (data) => {
-        console.log(JSON.stringify(data))
-        if (actionType == "insert") {
-            await axios.post(hostURL + "HR/InsertTaxconfigarationsemimonth", data) // Inserting new data [Shashank]
-            location.href = "/Settings/SemiMonthlyTax";
-            Swal.fire({
-                icon: 'success',
-                title: 'Added Successfully',
-            })
-        }
-        else {
-            Swal.fire({
-                title: 'Are you sure to update?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, update it!'
-            }).then((result) => {
-                if (result) {
-                    axios.post(hostURL + "HR/UpdateTaxconfigarationsemimonth", data) // Updating existing data [Shashank]
-                    sessionStorage.removeItem("id")
-                    Swal.fire({
-                        icon: "success",
-                        titleText: "Updated Successfully"
-                    })
-                    location.href = "/Settings/SemiMonthlyTax";
+        await axios.post(hostURL + "HR/InsertTaxconfigarationsemimonth", data) // Inserting new data [Shashank]
+        location.href = "/Settings/SemiMonthlyTax";
+        Swal.fire({
+            icon: 'success',
+            title: 'Added Successfully',
+        })
 
-                }
-            })
-        }
     }
 
-    function clearForm(existingData = null) {
-        let semitax = {
-            "ID": existingData ? existingData.id : "",
-            "Taxlowlevellimit": existingData ? existingData.taxlowlevellimit : "",
-            "Taxhighlevellimit": existingData ? existingData.taxhighlevellimit : "",
-            "slab": existingData ? existingData.slab : "",
-            "Percentage": existingData ? existingData.percentage : "",
-            "Taxexcessamount": existingData ? existingData.taxexcessamount : "",
-            "Taxdeductionamount": existingData ? existingData.taxdeductionamount : "",
-            "Year": existingData ? existingData.year : "",
-        }
-        reset(semitax)
-        setActionType(existingData ? "update" : "insert")
-    }
 
-    // async function getByID() {
-    //     const res = await axios.get(hostURL + "HR/GetTaxconfigarationsemimonthByID?ID=" + ID) //getting semi annual tax data based on ID to update details [Shashank]
-    //     console.log(res.data)
-    //     clearForm(res.data[0])
-    // }
-
-    useEffect(() => {
-        if (editData == "") {
-            clearForm();
-        } else {
-            clearForm(editData);
-        }
-    }, [1]);
     return (
         <Layout>
             <h3 className='Heading mt-3'>Semi Monthly Form</h3>
@@ -135,16 +85,9 @@ const SemiMonthlyTaxForm = ({ editData }) => {
 
                         <div className='col-lg-8'></div>
                         <div className='col-lg-2 mt-2 text-end'>
-                            {
-                                actionType == "insert" && (
-                                    <button type='submit' className=' AddButton'>Save</button>
-                                )
-                            }
-                            {
-                                actionType == "update" && (
-                                    <button type="submit" className=' AddButton'>Update</button>
-                                )
-                            }
+
+                            <button type='submit' className=' AddButton'>Save</button>
+
                         </div>
                         <div className='col-lg-2 mt-2'>
                             <Link href='/Settings/SemiMonthlyTax'><button className=' AddButton'>Cancel</button></Link>

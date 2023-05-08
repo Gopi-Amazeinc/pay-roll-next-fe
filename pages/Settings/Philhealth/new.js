@@ -9,47 +9,15 @@ import Layout from '@/components/layout/layout'
 
 const PhilhealthForm = ({ editData }) => {
     const { register, handleSubmit, watch, reset, formState: { errors }, } = useForm();
-    const [actionType, setActionType] = useState("insert");
-
-    useEffect(() => {
-        if (editData == "") {
-            clearForm();
-        } else {
-            clearForm(editData);
-        }
-    }, [1]);
-
-    function clearForm(PhillhealthData = null) {
-        debugger;
-        let details = {
-            ID: PhillhealthData ? PhillhealthData.id : "",
-            Taxiableincomelowlimit: PhillhealthData
-                ? PhillhealthData.taxiableincomelowlimit
-                : "",
-            Taxiableincomehighlimit: PhillhealthData
-                ? PhillhealthData.taxiableincomehighlimit
-                : "",
-            Phihealthvalue: PhillhealthData ? PhillhealthData.phihealthvalue : "",
-            Year: PhillhealthData ? PhillhealthData.year : "",
-        };
-        reset(details);
-        setActionType(PhillhealthData ? "update" : "insert");
-    }
 
     async function onSubmit(data) {
-        console.log(data);
         let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-        if (actionType == "insert") {
-            try {
-                await axios.post(hostURL + "HR/InsertPhihealthconfogaration", data);
-            } catch (error) { }
-            Swal.fire("Added succesfullly");
-            location.href = '/Settings/Philhealth';
-        } else {
-            await axios.post(hostURL + "HR/UpdatePhihealthconfogaration", data);
-            Swal.fire("Updated succesfullly");
-            location.href = '/Settings/Philhealth';
-        }
+        try {
+            await axios.post(hostURL + "HR/InsertPhihealthconfogaration", data);
+        } catch (error) { }
+        Swal.fire("Added succesfullly");
+        location.href = '/Settings/Philhealth';
+
     }
 
     return (
@@ -153,28 +121,17 @@ const PhilhealthForm = ({ editData }) => {
                                 {/* <button id={Styles.Save}>Save</button> */}
                             </div>
                             <div className="col-lg-1">
-                                {
-                                    actionType == "insert" && (
-                                        <button
-                                            type="submit"
 
-                                            className={Styles.Save}
-                                        >
-                                            Save
-                                        </button>
-                                    )}
+                                <button
+                                    type="submit"
 
-                                {
-                                    actionType == "update" && (
-                                        <button
-                                            type="submit"
+                                    className={Styles.Save}
+                                >
+                                    Save
+                                </button>
 
-                                            className={Styles.Save}
-                                        >
-                                            Update
-                                        </button>
-                                    )
-                                }
+
+
                             </div>
                             <div className="col-lg-2 ">
                                 {/* <button id='AddButton' className='btn btn-primary'>Submit</button>
