@@ -55,7 +55,7 @@ export default function BarangayMasterDash() {
 
       <div className="row mt-3">
         <div className="col-lg-10">
-          <p className="Heading fs-6 mt-2">
+          <p className="Heading">
             SHOWING <span></span>RESULTS
           </p>
         </div>

@@ -6,53 +6,19 @@ import axios from "axios";
 import Layout from '../../../components/layout/layout'
 import Swal from "sweetalert2";
 
-function CountryMasterForm({ editData }) {
-    const [actionType, setActionType] = useState("insert");
+function CountryMasterForm() {
     const { register, handleSubmit, reset, formState } = useForm();
     const { errors } = formState;
     let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
 
     async function onSubmit(data) {
-        if (actionType == "insert") {
-            await axios.post(hostURL + "Master/InsertCountryType", data);  //naveen.th@amazeinc.in, Insert API for Country master, to add new data
-            Swal.fire(
-                'Added succesfullly'
-            );
-            location.href = "/Masters/CountryMaster";
-        }
-        else {
-            await axios.post(hostURL + "Master/UpdateCountryType", data); //naveen.th@amazeinc.in, Update API for Country master, to update data
-            Swal.fire(
-                "Updated succesfullly"
-            );
-            location.href = "/Masters/CountryMaster";
-        }
-        await axios.get(hostURL + "Master/GetCountryType"); //naveen.th@amazeinc.in, Get API for Country master, to fetch updated data 
+        await axios.post(hostURL + "Master/InsertCountryType", data);  //naveen.th@amazeinc.in, Insert API for Country master, to add new data
+        Swal.fire(
+            'Added succesfullly'
+        );
+        location.href = "/Masters/CountryMaster";
     }
 
-    useEffect(() => {
-        getById()
-    }, []);
-
-    function getById() {
-        if (editData == "") {
-            clearForm();
-        }
-        else {
-
-            clearForm(editData);
-        }
-    }
-
-    function clearForm(existingData = null) {
-        let etty = {
-            "ID": existingData ? existingData.id : "",
-            "Short": existingData ? existingData.short : "",
-            "Description": existingData ? existingData.description : "",
-        }
-        reset(etty);
-        setActionType(existingData ? "update" : 'insert');
-    }
     const customStyles = {
         content: {
             top: '50%',
@@ -108,20 +74,8 @@ function CountryMasterForm({ editData }) {
                                         <button type='button' className='btn common-edit' id={Styles.btn}>Close</button></Link>
                                 </div>
                                 <div className="col-lg-2">
-                                    {
-                                        actionType == "insert" && (
-                                            <button type='submit' className='btn' id={Styles.btn}>Save</button>
-                                        )
-                                    }
-                                    {
-                                        actionType == "update" && (
-                                            <button type='submit' className='btn' id={Styles.btn} >Update</button>
-                                        )
-                                    }
+                                    <button type='submit' className='btn' id={Styles.btn}>Save</button>
                                 </div>
-
-
-
                             </div>
                         </form>
                     </div>

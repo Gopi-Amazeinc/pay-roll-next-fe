@@ -68,7 +68,7 @@ function LeaveTypeDashboard() {
                 <br></br>
                 <div className="row">
                     <div className="col-md-6">
-                        <p className="text-primary fs-6 mt-3 fw-bold">
+                        <p className="Heading fs-6">
                             SHOWING <span>{leaveTypeData.length} </span>RESULTS
                         </p>
                     </div>
@@ -82,12 +82,11 @@ function LeaveTypeDashboard() {
                     </div>
                 </div>
                 <br></br>
-                <div className="row" style={{ marginLeft: "-99px" }}></div>
-                <div className="row">
+                <div className="container">
                     <div className="col-md-12">
-                        <div className="container-fluid">
+                        <div className="row">
                             <table className="table table-striped table-hover mt-4">
-                                <thead className="bg-info text-white th">
+                                <thead>
                                     <tr>
                                         <th>Leave Type</th>
                                         <th>Description</th>
