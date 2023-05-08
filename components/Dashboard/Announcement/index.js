@@ -1,5 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import axios from "axios";
 
 function AnnoucementDash() {
   const [upcomming, setupcomming] = useState(false);
@@ -17,6 +18,19 @@ function AnnoucementDash() {
 
   const [upcommingdashboard, setupcommingdashboard] = useState([]);
   const [completedashboard, setcompletedashboard] = useState([]);
+
+  const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+
+  async function getupcomingdata() {
+    let res = await axios.get(hostURL + "HR/GetCompleteAnnouncementsByBuildingID?BuildingID=57");
+    setcompletedashboard(res.data);
+    console.log(res.data);
+  }
+
+  useEffect(() => {
+    getupcomingdata();
+  }, [1]);
+
 
   return (
     <>
@@ -55,6 +69,47 @@ function AnnoucementDash() {
             </div>
           </div>
         </div>
+        <br></br>
+
+        {
+          completed && (
+            <table className='table table-hover'>
+              <thead className='bg-info text-white'>
+                <tr>
+                  
+                  <th>Announcement Date</th>
+                  <th>Announcement Time</th>
+                  <th>Description</th>
+                  <th>Reason</th>
+                  <th>Venue</th>
+                  
+                </tr>
+              </thead>
+
+              <tbody>
+                {
+                  completedashboard.map((data) => {
+                    return (
+                      <tr key={data.id}>
+                        <td>{data.name}</td>
+                        <td>{data.filterdate}</td>
+                        <td>{data.description}</td>
+                        <td>{data.reason}</td>
+                        <td>{data.venue}</td>
+                        <td></td>
+                      </tr>
+                    )
+                  })
+                }
+              </tbody>
+            </table>
+          )
+        }
+
+
+
+
+
       </div>
     </>
   );

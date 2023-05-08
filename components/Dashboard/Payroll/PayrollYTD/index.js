@@ -13,16 +13,24 @@ const Employmentjobhistory = () => {
     const [PayrollYTD, setPayrollYTD] = useState(false);
     const [dashboard, setDashboard] = useState([])
     const [YTDlist, setYTDlist] = useState([])
+    const [PayrollHistory, setPayrollHistory] = useState(false)
 
 
     const handleModalOpen = () => {
         setModalIsOpen(true);
     };
 
+
     const handlePayrollYTD = (data) => {
         const payrollytdlist = dashboard.filter(x => x.id === data.id);
         setYTDlist(payrollytdlist);
         setPayrollYTD(true)
+    }
+    const payrollHistory = (data) => {
+        setPayrollHistory(true)
+        // const payrollytdlist = dashboard.filter(x => x.id === data.id);
+        // setYTDlist(payrollytdlist);
+        // setPayrollYTD(true)
     }
 
     let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
@@ -41,8 +49,8 @@ const Employmentjobhistory = () => {
     const payrollYTDStyle = {
         content: {
             top: '15%',
-            left: '15%',
-            right: '15%',
+            left: '20%',
+            right: '10%',
             bottom: '65%',
             // marginRight: '-40%',
             // transform: 'translate(-50%, -50%)',
@@ -64,7 +72,26 @@ const Employmentjobhistory = () => {
                 icon: "success",
                 text: "Uploaded Successfully"
             })
-            location.href = "/Payroll/employmentjobhistory"
+            location.href = "/Payroll/PayrollYTD"
+        }
+    }
+
+    const payrollHistorymodal = async () => {
+
+        if (items == "") {
+            Swal.fire({
+                icon: "danger",
+                titleText: "Invalid file",
+                text: "Please Select Valid File"
+            })
+        }
+        else {
+            await axios.post(hostURL + "Payroll/InsertPayrollYTD", items)
+            Swal.fire({
+                icon: "success",
+                text: "Uploaded Successfully"
+            })
+            location.href = "/Payroll/PayrollYTD"
         }
     }
 
@@ -136,6 +163,7 @@ const Employmentjobhistory = () => {
                                     <button onClick={() => setModalIsOpen(false)} className='btn-primary'><AiOutlineClose /></button>
                                 </div>
                             </div>
+                            <hr />
                             <div className='row mt-3'>
                                 <div className='col-lg-6'>
                                     <input
@@ -155,10 +183,42 @@ const Employmentjobhistory = () => {
                         </div>
                     </Modal>
 
+                    <Modal isOpen={PayrollHistory} style={customStyles}>
+                        <div className='container'>
+                            <div className='row card-header'>
+                                <div className='col-lg-8 mt-3'>
+                                    <h5>Upload Payroll History</h5>
+
+                                </div>
+                                <div className='col-lg-3'></div>
+                                <div className='col-lg-1 mt-3 mb-3'>
+                                    <button onClick={() => setPayrollHistory(false)} className='btn-primary'><AiOutlineClose /></button>
+                                </div>
+                            </div>
+                            <hr />
+                            <div className='row mt-3'>
+                                <div className='col-lg-6'>
+                                    <input
+                                        className='form-control'
+                                        type="file"
+                                        accept=".xlsx"
+                                        onChange={(e) => {
+                                            const file = e.target.files[0];
+                                            readExcel(file);
+                                        }}
+                                    />
+                                </div>
+                            </div>
+                            <div className='col-lg-4 mb-3'>
+                                <button type='submit' onClick={payrollHistorymodal} className='submit-button  mt-4'>Upload Payroll History</button>
+                            </div>
+                        </div>
+                    </Modal>
+
 
                     <Modal isOpen={PayrollYTD} style={payrollYTDStyle} onRequestClose={() => setPayrollYTD(false)}>
 
-                        <div className='container'>
+                        <div className='container' >
                             <div className='row'>
                                 <table className='table table-hover'>
                                     <thead className='bg-info text-white'>
@@ -198,7 +258,7 @@ const Employmentjobhistory = () => {
                         <button type='submit' onClick={handleModalOpen} className={Styles.button}>Payroll YTD</button>
                     </div>
                     <div className='col-lg-2'>
-                        <button type='submit' className={Styles.button}>Payroll History</button>
+                        <button type='submit' onClick={payrollHistory} className={Styles.button}>Payroll History</button>
                     </div>
                 </div>
 
@@ -230,7 +290,7 @@ const Employmentjobhistory = () => {
                                             <td>{data.joiningDate}</td>
                                             <td></td>
                                             <td>
-                                                <button className={Styles.upload}>Payroll History</button>
+                                                <button onClick={handlePayrollYTD.bind(this, data)} className={Styles.upload}>Payroll History</button>
                                             </td>
                                             <td>
                                                 <button onClick={handlePayrollYTD.bind(this, data)} className={Styles.upload}>PayrollYTD</button>

@@ -157,7 +157,7 @@ function CityMasterDash() {
                         <Link href={`/Masters/CityMaster/Edit/${data.id}`}>
                           <button className="edit-btn">Edit</button></Link>
                         &nbsp;
-                        <button className="edit-btn" onClick={() => DeleteCityMaster(data.id)}>Delete{" "}</button>
+                        <button className="edit-btn" onClick={() => DeleteCityMaster(data.id)}>Delete</button>
                       </td>
                     </tr>
                   );

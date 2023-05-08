@@ -77,7 +77,7 @@ const Compensationtimeoutform =()=> {
                         <div className='row mt-5'>
                             <div className='col-lg-8'></div>
                             <div className='col-lg-2'>
-                                <Link href="/Requests/Compensationtimeout"><button className='close-button'>Cancel</button></Link>
+                                <Link href="/Requests/Compensationtimeout"><button className='submit-button'>Cancel</button></Link>
                             </div>
                             <div className='col-lg-2'>
                                 <button type='submit' className=' submit-button'>Submit</button>

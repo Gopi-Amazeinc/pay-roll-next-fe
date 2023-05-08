@@ -62,9 +62,9 @@ export default function BarangayMasterDash() {
         <div className="col-lg-2">
           <Link href="/Masters/BarangayMaster/new">
             <button className=" AddButton">
-              {" "}
-              ADD NEW{" "}
-            </button>{" "}
+              
+              ADD NEW
+            </button>
           </Link>
         </div>
         <div className="col-lg-1"></div>

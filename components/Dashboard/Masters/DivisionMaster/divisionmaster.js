@@ -52,8 +52,8 @@ function DivisionMasterDashboard() {
                         <div className="col-lg-1">
                             <b>
                                 <p className="mt-2 text-center">
-                                    {" "}
-                                    <BiFilterAlt /> Filter by:{" "}
+                                    
+                                    <BiFilterAlt /> Filter by:
                                 </p>
                             </b>
                         </div>
