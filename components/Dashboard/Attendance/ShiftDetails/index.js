@@ -20,7 +20,7 @@ const Shiftdetails = () => {
     return (
         <>
             <div className='row mt-3'>
-                <div className='col-lg-3 text-end'>
+                <div className='col-lg-3 '>
                     <Link href="/Attendance/shiftdetails" className='Heading active' > My Weekly Shift</Link>
                 </div>
                 {/* <div className='col-lg-3'>
@@ -39,11 +39,11 @@ const Shiftdetails = () => {
             </div> */}
 
 
-            <div className='card shadow-lg p-4 rounded-3 mt-4'>
+            <div className='card shadow-lg p-4 rounded-3 mt-4 text-start'>
                 <div className='row'>
                     <div className='col-lg-3'>
                         <p >START DATE <span >*</span></p>
-                        <input type='date' className='form-control form-control-sm' />
+                        <input type='date' className='form-control form-control-sm m-o' />
                     </div>
                     <div className='col-lg-3'>
                         <p >END DATE <span >*</span></p>

@@ -26,12 +26,12 @@ const AttendenceDetails = () => {
       if (userID) {
         let res = await axios.get(
           hostURL +
-            "HR/GetAttendanceByEmployeeID?userID=" +
-            userID +
-            "&SDate=" +
-            SDate +
-            "&EDate=" +
-            EDate
+          "HR/GetAttendanceByEmployeeID?userID=" +
+          userID +
+          "&SDate=" +
+          SDate +
+          "&EDate=" +
+          EDate
         );
         setAttendence(res.data);
       }
@@ -44,50 +44,48 @@ const AttendenceDetails = () => {
     <div>
       <div className="container">
         <div className="row mt-3">
-          <div className="col-lg-3 text-end">
-            <Link
-              className="Heading active"
-              href="/Attendance/AttendanceDetails"
-            >
-              My Attendance Details
-            </Link>
+          <div className="col-lg-3 ">
+            <Link className="Heading active" href="/Attendance/AttendanceDetails"  >   My Attendance Details  </Link>
           </div>
-          {roleID== 9 && (
+          {roleID == 9 && (
             <>
-          <div className="col-lg-3">
-            <Link
-              className="Heading active"
-              href="/Attendance/MyTeamAttendanceDetails"
-            >
-              Company Attendance Details
-            </Link>
-          </div>
-          </>
+              <div className="col-lg-3">
+                <Link
+                  className="Heading active"
+                  href="/Attendance/MyTeamAttendanceDetails"
+                >
+                  Company Attendance Details
+                </Link>
+              </div>
+            </>
           )}
         </div>
+        <div className="Filter" style={{marginLeft:"0px"}}>
 
-        <div className="card p-3 border-0 shadow-lg rounded-3 mt-4">
-          <div className="row">
-            <div className="col-lg-1">
-              <p>Filter By</p>
-            </div>
 
-            <div className="col-lg-3">
-              <p>Start Date</p>
-              <input type="date" className="form-control" />
-            </div>
+          <div className="card p-3  border-0 shadow-lg rounded-3 mt-4">
+            <div className="row">
+              <div className="col-lg-1">
+                <p>Filter By</p>
+              </div>
 
-            <div className="col-lg-3">
-              <p>End Date</p>
-              <input type="date" className="form-control" />
-            </div>
+              <div className="col-lg-3">
+                <p>Start Date</p>
+                <input type="date" className="form-control" />
+              </div>
 
-            <div className="col-lg-2">
-              <br />
-              <p></p>
-              <button className="btn btn-primary" id="AddButton">
-                Download
-              </button>
+              <div className="col-lg-3">
+                <p>End Date</p>
+                <input type="date" className="form-control" />
+              </div>
+
+              <div className="col-lg-2">
+                <br />
+                <p></p>
+                <button className="btn btn-primary" id="AddButton">
+                  Download
+                </button>
+              </div>
             </div>
           </div>
         </div>
