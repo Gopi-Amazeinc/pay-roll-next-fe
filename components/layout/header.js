@@ -14,9 +14,14 @@ import Link from "next/link";
 const Header = ({ makelogout }) => {
   const [userName, setUserName] = useState();
 
+  const [initial, setInitial] = useState('');
+
   useEffect(() => {
     const Loginname = sessionStorage.getItem("userName");
     setUserName(Loginname);
+    if (Loginname) {
+      setInitial(Loginname.charAt(0));
+    }
   }, []);
 
   const [time, setTime] = useState(new Date());
@@ -67,19 +72,26 @@ const Header = ({ makelogout }) => {
 
         </div>
         {/* <div className="col-lg-1 mt-2 text-white"> */}
-          {/* <h4 onClick={makelogout}>logout </h4> */}
+        {/* <h4 onClick={makelogout}>logout </h4> */}
         {/* </div> */}
         <div className="col-lg-3  mt-2 text-white" style={{ float: "right" }}>
-          <Image className={HeaderStyles.notification} src={Notification} alt="notificatons" width={33} height={30} />
+
           <div className={HeaderStyles.dropdown1} >
             <div className={HeaderStyles.dropdown} style={{ float: "left" }}>
+              <Image className={HeaderStyles.notification} src={Notification} alt="notificatons" width={33} height={30} />
+
+   
+                <span className={HeaderStyles.initial}>{initial}</span>
+
+
+
               <button className={HeaderStyles.logout} >  Hi {userName} <FaCaretDown style={{ cursor: "pointer" }} /> </button>
 
               <div className={HeaderStyles.dropdowncontent} >
 
-                <Link className={HeaderStyles.profile} href="/Staff/AddStaff"> <h6> <CgProfile /> &nbsp; &nbsp; My Profile</h6> </Link>
-                <h6 style={{ whiteSpace: "nowrap" }}> <AiOutlineSetting /> &nbsp; &nbsp; Account Setting</h6>
-                <h6 onClick={makelogout} style={{ color: "red" }} ><FiLogOut /> &nbsp; &nbsp; logout</h6>
+                <Link className={HeaderStyles.profile} href="/Staff/AddStaff"> <h6> <CgProfile size={"22px"} /> &nbsp; &nbsp; My Profile</h6> </Link>
+                <h6 style={{ whiteSpace: "nowrap" }}> <AiOutlineSetting size={"22px"} /> &nbsp; &nbsp; Account Setting</h6>
+                <h6 onClick={makelogout} style={{ color: "red" }} ><FiLogOut size={"22px"} /> &nbsp; &nbsp; logout</h6>
               </div>
             </div>
           </div>
