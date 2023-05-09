@@ -42,24 +42,9 @@ const OverTimeDetails = () => {
     const res = await axios.get(hostURL + "HR/GetOtNightOt?StartTime=" + startTime + "&EndTime=" + endTime + "&Shift=1&StaffID=" + staffID + "&Date=" + date);
     setDashboardData(res.data);
     console.log(res.data);
-    // onSubmit(res.data);
     sessionStorage.setItem("Date", date);
   }
 
-  async function onSubmit(data) {
-    try {
-      console.log("form data", data);
-
-
-    } catch (error) {
-
-    }
-  }
-  // let staffID;
-  // staffID = sessionStorage.getItem("StaffID")
-
-  // let Date;
-  // Date = sessionStorage.getItem("Date")
 
   async function insertDetails(data) {
     try {
@@ -100,13 +85,12 @@ const OverTimeDetails = () => {
       await axios.post(hostURL + "HR/InsertStaffOverTimeDetails", details);
       Swal.fire('Data Inserted successfully')
       console.log("Inserted data:", details);
+      // location.href = ("/Requests/OverTimeDetails");
     }
     catch {
       Swal.fire("Insert is not working");
     }
-    // location.href = ("/Requests/OverTimeDetails");
   }
-
   return (
     <Layout>
       <div className="shadow-lg p-3 mt-3 mb-5 bg-white rounded">
@@ -167,7 +151,6 @@ const OverTimeDetails = () => {
               <div className='col-lg-2'>
                 <button className={Styles.addButton}>Submit</button>
               </div>
-
             </div>
           </form>
         </div>
