@@ -82,10 +82,16 @@ const OverTimeDetails = () => {
         "LegalExccessRestNormalOt": dashboardData[0].legalExccessRestNormalOt == null ? 0 : dashboardData[0].legalExccessRestNormalOt,
         "LegalExccessRestNightOt": dashboardData[0].legalExccessRestNightOt == null ? 0 : dashboardData[0].legalExccessRestNightOt
       }
-      await axios.post(hostURL + "HR/InsertStaffOverTimeDetails", details);
-      Swal.fire('Data Inserted successfully')
-      console.log("Inserted data:", details);
-      // location.href = ("/Requests/OverTimeDetails");
+      if(details !=0){
+        await axios.post(hostURL + "HR/InsertStaffOverTimeDetails", details);
+        Swal.fire('Data Inserted successfully')
+        console.log("Inserted data:", details);
+        // location.href = ("/Requests/OverTimeDetails");
+      }
+      else{
+        Swal.fire("Error in the Details")
+      }
+    
     }
     catch {
       Swal.fire("Insert is not working");
