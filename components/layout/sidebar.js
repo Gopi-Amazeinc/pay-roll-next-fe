@@ -282,7 +282,7 @@ const Sidebar = ({ children, applyPageName }) => {
   };
   return (
     <div className="row" style={{ height: "90vh", overflowY: "auto" }}>
-      <div className="col-lg-12">
+      <div className="col-lg-12 mb-4">
         <Link href="/Home/dashboard" className={styles.sidemenulink}>
           <button
             className={getStyle(1)}
@@ -1230,9 +1230,9 @@ const Sidebar = ({ children, applyPageName }) => {
             <hr></hr>
             <Link href="/Announcement" className={styles.sidemenulink}>
               <button
-                className={getStyle(501)}
+                className={getStyle(701)}
                 onClick={updateActiveMenu.bind(this, {
-                  id: 501,
+                  id: 701,
                   name: "Announcement",
                 })}
               >
