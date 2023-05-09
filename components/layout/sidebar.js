@@ -364,7 +364,7 @@ const Sidebar = ({ children, applyPageName }) => {
                 Attendance Details
               </button>
             </Link>
-
+            { userRole != 6 && (
             <Link
               href="/Attendance/OverTimeUnitsUpload"
               className={styles.sidemenulink}
@@ -380,7 +380,7 @@ const Sidebar = ({ children, applyPageName }) => {
                 Overtime Units Upload
               </button>
             </Link>
-
+            )}
             <Link
               href="/Attendance/AttendanceCorrections"
               className={styles.sidemenulink}
