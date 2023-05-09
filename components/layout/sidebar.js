@@ -457,7 +457,7 @@ const Sidebar = ({ children, applyPageName }) => {
                 Loan Requests
               </button>
             </Link>
-            <Link href="/Requests/Timesheet">
+            {/* <Link href="/Requests/Timesheet">
               <button
                 className={getSubStyle(54)}
                 onClick={updateActiveMenu.bind(this, {
@@ -468,7 +468,7 @@ const Sidebar = ({ children, applyPageName }) => {
                 <RiFileUserLine style={customStyles.icons} />
                 Timesheet Requests(clarify)
               </button>
-            </Link>
+            </Link> */}
             <Link href="/Requests/Locatorrequest">
               <button
                 className={getSubStyle(55)}
