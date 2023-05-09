@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
-
+import { ApiService } from '@/services/api.service';
 import { AiOutlinePlusCircle } from "react-icons/ai";
 
 import axios from "axios";
@@ -9,11 +9,16 @@ import Swal from "sweetalert2";
 export default function BarangayMasterDash() {
   const [barangaymaster, setbarangaymaster] = useState([]);
 
-  const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+  // const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+
+  // const user = await usercurdService.getById(params.id);
+
+
 
   const getbarangaymaster = async () => {
+    let res = await ApiService.commonGetCall("Master/GetBarangayMaster");
     // This API is used to fetch the data from Barangay Master table
-    let res = await axios.get(hostURL + "Master/GetBarangayMaster");
+    // let res = await axios.get(hostURL + "Master/GetBarangayMaster");
     setbarangaymaster(res.data);
   };
   useEffect(() => {
