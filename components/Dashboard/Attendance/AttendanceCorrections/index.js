@@ -46,9 +46,7 @@ const Attendancecorrectiondashboard = () => {
   }
 
   async function getPendingData(SDate, EDate) {
-    // debugger
     let staffID = sessionStorage.getItem("userID");
-    //let staffID = "20540";
     const res = await axios.get(
       hostURL +
       "Payroll/GetPendingAttendanceCorrectionByStaffID?userID=" +
@@ -58,30 +56,68 @@ const Attendancecorrectiondashboard = () => {
       "&EDate=" +
       EDate
     );
-    console.log(res);
+    console.log(res, "pending");
     setpendingDashboardData(res.data);
   }
 
+
+  async function getApprovedData(SDate, EDate) {
+    let staffID = sessionStorage.getItem("userID");
+    const res = await axios.get(
+      hostURL +
+      "Payroll/GetApprovedAttendanceCorrectionByStaffID?userID=" +
+      staffID +
+      "&SDate=" +
+      SDate +
+      "&EDate=" +
+      EDate
+    );
+    console.log(res, "approved");
+    setapprovedDashboardData(res.data);
+  }
+
+
+  async function getRejectedData(SDate, EDate) {
+    let staffID = sessionStorage.getItem("userID");
+    const res = await axios.get(
+      hostURL +
+      "Payroll/GetRejectedAttendanceCorrectionByStaffID?userID=" +
+      staffID +
+      "&SDate=" +
+      SDate +
+      "&EDate=" +
+      EDate
+    );
+    console.log(res, "rejected");
+    setrejectedDashboardData(res.data);
+  }
+
+
+
   useEffect(() => {
-    debugger;
+
     let Newtoday = new Date();
     let firstDayOfMonth = new Date(
       Newtoday.getFullYear(),
       Newtoday.getMonth(),
-      1
+
     );
     let fromDate = formateDate(firstDayOfMonth);
-    let cdate = new Date(
-      Newtoday.getFullYear(),
-      Newtoday.getMonth(),
-      Newtoday.getDate()
-    );
-    let toDate = formateDate(cdate);
+
+    const date = new Date();
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1;
+    const lastDay = new Date(year, month, 0).getDate();
+    const EndDate = `${year}-${month.toString().padStart(2, '0')}-${lastDay.toString().padStart(2, '0')}`;
+
+    console.log(EndDate);
 
     setSDate(fromDate);
-    setEDate(toDate);
+    setEDate(EndDate);
 
-    getPendingData(fromDate, toDate);
+    getPendingData(fromDate, EndDate);
+    getApprovedData(fromDate, EndDate);
+    getRejectedData(fromDate, EndDate);
   }, [1]);
 
   const Delete = (id) => {
@@ -100,14 +136,13 @@ const Attendancecorrectiondashboard = () => {
           icon: "success",
           titleText: "Cancelled Successfully",
         });
-        getPendingData();
       }
+      getPendingData();
     });
   };
 
   return (
     <div className="container">
-      <h2>Yet to bind</h2>
       <h3 className="text-primary fs-5 mt-3">Attendance Correction </h3>
       <div className="card p-3 border-0 shadow-lg rounded-3 mt-4">
         <div className="row p-3">
@@ -173,7 +208,7 @@ const Attendancecorrectiondashboard = () => {
                     <td>{data.date}</td>
                     <td>{data.startTime}</td>
                     <td>{data.endTime}</td>
-                    <td>{data.comments}</td>
+                    <td>{data.Comments}</td>
                     <td>{data.status}</td>
                     <td>
                       <button
@@ -215,6 +250,20 @@ const Attendancecorrectiondashboard = () => {
                 <th>Status</th>
               </tr>
             </thead>
+
+            <tbody>
+              {approvedDashboardData.map((data) => {
+                return (
+                  <tr key={data.id}>
+                    <td>{data.date}</td>
+                    <td>{data.startTime}</td>
+                    <td>{data.endTime}</td>
+                    <td>{data.Comments}</td>
+                    <td>{data.status}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
           </table>
         )}
 
@@ -243,6 +292,20 @@ const Attendancecorrectiondashboard = () => {
                 <th>Status</th>
               </tr>
             </thead>
+
+            <tbody>
+              {rejectedDashboardData.map((data) => {
+                return (
+                  <tr key={data.id}>
+                    <td>{data.date}</td>
+                    <td>{data.startTime}</td>
+                    <td>{data.endTime}</td>
+                    <td>{data.Comments}</td>
+                    <td>{data.status}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
           </table>
         )}
 
