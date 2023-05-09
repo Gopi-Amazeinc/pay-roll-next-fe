@@ -10,11 +10,12 @@ import { useState, useEffect } from 'react';
 function Holidayform() {
 
   const { register, handleSubmit, watch, reset, formState: { errors }, } = useForm();
+  let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
  
   
  async  function onSubmit (data)  {
 
-    await axios.post(hostURL + "HR/InsertHolidays", data) // inserting new division master data [Shashank]
+    await axios.post(hostURL + "HR/InsertHolidays", data) 
     location.href = "/Holiday"
     Swal.fire({
         icon: 'success',
