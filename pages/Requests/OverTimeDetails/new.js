@@ -42,88 +42,60 @@ const OverTimeDetails = () => {
     const res = await axios.get(hostURL + "HR/GetOtNightOt?StartTime=" + startTime + "&EndTime=" + endTime + "&Shift=1&StaffID=" + staffID + "&Date=" + date);
     setDashboardData(res.data);
     console.log(res.data);
-    onSubmit(res.data);
     sessionStorage.setItem("Date", date);
   }
 
-  async function onSubmit(data) {
+
+  async function insertDetails(data) {
     try {
-      console.log("form data", data);
-
-    } catch (error) {
-
-    }
-  }
-  // let staffID;
-  // staffID = sessionStorage.getItem("StaffID")
-
-  // let Date;
-  // Date = sessionStorage.getItem("Date")
-
-  async function clearForm() {
-    let details = {
-      "StaffID": sessionStorage.getItem("userID"),
-      "Date": sessionStorage.getItem("Date"),
-      "StartTime": sessionStorage.getItem("Date") + watch("StartTime"),
-      "EndTime": sessionStorage.getItem("Date") + watch("EndTime"),
-      "noofhours": "",
-      "NightOT": dashboardData[0].nightOt == null ? 0 : dashboardData[0].nightOt,
-      "Comments": watch("Comments"),
-      "Attachment": watch("Attachment"),
-      "NSD_REGULAR": dashboardData[0].nsD_REGULAR == null ? 0 : dashboardData[0].nsD_REGULAR,
-      "ExccessNightOt": dashboardData[0].exccessNightOt == null ? 0 : dashboardData[0].exccessNightOt,
-      "ExccessNormalOt": dashboardData[0].exccessNormalOt == null ? 0 : dashboardData[0].exccessNormalOt,
-      "RestNightOt": dashboardData[0].restNightOt == null ? 0 : dashboardData[0].restNightOt,
-      "RestNormalOT": dashboardData[0].restNormalOT == null ? 0 : dashboardData[0].restNormalOT,
-      "ExccessRestNormalOt": dashboardData[0].exccessRestNormalOt == null ? 0 : dashboardData[0].exccessRestNormalOt,
-      "RestExccessNightOt": dashboardData[0].restExccessNightOt == null ? 0 : dashboardData[0].restExccessNightOt,
-      "LegalNightOt": dashboardData[0].legalNightOt == null ? 0 : dashboardData[0].legalNightOt,
-      "LegalNormalOT": dashboardData[0].legalNormalOT == null ? 0 : dashboardData[0].legalNormalOT,
-      "LegalExccessNormalOt": dashboardData[0].legalExccessNormalOt == null ? 0 : dashboardData[0].legalExccessNormalOt,
-      "LegalExccessNightOt": dashboardData[0].legalExccessNightOt == null ? 0 : dashboardData[0].legalExccessNightOt,
-      "SpecialNightOt": dashboardData[0].specialNightOt == null ? 0 : dashboardData[0].specialNightOt,
-      "SpecialNormalOT": dashboardData[0].specialNormalOT == null ? 0 : dashboardData[0].specialNormalOT,
-      "SpecialExccessNormalOt": dashboardData[0].specialExccessNormalOt == null ? 0 : dashboardData[0].specialExccessNormalOt,
-      "SpecialExccessNightOt": dashboardData[0].specialExccessNightOt == null ? 0 : dashboardData[0].specialExccessNightOt,
-      "SpecialRestNightOt": dashboardData[0].specialRestNightOt == null ? 0 : dashboardData[0].specialRestNightOt,
-      "SpecialRestNormalOT": dashboardData[0].specialRestNormalOT == null ? 0 : dashboardData[0].specialRestNormalOT,
-      "SpecialRestExccessNormalOt": dashboardData[0].specialRestExccessNormalOt == null ? 0 : dashboardData[0].specialRestExccessNormalOt,
-      "SpecialRestExccessNightOt": dashboardData[0].specialRestExccessNightOt == null ? 0 : dashboardData[0].specialRestExccessNightOt,
-      "LegalRestNightOt": dashboardData[0].legalRestNightOt == null ? 0 : dashboardData[0].legalRestNightOt,
-      "LegalRestNormalOT": dashboardData[0].legalRestNormalOT == null ? 0 : dashboardData[0].legalRestNormalOT,
-      "LegalExccessRestNormalOt": dashboardData[0].legalExccessRestNormalOt == null ? 0 : dashboardData[0].legalExccessRestNormalOt,
-      "LegalExccessRestNightOt": dashboardData[0].legalExccessRestNightOt == null ? 0 : dashboardData[0].legalExccessRestNightOt
-      // "Status": "Manager Pending"
-    }
-    console.log("Modal Data", details);
-    try {
+      console.log(data);
       debugger;
+      let details = {
+        "StaffID": sessionStorage.getItem("userID"),
+        "Date": sessionStorage.getItem("Date"),
+        "StartTime": sessionStorage.getItem("Date") + " " + watch("StartTime"),
+        "EndTime": sessionStorage.getItem("Date") + " " + watch("EndTime"),
+        "Comments": watch("comments"),
+        "NightOT": dashboardData[0].nightOt == null ? 0 : dashboardData[0].nightOt,
+        "Attachment": watch("Attachment"),
+        "NSD_REGULAR": dashboardData[0].nsD_REGULAR == null ? 0 : dashboardData[0].nsD_REGULAR,
+        "ExccessNormalOt": dashboardData[0].exccessNormalOt == null ? 0 : dashboardData[0].exccessNormalOt,
+        "ExccessNightOt": dashboardData[0].exccessNightOt == null ? 0 : dashboardData[0].exccessNightOt,
+        "RestNightOt": dashboardData[0].restNightOt == null ? 0 : dashboardData[0].restNightOt,
+        "RestNormalOT": dashboardData[0].restNormalOT == null ? 0 : dashboardData[0].restNormalOT,
+        "ExccessRestNormalOt": dashboardData[0].exccessRestNormalOt == null ? 0 : dashboardData[0].exccessRestNormalOt,
+        "RestExccessNightOt": dashboardData[0].restExccessNightOt == null ? 0 : dashboardData[0].restExccessNightOt,
+        "LegalNightOt": dashboardData[0].legalNightOt == null ? 0 : dashboardData[0].legalNightOt,
+        "LegalNormalOT": dashboardData[0].legalNormalOT == null ? 0 : dashboardData[0].legalNormalOT,
+        "LegalExccessNormalOt": dashboardData[0].legalExccessNormalOt == null ? 0 : dashboardData[0].legalExccessNormalOt,
+        "LegalExccessNightOt": dashboardData[0].legalExccessNightOt == null ? 0 : dashboardData[0].legalExccessNightOt,
+        "SpecialNightOt": dashboardData[0].specialNightOt == null ? 0 : dashboardData[0].specialNightOt,
+        "SpecialNormalOT": dashboardData[0].specialNormalOT == null ? 0 : dashboardData[0].specialNormalOT,
+        "SpecialExccessNormalOt": dashboardData[0].specialExccessNormalOt == null ? 0 : dashboardData[0].specialExccessNormalOt,
+        "SpecialExccessNightOt": dashboardData[0].specialExccessNightOt == null ? 0 : dashboardData[0].specialExccessNightOt,
+        "SpecialRestNightOt": dashboardData[0].specialRestNightOt == null ? 0 : dashboardData[0].specialRestNightOt,
+        "SpecialRestNormalOT": dashboardData[0].specialRestNormalOT == null ? 0 : dashboardData[0].specialRestNormalOT,
+        "SpecialRestExccessNormalOt": dashboardData[0].specialRestExccessNormalOt == null ? 0 : dashboardData[0].specialRestExccessNormalOt,
+        "SpecialRestExccessNightOt": dashboardData[0].specialRestExccessNightOt == null ? 0 : dashboardData[0].specialRestExccessNightOt,
+        "LegalRestNightOt": dashboardData[0].legalRestNightOt == null ? 0 : dashboardData[0].legalRestNightOt,
+        "LegalRestNormalOT": dashboardData[0].legalRestNormalOT == null ? 0 : dashboardData[0].legalRestNormalOT,
+        "LegalExccessRestNormalOt": dashboardData[0].legalExccessRestNormalOt == null ? 0 : dashboardData[0].legalExccessRestNormalOt,
+        "LegalExccessRestNightOt": dashboardData[0].legalExccessRestNightOt == null ? 0 : dashboardData[0].legalExccessRestNightOt
+      }
       await axios.post(hostURL + "HR/InsertStaffOverTimeDetails", details);
       Swal.fire('Data Inserted successfully')
       console.log("Inserted data:", details);
+      // location.href = ("/Requests/OverTimeDetails");
     }
     catch {
       Swal.fire("Insert is not working");
     }
-
-    // location.href = ("/Requests/OverTimeDetails");
   }
-
-  // const insertDetails = async () => {
-  //   try {
-  //     debugger;
-  //     clearForm();
-  //   }
-  //   catch {
-  //     Swal.fire("Insert is not working");
-  //   }
-  // }
-
   return (
     <Layout>
-      <form onSubmit={handleSubmit(clearForm)}>
-        <div className="shadow-lg p-3 mt-3 mb-5 bg-white rounded">
-          <div>
+      <div className="shadow-lg p-3 mt-3 mb-5 bg-white rounded">
+        <div>
+          <form onSubmit={handleSubmit(insertDetails)}>
             <h4 style={{ color: "blue" }}>Add Actual Time</h4>
             <div className='row mt-4'>
               <div className='col-lg-4'>
@@ -139,18 +111,17 @@ const OverTimeDetails = () => {
             </div>
             <div className='row'>
               <div className='col-lg-4'>
-                <input type='date' className='form-control'  {...register('Date', { required: true })} ></input>
+                <input type='date' className='form-control' {...register('Date', { required: true })}></input>
               </div>
               <div className='col-lg-2'>
+                {/* <input type="text" maxlength="2" class="form-control text-center bs-timepicker-field" placeholder="HH" /> */}
                 {/* <TimePicker onChange={handleTimeChange} value={time} disableClock={true} clearIcon={null} /> */}
                 <input type='time' className='form-control' name='time' min="00:00" max="23:59" step="1" {...register('StartTime', { required: true })} />
               </div>
               <div className='col-lg-2'>
                 <input type="time" className='form-control' name='time' min="00:00" max="23:59" step="1" {...register('EndTime', { required: true })} />
               </div>
-              <div className='col-lg-2'>
-                <button className='submit-button' onClick={getDetails}>Click</button>
-              </div>
+
             </div><br />
             <div className='row'>
               <div className='col-lg-4'>
@@ -163,31 +134,37 @@ const OverTimeDetails = () => {
             </div>
             <div className='row'>
               <div className='col-lg-4'>
-                <input type='file' className='form-control' {...register('Attachments', { required: true })}></input>
+                <input type='file' className='form-control' {...register('Attachments')}></input>
               </div>
               <div className='col-lg-4'>
-                <textarea className='form-control' placeholder='Write here...' {...register('Comments', { required: true })}></textarea>
+                <textarea className='form-control' placeholder='Write here...' {...register('comments')}></textarea>
               </div>
               <div className='col-lg-4'></div>
             </div>
             <div className='row mt-4'>
-              <div className='col-lg-6'></div>
+              <div className='col-lg-8'></div>
               <div className='col-lg-2'>
                 <Link href="/Requests/OverTimeDetails">
-                  <button className='submit-button' style={{ float: "right" }}>Cancel</button>
+                  <button className={Styles.addButton} style={{ float: "right" }}>Cancel</button>
                 </Link>
               </div>
               <div className='col-lg-2'>
-                <button className='submit-button'>Submit</button>
-              </div>
-              <div className='col-lg-2'>
-                <button className='submit-button' onClick={openEditModal} style={{ float: "left" }}>OT Details</button>
+                <button className={Styles.addButton}>Submit</button>
               </div>
             </div>
-          </div>
+          </form>
         </div>
-      </form>
-      <Modal isOpen={modalOpen} style={customStyles} contentLabel="Example Modal">
+      </div>
+      <div className='row'>
+        <div className='col-lg-8'></div>
+        <div className='col-lg-2'>
+          <button className={Styles.addButton} onClick={getDetails}>Click</button>
+        </div>
+        <div className='col-lg-2'>
+          <button className={Styles.addButton} onClick={openEditModal} style={{ float: "left" }}>OT Details</button>
+        </div>
+      </div>
+      <Modal ariaHideApp={false} isOpen={modalOpen} style={customStyles} contentLabel="Example Modal">
         <div className='row'>
           <div className='col-lg-6'>
             <div className=" modal-header">
@@ -371,9 +348,8 @@ const OverTimeDetails = () => {
                           </tr>
                         </td>
                       </>
-                    )
-                  })
-                  }
+                    );
+                  })}
 
                 </tr>
               </tbody>
@@ -381,7 +357,7 @@ const OverTimeDetails = () => {
           </div>
         </div>
       </Modal>
-    </Layout>
+    </Layout >
 
   )
 }

@@ -7,7 +7,7 @@ import Swal from 'sweetalert2'
 import { useEffect, useState } from 'react';
 import Layout from '@/components/layout/layout'
 
-const PagibigForm = ({ }) => {
+const PagibigForm = () => {
 
 
 
@@ -24,9 +24,6 @@ const PagibigForm = ({ }) => {
         })
 
     }
-
-
-
 
 
     return (
