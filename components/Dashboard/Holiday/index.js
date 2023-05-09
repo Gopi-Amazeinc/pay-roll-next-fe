@@ -51,7 +51,7 @@ const Holidaydashboard = () => {
         <div>
             <br></br> <p id={Styles.title}>Holiday Dashboard</p>
             <div className="container-fluid mt-4">
-                <div className="row shadow-lg p-2 rounded-4 p-3 ">
+                <div className="shadow-lg p-3 mb-5 bg-white rounded" style={{marginRight:"10px"}}>
                     <div className="col-lg-1">
                         <b>
                             <p className="mt-2 text-center">
