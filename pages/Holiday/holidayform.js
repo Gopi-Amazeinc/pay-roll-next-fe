@@ -32,7 +32,7 @@ function Holidayform() {
       <Layout>
         <div>
           <h3 className="text-primary fs-5 mt-3">Holidays</h3>
-          <div className="card p-3 border-0 shadow-lg rounded-3 mt-4">
+          <div class="shadow-lg p-3 mb-5 bg-white rounded">
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="row">
                 <div className="col-lg-4">
@@ -93,7 +93,7 @@ function Holidayform() {
                 <div className="col-lg-8"></div>
                 <div className="col-lg-2  text-end">
                   <Link href="/Holiday">
-                    <button type="submit" id="AddButton" className="submit-button">Cancel</button>
+                    <button type="submit" className="AddButton">Cancel</button>
                   </Link>
                 </div>
                 <div className="col-lg-2 ">
