@@ -29,7 +29,7 @@ function AnnoucementDash() {
   const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
 
   async function getupcomingdata() {
-    let res = await axios.get(hostURL + "HR/GetCompleteAnnouncementsByBuildingID?BuildingID=57");
+    let res = await axios.get(hostURL + `HR/GetCompleteAnnouncementsByBuildingID?BuildingID=${BuildingID}`);
     setcompletedashboard(res.data);
     console.log(res.data);
   }

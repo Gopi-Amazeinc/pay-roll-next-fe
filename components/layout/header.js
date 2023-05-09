@@ -91,7 +91,7 @@ const Header = ({ makelogout }) => {
 
                 <Link className={HeaderStyles.profile} href="/Staff/AddStaff"> <h6> <CgProfile size={"22px"} /> &nbsp; &nbsp; My Profile</h6> </Link>
                 <h6 style={{ whiteSpace: "nowrap" }}> <AiOutlineSetting size={"22px"} /> &nbsp; &nbsp; Account Setting</h6>
-                <h6 onClick={makelogout} style={{ color: "red" }} ><FiLogOut size={"22px"} /> &nbsp; &nbsp; logout</h6>
+                <h6 onClick={makelogout} style={{ color: "red" }} ><FiLogOut size={"22px"} /> &nbsp; &nbsp; Logout</h6>
               </div>
             </div>
           </div>
