@@ -12,6 +12,7 @@ import advertising1 from "@/public/Images/advertising.png";
 import { Modal, ModalBody, ModalFooter } from "reactstrap";
 import { BiEdit } from "react-icons/bi";
 import { RiArrowDropDownLine } from "react-icons/ri";
+import Pnchingreen from "@/public/pnchin-green.svg";
 // import GaugeChart from 'react-gauge-chart';
 import dynamic from "next/dynamic";
 const GaugeChart = dynamic(() => import("react-gauge-chart"), { ssr: false });
@@ -38,14 +39,6 @@ const Dashboard=()=> {
   // const percent= 0.35;
   //   const colors = getGaugeColors(percent);
 
-  useEffect(() => {
-    const Loginname = sessionStorage.getItem("userName");
-    setUserName(Loginname);
-    const Loginemail = sessionStorage.getItem("email");
-    setUserEmail(Loginemail);
-    const punchinID = sessionStorage.getItem("StaffPunchedinID");
-    setActionType(punchinID);
-  }, []);
 
   // const userName = "Anup";
   // const email = "anup@amazeinc.in";
@@ -58,7 +51,14 @@ const Dashboard=()=> {
   const [actionType, setActionType] = useState("");
   const [workType, setWorkType] = useState();
   const [localIPAddress, setLocalIPAddress] = useState("");
+
   useEffect(() => {
+    const Loginname = sessionStorage.getItem("userName");
+    setUserName(Loginname);
+    const Loginemail = sessionStorage.getItem("email");
+    setUserEmail(Loginemail);
+    const punchinID = sessionStorage.getItem("StaffPunchedinID");
+    setActionType(punchinID);
     const getLocalIPAddress = async () => {
       const response = await fetch("https://api.ipify.org/?format=json");
       const data = await response.json();
@@ -67,6 +67,7 @@ const Dashboard=()=> {
 
     getLocalIPAddress();
   }, []);
+
 
   const modelopen = () => {
     setModalOpen(!modalOpen);
@@ -108,7 +109,7 @@ const Dashboard=()=> {
     const staffPunchedinID = res.data || res;
     if (staffPunchedinID) {
       sessionStorage.setItem("StaffPunchedinID", staffPunchedinID);
-      // setPunchintime(punchinId);
+      setActionType(StaffPunchedinID)
       Swal.fire("Punched In Successfully");
     }
     // }
@@ -322,7 +323,12 @@ const Dashboard=()=> {
                         className={dashboard.buttonclick}
                         // onClick={() => modelopen()}
                       >
-                        PUNCH IN
+                       <Image
+                        src={Pnchingreen}
+                        alt="Leave icon"
+                        width={15}
+                        height={19}
+                      />  PUNCH IN 
                       </button>
                     </div>
                     <div className="col-lg-4 mt-3 ">
