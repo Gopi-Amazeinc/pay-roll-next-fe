@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import { ApiService } from '@/services/api.service';
+import { apiService } from '../../../../services/api.service';
 import { AiOutlinePlusCircle } from "react-icons/ai";
 
 import axios from "axios";
@@ -16,12 +16,13 @@ export default function BarangayMasterDash() {
 
 
   const getbarangaymaster = async () => {
-    let res = await ApiService.commonGetCall("Master/GetBarangayMaster");
+    let res = await apiService.commonGetCall("Master/GetBarangayMaster");
     // This API is used to fetch the data from Barangay Master table
     // let res = await axios.get(hostURL + "Master/GetBarangayMaster");
     setbarangaymaster(res.data);
   };
   useEffect(() => {
+    debugger
     getbarangaymaster();
   }, []);
 
