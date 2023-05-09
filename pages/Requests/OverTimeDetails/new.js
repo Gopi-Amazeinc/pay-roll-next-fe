@@ -55,9 +55,10 @@ const OverTimeDetails = () => {
         "Date": sessionStorage.getItem("Date"),
         "StartTime": sessionStorage.getItem("Date") + " " + watch("StartTime"),
         "EndTime": sessionStorage.getItem("Date") + " " + watch("EndTime"),
-        "Comments": watch("comments"),
         "NightOT": dashboardData[0].nightOt == null ? 0 : dashboardData[0].nightOt,
-        "Attachment": watch("Attachment"),
+        "Comments": watch("comments"),
+        // "Attachment": watch("Attachment"),
+        // "noofhours ":dashboardData[0].noofhours == null ? 0 : dashboardData[0].noofhours,
         "NSD_REGULAR": dashboardData[0].nsD_REGULAR == null ? 0 : dashboardData[0].nsD_REGULAR,
         "ExccessNormalOt": dashboardData[0].exccessNormalOt == null ? 0 : dashboardData[0].exccessNormalOt,
         "ExccessNightOt": dashboardData[0].exccessNightOt == null ? 0 : dashboardData[0].exccessNightOt,
@@ -82,16 +83,10 @@ const OverTimeDetails = () => {
         "LegalExccessRestNormalOt": dashboardData[0].legalExccessRestNormalOt == null ? 0 : dashboardData[0].legalExccessRestNormalOt,
         "LegalExccessRestNightOt": dashboardData[0].legalExccessRestNightOt == null ? 0 : dashboardData[0].legalExccessRestNightOt
       }
-      if(details !=0){
-        await axios.post(hostURL + "HR/InsertStaffOverTimeDetails", details);
-        Swal.fire('Data Inserted successfully')
-        console.log("Inserted data:", details);
-        // location.href = ("/Requests/OverTimeDetails");
-      }
-      else{
-        Swal.fire("Error in the Details")
-      }
-    
+      await axios.post(hostURL + "HR/InsertStaffOverTimeDetails", details);
+      Swal.fire('Data Inserted successfully')
+      console.log("Inserted data:", details);
+      // location.href = ("/Requests/OverTimeDetails");
     }
     catch {
       Swal.fire("Insert is not working");
@@ -111,21 +106,23 @@ const OverTimeDetails = () => {
               <div className='col-lg-2'>
                 <p>Actual Start Time<span style={{ color: "red" }}>*</span></p>
               </div>
+              <div className='col-lg-2'></div>
               <div className='col-lg-2'>
                 <p>Actual End Time<span style={{ color: "red" }}>*</span></p>
               </div>
             </div>
             <div className='row'>
               <div className='col-lg-4'>
-                <input type='date' className='form-control' {...register('Date', { required: true })}></input>
+                <input type='date' className='form-control' {...register('Date', { required: "This field is required" })}></input>
               </div>
               <div className='col-lg-2'>
                 {/* <input type="text" maxlength="2" class="form-control text-center bs-timepicker-field" placeholder="HH" /> */}
                 {/* <TimePicker onChange={handleTimeChange} value={time} disableClock={true} clearIcon={null} /> */}
-                <input type='time' className='form-control' name='time' min="00:00" max="23:59" step="1" {...register('StartTime', { required: true })} />
+                <input type='time' className='form-control' name='time' min="00:00" max="23:59" step="1" {...register('StartTime', { required: "This field is required" })} />
               </div>
+              <div className='col-lg-2'></div>
               <div className='col-lg-2'>
-                <input type="time" className='form-control' name='time' min="00:00" max="23:59" step="1" {...register('EndTime', { required: true })} />
+                <input type="time" className='form-control' name='time' min="00:00" max="23:59" step="1" {...register('EndTime', { required: "This field is required" })} />
               </div>
 
             </div><br />
