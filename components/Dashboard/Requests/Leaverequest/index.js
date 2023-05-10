@@ -39,6 +39,7 @@ function LeaveListDashboard() {
 
     const toggleRejected = () => {
         setRejected(true)
+        setPending(false)
         setApproved(false)
     }
 
