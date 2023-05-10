@@ -242,8 +242,7 @@ const Index = () => {
                                 <th>Start Time</th>
                                 <th>End Time</th>
                                 <th>OT Details</th>
-                                {/* <th>Attachment</th> */}
-                                {/* <th>Purpose</th> */}
+                                <th>Purpose</th>
                                 <th>Status</th>
                                 <th>Actions</th>
                             </tr>
@@ -284,7 +283,6 @@ const Index = () => {
                                 <th>Start Time</th>
                                 <th>End Time</th>
                                 <th>OT Details</th>
-                                {/* <th>Attachment</th> */}
                                 <th>Purpose</th>
                                 <th>Status</th>
                                 <th>Actions</th>
@@ -320,7 +318,6 @@ const Index = () => {
                                 <th>Start Time</th>
                                 <th>End Time</th>
                                 <th>OT Details</th>
-                                {/* <th>Attachment</th> */}
                                 <th>Purpose</th>
                                 <th>Status</th>
                                 <th>Actions</th>
@@ -354,7 +351,6 @@ const Index = () => {
                                 <th>Start Time</th>
                                 <th>End Time</th>
                                 <th>OT Details</th>
-                                {/* <th>Attachment</th> */}
                                 <th>Purpose</th>
                                 <th>Status</th>
                                 <th>Actions</th>
@@ -394,8 +390,7 @@ const Index = () => {
                                 <th>Start Time</th>
                                 <th>End Time</th>
                                 <th>OT Details</th>
-                                {/* <th>Attachment</th> */}
-                                {/* <th>Purpose</th> */}
+                                <th>Purpose</th>
                                 <th>Status</th>
                                 <th>Actions</th>
                             </tr>
@@ -428,8 +423,7 @@ const Index = () => {
                                 <th>Start Time</th>
                                 <th>End Time</th>
                                 <th>OT Details</th>
-                                {/* <th>Attachment</th> */}
-                                {/* <th>Purpose</th> */}
+                                <th>Purpose</th>
                                 <th>Status</th>
                                 <th>Actions</th>
                             </tr>
