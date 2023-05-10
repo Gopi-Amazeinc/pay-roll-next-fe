@@ -113,16 +113,16 @@ const OverTimeDetails = () => {
             </div>
             <div className='row'>
               <div className='col-lg-4'>
-                <input type='date' className='form-control' {...register('Date', { required: "This field is required" })}></input>
+                <input type='date' className='form-control' {...register('Date')}></input>
               </div>
               <div className='col-lg-2'>
                 {/* <input type="text" maxlength="2" class="form-control text-center bs-timepicker-field" placeholder="HH" /> */}
                 {/* <TimePicker onChange={handleTimeChange} value={time} disableClock={true} clearIcon={null} /> */}
-                <input type='time' className='form-control' name='time' min="00:00" max="23:59" step="1" {...register('StartTime', { required: "This field is required" })} />
+                <input type='time' className='form-control' name='time' min="00:00" max="23:59" step="1" {...register('StartTime')} />
               </div>
               <div className='col-lg-2'></div>
               <div className='col-lg-2'>
-                <input type="time" className='form-control' name='time' min="00:00" max="23:59" step="1" {...register('EndTime', { required: "This field is required" })} />
+                <input type="time" className='form-control' name='time' min="00:00" max="23:59" step="1" {...register('EndTime')} />
               </div>
 
             </div><br />
