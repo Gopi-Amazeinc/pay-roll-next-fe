@@ -8,6 +8,8 @@ import Swal from "sweetalert2";
 import Layout from "@/components/layout/layout";
 import { apiService } from "@/services/api.service";
 import { useRouter } from "next/router";
+
+
 const BarangayMasterForm = ({ editData }) => {
   const router = useRouter();
 
@@ -20,7 +22,9 @@ const BarangayMasterForm = ({ editData }) => {
     reset,
     formState: { errors },
   } = useForm();
+  
   const [actionType, setActionType] = useState("insert");
+
   const [countrydata, setCountryData] = useState([]);
   const [provincedata, setProvinceData] = useState([]);
   const [citydata, setCityData] = useState([]);
