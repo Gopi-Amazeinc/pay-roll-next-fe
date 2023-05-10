@@ -26,10 +26,8 @@ const BarangayMasterForm = ({ editData }) => {
   const [citydata, setCityData] = useState([]);
 
   useEffect(() => {
-    debugger;
     getMasters();
     const { id } = editData || {};
-    console.log(id, "clggg");
     if (id) {
       // This API is used to fetch the data from BarangayMaster ByID table
       getBarangayMasterByID(id);
@@ -42,7 +40,6 @@ const BarangayMasterForm = ({ editData }) => {
       "Master/GetBarangayMasterByID?ID=" + id
     );
     clearForm(res.data[0]);
-    console.log("hello result", res.data[0]);
   };
 
   // let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
