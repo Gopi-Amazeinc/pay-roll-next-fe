@@ -35,6 +35,7 @@ const OverTimeDetails = () => {
   }
 
   const getDetails = async () => {
+    debugger;
     var startTime = watch("StartTime");
     var endTime = watch("EndTime");
     var date = watch("Date");
@@ -43,6 +44,8 @@ const OverTimeDetails = () => {
     setDashboardData(res.data);
     console.log(res.data);
     sessionStorage.setItem("Date", date);
+    sessionStorage.setItem("StartTime", startTime);
+    sessionStorage.setItem("EndTime", endTime);
   }
 
 
