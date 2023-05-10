@@ -1,23 +1,56 @@
-import React from 'react'
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import leaveform from '../../../styles/LeaveTypeForm.module.css'
-import Layout from '../../../components/layout/layout'
-import axios from "axios";
+import Layout from '../../../components/layout/layout';
 import Swal from "sweetalert2";
+import { apiService } from "@/services/api.service";
+import { useRouter } from "next/router";
+import React,{useState,useEffect} from 'react';
 
-function LeaveTypeForm() {
-
-    let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-
+function LeaveTypeForm({ editData }) {
     const { register, handleSubmit, reset, formState } = useForm();
     const { errors } = formState;
+    const router = useRouter();
+    const [actionType, setActionType] = useState("insert");
 
     const onSubmit = async (data) => {
-        await axios.post(hostURL + "Master/InsertLeaveTypeMaster", data);
-        Swal.fire("SubSectionMaster Inserted succefully!");
-        location.href = "/Masters/LeaveType";
+        if (actionType == "insert") {
+            await apiService.commonPostCall("Master/InsertLeaveTypeMaster", data);
+            Swal.fire("Data Inserted successfully");
+            router.push("/Masters/LeaveType");
+        } else {
+            await apiService.commonPostCall("Master/UpdateLeaveTypeMaster", data);
+            Swal.fire("Data Updated successfully");
+            router.push("/Masters/LeaveType");
+        }
     };
+
+    const clearForm = (existingData = null) => {
+        let etty = {
+            ID: existingData ? existingData.id : "",
+            Short: existingData ? existingData.short : "",
+            Description: existingData ? existingData.description : "",
+        };
+        reset(etty);
+        setActionType(existingData ? "update" : "insert");
+    };
+
+    useEffect(() => {
+        const { id } = editData || {};
+        if (id) {
+            // This API is used to fetch the data from BarangayMaster ByID table
+            geLeaveTypeByID(id);
+        } else {
+            clearForm();
+        }
+    }, []);
+    const geLeaveTypeByID = async (id) => {
+        const res = await apiService.commonGetCall(
+            "Master/GetLeaveTypeByID?ID=" + id
+        );
+        clearForm(res.data[0]);
+    };
+
     const customStyles = {
         errorMsg: {
             fontSize: "12px",
@@ -97,12 +130,16 @@ function LeaveTypeForm() {
                                         </Link>
                                     </div>
                                     <div className="col-lg-2">
-                                        <button
-                                            type="submit"
-                                            className="AddButton"
-                                        >
-                                            Submit
-                                        </button>
+                                        {actionType == "insert" && (
+                                            <button type="submit" className="AddButton">
+                                                Save
+                                            </button>
+                                        )}
+                                        {actionType == "update" && (
+                                            <button type="submit" className="AddButton">
+                                                Update
+                                            </button>
+                                        )}
                                     </div>
                                 </div>
                             </div>

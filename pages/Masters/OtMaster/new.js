@@ -3,24 +3,56 @@ import Styles from '../../../styles/WorkLocationMasterForm.module.css'
 import Link from "next/link";
 import Layout from '@/components/layout/layout.js';
 import { useForm } from 'react-hook-form';
-import axios from 'axios';
 import Swal from 'sweetalert2';
+import { apiService } from "@/services/api.service";
+import { useRouter } from "next/router";
 function Otmaster({ editData }) {
 
   const { register, handleSubmit, reset, formState } = useForm();
   const { errors } = formState;
+  const router = useRouter();
+  const [actionType, setActionType] = useState("insert");
 
-  async function onSubmit(data) {
-    let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-    await axios.post(hostURL + "Master/InsertOTRates", data);
-    Swal.fire({
-      icon: "success",
-      title: "Hurray..",
-      text: "Data was inserted...!",
-    });
-    location.href = "/Masters/OtMaster"
+  const onSubmit = async (data) => {
+    if (actionType == "insert") {
+      await apiService.commonPostCall("Master/InsertOTRates", data);
+      Swal.fire("Data Inserted successfully");
+      router.push("/Masters/OtMaster");
+    } else {
+      await apiService.commonPostCall("Master/UpdateOTRates", data);
+      Swal.fire("Data Updated successfully");
+      router.push("/Masters/OtMaster");
+    }
+  };
 
+  function clearForm(otData = null) {
+    let details = {
+      "ID": otData ? otData.id : "",
+      "Day": otData ? otData.day : "",
+      "Normal": otData ? otData.normal : "",
+      "OT": otData ? otData.ot : "",
+      "ND": otData ? otData.nd : "",
+      "NDOT": otData ? otData.ndot : ""
+    }
+    reset(details);
+    setActionType(otData ? "update" : "insert");
   }
+
+  useEffect(() => {
+    const { id } = editData || {};
+    if (id) {
+      // This API is used to fetch the data from BarangayMaster ByID table
+      getOtMasterByID(id);
+    } else {
+      clearForm();
+    }
+  }, []);
+  const getOtMasterByID = async (id) => {
+    const res = await apiService.commonGetCall(
+      "Master/GetOTRatesByID?ID=" + id
+    );
+    clearForm(res.data[0]);
+  };
 
   return (
     <Layout>
@@ -78,10 +110,16 @@ function Otmaster({ editData }) {
                       <Link href="/Masters/OtMaster"><button className="AddButton" tabindex="0">CANCEL</button></Link>
                     </div>
                     <div className="col-lg-2">
-
-                      <button type='submit' className="AddButton"  >Save</button>
-
-
+                      {actionType == "insert" && (
+                        <button type="submit" className="AddButton">
+                          Save
+                        </button>
+                      )}
+                      {actionType == "update" && (
+                        <button type="submit" className="AddButton">
+                          Update
+                        </button>
+                      )}
                     </div>
                   </div>
                 </div>

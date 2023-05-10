@@ -52,6 +52,7 @@
   letter-spacing: 0.7px;
   line-height: 1vh;
   max-width: 250px; 
+  margin-left: 30%;
   
 
 }
@@ -98,8 +99,8 @@
 }
 
 .initial {
-  font-size: 23px;
-  margin-left: 20px;
+  font-size: 25px;
+  margin-left: 60px;
   background-color: #FFF;
   color: rgb(0, 136, 255);
   padding: 0px 3px 0px 3px;

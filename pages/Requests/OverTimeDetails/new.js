@@ -7,14 +7,11 @@ import Swal from 'sweetalert2';
 import axios from 'axios';
 import Styles from "@../../../pages/OT/Ot.module.css"
 import Link from 'next/link';
+import { apiService } from "@/services/api.service";
 const OverTimeDetails = () => {
   const { register, handleSubmit, watch, reset, formState } = useForm();
   const [dashboardData, setDashboardData] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
-
-
-  const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-
   const openEditModal = () => {
     setModalOpen(true)
   }
@@ -40,7 +37,7 @@ const OverTimeDetails = () => {
     var endTime = watch("EndTime");
     var date = watch("Date");
     var staffID = sessionStorage.getItem("userID");
-    const res = await axios.get(hostURL + "HR/GetOtNightOt?StartTime=" + startTime + "&EndTime=" + endTime + "&Shift=1&StaffID=" + staffID + "&Date=" + date);
+    const res = await apiService.commonGetCall("HR/GetOtNightOt?StartTime=" + startTime + "&EndTime=" + endTime + "&Shift=1&StaffID=" + staffID + "&Date=" + date);
     setDashboardData(res.data);
     console.log(res.data);
     sessionStorage.setItem("Date", date);
@@ -86,10 +83,10 @@ const OverTimeDetails = () => {
         "LegalExccessRestNormalOt": dashboardData[0].legalExccessRestNormalOt == null ? 0 : dashboardData[0].legalExccessRestNormalOt,
         "LegalExccessRestNightOt": dashboardData[0].legalExccessRestNightOt == null ? 0 : dashboardData[0].legalExccessRestNightOt
       }
-      await axios.post(hostURL + "HR/InsertStaffOverTimeDetails", details);
+      await apiService.commonPostCall("HR/InsertStaffOverTimeDetails", details);
       Swal.fire('Data Inserted successfully')
       console.log("Inserted data:", details);
-      // location.href = ("/Requests/OverTimeDetails");
+      location.href = ("/Requests/OverTimeDetails");
     }
     catch {
       Swal.fire("Insert is not working");

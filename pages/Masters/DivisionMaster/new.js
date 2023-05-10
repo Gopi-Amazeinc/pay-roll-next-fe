@@ -1,29 +1,55 @@
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form';
 import Layout from '../../../components/layout/layout'
-import axios from 'axios';
-import Swal from 'sweetalert2';
 import Link from 'next/link';
-function DivDivisionMaster() {
+import { apiService } from "@/services/api.service";
+import Swal from 'sweetalert2';
+import { useRouter } from "next/router";
+function DivDivisionMaster({ editData }) {
 
-    let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-
-
-    // get functions to build form with useForm() hook
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
+    const router = useRouter();
+    const [actionType, setActionType] = useState("insert");
 
     const onSubmit = async (data) => {
+        if (actionType == "insert") {
+            await apiService.commonPostCall("Master/InsertDivisionMaster", data);
+            Swal.fire("Data Inserted successfully");
+            router.push("/Masters/DivisionMaster");
+        } else {
+            await apiService.commonPostCall("Master/UpdateDivisionMaster", data);
+            Swal.fire("Data Updated successfully");
+            router.push("/Masters/DivisionMaster");
+        }
+    };
 
-        await axios.post(hostURL + "Master/InsertDivisionMaster", data) // inserting new division master data [Shashank]
-        location.href = "/Masters/DivisionMaster"
-        Swal.fire({
-            icon: 'success',
-            title: 'Added Successfully',
-        })
 
+    function clearForm(existingData = null) {
+        let etty = {
+            "ID": existingData ? existingData.id : "",
+            "Short": existingData ? existingData.short : "",
+            "Description": existingData ? existingData.description : "",
+        }
+        reset(etty)
+        setActionType(existingData ? "update" : "insert");
     }
 
 
+    useEffect(() => {
+        const { id } = editData || {};
+        if (id) {
+            // This API is used to fetch the data from BarangayMaster ByID table
+            getDivisionMasterByID(id);
+        } else {
+            clearForm();
+        }
+    }, []);
+    const getDivisionMasterByID = async (id) => {
+        const res = await apiService.commonGetCall(
+            "Master/GetDivisionMasterByID?ID=" + id
+        );
+        clearForm(res.data[0]);
+    };
 
     return (
         <Layout>
@@ -79,10 +105,16 @@ function DivDivisionMaster() {
                                 </Link>
                             </div>
                             <div className="col-lg-2">
-
-                                <button type='submit' className="AddButton">Save</button>
-
-
+                                {actionType == "insert" && (
+                                    <button type="submit" className="AddButton">
+                                        Save
+                                    </button>
+                                )}
+                                {actionType == "update" && (
+                                    <button type="submit" className="AddButton">
+                                        Update
+                                    </button>
+                                )}
                             </div>
                         </div>
                     </form>
