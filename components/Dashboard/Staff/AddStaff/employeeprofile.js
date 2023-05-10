@@ -7,7 +7,7 @@ function EmployeeProfile() {
     
 
 
-    const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
+    // const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
     return (
         <div>
             <div className='container'>
@@ -69,14 +69,14 @@ function EmployeeProfile() {
                                 </select>
                             </div>
 
-                            <div className='mb-3 Dropzone' {...getRootProps()}>
+                            {/* <div className='mb-3 Dropzone' {...getRootProps()}>
                                 <input {...getInputProps()} />
                                 {
                                     isDragActive ?
                                         <p>Drop the files here ...</p> :
                                         <p>Drop files here Only JPG,PNG,JPEG</p>
                                 }
-                            </div>
+                            </div> */}
                         </div>
 
                         <div className='col-lg-2'>
