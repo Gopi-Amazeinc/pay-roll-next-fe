@@ -75,15 +75,11 @@ const Header = ({ makelogout }) => {
         {/* <h4 onClick={makelogout}>logout </h4> */}
         {/* </div> */}
         <div className="col-lg-4  mt-2 text-white" style={{ float: "right" }}>
-
           <div className={HeaderStyles.dropdown1} >
             <div className={HeaderStyles.dropdown} style={{ float: "left" }}>
-              <Image className={HeaderStyles.notification} src={Notification} alt="notificatons" width={33} height={30} />
-
+              <Image className={HeaderStyles.notification} src={Notification} alt="notificatons" width={36} height={30} />
 
               <span className={HeaderStyles.initial}>{initial}</span>
-
-
 
               <button className={HeaderStyles.logout} >  Hi {userName}! <FaCaretDown style={{ cursor: "pointer" }} /> </button>
 
