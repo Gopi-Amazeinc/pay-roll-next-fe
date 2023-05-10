@@ -5,17 +5,18 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { apiService } from "@/services/api.service";
 
 const Holidaydashboard = () => {
 
 
-    const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+    
 
     const [Holiday, setHoliday] = useState([]);
 
 
     const getHoliday = async () => {
-        let res = await axios.get(hostURL + "HR/GetHolidays"); //This Api is useed for Get the Dashborad data band Master
+        let res = await apiService.commonGetCall ("HR/GetHolidays"); //This Api is useed for Get the Dashborad data band Master
         setHoliday(res.data);
     }
 
@@ -35,7 +36,7 @@ const Holidaydashboard = () => {
 
     const handleDelete = async (id) => {
         try {
-            let res = await axios.get(hostURL + `HR/DeleteHolidays?id=${id}`); // this is for deleting the data for dashborad using delete api call 
+            let res = await apiService.commonGetCall (`HR/DeleteHolidays?id=${id}`); // this is for deleting the data for dashborad using delete api call 
             console.log(res.data);
             Swal.fire('Data deleted successfully')
             getHoliday();
