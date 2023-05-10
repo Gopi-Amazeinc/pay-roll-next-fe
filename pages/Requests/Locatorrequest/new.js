@@ -29,7 +29,7 @@ const Locatorrequest = () => {
             console.log("form data", formData);
             await axios.post(hostURL + "Payroll/InsertLocatorTable", formData);
             Swal.fire('Data Inserted successfully')
-            console.log("Inserted data:", data);
+            console.log("Inserted data", data);
             location.href = ("/Requests/Locatorrequest");
         } catch (error) {
             Swal.fire("Insert is not working");

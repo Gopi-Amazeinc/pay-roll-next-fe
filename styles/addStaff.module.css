@@ -11,7 +11,7 @@
     align-items: center;
 }
 .circle { 
-    background-color: #2dd2e7;
+    background-color: #2dd2e7 !important; 
     height: 70px;
     width: 110px;
     border-radius: 50%;
@@ -21,6 +21,13 @@
     margin-right: 1%;
 }
 
-.circle:active{
-    background-color: #20c961;
+.circlebg{
+    background-color:rgb(60, 210, 37) !important;
+    height: 70px;
+    width: 110px;
+    border-radius: 50%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    margin-right: 1%;
 }

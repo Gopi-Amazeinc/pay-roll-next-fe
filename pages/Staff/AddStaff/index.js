@@ -14,46 +14,96 @@ import IDDetails from "@/components/Dashboard/Staff/AddStaff/iddetails";
 const Index = () => {
   const [pgNo, setPgNo] = useState(1);
 
-  function changePathName(data){
-    setPgNo(data)
+  function changePathName(data) {
+    setPgNo(data);
 
     // document.getElementById(data).style.color = "green"
-
-    
   }
-  
+
   return (
     <Layout>
       <div className="container">
         <h5>APIs yet to be provided</h5>
         <div>
           <div className={Styles.wizardHorizontal}>
-            <div id={1} className={Styles.circle}>
-            <p onClick={()=>changePathName(1)} className={Styles.wizardLabel}>Employee Profile </p>
+            <div
+              id={1}
+              className={pgNo == "1" ? Styles.circlebg : Styles.circle}
+            >
+              <p
+                onClick={() => changePathName(1)}
+                className={Styles.wizardLabel}
+              >
+                Employee Profile{" "}
+              </p>
             </div>
-            <div id={2}  className={Styles.circle}>
-            <p onClick={()=>changePathName(2)} className={Styles.wizardLabel}> Position Details</p>
+            <div
+              id={2}
+              className={pgNo == "2" ? Styles.circlebg : Styles.circle}
+            >
+              <p
+                onClick={() => changePathName(2)}
+                className={Styles.wizardLabel}
+              >
+                {" "}
+                Position Details
+              </p>
             </div>
-            <div id={3}  className={Styles.circle}>
-            <p onClick={()=>changePathName(3)} className={Styles.wizardLabel}>Contact Details</p>
+            <div id={3}  className={pgNo == "3" ? Styles.circlebg : Styles.circle}>
+              <p
+                onClick={() => changePathName(3)}
+                className={Styles.wizardLabel}
+              >
+                Contact Details
+              </p>
             </div>
-            <div id={4}  className={Styles.circle}>
-            <p onClick={()=>changePathName(4)} className={Styles.wizardLabel}>Dependent Details</p>
+            <div id={4} className={pgNo == "4" ? Styles.circlebg : Styles.circle}>
+              <p
+                onClick={() => changePathName(4)}
+                className={Styles.wizardLabel}
+              >
+                Dependent Details
+              </p>
             </div>
-            <div id={5} className={Styles.circle}>
-            <p onClick={()=>changePathName(5)} className={Styles.wizardLabel}>Employment Details</p>
+            <div id={5} className={pgNo == "5" ? Styles.circlebg : Styles.circle}>
+              <p
+                onClick={() => changePathName(5)}
+                className={Styles.wizardLabel}
+              >
+                Employment Details
+              </p>
             </div>
-            <div id={6} className={Styles.circle}>
-            <p onClick={()=>changePathName(6)} className={Styles.wizardLabel}>Nomination Details</p>
+            <div id={6} className={pgNo == "6" ? Styles.circlebg : Styles.circle}>
+              <p
+                onClick={() => changePathName(6)}
+                className={Styles.wizardLabel}
+              >
+                Nomination Details
+              </p>
             </div>
-            <div id={7} className={Styles.circle}>
-            <p onClick={()=>changePathName(7)} className={Styles.wizardLabel}>Educational Attainment</p>
+            <div id={7} className={pgNo == "7" ? Styles.circlebg : Styles.circle}>
+              <p
+                onClick={() => changePathName(7)}
+                className={Styles.wizardLabel}
+              >
+                Educational Attainment
+              </p>
             </div>
-            <div id={8} className={Styles.circle}>
-            <p onClick={()=>changePathName(8)} className={Styles.wizardLabel}>Bank Details</p>
+            <div id={8} className={pgNo == "8" ? Styles.circlebg : Styles.circle}>
+              <p
+                onClick={() => changePathName(8)}
+                className={Styles.wizardLabel}
+              >
+                Bank Details
+              </p>
             </div>
-            <div id={9} className={Styles.circle}>
-            <p onClick={()=>changePathName(9)} className={Styles.wizardLabel}>ID Details</p>
+            <div id={9} className={pgNo == "9" ? Styles.circlebg : Styles.circle}>
+              <p
+                onClick={() => changePathName(9)}
+                className={Styles.wizardLabel}
+              >
+                ID Details
+              </p>
             </div>
           </div>
 
