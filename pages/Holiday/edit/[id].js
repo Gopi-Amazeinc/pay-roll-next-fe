@@ -127,7 +127,7 @@ function HolidayID() {
                                 <div className="col-lg-8"></div>
                                 <div className="col-lg-2  text-end">
                                     <Link href="/Holiday">
-                                        <button type="submit" id="AddButton" className="submit-button">Cancel</button>
+                                        <button type="submit" id="AddButton" className="AddButton">Cancel</button>
                                     </Link>
                                 </div>
                                 <div className="col-lg-2 ">
