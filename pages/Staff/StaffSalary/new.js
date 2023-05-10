@@ -5,9 +5,12 @@ import { useForm } from 'react-hook-form';
 import Link from 'next/link';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { apiService } from "@/services/api.service";
+import { useRouter } from "next/router";
 
-const AddStaffSalaryForm = () => {
-    let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL
+const AddStaffSalaryForm = ({ editData }) => {
+   const router = useRouter();
+   //  let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL
 
     const { register, handleSubmit, reset, formState } = useForm();
     const [Staff, setStaff] = useState([]);
@@ -17,11 +20,22 @@ const AddStaffSalaryForm = () => {
  
     useEffect(() => {
         getData();
+        const { id } = editData || {};
+        if (id) {
+         getByID(id);
+        } else {
+          clearForm();
+        }
      }, [1]);
 
-     async function getData() {
-        let res = await axios.get(hostURL + "HR/GetAllStaffNew"); // This API is used for fetch the  data for Dropdown
+     const getData = async()=> {
+        let res = await apiService.commonGetCall("HR/GetAllStaffNew"); // This API is used for fetch the  data for Dropdown
         setStaff(res.data);
+     }
+     const getByID = async (id)=>{
+      debugger
+      const res = await apiService.commonGetCall("HR/GetMyDetailsByStaffID?id="+id);
+      clearForm(res.data[0]);
      }
 
      function clearForm(staffSalary = null) {
@@ -36,11 +50,19 @@ const AddStaffSalaryForm = () => {
         setActionType(staffSalary ? "update" : 'insert')
      }
 
-    async function onSubmit(data) {
-          await axios.post(hostURL + 'Payroll/UpdateDe_minimis_Detailsforstaff', data);
+    const onSubmit = async(data) => {
+      debugger
+      if (actionType == "insert") {
+          await apiService.commonPostCall('Payroll/UpdateDe_minimis_Detailsforstaff', data);
           Swal.fire({ icon: "success", text: "Data Successfully added" })
           location.href = ("/Payroll/staffsalarycomponent");
-       
+      } else 
+      {
+         await apiService.commonPostCall('Payroll/UpdateDe_minimis_Detailsforstaff', data);
+         Swal.fire({ icon: "success", text: "Data updated successfully" })
+         location.href = ("/Payroll/staffsalarycomponent");
+      }
+
     }
     
     
@@ -50,7 +72,7 @@ const AddStaffSalaryForm = () => {
           <div className="col-lg-10" >
              <br />
              <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="container-fluid">
+                <div className="container">
                    <div className="row">
                       <div className="col-md-12">
                          <div className="row">
@@ -111,7 +133,7 @@ const AddStaffSalaryForm = () => {
                                </div>
  
                                <div className='col-lg-2'>
-                                  <Link href="/Staff/staffsalarycomponent"><button className="btn btn-primary AddButton">Cancel</button></Link>
+                                  <Link href="/Staff/StaffSalary"><button className="btn btn-primary AddButton">Cancel</button></Link>
                                </div>
  
                             </div>
