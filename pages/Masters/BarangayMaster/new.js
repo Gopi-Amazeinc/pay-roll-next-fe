@@ -10,7 +10,7 @@ import { apiService } from "@/services/api.service";
 import { useRouter } from "next/router";
 const BarangayMasterForm = ({ editData }) => {
   const router = useRouter();
-  
+
   // const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
 
   const {
@@ -26,20 +26,24 @@ const BarangayMasterForm = ({ editData }) => {
   const [citydata, setCityData] = useState([]);
 
   useEffect(() => {
-    debugger
+    debugger;
     getMasters();
     const { id } = editData || {};
-  console.log(id, "clggg");
+    console.log(id, "clggg");
     if (id) {
       // This API is used to fetch the data from BarangayMaster ByID table
-      let res = apiService.commonGetCall(
-        "Master/GetBarangayMasterByID?ID=" + id
-      );
-      clearForm(res.data[0]);
+      getBarangayMasterByID(id);
     } else {
       clearForm();
     }
   }, []);
+  const getBarangayMasterByID = async (id) => {
+    const res = await apiService.commonGetCall(
+      "Master/GetBarangayMasterByID?ID=" + id
+    );
+    clearForm(res.data[0]);
+    console.log("hello result", res.data[0]);
+  };
 
   // let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
   // This API is used to fetch the data from CountryType table
@@ -73,9 +77,10 @@ const BarangayMasterForm = ({ editData }) => {
       Swal.fire("Data Inserted successfully");
       router.push("/Masters/BarangayMaster");
     } else {
-      await axios.post(hostURL + "Master/UpdateBarangayMaster", data);
+      await apiService.commonPostCall("Master/UpdateBarangayMaster", data);
       Swal.fire("Data Updated successfully");
       router.push("/Masters/BarangayMaster");
+      
     }
   };
   return (
