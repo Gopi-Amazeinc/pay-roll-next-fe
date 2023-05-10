@@ -1,27 +1,56 @@
 import { useForm } from 'react-hook-form';
 import Layout from '@/components/layout/layout.js';
 import Styles from "../../../styles/employmentJobHistory.module.css";
-import axios from "axios";
 import Link from "next/link";
 import Swal from "sweetalert2";
+import { apiService } from "@/services/api.service";
+import { useRouter } from "next/router";
+import React, { useState, useEffect } from 'react';
 
-const PositionMasterDetails = () => {
+const PositionMasterDetails = ({ editData }) => {
 
     const { register, handleSubmit, reset, formState } = useForm();
     const { errors } = formState;
+    const router = useRouter();
+    const [actionType, setActionType] = useState("insert");
 
+    const onSubmit = async (data) => {
+        if (actionType == "insert") {
+            await apiService.commonPostCall("Master/InsertRoleType", data);
+            Swal.fire("Data Inserted successfully");
+            router.push("/Masters/PositionMaster");
+        } else {
+            await apiService.commonPostCall("Master/UpdateRoleType", data);
+            Swal.fire("Data Updated successfully");
+            router.push("/Masters/PositionMaster");
+        }
+    };
 
-    let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-
-
-    async function onSubmit(data) {
-
-        await axios.post(hostURL + 'Master/InsertRoleType', data); //gurukiran@amazeinc.in, api call to insert the data
-        Swal.fire("Data Successfully added")
-        router.push("/Masters/PositionMaster");
-
+    function clearForm(positionMasterData = null) {
+        let details = {
+            "ID": positionMasterData ? positionMasterData.id : "",
+            "Short": positionMasterData ? positionMasterData.short : "",
+            "Description": positionMasterData ? positionMasterData.description : "",
+        }
+        reset(details);
+        setActionType(positionMasterData ? "update" : "insert");
     }
 
+    useEffect(() => {
+        const { id } = editData || {};
+        if (id) {
+            // This API is used to fetch the data from BarangayMaster ByID table
+            getPositionMasterByID(id);
+        } else {
+            clearForm();
+        }
+    }, []);
+    const getPositionMasterByID = async (id) => {
+        const res = await apiService.commonGetCall(
+            "Master/GetRoleTypeByID?ID=" + id
+        );
+        clearForm(res.data[0]);
+    };
 
     return (
         <Layout>
@@ -85,15 +114,16 @@ const PositionMasterDetails = () => {
                                             <Link href="/Masters/PositionMaster"> <button className="AddButton">CANCEL</button></Link>
                                         </div>
                                         <div className="col-lg-2">
-
-
-                                            <button type="submit" className="AddButton">
-
-                                                Save
-
-                                            </button>
-
-
+                                            {actionType == "insert" && (
+                                                <button type="submit" className="AddButton">
+                                                    Save
+                                                </button>
+                                            )}
+                                            {actionType == "update" && (
+                                                <button type="submit" className="AddButton">
+                                                    Update
+                                                </button>
+                                            )}
                                         </div>
                                     </div>
                                 </form>

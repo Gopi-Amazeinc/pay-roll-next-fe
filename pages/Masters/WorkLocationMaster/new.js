@@ -3,24 +3,57 @@ import Styles from '../../../styles/WorkLocationMasterForm.module.css'
 import { useForm } from "react-hook-form";
 import Layout from '@/components/layout/layout.js';
 import Link from "next/link";
-import axios from "axios";
 import Swal from "sweetalert2";
+import { apiService } from "@/services/api.service";
+import { useRouter } from "next/router";
 
-function WorkLocationMasterForm() {
+function WorkLocationMasterForm({ editData }) {
 
   const { register, handleSubmit, reset, formState } = useForm();
   const { errors } = formState;
-  let ID
-  let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+  const router = useRouter();
+  const [actionType, setActionType] = useState("insert");
 
-  async function onSubmit(data) {
+  const onSubmit = async (data) => {
+    if (actionType == "insert") {
+      await apiService.commonPostCall("Master/InsertWorkingLocationMaster", data);
+      Swal.fire("Data Inserted successfully");
+      router.push("/Masters/WorkLocationMaster");
+    } else {
+      await apiService.commonPostCall("Master/UpdateWorkingLocationMaster", data);
+      Swal.fire("Data Updated successfully");
+      router.push("/Masters/WorkLocationMaster");
+    }
+  };
 
-    await axios.post(hostURL + "Master/InsertWorkingLocationMaster", data); //naveen.th@amazeinc.in, Insert API for Working location master, to add new data
-    Swal.fire(
-      'Added succesfullly'
-    );
-    location.href = "/Masters/WorkLocationMaster";
+  function clearForm(existingData = null) {
+    let etty = {
+      "ID": existingData ? existingData.id : "",
+      "Short": existingData ? existingData.short : "",
+      "Description": existingData ? existingData.description : "",
+    }
+    reset(etty);
+    setActionType(existingData ? "update" : "insert");
   }
+
+  useEffect(() => {
+    const { id } = editData || {};
+    if (id) {
+      // This API is used to fetch the data from BarangayMaster ByID table
+      getWorkLocationMasterByID(id);
+    } else {
+      clearForm();
+    }
+  }, []);
+
+  const getWorkLocationMasterByID = async (id) => {
+    const res = await apiService.commonGetCall(
+      "Master/GetWorkingLocationMasterByID?ID=" + id
+    );
+    clearForm(res.data[0]);
+  };
+
+
   const customStyles = {
     content: {
       top: '50%',
@@ -74,9 +107,16 @@ function WorkLocationMasterForm() {
                     <button type='button' className='btn common-edit edit-btn' id={Styles.btn}>Close</button></Link>
                 </div>
                 <div className="col-lg-2">
-
-                  <button type='submit' className='edit-btn' id={Styles.btn}>Save</button>
-
+                  {actionType == "insert" && (
+                    <button type="submit" className="AddButton">
+                      Save
+                    </button>
+                  )}
+                  {actionType == "update" && (
+                    <button type="submit" className="AddButton">
+                      Update
+                    </button>
+                  )}
                 </div>
               </div>
             </form>
