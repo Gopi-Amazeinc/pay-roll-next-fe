@@ -1,23 +1,52 @@
 import { useForm } from "react-hook-form";
 import Layout from '../../../components/layout/layout';
-import axios from "axios";
+import React, { useState, useEffect } from "react";
 import Swal from "sweetalert2";
 import Link from "next/link";
-function LevelTypeForm() {
-
+import { apiService } from "@/services/api.service";
+import { useRouter } from "next/router";
+function LevelTypeForm({ editData }) {
+    const router = useRouter();
+    const [actionType, setActionType] = useState("insert");
     const { register, handleSubmit, reset, formState: { errors }, } = useForm();
 
     const onSubmit = async (data) => {
+        if (actionType == "insert") {
+            await apiService.commonPostCall("Master/InsertLevelType", data);
+            Swal.fire("Data Inserted successfully");
+            router.push("/Masters/JobLevel");
+        } else {
+            await apiService.commonPostCall("Master/UpdateLevelType", data);
+            Swal.fire("Data Updated successfully");
+            router.push("/Masters/JobLevel");
+        }
+    };
 
-        let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-        await axios.post(hostURL + "Master/InsertLevelType", data) // inserting new job level type data [Shashank]
-        location.href = "/Masters/JobLevel";
-        Swal.fire({
-            icon: 'success',
-            title: 'Added Successfully',
-        })
-
+    function clearForm(existingData = null) {
+        let etty = {
+            "ID": existingData ? existingData.id : "",
+            "Short": existingData ? existingData.short : "",
+            "Description": existingData ? existingData.description : "",
+        }
+        reset(etty);
+        setActionType(existingData ? "update" : "insert");
     }
+
+    useEffect(() => {
+        const { id } = editData || {};
+        if (id) {
+            // This API is used to fetch the data from BarangayMaster ByID table
+            geJobLevelByID(id);
+        } else {
+            clearForm();
+        }
+    }, []);
+    const geJobLevelByID = async (id) => {
+        const res = await apiService.commonGetCall(
+            "Master/GetLevelTypeByID?ID=" + id
+        );
+        clearForm(res.data[0]);
+    };
 
     return (
         <Layout>
@@ -73,11 +102,16 @@ function LevelTypeForm() {
                                 </Link>
                             </div>
                             <div className="col-lg-2">
-
-                                <button type="submit" className="AddButton" >
-                                    Save
-                                </button>
-
+                                {actionType == "insert" && (
+                                    <button type="submit" className="AddButton">
+                                        Save
+                                    </button>
+                                )}
+                                {actionType == "update" && (
+                                    <button type="submit" className="AddButton">
+                                        Update
+                                    </button>
+                                )}
                             </div>
                         </div>
                     </form>

@@ -6,9 +6,11 @@ import { useForm } from "react-hook-form";
 import Link from "next/link";
 import Swal from "sweetalert2";
 import Layout from "@/components/layout/layout";
+import { apiService } from "@/services/api.service";
+import { useRouter } from "next/router";
 
-const ComponentBulkUploadForm = () => {
-  const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+const ComponentBulkUploadForm = ({ editData }) => {
+  const router = useRouter();
 
   const {
     register,
@@ -20,25 +22,50 @@ const ComponentBulkUploadForm = () => {
   const [staff, setStaffData] = useState([]);
   const [component, setComponentData] = useState([]);
   const [payment, setPayment] = useState([]);
-  const [actionType, setAction] = useState("insert");
+  const [actionType, setActionType] = useState("insert");
 
   useEffect(() => {
     getData();
+    const { id } = editData || {};
+    if (id) {
+      getByID(id);
+    } else {
+      clearForm();
+    }
   }, [1]);
 
   async function getData() {
-    let res = await axios.get(hostURL + "HR/GetAllStaffNew");
+    let res = await apiService.commonGetCall("HR/GetAllStaffNew");
     setStaffData(res.data);
   }
+ const getByID =async(id)=>{
+  const res = await apiService.commonGetCall(
+    "Payroll/GetPayrollComponentBulkUploadByID?ID=" + id
+  );
+  clearForm(res.data[0]);
+ }
 
-
-
-  async function onSubmit(data) {
-
-    await axios.post(hostURL + "HR/InsertPayrollComponentBulkUpload", data);
+ function clearForm(userData = null) {
+    let details = {
+      ID: userData ? userData.id : "",
+      EmployeeID: userData ? userData.employeeID : "",
+      PayCode: userData ? userData.payCode : "",
+      Amount: userData ? userData.amount : "",
+      Paymentfrequeicy: userData ? userData.paymentfrequeicy : "",
+    };
+    reset(details);
+    setActionType(userData ? "update" : "insert");
+  }
+  const onSubmit= async(data)=> {
+    if (actionType == "insert") {
+    await apiService.commonPostCall("HR/InsertPayrollComponentBulkUpload", data);
     Swal.fire("Data Inserted successfully");
-    location.href = "/Staff/ComponentBulkUpload";
-
+    router.push("/Staff/ComponentBulkUpload")
+  } else {
+    await apiService.commonPostCall("HR/UpdatePayrollComponentBulkUpload", data);
+    Swal.fire("Data Updated successfully");
+    router.push("/Staff/ComponentBulkUpload");
+  }
   }
 
   return (

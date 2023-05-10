@@ -1,7 +1,6 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import Barangay from "../../../styles/BarangayMasterForm.module.css";
-import axios from "axios";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
 import Swal from "sweetalert2";
