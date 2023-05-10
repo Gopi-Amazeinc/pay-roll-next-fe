@@ -3,6 +3,9 @@ import Layout from '@/components/layout/layout.js'
 import Link from 'next/link';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
+import Swal from 'sweetalert2';
+import { useRouter } from "next/router";
+
 const New = () => {
     const [staffshift, setStaffShift] = useState([]);
     // const [selectedOption, setSelectedOption] = useState('');
@@ -15,8 +18,6 @@ const New = () => {
         setStaffShift(res.data)
     }
 
-
-
     let [startTime, setStartTime] = useState("");
     let [endTime, setEndTime] = useState("");
     const getshiftTimings = (event) => {
@@ -25,17 +26,27 @@ const New = () => {
         setStartTime(startTime)
         setEndTime(endTime)
     }
-
+    function clearForm() {
+        let UserID = sessionStorage.getItem("userID")
+        let details = {
+           "StaffID": UserID,
+           "ShiftDate": "",
+           "ShiftName": "",
+           "StartTime": "",
+           "EndTime": "",
+           "EndDate": "",
+        }
+        reset(details);
+     }
     const onSubmit = async (data) => {
         const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-
         await axios.post(hostURL + "HR/InsertStaffShiftDetails", data)
-        alert("inserted")
-
-        console.log(JSON.stringify(data))
+        Swal.fire("Added successfully!");
+        Router.push("/Attendance/ShiftDetails")
     }
 
     useEffect(() => {
+        clearForm()
         getShiftname();
     }, [])
 
@@ -52,7 +63,7 @@ const New = () => {
 
                             <div className="col-lg-2">
                                 <label htmlFor="">Start Date</label>
-                                <input type="date" name="" id="" className='form-control' {...register("startDate", { required: true })} />
+                                <input type="date" name="" id="" className='form-control' {...register("ShiftDate", { required: true })} />
                                 {
                                     errors.startDate && <p className='text-danger'> Start Date is Required</p>
                                 }
@@ -60,14 +71,14 @@ const New = () => {
 
                             <div className="col-lg-2">
                                 <label htmlFor="">End Date</label>
-                                <input type="date" name="" id="" className='form-control'  {...register("endDate", { required: true })} />
+                                <input type="date" name="" id="" className='form-control'  {...register("EndDate", { required: true })} />
                                 {
                                     errors.endDate && <p className='text-danger'> End Date is Required</p>
                                 }
                             </div>
                             <div className="col-lg-2">
                                 <label htmlFor="">ShiftName</label>
-                                <select name="" id="" className='form-select' {...register('shiftName')} onChange={getshiftTimings} >
+                                <select name="" id="" className='form-select' {...register('ShiftName')} onChange={getshiftTimings} >
                                     < option   >Select</option>
                                     {
                                         staffshift.map((data, index) => {
@@ -83,12 +94,12 @@ const New = () => {
                             </div>
                             <div className="col-lg-2">
                                 <label htmlFor="">Start Time</label>
-                                <input type="text" {...register('startTime', { required: true })} value={startTime} className='form-control' />
+                                <input type="text" {...register('StartTime', { required: true })} value={startTime} className='form-control' />
 
                             </div>
                             <div className="col-lg-2">
                                 <label htmlFor="">End Time</label>
-                                <input type="text" name='' {...register('endTime', { required: true })} value={endTime} className='form-control' />
+                                <input type="text" name='' {...register('EndTime', { required: true })} value={endTime} className='form-control' />
 
                             </div>
                         </div>
