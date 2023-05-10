@@ -10,15 +10,30 @@ import digiLogo from "@/public/Images/DigiLogoBlue.png";
 
 const Login = ({ makelogin }) => {
   let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-  const positionList = [
-    { id: 2, short: "Manager" },
-    { id: 6, short: "Employee" },
-    { id: 9, short: "HR" },
-    { id: 17, short: "Payroll Manager" },
-    // { id: 10, short: "SBU" },
-    // { id: 11, short: "IT Team" },
-    // { id: 12, short: "HR Head" },
-  ];
+
+  const [positionList, setPositionList] = useState([]);
+
+  useEffect(() => {
+    getRoleMaster()
+  }, [1]);
+
+  async function getRoleMaster() {
+    debugger
+    const res = await axios.get(
+      hostURL +
+      `Payroll/GetRoleMasterr`
+    );
+    setPositionList(res.data);
+  }
+  // const positionList = [
+  //   { id: 2, short: "Manager" },
+  //   { id: 6, short: "Employee" },
+  //   { id: 9, short: "HR" },
+  //   { id: 17, short: "Payroll Manager" },
+  //   // { id: 10, short: "SBU" },
+  //   // { id: 11, short: "IT Team" },
+  //   // { id: 12, short: "HR Head" },
+  // ];
   const companyList = [{ id: 1001, short: "Company 1" }];
 
   const [passwordShown, setPasswordShown] = useState("");
@@ -54,8 +69,8 @@ const Login = ({ makelogin }) => {
     if (res.data.length > 0 && res.status === 200) {
       sessionStorage.setItem("userID", res.data[0].id);
       sessionStorage.setItem("userName", res.data[0].name);
-      sessionStorage.setItem("email", res.data[0].email);
-      sessionStorage.setItem("roleID", res.data[0].login);
+      sessionStorage.setItem("email", res.data[0].emailID);
+      sessionStorage.setItem("roleID", res.data[0].roleID);
       makelogin();
     }
     // else if (res){
