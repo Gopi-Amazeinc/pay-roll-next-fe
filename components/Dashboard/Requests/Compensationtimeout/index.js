@@ -65,7 +65,7 @@ const Compensationtimeout = () => {
     const getPendingData = async () => {
         staffID = sessionStorage.getItem("userID");
         const res = await axios.get(hostURL + "Payroll/GetPendingCompensationTimeOutByStaffID?UserID=" + staffID)
-        sessionStorage.setItem("supervisorID", res.data[0].supervisor)
+        // sessionStorage.setItem("supervisorID", res.data[0].supervisor)
         getPending(res.data)
     }
 
@@ -82,20 +82,20 @@ const Compensationtimeout = () => {
     }
 
     const getManagerApprovedData = async () => {
-        const res = await axios.get(hostURL + "Payroll/GetApproveCompensationTimeOutBySupervisor?UserID=" + sessionStorage.getItem("supervisorID"))
+        const res = await axios.get(hostURL + "Payroll/GetApproveCompensationTimeOutBySupervisor?UserID=" + 20540)
         console.log(res.data)
         getManagerApproved(res.data)
     }
 
     const getManagerRejectedData = async () => {
-        const res = await axios.get(hostURL + "Payroll/GetRejectCompensationTimeOutBySupervisor?UserID=" + sessionStorage.getItem("supervisorID"))
+        const res = await axios.get(hostURL + "Payroll/GetRejectCompensationTimeOutBySupervisor?UserID=" + 20540)
         console.log(res.data)
         getManagerRejected(res.data)
     }
 
     const getPendingCompensation = async () => {
         staffID = sessionStorage.getItem("userID");
-        const res = await axios.get(hostURL + "Payroll/GetPendingCompensationTimeOutBySupervisor?UserID=" + sessionStorage.getItem("supervisorID"))
+        const res = await axios.get(hostURL + "Payroll/GetPendingCompensationTimeOutBySupervisor?UserID=" + 20540)
         console.log(res.data)
         getComponsation(res.data)
     }

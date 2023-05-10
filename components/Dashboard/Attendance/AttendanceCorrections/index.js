@@ -14,6 +14,10 @@ const Attendancecorrectiondashboard = () => {
   const [approvedDashboardData, setapprovedDashboardData] = useState([]);
   const [rejectedDashboardData, setrejectedDashboardData] = useState([]);
 
+  const [managerPending, getManagerPending] = useState([]);
+  const [managerApproved, getManagerApproved] = useState([]);
+  const [managerRejected, getManagerRejected] = useState([]);
+
   const [SDate, setSDate] = useState("");
   const [EDate, setEDate] = useState("");
 
@@ -34,9 +38,68 @@ const Attendancecorrectiondashboard = () => {
     setApproved(false);
   };
 
-  const approve = async (id) => {
-    await axios.post(hostURL + "Payroll/ApproveAttedanceCoorection?id" + id);
-  };
+  const getPendingManager = async (SDate, EDate) => {
+    const res = await axios.get(
+      hostURL +
+      "Payroll/GetPendingAttendanceCorrectionBySupervisor?userID=" +
+      20540 +
+      "&SDate=" +
+      SDate +
+      "&EDate=" +
+      EDate
+    );
+    console.log(res, "manager pending");
+    getManagerPending(res.data);
+  }
+
+  const getApprovedManager = async (SDate, EDate) => {
+    const res = await axios.get(
+      hostURL +
+      "Payroll/GetApprovedAttendanceCorrectionBySupervisor?userID=" +
+      20540 +
+      "&SDate=" +
+      SDate +
+      "&EDate=" +
+      EDate
+    );
+    console.log(res, "manager Approved");
+    getManagerApproved(res.data);
+  }
+
+  const getRejectedManager = async (SDate, EDate) => {
+    const res = await axios.get(
+      hostURL +
+      "Payroll/GetApprovedAttendanceCorrectionBySupervisor?userID=" +
+      20540 +
+      "&SDate=" +
+      SDate +
+      "&EDate=" +
+      EDate
+    );
+    console.log(res, "manager Rejected");
+    getManagerRejected(res.data);
+  }
+
+  const approve = (data) => {
+    Swal.fire({
+      title: 'Confirm To Approve?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, Approve it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios.get(hostURL + "Payroll/ApproveAttedanceCoorection?id=" + data.id + "&UserID=" + data.staffID + "&SigninDate=" + SDate + "&SignoutDate=" + EDate)
+        Swal.fire({
+          icon: "success",
+          titleText: "Approved Successfully"
+        })
+        getPendingManager(SDate, EDate);
+      }
+    })
+  }
 
   function formateDate(datetoformat) {
     const day = datetoformat.getDate().toString().padStart(2, "0");
@@ -118,6 +181,9 @@ const Attendancecorrectiondashboard = () => {
     getPendingData(fromDate, EndDate);
     getApprovedData(fromDate, EndDate);
     getRejectedData(fromDate, EndDate);
+    getPendingManager(fromDate, EndDate);
+    getApprovedManager(fromDate, EndDate);
+    getRejectedManager(fromDate, EndDate);
   }, [1]);
 
   const Delete = (id) => {
@@ -159,11 +225,15 @@ const Attendancecorrectiondashboard = () => {
           </div>
 
           <div className="col-lg-4">
-            <Link href="/Attendance/AttendanceCorrections/attendancecorrectionform">
-              <button className="button">
-                Add Attendance Correction
-              </button>
-            </Link>
+            {
+              sessionStorage.getItem("roleID") != "2" && (
+                <Link href="/Attendance/AttendanceCorrections/attendancecorrectionform">
+                  <button className="button">
+                    Add Attendance Correction
+                  </button>
+                </Link>
+              )
+            }
           </div>
         </div>
       </div>
@@ -236,6 +306,25 @@ const Attendancecorrectiondashboard = () => {
                 <th colSpan={2}>Action</th>
               </tr>
             </thead>
+
+            <tbody>
+              {
+                managerPending.map((data) => {
+                  return (
+                    <tr key={data.id}>
+                      <td>{data.staffname}</td>
+                      <td>{data.date}</td>
+                      <td>{data.startTime}</td>
+                      <td>{data.endTime}</td>
+                      <td>
+                        <button onClick={approve.bind(this, data)} className="edit-btn">Accept</button>
+                        <button className="edit-btn">Reject</button>
+                      </td>
+                    </tr>
+                  )
+                })
+              }
+            </tbody>
           </table>
         )}
 
@@ -277,7 +366,20 @@ const Attendancecorrectiondashboard = () => {
                 <th>End Time</th>
               </tr>
             </thead>
-            <tbody></tbody>
+
+            <tbody>
+              {managerApproved.map((data) => {
+                return (
+                  <tr key={data.id}>
+                    <td>{data.date}</td>
+                    <td>{data.startTime}</td>
+                    <td>{data.endTime}</td>
+                    <td>{data.Comments}</td>
+                    <td>{data.status}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
           </table>
         )}
 
@@ -319,6 +421,20 @@ const Attendancecorrectiondashboard = () => {
                 <th>End Time</th>
               </tr>
             </thead>
+
+            <tbody>
+              {managerRejected.map((data) => {
+                return (
+                  <tr key={data.id}>
+                    <td>{data.date}</td>
+                    <td>{data.startTime}</td>
+                    <td>{data.endTime}</td>
+                    <td>{data.Comments}</td>
+                    <td>{data.status}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
           </table>
         )}
       </div>
