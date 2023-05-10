@@ -52,6 +52,7 @@
   letter-spacing: 0.7px;
   line-height: 1vh;
   max-width: 250px; 
+  margin-left: 30%;
   
 
 }
@@ -98,7 +99,7 @@
 }
 
 .initial {
-  font-size: 23px;
+  font-size: 25px;
   margin-left: 20px;
   background-color: #FFF;
   color: rgb(0, 136, 255);
