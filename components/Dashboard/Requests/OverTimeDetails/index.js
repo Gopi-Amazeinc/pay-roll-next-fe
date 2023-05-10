@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import loan from "../../../../pages/Requests/Applyloans/applyloans.module.css"
+import Modal from 'react-modal';
+import Styles from "@../../../pages/OT/Ot.module.css"
 
 const Index = () => {
     let staffID;
@@ -20,6 +22,8 @@ const Index = () => {
     const [managerPending, setManagerPendingData] = useState([]);
     const [managerApproved, setManagerApprovedData] = useState([]);
     const [managerRejected, setManagerRejectedData] = useState([]);
+    const [modalOpen, setModalOpen] = useState(false);
+    const [modalData, setModalData] = useState([]);
     const togglePending = () => {
         setPending(true)
         setApproved(false)
@@ -37,6 +41,25 @@ const Index = () => {
         setRejected(true)
         setApproved(false)
         setPending(false)
+    }
+
+    const openEditModal = () => {
+        setModalOpen(true)
+    }
+    const closeModal = () => {
+        setModalOpen(false)
+    }
+    const customStyles = {
+        content: {
+            top: '50%',
+            left: '50%',
+            right: 'auto',
+            bottom: 'auto',
+            marginRight: '-50%',
+            transform: 'translate(-50%, -50%)',
+            width: '60%',
+            height: '70%'
+        }
     }
 
     const getPendingDetails = async () => {
@@ -72,6 +95,16 @@ const Index = () => {
         const res = await axios.get(hostURL + "Payroll/GetRejectOverTimeDetailsByManagerID?ManagerID=" + staffID)
         setManagerRejectedData(res.data)
         console.log("Manager Rejected", res.data)
+    }
+    const getModalData = async () => {
+        staffID = sessionStorage.getItem("userID");
+        var date = sessionStorage.getItem("userID");
+        var startTime = sessionStorage.getItem("StartTime");
+        var endTime = sessionStorage.getItem("EndTime");
+        const res = await axios.get(hostURL + "HR/GetOtNightOt?StartTime=" + startTime + "&EndTime=" + endTime + "&Shift=1&StaffID=" + staffID + "&Date=" + date);
+        setModalData(res.data);
+        console.log("Modal data", res.data);
+
     }
     const approve = (id) => {
         Swal.fire({
@@ -227,7 +260,7 @@ const Index = () => {
                                             <td>{data.startTime}</td>
                                             <td>{data.endTime}</td>
                                             <td>
-                                                <button className='edit-btn'>Details</button>
+                                                <button className='edit-btn' onClick={openEditModal} >Details</button>
                                             </td>
                                             <td>{data.comments}</td>
                                             <td>{data.status}</td>
@@ -422,6 +455,53 @@ const Index = () => {
                     </table>
                 )
             }
+            <Modal ariaHideApp={false} isOpen={modalOpen} style={customStyles} contentLabel="Example Modal">
+                <div className='row'>
+                    <div className='col-lg-6'>
+                        <div className=" modal-header">
+                            <h5 className=" modal-title" id="exampleModalLabel">
+                                Overtime Details
+                            </h5>
+                        </div>
+                    </div>
+                    <div className='col-lg-5'></div>
+                    <div className='col-lg-1'>
+                        <button
+                            aria-label="Close"
+                            type="button"
+                            className={Styles.close}
+                            onClick={closeModal}
+                        >X
+                        </button>
+                    </div>
+                </div>
+                <div className='row'>
+                    <div className='col-lg-12'>
+                        <table className="table table-hover">
+                            <thead>
+                                <tr>
+                                    <th>OT Type</th>
+                                    <th>No of Hours</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    {
+                                        modalData.map((data, index) => {
+                                            return (
+                                                <tr key={index}>
+                                                    <td>{data.normalOT}</td>
+                                                </tr>
+                                            )
+                                        })
+                                    }
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+            </Modal>
         </div>
     )
 }
