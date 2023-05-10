@@ -5,6 +5,7 @@ import axios from "axios";
 import Link from "next/link";
 import Swal from "sweetalert2";
 import { useState, useEffect } from 'react';
+import { apiService } from "@/services/api.service";
 
 
 function Holidayform() {
@@ -15,7 +16,7 @@ function Holidayform() {
   
  async  function onSubmit (data)  {
 
-    await axios.post(hostURL + "HR/InsertHolidays", data) 
+    await apiService.commonPostCall("HR/InsertHolidays", data) 
     location.href = "/Holiday"
     Swal.fire({
         icon: 'success',

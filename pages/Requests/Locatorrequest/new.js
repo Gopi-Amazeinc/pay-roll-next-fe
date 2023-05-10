@@ -25,7 +25,7 @@ const Locatorrequest = () => {
     async function onSubmit(data) {
         debugger;
         try {
-            const formData = { ...data, userID: userID };
+            const formData = { ...data, StaffID: userID };
             console.log("form data", formData);
             await axios.post(hostURL + "Payroll/InsertLocatorTable", formData);
             Swal.fire('Data Inserted successfully')
@@ -39,56 +39,33 @@ const Locatorrequest = () => {
     return (
         <Layout>
             <form onSubmit={handleSubmit(onSubmit)} className='card p-3 border-0 shadow-lg rounded-3 mt-4'>
-                <div className="row ">
+                <div className="row ">  
                     <div className="col-lg-2">
-                        <label htmlFor="" className={styles.p}>Transportation Type<span style={{ color: "red" }}>*</span></label>
-                        <select className="form-control" {...register('TransportationType', { required: true })}  >
-                            <option disabled>Select Transport Type</option>
-                            <option>Flight</option>
-                            <option>Bus</option>
-                            <option>Train</option>
-                            <option>Car</option>
-
-                        </select>
-                    </div>
-                    {/* <div className="col-lg-2">
-                        <label htmlFor="">Name*</label>
-                        <input type="text" className="form-control" {...register('Name', { required: true })} value={Test} />
-                    </div> */}
-                    <div className="col-lg-2">
-                        <label htmlFor="" className={styles.p}>Start Date<span style={{ color: "red" }}>*</span></label>
+                        <label htmlFor="" className={styles.p}>Date<span style={{ color: "red" }}>*</span></label>
                         <input type="date" className="form-control" {...register('Date', { required: true })} />
-
                     </div>
                     <div className="col-lg-2">
-                        <label htmlFor="" className={styles.p}>Return Date<span style={{ color: "red" }}>*</span></label>
-                        <input type="date" className="form-control" {...register('returndate', { required: true })} />
-
+                        <label htmlFor="" className={styles.p}>Task<span style={{ color: "red" }}>*</span></label>
+                        <input type="text" className="form-control" placeholder="Task" {...register('Task', { required: true })} />
                     </div>
                     <div className="col-lg-2">
-                        <label htmlFor="" className={styles.p}>Destination</label>
-                        <input type="text" className="form-control" {...register('Destination', { required: true })} />
-
+                        <label htmlFor="" className={styles.p}>Start Time<span style={{ color: "red" }}>*</span>*</label>
+                        <input type="time" className="form-control" {...register('StartTime', { required: true })} />
                     </div>
                     <div className="col-lg-2">
-                        <label htmlFor="" className={styles.p}>Purpose</label>
-                        <input type="text" className="form-control" {...register('Purpose', { required: true })} />
-
+                        <label htmlFor="" className={styles.p}>End Time<span style={{ color: "red" }}>*</span></label>
+                        <input type="time" className="form-control" {...register('EndTime', { required: true })} />
                     </div>
                     <div className="col-lg-2">
-                        <label htmlFor="" className={styles.p}> Time Of Departure<span style={{ color: "red" }}>*</span>*</label>
-                        <input type="time" className="form-control" {...register('TimeOfDeparture', { required: true })} />
+                        <label htmlFor="" className={styles.p}>Comments<span style={{ color: "red" }}>*</span></label>
+                        <input type="text" className="form-control" placeholder="Comments" {...register('Comments', { required: true })} />
                     </div>
                 </div>
                 <br />
                 <div className="row">
                     <div className="col-lg-2">
-                        <label htmlFor="" className={styles.p}> Time Of Return<span style={{ color: "red" }}>*</span></label>
-                        <input type="time" className="form-control" {...register('Pagibigvalue', { required: true })} />
-                    </div>
-                    <div className="col-lg-2">
                         <label htmlFor="" className={styles.p}> Attachment</label>
-
+                        <input type="text" className="form-control" {...register('Attachment', { required: false })} />
                     </div>
                 </div>
                 <br />
