@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
+import { useRouter } from "next/router";
+import { apiService } from "@/services/api.service";
 
 
 function CityMasterForm({ editData }) {
@@ -17,34 +19,61 @@ function CityMasterForm({ editData }) {
         reset,
         formState: { errors },
     } = useForm();
+    const router = useRouter();
+    const [actionType, setActionType] = useState("insert");
+
+    const getMasters = async () => {
+        const [countryRes, provinceRes] = await Promise.all([
+            apiService.commonGetMasters("Master/GetCountryType"),
+            apiService.commonGetMasters("Master/GetStateType"),
+        ]);
+
+        setCountryData(countryRes.data);
+        setProvinceData(provinceRes.data);
+    }
+
+    function clearForm(userData = null) {
+        debugger;
+        let details = {
+            ID: userData ? userData.id : "",
+            CountryID: userData ? userData.countryID : "",
+            StateID: userData ? userData.stateID : "",
+            // City:userData ? userData.city : "",
+            Short: userData ? userData.short : "",
+            Description: userData ? userData.description : "",
+        };
+        reset(details);
+        setActionType(userData ? "update" : "insert");
+    }
+
+    const onSubmit = async (data) => {
+        if (actionType == "insert") {
+            await apiService.commonPostCall("Master/InsertCityType", data);
+            Swal.fire("Data Inserted successfully");
+            router.push("/Masters/CityMaster");
+        } else {
+            await apiService.commonPostCall("Master/UpdateCityType", data);
+            Swal.fire("Data Updated successfully");
+            router.push("/Masters/CityMaster");
+        }
+    };
 
     useEffect(() => {
-        async function getDropdownData() {
-            let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-
-            let res = await axios.get(hostURL + "Master/GetCountryType"); // this api call for master table this is used for DropDown data 
-            setCountryData(res.data);
-
-            res = await axios.get(hostURL + "Master/GetStateType"); // this api call for master table this is used for DropDown data 
-            setProvinceData(res.data);
+        const { id } = editData || {};
+        if (id) {
+            // This API is used to fetch the data from BarangayMaster ByID table
+            getCityMasterByID(id);
+        } else {
+            clearForm();
         }
-
-        getDropdownData();
-    }, [1]);
-
-
-    async function onSubmit(data) {
-        console.log(data);
-        let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-        await axios.post(hostURL + "Master/InsertCityType", data); // this for insrting the data using inserting Api call 
-        Swal.fire({
-            icon: "success",
-            title: "Hurray...",
-            text: "Data was added..!",
-        });
-        location.href = "/Masters/CityMaster"
-
-    }
+        getMasters();
+    }, []);
+    const getCityMasterByID = async (id) => {
+        const res = await apiService.commonGetCall(
+            "Master/GetCityTypeByID?ID=" + id
+        );
+        clearForm(res.data[0]);
+    };
 
     return (
         <Layout>
@@ -137,12 +166,16 @@ function CityMasterForm({ editData }) {
                             </div>
 
                             <div className="col-lg-2 ">
-                                <button
-                                    type="submit"
-                                    className="AddButton"
-                                >
-                                    Save
-                                </button>
+                                {actionType == "insert" && (
+                                    <button type="submit" className="AddButton">
+                                        Save
+                                    </button>
+                                )}
+                                {actionType == "update" && (
+                                    <button type="submit" className="AddButton">
+                                        Update
+                                    </button>
+                                )}
                             </div>
                         </div>
                     </form>

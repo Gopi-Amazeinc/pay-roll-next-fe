@@ -3,28 +3,56 @@ import Styles from '../../../styles/DepartmentMasterForm.module.css'
 import { useForm } from 'react-hook-form';
 import Layout from '../../../components/layout/layout'
 import Link from 'next/link';
-import axios from 'axios';
 import Swal from 'sweetalert2';
-const DepartmentMasterForm = () => {
-
-
-
+import { apiService } from "@/services/api.service";
+import { useRouter } from "next/router";
+const DepartmentMasterForm = ({ editData }) => {
     // get functions to build form with useForm() hook
     const { register, handleSubmit, reset, formState } = useForm();
     const { errors } = formState;
+    const router = useRouter();
+    const [actionType, setActionType] = useState("insert");
 
-    let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+    const onSubmit = async (data) => {
+        if (actionType == "insert") {
+            await apiService.commonPostCall("Master/InsertDepartmentMaster", data);
+            Swal.fire("Data Inserted successfully");
+            router.push("/Masters/DepartmentMaster");
+        } else {
+            debugger
+            await apiService.commonPostCall("Master/UpdateDepartmentMaster", data);
+            Swal.fire("Data Updated successfully");
+            router.push("/Masters/DepartmentMaster");
+        }
+    };
 
-
-
-
-    async function onSubmit(data) {
-
-        await axios.post(hostURL + 'Master/InsertDepartmentMaster', data); //gurukiran@amazeinc.in api call for insert of data
-        Swal.fire({ icon: "success", text: "Data Successfully added" })
-        location.href = "/Masters/DepartmentMaster/";
-
+    function clearForm(departmentMaster = null) {
+        let details = {
+            "ID": departmentMaster ? departmentMaster.id : "",
+            "Department_name": departmentMaster ? departmentMaster.department_name : "",
+            "Department_Desc": departmentMaster ? departmentMaster.department_Desc : "",
+        }
+        reset(details);
+        setActionType(departmentMaster ? "update" : "insert");
     }
+
+    useEffect(() => {
+        const { id } = editData || {};
+        if (id) {
+            // This API is used to fetch the data from BarangayMaster ByID table
+            getDepartmentMasterByID(id);
+        } else {
+            clearForm();
+        }
+    }, []);
+    const getDepartmentMasterByID = async (id) => {
+        const res = await apiService.commonGetCall(
+            "Master/GetDepartmentMasterByID?ID=" + id
+        );
+        clearForm(res.data[0]);
+    };
+
+
 
     return (
         <Layout>
@@ -79,17 +107,16 @@ const DepartmentMasterForm = () => {
                             <Link href="/Masters/DepartmentMaster"  ><button className="AddButton">Cancel</button></Link>
                         </div>
                         <div className="col-lg-2">
-
-
-                            <button type="submit" className="AddButton">
-
-                                Save
-
-                            </button>
-
-
-
-
+                            {actionType == "insert" && (
+                                <button type="submit" className="AddButton">
+                                    Save
+                                </button>
+                            )}
+                            {actionType == "update" && (
+                                <button type="submit" className="AddButton">
+                                    Update
+                                </button>
+                            )}
                         </div>
                     </div>
 

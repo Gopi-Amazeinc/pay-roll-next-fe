@@ -3,31 +3,65 @@ import Styles from "../../../styles/statemasterdashboard.module.css";
 import { useForm } from "react-hook-form";
 import Layout from '@/components/layout/layout.js';
 import Link from "next/link";
-import axios from "axios";
 import Swal from "sweetalert2";
-function StateMasterForm() {
+import { apiService } from "@/services/api.service";
+import { useRouter } from "next/router";
+function StateMasterForm({editData}) {
+  
   const [country, setCountryData] = useState([]);
   const { register, handleSubmit, reset, formState } = useForm();
   const { errors } = formState;
+  const router = useRouter();
+  const [actionType, setActionType] = useState("insert");
 
-  let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+  const onSubmit = async (data) => {
+    if (actionType == "insert") {
+      await apiService.commonPostCall("Master/InsertStateType", data);
+      Swal.fire("Data Inserted successfully");
+      router.push("/Masters/StateMaster");
+    } else {
+      debugger
+      await apiService.commonPostCall("Master/UpdateStateType", data);
+      Swal.fire("Data Updated successfully");
+      router.push("/Masters/StateMaster");
+    }
+  };
 
-  async function onSubmit(data) {
-      await axios.post(hostURL + "Master/InsertStateType", data);  //naveen.th@amazeinc.in, Insert API for State master, to add new data
-      Swal.fire("Added succesfullly");
-      location.href = "/Masters/StateMaster/";
+  const getMasters = async () => {
+    const [countryRes] = await Promise.all([
+      apiService.commonGetMasters("Master/GetCountryType"),
+    ]);
+    setCountryData(countryRes.data);
+  };
+
+  function clearForm(existingData = null) {
+    let etty = {
+      "ID": existingData ? existingData.id : "",
+      "Short": existingData ? existingData.short : "",
+      "Description": existingData ? existingData.description : "",
+      "CountryID": existingData ? existingData.countryID : "",
+    };
+    reset(etty);
+    setActionType(existingData ? "update" : "insert");
   }
 
   useEffect(() => {
-    getCountryList();
+    const { id } = editData || {};
+    if (id) {
+      // This API is used to fetch the data from BarangayMaster ByID table
+      getStateMasterByID(id);
+    } else {
+      clearForm();
+    }
+    getMasters();
   }, []);
 
-  const getCountryList = async () => {
-    let res = await axios.get(hostURL + "Master/GetCountryType"); //naveen.th@amazeinc.in, Get API for country master, to fetch data
-    console.log(res.data);
-    setCountryData(res.data);
-  }
-
+  const getStateMasterByID = async (id) => {
+    const res = await apiService.commonGetCall(
+      "Master/GetStateTypeByID?ID=" + id
+    );
+    clearForm(res.data[0]);
+  };
 
   const customStyles = {
     content: {
@@ -133,11 +167,16 @@ function StateMasterForm() {
                 </Link>
               </div>
               <div className="col-lg-2">
-               
-                  <button type="submit" className="btn" id={Styles.btn}>
+                {actionType == "insert" && (
+                  <button type="submit" className="AddButton">
                     Save
                   </button>
-                
+                )}
+                {actionType == "update" && (
+                  <button type="submit" className="AddButton">
+                    Update
+                  </button>
+                )}
               </div>
             </div>
           </form>

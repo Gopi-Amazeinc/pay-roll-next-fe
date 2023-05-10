@@ -2,22 +2,55 @@ import React, { useState, useEffect } from "react";
 import Styles from "../../../styles/CountryMasterForm.module.css";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
-import axios from "axios";
 import Layout from '../../../components/layout/layout'
 import Swal from "sweetalert2";
+import { apiService } from "@/services/api.service";
+import { useRouter } from "next/router";
 
-function CountryMasterForm() {
+function CountryMasterForm({editData}) {
     const { register, handleSubmit, reset, formState } = useForm();
     const { errors } = formState;
-    let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+    const router = useRouter();
+    const [actionType, setActionType] = useState("insert");
 
-    async function onSubmit(data) {
-        await axios.post(hostURL + "Master/InsertCountryType", data);  //naveen.th@amazeinc.in, Insert API for Country master, to add new data
-        Swal.fire(
-            'Added succesfullly'
-        );
-        location.href = "/Masters/CountryMaster";
+    const onSubmit = async (data) => {
+        if (actionType == "insert") {
+            await apiService.commonPostCall("Master/InsertCountryType", data);
+            Swal.fire("Data Inserted successfully");
+            router.push("/Masters/CountryMaster");
+        } else {
+            debugger
+            await apiService.commonPostCall("Master/UpdateCountryType", data);
+            Swal.fire("Data Updated successfully");
+            router.push("/Masters/CountryMaster");
+        }
+    };
+
+    function clearForm(existingData = null) {
+        let etty = {
+            "ID": existingData ? existingData.id : "",
+            "Short": existingData ? existingData.short : "",
+            "Description": existingData ? existingData.description : "",
+        }
+        reset(etty);
+        setActionType(existingData ? "update" : "insert");
     }
+
+    useEffect(() => {
+        const { id } = editData || {};
+        if (id) {
+            // This API is used to fetch the data from BarangayMaster ByID table
+            getCountryMasterByID(id);
+        } else {
+            clearForm();
+        }
+    }, []);
+    const getCountryMasterByID = async (id) => {
+        const res = await apiService.commonGetCall(
+            "Master/GetCountryTypeByID?ID=" + id
+        );
+        clearForm(res.data[0]);
+    };
 
     const customStyles = {
         content: {
@@ -74,7 +107,17 @@ function CountryMasterForm() {
                                         <button type='button' className='btn common-edit' id={Styles.btn}>Close</button></Link>
                                 </div>
                                 <div className="col-lg-2">
-                                    <button type='submit' className='btn' id={Styles.btn}>Save</button>
+                                    {actionType == "insert" && (
+                                        <button type="submit" className="AddButton">
+                                            Save
+                                        </button>
+                                    )}
+                                    {actionType == "update" && (
+                                        <button type="submit" className="AddButton">
+                                            Update
+                                        </button>
+                                    )}
+
                                 </div>
                             </div>
                         </form>
