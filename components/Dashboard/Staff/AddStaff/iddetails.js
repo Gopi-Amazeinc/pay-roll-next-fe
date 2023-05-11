@@ -10,18 +10,18 @@ function IDDetails() {
     return (
         <div className='container'>
             <div className='card rounded-3 shadow-lg border-0 mt-3'>
-                <div className='row mt-3 p-3'>
+                <div className='row'>
                     <div className='col-lg-12'>
                         <p>ID Details</p>
                     </div>
                     <hr color='black' />
                 </div>
-
-                <div className='row p-4'>
+                <div className='row'>
                     <div className='col-lg-2'>
                         <div className='mb-3'>
                             <span>ID Type <i className='text-danger'>*</i> </span><p></p>
                             <select className=" form-select" >
+                                <option>Select ID</option>
                                 <option value="1">One</option>
                             </select>
                         </div>
@@ -82,7 +82,7 @@ function IDDetails() {
                 <div className='row'>
                     <div className='col-lg-4'></div>
                     <div className='mt-3 mb-3 col-lg-3'>
-                        <button className='btn btn-primary' id='AddButton'>Submit</button>
+                        <button className='submit-button'>Submit</button>
                     </div>
                     <div className='col-lg-5'></div>
                 </div>
