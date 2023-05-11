@@ -75,7 +75,6 @@ const Dashboard=()=> {
     // setActionType("punchin")
   };
   const handleworkType = (value) => {
-    debugger;
     console.log(value);
     setWorkType(value);
   };
@@ -85,7 +84,6 @@ const Dashboard=()=> {
   // }
   // TODO: Written By: Gopi -> Add code to punchhin user or staff
   const handlePunchin = async () => {
-    debugger;
     setModalOpen(!modalOpen);
     // if (punchintime != true) {
     //   Swal.fire("Already Punched In for the day");
