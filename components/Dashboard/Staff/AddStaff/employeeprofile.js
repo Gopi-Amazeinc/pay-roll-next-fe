@@ -3,11 +3,11 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useDropzone } from "react-dropzone";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 function EmployeeProfile() {
   let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
   const [CountrylistData, setCountrylistData] = useState([]);
-  const [LanguagelistData, setLanguagelistData] = useState([]);
   const [TitleMasterData, setTitleMaster] = useState([]);
   const [MaritalStatusData, setMaritalStatusData] = useState([]);
   const [GenderMasterData, setGenderMasterData] = useState([]);
@@ -71,46 +71,44 @@ function EmployeeProfile() {
   };
 
   async function onSubmit(data) {
-    debugger
-    console.log(data)
+    debugger;
+    console.log(data);
     let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
 
     if (actionType == "insert") {
-        let Enity = {
-            'Title': data.Title,
-            'FirstName': data.FirstName,
-            'MiddleName': data.MiddleName,
-            'LastName': data.LastName,
-            'NickName': data.NickName,
-            'DateOfBirth': data.DateOfBirth,
-            'PlaceOfBirth': data.PlaceOfBirth,
-            'CountryOfBirthID': data.CountryOfBirthID,
-            'GenderID': data.GenderID,
-            'MaritalStatusID': data.MaritalStatusID,
-            'PersonalEmail': data.PersonalEmail,
-            'MothersName': data.MothersName,
-            'FathersName': data.FathersName,
-            'ReligionID': data.ReligionID,
-            'CitizenshipID': data.CitizenshipID,
-            'NationalityID': data.NationalityID,
-            'LanguageSpokenID': data.LanguageSpokenID,
+      let Enity = {
+        Title: data.Title,
+        FirstName: data.FirstName,
+        MiddleName: data.MiddleName,
+        LastName: data.LastName,
+        NickName: data.NickName,
+        DateOfBirth: data.DateOfBirth,
+        PlaceOfBirth: data.PlaceOfBirth,
+        CountryOfBirthID: data.CountryOfBirthID,
+        GenderID: data.GenderID,
+        MaritalStatusID: data.MaritalStatusID,
+        PersonalEmail: data.PersonalEmail,
+        MothersName: data.MothersName,
+        FathersName: data.FathersName,
+        ReligionID: data.ReligionID,
+        CitizenshipID: data.CitizenshipID,
+        NationalityID: data.NationalityID,
+        LanguageSpokenID: data.LanguageSpokenID,
 
-            'BloodTypeID': data.BloodTypeID,
-            'IsPWD': data.IsPWD,
+        BloodTypeID: data.BloodTypeID,
+        IsPWD: data.IsPWD,
 
-            'OriginalBMS': data.OriginalBMS,
-            'EffectivityDateOfOriginalBMS': data.EffectivityDateOfOriginalBMS,
-            'PreviousBMS': data.PreviousBMS,
-            'EffectivityOfPreviousBMS': data.EffectivityOfPreviousBMS
-        }
-        let res = await axios.post(hostURL + "Employee/InsertStaff", Enity);
-        if (res.data && res.status == 200) {
-            setInsertStatus(true);
-            <MyProfile data={{ InsertStatus }} />
-        }
+        OriginalBMS: data.OriginalBMS,
+        EffectivityDateOfOriginalBMS: data.EffectivityDateOfOriginalBMS,
+        PreviousBMS: data.PreviousBMS,
+        EffectivityOfPreviousBMS: data.EffectivityOfPreviousBMS,
+      };
+      let res = await axios.post(hostURL + "Employee/InsertStaff", Enity);
+      if (res.data && res.status == 200) {
+            Swal.fire("Added successfully!!")
+      }
 
-        console.log(res)
-
+      console.log(res);
     }
     // else {
     //     let Enity = {
@@ -143,8 +141,7 @@ function EmployeeProfile() {
     //     }
     //     await axios.post(hostURL + "Master/UpdateBuildingStaff", Enity);
     // }
-
-}
+  }
 
   const customStyles = {
     content: {
@@ -194,6 +191,7 @@ function EmployeeProfile() {
   return (
     <div>
       <div className="container">
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div className="card mt-4 shadow-lg border-0">
           <div className="row">
             <p>My Information</p>
@@ -460,159 +458,264 @@ function EmployeeProfile() {
         </div>
 
         <div className="card mt-4 shadow-lg border-0">
-        <p>Ethnicity Information</p>
-        <hr />
+          <p>Ethnicity Information</p>
+          <hr />
           <div className="row">
             <div className="col-lg-3">
-            <p>Religion<span style={customStyles.span}>*</span></p>
-                                            <div>
-                                                <select className='form-select ' {...register("ReligionID", { required: true })}>
-                                                    <option value="">Select Religion</option>
-                                                    {
-                                                        ReligionMasterData.map((data, index) => {
-                                                            return (
-                                                                <option value={data.id}>{data.short}</option>
-                                                            )
-                                                        })
-                                                    }
-                                                </select>
-                                                {errors.ReligionID && <span style={customStyles.errorMsg}> Please Enter Religion</span>}
-                                            </div>
-                                        </div>
-            <div className="col-lg-3">
-            <p>Citizenship<span style={customStyles.span}>*</span></p>
-                                        {
-                                            <div>
-                                                <select className='form-select ' {...register("CitizenshipID", { required: true })} style={customStyles.inputLabel}>
-                                                    <option value="">Select Citizenship</option>
-                                                    {
-                                                        CitizenshipMasterData.map((data, index) => {
-                                                            return (
-                                                                <option value={data.id}>{data.short}</option>
-                                                            )
-                                                        })
-                                                    }
-                                                </select>
-                                                {errors.CitizenshipID && <span style={customStyles.errorMsg}> Please Enter Citizen Ship</span>}
-                                            </div>
-                                        }
+              <p>
+                Religion<span style={customStyles.span}>*</span>
+              </p>
+              <div>
+                <select
+                  className="form-select "
+                  {...register("ReligionID", { required: true })}
+                >
+                  <option value="">Select Religion</option>
+                  {ReligionMasterData.map((data, index) => {
+                    return <option value={data.id}>{data.short}</option>;
+                  })}
+                </select>
+                {errors.ReligionID && (
+                  <span style={customStyles.errorMsg}>
+                    {" "}
+                    Please Enter Religion
+                  </span>
+                )}
+              </div>
             </div>
             <div className="col-lg-3">
-            <p>Nationality <span style={customStyles.span}>*</span></p>
-                                            {<div>
-                                                <select className='form-select ' {...register("NationalityID", { required: true })} >
-                                                    <option value="">Select Nationality</option>
-                                                    {
-                                                        NationalityMasterData.map((data, index) => {
-                                                            return (
-                                                                <option value={data.id}>{data.short}</option>
-                                                            )
-                                                        })
-                                                    }
-                                                </select>
-                                                {errors.NationalityID && <span style={customStyles.errorMsg}> Please Enter Nationality</span>}
-                                            </div>}
+              <p>
+                Citizenship<span style={customStyles.span}>*</span>
+              </p>
+              {
+                <div>
+                  <select
+                    className="form-select "
+                    {...register("CitizenshipID", { required: true })}
+                    style={customStyles.inputLabel}
+                  >
+                    <option value="">Select Citizenship</option>
+                    {CitizenshipMasterData.map((data, index) => {
+                      return <option value={data.id}>{data.short}</option>;
+                    })}
+                  </select>
+                  {errors.CitizenshipID && (
+                    <span style={customStyles.errorMsg}>
+                      {" "}
+                      Please Enter Citizen Ship
+                    </span>
+                  )}
+                </div>
+              }
             </div>
             <div className="col-lg-3">
-            <p>Language Spoken<span style={customStyles.span}>*</span></p>
-                                            {<div>
-                                                <select className='form-select ' {...register("LanguageSpokenID", { required: true })} >
-                                                    <option value="">Select Language Spoken</option>
-                                                    {
-                                                        LanguageSpokenMasterData.map((data, index) => {
-                                                            return (
-                                                                <option value={data.id}>{data.short}</option>
-                                                            )
-                                                        })
-                                                    }
-                                                </select>
-                                                {errors.LanguageSpokenID && <span style={customStyles.errorMsg}> Please Enter Spoken Language</span>}
-                                            </div>}</div>  
+              <p>
+                Nationality <span style={customStyles.span}>*</span>
+              </p>
+              {
+                <div>
+                  <select
+                    className="form-select "
+                    {...register("NationalityID", { required: true })}
+                  >
+                    <option value="">Select Nationality</option>
+                    {NationalityMasterData.map((data, index) => {
+                      return <option value={data.id}>{data.short}</option>;
+                    })}
+                  </select>
+                  {errors.NationalityID && (
+                    <span style={customStyles.errorMsg}>
+                      {" "}
+                      Please Enter Nationality
+                    </span>
+                  )}
+                </div>
+              }
+            </div>
+            <div className="col-lg-3">
+              <p>
+                Language Spoken<span style={customStyles.span}>*</span>
+              </p>
+              {
+                <div>
+                  <select
+                    className="form-select "
+                    {...register("LanguageSpokenID", { required: true })}
+                  >
+                    <option value="">Select Language Spoken</option>
+                    {LanguageSpokenMasterData.map((data, index) => {
+                      return <option value={data.id}>{data.short}</option>;
+                    })}
+                  </select>
+                  {errors.LanguageSpokenID && (
+                    <span style={customStyles.errorMsg}>
+                      {" "}
+                      Please Enter Spoken Language
+                    </span>
+                  )}
+                </div>
+              }
+            </div>
           </div>
         </div>
 
         <div className="card mt-4 shadow-lg border-0">
-        <p>Health Information</p>
-            <div className="row">
-                <div className="col-lg-3">
-                <p>Blood Type<span style={customStyles.span}>*</span></p>
-                                            {<div>
-                                                <select className='form-select' {...register("BloodTypeID", { required: true })} >
-                                                    <option value="">Select Blood Type</option>
-                                                    {
-                                                        BloodTypeMasterData.map((data, index) => {
-                                                            return (
-                                                                <option value={data.id}>{data.short}</option>
-                                                            )
-                                                        })
-                                                    }
-                                                </select>
-                                                {errors.BloodTypeID && <span style={customStyles.errorMsg}> Please Enter Blood Group</span>}
-                                            </div>}
+          <p>Health Information</p>
+          <div className="row">
+            <div className="col-lg-3">
+              <p>
+                Blood Type<span style={customStyles.span}>*</span>
+              </p>
+              {
+                <div>
+                  <select
+                    className="form-select"
+                    {...register("BloodTypeID", { required: true })}
+                  >
+                    <option value="">Select Blood Type</option>
+                    {BloodTypeMasterData.map((data, index) => {
+                      return <option value={data.id}>{data.short}</option>;
+                    })}
+                  </select>
+                  {errors.BloodTypeID && (
+                    <span style={customStyles.errorMsg}>
+                      {" "}
+                      Please Enter Blood Group
+                    </span>
+                  )}
                 </div>
-                <div className="col-lg-3">
-                <p>Is PWD<span style={customStyles.span}>*</span></p>
-                                            {<div>
-                                                <input type="radio" value="1" name="IsPWD" {...register("IsPWD", { required: true })} /> Yes
-                                                <input type="radio" value="0" name="IsPWD" {...register("IsPWD", { required: true })} />  No
-                                                {errors.IsPWD && <span style={customStyles.errorMsg}> Please Enter Blood Group</span>}
-                                            </div>}
-                </div>
-                <div className="col-lg-3"></div>
-                <div className="col-lg-3"></div>
-            
+              }
             </div>
+            <div className="col-lg-3">
+              <p>
+                Is PWD<span style={customStyles.span}>*</span>
+              </p>
+              {
+                <div>
+                  <input
+                    type="radio"
+                    value='true'
+                    name="IsPWD"
+                    {...register("IsPWD", { required: true })}
+                  />
+                  Yes
+                  <input
+                    type="radio"
+                    value='false'
+                    name="IsPWD"
+                    {...register("IsPWD", { required: true })}
+                  />
+                  No
+                  {errors.IsPWD && (
+                    <span style={customStyles.errorMsg}>
+                      Please Enter Blood Group
+                    </span>
+                  )}
+                </div>
+              }
+            </div>
+            <div className="col-lg-3"></div>
+            <div className="col-lg-3"></div>
+          </div>
         </div>
 
         <div className="card mt-4 shadow-lg border-0">
-        <p>BMS Details</p>
-        <hr/>
+          <p>BMS Details</p>
+          <hr />
           <div className="row">
             <div className="col-lg-3">
-            <p>Original BMS<span style={customStyles.span}>*</span></p>
-                                        <div>
-                                            <input type='text' placeholder='Original BMS *'
-                                                {...register("OriginalBMS", { required: true })} className='form-control' ></input>
-                                            {errors.OriginalBMS && <span style={customStyles.errorMsg}> Please Enter Original BMS *</span>}
-                                        </div>
+              <p>
+                Original BMS<span style={customStyles.span}>*</span>
+              </p>
+              <div>
+                <input
+                  type="text"
+                  placeholder="Original BMS *"
+                  {...register("OriginalBMS", { required: true })}
+                  className="form-control"
+                ></input>
+                {errors.OriginalBMS && (
+                  <span style={customStyles.errorMsg}>
+                    {" "}
+                    Please Enter Original BMS *
+                  </span>
+                )}
+              </div>
             </div>
             <div className="col-lg-3">
-            <p>Effectivity date of Original BMS<span style={customStyles.span}>*</span></p>
-                                        <div>
-                                            <input type='date' placeholder='Previous Effectivity BMSDate'
-                                                {...register("EffectivityDateOfOriginalBMS", { required: true })} className='form-control' ></input>
-                                            {errors.EffectivityDateOfOriginalBMS && <span style={customStyles.errorMsg}> Please Enter Effectivity date of Original BMS</span>}
-                                        </div>
+              <p>
+                Effectivity date of Original BMS
+                <span style={customStyles.span}>*</span>
+              </p>
+              <div>
+                <input
+                  type="date"
+                  placeholder="Previous Effectivity BMSDate"
+                  {...register("EffectivityDateOfOriginalBMS", {
+                    required: true,
+                  })}
+                  className="form-control"
+                ></input>
+                {errors.EffectivityDateOfOriginalBMS && (
+                  <span style={customStyles.errorMsg}>
+                    {" "}
+                    Please Enter Effectivity date of Original BMS
+                  </span>
+                )}
+              </div>
             </div>
             <div className="col-lg-3">
-            <p>Previous BMS<span style={customStyles.span}>*</span></p>
-                                        <div>
-                                            <input type='text' placeholder='Previous BMS'
-                                                {...register("PreviousBMS", { required: true })} className='form-control' ></input>
-                                            {errors.PreviousBMS && <span style={customStyles.errorMsg}> Please Enter Previous BMS</span>}
-                                        </div>
+              <p>
+                Previous BMS<span style={customStyles.span}>*</span>
+              </p>
+              <div>
+                <input
+                  type="text"
+                  placeholder="Previous BMS"
+                  {...register("PreviousBMS", { required: true })}
+                  className="form-control"
+                ></input>
+                {errors.PreviousBMS && (
+                  <span style={customStyles.errorMsg}>
+                    {" "}
+                    Please Enter Previous BMS
+                  </span>
+                )}
+              </div>
             </div>
             <div className="col-lg-3">
-            <p>Effectivity date of Original BMS<span style={customStyles.span}>*</span></p>
-                                        <div>
-                                            <input type='date' placeholder='EffectivityOfPreviousBMS'
-                                                {...register("EffectivityOfPreviousBMS", { required: true })} className='form-control inputwidth' ></input>
-                                            {errors.EffectivityOfPreviousBMS && <span style={customStyles.errorMsg}> Please Enter Effectivity date of Original BMS</span>}
-                                        </div>
+              <p>
+                Effectivity date of Original BMS
+                <span style={customStyles.span}>*</span>
+              </p>
+              <div>
+                <input
+                  type="date"
+                  placeholder="EffectivityOfPreviousBMS"
+                  {...register("EffectivityOfPreviousBMS", { required: true })}
+                  className="form-control inputwidth"
+                ></input>
+                {errors.EffectivityOfPreviousBMS && (
+                  <span style={customStyles.errorMsg}>
+                    {" "}
+                    Please Enter Effectivity date of Original BMS
+                  </span>
+                )}
+              </div>
             </div>
-
           </div>
           <br></br>
           <div className="row">
-          <div className="d-flex">
-              <button className="btn btn-primary" id="AddButton">
+            <div className="d-flex">
+              <button className="btn btn-primary" type="submit" id="AddButton">
                 Submit
               </button>
             </div>
           </div>
-          
         </div>
+        </form>
       </div>
+    
     </div>
   );
 }
