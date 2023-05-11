@@ -1,250 +1,620 @@
-import React from 'react'
-import { useEffect, useState } from 'react';
+import React from "react";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
-import { useDropzone } from 'react-dropzone'
+import { useDropzone } from "react-dropzone";
+import axios from "axios";
 
 function EmployeeProfile() {
-    
+  let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+  const [CountrylistData, setCountrylistData] = useState([]);
+  const [LanguagelistData, setLanguagelistData] = useState([]);
+  const [TitleMasterData, setTitleMaster] = useState([]);
+  const [MaritalStatusData, setMaritalStatusData] = useState([]);
+  const [GenderMasterData, setGenderMasterData] = useState([]);
+  const [ReligionMasterData, setReligionMasterData] = useState([]);
+  const [CitizenshipMasterData, setCitizenshipMasterData] = useState([]);
+  const [NationalityMasterData, setNationalityMasterData] = useState([]);
+  const [LanguageSpokenMasterData, setLanguageSpokenMasterData] = useState([]);
+  const [BloodTypeMasterData, setBloodTypeMasterData] = useState([]);
 
+  const {
+    register,
+    handleSubmit,
+    watch,
+    reset,
+    formState: { errors },
+  } = useForm();
+  const [actionType, setActionType] = useState("insert");
 
-    // const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
-    return (
-        <div>
-            <div className='container'>
+  useEffect(() => {
+    debugger;
+    getData();
+  }, [1]);
 
-                <div className='card mt-4 shadow-lg border-0'>
-                    <div className='row mt-2 p-2'>
-                        <div className='col-lg-12'>
-                            <p>My Information</p>
-                            <hr />
-                        </div>
+  const getData = async () => {
+    let GetTitleMaster = await axios.get(hostURL + "Master/GetTitleMaster");
+    setTitleMaster(GetTitleMaster.data);
 
-                        <div className='col-lg-3'></div>
-                        <div className='col-lg-2'>
-                            <div className='mb-3'>
-                                <span>Title</span><p></p>
-                                <select className='form-select'>
-                                    <option>Select title</option>
-                                </select>
-                            </div>
+    let GetCountryType = await axios.get(hostURL + "Master/GetCountryType");
+    setCountrylistData(GetCountryType.data);
 
-                            <div className='mb-3'>
-                                <span>Nick Name</span><p></p>
-                                <input type="text" className='form-control' placeholder='Nick Name' />
-                            </div>
+    let GetMaritalStatus = await axios.get(hostURL + "Master/GetMaritalStatus");
+    setMaritalStatusData(GetMaritalStatus.data);
 
-                            <div className='mb-3'>
-                                <span>Gender</span><p></p>
-                                <select className='form-select'>
-                                    <option>Select Gender</option>
-                                </select>
-                            </div>
+    let GetGenderMaster = await axios.get(hostURL + "Master/GetGenderMaster");
+    setGenderMasterData(GetGenderMaster.data);
 
-                            <div className='mb-3'>
-                                <span>Father Name</span><p></p>
-                                <input type="text" className='form-control' placeholder='Father Name' />
-                            </div>
+    let GetReligionMaster = await axios.get(
+      hostURL + "Master/GetReligionMaster"
+    );
+    setReligionMasterData(GetReligionMaster.data);
 
-                            <div className='mb-3'>
-                                <span>Personal Email <i className='text-danger'>*</i></span><p></p>
-                                <input type="email" className='form-control' placeholder='Personal Email' />
-                            </div>
-                        </div>
+    let GetCitizenshipMaster = await axios.get(
+      hostURL + "Master/GetCitizenshipMaster"
+    );
+    setCitizenshipMasterData(GetCitizenshipMaster.data);
 
-                        <div className='col-lg-2'>
-                            <div className='mb-3'>
-                                <span>First Name <i className='text-danger'>*</i></span><p></p>
-                                <input type="text" className='form-control' placeholder='First Name' />
-                            </div>
+    let GetNationalityMaster = await axios.get(
+      hostURL + "Master/GetNationalityMaster"
+    );
+    setNationalityMasterData(GetNationalityMaster.data);
 
-                            <div className='mb-3'>
-                                <span>Date Of Birth <i className='text-danger'>*</i></span><p></p>
-                                <input type="date" className='form-control' />
-                            </div>
+    let GetLanguageSpokenMaster = await axios.get(
+      hostURL + "Master/GetLanguageSpokenMaster"
+    );
+    setLanguageSpokenMasterData(GetLanguageSpokenMaster.data);
 
-                            <div className='mb-3'>
-                                <span>Maritial Status <i className='text-danger'>*</i></span><p></p>
-                                <select className='form-select'>
-                                    <option>Select Status</option>
-                                </select>
-                            </div>
+    let GetBloodTypeMaster = await axios.get(
+      hostURL + "Master/GetBloodTypeMaster"
+    );
+    setBloodTypeMasterData(GetBloodTypeMaster.data);
+  };
 
-                            {/* <div className='mb-3 Dropzone' {...getRootProps()}>
-                                <input {...getInputProps()} />
-                                {
-                                    isDragActive ?
-                                        <p>Drop the files here ...</p> :
-                                        <p>Drop files here Only JPG,PNG,JPEG</p>
-                                }
-                            </div> */}
-                        </div>
+  async function onSubmit(data) {
+    debugger
+    console.log(data)
+    let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
 
-                        <div className='col-lg-2'>
-                            <div className='mb-3'>
-                                <span>Middle Name</span><p></p>
-                                <input type="text" className='form-control' placeholder='Middle Name' />
-                            </div>
+    if (actionType == "insert") {
+        let Enity = {
+            'Title': data.Title,
+            'FirstName': data.FirstName,
+            'MiddleName': data.MiddleName,
+            'LastName': data.LastName,
+            'NickName': data.NickName,
+            'DateOfBirth': data.DateOfBirth,
+            'PlaceOfBirth': data.PlaceOfBirth,
+            'CountryOfBirthID': data.CountryOfBirthID,
+            'GenderID': data.GenderID,
+            'MaritalStatusID': data.MaritalStatusID,
+            'PersonalEmail': data.PersonalEmail,
+            'MothersName': data.MothersName,
+            'FathersName': data.FathersName,
+            'ReligionID': data.ReligionID,
+            'CitizenshipID': data.CitizenshipID,
+            'NationalityID': data.NationalityID,
+            'LanguageSpokenID': data.LanguageSpokenID,
 
-                            <div className='mb-3'>
-                                <span>Place of Birth</span><p></p>
-                                <input type="text" className='form-control' placeholder='Place of Birth' />
-                            </div>
-                        </div>
+            'BloodTypeID': data.BloodTypeID,
+            'IsPWD': data.IsPWD,
 
-                        <div className='col-lg-2'>
-                            <div className='mb-3'>
-                                <span>Last Name <i className='text-danger'>*</i></span><p></p>
-                                <input type="text" className='form-control' placeholder='Last Name' />
-                            </div>
+            'OriginalBMS': data.OriginalBMS,
+            'EffectivityDateOfOriginalBMS': data.EffectivityDateOfOriginalBMS,
+            'PreviousBMS': data.PreviousBMS,
+            'EffectivityOfPreviousBMS': data.EffectivityOfPreviousBMS
+        }
+        let res = await axios.post(hostURL + "Employee/InsertStaff", Enity);
+        if (res.data && res.status == 200) {
+            setInsertStatus(true);
+            <MyProfile data={{ InsertStatus }} />
+        }
 
-                            <div className='mb-3'>
-                                <span>Country of Birth</span><p></p>
-                                <select className='form-select'>
-                                    <option>Select Country</option>
-                                </select>
-                            </div>
+        console.log(res)
 
-                            <div className='mb-3'>
-                                <span>Mother Name</span><p></p>
-                                <input type="text" className='form-control' placeholder='Mother Name' />
-                            </div>
+    }
+    // else {
+    //     let Enity = {
+    //         "ID": data.ID,
+    //         'Title': data.Title,
+    //         'FirstName': data.FirstName,
+    //         'MiddleName': data.MiddleName,
+    //         'LastName': data.LastName,
+    //         'NickName': data.NickName,
+    //         'DateOfBirth': data.DateOfBirth,
+    //         'PlaceOfBirth': data.PlaceOfBirth,
+    //         'CountryOfBirthID': data.CountryOfBirthID,
+    //         'GenderID': data.GenderID,
+    //         'MaritalStatusID': data.MaritalStatusID,
+    //         'PersonalEmail': data.PersonalEmail,
+    //         'MothersName': data.MothersName,
+    //         'FathersName': data.FathersName,
+    //         'ReligionID': data.ReligionID,
+    //         'CitizenshipID': data.CitizenshipID,
+    //         'NationalityID': data.NationalityID,
+    //         'LanguageSpokenID': data.LanguageSpokenID,
 
-                            <div className='mb-3'>
-                                <span>Personal Contact Number <i className='text-danger'>*</i></span><p></p>
-                                <input type="number" className='form-control' placeholder='Personal Contact Number' />
-                            </div>
-                        </div>
-                    </div>
-                </div>
+    //         'BloodTypeID': data.BloodTypeID,
+    //         'IsPWD': data.IsPWD,
 
-                <div className='card mt-4 shadow-lg border-0'>
-                    <div className='row mt-2 p-2'>
-                        <div className='col-lg-12'>
-                            <p>Ethnicity Information</p>
-                            <hr />
-                        </div>
+    //         'OriginalBMS': data.OriginalBMS,
+    //         'EffectivityDateOfOriginalBMS': data.EffectivityDateOfOriginalBMS,
+    //         'PreviousBMS': data.PreviousBMS,
+    //         'EffectivityOfPreviousBMS': data.EffectivityOfPreviousBMS
+    //     }
+    //     await axios.post(hostURL + "Master/UpdateBuildingStaff", Enity);
+    // }
 
-                        <div className='col-lg-2'>
-                            <div className='mb-3'>
-                                <span>Religion</span><p></p>
-                                <select className='form-select'>
-                                    <option>Select Religion</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div className='col-lg-2'>
-                            <div className='mb-3'>
-                                <span>Citizenship</span><p></p>
-                                <input type="text" className='form-control' placeholder='Citizenship' />
-                            </div>
-                        </div>
-
-                        <div className='col-lg-2'>
-                            <div className='mb-3'>
-                                <span>Nationality <i className='text-danger'>*</i></span><p></p>
-                                <input type="text" className='form-control' placeholder='Nationality' />
-                            </div>
-                        </div>
-
-                        <div className='col-lg-2'>
-                            <div className='mb-3'>
-                                <span>Language Spoken</span><p></p>
-                                <select className='form-select'>
-                                    <option>Select Language</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div className='card mt-4 shadow-lg border-0'>
-                    <div className='row mt-2 p-2'>
-                        <div className='col-lg-12'>
-                            <p>Health Information</p>
-                            <hr />
-                        </div>
-
-                        <div className='col-lg-2'>
-                            <div className='mb-3'>
-                                <span>Blood Type <i className='text-danger'>*</i></span><p></p>
-                                <select className='form-select'>
-                                    <option>Select Blood Type</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div className='col-lg-2'>
-                            <div className='mb-3 form-check form-switch'>
-                                <span>Is Disable</span><br /><p></p>
-                                <input type="checkbox" className='form-check-input ms-3' />
-                            </div>
-                        </div>
-
-                        <div className='col-lg-2'>
-                            <div className='mb-3'>
-                                <span>Please Specify <i className='text-danger'>*</i></span><p></p>
-                                <input type="text" className='form-control' placeholder='Please Specify' />
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div className='card mt-4 shadow-lg border-0'>
-                    <div className='row mt-2 p-2'>
-                        <div className='col-lg-12'>
-                            <p>Ethnicity Information</p>
-                            <hr />
-                        </div>
-
-                        <div className='col-lg-2'>
-                            <div className='mb-3'>
-                                <span>Orginlal BMS <i className='text-danger'>*</i></span><p></p>
-                                <input type="text" className='form-control' placeholder='Orginlal BMS' />
-                            </div>
-                        </div>
-
-                        <div className='col-lg-3'>
-                            <div className='mb-3'>
-                                <span>Effective date of Orginlal BMS <i className='text-danger'>*</i></span><p></p>
-                                <input type="date" className='form-control' />
-                            </div>
-                        </div>
-
-                        <div className='col-lg-2'>
-                            <div className='mb-3'>
-                                <span>Previous BMS <i className='text-danger'>*</i></span><p></p>
-                                <input type="text" className='form-control' placeholder='Previous BMS' />
-                            </div>
-                        </div>
-
-                        <div className='col-lg-3'>
-                            <div className='mb-3'>
-                                <span>Effective date of Previous BMS <i className='text-danger'>*</i></span><p></p>
-                                <input type="date" className='form-control' />
-                            </div>
-                        </div>
-                        <div className='col-lg-4'></div>
-                        <div className='mt-3 mb-3 col-lg-3'>
-                            <button className='btn btn-primary' id='AddButton'>Submit</button>
-                        </div>
-                        <div className='col-lg-5'></div>
-
-                        <div className='col-lg-9'></div>
-                        {/* <div className='col-lg-3'>
-                            <div className='btn-group mb-3 mt-2 ms-5'>
-                                <button className='btn btn-secondary'>Previous</button>
-                                <button className='btn btn-primary'>Next</button>
-                            </div>
-                        </div> */}
-                    </div>
-                </div>
-
-
-            </div>
-        </div>
-       
-    )
 }
 
-export default EmployeeProfile
+  const customStyles = {
+    content: {
+      width: "85%",
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      transform: "translate(-50%, -50%)",
+      height: "70%",
+    },
+    errorMsg: {
+      fontSize: "12px",
+      fontWeight: "500",
+      color: "red",
+    },
+    span: {
+      color: "red",
+    },
+  };
+
+  const customPopupDivision = {
+    popupcontent: {
+      display: "flex",
+      flexWrap: "wrap",
+      justifyContent: "space-between",
+      alignItems: "center",
+      width: "100%",
+    },
+    popupinputs: {
+      width: "24%",
+      marginTop: "16px",
+    },
+    formcontrol: {
+      width: "350px !important",
+    },
+
+    cardinputs: {
+      display: "flex",
+      flexDirection: "column",
+      margin: "5px",
+      width: "215px",
+      justifyContent: "center",
+    },
+  };
+  // const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
+  return (
+    <div>
+      <div className="container">
+        <div className="card mt-4 shadow-lg border-0">
+          <div className="row">
+            <p>My Information</p>
+            <hr></hr>
+            <div className="col-lg-3">
+              <p>
+                Title<span style={customStyles.span}>*</span>
+              </p>
+              {
+                <div>
+                  <select
+                    className="form-select"
+                    {...register("Title", { required: true })}
+                  >
+                    <option value="">Select Title</option>
+                    {TitleMasterData.map((data, index) => {
+                      return <option value={data.id}>{data.short}</option>;
+                    })}
+                  </select>
+                  {errors.Title && (
+                    <span style={customStyles.errorMsg}>
+                      {" "}
+                      Please Enter Title
+                    </span>
+                  )}
+                </div>
+              }
+            </div>
+            <div className="col-lg-3">
+              <p>
+                First Name<span style={customStyles.span}>*</span>
+              </p>
+              <div>
+                <input
+                  type="text"
+                  placeholder="First Name"
+                  {...register("FirstName", { required: true })}
+                  className="form-control "
+                ></input>
+                {errors.FirstName && <span> Please Enter First Name</span>}
+              </div>
+            </div>
+            <div className="col-lg-3">
+              <p>
+                Middle Name<span style={customStyles.span}>*</span>
+              </p>
+              <div>
+                <input
+                  type="text"
+                  placeholder="Middle Name"
+                  {...register("MiddleName", { required: true })}
+                  className="form-control "
+                ></input>
+                {errors.MiddleName && <span> Please Enter Middle Name</span>}
+              </div>
+            </div>
+            <div className="col-lg-3">
+              <p>
+                Last Name<span style={customStyles.span}>*</span>
+              </p>
+              <div>
+                <input
+                  type="text"
+                  placeholder="Last Name"
+                  {...register("LastName", { required: true })}
+                  className="form-control "
+                ></input>
+                {errors.LastName && (
+                  <span style={customStyles.errorMsg}>
+                    {" "}
+                    Please Enter Last Name
+                  </span>
+                )}
+              </div>
+            </div>
+          </div>
+          <br></br>
+          <div className="row">
+            <div className="col-lg-3">
+              <p>
+                Nick Name<span style={customStyles.span}>*</span>
+              </p>
+              <div>
+                <input
+                  type="text"
+                  placeholder="Nick Name"
+                  {...register("NickName", { required: true })}
+                  className="form-control "
+                ></input>
+                {errors.NickName && <span> Please Enter Nick Name</span>}
+              </div>
+            </div>
+            <div className="col-lg-3">
+              <p>
+                Date of Birth<span style={customStyles.span}>*</span>
+              </p>
+              <div>
+                <input
+                  type="date"
+                  placeholder="Date of Birth"
+                  {...register("DateOfBirth", { required: true })}
+                  className="form-control "
+                ></input>
+                {errors.DateOfBirth && (
+                  <span style={customStyles.errorMsg}>
+                    {" "}
+                    Please Enter Date of Birth
+                  </span>
+                )}
+              </div>
+            </div>
+            <div className="col-lg-3">
+              <p>
+                Place of Birth<span style={customStyles.span}>*</span>
+              </p>
+              <div>
+                <input
+                  type="text"
+                  placeholder="Place of Birth"
+                  {...register("PlaceOfBirth", { required: true })}
+                  className="form-control "
+                ></input>
+                {errors.PlaceOfBirth && (
+                  <span> Please Enter Place of Birth</span>
+                )}
+              </div>
+            </div>
+            <div className="col-lg-3">
+              <p>
+                Country of Birth<span style={customStyles.span}>*</span>
+              </p>
+              {
+                <div>
+                  <select
+                    className="form-select "
+                    {...register("Country_Of_Birth", { required: true })}
+                  >
+                    <option value="">Select Country Of Birth</option>
+                    {CountrylistData.map((data, index) => {
+                      return <option value={data.id}>{data.short}</option>;
+                    })}
+                  </select>
+                  {errors.Country_Of_Birth && (
+                    <span> Please Enter Country Of Birth</span>
+                  )}
+                </div>
+              }
+            </div>
+          </div>
+          <br></br>
+          <div className="row">
+            <div className="col-lg-3">
+              <p>
+                Gender<span style={customStyles.span}>*</span>
+              </p>
+              {
+                <div>
+                  <select
+                    className="form-select "
+                    {...register("GenderID", { required: true })}
+                  >
+                    <option value="">Select Gender</option>
+                    {GenderMasterData.map((data, index) => {
+                      return <option value={data.id}>{data.short}</option>;
+                    })}
+                  </select>
+                  {errors.GenderID && (
+                    <span style={customStyles.errorMsg}>
+                      {" "}
+                      Please Enter Gender
+                    </span>
+                  )}
+                </div>
+              }
+            </div>
+            <div className="col-lg-3">
+              <p>
+                Marital Status<span style={customStyles.span}>*</span>
+              </p>
+              {
+                <div>
+                  <select
+                    className="form-select "
+                    {...register("MaritalStatusID", { required: true })}
+                  >
+                    <option value="">Select Marital Status</option>
+                    {MaritalStatusData.map((data, index) => {
+                      return <option value={data.id}>{data.short}</option>;
+                    })}
+                  </select>
+                  {errors.MaritalStatusID && (
+                    <span style={customStyles.errorMsg}>
+                      {" "}
+                      Please Enter Marital Status
+                    </span>
+                  )}
+                </div>
+              }
+            </div>
+            <div className="col-lg-3">
+              <p>
+                Personal Email<span style={customStyles.span}>*</span>
+              </p>
+              <div>
+                <input
+                  type="text"
+                  placeholder="Personal Email"
+                  {...register("PersonalEmail", { required: true })}
+                  className="form-control "
+                ></input>
+                {errors.PersonalEmail && (
+                  <span style={customStyles.errorMsg}>
+                    {" "}
+                    Please Enter Personal Email
+                  </span>
+                )}
+              </div>
+            </div>
+            <div className="col-lg-3">
+              <p>
+                Mother's Maiden Name<span style={customStyles.span}>*</span>
+              </p>
+              <div>
+                <input
+                  type="text"
+                  placeholder="Personal Email"
+                  {...register("MothersName", { required: true })}
+                  className="form-control "
+                ></input>
+                {errors.MothersName && (
+                  <span style={customStyles.errorMsg}>
+                    {" "}
+                    Please Enter Mother Maiden Name
+                  </span>
+                )}
+              </div>
+            </div>
+          </div>
+          <br></br>
+          <div className="row">
+            <div className="col-lg-3">
+              <p>
+                Father's Name<span style={customStyles.span}>*</span>
+              </p>
+              <div>
+                <input
+                  type="text"
+                  placeholder="Father Maiden Name"
+                  {...register("FathersName", { required: true })}
+                  className="form-control "
+                ></input>
+                {errors.FathersName && (
+                  <span style={customStyles.errorMsg}>
+                    {" "}
+                    Please Enter Father Maiden Name
+                  </span>
+                )}
+              </div>
+            </div>
+            <div className="col-lg-3">dropzone goes here</div>
+            <div className="col-lg-3"></div>
+            <div className="col-lg-3"></div>
+          </div>
+        </div>
+
+        <div className="card mt-4 shadow-lg border-0">
+        <p>Ethnicity Information</p>
+        <hr />
+          <div className="row">
+            <div className="col-lg-3">
+            <p>Religion<span style={customStyles.span}>*</span></p>
+                                            <div>
+                                                <select className='form-select ' {...register("ReligionID", { required: true })}>
+                                                    <option value="">Select Religion</option>
+                                                    {
+                                                        ReligionMasterData.map((data, index) => {
+                                                            return (
+                                                                <option value={data.id}>{data.short}</option>
+                                                            )
+                                                        })
+                                                    }
+                                                </select>
+                                                {errors.ReligionID && <span style={customStyles.errorMsg}> Please Enter Religion</span>}
+                                            </div>
+                                        </div>
+            <div className="col-lg-3">
+            <p>Citizenship<span style={customStyles.span}>*</span></p>
+                                        {
+                                            <div>
+                                                <select className='form-select ' {...register("CitizenshipID", { required: true })} style={customStyles.inputLabel}>
+                                                    <option value="">Select Citizenship</option>
+                                                    {
+                                                        CitizenshipMasterData.map((data, index) => {
+                                                            return (
+                                                                <option value={data.id}>{data.short}</option>
+                                                            )
+                                                        })
+                                                    }
+                                                </select>
+                                                {errors.CitizenshipID && <span style={customStyles.errorMsg}> Please Enter Citizen Ship</span>}
+                                            </div>
+                                        }
+            </div>
+            <div className="col-lg-3">
+            <p>Nationality <span style={customStyles.span}>*</span></p>
+                                            {<div>
+                                                <select className='form-select ' {...register("NationalityID", { required: true })} >
+                                                    <option value="">Select Nationality</option>
+                                                    {
+                                                        NationalityMasterData.map((data, index) => {
+                                                            return (
+                                                                <option value={data.id}>{data.short}</option>
+                                                            )
+                                                        })
+                                                    }
+                                                </select>
+                                                {errors.NationalityID && <span style={customStyles.errorMsg}> Please Enter Nationality</span>}
+                                            </div>}
+            </div>
+            <div className="col-lg-3">
+            <p>Language Spoken<span style={customStyles.span}>*</span></p>
+                                            {<div>
+                                                <select className='form-select ' {...register("LanguageSpokenID", { required: true })} >
+                                                    <option value="">Select Language Spoken</option>
+                                                    {
+                                                        LanguageSpokenMasterData.map((data, index) => {
+                                                            return (
+                                                                <option value={data.id}>{data.short}</option>
+                                                            )
+                                                        })
+                                                    }
+                                                </select>
+                                                {errors.LanguageSpokenID && <span style={customStyles.errorMsg}> Please Enter Spoken Language</span>}
+                                            </div>}</div>  
+          </div>
+        </div>
+
+        <div className="card mt-4 shadow-lg border-0">
+        <p>Health Information</p>
+            <div className="row">
+                <div className="col-lg-3">
+                <p>Blood Type<span style={customStyles.span}>*</span></p>
+                                            {<div>
+                                                <select className='form-select' {...register("BloodTypeID", { required: true })} >
+                                                    <option value="">Select Blood Type</option>
+                                                    {
+                                                        BloodTypeMasterData.map((data, index) => {
+                                                            return (
+                                                                <option value={data.id}>{data.short}</option>
+                                                            )
+                                                        })
+                                                    }
+                                                </select>
+                                                {errors.BloodTypeID && <span style={customStyles.errorMsg}> Please Enter Blood Group</span>}
+                                            </div>}
+                </div>
+                <div className="col-lg-3">
+                <p>Is PWD<span style={customStyles.span}>*</span></p>
+                                            {<div>
+                                                <input type="radio" value="1" name="IsPWD" {...register("IsPWD", { required: true })} /> Yes
+                                                <input type="radio" value="0" name="IsPWD" {...register("IsPWD", { required: true })} />  No
+                                                {errors.IsPWD && <span style={customStyles.errorMsg}> Please Enter Blood Group</span>}
+                                            </div>}
+                </div>
+                <div className="col-lg-3"></div>
+                <div className="col-lg-3"></div>
+            
+            </div>
+        </div>
+
+        <div className="card mt-4 shadow-lg border-0">
+        <p>BMS Details</p>
+        <hr/>
+          <div className="row">
+            <div className="col-lg-3">
+            <p>Original BMS<span style={customStyles.span}>*</span></p>
+                                        <div>
+                                            <input type='text' placeholder='Original BMS *'
+                                                {...register("OriginalBMS", { required: true })} className='form-control' ></input>
+                                            {errors.OriginalBMS && <span style={customStyles.errorMsg}> Please Enter Original BMS *</span>}
+                                        </div>
+            </div>
+            <div className="col-lg-3">
+            <p>Effectivity date of Original BMS<span style={customStyles.span}>*</span></p>
+                                        <div>
+                                            <input type='date' placeholder='Previous Effectivity BMSDate'
+                                                {...register("EffectivityDateOfOriginalBMS", { required: true })} className='form-control' ></input>
+                                            {errors.EffectivityDateOfOriginalBMS && <span style={customStyles.errorMsg}> Please Enter Effectivity date of Original BMS</span>}
+                                        </div>
+            </div>
+            <div className="col-lg-3">
+            <p>Previous BMS<span style={customStyles.span}>*</span></p>
+                                        <div>
+                                            <input type='text' placeholder='Previous BMS'
+                                                {...register("PreviousBMS", { required: true })} className='form-control' ></input>
+                                            {errors.PreviousBMS && <span style={customStyles.errorMsg}> Please Enter Previous BMS</span>}
+                                        </div>
+            </div>
+            <div className="col-lg-3">
+            <p>Effectivity date of Original BMS<span style={customStyles.span}>*</span></p>
+                                        <div>
+                                            <input type='date' placeholder='EffectivityOfPreviousBMS'
+                                                {...register("EffectivityOfPreviousBMS", { required: true })} className='form-control inputwidth' ></input>
+                                            {errors.EffectivityOfPreviousBMS && <span style={customStyles.errorMsg}> Please Enter Effectivity date of Original BMS</span>}
+                                        </div>
+            </div>
+
+          </div>
+          <br></br>
+          <div className="row">
+          <div className="d-flex">
+              <button className="btn btn-primary" id="AddButton">
+                Submit
+              </button>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+  );
+}
+
+export default EmployeeProfile;
