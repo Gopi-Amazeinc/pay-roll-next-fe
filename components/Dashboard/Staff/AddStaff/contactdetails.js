@@ -163,10 +163,11 @@ function ContactDetails() {
                     </div>
                 </div>
                 <div className='row'>
-                    <div className='col-lg-6'></div>
-                    <div className='col-lg-2'>
-                        <button className='btn btn-primary' id='AddButton'>SUBMIT</button>
+                    <div className='col-lg-4'></div>
+                    <div className='col-lg-4 text-center'>
+                        <button className='submit-button'>SUBMIT</button>
                     </div>
+                    <div className='col-lg-4'></div>
                 </div>
 
             </div>
