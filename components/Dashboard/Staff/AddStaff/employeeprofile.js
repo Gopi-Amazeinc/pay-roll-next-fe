@@ -105,7 +105,7 @@ function EmployeeProfile() {
       };
       let res = await apiService.commonPostCall( "Employee/InsertStaff", Enity);
       if (res.data && res.status == 200) {
-            Swal.fire("Added successfully!!")
+        Swal.fire("Added successfully!!");
       }
 
       console.log(res);
@@ -191,531 +191,519 @@ function EmployeeProfile() {
   return (
     <div>
       <div className="container">
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="card mt-4 shadow-lg border-0">
-          <div className="row">
-            <p>My Information</p>
-            <hr></hr>
-            <div className="col-lg-3">
-              <p>
-                Title<span style={customStyles.span}>*</span>
-              </p>
-              {
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <div className="card mt-4 shadow-lg border-0">
+            <div className="row">
+              <p>My Information</p>
+              <hr></hr>
+              <div className="col-lg-3">
+                <p>
+                  Title<span style={customStyles.span}>*</span>
+                </p>
+                {
+                  <div>
+                    <select
+                      className="form-select"
+                      {...register("Title", { required: true })}
+                    >
+                      <option value="">Select Title</option>
+                      {TitleMasterData.map((data, index) => {
+                        return <option  key={data.id} value={data.id}>{data.short}</option>;
+                      })}
+                    </select>
+                    {errors.Title && (
+                      <span style={customStyles.errorMsg}>
+                        Please Enter Title
+                      </span>
+                    )}
+                  </div>
+                }
+              </div>
+              <div className="col-lg-3">
+                <p>
+                  First Name<span style={customStyles.span}>*</span>
+                </p>
                 <div>
-                  <select
-                    className="form-select"
-                    {...register("Title", { required: true })}
-                  >
-                    <option value="">Select Title</option>
-                    {TitleMasterData.map((data, index) => {
-                      return <option value={data.id}>{data.short}</option>;
-                    })}
-                  </select>
-                  {errors.Title && (
+                  <input
+                    type="text"
+                    placeholder="First Name"
+                    {...register("FirstName", { required: true })}
+                    className="form-control "
+                  ></input>
+                  {errors.FirstName && <span> Please Enter First Name</span>}
+                </div>
+              </div>
+              <div className="col-lg-3">
+                <p>
+                  Middle Name<span style={customStyles.span}>*</span>
+                </p>
+                <div>
+                  <input
+                    type="text"
+                    placeholder="Middle Name"
+                    {...register("MiddleName", { required: true })}
+                    className="form-control "
+                  ></input>
+                  {errors.MiddleName && <span> Please Enter Middle Name</span>}
+                </div>
+              </div>
+              <div className="col-lg-3">
+                <p>
+                  Last Name<span style={customStyles.span}>*</span>
+                </p>
+                <div>
+                  <input
+                    type="text"
+                    placeholder="Last Name"
+                    {...register("LastName", { required: true })}
+                    className="form-control "
+                  ></input>
+                  {errors.LastName && (
                     <span style={customStyles.errorMsg}>
-                      {" "}
-                      Please Enter Title
+                      Please Enter Last Name
                     </span>
                   )}
                 </div>
-              }
-            </div>
-            <div className="col-lg-3">
-              <p>
-                First Name<span style={customStyles.span}>*</span>
-              </p>
-              <div>
-                <input
-                  type="text"
-                  placeholder="First Name"
-                  {...register("FirstName", { required: true })}
-                  className="form-control "
-                ></input>
-                {errors.FirstName && <span> Please Enter First Name</span>}
               </div>
             </div>
-            <div className="col-lg-3">
-              <p>
-                Middle Name<span style={customStyles.span}>*</span>
-              </p>
-              <div>
-                <input
-                  type="text"
-                  placeholder="Middle Name"
-                  {...register("MiddleName", { required: true })}
-                  className="form-control "
-                ></input>
-                {errors.MiddleName && <span> Please Enter Middle Name</span>}
-              </div>
-            </div>
-            <div className="col-lg-3">
-              <p>
-                Last Name<span style={customStyles.span}>*</span>
-              </p>
-              <div>
-                <input
-                  type="text"
-                  placeholder="Last Name"
-                  {...register("LastName", { required: true })}
-                  className="form-control "
-                ></input>
-                {errors.LastName && (
-                  <span style={customStyles.errorMsg}>
-                    {" "}
-                    Please Enter Last Name
-                  </span>
-                )}
-              </div>
-            </div>
-          </div>
-          <br></br>
-          <div className="row">
-            <div className="col-lg-3">
-              <p>
-                Nick Name<span style={customStyles.span}>*</span>
-              </p>
-              <div>
-                <input
-                  type="text"
-                  placeholder="Nick Name"
-                  {...register("NickName", { required: true })}
-                  className="form-control "
-                ></input>
-                {errors.NickName && <span> Please Enter Nick Name</span>}
-              </div>
-            </div>
-            <div className="col-lg-3">
-              <p>
-                Date of Birth<span style={customStyles.span}>*</span>
-              </p>
-              <div>
-                <input
-                  type="date"
-                  placeholder="Date of Birth"
-                  {...register("DateOfBirth", { required: true })}
-                  className="form-control "
-                ></input>
-                {errors.DateOfBirth && (
-                  <span style={customStyles.errorMsg}>
-                    {" "}
-                    Please Enter Date of Birth
-                  </span>
-                )}
-              </div>
-            </div>
-            <div className="col-lg-3">
-              <p>
-                Place of Birth<span style={customStyles.span}>*</span>
-              </p>
-              <div>
-                <input
-                  type="text"
-                  placeholder="Place of Birth"
-                  {...register("PlaceOfBirth", { required: true })}
-                  className="form-control "
-                ></input>
-                {errors.PlaceOfBirth && (
-                  <span> Please Enter Place of Birth</span>
-                )}
-              </div>
-            </div>
-            <div className="col-lg-3">
-              <p>
-                Country of Birth<span style={customStyles.span}>*</span>
-              </p>
-              {
+            <br></br>
+            <div className="row">
+              <div className="col-lg-3">
+                <p>
+                  Nick Name<span style={customStyles.span}>*</span>
+                </p>
                 <div>
-                  <select
-                    className="form-select "
-                    {...register("Country_Of_Birth", { required: true })}
-                  >
-                    <option value="">Select Country Of Birth</option>
-                    {CountrylistData.map((data, index) => {
-                      return <option value={data.id}>{data.short}</option>;
-                    })}
-                  </select>
-                  {errors.Country_Of_Birth && (
-                    <span> Please Enter Country Of Birth</span>
-                  )}
+                  <input
+                    type="text"
+                    placeholder="Nick Name"
+                    {...register("NickName", { required: true })}
+                    className="form-control "
+                  ></input>
+                  {errors.NickName && <span> Please Enter Nick Name</span>}
                 </div>
-              }
-            </div>
-          </div>
-          <br></br>
-          <div className="row">
-            <div className="col-lg-3">
-              <p>
-                Gender<span style={customStyles.span}>*</span>
-              </p>
-              {
+              </div>
+              <div className="col-lg-3">
+                <p>
+                  Date of Birth<span style={customStyles.span}>*</span>
+                </p>
                 <div>
-                  <select
-                    className="form-select "
-                    {...register("GenderID", { required: true })}
-                  >
-                    <option value="">Select Gender</option>
-                    {GenderMasterData.map((data, index) => {
-                      return <option value={data.id}>{data.short}</option>;
-                    })}
-                  </select>
-                  {errors.GenderID && (
+                  <input
+                    type="date"
+                    placeholder="Date of Birth"
+                    {...register("DateOfBirth", { required: true })}
+                    className="form-control "
+                  ></input>
+                  {errors.DateOfBirth && (
                     <span style={customStyles.errorMsg}>
-                      {" "}
-                      Please Enter Gender
+                      Please Enter Date of Birth
                     </span>
                   )}
                 </div>
-              }
-            </div>
-            <div className="col-lg-3">
-              <p>
-                Marital Status<span style={customStyles.span}>*</span>
-              </p>
-              {
+              </div>
+              <div className="col-lg-3">
+                <p>
+                  Place of Birth<span style={customStyles.span}>*</span>
+                </p>
                 <div>
-                  <select
-                    className="form-select "
-                    {...register("MaritalStatusID", { required: true })}
-                  >
-                    <option value="">Select Marital Status</option>
-                    {MaritalStatusData.map((data, index) => {
-                      return <option value={data.id}>{data.short}</option>;
-                    })}
-                  </select>
-                  {errors.MaritalStatusID && (
+                  <input
+                    type="text"
+                    placeholder="Place of Birth"
+                    {...register("PlaceOfBirth", { required: true })}
+                    className="form-control "
+                  ></input>
+                  {errors.PlaceOfBirth && (
+                    <span> Please Enter Place of Birth</span>
+                  )}
+                </div>
+              </div>
+              <div className="col-lg-3">
+                <p>
+                  Country of Birth<span style={customStyles.span}>*</span>
+                </p>
+                {
+                  <div>
+                    <select
+                      className="form-select "
+                      {...register("Country_Of_Birth", { required: true })}
+                    >
+                      <option value="">Select Country Of Birth</option>
+                      {CountrylistData.map((data, index) => {
+                        return <option  key={data.id} value={data.id}>{data.short}</option>;
+                      })}
+                    </select>
+                    {errors.Country_Of_Birth && (
+                      <span> Please Enter Country Of Birth</span>
+                    )}
+                  </div>
+                }
+              </div>
+            </div>
+            <br></br>
+            <div className="row">
+              <div className="col-lg-3">
+                <p>
+                  Gender<span style={customStyles.span}>*</span>
+                </p>
+                {
+                  <div>
+                    <select
+                      className="form-select "
+                      {...register("GenderID", { required: true })}
+                    >
+                      <option value="">Select Gender</option>
+                      {GenderMasterData.map((data, index) => {
+                        return <option  key={data.id} value={data.id}>{data.short}</option>;
+                      })}
+                    </select>
+                    {errors.GenderID && (
+                      <span style={customStyles.errorMsg}>
+                        Please Enter Gender
+                      </span>
+                    )}
+                  </div>
+                }
+              </div>
+              <div className="col-lg-3">
+                <p>
+                  Marital Status<span style={customStyles.span}>*</span>
+                </p>
+                {
+                  <div>
+                    <select
+                      className="form-select "
+                      {...register("MaritalStatusID", { required: true })}
+                    >
+                      <option value="">Select Marital Status</option>
+                      {MaritalStatusData.map((data, index) => {
+                        return <option   key={data.id} value={data.id}>{data.short}</option>;
+                      })}
+                    </select>
+                    {errors.MaritalStatusID && (
+                      <span style={customStyles.errorMsg}>
+                        Please Enter Marital Status
+                      </span>
+                    )}
+                  </div>
+                }
+              </div>
+              <div className="col-lg-3">
+                <p>
+                  Personal Email<span style={customStyles.span}>*</span>
+                </p>
+                <div>
+                  <input
+                    type="text"
+                    placeholder="Personal Email"
+                    {...register("PersonalEmail", { required: true })}
+                    className="form-control "
+                  ></input>
+                  {errors.PersonalEmail && (
                     <span style={customStyles.errorMsg}>
-                      {" "}
-                      Please Enter Marital Status
+                      Please Enter Personal Email
                     </span>
                   )}
                 </div>
-              }
-            </div>
-            <div className="col-lg-3">
-              <p>
-                Personal Email<span style={customStyles.span}>*</span>
-              </p>
-              <div>
-                <input
-                  type="text"
-                  placeholder="Personal Email"
-                  {...register("PersonalEmail", { required: true })}
-                  className="form-control "
-                ></input>
-                {errors.PersonalEmail && (
-                  <span style={customStyles.errorMsg}>
-                    {" "}
-                    Please Enter Personal Email
-                  </span>
-                )}
+              </div>
+              <div className="col-lg-3">
+                <p>
+                  Mother's Maiden Name<span style={customStyles.span}>*</span>
+                </p>
+                <div>
+                  <input
+                    type="text"
+                    placeholder="Personal Email"
+                    {...register("MothersName", { required: true })}
+                    className="form-control "
+                  ></input>
+                  {errors.MothersName && (
+                    <span style={customStyles.errorMsg}>
+                      Please Enter Mother Maiden Name
+                    </span>
+                  )}
+                </div>
               </div>
             </div>
-            <div className="col-lg-3">
-              <p>
-                Mother's Maiden Name<span style={customStyles.span}>*</span>
-              </p>
-              <div>
-                <input
-                  type="text"
-                  placeholder="Personal Email"
-                  {...register("MothersName", { required: true })}
-                  className="form-control "
-                ></input>
-                {errors.MothersName && (
-                  <span style={customStyles.errorMsg}>
-                    {" "}
-                    Please Enter Mother Maiden Name
-                  </span>
-                )}
+            <br></br>
+            <div className="row">
+              <div className="col-lg-3">
+                <p>
+                  Father's Name<span style={customStyles.span}>*</span>
+                </p>
+                <div>
+                  <input
+                    type="text"
+                    placeholder="Father Maiden Name"
+                    {...register("FathersName", { required: true })}
+                    className="form-control "
+                  ></input>
+                  {errors.FathersName && (
+                    <span style={customStyles.errorMsg}>
+                      Please Enter Father Maiden Name
+                    </span>
+                  )}
+                </div>
               </div>
+              <div className="col-lg-3">dropzone goes here</div>
+              <div className="col-lg-3"></div>
+              <div className="col-lg-3"></div>
             </div>
           </div>
-          <br></br>
-          <div className="row">
-            <div className="col-lg-3">
-              <p>
-                Father's Name<span style={customStyles.span}>*</span>
-              </p>
-              <div>
-                <input
-                  type="text"
-                  placeholder="Father Maiden Name"
-                  {...register("FathersName", { required: true })}
-                  className="form-control "
-                ></input>
-                {errors.FathersName && (
-                  <span style={customStyles.errorMsg}>
-                    {" "}
-                    Please Enter Father Maiden Name
-                  </span>
-                )}
-              </div>
-            </div>
-            <div className="col-lg-3">dropzone goes here</div>
-            <div className="col-lg-3"></div>
-            <div className="col-lg-3"></div>
-          </div>
-        </div>
 
-        <div className="card mt-4 shadow-lg border-0">
-          <p>Ethnicity Information</p>
-          <hr />
-          <div className="row">
-            <div className="col-lg-3">
-              <p>
-                Religion<span style={customStyles.span}>*</span>
-              </p>
-              <div>
-                <select
-                  className="form-select "
-                  {...register("ReligionID", { required: true })}
+          <div className="card mt-4 shadow-lg border-0">
+            <p>Ethnicity Information</p>
+            <hr />
+            <div className="row">
+              <div className="col-lg-3">
+                <p>
+                  Religion<span style={customStyles.span}>*</span>
+                </p>
+                <div>
+                  <select
+                    className="form-select "
+                    {...register("ReligionID", { required: true })}
+                  >
+                    <option value="">Select Religion</option>
+                    {ReligionMasterData.map((data, index) => {
+                      return <option   key={data.id} value={data.id}>{data.short}</option>;
+                    })}
+                  </select>
+                  {errors.ReligionID && (
+                    <span style={customStyles.errorMsg}>
+                      Please Enter Religion
+                    </span>
+                  )}
+                </div>
+              </div>
+              <div className="col-lg-3">
+                <p>
+                  Citizenship<span style={customStyles.span}>*</span>
+                </p>
+                {
+                  <div>
+                    <select
+                      className="form-select "
+                      {...register("CitizenshipID", { required: true })}
+                      style={customStyles.inputLabel}
+                    >
+                      <option value="">Select Citizenship</option>
+                      {CitizenshipMasterData.map((data, index) => {
+                        return <option  key={data.id} value={data.id}>{data.short}</option>;
+                      })}
+                    </select>
+                    {errors.CitizenshipID && (
+                      <span style={customStyles.errorMsg}>
+                        Please Enter Citizen Ship
+                      </span>
+                    )}
+                  </div>
+                }
+              </div>
+              <div className="col-lg-3">
+                <p>
+                  Nationality <span style={customStyles.span}>*</span>
+                </p>
+                {
+                  <div>
+                    <select
+                      className="form-select "
+                      {...register("NationalityID", { required: true })}
+                    >
+                      <option value="">Select Nationality</option>
+                      {NationalityMasterData.map((data, index) => {
+                        return <option key={data.id}  value={data.id}>{data.short}</option>;
+                      })}
+                    </select>
+                    {errors.NationalityID && (
+                      <span style={customStyles.errorMsg}>
+                        Please Enter Nationality
+                      </span>
+                    )}
+                  </div>
+                }
+              </div>
+              <div className="col-lg-3">
+                <p>
+                  Language Spoken<span style={customStyles.span}>*</span>
+                </p>
+                {
+                  <div>
+                    <select
+                      className="form-select "
+                      {...register("LanguageSpokenID", { required: true })}
+                    >
+                      <option value="">Select Language Spoken</option>
+                      {LanguageSpokenMasterData.map((data, index) => {
+                        return <option  key={data.id} value={data.id}>{data.short}</option>;
+                      })}
+                    </select>
+                    {errors.LanguageSpokenID && (
+                      <span style={customStyles.errorMsg}>
+                        Please Enter Spoken Language
+                      </span>
+                    )}
+                  </div>
+                }
+              </div>
+            </div>
+          </div>
+
+          <div className="card mt-4 shadow-lg border-0">
+            <p>Health Information</p>
+            <div className="row">
+              <div className="col-lg-3">
+                <p>
+                  Blood Type<span style={customStyles.span}>*</span>
+                </p>
+                {
+                  <div>
+                    <select
+                      className="form-select"
+                      {...register("BloodTypeID", { required: true })}
+                    >
+                      <option value="">Select Blood Type</option>
+                      {BloodTypeMasterData.map((data, index) => {
+                        return <option  key={data.id} value={data.id}>{data.short}</option>;
+                      })}
+                    </select>
+                    {errors.BloodTypeID && (
+                      <span style={customStyles.errorMsg}>
+                        Please Enter Blood Group
+                      </span>
+                    )}
+                  </div>
+                }
+              </div>
+              <div className="col-lg-3">
+                <p>
+                  Is PWD<span style={customStyles.span}>*</span>
+                </p>
+                {
+                  <div>
+                    <input
+                      type="radio"
+                      value="true"
+                      name="IsPWD"
+                      {...register("IsPWD", { required: true })}
+                    />
+                    Yes
+                    <input
+                      type="radio"
+                      value="false"
+                      name="IsPWD"
+                      {...register("IsPWD", { required: true })}
+                    />
+                    No
+                    {errors.IsPWD && (
+                      <span style={customStyles.errorMsg}>
+                        Please Enter Blood Group
+                      </span>
+                    )}
+                  </div>
+                }
+              </div>
+              <div className="col-lg-3"></div>
+              <div className="col-lg-3"></div>
+            </div>
+          </div>
+
+          <div className="card mt-4 shadow-lg border-0">
+            <p>BMS Details</p>
+            <hr />
+            <div className="row">
+              <div className="col-lg-3">
+                <p>
+                  Original BMS<span style={customStyles.span}>*</span>
+                </p>
+                <div>
+                  <input
+                    type="text"
+                    placeholder="Original BMS *"
+                    {...register("OriginalBMS", { required: true })}
+                    className="form-control"
+                  ></input>
+                  {errors.OriginalBMS && (
+                    <span style={customStyles.errorMsg}>
+                      Please Enter Original BMS *
+                    </span>
+                  )}
+                </div>
+              </div>
+              <div className="col-lg-3">
+                <p>
+                  Effectivity date of Original BMS
+                  <span style={customStyles.span}>*</span>
+                </p>
+                <div>
+                  <input
+                    type="date"
+                    placeholder="Previous Effectivity BMSDate"
+                    {...register("EffectivityDateOfOriginalBMS", {
+                      required: true,
+                    })}
+                    className="form-control"
+                  ></input>
+                  {errors.EffectivityDateOfOriginalBMS && (
+                    <span style={customStyles.errorMsg}>
+                      Please Enter Effectivity date of Original BMS
+                    </span>
+                  )}
+                </div>
+              </div>
+              <div className="col-lg-3">
+                <p>
+                  Previous BMS<span style={customStyles.span}>*</span>
+                </p>
+                <div>
+                  <input
+                    type="text"
+                    placeholder="Previous BMS"
+                    {...register("PreviousBMS", { required: true })}
+                    className="form-control"
+                  ></input>
+                  {errors.PreviousBMS && (
+                    <span style={customStyles.errorMsg}>
+                      Please Enter Previous BMS
+                    </span>
+                  )}
+                </div>
+              </div>
+              <div className="col-lg-3">
+                <p>
+                  Effectivity date of Original BMS
+                  <span style={customStyles.span}>*</span>
+                </p>
+                <div>
+                  <input
+                    type="date"
+                    placeholder="EffectivityOfPreviousBMS"
+                    {...register("EffectivityOfPreviousBMS", {
+                      required: true,
+                    })}
+                    className="form-control inputwidth"
+                  ></input>
+                  {errors.EffectivityOfPreviousBMS && (
+                    <span style={customStyles.errorMsg}>
+                      Please Enter Effectivity date of Original BMS
+                    </span>
+                  )}
+                </div>
+              </div>
+            </div>
+            <br></br>
+            <div className="row">
+              <div className="d-flex">
+                <button
+                  className="btn btn-primary"
+                  type="submit"
+                  id="AddButton"
                 >
-                  <option value="">Select Religion</option>
-                  {ReligionMasterData.map((data, index) => {
-                    return <option value={data.id}>{data.short}</option>;
-                  })}
-                </select>
-                {errors.ReligionID && (
-                  <span style={customStyles.errorMsg}>
-                    {" "}
-                    Please Enter Religion
-                  </span>
-                )}
-              </div>
-            </div>
-            <div className="col-lg-3">
-              <p>
-                Citizenship<span style={customStyles.span}>*</span>
-              </p>
-              {
-                <div>
-                  <select
-                    className="form-select "
-                    {...register("CitizenshipID", { required: true })}
-                    style={customStyles.inputLabel}
-                  >
-                    <option value="">Select Citizenship</option>
-                    {CitizenshipMasterData.map((data, index) => {
-                      return <option value={data.id}>{data.short}</option>;
-                    })}
-                  </select>
-                  {errors.CitizenshipID && (
-                    <span style={customStyles.errorMsg}>
-                      {" "}
-                      Please Enter Citizen Ship
-                    </span>
-                  )}
-                </div>
-              }
-            </div>
-            <div className="col-lg-3">
-              <p>
-                Nationality <span style={customStyles.span}>*</span>
-              </p>
-              {
-                <div>
-                  <select
-                    className="form-select "
-                    {...register("NationalityID", { required: true })}
-                  >
-                    <option value="">Select Nationality</option>
-                    {NationalityMasterData.map((data, index) => {
-                      return <option value={data.id}>{data.short}</option>;
-                    })}
-                  </select>
-                  {errors.NationalityID && (
-                    <span style={customStyles.errorMsg}>
-                      {" "}
-                      Please Enter Nationality
-                    </span>
-                  )}
-                </div>
-              }
-            </div>
-            <div className="col-lg-3">
-              <p>
-                Language Spoken<span style={customStyles.span}>*</span>
-              </p>
-              {
-                <div>
-                  <select
-                    className="form-select "
-                    {...register("LanguageSpokenID", { required: true })}
-                  >
-                    <option value="">Select Language Spoken</option>
-                    {LanguageSpokenMasterData.map((data, index) => {
-                      return <option value={data.id}>{data.short}</option>;
-                    })}
-                  </select>
-                  {errors.LanguageSpokenID && (
-                    <span style={customStyles.errorMsg}>
-                      {" "}
-                      Please Enter Spoken Language
-                    </span>
-                  )}
-                </div>
-              }
-            </div>
-          </div>
-        </div>
-
-        <div className="card mt-4 shadow-lg border-0">
-          <p>Health Information</p>
-          <div className="row">
-            <div className="col-lg-3">
-              <p>
-                Blood Type<span style={customStyles.span}>*</span>
-              </p>
-              {
-                <div>
-                  <select
-                    className="form-select"
-                    {...register("BloodTypeID", { required: true })}
-                  >
-                    <option value="">Select Blood Type</option>
-                    {BloodTypeMasterData.map((data, index) => {
-                      return <option value={data.id}>{data.short}</option>;
-                    })}
-                  </select>
-                  {errors.BloodTypeID && (
-                    <span style={customStyles.errorMsg}>
-                      {" "}
-                      Please Enter Blood Group
-                    </span>
-                  )}
-                </div>
-              }
-            </div>
-            <div className="col-lg-3">
-              <p>
-                Is PWD<span style={customStyles.span}>*</span>
-              </p>
-              {
-                <div>
-                  <input
-                    type="radio"
-                    value='true'
-                    name="IsPWD"
-                    {...register("IsPWD", { required: true })}
-                  />
-                  Yes
-                  <input
-                    type="radio"
-                    value='false'
-                    name="IsPWD"
-                    {...register("IsPWD", { required: true })}
-                  />
-                  No
-                  {errors.IsPWD && (
-                    <span style={customStyles.errorMsg}>
-                      Please Enter Blood Group
-                    </span>
-                  )}
-                </div>
-              }
-            </div>
-            <div className="col-lg-3"></div>
-            <div className="col-lg-3"></div>
-          </div>
-        </div>
-
-        <div className="card mt-4 shadow-lg border-0">
-          <p>BMS Details</p>
-          <hr />
-          <div className="row">
-            <div className="col-lg-3">
-              <p>
-                Original BMS<span style={customStyles.span}>*</span>
-              </p>
-              <div>
-                <input
-                  type="text"
-                  placeholder="Original BMS *"
-                  {...register("OriginalBMS", { required: true })}
-                  className="form-control"
-                ></input>
-                {errors.OriginalBMS && (
-                  <span style={customStyles.errorMsg}>
-                    {" "}
-                    Please Enter Original BMS *
-                  </span>
-                )}
-              </div>
-            </div>
-            <div className="col-lg-3">
-              <p>
-                Effectivity date of Original BMS
-                <span style={customStyles.span}>*</span>
-              </p>
-              <div>
-                <input
-                  type="date"
-                  placeholder="Previous Effectivity BMSDate"
-                  {...register("EffectivityDateOfOriginalBMS", {
-                    required: true,
-                  })}
-                  className="form-control"
-                ></input>
-                {errors.EffectivityDateOfOriginalBMS && (
-                  <span style={customStyles.errorMsg}>
-                    {" "}
-                    Please Enter Effectivity date of Original BMS
-                  </span>
-                )}
-              </div>
-            </div>
-            <div className="col-lg-3">
-              <p>
-                Previous BMS<span style={customStyles.span}>*</span>
-              </p>
-              <div>
-                <input
-                  type="text"
-                  placeholder="Previous BMS"
-                  {...register("PreviousBMS", { required: true })}
-                  className="form-control"
-                ></input>
-                {errors.PreviousBMS && (
-                  <span style={customStyles.errorMsg}>
-                    {" "}
-                    Please Enter Previous BMS
-                  </span>
-                )}
-              </div>
-            </div>
-            <div className="col-lg-3">
-              <p>
-                Effectivity date of Original BMS
-                <span style={customStyles.span}>*</span>
-              </p>
-              <div>
-                <input
-                  type="date"
-                  placeholder="EffectivityOfPreviousBMS"
-                  {...register("EffectivityOfPreviousBMS", { required: true })}
-                  className="form-control inputwidth"
-                ></input>
-                {errors.EffectivityOfPreviousBMS && (
-                  <span style={customStyles.errorMsg}>
-                    {" "}
-                    Please Enter Effectivity date of Original BMS
-                  </span>
-                )}
+                  Submit
+                </button>
               </div>
             </div>
           </div>
-          <br></br>
-          <div className="row">
-            <div className="d-flex">
-              <button className="btn btn-primary" type="submit" id="AddButton">
-                Submit
-              </button>
-            </div>
-          </div>
-        </div>
         </form>
       </div>
-    
     </div>
   );
 }
