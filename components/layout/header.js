@@ -54,7 +54,7 @@ const Header = ({ makelogout }) => {
     .toUpperCase();
 
   return (
-    <div className="header">
+    <div className='header'>
       <div className="row" style={{ background: "#3247d5" }}>
         <div className="col-lg-2 mt-1">
           <Image
@@ -87,10 +87,10 @@ const Header = ({ makelogout }) => {
               width={36}
               height={30}
             />
-         <span className={HeaderStyles.initial} style={{ borderRadius: '50%', display: 'inline-block', height: '25px', width: '25px', textAlign: 'center', lineHeight: '25px' }}>{initial}</span>
+         <span className={HeaderStyles.initial}>{initial}</span>
 
           </div>
-          <div className={HeaderStyles.dropdown} style={{ float: "left" }}>
+          <div className={HeaderStyles.dropdown} >
             <p className={HeaderStyles.logout}>
               Hi {userName}! <FaCaretDown style={{ cursor: "pointer" }} />
             </p>
