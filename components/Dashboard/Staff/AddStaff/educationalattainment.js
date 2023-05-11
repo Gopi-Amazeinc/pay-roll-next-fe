@@ -11,18 +11,19 @@ function EducationalAttainment() {
     return (
         <div className='container'>
             <div className='card rounded-3 shadow-lg border-0 mt-3'>
-                <div className='row mt-3 p-3'>
+                <div className='row'>
                     <div className='col-lg-12'>
                         <p>Educational Attainment</p>
                     </div>
                     <hr color='black' />
                 </div>
 
-                <div className='row p-4'>
+                <div className='row'>
                     <div className='col-lg-2'>
                         <div className='mb-3'>
                             <span> Education Type <i className='text-danger'>*</i> </span><p></p>
                             <select className=" form-select" >
+                                <option>Select Education</option>
                                 <option value="1">One</option>
                             </select>
                         </div>
@@ -32,6 +33,7 @@ function EducationalAttainment() {
                         <div className='mb-3'>
                             <span> Course <i className='text-danger'>*</i> </span><p></p>
                             <select className=" form-select" >
+                            <option>Select Course</option>
                                 <option value="1">One</option>
                             </select>
                         </div>
@@ -41,6 +43,7 @@ function EducationalAttainment() {
                         <div className='mb-3'>
                             <span>Major <i className='text-danger'>*</i></span><p></p>
                             <select className=" form-select" >
+                                <option>Select Major</option>
                                 <option value="1">One</option>
                             </select>
                         </div>
@@ -64,18 +67,19 @@ function EducationalAttainment() {
                         <div className='mb-3'>
                             <span>Country </span><p></p>
                             <select className=" form-select" >
+                                <option>Select Country</option>
                                 <option value="1">One</option>
                             </select>
                         </div>
                     </div>
 
-                    <div className='col-lg-2'>
+                    <div className='col-lg-3'>
                         <div className='mb-3'>
                             <span>Start Date</span><p></p>
                             <input type="date" className="form-control" />
                         </div>
                     </div>
-                    <div className='col-lg-2'>
+                    <div className='col-lg-3'>
                         <div className='mb-3'>
                             <span>End Date</span><p></p>
                             <input type="date" className="form-control" />
@@ -95,9 +99,10 @@ function EducationalAttainment() {
                     </div>
                 </div>
                 <div className='row'>
+                    <div className='col-lg-1'></div>
                     <div className='col-lg-4'></div>
                     <div className='mt-3 mb-3 col-lg-3'>
-                        <button className='btn btn-primary' id='AddButton'>Submit</button>
+                        <button className='submit-button'>Submit</button>
                     </div>
                     <div className='col-lg-5'></div>
                 </div>
