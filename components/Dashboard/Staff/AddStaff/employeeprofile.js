@@ -324,7 +324,7 @@ function EmployeeProfile() {
     }
 
 
-    const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
+    // const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
     return (
         // <div>
         //     <div className='container'>
