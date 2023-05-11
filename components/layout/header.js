@@ -101,7 +101,7 @@ const Header = ({ makelogout }) => {
                 </h6>
               </Link>
               <h6 style={{ whiteSpace: "nowrap" }}>
-                <AiOutlineSetting size={"22px"} /> &nbsp; &nbsp; Account Setting
+              <Link href='/SharedComponent/MyAccountSetting' className={HeaderStyles.accountsetting} >  <AiOutlineSetting size={"22px"} /> &nbsp; &nbsp; Account Setting </Link>
               </h6>
               <h6 onClick={makelogout} style={{ color: "red" }}>
                 <FiLogOut size={"22px"} /> &nbsp; &nbsp; Logout
