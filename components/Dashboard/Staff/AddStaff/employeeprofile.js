@@ -7,7 +7,318 @@ function EmployeeProfile() {
     
 
 
-    // const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
+    useEffect(() => {
+        debugger
+        getData();
+    }, [1]);
+    const getData = async () => {
+        let GetTitleMaster = await axios.get(hostURL + "Master/GetTitleMaster");
+        setTitleMaster(GetTitleMaster.data);
+        let GetCountryType = await axios.get(hostURL + "Master/GetCountryType");
+        setCountrylistData(GetCountryType.data);
+    }
+
+    async function getLanguagelist() {
+        debugger
+        let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+        let res = await axios.get(hostURL + "Master/GetLanguageMaster");
+        setLanguagelistData(res.data);
+    }
+
+    const customStyles = {
+        content: {
+            width: '85%',
+            top: '50%',
+            left: '50%',
+            right: 'auto',
+            bottom: 'auto',
+            transform: 'translate(-50%, -50%)',
+            height: "70%"
+        },
+        errorMsg: {
+            fontSize: '12px',
+            fontWeight: '500',
+            color: 'red'
+        },
+    };
+
+    const customPopupDivision = {
+        popupcontent: {
+            display: 'flex',
+            flexWrap: 'wrap',
+            justifyContent: 'space-between',
+            alignItems: 'center',
+            width: '100%'
+        },
+        popupinputs: {
+            width: '24%',
+            marginTop: '16px'
+        },
+        formcontrol: {
+            width: '350px !important'
+        },
+
+        cardinputs: {
+            display: 'flex',
+            flexDirection: 'column',
+            margin: '5px',
+            width: '215px',
+            justifyContent: 'center'
+        }
+
+    }
+
+    async function onSubmit(data) {
+        debugger
+        console.log(data)
+        let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+
+        if (actionType == "insert") {
+            let Enity = {
+                BuildingID: 56,
+                Name: this.Name,
+                // PhoneNo: this.MobilePersonal,
+                PhoneNo: '9876543210',
+                // 'EmailID': ((this.Personal_Email).replaceAll(' ', '')),
+                EmailID: this.Personal_Email,
+                TypeID: 6,
+                // 'Type': Number(this.RoleType),
+                Address: this.Address,
+                Attachment: this.attachments3url[0],   // marriage certificate column
+                doj: this.JoiningDate,
+                Salary: 1000,
+
+                LeavesPerMonth: this.LeavesPerMonth,
+                WorkTimings: this.WorkTimings,
+                ContactNumber: this.ContactNumber,
+                // 'Supervisor': 20459,
+                Supervisor: this.Supervisor,
+                EmployeeID: this.EmployeeCode,
+                ResignationDate: this.JoiningDate,
+                ChaildTotal: 10,
+                MedicalLeaveEntitlement: 10,
+                MaternitityLeaveEntitlement: 105,
+                PaternitityLeaveEntitlement: 7,
+                CompassionateLeaveEntitlement: 10,
+                Leavesfrompreviousyear: 10,
+                ExtendedChildcareLeaveEntitlement: 10,
+                MarriageLeaveEntitlement: 10,
+                Title: this.Title,
+                Middle_Name: this.Middle_Name,
+                Last_Name: this.Last_Name,
+                PlaceO_f_Birth: this.PlaceO_f_Birth,
+                Country_Of_Birth: this.Country_Of_Birth,
+                Age: this.Age,
+                Gender: this.Gender == 'Male' ? 'Male' : 'Female',
+                Status: this.Status,
+                // 'Date_Of_Marriage' : (String(this.Date_Of_Marriage ) == "" ? "Null" + "," : "'" + String(this.Date_Of_Marriage) + "',"),
+
+                Date_Of_Marriage:
+                    this.Date_Of_Marriage == ' '
+                        ? '1990-01-01 00:00:00.000'
+                        : this.Date_Of_Marriage,
+                // 'Date_Of_Marriage': this.Date_Of_Marriage,
+                Religion: this.Religion == undefined ? null : this.Religion,
+                Citizen_Ship: this.Citizen_Ship == undefined ? null : this.Citizen_Ship,
+                Ethnicity: this.Ethnicity == undefined ? null : this.Ethnicity,
+                Nationality: this.Nationality,
+                Is_Disabled: this.Is_Disabled == 'yes' ? true : false,
+                Blood_Group: this.Blood_Group,
+                Height: this.Height == null ? 0 : this.Height,
+                Weight: this.Weight == null ? 0 : this.Weight,
+                MajorIllness: this.MajorIllness,
+                IS_Night_Blind: this.IS_Night_Blind == null ? 0 : this.IS_Night_Blind,
+                Is_Color_Blind: this.Is_Color_Blind == null ? 0 : this.Is_Color_Blind,
+                DOB: this.DOB,
+                Signature: this.attachments2url[0],
+                Paygroup: this.Paygroup,
+                PagiBig_ID: this.PagiBig_ID,
+                PagiBigAccountNo: this.PagiBigAccountNo,
+                PagibigMembership: this.PagibigMembership,
+                PagibigRemarks: this.PagibigRemarks,
+                EMPLOYEE_TIN: this.EMPLOYEE_TIN,
+                PHILHEALTH_NO: this.PHILHEALTH_NO,
+                SSSNO: this.SSSNO,
+
+                department: this.Department == null || this.Department == undefined || this.Department == "" || this.Department == " " || this.Department == "0" ? 0 : this.Department,
+                Level: this.level == null || this.level == "" ? 0 : this.level,
+                ParentCompany: this.ParentCompany,
+                AssignedCompany: this.AssignedCompany,
+                ShiftID: 0,
+                Restdays: this.Restdays,
+                Is_Solo_Parent:
+                    this.Is_Solo_Parent == undefined ? 0 : this.Is_Solo_Parent,
+                OrginalBms: this.OrginalBms == undefined || this.OrginalBms == "" || this.OrginalBms == 0 ? 0 : this.OrginalBms,
+                PreviousEffectivityBMSDate: this.PreviousEffectivityBMSDate == ' ' || this.PreviousEffectivityBMSDate == ""
+                    ? '1990-01-01 00:00:00.000' : this.PreviousEffectivityBMSDate,
+                PreviousBMS: this.PreviousBMS == null || this.PreviousBMS == "" ? 0 : this.PreviousBMS,
+                CurrentEffectivityBMSDate: this.CurrentEffectivityBMSDate == ' ' || this.CurrentEffectivityBMSDate == ""
+                    ? '1990-01-01 00:00:00.000' : this.CurrentEffectivityBMSDate,
+                CurrentBMS: 1000,
+                COLA: this.COLA == null || this.COLA == "" ? 0 : this.COLA,
+                IncentiveLeave: this.IncentiveLeave == null ? 0 : this.IncentiveLeave,
+                HMOInsurance: this.HMOInsurance == null ? 0 : this.HMOInsurance,
+                MeritInsurance: this.MeritInsurance == null ? 0 : this.MeritInsurance,
+                DailerLicense: this.DailerLicense == null ? 0 : this.DailerLicense,
+                Incrementals: this.Incrementals == null ? 0 : this.Incrementals,
+                TaxStatus: this.TaxStatus == null ? 0 : this.TaxStatus,
+                GCashNumber: this.GCashNumber == null ? 0 : this.GCashNumber,
+                TalentSegment: this.TalentSegment == null ? 0 : this.TalentSegment,
+                CostCentre: this.CostCenter == null || this.CostCenter == "" ? 0 : this.CostCenter,
+
+                TranspoAllowance:
+                    this.TranspoAllowance == null ? 0 : this.TranspoAllowance,
+                CommAllowance: this.CommAllowance == null ? 0 : this.CommAllowance,
+                MealAllowance: this.MealAllowance == null ? 0 : this.MealAllowance,
+                RiceAllowance: this.RiceAllowance == null ? 0 : this.RiceAllowance,
+                MedicineAllowance:
+                    this.MedicineAllowance == null ? 0 : this.MedicineAllowance,
+                MaintenanceDepreciationAllowance:
+                    this.MaintenanceDepreciationAllowance == null
+                        ? 0
+                        : this.MaintenanceDepreciationAllowance,
+                EffectivityofAllowance:
+                    this.EffectivityofAllowance == null ? 0 : this.EffectivityofAllowance,
+                MotherMaidenName: this.MotherMaidenName,
+                FatherMaidenName: this.FatherMaidenName,
+                PleaseSpecify: this.PleaseSpecify,
+                SpokenLanguage: this.SpokenLanguage == null || this.SpokenLanguage == 0 ? 0 : this.SpokenLanguage,
+                NickName: this.NickName == null ? 0 : this.NickName,
+                MarriageCertficate: this.attachments3url[0],
+                // PWDDisabilityAttachment: this.attachments21[0],
+                PWDDisabilityAttachment: this.attachments213url[0] == undefined
+                    ? this.PWDDisabilityAttachmenturl
+                    : this.attachments213url[0],
+            }
+            await axios.post(hostURL + "Master/InsertBuildingStaff", Enity);
+        }
+        else {
+            let Enity = {
+                "ID": data.ID,
+                BuildingID: 56,
+                Name: this.Name,
+                // PhoneNo: this.MobilePersonal,
+                PhoneNo: '9876543210',
+                // 'EmailID': ((this.Personal_Email).replaceAll(' ', '')),
+                EmailID: this.Personal_Email,
+                TypeID: 6,
+                // 'Type': Number(this.RoleType),
+                Address: this.Address,
+                Attachment: this.attachments3url[0],   // marriage certificate column
+                doj: this.JoiningDate,
+                Salary: 1000,
+
+                LeavesPerMonth: this.LeavesPerMonth,
+                WorkTimings: this.WorkTimings,
+                ContactNumber: this.ContactNumber,
+                // 'Supervisor': 20459,
+                Supervisor: this.Supervisor,
+                EmployeeID: this.EmployeeCode,
+                ResignationDate: this.JoiningDate,
+                ChaildTotal: 10,
+                MedicalLeaveEntitlement: 10,
+                MaternitityLeaveEntitlement: 105,
+                PaternitityLeaveEntitlement: 7,
+                CompassionateLeaveEntitlement: 10,
+                Leavesfrompreviousyear: 10,
+                ExtendedChildcareLeaveEntitlement: 10,
+                MarriageLeaveEntitlement: 10,
+                Title: this.Title,
+                Middle_Name: this.Middle_Name,
+                Last_Name: this.Last_Name,
+                PlaceO_f_Birth: this.PlaceO_f_Birth,
+                Country_Of_Birth: this.Country_Of_Birth,
+                Age: this.Age,
+                Gender: this.Gender == 'Male' ? 'Male' : 'Female',
+                Status: this.Status,
+                // 'Date_Of_Marriage' : (String(this.Date_Of_Marriage ) == "" ? "Null" + "," : "'" + String(this.Date_Of_Marriage) + "',"),
+
+                Date_Of_Marriage:
+                    this.Date_Of_Marriage == ' '
+                        ? '1990-01-01 00:00:00.000'
+                        : this.Date_Of_Marriage,
+                // 'Date_Of_Marriage': this.Date_Of_Marriage,
+                Religion: this.Religion == undefined ? null : this.Religion,
+                Citizen_Ship: this.Citizen_Ship == undefined ? null : this.Citizen_Ship,
+                Ethnicity: this.Ethnicity == undefined ? null : this.Ethnicity,
+                Nationality: this.Nationality,
+                Is_Disabled: this.Is_Disabled == 'yes' ? true : false,
+                Blood_Group: this.Blood_Group,
+                Height: this.Height == null ? 0 : this.Height,
+                Weight: this.Weight == null ? 0 : this.Weight,
+                MajorIllness: this.MajorIllness,
+                IS_Night_Blind: this.IS_Night_Blind == null ? 0 : this.IS_Night_Blind,
+                Is_Color_Blind: this.Is_Color_Blind == null ? 0 : this.Is_Color_Blind,
+                DOB: this.DOB,
+                Signature: this.attachments2url[0],
+                Paygroup: this.Paygroup,
+                PagiBig_ID: this.PagiBig_ID,
+                PagiBigAccountNo: this.PagiBigAccountNo,
+                PagibigMembership: this.PagibigMembership,
+                PagibigRemarks: this.PagibigRemarks,
+                EMPLOYEE_TIN: this.EMPLOYEE_TIN,
+                PHILHEALTH_NO: this.PHILHEALTH_NO,
+                SSSNO: this.SSSNO,
+
+                department: this.Department == null || this.Department == undefined || this.Department == "" || this.Department == " " || this.Department == "0" ? 0 : this.Department,
+                Level: this.level == null || this.level == "" ? 0 : this.level,
+                ParentCompany: this.ParentCompany,
+                AssignedCompany: this.AssignedCompany,
+                ShiftID: 0,
+                Restdays: this.Restdays,
+                Is_Solo_Parent:
+                    this.Is_Solo_Parent == undefined ? 0 : this.Is_Solo_Parent,
+                OrginalBms: this.OrginalBms == undefined || this.OrginalBms == "" || this.OrginalBms == 0 ? 0 : this.OrginalBms,
+                PreviousEffectivityBMSDate: this.PreviousEffectivityBMSDate == ' ' || this.PreviousEffectivityBMSDate == ""
+                    ? '1990-01-01 00:00:00.000' : this.PreviousEffectivityBMSDate,
+                PreviousBMS: this.PreviousBMS == null || this.PreviousBMS == "" ? 0 : this.PreviousBMS,
+                CurrentEffectivityBMSDate: this.CurrentEffectivityBMSDate == ' ' || this.CurrentEffectivityBMSDate == ""
+                    ? '1990-01-01 00:00:00.000' : this.CurrentEffectivityBMSDate,
+                CurrentBMS: 1000,
+                COLA: this.COLA == null || this.COLA == "" ? 0 : this.COLA,
+                IncentiveLeave: this.IncentiveLeave == null ? 0 : this.IncentiveLeave,
+                HMOInsurance: this.HMOInsurance == null ? 0 : this.HMOInsurance,
+                MeritInsurance: this.MeritInsurance == null ? 0 : this.MeritInsurance,
+                DailerLicense: this.DailerLicense == null ? 0 : this.DailerLicense,
+                Incrementals: this.Incrementals == null ? 0 : this.Incrementals,
+                TaxStatus: this.TaxStatus == null ? 0 : this.TaxStatus,
+                GCashNumber: this.GCashNumber == null ? 0 : this.GCashNumber,
+                TalentSegment: this.TalentSegment == null ? 0 : this.TalentSegment,
+                CostCentre: this.CostCenter == null || this.CostCenter == "" ? 0 : this.CostCenter,
+
+                TranspoAllowance:
+                    this.TranspoAllowance == null ? 0 : this.TranspoAllowance,
+                CommAllowance: this.CommAllowance == null ? 0 : this.CommAllowance,
+                MealAllowance: this.MealAllowance == null ? 0 : this.MealAllowance,
+                RiceAllowance: this.RiceAllowance == null ? 0 : this.RiceAllowance,
+                MedicineAllowance:
+                    this.MedicineAllowance == null ? 0 : this.MedicineAllowance,
+                MaintenanceDepreciationAllowance:
+                    this.MaintenanceDepreciationAllowance == null
+                        ? 0
+                        : this.MaintenanceDepreciationAllowance,
+                EffectivityofAllowance:
+                    this.EffectivityofAllowance == null ? 0 : this.EffectivityofAllowance,
+                MotherMaidenName: this.MotherMaidenName,
+                FatherMaidenName: this.FatherMaidenName,
+                PleaseSpecify: this.PleaseSpecify,
+                SpokenLanguage: this.SpokenLanguage == null || this.SpokenLanguage == 0 ? 0 : this.SpokenLanguage,
+                NickName: this.NickName == null ? 0 : this.NickName,
+                MarriageCertficate: this.attachments3url[0],
+                // PWDDisabilityAttachment: this.attachments21[0],
+                PWDDisabilityAttachment: this.attachments213url[0] == undefined
+                    ? this.PWDDisabilityAttachmenturl
+                    : this.attachments213url[0],
+            }
+            await axios.post(hostURL + "Master/UpdateBuildingStaff", Enity);
+        }
+        let res = await axios.get(hostURL + "Master/GetLeaveConfiguration");
+        setLeaveConfigurationData(res.data);
+        setIsOpen(false);
+    }
+
+
+    const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
     return (
         <div>
             <div className='container'>
