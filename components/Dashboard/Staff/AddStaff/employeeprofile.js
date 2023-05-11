@@ -2,20 +2,21 @@ import React from 'react'
 import { useEffect, useState } from 'react';
 import { useForm } from "react-hook-form";
 import { useDropzone } from 'react-dropzone'
+import axios from 'axios';
 
 function EmployeeProfile() {
-    
 
 
+    const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
     useEffect(() => {
         debugger
         getData();
     }, [1]);
     const getData = async () => {
         let GetTitleMaster = await axios.get(hostURL + "Master/GetTitleMaster");
-        setTitleMaster(GetTitleMaster.data);
+        // setTitleMaster(GetTitleMaster.data);
         let GetCountryType = await axios.get(hostURL + "Master/GetCountryType");
-        setCountrylistData(GetCountryType.data);
+        // setCountrylistData(GetCountryType.data);
     }
 
     async function getLanguagelist() {
@@ -318,7 +319,7 @@ function EmployeeProfile() {
     }
 
 
-    const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
+    // const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
     return (
         <div>
             <div className='container'>
@@ -554,7 +555,7 @@ function EmployeeProfile() {
 
             </div>
         </div>
-       
+
     )
 }
 
