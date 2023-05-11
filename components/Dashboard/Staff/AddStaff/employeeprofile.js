@@ -4,9 +4,11 @@ import { useForm } from "react-hook-form";
 import { useDropzone } from "react-dropzone";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { apiService } from "@/services/api.service";
+import { useRouter } from "next/router";
 
 function EmployeeProfile() {
-  let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+  const router = useRouter();
   const [CountrylistData, setCountrylistData] = useState([]);
   const [TitleMasterData, setTitleMaster] = useState([]);
   const [MaritalStatusData, setMaritalStatusData] = useState([]);
@@ -32,40 +34,40 @@ function EmployeeProfile() {
   }, [1]);
 
   const getData = async () => {
-    let GetTitleMaster = await axios.get(hostURL + "Master/GetTitleMaster");
+    let GetTitleMaster = await apiService.commonGetCall("Master/GetTitleMaster");
     setTitleMaster(GetTitleMaster.data);
 
-    let GetCountryType = await axios.get(hostURL + "Master/GetCountryType");
+    let GetCountryType = await apiService.commonGetCall( "Master/GetCountryType");
     setCountrylistData(GetCountryType.data);
 
-    let GetMaritalStatus = await axios.get(hostURL + "Master/GetMaritalStatus");
+    let GetMaritalStatus = await apiService.commonGetCall( "Master/GetMaritalStatus");
     setMaritalStatusData(GetMaritalStatus.data);
 
-    let GetGenderMaster = await axios.get(hostURL + "Master/GetGenderMaster");
+    let GetGenderMaster = await apiService.commonGetCall( "Master/GetGenderMaster");
     setGenderMasterData(GetGenderMaster.data);
 
-    let GetReligionMaster = await axios.get(
-      hostURL + "Master/GetReligionMaster"
+    let GetReligionMaster = await apiService.commonGetCall(
+       "Master/GetReligionMaster"
     );
     setReligionMasterData(GetReligionMaster.data);
 
-    let GetCitizenshipMaster = await axios.get(
-      hostURL + "Master/GetCitizenshipMaster"
+    let GetCitizenshipMaster = await apiService.commonGetCall(
+       "Master/GetCitizenshipMaster"
     );
     setCitizenshipMasterData(GetCitizenshipMaster.data);
 
-    let GetNationalityMaster = await axios.get(
-      hostURL + "Master/GetNationalityMaster"
+    let GetNationalityMaster = await apiService.commonGetCall(
+       "Master/GetNationalityMaster"
     );
     setNationalityMasterData(GetNationalityMaster.data);
 
-    let GetLanguageSpokenMaster = await axios.get(
-      hostURL + "Master/GetLanguageSpokenMaster"
+    let GetLanguageSpokenMaster = await apiService.commonGetCall(
+       "Master/GetLanguageSpokenMaster"
     );
     setLanguageSpokenMasterData(GetLanguageSpokenMaster.data);
 
-    let GetBloodTypeMaster = await axios.get(
-      hostURL + "Master/GetBloodTypeMaster"
+    let GetBloodTypeMaster = await apiService.commonGetCall(
+       "Master/GetBloodTypeMaster"
     );
     setBloodTypeMasterData(GetBloodTypeMaster.data);
   };
@@ -94,16 +96,14 @@ function EmployeeProfile() {
         CitizenshipID: data.CitizenshipID,
         NationalityID: data.NationalityID,
         LanguageSpokenID: data.LanguageSpokenID,
-
         BloodTypeID: data.BloodTypeID,
         IsPWD: data.IsPWD,
-
         OriginalBMS: data.OriginalBMS,
         EffectivityDateOfOriginalBMS: data.EffectivityDateOfOriginalBMS,
         PreviousBMS: data.PreviousBMS,
         EffectivityOfPreviousBMS: data.EffectivityOfPreviousBMS,
       };
-      let res = await axios.post(hostURL + "Employee/InsertStaff", Enity);
+      let res = await apiService.commonPostCall( "Employee/InsertStaff", Enity);
       if (res.data && res.status == 200) {
             Swal.fire("Added successfully!!")
       }
@@ -139,7 +139,7 @@ function EmployeeProfile() {
     //         'PreviousBMS': data.PreviousBMS,
     //         'EffectivityOfPreviousBMS': data.EffectivityOfPreviousBMS
     //     }
-    //     await axios.post(hostURL + "Master/UpdateBuildingStaff", Enity);
+    //     await axios.post( "Master/UpdateBuildingStaff", Enity);
     // }
   }
 
