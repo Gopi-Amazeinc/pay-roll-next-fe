@@ -87,7 +87,8 @@ const Header = ({ makelogout }) => {
               width={36}
               height={30}
             />
-            <span className={HeaderStyles.initial}>{initial}</span>
+         <span className={HeaderStyles.initial} style={{ borderRadius: '50%', display: 'inline-block', height: '25px', width: '25px', textAlign: 'center', lineHeight: '25px' }}>{initial}</span>
+
           </div>
           <div className={HeaderStyles.dropdown} style={{ float: "left" }}>
             <p className={HeaderStyles.logout}>
