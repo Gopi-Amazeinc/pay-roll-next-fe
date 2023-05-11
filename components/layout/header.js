@@ -74,22 +74,21 @@ const Header = ({ makelogout }) => {
         {/* <div className="col-lg-1 mt-2 text-white"> */}
         {/* <h4 onClick={makelogout}>logout </h4> */}
         {/* </div> */}
-        <div className="col-lg-4  mt-2 text-white" style={{ float: "right" }}>
-          <div className={HeaderStyles.dropdown1} >
-            <div className={HeaderStyles.dropdown} style={{ float: "left" }}>
-              <Image className={HeaderStyles.notification} src={Notification} alt="notificatons" width={36} height={30} />
-
-              <span className={HeaderStyles.initial}>{initial}</span>
-
-              <button className={HeaderStyles.logout} >  Hi {userName}! <FaCaretDown style={{ cursor: "pointer" }} /> </button>
-
-              <div className={HeaderStyles.dropdowncontent} >
-
-                <Link className={HeaderStyles.profile} href="/Staff/AddStaff"> <h6> <CgProfile size={"22px"} /> &nbsp; &nbsp; My Profile</h6> </Link>
-                <h6 style={{ whiteSpace: "nowrap" }}> <AiOutlineSetting size={"22px"} /> &nbsp; &nbsp; Account Setting</h6>
-                <h6 onClick={makelogout} style={{ color: "red" }} ><FiLogOut size={"22px"} /> &nbsp; &nbsp; Logout</h6>
-              </div>
+        <div className="col-lg-4  mt-2 text-white" >
+          <div className="notification">
+            <Image className={HeaderStyles.notification} src={Notification} alt="notificatons" width={36} height={30} />
+            <span className={HeaderStyles.initial}>{initial}</span>
+          </div>
+          <div className={HeaderStyles.dropdown} style={{ float: "left" }}>
+            {/* <Image className={HeaderStyles.notification} src={Notification} alt="notificatons" width={36} height={30} />
+            <span className={HeaderStyles.initial}>{initial}</span> */}
+            <p className={HeaderStyles.logout} >  Hi {userName}! <FaCaretDown style={{ cursor: "pointer" }} /> </p>
+            <div className={HeaderStyles.dropdowncontent} >
+              <Link className={HeaderStyles.profile} href="/Staff/AddStaff"> <h6> <CgProfile size={"22px"} /> &nbsp; &nbsp; My Profile</h6> </Link>
+              <h6 style={{ whiteSpace: "nowrap" }}> <AiOutlineSetting size={"22px"} /> &nbsp; &nbsp; Account Setting</h6>
+              <h6 onClick={makelogout} style={{ color: "red" }} ><FiLogOut size={"22px"} /> &nbsp; &nbsp; Logout</h6>
             </div>
+
           </div>
         </div>
       </div>
