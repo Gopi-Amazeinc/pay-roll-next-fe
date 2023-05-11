@@ -11,6 +11,7 @@ import { apiService } from "@/services/api.service";
 const OverTimeDetails = () => {
   const { register, handleSubmit, watch, reset, formState } = useForm();
   const [dashboardData, setDashboardData] = useState([]);
+  const { errors } = formState;
   const [modalOpen, setModalOpen] = useState(false);
   const openEditModal = () => {
     setModalOpen(true)
@@ -106,42 +107,46 @@ const OverTimeDetails = () => {
               <div className='col-lg-2'>
                 <p>Actual Start Time<span style={{ color: "red" }}>*</span></p>
               </div>
-              <div className='col-lg-2'></div>
+              {/* <div className='col-lg-2'></div> */}
               <div className='col-lg-2'>
                 <p>Actual End Time<span style={{ color: "red" }}>*</span></p>
               </div>
             </div>
             <div className='row'>
               <div className='col-lg-4'>
-                <input type='date' className='form-control' {...register('Date')}></input>
+                <input type='date' id='Date' name="Date" className='form-control' {...register('Date', { required: "This field is required" })}></input>
+                {errors.Date && <p className="error-message" style={{ color: "red" }}>{errors.Date.message}</p>}
               </div>
               <div className='col-lg-2'>
                 {/* <input type="text" maxlength="2" class="form-control text-center bs-timepicker-field" placeholder="HH" /> */}
                 {/* <TimePicker onChange={handleTimeChange} value={time} disableClock={true} clearIcon={null} /> */}
-                <input type='time' className='form-control' name='time' min="00:00" max="23:59" step="1" {...register('StartTime')} />
+                <input type='time' className='form-control' id='StartTime' name='time' min="00:00" max="23:59" step="1" {...register('StartTime', { required: "This field is required" })} />
+                {errors.StartTime && <p className="error-message" style={{ color: "red" }}>{errors.StartTime.message}</p>}
               </div>
-              <div className='col-lg-2'></div>
+              {/* <div className='col-lg-2'></div> */}
               <div className='col-lg-2'>
-                <input type="time" className='form-control' name='time' min="00:00" max="23:59" step="1" {...register('EndTime')} />
+                <input type="time" className='form-control' id='EndTime' name='time' min="00:00" max="23:59" step="1" {...register('EndTime', { required: "This field is required" })} />
+                {errors.EndTime && <p className="error-message" style={{ color: "red" }}>{errors.EndTime.message}</p>}
               </div>
 
             </div><br />
             <div className='row'>
               <div className='col-lg-4'>
-                <p>Supporting Documents</p>
+                <p>Purpose</p>
+                {/* <p>Supporting Documents</p> */}
               </div>
               <div className='col-lg-4'>
-                <p>Purpose</p>
+                {/* <p>Purpose</p> */}
               </div>
               <div className='col-lg-4'></div>
             </div>
             <div className='row'>
               <div className='col-lg-4'>
-                <input type='file' className='form-control' {...register('Attachments')}></input>
-              </div>
-              <div className='col-lg-4'>
                 <textarea className='form-control' placeholder='Write here...' {...register('comments')}></textarea>
               </div>
+              {/* <div className='col-lg-4'>
+                <input type='file' className='form-control' {...register('Attachments')}></input>
+              </div> */}
               <div className='col-lg-4'></div>
             </div>
             <div className='row mt-4'>
