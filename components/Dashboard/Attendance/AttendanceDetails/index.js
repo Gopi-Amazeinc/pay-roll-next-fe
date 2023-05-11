@@ -24,15 +24,7 @@ const AttendenceDetails = () => {
       const SDate = "2023-10-10";
       const EDate = "2023-11-11";
       if (userID) {
-        let res = await axios.get(
-          hostURL +
-          "HR/GetAttendanceByEmployeeID?userID=" +
-          userID +
-          "&SDate=" +
-          SDate +
-          "&EDate=" +
-          EDate
-        );
+        let res = await axios.get(hostURL +"HR/GetAttendanceByEmployeeID?userID=" +userID +"&SDate=" +SDate +"&EDate=" +EDate);
         setAttendence(res.data);
       }
     }

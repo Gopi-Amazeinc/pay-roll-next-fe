@@ -292,8 +292,8 @@ const Sidebar = ({ children, applyPageName }) => {
             Home
           </button>
         </Link>
-        {userRole == 9 ||
-          (userRole == 17 && (
+        {userRole == 2 ||
+          (userRole == 4 && (
             <div>
               <hr></hr>
               <button className={styles.sidemenu} onClick={tooggleStaffMenu}>
@@ -360,7 +360,7 @@ const Sidebar = ({ children, applyPageName }) => {
               )}
             </div>
           ))}
-{userRole ==17 && (
+{userRole ==4 && (
   <>
         <hr></hr>
         <button className={styles.sidemenu} onClick={toggleOtMenu}>
@@ -407,7 +407,7 @@ const Sidebar = ({ children, applyPageName }) => {
                 Attendance Details
               </button>
             </Link>
-            { userRole != 6 && (
+            { userRole != 3 && (
             <Link
               href="/Attendance/OverTimeUnitsUpload"
               className={styles.sidemenulink}
@@ -538,7 +538,7 @@ const Sidebar = ({ children, applyPageName }) => {
           </div>
         )}
 
-{ userRole == 17 && (
+{ userRole == 4 && (
   <>
         <hr></hr>
         <button className={styles.sidemenu} onClick={toggleLoansMenu}>
@@ -563,7 +563,7 @@ const Sidebar = ({ children, applyPageName }) => {
         )}
         </>
 )}
-        {userRole == 17 && (
+        {userRole == 4 && (
           <div>
             <hr></hr>
             <button className={styles.sidemenu} onClick={togglePayRollMenu}>
@@ -685,7 +685,7 @@ const Sidebar = ({ children, applyPageName }) => {
             )}
           </div>
         )}
-        {userRole == 17 && (
+        {userRole == 4 && (
           <div>
             <hr></hr>
             <button className={styles.sidemenu} onClick={toggleCompanyMenu}>
@@ -710,7 +710,7 @@ const Sidebar = ({ children, applyPageName }) => {
             )}
           </div>
         )}
-        {userRole == 17 && (
+        {userRole == 4 && (
           <div>
             <hr></hr>
             <button className={styles.sidemenu} onClick={toggleSettingsMenu}>
@@ -810,7 +810,7 @@ const Sidebar = ({ children, applyPageName }) => {
           </div>
         )}
 
-        {/* {userRole == 17 && (
+        {/* {userRole == 4 && (
           <div>
             <hr></hr>
 
@@ -917,14 +917,14 @@ const Sidebar = ({ children, applyPageName }) => {
             )}
           </div>
         )} */}
-        {(userRole == 9 || userRole == 17) && (
+        {(userRole == 2 || userRole == 4) && (
           <div>
             <hr></hr>
             <button className={styles.sidemenu} onClick={toggleMastersMenu}>
               <RiUserStarLine style={customStyles.icons} />
               Masters
             </button>
-            {userRole == 9 && displayMasters && (
+            {userRole == 2 && displayMasters && (
               <div>
                 <Link href="/Masters/LeaveType">
                   <button
@@ -1164,7 +1164,7 @@ const Sidebar = ({ children, applyPageName }) => {
                 {/* code ends for data configuration here */}
               </div>
             )}
-            {userRole == 17 && displayMasters && (
+            {userRole == 4 && displayMasters && (
               <>
                 {/* <Link href="/Settings/componentmaster">
                   <button
@@ -1208,7 +1208,7 @@ const Sidebar = ({ children, applyPageName }) => {
             )}
           </div>
         )}
-        {userRole == 6 && (
+        {userRole == 3 && (
           <div>
             <hr></hr>
             <Link href="/Holiday" className={styles.sidemenulink}>
@@ -1225,7 +1225,7 @@ const Sidebar = ({ children, applyPageName }) => {
             </Link>
           </div>
         )}
-          {userRole == 6 && (
+          {userRole == 3 && (
           <>
             <hr></hr>
             <Link href="/Announcement" className={styles.sidemenulink}>
@@ -1242,7 +1242,7 @@ const Sidebar = ({ children, applyPageName }) => {
             </Link>
           </>
         )}
-        {userRole == 17 && (
+        {userRole == 4 && (
           <div>
             <hr></hr>
             <button className={styles.sidemenu} onClick={togleReportsMeanu}>
@@ -1589,7 +1589,7 @@ const Sidebar = ({ children, applyPageName }) => {
                         R1-A
                       </button>
                     </Link>
-                    {userRole == 6 && (
+                    {userRole == 3 && (
                     <>
                     <Link href="/Reports/LeaveReport">
                       <button
