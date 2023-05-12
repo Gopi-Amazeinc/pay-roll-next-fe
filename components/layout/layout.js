@@ -13,7 +13,6 @@ const Index = ({ children }) => {
   const [isLogin, setILogin] = useState("no");
   const [pageName, setPageName] = useState("Dashboard");
   useEffect(() => {
-    console.log("layout rendered");
     let login = sessionStorage.getItem("isLogin");
     if (login && login == "yes") {
       setILogin("yes");
