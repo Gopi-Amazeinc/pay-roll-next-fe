@@ -11,10 +11,11 @@ import digiLogo from "@/public/Images/DigiLogoBlue.png";
 const Login = ({ makelogin }) => {
   let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
   const positionList = [
-    { id: 2, short: "Manager" },
-    { id: 6, short: "Employee" },
-    { id: 9, short: "HR" },
-    { id: 17, short: "Payroll Manager" },
+    { id: 1, short: "Admin" },
+    { id: 2, short: "HR" },
+    { id: 3, short: "Manager" },
+    { id: 4, short: "Payroll Manager" },
+    { id: 5, short: "Employee" },
     // { id: 10, short: "SBU" },
     // { id: 11, short: "IT Team" },
     // { id: 12, short: "HR Head" },
