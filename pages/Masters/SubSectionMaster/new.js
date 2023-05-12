@@ -1,26 +1,59 @@
-import React from "react";
+import React,{useState,useEffect} from "react";
 import { useForm } from "react-hook-form";
 import Layout from '@/components/layout/layout.js';
 import Link from "next/link";
-import axios from "axios";
 import Swal from "sweetalert2";
+import { apiService } from "@/services/api.service";
+import { useRouter } from "next/router";
 
-const SubSectionMasterForm = () => {
+const SubSectionMasterForm = ({ editData }) => {
   let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-
+  const router = useRouter();
+  const [actionType, setActionType] = useState("insert");
   // form validation rules
   const { register, handleSubmit, reset, formState } = useForm();
   const { errors } = formState;
 
-  // get functions to build form with useForm() hook
-
-
   const onSubmit = async (data) => {
+    if (actionType == "insert") {
+      await apiService.commonPostCall("Master/InsertSubSectionMaster", data);
+      Swal.fire("Data Inserted successfully");
+      router.push("/Masters/SubSectionMaster");
+    } else {
+      debugger
+      await apiService.commonPostCall("Master/UpdateSubSectionMaster", data);
+      Swal.fire("Data Updated successfully");
+      router.push("/Masters/SubSectionMaster");
+    }
+  };
 
-    await axios.post(hostURL + "Master/InsertSubSectionMaster", data);
-    Swal.fire("SubSectionMaster Inserted succefully!");
-    location.href = "/Masters/SubSectionMaster";
 
+  const clearForm = (existingData = null) => {
+    let etty = {
+      ID: existingData ? existingData.id : "",
+      Short: existingData ? existingData.short : "",
+      Description: existingData ? existingData.description : "",
+    };
+    reset(etty);
+    setActionType(existingData ? "update" : "insert");
+  };
+
+
+  useEffect(() => {
+    const { id } = editData || {};
+    if (id) {
+      // This API is used to fetch the data from BarangayMaster ByID table
+      getSubsectionMasterByID(id);
+    } else {
+      clearForm();
+    }
+  }, []);
+
+  const getSubsectionMasterByID = async (id) => {
+    const res = await apiService.commonGetCall(
+      "Master/GetSubSectionMasterByID?ID=" + id
+    );
+    clearForm(res.data[0]);
   };
 
   const customStyles = {
@@ -99,14 +132,16 @@ const SubSectionMasterForm = () => {
                   </Link>
                 </div>
                 <div className="col-lg-2">
-
-                  <button
-                    type="submit"
-                    className="AddButton"
-                  >
-                    Save
-                  </button>
-
+                  {actionType == "insert" && (
+                    <button type="submit" className="AddButton">
+                      Save
+                    </button>
+                  )}
+                  {actionType == "update" && (
+                    <button type="submit" className="AddButton">
+                      Update
+                    </button>
+                  )}
                 </div>
               </div>
             </div>

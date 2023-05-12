@@ -1,24 +1,54 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Layout from "../../../components/layout/layout";
 import { useForm } from "react-hook-form";
-import axios from 'axios'
 import Swal from "sweetalert2";
+import { apiService } from "@/services/api.service";
+import { useRouter } from "next/router";
 
-
-
-function BrandMasterForm() {
+function BrandMasterForm({ editData }) {
 
     const { register, handleSubmit, watch, reset, formState: { errors }, } = useForm();
-    let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+    const [actionType, setActionType] = useState("insert");
+    const router = useRouter();
 
-    async function onSubmit(data) {
-
-        await axios.post(hostURL + "Master/InsertBrandMaster", data);
-        Swal.fire("Inserted")
-        router.push("/Masters/BrandMaster")
-
+    function clearForm(BandMasterData = null) {
+        let details = {
+            "ID": BandMasterData ? BandMasterData.id : "",
+            "Short": BandMasterData ? BandMasterData.short : "",
+            "Description": BandMasterData ? BandMasterData.description : "",
+        };
+        reset(details);
+        setActionType(BandMasterData ? "update" : "insert");
     }
+
+    const onSubmit = async (data) => {
+        if (actionType == "insert") {
+            await apiService.commonPostCall("Master/InsertBrandMaster", data);
+            Swal.fire("Data Inserted successfully");
+            router.push("/Masters/BrandMaster");
+        } else {
+            await apiService.commonPostCall("Master/UpdateBrandMaster", data);
+            Swal.fire("Data Updated successfully");
+            router.push("/Masters/BrandMaster");
+        }
+    };
+
+    useEffect(() => {
+        const { id } = editData || {};
+        if (id) {
+            // This API is used to fetch the data from BarangayMaster ByID table
+            getBrandMasterByID(id);
+        } else {
+            clearForm();
+        }
+    }, []);
+    const getBrandMasterByID = async (id) => {
+        const res = await apiService.commonGetCall(
+            "Master/GetBrandMasterByID?ID=" + id
+        );
+        clearForm(res.data[0]);
+    };
 
     return (
         <Layout>
@@ -31,8 +61,8 @@ function BrandMasterForm() {
                                 <p>
                                     Short Name<i className="text-danger">*</i>
                                 </p>
-                                <input type="text" className="form-control" placeholder="Short Name"{...register('Short', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
-                                {errors.Short && <p className="error-message" style={{ color: "red" }}>{errors.Name.message}</p>}
+                                <input type="text" className="form-control" placeholder="Short Name"{...register('Short', { required: true })} />
+                                {errors.Short && <p className="error-message" style={{ color: "red" }}>Please enter a valid Short Name</p>}
                             </div>
 
                             <div className="col-lg-5">
@@ -57,11 +87,16 @@ function BrandMasterForm() {
                                 </Link>
                             </div>
                             <div className="col-lg-2 ">
-
-                                <button type="submit" className="AddButton">
-                                    Save
-                                </button>
-
+                                {actionType == "insert" && (
+                                    <button type="submit" className="AddButton">
+                                        Save
+                                    </button>
+                                )}
+                                {actionType == "update" && (
+                                    <button type="submit" className="AddButton">
+                                        Update
+                                    </button>
+                                )}
                             </div>
                         </div>
                     </form>

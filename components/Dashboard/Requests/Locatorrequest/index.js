@@ -11,11 +11,13 @@ const Locatordashboard = () => {
     const [RejectedlocatorRequests, setRejectedlocatorRequests] = useState([]);
 
     const getlocator = async () => {
-        let res = await axios.get(hostURL + "Payroll/GetLocatorRequests");
+        debugger
+        let UserID = sessionStorage.getItem("userID")
+        let res = await axios.get(hostURL + `Payroll/GetLocatorRequests?UserID=${UserID}`);
         setlocator(res.data);
-        res = await axios.get(hostURL + "Payroll/GetApprovedLocatorRequest");
+        res = await axios.get(hostURL + `Payroll/GetApprovedLocatorRequest?UserID=${UserID}`);
         setApprovedlocatorrequests(res.data);
-        res = await axios.get(hostURL + "Payroll/GetRejectedLocatorRequest");
+        res = await axios.get(hostURL + `Payroll/GetRejectedLocatorRequest?UserID=${UserID}`);
         setRejectedlocatorRequests(res.data);
     }
 
@@ -32,12 +34,12 @@ const Locatordashboard = () => {
                         <table className='table  table-striped mt-3 text-center' id={Styles.table} >
                             <thead>
                                 <tr id={Styles.tr}>
+                                    <th>Control Number</th>
                                     <th>Date</th>
-                                    <th>Destination</th>
-                                    <th>TimeOfDeparture</th>
-                                    <th>Time of Return	</th>
-                                    <th>Purpose</th>
-                                    <th>No Of Hours</th>
+                                    <th>Start Time</th>
+                                    <th>End Time</th>
+                                    <th>Task</th>
+                                    <th>Comments</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
@@ -46,12 +48,13 @@ const Locatordashboard = () => {
                                 {locator.map((data, index) => {
                                     return (
                                         <tr className="text-dark" key={index}>
+                                            <td>{data.id}</td>
                                             <td>{data.date}</td>
-                                            <td>{data.destination}</td>
-                                            <td>{data.timeOfDeparture}</td>
-                                            <td>{data.timeOfReturn}</td>
-                                            <td>{data.purpose}</td>
-                                            <td>{data.hourDiff}</td>
+                                            <td>{data.startTime}</td>
+                                            <td>{data.endTime}</td>
+                                            <td>{data.task}</td>
+                                            <td>{data.comments}</td>
+                                            {/* <td>{data.status}</td> */}
                                             <td>{
                                                 <b>{data.statusID === 0 ? 'Manager Pending' :
                                                     data.statusID === 1 ? 'Manager approved' :
@@ -76,12 +79,12 @@ const Locatordashboard = () => {
                         <table className='table  table-striped mt-3 text-center' id={Styles.table} >
                             <thead>
                                 <tr id={Styles.tr}>
+                                    <th>Control Number</th>
                                     <th>Date</th>
-                                    <th>Destination</th>
-                                    <th>TimeOfDeparture</th>
-                                    <th>Time of Return	</th>
-                                    <th>Purpose</th>
-                                    <th>No Of Hours</th>
+                                    <th>Start Time</th>
+                                    <th>End Time</th>
+                                    <th>Task</th>
+                                    <th>Comments</th>
                                     <th>Status</th>
                                 </tr>
                             </thead>
@@ -89,13 +92,13 @@ const Locatordashboard = () => {
                                 {Approvedlocatorrequests.map((data, index) => {
                                     return (
                                         <tr className="text-dark" key={index}>
+                                            <td>{data.id}</td>
                                             <td>{data.date}</td>
-                                            <td>{data.destination}</td>
-                                            <td>{data.timeOfDeparture}</td>
-                                            <td>{data.timeOfReturn}</td>
-                                            <td>{data.purpose}</td>
-                                            <td>{data.hourDiff}</td>
-                                            <td>{data.statusID}</td>
+                                            <td>{data.startTime}</td>
+                                            <td>{data.endTime}</td>
+                                            <td>{data.task}</td>
+                                            <td>{data.comments}</td>
+                                            <td>{data.status}</td>
                                         </tr>
                                     )
                                 })
@@ -113,12 +116,12 @@ const Locatordashboard = () => {
                         <table className='table  table-striped mt-3 text-center' id={Styles.table} >
                             <thead>
                                 <tr id={Styles.tr}>
+                                    <th>Control Number</th>
                                     <th>Date</th>
-                                    <th>Destination</th>
-                                    <th>TimeOfDeparture</th>
-                                    <th>Time of Return	</th>
-                                    <th>Purpose</th>
-                                    <th>No Of Hours</th>
+                                    <th>Start Time</th>
+                                    <th>End Time</th>
+                                    <th>Task</th>
+                                    <th>Comments</th>
                                     <th>Status</th>
                                 </tr>
                             </thead>
@@ -126,13 +129,13 @@ const Locatordashboard = () => {
                                 {RejectedlocatorRequests.map((data, index) => {
                                     return (
                                         <tr className="text-dark" key={index}>
+                                            <td>{data.id}</td>
                                             <td>{data.date}</td>
-                                            <td>{data.destination}</td>
-                                            <td>{data.timeOfDeparture}</td>
-                                            <td>{data.timeOfReturn}</td>
-                                            <td>{data.purpose}</td>
-                                            <td>{data.hourDiff}</td>
-                                            <td>{data.statusID}</td>
+                                            <td>{data.startTime}</td>
+                                            <td>{data.endTime}</td>
+                                            <td>{data.task}</td>
+                                            <td>{data.comments}</td>
+                                            <td>{data.status}</td>
                                         </tr>
                                     )
                                 })

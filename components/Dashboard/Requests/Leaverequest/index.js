@@ -39,6 +39,7 @@ function LeaveListDashboard() {
 
     const toggleRejected = () => {
         setRejected(true)
+        setPending(false)
         setApproved(false)
     }
 
@@ -171,7 +172,7 @@ function LeaveListDashboard() {
                             </div>
                             <div className="col-lg-6">
                                 <p>END DATE:</p>
-                                <input id="date" name="date" type="date" placeholder="Duration" onKeyDown="return false" className="form-control " />
+                                <input id="date" name="date" type="date" placeholder="Duration" onKeyDown={()=> handleEndDate()} className="form-control " />
                             </div>
 
                             <div className="col-lg-12 searchtxt mt-4"><br /><input type="search" placeholder="Search for date , Leave Type or Status" className="form-control " /></div>
@@ -216,7 +217,7 @@ function LeaveListDashboard() {
                 </div>
                 <div className="col-md-4"></div>
                 <div className="col-md-4">
-                    <Link href="/Requests/Applyleave/new"><button className="submit-button m" tabindex="0"> Apply Leave</button>
+                    <Link href="/Requests/Applyleave/new"><button className="submit-button m" tabIndex="0"> Apply Leave</button>
                     </Link>
                 </div>
             </div>

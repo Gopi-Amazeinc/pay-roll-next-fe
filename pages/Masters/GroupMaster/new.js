@@ -1,22 +1,57 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from "react-hook-form";
 import Link from 'next/link';
-import axios from 'axios';
 import Layout from '../../../components/layout/layout';
 import Styles from '../../../styles/groupMasterForm.module.css'
 import Swal from 'sweetalert2'
-function GroupMasterForm() {
+import { apiService } from "@/services/api.service";
+import { useRouter } from "next/router";
+function GroupMasterForm({ editData }) {
     const { register, handleSubmit, reset, formState } = useForm();
     const { errors } = formState;
-    let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+    const [actionType, setActionType] = useState("insert");
+    const router = useRouter();
 
-    async function onSubmit(data) {
-            await axios.post(hostURL + "Master/InsertGroupMaster", data);   //naveen.th@amazeinc.in, Insert API for group master, to add new data
-            Swal.fire('Added Successfully')
-            location.href = "/Masters/GroupMaster";
-      
+    const onSubmit = async (data) => {
+        if (actionType == "insert") {
+            await apiService.commonPostCall("Master/InsertGroupMaster", data);
+            Swal.fire("Data Inserted successfully");
+            router.push("/Masters/GroupMaster");
+        } else {
+            await apiService.commonPostCall("Master/UpdateGroupMaster", data);
+            Swal.fire("Data Updated successfully");
+            router.push("/Masters/GroupMaster");
+        }
+    };
+
+
+    function clearForm(existingData = null) {
+        let etty = {
+            "ID": existingData ? existingData.id : "",
+            "Short": existingData ? existingData.short : "",
+            "Description": existingData ? existingData.description : "",
+        }
+        reset(etty);
+        setActionType(existingData ? "update" : "insert");
     }
- 
+
+
+    useEffect(() => {
+        const { id } = editData || {};
+        if (id) {
+            // This API is used to fetch the data from BarangayMaster ByID table
+            getGroupMasterByID(id);
+        } else {
+            clearForm();
+        }
+    }, []);
+    const getGroupMasterByID = async (id) => {
+        const res = await apiService.commonGetCall(
+            "Master/GetGroupMasterByID?ID=" + id
+        );
+        clearForm(res.data[0]);
+    };
+
     const customStyles = {
         content: {
             top: '50%',
@@ -95,13 +130,18 @@ function GroupMasterForm() {
                                     Close
                                 </button></Link>
                             </div>
-                        
+
                             <div className='col-lg-2'>
-                           
-                                    <button type="submit" className="AddButton" >
+                                {actionType == "insert" && (
+                                    <button type="submit" className="AddButton">
                                         Save
                                     </button>
-                                
+                                )}
+                                {actionType == "update" && (
+                                    <button type="submit" className="AddButton">
+                                        Update
+                                    </button>
+                                )}
                             </div>
                         </div>
                     </form>

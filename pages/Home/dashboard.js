@@ -12,6 +12,7 @@ import advertising1 from "@/public/Images/advertising.png";
 import { Modal, ModalBody, ModalFooter } from "reactstrap";
 import { BiEdit } from "react-icons/bi";
 import { RiArrowDropDownLine } from "react-icons/ri";
+import Pnchingreen from "@/public/pnchin-green.svg";
 // import GaugeChart from 'react-gauge-chart';
 import dynamic from "next/dynamic";
 const GaugeChart = dynamic(() => import("react-gauge-chart"), { ssr: false });
@@ -19,7 +20,7 @@ const GaugeChart = dynamic(() => import("react-gauge-chart"), { ssr: false });
 import Swal from "sweetalert2";
 import axios from "axios";
 
-const Dashboard=()=> {
+const Dashboard = () => {
   let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
   const count = 1;
 
@@ -38,14 +39,6 @@ const Dashboard=()=> {
   // const percent= 0.35;
   //   const colors = getGaugeColors(percent);
 
-  useEffect(() => {
-    const Loginname = sessionStorage.getItem("userName");
-    setUserName(Loginname);
-    const Loginemail = sessionStorage.getItem("email");
-    setUserEmail(Loginemail);
-    const punchinID = sessionStorage.getItem("StaffPunchedinID");
-    setActionType(punchinID);
-  }, []);
 
   // const userName = "Anup";
   // const email = "anup@amazeinc.in";
@@ -58,7 +51,16 @@ const Dashboard=()=> {
   const [actionType, setActionType] = useState("");
   const [workType, setWorkType] = useState();
   const [localIPAddress, setLocalIPAddress] = useState("");
+  const [submitted, setSubmitted] = useState(false);
+
   useEffect(() => {
+    const Loginname = sessionStorage.getItem("userName");
+    setUserName(Loginname);
+    const Loginemail = sessionStorage.getItem("email");
+    setUserEmail(Loginemail);
+    const punchinID = sessionStorage.getItem("StaffPunchedinID");
+    setActionType(punchinID);
+
     const getLocalIPAddress = async () => {
       const response = await fetch("https://api.ipify.org/?format=json");
       const data = await response.json();
@@ -66,7 +68,12 @@ const Dashboard=()=> {
     };
 
     getLocalIPAddress();
+
+    const currentTime = new Date();
+    setPunchintime(currentTime.toLocaleTimeString());
+    setSubmitted(true);
   }, []);
+
 
   const modelopen = () => {
     setModalOpen(!modalOpen);
@@ -108,7 +115,7 @@ const Dashboard=()=> {
     const staffPunchedinID = res.data || res;
     if (staffPunchedinID) {
       sessionStorage.setItem("StaffPunchedinID", staffPunchedinID);
-      // setPunchintime(punchinId);
+      setActionType(StaffPunchedinID)
       Swal.fire("Punched In Successfully");
     }
     // }
@@ -301,33 +308,38 @@ const Dashboard=()=> {
               >
                 <div className="col-lg-12">
                   <div className="row">
-                    { actionType == null ? (
+                    {actionType == null ? (
                       <>
-                    <div className="col-lg-7">
-                      <button
-                        className={dashboard.punchin}
-                        onClick={() => modelopen()}
-                      >
-                        PUNCH IN
-                      </button>
-                    </div>
-                    <div className="col-lg-4 mt-3 ">
-                      <span> PunchIn time </span>
-                    </div>
-                  </>
+                        <div className="col-lg-7">
+                          <button
+                            className={dashboard.punchin}
+                            onClick={() => modelopen()}
+                          >
+                            PUNCH IN
+                          </button>
+                        </div>
+                        <div className="col-lg-4 mt-3 ">
+                          <span> PunchIn time </span>
+                        </div>
+                      </>
                     ) : (
                       <>
-                       <div className="col-lg-7">
-                      <button
-                        className={dashboard.buttonclick}
-                        // onClick={() => modelopen()}
-                      >
-                        PUNCH IN
-                      </button>
-                    </div>
-                    <div className="col-lg-4 mt-3 ">
-                      <span> Dynamic Time</span>
-                    </div>
+                        <div className="col-lg-7">
+                          <button
+                            className={dashboard.buttonclick}
+                          // onClick={() => modelopen()}
+                          >
+                            <Image
+                              src={Pnchingreen}
+                              alt="Leave icon"
+                              width={15}
+                              height={19}
+                            />  PUNCH IN
+                          </button>
+                        </div>
+                        <div className="col-lg-4 mt-3 ">
+                          <span>{punchintime.toLocaleString()}</span>
+                        </div>
                       </>
 
                     )}
@@ -380,23 +392,23 @@ const Dashboard=()=> {
                           <div className="col-lg-6">
                             <ModalFooter>
                               {actionType == null ? (
-                              <button
-                                color="primary"
-                                type="button"
-                                className="button"
-                                onClick={() => handlePunchin()}
-                              >
-                                Punchin
-                              </button>
-                               ) : ( 
-                              <button
-                                color="primary"
-                                type="button"
-                                className="button"
-                              >
-                                PunchOut
-                              </button>
-                               )} 
+                                <button
+                                  color="primary"
+                                  type="button"
+                                  className="button"
+                                  onClick={() => handlePunchin()}
+                                >
+                                  Punchin
+                                </button>
+                              ) : (
+                                <button
+                                  color="primary"
+                                  type="button"
+                                  className="button"
+                                >
+                                  PunchOut
+                                </button>
+                              )}
                             </ModalFooter>
                           </div>
                         </div>
@@ -442,7 +454,7 @@ const Dashboard=()=> {
                     needleColor={"#afb4bd"}
                     needleBaseColor={"#afb4bd"}
                     textOffsetY={-40}
-                    // hideText={true} // If you want to hide the text
+                  // hideText={true} // If you want to hide the text
                   />
                 </div>
                 {/* <Image src={images} alt="Picture of the author" width={100} height={80} className={dashboard.profileimg1} /> */}

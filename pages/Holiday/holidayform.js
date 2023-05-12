@@ -5,25 +5,84 @@ import axios from "axios";
 import Link from "next/link";
 import Swal from "sweetalert2";
 import { useState, useEffect } from 'react';
+import { apiService } from "@/services/api.service";
+import { useRouter } from "next/router";
 
 
-function Holidayform() {
+function Holidayform({editData}) {
 
   const { register, handleSubmit, watch, reset, formState: { errors }, } = useForm();
- 
-  
- async  function onSubmit (data)  {
+  let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+  const router = useRouter();
+  const [actionType, setActionType] = useState("insert");
 
-    await axios.post(hostURL + "HR/InsertHolidays", data) // inserting new division master data [Shashank]
-    location.href = "/Holiday"
-    Swal.fire({
-        icon: 'success',
-        title: 'Added Successfully',
-    })
 
-}
+  useEffect(() => {
+    const { id } = editData || {};
+    if (id) {
+      getHolidayByID(id);
+    } else {
+      clearForm();
+    }
+  }, []);
+  const getHolidayByID = async (id) => {
+    const res = await apiService.commonGetCall("HR/GetHolidaysByID?ID=" + id);
+    clearForm(res.data[0]);
+  };
 
- 
+
+  function clearForm(HolidaysData = null) {
+    debugger;
+    let details = {
+      "ID": HolidaysData ? HolidaysData.id : "",
+      "Holiday": HolidaysData ? HolidaysData.holiday : "",
+      "HolidayDescription": HolidaysData ? HolidaysData.holidayDescription : "",
+      "HolidayDate": HolidaysData ? HolidaysData.holidayDate : "",
+      "Attachment": HolidaysData ? HolidaysData.attachment : "",
+      "HolidayCategory": HolidaysData ? HolidaysData.holidayCategory : "",
+      "Region": HolidaysData ? HolidaysData.region : ""
+
+    };
+    reset(details);
+    setActionType(HolidaysData ? "update" : "insert");
+  }
+
+
+
+
+  const onSubmit = async (data) => {
+    if (actionType == "insert") {
+      await apiService.commonPostCall("HR/InsertHolidays", data);
+      Swal.fire("Data Inserted successfully");
+      router.push("/Holiday");
+    } else {
+      await apiService.commonPostCall("HR/UpdateHolidays", data);
+      Swal.fire("Data Updated successfully");
+      router.push("/Holiday");
+    }
+  };
+
+
+
+  // async function onSubmit(data) {
+  //   console.log(data);
+  //   let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+  //   if (actionType == "insert") {
+  //     try {
+  //       await axios.post(hostURL +"HR/InsertHolidays", data); // this for insrting the data using inserting Api call 
+  //       alert("Data inserted")
+  //       location.href = "/Holiday"
+  //     } catch (error) {
+  //       alert("data not inserted")
+
+  //     }
+
+  //   } else {
+  //     await axios.post(hostURL + "HR/UpdateHolidays", data); // this is for updating or Modifiying the data using  Update Api call
+  //     alert("updated");
+  //     location.href = "/Holiday";
+  //   }
+  // }
 
 
   return (
@@ -31,7 +90,7 @@ function Holidayform() {
       <Layout>
         <div>
           <h3 className="text-primary fs-5 mt-3">Holidays</h3>
-          <div className="card p-3 border-0 shadow-lg rounded-3 mt-4">
+          <div class="shadow-lg p-3 mb-5 bg-white rounded">
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="row">
                 <div className="col-lg-4">
@@ -92,13 +151,15 @@ function Holidayform() {
                 <div className="col-lg-8"></div>
                 <div className="col-lg-2  text-end">
                   <Link href="/Holiday">
-                    <button type="submit" id="AddButton" className="submit-button">Cancel</button>
+                    <button type="submit" className="AddButton">Cancel</button>
                   </Link>
                 </div>
                 <div className="col-lg-2 ">
-                  {/* <button id='AddButton' className='btn btn-primary'>Submit</button>
-                 */}
-                  <button type='submit' className="AddButton">Save</button>
+                  {actionType == "insert" && (
+                    <button type="submit" className="AddButton"> Save</button>)}
+
+                  {actionType == "update" && (
+                    <button type="submit" className="AddButton">  Update </button>)}
                 </div>
               </div>
             </form>

@@ -7,7 +7,7 @@ import Swal from 'sweetalert2'
 import { useEffect, useState } from 'react';
 import Layout from '@/components/layout/layout'
 
-const PagibigForm = ({ }) => {
+const PagibigForm = () => {
 
 
 
@@ -24,9 +24,6 @@ const PagibigForm = ({ }) => {
         })
 
     }
-
-
-
 
 
     return (
@@ -67,7 +64,7 @@ const PagibigForm = ({ }) => {
                         <br />
                         <div className="row">
                             <div className="col-lg-11">
-                                <Link href="/Settings/Pagibig"><button className={Styles.Cancel} style={{ float: "right", marginLeft: "5px" }} tabindex="0">CANCEL</button></Link>
+                                <Link href="/Settings/Pagibig"><button className={Styles.Cancel} style={{ float: "right", marginLeft: "5px" }} tabIndex="0">CANCEL</button></Link>
                                 {/* {
                                     actionType == "insert" && (
                                         <button type='submit' className={Styles.Save} style={{ float: "right" }}>Save</button>

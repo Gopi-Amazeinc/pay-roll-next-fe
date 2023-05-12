@@ -7,18 +7,21 @@ import Swal from "sweetalert2";
 import eye from "@/public/eye.svg";
 import Loginpage from "/public/Images/DigiLogin.png";
 import digiLogo from "@/public/Images/DigiLogoBlue.png";
+import { apiService } from "@/services/api.service";
 
 const Login = ({ makelogin }) => {
-  let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-  const positionList = [
-    { id: 2, short: "Manager" },
-    { id: 6, short: "Employee" },
-    { id: 9, short: "HR" },
-    { id: 17, short: "Payroll Manager" },
-    // { id: 10, short: "SBU" },
-    // { id: 11, short: "IT Team" },
-    // { id: 12, short: "HR Head" },
-  ];
+  // let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+
+  const [positionList, setPositionList] = useState([]);
+
+  useEffect(() => {
+    getRoleMaster();
+  }, [1]);
+ 
+  const getRoleMaster= async ()=> {
+    const res = await  apiService.commonGetMasters(`Master/GetRoleMaster`);
+    setPositionList(res.data);
+  }
   const companyList = [{ id: 1001, short: "Company 1" }];
 
   const [passwordShown, setPasswordShown] = useState("");
@@ -29,9 +32,6 @@ const Login = ({ makelogin }) => {
 
   // TODO:  will check this  further if required????
   const changePosition = async (event) => {
-    debugger;
-    console.log(event.target.name);
-    console.log(event.target.value);
     const selectedPosition = event.target.value;
     // setSelectedPosition(event.target.value);
     console.log(selectedPosition);
@@ -47,15 +47,12 @@ const Login = ({ makelogin }) => {
 
   // Written By:- Gopi -> Onsubmit login we are storing sessions
   const onSubmit = async (data) => {
-    const res = await axios.get(
-      hostURL +
-      `Master/GetMyDetailsForLogin?EmailID=${data.Username}&Password=${data.Password}&roletype=${data.RoleID}`
-    );
+    const res = await apiService.commonGetCall(`Master/GetMyDetailsForLogin?EmailID=${data.Username}&Password=${data.Password}&roletype=${data.RoleID}`);
     if (res.data.length > 0 && res.status === 200) {
       sessionStorage.setItem("userID", res.data[0].id);
       sessionStorage.setItem("userName", res.data[0].name);
-      sessionStorage.setItem("email", res.data[0].email);
-      sessionStorage.setItem("roleID", res.data[0].login);
+      sessionStorage.setItem("email", res.data[0].emailID);
+      sessionStorage.setItem("roleID", res.data[0].roleID);
       makelogin();
     }
     // else if (res){
@@ -100,7 +97,7 @@ const Login = ({ makelogin }) => {
         <div className="row">
           <div className={"col-lg-6 " + styles.logincard}>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <Image src={digiLogo} alt="digiLogo" width={250} />
+              <Image src={digiLogo} alt="digiLogo" width={250} height={'auto'}/>
               <div>
                 <select
                   className="form-select "
