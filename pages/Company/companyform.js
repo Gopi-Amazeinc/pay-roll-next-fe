@@ -82,7 +82,7 @@ function Companyform() {
             </div>
             <div className="col-lg-2">
               <p className={styles.p}>Country</p>
-              <select class="form-select" aria-p="Default select example">
+              <select class="form-select" >
                 <option selected>Select Country</option>
                 <option value="1">One</option>
                 <option value="2">Two</option>
@@ -91,7 +91,7 @@ function Companyform() {
             </div>
             <div className="col-lg-2">
               <p className={styles.p}>Province</p>
-              <select class="form-select" aria-p="Default select example">
+              <select class="form-select" >
                 <option selected>Select Province</option>
                 <option value="1">One</option>
                 <option value="2">Two</option>
@@ -100,7 +100,7 @@ function Companyform() {
             </div>
             <div className="col-lg-2">
               <p className={styles.p}>City</p>
-              <select class="form-select" aria-p="Default select example">
+              <select class="form-select" >
                 <option selected>Select City</option>
                 <option value="1">One</option>
                 <option value="2">Two</option>
@@ -111,7 +111,7 @@ function Companyform() {
           <div className="row">
             <div className="col-lg-2">
               <p className={styles.p}>Barangay <span style={{ color: "red" }}>*</span></p>
-              <select class="form-select" aria-p="Default select example">
+              <select class="form-select" >
                 <option selected>Select City</option>
                 <option value="1">One</option>
                 <option value="2">Two</option>
@@ -152,7 +152,7 @@ function Companyform() {
             </div>
             <div className="col-lg-2">
               <p className={styles.p}>Work Months Per Year<span style={{ color: "red" }}>*</span></p>
-              <select class="form-select" aria-p="Default select example">
+              <select class="form-select" >
                 <option selected>Select Months</option>
                 <option value="1">One</option>
                 <option value="2">Two</option>
@@ -180,7 +180,7 @@ function Companyform() {
           <div className="row">
             <div className="col-lg-2">
               <p>Periods Per Month <span style={{ color: "red" }}>*</span></p>
-              <select class="form-select" aria-p="Default select example">
+              <select class="form-select" >
                 <option selected>Select Months</option>
                 <option value="1">One</option>
                 <option value="2">Two</option>
