@@ -6,6 +6,7 @@ import Login from "./login";
 import Head from "next/head";
 import Footer from "./footer";
 import { useRouter } from "next/router";
+import { Loader } from '@/services/loadSpinner';
 
 const Index = ({ children }) => {
   const router = useRouter();
@@ -73,6 +74,7 @@ const Index = ({ children }) => {
                 background: "#e5f3f5",
               }}
             >
+              <Loader />
               <main >
                 {children}
                 <br></br>

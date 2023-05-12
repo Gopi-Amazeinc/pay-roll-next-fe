@@ -98,7 +98,7 @@ function ER2() {
                                     <div className="row">
                                         <div className="col-lg-6"></div>
                                         <div className="col-lg-5">
-                                            <button className="submit-button mt-5" tabindex="0">GENERATE</button>
+                                            <button className="submit-button mt-5" tabIndex="0">GENERATE</button>
                                         </div>
                                     </div>
                                 </div>

@@ -117,7 +117,7 @@ export default function PayPeriodSettingform() {
                                
                                         <button type='submit' className={Styles.submitBtn} style={{ float: "right" }}>Update</button>
                                   
-                                <Link href="/Settings/PayperiodSetting"><button className={Styles.submitBtn} style={{ float: "right", marginLeft: "5px" }} tabindex="0">CANCEL</button></Link>
+                                <Link href="/Settings/PayperiodSetting"><button className={Styles.submitBtn} style={{ float: "right", marginLeft: "5px" }} tabIndex="0">CANCEL</button></Link>
                             </div>
 
                         </div>

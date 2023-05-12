@@ -144,7 +144,7 @@ function ComponentMappingForm({ }) {
                   </select>
                   {/* <div className="multiselect-dropdown">
                     <div>
-                      <span tabindex="-1" className="dropdown-btn">
+                      <span tabIndex="-1" className="dropdown-btn">
                         <span>Select Rest Day</span>
                         <span>
                           <span className="dropdown-multiselect__caret"></span>
@@ -283,7 +283,7 @@ function ComponentMappingForm({ }) {
               <div className="col-lg-1">
                 {/* <button
                     routerlink="/Payroll/ComponentMappingDashboard"
-                    className="button" tabindex="0" id={Styles.actionBtn} >Cancel</button> */}
+                    className="button" tabIndex="0" id={Styles.actionBtn} >Cancel</button> */}
                 <Link href="/Settings/componentmapping">
                   <button id={Styles.actionBtn}>Cancel</button>
                 </Link>
