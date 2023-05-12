@@ -19,7 +19,7 @@ const Login = ({ makelogin }) => {
   }, [1]);
  
   const getRoleMaster= async ()=> {
-    const res = await  apiService.commonGetMasters(`Payroll/GetRoleMasterr`);
+    const res = await  apiService.commonGetMasters(`Master/GetRoleMaster`);
     setPositionList(res.data);
   }
   const companyList = [{ id: 1001, short: "Company 1" }];
@@ -97,7 +97,7 @@ const Login = ({ makelogin }) => {
         <div className="row">
           <div className={"col-lg-6 " + styles.logincard}>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <Image src={digiLogo} alt="digiLogo" width={250} />
+              <Image src={digiLogo} alt="digiLogo" width={250} height={auto}/>
               <div>
                 <select
                   className="form-select "

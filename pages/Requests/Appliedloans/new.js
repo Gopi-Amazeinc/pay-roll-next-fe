@@ -32,7 +32,7 @@ function Appliedloans() {
                             </div>
 
                             <div className="col-lg-2">
-                            <Link href="/Requests/appliedloans" className="Heading1" tabindex="0">All Staff Loans</Link>
+                            <Link href="/Requests/appliedloans" className="Heading1" tabIndex="0">All Staff Loans</Link>
                             </div>
 
                         </div>
@@ -70,7 +70,7 @@ function Appliedloans() {
                                 <p className="show3res">SHOWING <span style={{ color: "black" }}></span>&nbsp;RESULTS </p>
                             </div>
                             <div className="col-md-2">
-                                <button className="form-control submitbtn" tabindex="0">Add New</button></div>
+                                <button className="form-control submitbtn" tabIndex="0">Add New</button></div>
                         </div>
                         <br />
 

@@ -107,7 +107,7 @@ function Otmaster({ editData }) {
                     <div className="col-lg-8">
                     </div>
                     <div className="col-lg-2">
-                      <Link href="/Masters/OtMaster"><button className="AddButton" tabindex="0">CANCEL</button></Link>
+                      <Link href="/Masters/OtMaster"><button className="AddButton" tabIndex="0">CANCEL</button></Link>
                     </div>
                     <div className="col-lg-2">
                       {actionType == "insert" && (
