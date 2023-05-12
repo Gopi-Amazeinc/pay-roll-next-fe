@@ -229,7 +229,7 @@ function PositionDetails() {
                                                     {
                                                         rolelistData.map((data, index) => {
                                                             return (
-                                                                <option value={data.id}>{data.short}</option>
+                                                                <option  key={data.id} value={data.id}>{data.short}</option>
                                                             )
                                                         })
                                                     }
@@ -249,7 +249,7 @@ function PositionDetails() {
                                                     {
                                                         bandlistData.map((data, index) => {
                                                             return (
-                                                                <option value={data.id}>{data.short}</option>
+                                                                <option key={data.id} value={data.id}>{data.short}</option>
                                                             )
                                                         })
                                                     }
@@ -268,7 +268,7 @@ function PositionDetails() {
                                                     {
                                                         levellistData.map((data, index) => {
                                                             return (
-                                                                <option value={data.id}>{data.short}</option>
+                                                                <option  key={data.id} value={data.id}>{data.short}</option>
                                                             )
                                                         })
                                                     }
@@ -288,7 +288,7 @@ function PositionDetails() {
                                                     {
                                                         designationlistData.map((data, index) => {
                                                             return (
-                                                                <option value={data.id}>{data.short}</option>
+                                                                <option  key={data.id} value={data.id}>{data.short}</option>
                                                             )
                                                         })
                                                     }
@@ -363,7 +363,7 @@ function PositionDetails() {
                                                     {
                                                         grouplistData.map((data, index) => {
                                                             return (
-                                                                <option value={data.id}>{data.short}</option>
+                                                                <option  key={data.id} value={data.id}>{data.short}</option>
                                                             )
                                                         })
                                                     }
@@ -382,7 +382,7 @@ function PositionDetails() {
                                                     {
                                                         divisionlistData.map((data, index) => {
                                                             return (
-                                                                <option value={data.id}>{data.sort}</option>
+                                                                <option  key={data.id} value={data.id}>{data.sort}</option>
                                                             )
                                                         })
                                                     }
@@ -402,7 +402,7 @@ function PositionDetails() {
                                                     {
                                                         departmentlistData.map((data, index) => {
                                                             return (
-                                                                <option value={data.id}>{data.department_name}</option>
+                                                                <option  key={data.id} value={data.id}>{data.department_name}</option>
                                                             )
                                                         })
                                                     }
@@ -421,7 +421,7 @@ function PositionDetails() {
                                                     {
                                                         sectionlistData.map((data, index) => {
                                                             return (
-                                                                <option value={data.id}>{data.name}</option>
+                                                                <option  key={data.id} value={data.id}>{data.name}</option>
                                                             )
                                                         })
                                                     }
@@ -441,7 +441,7 @@ function PositionDetails() {
                                                     {
                                                         stafflistData.map((data, index) => {
                                                             return (
-                                                                <option value={data.id}>{data.fullname}</option>
+                                                                <option  key={data.id} value={data.id}>{data.fullname}</option>
                                                             )
                                                         })
                                                     }
@@ -460,7 +460,7 @@ function PositionDetails() {
                                                     {
                                                         stafflistData.map((data, index) => {
                                                             return (
-                                                                <option value={data.id}>{data.fullname}</option>
+                                                                <option key={data.id} value={data.id}>{data.fullname}</option>
                                                             )
                                                         })
                                                     }
@@ -479,7 +479,7 @@ function PositionDetails() {
                                                     {
                                                         stafflistData.map((data, index) => {
                                                             return (
-                                                                <option value={data.id}>{data.fullname}</option>
+                                                                <option  key={data.id} value={data.id}>{data.fullname}</option>
                                                             )
                                                         })
                                                     }
@@ -498,7 +498,7 @@ function PositionDetails() {
                                                     {
                                                         costlistData.map((data, index) => {
                                                             return (
-                                                                <option value={data.id}>{data.short}</option>
+                                                                <option  key={data.id} value={data.id}>{data.short}</option>
                                                             )
                                                         })
                                                     }
@@ -558,7 +558,7 @@ function PositionDetails() {
                                                     {
                                                         workCountrylistData.map((data, index) => {
                                                             return (
-                                                                <option value={data.id}>{data.short}</option>
+                                                                <option  key={data.id} value={data.id}>{data.short}</option>
                                                             )
                                                         })
                                                     }
@@ -577,7 +577,7 @@ function PositionDetails() {
                                                     {
                                                         Provincelist.map((data, index) => {
                                                             return (
-                                                                <option value={data.id}>{data.short}</option>
+                                                                <option  key={data.id} value={data.id}>{data.short}</option>
                                                             )
                                                         })
                                                     }
@@ -597,7 +597,7 @@ function PositionDetails() {
                                                     {
                                                         Citylist.map((data, index) => {
                                                             return (
-                                                                <option value={data.id}>{data.short}</option>
+                                                                <option  key={data.id} value={data.id}>{data.short}</option>
                                                             )
                                                         })
                                                     }
@@ -616,7 +616,7 @@ function PositionDetails() {
                                                     {
                                                         worklocationlist.map((data, index) => {
                                                             return (
-                                                                <option value={data.id}>{data.short}</option>
+                                                                <option  key={data.id} value={data.id}>{data.short}</option>
                                                             )
                                                         })
                                                     }
