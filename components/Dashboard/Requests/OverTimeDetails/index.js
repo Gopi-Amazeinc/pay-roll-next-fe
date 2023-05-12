@@ -130,7 +130,7 @@ const Index = () => {
             confirmButtonText: 'Yes, Approve it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                apiService.commonPostCall("Payroll/UpdateOtFromManager?id=" + id +"&Status=ManagerApproved")
+                apiService.commonPostCall("Payroll/UpdateApproveOtFromManager?id=" + id +"&Status=ManagerApproved")
                 Swal.fire({
                     icon: "success",
                     titleText: "Approved Successfully"
@@ -154,7 +154,7 @@ const Index = () => {
         }).then((result) => {
             if (result.isConfirmed) {
                 staffID = sessionStorage.getItem("userID");
-                apiService.commonPostCall("Payroll/UpdateOtFromManager?id=" + id)
+                apiService.commonPostCall("Payroll/UpdateOtFromManager?id=" + id +"&Status=ManagerApproved" + "RejectedReason=")
                 Swal.fire({
                     icon: "success",
                     titleText: "Rejected Successfully"
