@@ -97,7 +97,7 @@ const Login = ({ makelogin }) => {
         <div className="row">
           <div className={"col-lg-6 " + styles.logincard}>
             <form onSubmit={handleSubmit(onSubmit)}>
-              <Image src={digiLogo} alt="digiLogo" width={250} />
+              <Image src={digiLogo} alt="digiLogo" width={250} height={auto}/>
               <div>
                 <select
                   className="form-select "
