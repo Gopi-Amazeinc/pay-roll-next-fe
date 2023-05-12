@@ -151,16 +151,18 @@ const Index = () => {
 
 
     useEffect(() => {
-        if (roleID != 2) {
+        if (roleID == 5) {
             getPendingDetails();
             getApprovedDetails();
             getRejectedDetails();
             getModalData();
         }
-        else {
+        else if (roleID == 3) {
+            staffID=sessionStorage.getItem("userID")
             getPendingCompensation();
             getManagerApprovedData();
             getManagerRejectedData();
+            getModalData();
         }
 
     }, [])
@@ -234,7 +236,7 @@ const Index = () => {
                 </div>
             </div>
             {
-                pending && sessionStorage.getItem("roleID") == 2 && (
+                pending && sessionStorage.getItem("roleID") == 3 && (
                     <table className='table table-hover'>
                         <thead className='bg-info text-white'>
                             <tr>
@@ -250,7 +252,7 @@ const Index = () => {
 
                         <tbody>
                             {
-                                newDashboard.map((data) => {
+                                managerPending.map((data) => {
                                     return (
                                         <tr key={data.id}>
                                             <td>{data.date}</td>
@@ -262,7 +264,8 @@ const Index = () => {
                                             <td>{data.comments}</td>
                                             <td>{data.status}</td>
                                             <td>
-                                                <button onClick={Delete.bind(this, data.id)} className='edit-btn'>Cancel</button>
+                                                <button onClick={approve.bind(this, data.id)} className='edit-btn'>Approve</button>
+                                                <button onClick={openModal(sessionStorage.setItem("id", data.id))} className='edit-btn'>Reject</button>
                                             </td>
                                         </tr>
                                     )
@@ -275,7 +278,7 @@ const Index = () => {
 
 
             {
-                approved && sessionStorage.getItem("roleID") == 2 && (
+                approved && sessionStorage.getItem("roleID") == 3 && (
                     <table className='table table-hover'>
                         <thead className='bg-info text-white'>
                             <tr>
@@ -291,7 +294,7 @@ const Index = () => {
 
                         <tbody>
                             {
-                                newApproved.map((data) => {
+                                managerApproved.map((data) => {
                                     return (
                                         <tr key={data.id}>
                                             <td>{data.date}</td>
@@ -310,7 +313,7 @@ const Index = () => {
 
 
             {
-                rejected && sessionStorage.getItem("roleID") == 2 && (
+                rejected && sessionStorage.getItem("roleID") == 3 && (
                     <table className='table table-hover'>
                         <thead className='bg-info text-white'>
                             <tr>
@@ -326,7 +329,7 @@ const Index = () => {
 
                         <tbody>
                             {
-                                newRejected.map((data) => {
+                                managerRejected.map((data) => {
                                     return (
                                         <tr key={data.id}>
                                             <td>{data.date}</td>
