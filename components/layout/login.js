@@ -19,7 +19,7 @@ const Login = ({ makelogin }) => {
   }, [1]);
  
   const getRoleMaster= async ()=> {
-    const res = await  apiService.commonGetMasters(`Payroll/GetRoleMasterr`);
+    const res = await  apiService.commonGetMasters(`Masters/GetRoleMaster`);
     setPositionList(res.data);
   }
   const companyList = [{ id: 1001, short: "Company 1" }];
