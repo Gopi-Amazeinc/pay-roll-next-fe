@@ -72,22 +72,11 @@ const Header = ({ makelogout }) => {
             <span className={HeaderStyles.time}>{ampm}</span>
           </p>
         </div>
-        {/* <div className="col-lg-1 text-white ">
 
-        </div> */}
-        {/* <div className="col-lg-1 mt-2 text-white"> */}
-        {/* <h4 onClick={makelogout}>logout </h4> */}
-        {/* </div> */}
         <div className="col-lg-4 mt-2 text-white">
           <div className="notification">
-            <Image
-              className={HeaderStyles.notification}
-              src={Notification}
-              alt="notifications"
-              width={36}
-              height={30}
-            />
-         <span className={HeaderStyles.initial}>{initial}</span>
+            <Image className={HeaderStyles.notification} src={Notification} alt="notifications" width={36} height={30} />
+            <span className={HeaderStyles.initial}>{initial}</span>
 
           </div>
           <div className={HeaderStyles.dropdown} >
@@ -96,12 +85,10 @@ const Header = ({ makelogout }) => {
             </p>
             <div className={HeaderStyles.dropdowncontent}>
               <Link className={HeaderStyles.profile} href="/Staff/AddStaff">
-                <h6>
-                  <CgProfile size={"22px"} /> &nbsp; &nbsp; My Profile
-                </h6>
+                <h6><CgProfile size={"22px"} /> &nbsp; &nbsp; My Profile  </h6>
               </Link>
               <h6 style={{ whiteSpace: "nowrap" }}>
-              <Link href='/SharedComponent/MyAccountSetting' className={HeaderStyles.accountsetting} >  <AiOutlineSetting size={"22px"} /> &nbsp; &nbsp; Account Setting </Link>
+                <Link href='/SharedComponent/MyAccountSetting' className={HeaderStyles.accountsetting} >  <AiOutlineSetting size={"22px"} /> &nbsp; &nbsp; Account Setting </Link>
               </h6>
               <h6 onClick={makelogout} style={{ color: "red" }}>
                 <FiLogOut size={"22px"} /> &nbsp; &nbsp; Logout

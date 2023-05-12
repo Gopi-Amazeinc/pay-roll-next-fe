@@ -21,10 +21,10 @@ const AttendenceDetails = () => {
       const roleid = sessionStorage.getItem("roleID");
       setRoleID(roleid)
       const userID = 10348;
-      const SDate = "2023-10-10";
-      const EDate = "2023-11-11";
+      const SDate = "2000-10-10";
+      const EDate = "2025-11-11";
       if (userID) {
-        let res = await axios.get(hostURL +"HR/GetAttendanceByEmployeeID?userID=" +userID +"&SDate=" +SDate +"&EDate=" +EDate);
+        let res = await axios.get(hostURL + "HR/GetAttendanceByEmployeeID?userID=" + userID + "&SDate=" + SDate + "&EDate=" + EDate);
         setAttendence(res.data);
       }
     }
@@ -52,7 +52,7 @@ const AttendenceDetails = () => {
             </>
           )}
         </div>
-        <div className="Filter" style={{marginLeft:"0px"}}>
+        <div className="Filter" style={{ marginLeft: "0px" }}>
 
 
           <div className="card p-3  border-0 shadow-lg rounded-3 mt-4">
@@ -74,7 +74,7 @@ const AttendenceDetails = () => {
               <div className="col-lg-2">
                 <br />
                 <p></p>
-                <button className="btn btn-primary" id="AddButton">
+                <button className="button" id="AddButton">
                   Download
                 </button>
               </div>
@@ -89,26 +89,26 @@ const AttendenceDetails = () => {
                 <thead className={"bg-info text-white "}>
                   <tr style={{ whiteSpace: "nowrap" }}>
                     <th>Date</th>
-                    <th>SignIn Type</th>
-                    <th>SignIn Work type</th>
+                    <th>Shift</th>
+                    <th>Day Type	</th>
                     <th>Expected InTime</th>
-                    <th>Punch InTime</th>
-                    <th>Punch InLocation/IP Address</th>
-                    <th>Expected OutTime</th>
-                    <th>Punch Out Time</th>
-                    <th>Punch Out Location/IP Address</th>
-                    <th>Sign Out Type</th>
-                    <th>Punch Out Work type</th>
-                    <th>Work Hours(HH:MM) </th>
+                    <th>Expected Out Time	</th>
+                    <th>Punch In Time	</th>
+                    <th>Punch Out Time	</th>
+                    <th>Work Hours(HH:MM)	</th>
+                    <th>Overtime</th>
+                    <th>UnderTime	</th>
+                    <th>Late</th>
+                    {/* <th>Work Hours(HH:MM) </th>
                     <th>UnderTime </th>
-                    <th>Late </th>
+                    <th>Late </th> */}
                   </tr>
                 </thead>
                 <tbody>
                   {Attendence.map((data) => {
                     return (
                       <tr key={data.id}>
-                        <td>{data.date}</td>
+                        <td>{data.signinDate}</td>
                         <td>{data.signInType}</td>
                         <td>{data.signInWorkType}</td>
                         <td>{data.expectedInTime}</td>
@@ -119,9 +119,9 @@ const AttendenceDetails = () => {
                         <td>{data.punchoutip}</td>
                         <td>{data.signOutType}</td>
                         <td>{data.punchOutWorkType}</td>
-                        <td>{data.hr1}</td>
+                        {/* <td>{data.hr1}</td>
                         <td>{data.underTime}</td>
-                        <td>{data.late}</td>
+                        <td>{data.late}</td> */}
                         {/* <td>
                               <button className='edit-btn'>Cancel</button>
                             </td> */}
