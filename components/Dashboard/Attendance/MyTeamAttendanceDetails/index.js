@@ -10,18 +10,18 @@ const MyTeamAttendence = () => {
     let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
 
     useEffect(() => {
-      async function getAttendenceByID() {
-        debugger
-        // const userid = sessionStorage.getItem("userID");
-        const SupervisorID = 10348;
-        const SDate = '2000-10-10';
-        const EDate = "2025-11-11";
-        if (userID) {
-          let res = await axios.get(hostURL + "HR/GetAttendanceByManagerID?SupervisorID=" + SupervisorID + '&SDate=' + SDate + '&EDate=' + EDate);
-          setAttendence(res.data);
+        async function getAttendenceByID() {
+            debugger
+            // const userid = sessionStorage.getItem("userID");
+            const SupervisorID = 10348;
+            const SDate = '2000-10-10';
+            const EDate = "2025-11-11";
+            if (userID) {
+                let res = await axios.get(hostURL + "HR/GetAttendanceByManagerID?SupervisorID=" + SupervisorID + '&SDate=' + SDate + '&EDate=' + EDate);
+                setAttendence(res.data);
+            }
         }
-      }
-      getAttendenceByID();
+        getAttendenceByID();
     }, []);
 
 
@@ -90,30 +90,34 @@ const MyTeamAttendence = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {
-                            MyTeamAttendence.map((data) => {
-                                return (
-                                    <tr key={data.id}>
-                                        <td>{data.date}</td>
-                                        <td>{data.staffName}</td>
-                                        <td>{data.position}</td>
-                                        <td>{data.department}</td>
-                                        <td>{data.signInType}</td>
-                                        <td>{data.expectedInTime}</td>
-                                        <td>{data.punchInTime}</td>
-                                        <td>{data.punchinip}</td>
-                                        <td>{data.punchedInForm}</td>
-                                        <td>{data.signInType}</td>
-                                        <td>{data.expectedOutTime}</td>
+                        {Array.isArray(MyTeamAttendence) && MyTeamAttendence.length > 0 && (
+                            <>
+                                {
+                                    MyTeamAttendence.map((data) => {
+                                        return (
+                                            <tr key={data.id}>
+                                                <td>{data.date}</td>
+                                                <td>{data.staffName}</td>
+                                                <td>{data.position}</td>
+                                                <td>{data.department}</td>
+                                                <td>{data.signInType}</td>
+                                                <td>{data.expectedInTime}</td>
+                                                <td>{data.punchInTime}</td>
+                                                <td>{data.punchinip}</td>
+                                                <td>{data.punchedInForm}</td>
+                                                <td>{data.signInType}</td>
+                                                <td>{data.expectedOutTime}</td>
 
 
-                                        {/* <td>
+                                                {/* <td>
                               <button className='edit-btn'>Cancel</button>
                             </td> */}
-                                    </tr>
-                                )
-                            })
-                        }
+                                            </tr>
+                                        )
+                                    })
+                                }
+                            </>
+                        )}
                     </tbody>
                 </table>
             </div>

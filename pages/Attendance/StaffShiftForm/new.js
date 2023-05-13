@@ -5,6 +5,8 @@ import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
 import { useRouter } from "next/router";
+import { apiService } from "@/services/api.service";
+
 
 const New = () => {
     const [staffshift, setStaffShift] = useState([]);
@@ -14,7 +16,7 @@ const New = () => {
 
     const getShiftname = async () => {
         let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-        const res = await axios.get(hostURL + 'Master/GetShiftMaster')
+        const res = await apiService.commonGetCall("Master/GetShiftMaster");
         setStaffShift(res.data)
     }
 
@@ -29,15 +31,15 @@ const New = () => {
     function clearForm() {
         let UserID = sessionStorage.getItem("userID")
         let details = {
-           "StaffID": UserID,
-           "ShiftDate": "",
-           "ShiftName": "",
-           "StartTime": "",
-           "EndTime": "",
-           "EndDate": "",
+            "StaffID": UserID,
+            "ShiftDate": "",
+            "ShiftName": "",
+            "StartTime": "",
+            "EndTime": "",
+            "EndDate": "",
         }
         reset(details);
-     }
+    }
     const onSubmit = async (data) => {
         const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
         await axios.post(hostURL + "HR/InsertStaffShiftDetails", data)

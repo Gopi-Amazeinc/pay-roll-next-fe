@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import axios from "axios";
+import { apiService } from "@/services/api.service";
 // import Styles from '../../styles/shiftdetails.module.css'
 const Shiftdetails = () => {
   const [shiftDetails, setShiftDetails] = useState([]);
@@ -10,11 +11,11 @@ const Shiftdetails = () => {
 
   const getShiftDetails = async () => {
     staffID = sessionStorage.getItem("userID");
-    const { data } = await axios.get(
-      hostURL + "HR/GetStaffShiftDetailsByband?staffID=" + staffID
-    );
-    console.log(data);
-    setShiftDetails(data);
+    const res = await apiService.commonGetCall("HR/GetStaffShiftDetailsByband?staffID=" + staffID);
+    // const { data } = await axios.get(hostURL + "HR/GetStaffShiftDetailsByband?staffID=" + staffID
+    //     );
+    console.log(res);
+    setShiftDetails(res);
   };
   useEffect(() => {
     getShiftDetails();
@@ -76,7 +77,7 @@ const Shiftdetails = () => {
             </tr>
           </thead>
           <tbody>
-            { Array.isArray(shiftDetails) && shiftDetails.length > 0 && (
+            {Array.isArray(shiftDetails) && shiftDetails.length > 0 && (
               <>
                 {shiftDetails.map((data) => {
                   return (

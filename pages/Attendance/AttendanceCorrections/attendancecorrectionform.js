@@ -5,6 +5,8 @@ import Link from 'next/link';
 import axios from 'axios';
 import { useState, useEffect } from 'react';
 import Swal from 'sweetalert2';
+import { apiService } from "@/services/api.service";
+
 
 export default function AttendanceCorrectionform() {
 
@@ -25,11 +27,12 @@ export default function AttendanceCorrectionform() {
         // const formData = { ...data, Attendance: Attendance };
         // console.log("form data", formData);
         debugger
-        await axios.post(hostURL + "Payroll/InsertAttendanceCorrection", data);
+      await axios.post(hostURL + "Payroll/InsertAttendanceCorrection", data);
         Swal.fire('Data Inserted successfully');
         location.href = "/Attendance/AttendanceCorrections";
         console.log("Inserted data:", data);
     }
+
 
     function clearForm(existingData = null) {
         var StafID = sessionStorage.getItem("userID")

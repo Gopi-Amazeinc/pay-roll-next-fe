@@ -2,6 +2,8 @@ import Link from 'next/link';
 import React from 'react';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { apiService } from "@/services/api.service";
+
 
 const CompanyAttendanceDetails = () => {
     const [MyTeamAttendence, setMyTeamAttendence] = useState([]);
@@ -17,7 +19,8 @@ const CompanyAttendanceDetails = () => {
             const SDate = '2023-10-10';
             const EDate = "2023-11-11";
             if (userID) {
-                let res = await axios.get(hostURL + "HR/GetAttendanceByManagerID?SupervisorID=" + SupervisorID + '&SDate=' + SDate + '&EDate=' + EDate);
+     const res = await apiService.commonGetCall("HR/GetAttendanceByManagerID?SupervisorID=" + SupervisorID + '&SDate=' + SDate + '&EDate=' + EDate);
+//   let res = await axios.get(hostURL + "HR/GetAttendanceByManagerID?SupervisorID=" + SupervisorID + '&SDate=' + SDate + '&EDate=' + EDate);
                 setAttendence(res.data);
             }
         }
@@ -90,30 +93,30 @@ const CompanyAttendanceDetails = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {
-                            MyTeamAttendence.map((data) => {
-                                return (
-                                    <tr key={data.id}>
-                                        <td>{data.date}</td>
-                                        <td>{data.staffName}</td>
-                                        <td>{data.position}</td>
-                                        <td>{data.department}</td>
-                                        <td>{data.signInType}</td>
-                                        <td>{data.expectedInTime}</td>
-                                        <td>{data.punchInTime}</td>
-                                        <td>{data.punchinip}</td>
-                                        <td>{data.punchedInForm}</td>
-                                        <td>{data.signInType}</td>
-                                        <td>{data.expectedOutTime}</td>
+                        {Array.isArray(MyTeamAttendence) && MyTeamAttendence.length > 0 && (
+                            <>
+                                {
+                                    MyTeamAttendence.map((data) => {
+                                        return (
+                                            <tr key={data.id}>
+                                                <td>{data.date}</td>
+                                                <td>{data.staffName}</td>
+                                                <td>{data.position}</td>
+                                                <td>{data.department}</td>
+                                                <td>{data.signInType}</td>
+                                                <td>{data.expectedInTime}</td>
+                                                <td>{data.punchInTime}</td>
+                                                <td>{data.punchinip}</td>
+                                                <td>{data.punchedInForm}</td>
+                                                <td>{data.signInType}</td>
+                                                <td>{data.expectedOutTime}</td>
 
-
-                                        {/* <td>
-                              <button className='edit-btn'>Cancel</button>
-                            </td> */}
-                                    </tr>
-                                )
-                            })
-                        }
+                                            </tr>
+                                        )
+                                    })
+                                }
+                            </>
+                        )}
                     </tbody>
                 </table>
             </div>

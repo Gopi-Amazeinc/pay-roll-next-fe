@@ -25,7 +25,7 @@ const AttendenceDetails = () => {
       const SDate = "2000-10-10";
       const EDate = "2025-11-11";
       if (userID) {
-        const res = await apiService.commonGetCall( "HR/GetAttendanceByEmployeeID?userID=" + userID + "&SDate=" + SDate + "&EDate=" + EDate);
+        const res = await apiService.commonGetCall("HR/GetAttendanceByEmployeeID?userID=" + userID + "&SDate=" + SDate + "&EDate=" + EDate);
         // let res = await axios.get(hostURL + "HR/GetAttendanceByEmployeeID?userID=" + userID + "&SDate=" + SDate + "&EDate=" + EDate);
         setAttendence(res.data);
       }
@@ -117,31 +117,36 @@ const AttendenceDetails = () => {
                     <th>UnderTime </th>
                     <th>Late </th> */}
                   </tr>
+
                 </thead>
                 <tbody>
-                  {Attendence.map((data) => {
-                    return (
-                      <tr key={data.id}>
-                        <td>{data.signinDate}</td>
-                        <td>{data.signInType}</td>
-                        <td>{data.signInWorkType}</td>
-                        <td>{data.expectedInTime}</td>
-                        <td>{data.punchInTime}</td>
-                        <td>{data.punchinip}</td>
-                        <td>{data.expectedOutTime}</td>
-                        <td>{data.punchOutTime}</td>
-                        <td>{data.punchoutip}</td>
-                        <td>{data.signOutType}</td>
-                        <td>{data.punchOutWorkType}</td>
-                        {/* <td>{data.hr1}</td>
+                  {Array.isArray(Attendence) && Attendence.length > 0 && (
+                    <>
+                      {Attendence.map((data) => {
+                        return (
+                          <tr key={data.id}>
+                            <td>{data.signinDate}</td>
+                            <td>{data.signInType}</td>
+                            <td>{data.signInWorkType}</td>
+                            <td>{data.expectedInTime}</td>
+                            <td>{data.punchInTime}</td>
+                            <td>{data.punchinip}</td>
+                            <td>{data.expectedOutTime}</td>
+                            <td>{data.punchOutTime}</td>
+                            <td>{data.punchoutip}</td>
+                            <td>{data.signOutType}</td>
+                            <td>{data.punchOutWorkType}</td>
+                            {/* <td>{data.hr1}</td>
                         <td>{data.underTime}</td>
                         <td>{data.late}</td> */}
-                        {/* <td>
+                            {/* <td>
                               <button className='edit-btn'>Cancel</button>
                             </td> */}
-                      </tr>
-                    );
-                  })}
+                          </tr>
+                        );
+                      })}
+                    </>
+                  )}
                 </tbody>
               </table>
             </div>
