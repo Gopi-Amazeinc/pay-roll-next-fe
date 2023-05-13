@@ -3,25 +3,25 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const MyTeamAttendence = () => {
+const CompanyAttendanceDetails = () => {
     const [MyTeamAttendence, setMyTeamAttendence] = useState([]);
     const [userID, setUserID] = useState();
 
     let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
 
     useEffect(() => {
-      async function getAttendenceByID() {
-        debugger
-        // const userid = sessionStorage.getItem("userID");
-        const SupervisorID = 10348;
-        const SDate = '2000-10-10';
-        const EDate = "2025-11-11";
-        if (userID) {
-          let res = await axios.get(hostURL + "HR/GetAttendanceByManagerID?SupervisorID=" + SupervisorID + '&SDate=' + SDate + '&EDate=' + EDate);
-          setAttendence(res.data);
+        async function getAttendenceByID() {
+            debugger
+            // const userid = sessionStorage.getItem("userID");
+            const SupervisorID = 10348;
+            const SDate = '2023-10-10';
+            const EDate = "2023-11-11";
+            if (userID) {
+                let res = await axios.get(hostURL + "HR/GetAttendanceByManagerID?SupervisorID=" + SupervisorID + '&SDate=' + SDate + '&EDate=' + EDate);
+                setAttendence(res.data);
+            }
         }
-      }
-      getAttendenceByID();
+        getAttendenceByID();
     }, []);
 
 
@@ -33,7 +33,7 @@ const MyTeamAttendence = () => {
                         <Link className='Heading active' href="/Attendance/AttendanceDetails">My Attendence Details</Link>
                     </div>
                     <div className='col-lg-3'>
-                        <Link className='Heading active' href="/Attendance/MyTeamAttendanceDetails">My Team Attendance Details</Link>
+                        <Link className='Heading active' href="/Attendance/MyTeamAttendanceDetails">Company Attendance Details</Link>
                     </div>
                 </div>
                 <h6>API Issue In Company AttendanceDetails</h6>
@@ -121,4 +121,4 @@ const MyTeamAttendence = () => {
     );
 }
 
-export default MyTeamAttendence;
+export default CompanyAttendanceDetails;

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React from "react";
-
+import { apiService } from "@/services/api.service";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -10,6 +10,7 @@ const AttendenceDetails = () => {
   const [roleID, setRoleID] = useState();
   let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
   // function Attendance() {
+
   useEffect(() => {
     const userid = sessionStorage.getItem("userID");
     const roleid = sessionStorage.getItem("roleID");
@@ -24,7 +25,8 @@ const AttendenceDetails = () => {
       const SDate = "2000-10-10";
       const EDate = "2025-11-11";
       if (userID) {
-        let res = await axios.get(hostURL + "HR/GetAttendanceByEmployeeID?userID=" + userID + "&SDate=" + SDate + "&EDate=" + EDate);
+        const res = await apiService.commonGetCall( "HR/GetAttendanceByEmployeeID?userID=" + userID + "&SDate=" + SDate + "&EDate=" + EDate);
+        // let res = await axios.get(hostURL + "HR/GetAttendanceByEmployeeID?userID=" + userID + "&SDate=" + SDate + "&EDate=" + EDate);
         setAttendence(res.data);
       }
     }
@@ -39,12 +41,24 @@ const AttendenceDetails = () => {
           <div className="col-lg-3 ">
             <Link className="Heading active" href="/Attendance/AttendanceDetails"  >   My Attendance Details  </Link>
           </div>
-          {roleID == 9 && (
+          {roleID == 3 && (
             <>
               <div className="col-lg-3">
                 <Link
                   className="Heading active"
                   href="/Attendance/MyTeamAttendanceDetails"
+                >
+                  My Team Attendance Details
+                </Link>
+              </div>
+            </>
+          )}
+          {roleID == 2 && (
+            <>
+              <div className="col-lg-3">
+                <Link
+                  className="Heading active"
+                  href="/Attendance/CompanyAttendanceDetails"
                 >
                   Company Attendance Details
                 </Link>
