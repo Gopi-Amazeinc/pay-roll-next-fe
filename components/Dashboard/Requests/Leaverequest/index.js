@@ -2,6 +2,7 @@ import Layout from "@/components/layout/layout"
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import Link from 'next/link';
+import { apiService } from "@/services/api.service";
 import {
     Calendar as BigCalendar,
     momentLocalizer,
@@ -77,19 +78,19 @@ function LeaveListDashboard() {
 
     const getPendingData = async () => {
         const staffID = sessionStorage.getItem("userID")
-        const res = await axios.get(hostURL + "Employee/GetPendingStaffLeavesByStaffID?ID=" + staffID + "&TypeID=1&Sdate=" + Sdate + "&Edate=" + Edate)
+        const res = await apiService.commonGetCall("Employee/GetPendingStaffLeavesByStaffID?ID=" + staffID + "&TypeID=1&Sdate=" + Sdate + "&Edate=" + Edate)
         setPendingData(res.data);
         console.log(res.data);
     }
     const getApprovedData = async () => {
         const staffID = sessionStorage.getItem("userID")
-        const res = await axios.get(hostURL + "Employee/GetApprovedStaffLeavesByStaffID?ID=" + staffID + "&TypeID=1&Sdate=" + Sdate + "&Edate=" + Edate)
+        const res = await apiService.commonGetCall("Employee/GetApprovedStaffLeavesByStaffID?ID=" + staffID + "&TypeID=1&Sdate=" + Sdate + "&Edate=" + Edate)
         setApprovedData(res.data);
         console.log(res.data);
     }
     const getRejectedData = async () => {
         const staffID = sessionStorage.getItem("userID")
-        const res = await axios.get(hostURL + "Employee/GetRejectedStaffLeavesByStaffID?ID=" + staffID + "&TypeID=1&Sdate=" + Sdate + "&Edate=" + Edate)
+        const res = await apiService.commonGetCall("Employee/GetRejectedStaffLeavesByStaffID?ID=" + staffID + "&TypeID=1&Sdate=" + Sdate + "&Edate=" + Edate)
         setRejectedData(res.data);
         console.log(res.data);
     }

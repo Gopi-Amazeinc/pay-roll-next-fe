@@ -5,6 +5,7 @@ import Link from 'next/link';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { useRouter } from 'next/router';
+import { apiService } from "@/services/api.service";
 
 const Compensationtimeoutform =()=> {
     const router = useRouter();
@@ -17,7 +18,7 @@ const Compensationtimeoutform =()=> {
     const onSubmit = async (data) => {
         if (actionType == "insert") {
             // debugger
-            await axios.post(hostURL + "/Payroll/InsertCompensationTimeOut", data)
+            await apiService.commonPostCall("/Payroll/InsertCompensationTimeOut", data)
             // router.push("/Requests/compensationtimeout")
             location.href = "/Requests/Compensationtimeout"
             Swal.fire({
