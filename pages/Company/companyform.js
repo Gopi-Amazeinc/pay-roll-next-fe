@@ -1,12 +1,52 @@
-import React from "react";
+import React, { useState,useEffect} from "react";
 import Layout from "@/components/layout/layout";
 import styles from "../../styles/CompanyForm.module.css";
 import Dropzone from "../SharedComponent/dropzone";
 import { useForm } from "react-hook-form";
+import { apiService } from "@/services/api.service";
 
 function Companyform() {
 
   const { register, handleSubmit, watch, reset, formState: { errors }, } = useForm();
+
+  const [actionType, setActionType] = useState("insert");
+
+  const [countrydata, SetCountrydata] = useState([]);
+  const [statedata, setstatedata] = useState([]);
+  const [citydata, setcitydata] = useState([]);
+
+  useEffect(() => {
+   async function getdropdowndata(){
+    let res = await apiService.commonGetCall("/Master/GetCountryType");
+    SetCountrydata(res.data);
+     res = await apiService.commonGetCall("/Master/GetCityType");
+     setcitydata(res.data);
+     res = await apiService.commonGetCall("HR/GetHolidaysByID?ID=" + id);
+   }
+
+   getdropdowndata();
+  }, []);
+
+
+  function clearForm(HolidaysData = null) {
+    debugger;
+    let details = {
+      "ID": HolidaysData ? HolidaysData.id : "",
+      "Holiday": HolidaysData ? HolidaysData.holiday : "",
+      "HolidayDescription": HolidaysData ? HolidaysData.holidayDescription : "",
+      "HolidayDate": HolidaysData ? HolidaysData.holidayDate : "",
+      "Attachment": HolidaysData ? HolidaysData.attachment : "",
+      "HolidayCategory": HolidaysData ? HolidaysData.holidayCategory : "",
+      "Region": HolidaysData ? HolidaysData.region : ""
+
+    };
+    reset(details);
+    setActionType(HolidaysData ? "update" : "insert");
+  }
+
+
+
+
 
 
   return (
@@ -84,27 +124,41 @@ function Companyform() {
               <p className={styles.p}>Country</p>
               <select class="form-select" >
                 <option selected>Select Country</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+                {
+                  countrydata.map((data)=>{
+                    return(
+                      <option value={data.id} key={data.id}>{data.short}</option>
+
+                    )
+                  })
+
+                }
               </select>
             </div>
             <div className="col-lg-2">
               <p className={styles.p}>Province</p>
               <select class="form-select" >
                 <option selected>Select Province</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+                {
+
+                }
+                
               </select>
             </div>
             <div className="col-lg-2">
               <p className={styles.p}>City</p>
               <select class="form-select" >
                 <option selected>Select City</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+                {
+                  citydata.map((data)=>{
+                    return(
+                      <option value={data.id} key={data.id}>{data.short}</option>
+                    
+                    )
+                  })
+                  
+
+                }
               </select>
             </div>
           </div>
@@ -143,6 +197,8 @@ function Companyform() {
             <div className="col-lg-4"></div>
           </div>
         </div>
+
+
         <div class="shadow-lg p-3 mb-5 bg-white rounded">
           <p className={styles.p}>Work Policy</p>
           <div className="row">
