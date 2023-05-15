@@ -51,7 +51,7 @@ const Attendancecorrectiondashboard = () => {
 
     getCurrentMonthDates();
 
-    if (userRoleID === 3) {
+    if (roleID === 3) {
       getPendingManager(startDate, endDate);
       getApprovedManager(startDate, endDate);
       getRejectedManager(startDate, endDate);
@@ -145,7 +145,6 @@ const Attendancecorrectiondashboard = () => {
             "&SignoutDate=" +
             EDate
         );
-        // axios.get(hostURL + "Payroll/ApproveAttedanceCoorection?id=" + data.id + "&UserID=" + data.staffID + "&SigninDate=" + SDate + "&SignoutDate=" + EDate );
         Swal.fire({
           icon: "success",
           titleText: "Approved Successfully",
@@ -252,13 +251,16 @@ const Attendancecorrectiondashboard = () => {
       <div className="row mt-3">
         <div className="col-lg-4">
           <div className="btn-group">
-            <button onClick={togglePending} className="toggleButton">
+            <button onClick={togglePending} 
+            className={`toggleButton ${pending  ? 'focus' : ''}`}>
               Pending
             </button>
-            <button onClick={toggleApproved} className="toggleButton">
+            <button onClick={toggleApproved}
+             className={`toggleButton ${approved ? 'focus' : ''}`}>
               Approved
             </button>
-            <button onClick={toggleRejected} className="toggleButton">
+            <button onClick={toggleRejected}
+             className={`toggleButton ${rejected  ? 'focus' : ''}`}>
               Rejected
             </button>
           </div>
