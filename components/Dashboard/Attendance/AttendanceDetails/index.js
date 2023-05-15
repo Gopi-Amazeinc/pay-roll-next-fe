@@ -67,8 +67,6 @@ const AttendenceDetails = () => {
           )}
         </div>
         <div className="Filter" style={{ marginLeft: "0px" }}>
-
-
           <div className="card p-3  border-0 shadow-lg rounded-3 mt-4">
             <div className="row">
               <div className="col-lg-1">
