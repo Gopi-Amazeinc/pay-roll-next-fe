@@ -359,7 +359,7 @@ thead {
   font-size: 15px;
 }
 
-.toggleButton:focus {
+.toggleButton.focus {
   color: white;
   background-color: #3247d5;
 }
