@@ -84,26 +84,29 @@ function OTRateDash() {
                                 </tr>
                             </thead>
                             <tbody >
-                                {
-                                    otDetails.map((data, index) => {
-                                        return (
-                                            <tr className="text-dark" key={index}>
-                                                <td>{data.day}</td>
-                                                <td>{data.normal}</td>
-                                                <td>{data.ot}</td>
-                                                <td>{data.nd}</td>
-                                                <td>{data.ndot}</td>
-                                                <td>
-                                                    <Link href={`/Masters/OtMaster/Edit/${data.id}`}>
-                                                        <button className='edit-btn' >Edit</button>
-                                                    </Link>
-                                                    &nbsp; &nbsp; &nbsp;
-                                                    <button className='edit-btn' onClick={() => handleDelete(data.id)}>Delete</button>
-                                                </td>
-                                            </tr>
-                                        )
-                                    })
-                                }
+                                {Array.isArray(otDetails) &&
+                                    otDetails.length > 0 && (
+                                        <>
+                                            {otDetails.map((data, index) => {
+                                                return (
+                                                    <tr className="text-dark" key={index}>
+                                                        <td>{data.day}</td>
+                                                        <td>{data.normal}</td>
+                                                        <td>{data.ot}</td>
+                                                        <td>{data.nd}</td>
+                                                        <td>{data.ndot}</td>
+                                                        <td>
+                                                            <Link href={`/Masters/OtMaster/Edit/${data.id}`}>
+                                                                <button className='edit-btn' >Edit</button>
+                                                            </Link>
+                                                            &nbsp; &nbsp; &nbsp;
+                                                            <button className='edit-btn' onClick={() => handleDelete(data.id)}>Delete</button>
+                                                        </td>
+                                                    </tr>
+                                                );
+                                            })}
+                                        </>
+                                    )}
                             </tbody>
                         </table>
                     </div>

@@ -119,30 +119,35 @@ function BrandMasterDashboard() {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {BrandMaster.map((data) => {
-                                                return (
-                                                    <tr key={data.id}>
-                                                        <td>{data.short}</td>
-                                                        <td>{data.description}</td>
-                                                        <td>
-                                                            <Link href={`/Masters/BrandMaster/Edit/${data.id}`}>
-                                                                <button
-                                                                    className="edit-btn"
-                                                                >
-                                                                    Edit
-                                                                </button>
-                                                            </Link>
-                                                            &nbsp;
-                                                            <button
-                                                                className="edit-btn"
-                                                                onClick={() => DeleteBandMaster(data.id)}
-                                                            >
-                                                                Delete
-                                                            </button>
-                                                        </td>
-                                                    </tr>
-                                                );
-                                            })}
+                                            {Array.isArray(BrandMaster) &&
+                                                BrandMaster.length > 0 && (
+                                                    <>
+                                                        {BrandMaster.map((data) => {
+                                                            return (
+                                                                <tr key={data.id}>
+                                                                    <td>{data.short}</td>
+                                                                    <td>{data.description}</td>
+                                                                    <td>
+                                                                        <Link href={`/Masters/BrandMaster/Edit/${data.id}`}>
+                                                                            <button
+                                                                                className="edit-btn"
+                                                                            >
+                                                                                Edit
+                                                                            </button>
+                                                                        </Link>
+                                                                        &nbsp;
+                                                                        <button
+                                                                            className="edit-btn"
+                                                                            onClick={() => DeleteBandMaster(data.id)}
+                                                                        >
+                                                                            Delete
+                                                                        </button>
+                                                                    </td>
+                                                                </tr>
+                                                            );
+                                                        })}
+                                                    </>
+                                                )}
                                         </tbody>
                                     </table>
                                 </div>

@@ -76,29 +76,29 @@ export default function SubsidaryMasterDash() {
                     </tr>
                 </thead>
                 <tbody >
-                    {SubsidaryMaster.filter(post => {
-                        return Object.values(post).some(value =>
-                            value.toString().toLowerCase().includes(keyword.toLowerCase())
-                        );
-                    })
-                        .map((data) => {
-                            return (
-                                <tr key={data.id}>
-                                    <td>{data.name}</td>
-                                    <td>{data.description}</td>
 
-                                    <td>
-                                        <Link href={`/Masters/SubSidaryMaster/Edit/${data.id}`}>
-                                            <button className="edit-btn">Edit</button>
-                                        </Link>
-                                        &nbsp;
+                    {Array.isArray(SubsidaryMaster) &&
+                        SubsidaryMaster.length > 0 && (
+                            <>
+                                {SubsidaryMaster.map((data) => {
+                                    return (
+                                        <tr key={data.id}>
+                                            <td>{data.name}</td>
+                                            <td>{data.description}</td>
 
-                                        <button className="edit-btn" onClick={() => handleDelete(data.id)}>Delete</button>
-                                    </td>
-                                </tr>
-                            )
-                        })
-                    }
+                                            <td>
+                                                <Link href={`/Masters/SubSidaryMaster/Edit/${data.id}`}>
+                                                    <button className="edit-btn">Edit</button>
+                                                </Link>
+                                                &nbsp;
+
+                                                <button className="edit-btn" onClick={() => handleDelete(data.id)}>Delete</button>
+                                            </td>
+                                        </tr>
+                                    );
+                                })}
+                            </>
+                        )}
                 </tbody>
             </table>
         </div>

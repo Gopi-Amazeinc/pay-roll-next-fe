@@ -115,43 +115,49 @@ const LoanMasterDash = () => {
             </tr>
           </thead>
           <tbody>
-            {loanMaster.map((data, index) => {
-              return (
-                <tr className="text-dark" key={index}>
-                  <td>{data.type}</td>
-                  <td>{data.description}</td>
-                  <td>
-                    <span onClick={() => enableDisableLoanType(data)}>
-                      {data.enable_Disable ? (
-                        <Image
-                          className="img-fluid "
-                          src={Enable}
-                          alt="Digi Office"
-                          width={50}
-                          height={60}
-                        />
-                      ) : (
-                        <Image
-                          className="img-fluid "
-                          src={Disable}
-                          alt="Digi Office"
-                          width={50}
-                          height={60}
-                        />
-                      )}
-                    </span>
-                    <Image
-                      className="img-fluid"
-                      onClick={() => handelDelete(data.id)}
-                      src={Cancel}
-                      alt="Digi Office"
-                      width={30}
-                      height={60}
-                    />
-                  </td>
-                </tr>
-              );
-            })}
+
+            {Array.isArray(loanMaster) &&
+              loanMaster.length > 0 && (
+                <>
+                  {loanMaster.map((data, index) => {
+                    return (
+                      <tr className="text-dark" key={index}>
+                        <td>{data.type}</td>
+                        <td>{data.description}</td>
+                        <td>
+                          <span onClick={() => enableDisableLoanType(data)}>
+                            {data.enable_Disable ? (
+                              <Image
+                                className="img-fluid "
+                                src={Enable}
+                                alt="Digi Office"
+                                width={50}
+                                height={60}
+                              />
+                            ) : (
+                              <Image
+                                className="img-fluid "
+                                src={Disable}
+                                alt="Digi Office"
+                                width={50}
+                                height={60}
+                              />
+                            )}
+                          </span>
+                          <Image
+                            className="img-fluid"
+                            onClick={() => handelDelete(data.id)}
+                            src={Cancel}
+                            alt="Digi Office"
+                            width={30}
+                            height={60}
+                          />
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </>
+              )}
           </tbody>
         </table>
       </div>
