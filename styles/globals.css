@@ -1,6 +1,6 @@
 .AddButton {
-  width: 100%;
-  height: 100%;
+  width: 200px;
+  height: 40px;
   box-sizing: border-box;
   border-radius: 5px;
   font-family: Poppins;
@@ -237,10 +237,10 @@
 }
 
 
-/* .card {
+.card {
   width: 98%;
   margin-left: 15px;
-} */
+}
 
 #input {
   size: 100px;
@@ -261,7 +261,7 @@
   color: #3247d5;
 }
 
-/* .card {
+.card {
   padding: 1%;
   background: #fff;
   box-shadow: 1px 1px 15px 3px #0000001f;
@@ -280,7 +280,7 @@
   background-color: #fff;
   background-clip: border-box;
   border: 0px solid rgba(0, 0, 0, 0.125);
-} */
+}
 
 .button {
   background-color: #3247d5;
