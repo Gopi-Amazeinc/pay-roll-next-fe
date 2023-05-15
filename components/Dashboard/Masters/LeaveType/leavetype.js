@@ -1,10 +1,10 @@
 import React from "react";
 import Link from "next/link";
-import leavetypeStyles from "../../../../styles/LeaveTypeDashboard.module.css";
 import Layout from '../../../layout/layout'
 import { useState, useEffect } from 'react'
 import axios from "axios";
 import Swal from "sweetalert2";
+import { AiOutlinePlus } from "react-icons/ai";
 import ReactPaginate from "react-paginate";
 function LeaveTypeDashboard() {
     let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
@@ -52,126 +52,104 @@ function LeaveTypeDashboard() {
     return (
         <Layout>
             <div className="container">
-                <div className="row">
-                    <div className="col-lg-4">
-                        <h3 className=" Heading">Leave Type </h3>
-                    </div>
-                    <div className="col-lg-4"></div>
-                    <div className="col-lg-2"></div>
-                </div>
-                <br />
-                <div className={leavetypeStyles.card}>
-                    <br></br>
+                <p className="Heading"> Leave Type </p>
+                <div className="card p-3 rounded-3 shadow border-0">
                     <div className="row">
-                        <div className="col-lg-1">
-                            <p className="filter">Filter By</p>
+                        <div className="col-1">
+                            <p>Filter By</p>
                         </div>
-                        <div className="col-lg-5" style={{ marginLeft: "15px" }}>
+                        <div className="col-5">
                             <input
                                 type="text"
                                 placeholder="Search"
-                                id="term"
                                 className="form-control"
                                 onChange={e => setKeyword(e.target.value)}
                             ></input>
                         </div>
-                        <div className="col-lg-3" style={{ textAlign: "center" }}></div>
                     </div>
-                    <br></br>
                 </div>
-                <br></br>
-                <div className="row">
-                    <div className="col-md-6">
-                        <p className="Heading fs-6">
-                            SHOWING <span>{leaveTypeData.length} </span>RESULTS
-                        </p>
-                    </div>
-                    <div className="col-md-4"></div>
-                    <div className="col-md-1">
+
+                <div className="row mt-3">
+                    <p className="col-2 result-heading">Showing {leaveTypeData.length} Results</p>
+                    <div className="col-8"></div>
+                    <div className="col-2">
                         <Link href="/Masters/LeaveType/new">
-                            <button className="AddButton" tabIndex="0">
-                                Add New
+                            <button className=" AddButton">
+                            <AiOutlinePlus />    Add New
                             </button>
                         </Link>
                     </div>
                 </div>
-                <br></br>
-                <div className="container">
-                    <div className="col-md-12">
-                        <div className="row">
-                            <table className="table table-striped table-hover mt-4">
-                                <thead>
-                                    <tr>
-                                        <th>Leave Type</th>
-                                        <th>Description</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
 
+                <div className="mt-3">
+                    <table className="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Leave Type</th>
+                                <th>Description</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {Array.isArray(leaveTypeData) &&
+                                leaveTypeData.length > 0 && (
+                                    <>
+                                        {leaveTypeData
+                                            .filter(data => {
+                                                if ((data.short.toLowerCase().includes(keyword.toLowerCase())) || (data.description.toLowerCase().includes(keyword))) {
+                                                    return data;
+                                                }
+                                            })
+                                            .slice(offset, offset + PER_PAGE)
+                                            .map((data, index) => {
+                                                return (
+                                                    <tr classNameName="text-dark" key={index}>
+                                                        <td>{data.short}</td>
+                                                        <td>{data.description}</td>
+                                                        <td>
+                                                            <Link href={`/Masters/LeaveType/Edit/${data.id}`}>
+                                                                <button
+                                                                    className="edit-btn"
+                                                                >
+                                                                    Edit
+                                                                </button>
+                                                            </Link>
+                                                            <button
+                                                                className="edit-btn"
+                                                                onClick={() => handelDelete(data.id)}
+                                                            >
+                                                                Delete
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                );
+                                            })}
+                                    </>
+                                )}
+                        </tbody>
+                    </table>
+                </div>
 
-                                    {Array.isArray(leaveTypeData) &&
-                                        leaveTypeData.length > 0 && (
-                                            <>
-                                                {leaveTypeData
-                                                    .filter(data => {
-                                                        if ((data.short.toLowerCase().includes(keyword.toLowerCase())) || (data.description.toLowerCase().includes(keyword))) {
-                                                            return data;
-                                                        }
-                                                    })
-                                                    .slice(offset, offset + PER_PAGE)
-                                                    .map((data, index) => {
-                                                        return (
-                                                            <tr classNameName="text-dark" key={index}>
-                                                                <td>{data.short}</td>
-                                                                <td>{data.description}</td>
-                                                                <td>
-                                                                    <Link href={`/Masters/LeaveType/Edit/${data.id}`}>
-                                                                        <button
-                                                                            className="edit-btn"
-                                                                        >
-                                                                            Edit
-                                                                        </button>
-                                                                    </Link>
-                                                                    <button
-                                                                        className="edit-btn"
-                                                                        onClick={() => handelDelete(data.id)}
-                                                                    >
-                                                                        Delete
-                                                                    </button>
-                                                                </td>
-                                                            </tr>
-                                                        );
-                                                    })}
-                                            </>
-                                        )}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                    <div className="col-md-1"></div>
-
-                    <div className="mb-4 mt-4 text-center">
-                        <ReactPaginate
-                            previousLabel={"Previous"}
-                            nextLabel={"Next"}
-                            breakLabel={"..."}
-                            pageCount={pageCount}
-                            marginPagesDisplayed={2}
-                            pageRangeDisplayed={3}
-                            onPageChange={handlePageClick}
-                            containerClassName={"pagination  justify-content-center"}
-                            pageClassName={"page-item "}
-                            pageLinkClassName={"page-link"}
-                            previousClassName={"page-item"}
-                            previousLinkClassName={"page-link"}
-                            nextClassName={"page-item"}
-                            nextLinkClassName={"page-link"}
-                            breakClassName={"page-item"}
-                            breakLinkClassName={"page-link"}
-                            activeClassName={"active primary"}
-                        />
-                    </div>
+                <div className="mb-4 mt-4 text-center">
+                    <ReactPaginate
+                        previousLabel={"Previous"}
+                        nextLabel={"Next"}
+                        breakLabel={"..."}
+                        pageCount={pageCount}
+                        marginPagesDisplayed={2}
+                        pageRangeDisplayed={3}
+                        onPageChange={handlePageClick}
+                        containerClassName={"pagination  justify-content-center"}
+                        pageClassName={"page-item "}
+                        pageLinkClassName={"page-link"}
+                        previousClassName={"page-item"}
+                        previousLinkClassName={"page-link"}
+                        nextClassName={"page-item"}
+                        nextLinkClassName={"page-link"}
+                        breakClassName={"page-item"}
+                        breakLinkClassName={"page-link"}
+                        activeClassName={"active primary"}
+                    />
                 </div>
             </div>
         </Layout>
