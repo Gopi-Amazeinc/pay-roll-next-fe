@@ -51,7 +51,7 @@ const Attendancecorrectiondashboard = () => {
 
     getCurrentMonthDates();
 
-    if (userRoleID === 3) {
+    if (roleID === 3) {
       getPendingManager(startDate, endDate);
       getApprovedManager(startDate, endDate);
       getRejectedManager(startDate, endDate);
@@ -252,7 +252,8 @@ const Attendancecorrectiondashboard = () => {
       <div className="row mt-3">
         <div className="col-lg-4">
           <div className="btn-group">
-            <button onClick={togglePending} className="toggleButton">
+            <button onClick={togglePending} 
+            className="toggleButton">
               Pending
             </button>
             <button onClick={toggleApproved} className="toggleButton">
