@@ -3,6 +3,7 @@ import Link from "next/link";
 import { AiOutlinePlus } from "react-icons/ai";
 import axios from "axios";
 import Swal from 'sweetalert2';
+import { BiFilterAlt } from "react-icons/bi";
 
 function ShiftMaster() {
   const [shiftDetails, setShiftDetails] = useState([]);
@@ -43,7 +44,7 @@ function ShiftMaster() {
       <div className="card p-3 rounded-3 shadow border-0">
         <div className="row">
           <div className="col-1">
-            <p>Filter By</p>
+            <p> <BiFilterAlt /> Filter By</p>
           </div>
           <div className="col-5">
             <input
@@ -95,7 +96,7 @@ function ShiftMaster() {
                           <Link href={`/Masters/ShiftMaster/Edit/${data.id}`}>
                             <button className="edit-btn">Edit</button>
                           </Link>
-                          &nbsp; &nbsp; &nbsp;
+                          &nbsp; &nbsp;
                           <button className="edit-btn" onClick={() => handleDelete(data.id)}>Delete</button>
                         </td>
                       </tr>

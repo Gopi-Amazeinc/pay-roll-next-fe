@@ -1,15 +1,16 @@
 import React from "react";
-import citymaster from "@/styles/CityMasterDashboard.module.css";
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import axios from 'axios'
 import Swal from "sweetalert2";
 import Layout from '../../../layout/layout'
+import { BiFilterAlt } from "react-icons/bi";
+import { AiOutlinePlus } from "react-icons/ai";
 
 function CityMasterDash() {
 
   const [CityMaster, setCityMaster] = useState([]);
-
+  
   const getCityMaster = async () => {
     let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
     let res = await axios.get(hostURL + "Master/GetCityType"); //This Api is useed for Get the Dashborad data ciyType Master
@@ -20,30 +21,6 @@ function CityMasterDash() {
     getCityMaster();
   }, []);
 
-  // async function DeleteCityMaster(id) {
-  //   debugger;
-  //   try {
-  //     let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-  //     Swal.fire({
-  //       title: "Are you sure?",
-  //       text: "You won't be able to revert this!",
-  //       icon: "warning",
-  //       showCancelButton: true,
-  //       confirmButtonColor: "#3085d6",
-  //       cancelButtonColor: "#d33",
-  //       confirmButtonText: "Yes, delete it!",
-  //     }).then((res) => {
-  //       if (res) {
-  //         axios.get(hostURL + `Master/DeleteCityType?id=${id}`);          
-  //       }
-  //       getCityMaster();
-  //     });
-  //   } 
-  //   catch (error) {
-  //     console.error(error);
-  //     alert("Failed to delete data");
-  //   }
-  // }
   async function DeleteCityMaster(id) {
     debugger;
     try {
@@ -76,66 +53,44 @@ function CityMasterDash() {
   return (
     <Layout>
       <div className="container">
-        <div className="row">
-          <div className="col-lg-6">
-            <br />
-            <h3 className="Heading">City Master</h3>
-          </div>
-          <div className="col-lg-4"></div>
-          <div className="col-lg-2"></div>
-        </div>
-        <br />
-        <div className="card border-0 rounded-3 mx-0">
+        <p className="Heading">City Master</p>
+        <div className="card p-3 rounded-3 shadow border-0">
           <div className="row">
-            <div className="col-lg-1">
-              <p>Filter By</p>
+            <div className="col-1">
+              <p> <BiFilterAlt /> Filter By</p>
             </div>
-            <div className="col-lg-5">
+            <div className="col-5">
               <input
                 type="text"
                 placeholder="Search"
-                id="term"
                 className="form-control"
-              />
+              ></input>
             </div>
-            <div className="col-lg-3">
-              <div className="dropdown">
-                <select
-                  id="stateID"
-                  name="stateID"
-                  className="form-control inputfield"
-                >
-                  <option value="Select">Select Province</option>
-                </select>
-              </div>
+            <div className="col-3">
+              <select
+                className="form-select"
+              >
+                <option value="">Select Province</option>
+              </select>
             </div>
-            <div className="search"></div>
           </div>
-          <br />
         </div>
-        <br />
-        <div className="row">
-          <div className="col-md-10">
-            <p className="Heading fs-6 mt-2">
-              SHOWING <span></span>RESULTS
-            </p>
-          </div>
-          <div className="col-md-2">
+
+        <div className="row mt-3">
+          <p className="col-2 result-heading">Showing {CityMaster.length} Results</p>
+          <div className="col-8"></div>
+          <div className="col-2">
             <Link href="/Masters/CityMaster/new">
-              <button className="AddButton" tabIndex="0">
-                Add New
+              <button className=" AddButton">
+                <AiOutlinePlus />    Add New
               </button>
             </Link>
           </div>
         </div>
-        <br />
-      </div>
-      <br />
-      <div className="alignForm"></div>
-      <div className="row">
-        <div className="col-md-12">
-          <table class="table table-striped table-hover ">
-            <thead className="bg-info text-white ">
+
+        <div className="mt-3">
+          <table className="table table-striped">
+            <thead >
               <tr>
                 <th>Country Name</th>
                 <th>Province Name</th>
@@ -145,7 +100,6 @@ function CityMasterDash() {
               </tr>
             </thead>
             <tbody>
-
               {Array.isArray(CityMaster) &&
                 CityMaster.length > 0 && (
                   <>
@@ -159,7 +113,7 @@ function CityMasterDash() {
                           <td>
                             <Link href={`/Masters/CityMaster/Edit/${data.id}`}>
                               <button className="edit-btn">Edit</button></Link>
-                            &nbsp;
+                            &nbsp;&nbsp;
                             <button className="edit-btn" onClick={() => DeleteCityMaster(data.id)}>Delete</button>
                           </td>
                         </tr>
