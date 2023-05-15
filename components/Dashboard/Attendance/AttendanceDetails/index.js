@@ -21,7 +21,7 @@ const AttendenceDetails = () => {
       // const userid = sessionStorage.getItem("userID");
       const roleid = sessionStorage.getItem("roleID");
       setRoleID(roleid)
-      const userID = 10348;
+      const userID = sessionStorage.userID;
       const SDate = "2000-10-10";
       const EDate = "2025-11-11";
       if (userID) {
