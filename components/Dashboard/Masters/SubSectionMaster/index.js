@@ -93,31 +93,35 @@ const SubSectionMaster = () => {
               </tr>
             </thead>
             <tbody>
-              {subsection.map((data, index) => {
-                return (
-                  <tr className="text-dark" key={index}>
-                    <td>{data.short}</td>
-                    <td>{data.description}</td>
-                    <td>
-                      <Link href={`/Masters/SubSectionMaster/Edit/${data.id}`}>
-                        <button
-                          className="edit-btn"
-                          style={{ fontSize: "12px", marginRight: "5%" }}
-                        >
-                          Edit
-                        </button>
-                      </Link>
-                      <button
-                        className="edit-btn"
-                        style={{ fontSize: "12px" }}
-                        onClick={() => handelDelete(data.id)}
-                      >
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
-                );
-              })}
+
+              {Array.isArray(subsection) &&
+                subsection.length > 0 && (
+                  <>
+                    {subsection.map((data, index) => {
+                      return (
+                        <tr key={index}>
+                          <td>{data.short}</td>
+                          <td>{data.description}</td>
+                          <td>
+                            <Link href={`/Masters/SubSectionMaster/Edit/${data.id}`}>
+                              <button
+                                className="edit-btn"
+                              >
+                                Edit
+                              </button>
+                            </Link>
+                            <button
+                              className="edit-btn"
+                              onClick={() => handelDelete(data.id)}
+                            >
+                              Delete
+                            </button>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </>
+                )}
             </tbody>
           </table>
         </div>

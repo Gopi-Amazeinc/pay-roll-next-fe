@@ -74,22 +74,26 @@ function GroupMaster() {
                         </tr>
                     </thead>
                     <tbody>
-                        {
-                            groupMaster.map((data, index) => {
-                                return (
-                                    <tr key={index}>
-                                        <td>{data.short}</td>
-                                        <td>{data.description}</td>
-                                        <td>
-                                            <Link href={`/Masters/GroupMaster/Edit/${data.id}`}>
-                                                <button id={Styles.editbtn}>Edit</button>
-                                            </Link>&nbsp;&nbsp;&nbsp;&nbsp;
-                                            <button onClick={deleteGroupData.bind(this, data.id)} id={Styles.editbtn}>Delete</button>
-                                        </td>
-                                    </tr>
-                                )
-                            })
-                        }
+
+                        {Array.isArray(groupMaster) &&
+                            groupMaster.length > 0 && (
+                                <>
+                                    {groupMaster.map((data, index) => {
+                                        return (
+                                            <tr key={index}>
+                                                <td>{data.short}</td>
+                                                <td>{data.description}</td>
+                                                <td>
+                                                    <Link href={`/Masters/GroupMaster/Edit/${data.id}`}>
+                                                        <button id={Styles.editbtn}>Edit</button>
+                                                    </Link>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                    <button onClick={deleteGroupData.bind(this, data.id)} id={Styles.editbtn}>Delete</button>
+                                                </td>
+                                            </tr>
+                                        );
+                                    })}
+                                </>
+                            )}
                     </tbody>
                 </table>
             </div>

@@ -76,20 +76,24 @@ function LevelTypeDash() {
                             </tr>
                         </thead>
                         <tbody>
-                            {
-                                dashboard.map((data) => {
-                                    return (
-                                        <tr key={data.id}>
-                                            <td>{data.short}</td>
-                                            <td>{data.description}</td>
-                                            <td>
-                                                <Link href={`/Masters/JobLevel/Edit/${data.id}`}><button className='edit-btn mx-1'>Edit</button></Link>
-                                                <button className='edit-btn ' onClick={deleteLevelType.bind(this, data.id)}>Delete</button>
-                                            </td>
-                                        </tr>
-                                    )
-                                })
-                            }
+
+                            {Array.isArray(dashboard) &&
+                                dashboard.length > 0 && (
+                                    <>
+                                        {dashboard.map((data) => {
+                                            return (
+                                                <tr key={data.id}>
+                                                    <td>{data.short}</td>
+                                                    <td>{data.description}</td>
+                                                    <td>
+                                                        <Link href={`/Masters/JobLevel/Edit/${data.id}`}><button className='edit-btn mx-1'>Edit</button></Link>
+                                                        <button className='edit-btn ' onClick={deleteLevelType.bind(this, data.id)}>Delete</button>
+                                                    </td>
+                                                </tr>
+                                            );
+                                        })}
+                                    </>
+                                )}
                         </tbody>
                     </table>
                 </div>

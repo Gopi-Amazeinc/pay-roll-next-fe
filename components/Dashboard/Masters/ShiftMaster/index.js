@@ -86,26 +86,30 @@ function ShiftMaster() {
               </tr>
             </thead>
             <tbody>
-              {
-                shiftDetails.map((data, index) => {
-                  return (
-                    <tr className="text-dark" key={index}>
-                      <td>{data.short}</td>
-                      <td>{data.description}</td>
-                      <td>{data.shiftTimeings}</td>
-                      <td>{data.grace}</td>
-                      <td>{data.shiftType}</td>
-                      <td>
-                        <Link href={`/Masters/ShiftMaster/Edit/${data.id}`}>
-                          <button className="edit-btn">Edit</button>
-                        </Link>
-                        &nbsp; &nbsp; &nbsp;
-                        <button className="edit-btn" onClick={() => handleDelete(data.id)}>Delete</button>
-                      </td>
-                    </tr>
-                  )
-                })
-              }
+
+              {Array.isArray(shiftDetails) &&
+                shiftDetails.length > 0 && (
+                  <>
+                    {shiftDetails.map((data,index) => {
+                      return (
+                        <tr key={index}>
+                          <td>{data.short}</td>
+                          <td>{data.description}</td>
+                          <td>{data.shiftTimeings}</td>
+                          <td>{data.grace}</td>
+                          <td>{data.shiftType}</td>
+                          <td>
+                            <Link href={`/Masters/ShiftMaster/Edit/${data.id}`}>
+                              <button className="edit-btn">Edit</button>
+                            </Link>
+                            &nbsp; &nbsp; &nbsp;
+                            <button className="edit-btn" onClick={() => handleDelete(data.id)}>Delete</button>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </>
+                )}
             </tbody>
           </table>
         </div>
