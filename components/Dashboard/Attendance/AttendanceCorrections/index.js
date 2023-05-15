@@ -62,29 +62,28 @@ const Attendancecorrectiondashboard = () => {
     }
   }, [1]);
 
-  const getCurrentMonthDates = ()=> {
+  const getCurrentMonthDates = () => {
     let newDate = new Date();
     let firstDayOfMonth = new Date(newDate.getFullYear(), newDate.getMonth());
     let fromDate = formateDate(firstDayOfMonth);
-    
+
     const year = newDate.getFullYear();
     const month = newDate.getMonth() + 1;
     const lastDay = new Date(year, month, 0).getDate();
     const endDate = `${year}-${month.toString().padStart(2, "0")}-${lastDay
       .toString()
       .padStart(2, "0")}`;
-      
-      setSDate(fromDate);
-      setDate(endDate);
-    }
-    
-    const formateDate =(datetoformat) => {
-      const day = datetoformat.getDate().toString().padStart(2, "0");
-      const month = (datetoformat.getMonth() + 1).toString().padStart(2, "0");
-      const year = datetoformat.getFullYear().toString();
-      return `${year}-${month}-${day}`;
-    }
-  
+
+    setSDate(fromDate);
+    setDate(endDate);
+  };
+
+  const formateDate = (datetoformat) => {
+    const day = datetoformat.getDate().toString().padStart(2, "0");
+    const month = (datetoformat.getMonth() + 1).toString().padStart(2, "0");
+    const year = datetoformat.getFullYear().toString();
+    return `${year}-${month}-${day}`;
+  };
 
   const getPendingManager = async (SDate, EDate) => {
     const res = await apiService.commonGetCall(
@@ -134,9 +133,9 @@ const Attendancecorrectiondashboard = () => {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, Approve it!",
-    }).then(async (result)  => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
-         await apiService.commonGetCall(
+        await apiService.commonGetCall(
           "Payroll/ApproveAttedanceCoorection?id=" +
             data.id +
             "&UserID=" +
@@ -156,8 +155,7 @@ const Attendancecorrectiondashboard = () => {
     });
   };
 
-
-   const getPendingData= async(SDate, EDate)=> {
+  const getPendingData = async (SDate, EDate) => {
     const res = await apiService.commonGetCall(
       "Payroll/GetPendingAttendanceCorrectionByStaffID?userID=" +
         userID +
@@ -169,9 +167,9 @@ const Attendancecorrectiondashboard = () => {
     // const res = await axios.get( hostURL +  "Payroll/GetPendingAttendanceCorrectionByStaffID?userID=" + staffID + "&SDate=" + SDate + "&EDate=" + EDate);
     console.log(res, "pending");
     setpendingDashboardData(res.data);
-  }
+  };
 
-  const getApprovedData= async (SDate, EDate) =>{
+  const getApprovedData = async (SDate, EDate) => {
     const res = await apiService.commonGetCall(
       "Payroll/GetApprovedAttendanceCorrectionByStaffID?userID=" +
         userID +
@@ -183,9 +181,9 @@ const Attendancecorrectiondashboard = () => {
     // const res = await axios.get( hostURL +"Payroll/GetApprovedAttendanceCorrectionByStaffID?userID=" + staffID +"&SDate=" + SDate + "&EDate=" + EDate  );
     console.log(res, "approved");
     setapprovedDashboardData(res.data);
-  }
+  };
 
-  const  getRejectedData = async (SDate, EDate) => {
+  const getRejectedData = async (SDate, EDate) => {
     const res = await apiService.commonGetCall(
       "Payroll/GetRejectedAttendanceCorrectionByStaffID?userID=" +
         userID +
@@ -197,7 +195,7 @@ const Attendancecorrectiondashboard = () => {
     //  const res = await axios.get(hostURL + "Payroll/GetRejectedAttendanceCorrectionByStaffID?userID=" +staffID + "&SDate=" + SDate + "&EDate=" + EDate );
     console.log(res, "rejected");
     setrejectedDashboardData(res.data);
-  }
+  };
 
   const deleteAttendanceCorrection = (id) => {
     Swal.fire({
@@ -208,9 +206,11 @@ const Attendancecorrectiondashboard = () => {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, Cancel it!",
-    }).then(async (result)   => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
-        await apiService.commonGetCall("Payroll/DeleteAttendanceCorrection?id=" + id);
+        await apiService.commonGetCall(
+          "Payroll/DeleteAttendanceCorrection?id=" + id
+        );
         //  axios.get(hostURL + "Payroll/DeleteAttendanceCorrection?id=" + id);
         Swal.fire({
           icon: "success",
@@ -297,7 +297,10 @@ const Attendancecorrectiondashboard = () => {
                           <td>{data.status}</td>
                           <td>
                             <button
-                              onClick={deleteAttendanceCorrection.bind(this, data.id)}
+                              onClick={deleteAttendanceCorrection.bind(
+                                this,
+                                data.id
+                              )}
                               className="edit-btn"
                             >
                               Cancel
@@ -336,7 +339,10 @@ const Attendancecorrectiondashboard = () => {
                         <td>{data.endTime}</td>
                         <td>
                           <button
-                            onClick={approveAttedanceCorrection.bind(this, data)}
+                            onClick={approveAttedanceCorrection.bind(
+                              this,
+                              data
+                            )}
                             className="edit-btn"
                           >
                             Accept
