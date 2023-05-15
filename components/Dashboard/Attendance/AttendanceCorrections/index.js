@@ -88,11 +88,11 @@ const Attendancecorrectiondashboard = () => {
   const getPendingManager = async (SDate, EDate) => {
     const res = await apiService.commonGetCall(
       "Payroll/GetPendingAttendanceCorrectionBySupervisor?userID=" +
-        userID +
-        "&SDate=" +
-        SDate +
-        "&EDate=" +
-        EDate
+      userID +
+      "&SDate=" +
+      SDate +
+      "&EDate=" +
+      EDate
     );
     // const res = await axios.get( hostURL + "Payroll/GetPendingAttendanceCorrectionBySupervisor?userID=" + userID +"&SDate=" + SDate +"&EDate=" +EDate);
     setManagerPendingData(res.data);
@@ -101,11 +101,11 @@ const Attendancecorrectiondashboard = () => {
   const getApprovedManager = async (SDate, EDate) => {
     const res = await apiService.commonGetCall(
       "Payroll/GetApprovedAttendanceCorrectionBySupervisor?userID=" +
-        userID +
-        "&SDate=" +
-        SDate +
-        "&EDate=" +
-        EDate
+      userID +
+      "&SDate=" +
+      SDate +
+      "&EDate=" +
+      EDate
     );
     // const res = await axios.get( hostURL + "Payroll/GetApprovedAttendanceCorrectionBySupervisor?userID=" + userID +  "&SDate=" +  SDate +  "&EDate=" +EDate );
     setManagerApprovedData(res.data);
@@ -114,11 +114,11 @@ const Attendancecorrectiondashboard = () => {
   const getRejectedManager = async (SDate, EDate) => {
     const res = await apiService.commonGetCall(
       "Payroll/GetApprovedAttendanceCorrectionBySupervisor?userID=" +
-        userID +
-        "&SDate=" +
-        SDate +
-        "&EDate=" +
-        EDate
+      userID +
+      "&SDate=" +
+      SDate +
+      "&EDate=" +
+      EDate
     );
     //  const res = await axios.get( hostURL + "Payroll/GetApprovedAttendanceCorrectionBySupervisor?userID=" +  userID + "&SDate=" + SDate + "&EDate=" + EDate);
     setManagerRejectedData(res.data);
@@ -137,13 +137,13 @@ const Attendancecorrectiondashboard = () => {
       if (result.isConfirmed) {
         await apiService.commonGetCall(
           "Payroll/ApproveAttedanceCoorection?id=" +
-            data.id +
-            "&UserID=" +
-            data.staffID +
-            "&SigninDate=" +
-            SDate +
-            "&SignoutDate=" +
-            EDate
+          data.id +
+          "&UserID=" +
+          data.staffID +
+          "&SigninDate=" +
+          SDate +
+          "&SignoutDate=" +
+          EDate
         );
         Swal.fire({
           icon: "success",
@@ -157,11 +157,11 @@ const Attendancecorrectiondashboard = () => {
   const getPendingData = async (SDate, EDate) => {
     const res = await apiService.commonGetCall(
       "Payroll/GetPendingAttendanceCorrectionByStaffID?userID=" +
-        userID +
-        "&SDate=" +
-        SDate +
-        "&EDate=" +
-        EDate
+      userID +
+      "&SDate=" +
+      SDate +
+      "&EDate=" +
+      EDate
     );
     // const res = await axios.get( hostURL +  "Payroll/GetPendingAttendanceCorrectionByStaffID?userID=" + staffID + "&SDate=" + SDate + "&EDate=" + EDate);
     console.log(res, "pending");
@@ -171,11 +171,11 @@ const Attendancecorrectiondashboard = () => {
   const getApprovedData = async (SDate, EDate) => {
     const res = await apiService.commonGetCall(
       "Payroll/GetApprovedAttendanceCorrectionByStaffID?userID=" +
-        userID +
-        "&SDate=" +
-        SDate +
-        "&EDate=" +
-        EDate
+      userID +
+      "&SDate=" +
+      SDate +
+      "&EDate=" +
+      EDate
     );
     // const res = await axios.get( hostURL +"Payroll/GetApprovedAttendanceCorrectionByStaffID?userID=" + staffID +"&SDate=" + SDate + "&EDate=" + EDate  );
     console.log(res, "approved");
@@ -185,11 +185,11 @@ const Attendancecorrectiondashboard = () => {
   const getRejectedData = async (SDate, EDate) => {
     const res = await apiService.commonGetCall(
       "Payroll/GetRejectedAttendanceCorrectionByStaffID?userID=" +
-        userID +
-        "&SDate=" +
-        SDate +
-        "&EDate=" +
-        EDate
+      userID +
+      "&SDate=" +
+      SDate +
+      "&EDate=" +
+      EDate
     );
     //  const res = await axios.get(hostURL + "Payroll/GetRejectedAttendanceCorrectionByStaffID?userID=" +staffID + "&SDate=" + SDate + "&EDate=" + EDate );
     console.log(res, "rejected");
@@ -223,7 +223,7 @@ const Attendancecorrectiondashboard = () => {
   return (
     <div className="container">
       <h3 className="text-primary fs-5 mt-3">Attendance Correction </h3>
-      <div className="card p-3 border-0 shadow-lg rounded-3 mt-4">
+      <div className="card p-3 border-0 shadow-lg rounded-3 mt-4" style={{ marginLeft: "-8px" }}>
         <div className="row p-3">
           <div className="col-lg-1">
             <p>Filter By</p>
@@ -238,12 +238,31 @@ const Attendancecorrectiondashboard = () => {
           </div>
 
           <div className="col-lg-4">
-            {roleID != 2 ||
-              ("2" && (
-                <Link href="/Attendance/AttendanceCorrections/attendancecorrectionform">
-                  <button className="button">Add Attendance Correction</button>
-                </Link>
+            {roleID != 5 ||
+              ("5" && (
+                <>
+                  <div className="row">
+                    <div className="col-lg-8">
+                      <Link href="/Attendance/AttendanceCorrections/attendancecorrectionform">
+                        <button className="button">Add Attendance Correction</button>
+                      </Link>
+                    </div>
+                    <div className="col-lg-4">
+                      <button className="button">Download</button>
+                    </div>
+                  </div>
+                </>
               ))}
+            {roleID != 3 ||
+              <>
+                <div className="row">
+                  <div className="col-lg-4">
+                    <button className="button">Download</button>
+                  </div>
+                </div>
+              </>
+
+            }
           </div>
         </div>
       </div>
@@ -251,16 +270,16 @@ const Attendancecorrectiondashboard = () => {
       <div className="row mt-3">
         <div className="col-lg-4">
           <div className="btn-group">
-            <button onClick={togglePending} 
-            className={`toggleButton ${pending  ? 'focus' : ''}`}>
+            <button onClick={togglePending}
+              className={`toggleButton ${pending ? 'focus' : ''}`}>
               Pending
             </button>
             <button onClick={toggleApproved}
-             className={`toggleButton ${approved ? 'focus' : ''}`}>
+              className={`toggleButton ${approved ? 'focus' : ''}`}>
               Approved
             </button>
             <button onClick={toggleRejected}
-             className={`toggleButton ${rejected  ? 'focus' : ''}`}>
+              className={`toggleButton ${rejected ? 'focus' : ''}`}>
               Rejected
             </button>
           </div>
