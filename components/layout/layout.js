@@ -6,13 +6,13 @@ import Login from "./login";
 import Head from "next/head";
 import Footer from "./footer";
 import { useRouter } from "next/router";
+import { Loader } from '@/services/loadSpinner';
 
 const Index = ({ children }) => {
   const router = useRouter();
   const [isLogin, setILogin] = useState("no");
   const [pageName, setPageName] = useState("Dashboard");
   useEffect(() => {
-    console.log("layout rendered");
     let login = sessionStorage.getItem("isLogin");
     if (login && login == "yes") {
       setILogin("yes");
@@ -73,6 +73,7 @@ const Index = ({ children }) => {
                 background: "#e5f3f5",
               }}
             >
+              <Loader />
               <main >
                 {children}
                 <br></br>

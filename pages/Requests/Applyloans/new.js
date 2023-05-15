@@ -5,6 +5,7 @@ import Link from "next/link"
 import axios from "axios"
 import styles from "../../../styles/applyloans.module.css"
 import Swal from "sweetalert2";
+import { apiService } from "@/services/api.service";
 
 const Applyloans = () => {
     const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
@@ -25,7 +26,7 @@ const Applyloans = () => {
             }
         ];
         
-            await axios.post(hostURL + 'Payroll/InsertEmployeeLoans', ddd);
+            await apiService.commonPostCall('Payroll/InsertEmployeeLoans', ddd);
             Swal.fire("Added succefully!")
             window.location.href = "/Requests/Applyloans";
     }

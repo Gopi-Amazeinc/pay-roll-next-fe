@@ -4,6 +4,7 @@ import ApplyLeaveDashboard from "@/components/Dashboard/Requests/Applyleave/inde
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { apiService } from "@/services/api.service";
 
 // import Astyle from 'styles//Requests//applyleave.module.css';
 import { BsArrowLeftSquare } from "react-icons/bs";
@@ -16,7 +17,7 @@ const ApplyLeave = () => {
   const [leavetype, setLeaveType] = useState([]);
   const [userID, setUserId] = useState();
   const getDropdowndata = async () => {
-    const res = await axios.get(hostURL + "Master/GetLeaveType");
+    const res = await apiService.commonGetCall("Master/GetLeaveType");
     setLeaveType(res.data);
   };
   useEffect(() => {
@@ -28,7 +29,7 @@ const ApplyLeave = () => {
   async function onSubmit(data) {
     try {
       debugger;
-      await axios.post(hostURL + "HR/InsertStaffLeaves", data);
+      await apiService.commonPostCall("HR/InsertStaffLeaves", data);
       Swal.fire({
         icon: "success",
         title: "Hurray..",

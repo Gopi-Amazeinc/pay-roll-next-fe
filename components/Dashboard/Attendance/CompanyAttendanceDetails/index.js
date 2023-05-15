@@ -2,8 +2,10 @@ import Link from 'next/link';
 import React from 'react';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { apiService } from "@/services/api.service";
 
-const MyTeamAttendence = () => {
+
+const CompanyAttendanceDetails = () => {
     const [MyTeamAttendence, setMyTeamAttendence] = useState([]);
     const [userID, setUserID] = useState();
 
@@ -14,10 +16,11 @@ const MyTeamAttendence = () => {
             debugger
             // const userid = sessionStorage.getItem("userID");
             const SupervisorID = 10348;
-            const SDate = '2000-10-10';
-            const EDate = "2025-11-11";
+            const SDate = '2023-10-10';
+            const EDate = "2023-11-11";
             if (userID) {
-                let res = await axios.get(hostURL + "HR/GetAttendanceByManagerID?SupervisorID=" + SupervisorID + '&SDate=' + SDate + '&EDate=' + EDate);
+     const res = await apiService.commonGetCall("HR/GetAttendanceByManagerID?SupervisorID=" + SupervisorID + '&SDate=' + SDate + '&EDate=' + EDate);
+//   let res = await axios.get(hostURL + "HR/GetAttendanceByManagerID?SupervisorID=" + SupervisorID + '&SDate=' + SDate + '&EDate=' + EDate);
                 setAttendence(res.data);
             }
         }
@@ -33,7 +36,7 @@ const MyTeamAttendence = () => {
                         <Link className='Heading active' href="/Attendance/AttendanceDetails">My Attendence Details</Link>
                     </div>
                     <div className='col-lg-3'>
-                        <Link className='Heading active' href="/Attendance/MyTeamAttendanceDetails">My Team Attendance Details</Link>
+                        <Link className='Heading active' href="/Attendance/MyTeamAttendanceDetails">Company Attendance Details</Link>
                     </div>
                 </div>
                 <h6>API Issue In Company AttendanceDetails</h6>
@@ -108,10 +111,6 @@ const MyTeamAttendence = () => {
                                                 <td>{data.signInType}</td>
                                                 <td>{data.expectedOutTime}</td>
 
-
-                                                {/* <td>
-                              <button className='edit-btn'>Cancel</button>
-                            </td> */}
                                             </tr>
                                         )
                                     })
@@ -125,4 +124,4 @@ const MyTeamAttendence = () => {
     );
 }
 
-export default MyTeamAttendence;
+export default CompanyAttendanceDetails;

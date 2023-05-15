@@ -3,6 +3,7 @@ import loan from "../../../../pages/Requests/Applyloans/applyloans.module.css"
 import Link from "next/link"
 import axios from "axios"
 import Swal from "sweetalert2";
+import { apiService } from "@/services/api.service";
 const ApplyloansDashboard = () => {
     const [newrequest, setNewRequest] = useState(false)
     // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -21,8 +22,7 @@ const ApplyloansDashboard = () => {
 
     }
     const getApplyLoans = async () => {
-        let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-        let res = await axios.get(hostURL + "Payroll/GetEmployeeLoans"); //This Api is useed for Get the Dashborad data band Master
+        let res = await apiService.commonGetCall("Payroll/GetEmployeeLoans"); //This Api is useed for Get the Dashborad data band Master
         setApplyLoans(res.data);
     };
 
@@ -31,8 +31,7 @@ const ApplyloansDashboard = () => {
     }, [1]);
 
     const getnewApprovedData = async () => {
-        let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-        let res = await axios.get(hostURL + "Payroll/GetEmployeeLoans"); //This Api is useed for Get the Dashborad data band Master
+        let res = await apiService.commonGetCall("Payroll/GetEmployeeLoans"); //This Api is useed for Get the Dashborad data band Master
         setnewApprovedData(res.data);
     };
 
@@ -52,7 +51,6 @@ const ApplyloansDashboard = () => {
     async function DeleteApplyLoans(id) {
         debugger;
         try {
-            let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
             Swal.fire({
                 title: "Are you sure?",
                 text: "You won't be able to revert this!",
@@ -63,7 +61,7 @@ const ApplyloansDashboard = () => {
                 confirmButtonText: "Yes, delete it!",
             }).then((res) => {
                 if (res) {
-                    axios.get(hostURL + `Payroll/DeleteEmployeeLoans?id=${id}`);  // this is for deleting the data for dashborad using delete api call         
+                    apiService.commonGetCall(`Payroll/DeleteEmployeeLoans?id=${id}`);  // this is for deleting the data for dashborad using delete api call         
                 }
                 getApplyLoans();
             });
@@ -80,7 +78,7 @@ const ApplyloansDashboard = () => {
     }
     return (
         <>
-        <h4 className="Heading">Apply Loans </h4>
+            <h4 className="Heading">Apply Loans </h4>
             <div className='card p-4 border-0 shadow-lg mt-4'>
                 <div className="row">
                     <div className="col-lg-1">

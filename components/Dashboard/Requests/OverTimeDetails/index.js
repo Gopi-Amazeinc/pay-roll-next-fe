@@ -9,11 +9,14 @@ import Styles from "@../../../pages/OT/Ot.module.css"
 import { apiService } from "@/services/api.service";
 const Index = () => {
     let staffID;
-    let roleID = sessionStorage.getItem("roleID")
+    // let roleID = sessionStorage.getItem("roleID")
     const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
     const [pending, setPending] = useState(false)
     const [approved, setApproved] = useState(false)
     const [rejected, setRejected] = useState(false);
+    const [managertogglePending, setManagerTogglePending] = useState(false)
+    const [managerToggleapproved, setManagerToggleApproved] = useState(false)
+    const [managertogglerejected, setManagerToggleRejected] = useState(false);
     const [newDashboard, setNewDashboardData] = useState([]);
     const [newApproved, setnewApprovedData] = useState([]);
     const [newRejected, setnewRejectedData] = useState([]);
@@ -22,23 +25,36 @@ const Index = () => {
     const [managerRejected, setManagerRejectedData] = useState([]);
     const [modalOpen, setModalOpen] = useState(false);
     const [modalData, setModalData] = useState([]);
+    const [isOpen, ModalIsOpen] = useState(false)
+    const [roleID, setRoleID] = useState();
+    const [userID, setUserID] = useState();
     const togglePending = () => {
         setPending(true)
         setApproved(false)
         setRejected(false)
-
+        setManagerTogglePending(true);
+        setManagerToggleApproved(false);
+        setManagerToggleRejected(false);
     }
 
     const toggleApproved = () => {
         setApproved(true)
         setPending(false)
         setRejected(false)
-
+        setManagerTogglePending(false);
+        setManagerToggleApproved(true);
+        setManagerToggleRejected(false);
     }
     const toggleRejected = () => {
         setRejected(true)
         setApproved(false)
         setPending(false)
+        setManagerTogglePending(false);
+        setManagerToggleApproved(false);
+        setManagerToggleRejected(true);
+    }
+    const openModal = () => {
+        ModalIsOpen(true)
     }
 
     const openEditModal = () => {
@@ -62,49 +78,54 @@ const Index = () => {
     }
 
     const getPendingDetails = async () => {
+        // debugger;
         const res = await apiService.commonGetCall("Payroll/GetPendingStaffOverTimeDetails")
         setNewDashboardData(res.data);
         console.log("Pending emp", res.data);
     }
     const getApprovedDetails = async () => {
+        // debugger;
         const res = await apiService.commonGetCall("Payroll/GetApproveStaffOverTimeDetails")
         setnewApprovedData(res.data);
         console.log("Approved", res.data);
     }
     const getRejectedDetails = async () => {
+        // debugger;
         const res = await apiService.commonGetCall("Payroll/GetRejectStaffOverTimeDetails")
         setnewRejectedData(res.data);
         console.log("Rejected", res.data);
     }
-    const getPendingCompensation = async () => {
-        staffID = sessionStorage.getItem("userID");
-        const res = await apiService.commonGetCall("Payroll/GetPendingOverTimeDetailsByManagerID?ManagerID=" + staffID)
+    const getManagerPendingDetails = async () => {
+        // debugger;
+        // staffID = sessionStorage.getItem("userID");
+        const res = await apiService.commonGetCall("Payroll/GetPendingOverTimeDetailsByManagerID?ManagerID=" + userID)
         setManagerPendingData(res.data)
         console.log("Manager Pending", res.data)
     }
     const getManagerApprovedData = async () => {
-        staffID = sessionStorage.getItem("userID");
-        const res = await apiService.commonGetCall("Payroll/GetApprovedOverTimeDetailsByManagerID?ManagerID=" + staffID)
+        // debugger;
+        // staffID = sessionStorage.getItem("userID");
+        const res = await apiService.commonGetCall("Payroll/GetApprovedOverTimeDetailsByManagerID?ManagerID=" + userID)
         setManagerApprovedData(res.data)
         console.log("Manager Approved", res.data)
     }
 
     const getManagerRejectedData = async () => {
-        staffID = sessionStorage.getItem("userID");
-        const res = await apiService.commonGetCall("Payroll/GetRejectOverTimeDetailsByManagerID?ManagerID=" + staffID)
+        // debugger;
+        // staffID = sessionStorage.getItem("userID");
+        const res = await apiService.commonGetCall("Payroll/GetRejectOverTimeDetailsByManagerID?ManagerID=" + userID)
         setManagerRejectedData(res.data)
         console.log("Manager Rejected", res.data)
     }
-    const getModalData = async () => {
-        staffID = sessionStorage.getItem("userID");
-        var date = sessionStorage.getItem("Date");
-        var startTime = sessionStorage.getItem("StartTime");
-        var endTime = sessionStorage.getItem("EndTime");
-        const res = await apiService.commonGetCall("HR/GetOtNightOt?StartTime=" + startTime + "&EndTime=" + endTime + "&Shift=1&StaffID=" + staffID + "&Date=" + date);
+    const getModalData = async (startTime, endTime, date, userID) => {
+        // debugger;
+        // staffID = sessionStorage.getItem("userID");       
+        const res = await apiService.commonGetCall("HR/GetOtNightOt?StartTime=" + startTime + "&EndTime=" + endTime + "&Shift=1&StaffID=" + userID + "&Date=" + date);
         setModalData(res.data);
         console.log("Modal data", res.data);
     }
     const approve = (id) => {
+        // debugger;
         Swal.fire({
             title: 'Confirm To Approve?',
             text: "You won't be able to revert this!",
@@ -115,19 +136,19 @@ const Index = () => {
             confirmButtonText: 'Yes, Approve it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                apiService.commonPostCall("Payroll/Payroll/UpdateOtFromManager?id=" + id)
+                apiService.commonPostCall("Payroll/UpdateApproveOtFromManager?id=" + id + "&Status=ManagerApproved")
                 Swal.fire({
                     icon: "success",
                     titleText: "Approved Successfully"
                 })
-                getPendingCompensation();
+                getManagerPendingDetails();
             }
         })
     }
     let id;
     const reject = () => {
         id = sessionStorage.getItem("id")
-        alert(id)
+        // alert(id)
         Swal.fire({
             title: 'Confirm To Reject?',
             text: "You won't be able to revert this!",
@@ -138,31 +159,37 @@ const Index = () => {
             confirmButtonText: 'Yes, Reject it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                staffID = sessionStorage.getItem("userID");
-                apiService.commonPostCall("Payroll/Payroll/UpdateOtFromManager?id=" + id)
+                // staffID = sessionStorage.getItem("userID");
+                apiService.commonPostCall("Payroll/UpdateOtFromManager?id=" + id + "&Status=ManagerApproved" + "RejectedReason=")
                 Swal.fire({
                     icon: "success",
                     titleText: "Rejected Successfully"
                 })
-                getPendingCompensation();
+                getManagerPendingDetails();
             }
         })
     }
 
-
     useEffect(() => {
+        debugger;
+        const usrID = sessionStorage.getItem("userID");
+        setUserID(usrID);
+        const userRoleID = sessionStorage.getItem("roleID");
+        setRoleID(userRoleID);
+        var date = sessionStorage.getItem("Date");
+        var startTime = sessionStorage.getItem("StartTime");
+        var endTime = sessionStorage.getItem("EndTime");
         if (roleID == 5) {
             getPendingDetails();
             getApprovedDetails();
             getRejectedDetails();
-            getModalData();
+            getModalData(startTime, endTime, date, userID);
         }
         else if (roleID == 3) {
-            staffID=sessionStorage.getItem("userID")
-            getPendingCompensation();
-            getManagerApprovedData();
-            getManagerRejectedData();
-            getModalData();
+            getManagerPendingDetails(userID);
+            getManagerApprovedData(userID);
+            getManagerRejectedData(userID);
+            getModalData(startTime, endTime, date, userID);
         }
 
     }, [])
@@ -236,7 +263,7 @@ const Index = () => {
                 </div>
             </div>
             {
-                pending && sessionStorage.getItem("roleID") == 3 && (
+                managertogglePending && sessionStorage.getItem("roleID") == 3 && (
                     <table className='table table-hover'>
                         <thead className='bg-info text-white'>
                             <tr>
@@ -265,7 +292,7 @@ const Index = () => {
                                             <td>{data.status}</td>
                                             <td>
                                                 <button onClick={approve.bind(this, data.id)} className='edit-btn'>Approve</button>
-                                                <button onClick={openModal(sessionStorage.setItem("id", data.id))} className='edit-btn'>Reject</button>
+                                                <button onClick={() => openModal(sessionStorage.setItem("id", data.id))} className='edit-btn'>Reject</button>
                                             </td>
                                         </tr>
                                     )
@@ -278,17 +305,17 @@ const Index = () => {
 
 
             {
-                approved && sessionStorage.getItem("roleID") == 3 && (
+                managerToggleapproved && sessionStorage.getItem("roleID") == 3 && (
                     <table className='table table-hover'>
                         <thead className='bg-info text-white'>
                             <tr>
                                 <th>Date Request</th>
                                 <th>Start Time</th>
                                 <th>End Time</th>
-                                <th>OT Details</th>
-                                <th>Purpose</th>
+                                {/* <th>OT Details</th> */}
+                                {/* <th>Purpose</th> */}
                                 <th>Status</th>
-                                <th>Actions</th>
+                                {/* <th>Actions</th> */}
                             </tr>
                         </thead>
 
@@ -300,7 +327,7 @@ const Index = () => {
                                             <td>{data.date}</td>
                                             <td>{data.startTime}</td>
                                             <td>{data.endTime}</td>
-                                            <td>{data.comments}</td>
+                                            {/* <td>{data.comments}</td> */}
                                             <td>{data.status}</td>
                                         </tr>
                                     )
@@ -313,17 +340,17 @@ const Index = () => {
 
 
             {
-                rejected && sessionStorage.getItem("roleID") == 3 && (
+                managertogglerejected && sessionStorage.getItem("roleID") == 3 && (
                     <table className='table table-hover'>
                         <thead className='bg-info text-white'>
                             <tr>
                                 <th>Date Request</th>
                                 <th>Start Time</th>
                                 <th>End Time</th>
-                                <th>OT Details</th>
-                                <th>Purpose</th>
+                                {/* <th>OT Details</th> */}
+                                {/* <th>Purpose</th> */}
                                 <th>Status</th>
-                                <th>Actions</th>
+                                {/* <th>Actions</th> */}
                             </tr>
                         </thead>
 
@@ -335,7 +362,7 @@ const Index = () => {
                                             <td>{data.date}</td>
                                             <td>{data.startTime}</td>
                                             <td>{data.endTime}</td>
-                                            <td>{data.comments}</td>
+                                            {/* <td>{data.comments}</td> */}
                                             <td>{data.status}</td>
                                         </tr>
                                     )
@@ -346,7 +373,7 @@ const Index = () => {
                 )
             }
             {
-                pending && sessionStorage.getItem("roleID") != 2 && (
+                pending && sessionStorage.getItem("roleID") == 5 && (
                     <table className='table table-hover'>
                         <thead className='bg-info text-white'>
                             <tr>
@@ -385,17 +412,15 @@ const Index = () => {
                 )
             }
             {
-                approved && sessionStorage.getItem("roleID") != 2 && (
+                approved && sessionStorage.getItem("roleID") == 5 && (
                     <table className='table table-hover'>
                         <thead className='bg-info text-white'>
                             <tr>
                                 <th>Date Request</th>
                                 <th>Start Time</th>
                                 <th>End Time</th>
-                                <th>OT Details</th>
-                                <th>Purpose</th>
+                                {/* <th>OT Details</th>                                 */}
                                 <th>Status</th>
-                                <th>Actions</th>
                             </tr>
                         </thead>
 
@@ -407,7 +432,7 @@ const Index = () => {
                                             <td>{data.date}</td>
                                             <td>{data.startTime}</td>
                                             <td>{data.endTime}</td>
-                                            <td>{data.comments}</td>
+                                            {/* <td>{data.comments}</td> */}
                                             <td>{data.status}</td>
                                         </tr>
                                     )
@@ -418,17 +443,17 @@ const Index = () => {
                 )
             }
             {
-                rejected && sessionStorage.getItem("roleID") != 2 && (
+                rejected && sessionStorage.getItem("roleID") == 5 && (
                     <table className='table table-hover'>
                         <thead className='bg-info text-white'>
                             <tr>
                                 <th>Date Request</th>
                                 <th>Start Time</th>
                                 <th>End Time</th>
-                                <th>OT Details</th>
-                                <th>Purpose</th>
+                                {/* <th>OT Details</th> */}
+                                {/* <th>Purpose</th> */}
                                 <th>Status</th>
-                                <th>Actions</th>
+                                {/* <th>Actions</th> */}
                             </tr>
                         </thead>
 
@@ -440,7 +465,7 @@ const Index = () => {
                                             <td>{data.date}</td>
                                             <td>{data.startTime}</td>
                                             <td>{data.endTime}</td>
-                                            <td>{data.comments}</td>
+                                            {/* <td>{data.comments}</td> */}
                                             <td>{data.status}</td>
                                         </tr>
                                     )
@@ -492,6 +517,33 @@ const Index = () => {
                                 }
                             </tbody>
                         </table>
+                    </div>
+                </div>
+            </Modal>
+            <Modal isOpen={isOpen} style={customStyles}>
+                <div className='container'>
+                    <div className='row card-header'>
+                        <div className='col-lg-8 mt-3'>
+                            <h4>Rejecting Request</h4>
+                        </div>
+                        <div className='col-lg-3'></div>
+                        <div className='col-lg-1 mt-3 mb-3'>
+                            <button onClick={() => ModalIsOpen(false)} className='btn-primary'>X</button>
+                        </div>
+                    </div>
+                    <div className='row mt-3'>
+                        <div className='col-lg-12'>
+                            <textarea rows={4} className='form-control'></textarea>
+                        </div>
+                    </div>
+                    <div className='row'>
+                        <div className='col-lg-8'></div>
+                        <div className='col-lg-2 mb-3'>
+                            <button type='submit' className=' edit-btn mt-5'>Cancel</button>
+                        </div>
+                        <div className='col-lg-2 mb-3'>
+                            <button onClick={reject} type='submit' className='edit-btn mt-5'>Reject </button>
+                        </div>
                     </div>
                 </div>
             </Modal>

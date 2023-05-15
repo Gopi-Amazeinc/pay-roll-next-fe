@@ -1,6 +1,6 @@
 import Link from "next/link";
 import React from "react";
-
+import { apiService } from "@/services/api.service";
 import { useEffect, useState } from "react";
 import axios from "axios";
 
@@ -10,6 +10,7 @@ const AttendenceDetails = () => {
   const [roleID, setRoleID] = useState();
   let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
   // function Attendance() {
+
   useEffect(() => {
     const userid = sessionStorage.getItem("userID");
     const roleid = sessionStorage.getItem("roleID");
@@ -20,11 +21,12 @@ const AttendenceDetails = () => {
       // const userid = sessionStorage.getItem("userID");
       const roleid = sessionStorage.getItem("roleID");
       setRoleID(roleid)
-      const userID = 10348;
+      const userID = sessionStorage.userID;
       const SDate = "2000-10-10";
       const EDate = "2025-11-11";
       if (userID) {
-        let res = await axios.get(hostURL + "HR/GetAttendanceByEmployeeID?userID=" + userID + "&SDate=" + SDate + "&EDate=" + EDate);
+        const res = await apiService.commonGetCall("HR/GetAttendanceByEmployeeID?userID=" + userID + "&SDate=" + SDate + "&EDate=" + EDate);
+        // let res = await axios.get(hostURL + "HR/GetAttendanceByEmployeeID?userID=" + userID + "&SDate=" + SDate + "&EDate=" + EDate);
         setAttendence(res.data);
       }
     }
@@ -39,12 +41,24 @@ const AttendenceDetails = () => {
           <div className="col-lg-3 ">
             <Link className="Heading active" href="/Attendance/AttendanceDetails"  >   My Attendance Details  </Link>
           </div>
-          {roleID == 9 && (
+          {roleID == 3 && (
             <>
               <div className="col-lg-3">
                 <Link
                   className="Heading active"
                   href="/Attendance/MyTeamAttendanceDetails"
+                >
+                  My Team Attendance Details
+                </Link>
+              </div>
+            </>
+          )}
+          {roleID == 2 && (
+            <>
+              <div className="col-lg-3">
+                <Link
+                  className="Heading active"
+                  href="/Attendance/CompanyAttendanceDetails"
                 >
                   Company Attendance Details
                 </Link>
@@ -103,31 +117,36 @@ const AttendenceDetails = () => {
                     <th>UnderTime </th>
                     <th>Late </th> */}
                   </tr>
+
                 </thead>
                 <tbody>
-                  {Attendence.map((data) => {
-                    return (
-                      <tr key={data.id}>
-                        <td>{data.signinDate}</td>
-                        <td>{data.signInType}</td>
-                        <td>{data.signInWorkType}</td>
-                        <td>{data.expectedInTime}</td>
-                        <td>{data.punchInTime}</td>
-                        <td>{data.punchinip}</td>
-                        <td>{data.expectedOutTime}</td>
-                        <td>{data.punchOutTime}</td>
-                        <td>{data.punchoutip}</td>
-                        <td>{data.signOutType}</td>
-                        <td>{data.punchOutWorkType}</td>
-                        {/* <td>{data.hr1}</td>
+                  {Array.isArray(Attendence) && Attendence.length > 0 && (
+                    <>
+                      {Attendence.map((data) => {
+                        return (
+                          <tr key={data.id}>
+                            <td>{data.signinDate}</td>
+                            <td>{data.signInType}</td>
+                            <td>{data.signInWorkType}</td>
+                            <td>{data.expectedInTime}</td>
+                            <td>{data.punchInTime}</td>
+                            <td>{data.punchinip}</td>
+                            <td>{data.expectedOutTime}</td>
+                            <td>{data.punchOutTime}</td>
+                            <td>{data.punchoutip}</td>
+                            <td>{data.signOutType}</td>
+                            <td>{data.punchOutWorkType}</td>
+                            {/* <td>{data.hr1}</td>
                         <td>{data.underTime}</td>
                         <td>{data.late}</td> */}
-                        {/* <td>
+                            {/* <td>
                               <button className='edit-btn'>Cancel</button>
                             </td> */}
-                      </tr>
-                    );
-                  })}
+                          </tr>
+                        );
+                      })}
+                    </>
+                  )}
                 </tbody>
               </table>
             </div>

@@ -75,7 +75,7 @@ function LeaveTypeDashboard() {
                     <div className="col-md-4"></div>
                     <div className="col-md-1">
                         <Link href="/Masters/LeaveType/new">
-                            <button className="AddButton" tabindex="0">
+                            <button className="AddButton" tabIndex="0">
                                 Add New
                             </button>
                         </Link>

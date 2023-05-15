@@ -2,6 +2,7 @@ import Layout from "@/components/layout/layout"
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import Link from 'next/link';
+import { apiService } from "@/services/api.service";
 import {
     Calendar as BigCalendar,
     momentLocalizer,
@@ -77,19 +78,19 @@ function LeaveListDashboard() {
 
     const getPendingData = async () => {
         const staffID = sessionStorage.getItem("userID")
-        const res = await axios.get(hostURL + "Employee/GetPendingStaffLeavesByStaffID?ID=" + staffID + "&TypeID=1&Sdate=" + Sdate + "&Edate=" + Edate)
+        const res = await apiService.commonGetCall("Employee/GetPendingStaffLeavesByStaffID?ID=" + staffID + "&TypeID=1&Sdate=" + Sdate + "&Edate=" + Edate)
         setPendingData(res.data);
         console.log(res.data);
     }
     const getApprovedData = async () => {
         const staffID = sessionStorage.getItem("userID")
-        const res = await axios.get(hostURL + "Employee/GetApprovedStaffLeavesByStaffID?ID=" + staffID + "&TypeID=1&Sdate=" + Sdate + "&Edate=" + Edate)
+        const res = await apiService.commonGetCall("Employee/GetApprovedStaffLeavesByStaffID?ID=" + staffID + "&TypeID=1&Sdate=" + Sdate + "&Edate=" + Edate)
         setApprovedData(res.data);
         console.log(res.data);
     }
     const getRejectedData = async () => {
         const staffID = sessionStorage.getItem("userID")
-        const res = await axios.get(hostURL + "Employee/GetRejectedStaffLeavesByStaffID?ID=" + staffID + "&TypeID=1&Sdate=" + Sdate + "&Edate=" + Edate)
+        const res = await apiService.commonGetCall("Employee/GetRejectedStaffLeavesByStaffID?ID=" + staffID + "&TypeID=1&Sdate=" + Sdate + "&Edate=" + Edate)
         setRejectedData(res.data);
         console.log(res.data);
     }
@@ -172,7 +173,7 @@ function LeaveListDashboard() {
                             </div>
                             <div className="col-lg-6">
                                 <p>END DATE:</p>
-                                <input id="date" name="date" type="date" placeholder="Duration" onKeyDown="return false" className="form-control " />
+                                <input id="date" name="date" type="date" placeholder="Duration" onKeyDown={()=> handleEndDate()} className="form-control " />
                             </div>
 
                             <div className="col-lg-12 searchtxt mt-4"><br /><input type="search" placeholder="Search for date , Leave Type or Status" className="form-control " /></div>
@@ -217,7 +218,7 @@ function LeaveListDashboard() {
                 </div>
                 <div className="col-md-4"></div>
                 <div className="col-md-4">
-                    <Link href="/Requests/Applyleave/new"><button className="submit-button m" tabindex="0"> Apply Leave</button>
+                    <Link href="/Requests/Applyleave/new"><button className="submit-button m" tabIndex="0"> Apply Leave</button>
                     </Link>
                 </div>
             </div>

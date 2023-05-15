@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from 'react';
 import axios from "axios";
 import Styles from "@/styles/Locatorrequest.module.css";
 import Layout from "@/components/layout/layout"
+import { apiService } from "@/services/api.service";
 
 const Locatordashboard = () => {
     const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
@@ -13,11 +14,11 @@ const Locatordashboard = () => {
     const getlocator = async () => {
         debugger
         let UserID = sessionStorage.getItem("userID")
-        let res = await axios.get(hostURL + `Payroll/GetLocatorRequests?UserID=${UserID}`);
+        let res = await apiService.commonGetCall(`Payroll/GetLocatorRequests?UserID=${UserID}`);
         setlocator(res.data);
-        res = await axios.get(hostURL + `Payroll/GetApprovedLocatorRequest?UserID=${UserID}`);
+        res = await apiService.commonGetCall(`Payroll/GetApprovedLocatorRequest?UserID=${UserID}`);
         setApprovedlocatorrequests(res.data);
-        res = await axios.get(hostURL + `Payroll/GetRejectedLocatorRequest?UserID=${UserID}`);
+        res = await apiService.commonGetCall(`Payroll/GetRejectedLocatorRequest?UserID=${UserID}`);
         setRejectedlocatorRequests(res.data);
     }
 

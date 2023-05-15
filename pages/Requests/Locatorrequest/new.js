@@ -6,6 +6,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { HiLocationMarker } from "react-icons/hi";
 import styles from '@/../../styles/Locatorrequest.module.css'
+import { apiService } from "@/services/api.service";
 
 const Locatorrequest = () => {
     const { register, handleSubmit, reset, formState } = useForm();
@@ -27,7 +28,7 @@ const Locatorrequest = () => {
         try {
             const formData = { ...data, StaffID: userID };
             console.log("form data", formData);
-            await axios.post(hostURL + "Payroll/InsertLocatorTable", formData);
+            await apiService.commonPostCall("Payroll/InsertLocatorTable", formData);
             Swal.fire('Data Inserted successfully')
             console.log("Inserted data", data);
             location.href = ("/Requests/Locatorrequest");

@@ -1,7 +1,8 @@
-.divHeader {
+.header {
   background-color: #3247d5;
   height: 8vh;
   padding: 0px;
+
 }
 
 .dropdownmenu {
@@ -51,9 +52,9 @@
   width: 450px;
   letter-spacing: 0.7px;
   line-height: 1vh;
-  max-width: 250px; 
+  max-width: 250px;
   margin-left: 30%;
-  
+
 
 }
 
@@ -105,16 +106,43 @@
   justify-content: center;
   text-align: center;
   width: 30px;
-  height: 30px; 
+  height: 30px;
   margin-left: 20px;
-  margin-top:5px;
+  margin-top: 5px;
   font-size: 20px;
   background-color: #fff;
   color: #3247d5;
   border-radius: 50%;
   text-transform: uppercase;
 }
-.accountsetting{
+
+.accountsetting {
   text-decoration: none;
-   color: #3247d5;
+  color: #3247d5;
+}
+
+.notifications {
+  position: fixed;
+  background-color: #FFF;
+  box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+  z-index: 999;
+  border-radius: 5px;
+  width: 450px;
+  color: #0C275A;
+  letter-spacing: 0.7px;
+  line-height: 1vh;
+}
+
+.card {
+  padding: 20px;
+  box-shadow: 1px 1px 15px 3px #0000001f;
+  width: 23%;
+  background-color: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  z-index: 999;
+  border-radius: 5px;
+  position: fixed;
+  right: 0;
+  margin-top: 60px;
+
 }
