@@ -10,30 +10,77 @@ const AttendenceDetails = () => {
   const [userID, setUserID] = useState();
   const [roleID, setRoleID] = useState();
 
-  const [start, setStart] = useState("");
-  const [end, setEnd] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
 
   useEffect(() => {
     const userid = sessionStorage.getItem("userID");
     const roleid = sessionStorage.getItem("roleID");
     setUserID(userid);
     setRoleID(roleid);
-    getAttendenceByID();
   }, []);
 
-  const filterData = (start, end) => {
-    const filteredData = data.filter((item) => {
-      return item.start_date >= start && item.end_date <= end;
-    });
-    return filteredData;
+  useEffect(() => {
+    if (userID) {
+      const resu = getCurrentMonthDates();
+      if (resu) {
+        getAttendenceByID(resu.setStartDate, resu.setEndDate);
+      }
+    }
+  }, [userID]);
+
+  const getCurrentMonthDates = () => {
+    let newDate = new Date();
+    let firstDayOfMonth = new Date(newDate.getFullYear(), newDate.getMonth());
+    let fromDate = formateDate(firstDayOfMonth);
+
+    const year = newDate.getFullYear();
+    const month = newDate.getMonth() + 1;
+    const lastDay = new Date(year, month, 0).getDate();
+    const toDate = `${year}-${month.toString().padStart(2, "0")}-${lastDay
+      .toString()
+      .padStart(2, "0")}`;
+    setStartDate(fromDate);
+    setEndDate(toDate);
+    return {
+      setStartDate: fromDate,
+      setEndDate: toDate,
+    };
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setData(filterData(start, end));
+  const formateDate = (datetoformat) => {
+    const day = datetoformat.getDate().toString().padStart(2, "0");
+    const month = (datetoformat.getMonth() + 1).toString().padStart(2, "0");
+    const year = datetoformat.getFullYear().toString();
+    return `${year}-${month}-${day}`;
   };
 
-  const getAttendenceByID = async () => {
+  // const filterData = (start, end) => {
+  //   const filteredData = data.filter((item) => {
+  //     return item.start_date >= start && item.end_date <= end;
+  //   });
+  //   return filteredData;
+  // };
+
+  const getStartDate = (selectedDate) => {
+    setStartDate(selectedDate);
+    setEndDate("");
+  };
+
+  const getEndDate = (selectedDate) => {
+    setEndDate(selectedDate);
+    return getDateBySelectedDate(selectedDate);
+  };
+  const getDateBySelectedDate = (endDatesss) => {
+    return getAttendenceByID(startDate, endDatesss);
+  };
+
+  // const handleSubmit = (e) => {
+  //   e.preventDefault();
+  //   setData(filterData(start, end));
+  // };
+
+  const getAttendenceByID = async (SDate, EDate) => {
     if (userID) {
       const res = await apiService.commonGetCall(
         "HR/GetAttendanceByEmployeeID?userID=" +
@@ -85,42 +132,42 @@ const AttendenceDetails = () => {
           )}
         </div>
         <div className={Styles.filter}>
-          <form onSubmit={handleSubmit}>
-            <div className="card p-3  border-0 shadow-lg rounded-3 mt-4">
-              <div className="row">
-                <div className="col-lg-1">
-                  <p>Filter By</p>
-                </div>
-                <div className="col-lg-3">
-                  <p>Start Date</p>
-                  <input
-                    type="date"
-                    className="form-control"
-                    value={start}
-                    onChange={(e) => setStart(e.target.value)}
-                  />
-                </div>
+          {/* <form onSubmit={handleSubmit}> */}
+          <div className="card p-3  border-0 shadow-lg rounded-3 mt-4">
+            <div className="row">
+              <div className="col-lg-1">
+                <p>Filter By</p>
+              </div>
+              <div className="col-lg-3">
+                <p>Start Date</p>
+                <input
+                  type="date"
+                  className="form-control"
+                  value={startDate}
+                  onChange={(e) => getStartDate(e.target.value)}
+                />
+              </div>
 
-                <div className="col-lg-3">
-                  <p>End Date</p>
-                  <input
-                    type="date"
-                    className="form-control"
-                    value={end}
-                    onChange={(e) => setEnd(e.target.value)}
-                  />
-                </div>
+              <div className="col-lg-3">
+                <p>End Date</p>
+                <input
+                  type="date"
+                  className="form-control"
+                  value={endDate || ""}
+                  onChange={(e) => getEndDate(e.target.value)}
+                />
+              </div>
 
-                <div className="col-lg-2">
-                  <br />
-                  <p></p>
-                  <button className="button" id="AddButton">
-                    Download
-                  </button>
-                </div>
+              <div className="col-lg-2">
+                <br />
+                <p></p>
+                <button className="button" id="AddButton">
+                  Download
+                </button>
               </div>
             </div>
-          </form>
+          </div>
+          {/* </form> */}
         </div>
 
         <div className="row mt-4">

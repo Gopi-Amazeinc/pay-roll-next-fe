@@ -38,6 +38,7 @@ const Attendancecorrectiondashboard = () => {
   const toggleRejected = () => {
     setRejected(true);
     setApproved(false);
+    setPending(false);
   };
 
   useEffect(() => {

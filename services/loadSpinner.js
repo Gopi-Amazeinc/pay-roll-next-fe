@@ -8,7 +8,6 @@ export const Loader = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    debugger;
     const handleStart = () => setLoading(true);
     const handleComplete = () => setLoading(false);
 
