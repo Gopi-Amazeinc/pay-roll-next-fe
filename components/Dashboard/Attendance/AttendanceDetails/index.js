@@ -3,6 +3,7 @@ import React from "react";
 import { apiService } from "@/services/api.service";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Styles from "..//..//..//..//styles/attendancedetails.module.css"
 
 const AttendenceDetails = () => {
   const [Attendence, setAttendence] = useState([]);
@@ -38,12 +39,12 @@ const AttendenceDetails = () => {
     <div>
       <div className="container">
         <div className="row mt-3">
-          <div className="col-lg-3 ">
-            <Link className="Heading active" href="/Attendance/AttendanceDetails"  >   My Attendance Details  </Link>
+          <div className="col-lg-3" style={{marginLeft:"10px"}}>
+            <Link className={Styles.header} href="/Attendance/AttendanceDetails"  >   My Attendance Details  </Link>
           </div>
           {roleID == 3 && (
             <>
-              <div className="col-lg-3">
+              <div className="col-lg-3" style={{ marginLeft: '-80px' }}>
                 <Link
                   className="Heading active"
                   href="/Attendance/MyTeamAttendanceDetails"
@@ -55,7 +56,7 @@ const AttendenceDetails = () => {
           )}
           {roleID == 2 && (
             <>
-              <div className="col-lg-3">
+              <div className="col-lg-3" style={{ marginLeft: '-80px' }}>
                 <Link
                   className="Heading active"
                   href="/Attendance/CompanyAttendanceDetails"
@@ -66,13 +67,12 @@ const AttendenceDetails = () => {
             </>
           )}
         </div>
-        <div className="Filter" style={{ marginLeft: "0px" }}>
+        <div className={Styles.filter}>
           <div className="card p-3  border-0 shadow-lg rounded-3 mt-4">
             <div className="row">
               <div className="col-lg-1">
                 <p>Filter By</p>
               </div>
-
               <div className="col-lg-3">
                 <p>Start Date</p>
                 <input type="date" className="form-control" />
@@ -97,7 +97,7 @@ const AttendenceDetails = () => {
         <div className="row mt-4">
           <div className="col-lg-12">
             <div className="table-responsive">
-              <table className="table table-striped table-bordered ">
+              <table className="table table-striped table-bordered " style={{ marginLeft: "0px", width: "100%" }}>
                 <thead className={"bg-info text-white "}>
                   <tr style={{ whiteSpace: "nowrap" }}>
                     <th>Date</th>
