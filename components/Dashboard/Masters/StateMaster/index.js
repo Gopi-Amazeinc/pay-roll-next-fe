@@ -99,31 +99,37 @@ function StateMasterDashboard() {
           </tr>
         </thead>
         <tbody>
-          {state.map((data, index) => {
-            return (
-              <tr className="text-dark" key={index}>
-                <td>{data.country}</td>
-                <td>{data.short}</td>
-                <td>{data.description}</td>
-                <td>
-                  <Link href={`/Masters/StateMaster/Edit/${data.id}`}>
-                    <button
-                      className='edit-btn'
-                    >
-                      Edit
-                    </button>
-                  </Link>
-                  &nbsp;&nbsp;&nbsp;&nbsp;
-                  <button
-                    className='edit-btn'
-                    onClick={deleteState.bind(this, data.id)}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            );
-          })}
+
+          {Array.isArray(state) &&
+            state.length > 0 && (
+              <>
+                {state.map((data, index) => {
+                  return (
+                    <tr className="text-dark" key={index}>
+                      <td>{data.country}</td>
+                      <td>{data.short}</td>
+                      <td>{data.description}</td>
+                      <td>
+                        <Link href={`/Masters/StateMaster/Edit/${data.id}`}>
+                          <button
+                            className='edit-btn'
+                          >
+                            Edit
+                          </button>
+                        </Link>
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <button
+                          className='edit-btn'
+                          onClick={deleteState.bind(this, data.id)}
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })}
+              </>
+            )}
         </tbody>
       </table>
     </div>

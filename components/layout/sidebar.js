@@ -82,7 +82,7 @@ const Sidebar = ({ children, applyPageName }) => {
       tooggleStaff(false);
     }
 
-    if (menuID === "31" ) {
+    if (menuID === "31") {
       toggleOt(true);
     } else {
       toggleOt(false);
@@ -94,7 +94,7 @@ const Sidebar = ({ children, applyPageName }) => {
       toggleAttendence(false);
     }
 
-    if (menuID >"50" && menuID <"57") {
+    if (menuID > "50" && menuID < "57") {
       toggleRequests(true);
     } else {
       toggleRequests(false);
@@ -106,74 +106,73 @@ const Sidebar = ({ children, applyPageName }) => {
       toggleLoans(false);
     }
 
-    if ( menuID >"700" && menuID<"740") {
+    if (menuID > "700" && menuID < "740") {
       togglePayRoll(true);
     } else {
       togglePayRoll(false);
     }
-    if ( menuID >"709" && menuID<"720") {
+    if (menuID > "709" && menuID < "720") {
       toggleInitialRun(true);
     } else {
       toggleInitialRun(false);
     }
-    if ( menuID >"720" && menuID<"730") {
+    if (menuID > "720" && menuID < "730") {
       toggleFinalRun(true);
     } else {
       toggleFinalRun(false);
     }
-    
-    if ( menuID ===81) {
+
+    if (menuID === 81) {
       toggleCompany(true);
     } else {
       toggleCompany(false);
     }
 
-    if ( menuID >"90" && menuID < "98") {
+    if (menuID > "90" && menuID < "98") {
       toggleSettings(true);
     } else {
       toggleSettings(false);
     }
-    if ( menuID >"100" && menuID < "120") {
+    if (menuID > "100" && menuID < "120") {
       toggleMasters(true);
     } else {
       toggleMasters(false);
     }
-    if ( menuID >"300" && menuID < "400") {
+    if (menuID > "300" && menuID < "400") {
       toggleReports(true);
     } else {
       toggleReports(false);
     }
-    if ( menuID >"300" && menuID < "310") {
+    if (menuID > "300" && menuID < "310") {
       togglePagibig(true);
     } else {
       togglePagibig(false);
     }
-    if ( menuID >"310" && menuID < "320") {
+    if (menuID > "310" && menuID < "320") {
       toggleTaxReports(true);
     } else {
       toggleTaxReports(false);
     }
-    if ( menuID >"320" && menuID < "330") {
+    if (menuID > "320" && menuID < "330") {
       toggleBIR(true);
     } else {
       toggleBIR(false);
     }
-    if ( menuID >"330" && menuID < "340") {
+    if (menuID > "330" && menuID < "340") {
       toggleBankReports(true);
     } else {
       toggleBankReports(false);
     }
-    if ( menuID >"340" && menuID < "350") {
+    if (menuID > "340" && menuID < "350") {
       toggleSSS(true);
     } else {
       toggleSSS(false);
     }
-    if ( menuID >"350" && menuID < "360") {
+    if (menuID > "350" && menuID < "360") {
       togglePhilhealthMonthly(true);
     } else {
       togglePhilhealthMonthly(false);
     }
-    
   }, []);
 
   const getStyle = (menuID) => {
@@ -213,7 +212,6 @@ const Sidebar = ({ children, applyPageName }) => {
     togglePhilhealthMonthly(!displayPhilhealthMonthly);
     sessionStorage.setItem("togglePhilhealthMonthly", displayPhilhealthMonthly);
   };
-
 
   const toggleBankReportsMenu = () => {
     toggleBankReports(!displayBankReports);
@@ -360,31 +358,31 @@ const Sidebar = ({ children, applyPageName }) => {
               )}
             </div>
           ))}
-{userRole ==4 && (
-  <>
-        <hr></hr>
-        <button className={styles.sidemenu} onClick={toggleOtMenu}>
-          <BiCalendar style={customStyles.icons} />
-          OT
-        </button>
-        {displayOt && (
-          <div>
-            <Link href="/OT" className={styles.sidemenulink}>
-              <button
-                className={getSubStyle(31)}
-                onClick={updateActiveMenu.bind(this, {
-                  id: 31,
-                  name: "Over time details",
-                })}
-              >
-                <BiCalendarCheck style={customStyles.icons} />
-                Over Time Details
-              </button>
-            </Link>
-          </div>
+        {userRole == 4 && (
+          <>
+            <hr></hr>
+            <button className={styles.sidemenu} onClick={toggleOtMenu}>
+              <BiCalendar style={customStyles.icons} />
+              OT
+            </button>
+            {displayOt && (
+              <div>
+                <Link href="/OT" className={styles.sidemenulink}>
+                  <button
+                    className={getSubStyle(31)}
+                    onClick={updateActiveMenu.bind(this, {
+                      id: 31,
+                      name: "Over time details",
+                    })}
+                  >
+                    <BiCalendarCheck style={customStyles.icons} />
+                    Over Time Details
+                  </button>
+                </Link>
+              </div>
+            )}
+          </>
         )}
-        </>
-)}
         <hr></hr>
         <button className={styles.sidemenu} onClick={toggleAttendenceMenu}>
           <BiCalendar style={customStyles.icons} />
@@ -407,22 +405,22 @@ const Sidebar = ({ children, applyPageName }) => {
                 Attendance Details
               </button>
             </Link>
-            { userRole != 3 && (
-            <Link
-              href="/Attendance/OverTimeUnitsUpload"
-              className={styles.sidemenulink}
-            >
-              <button
-                className={getSubStyle(42)}
-                onClick={updateActiveMenu.bind(this, {
-                  id: 42,
-                  name: "Overtime Units Upload",
-                })}
+            {userRole != 3 && (
+              <Link
+                href="/Attendance/OverTimeUnitsUpload"
+                className={styles.sidemenulink}
               >
-                <BiCalendarPlus style={customStyles.icons} />
-                Overtime Units Upload
-              </button>
-            </Link>
+                <button
+                  className={getSubStyle(42)}
+                  onClick={updateActiveMenu.bind(this, {
+                    id: 42,
+                    name: "Overtime Units Upload",
+                  })}
+                >
+                  <BiCalendarPlus style={customStyles.icons} />
+                  Overtime Units Upload
+                </button>
+              </Link>
             )}
             <Link
               href="/Attendance/AttendanceCorrections"
@@ -538,31 +536,31 @@ const Sidebar = ({ children, applyPageName }) => {
           </div>
         )}
 
-{ userRole == 4 && (
-  <>
-        <hr></hr>
-        <button className={styles.sidemenu} onClick={toggleLoansMenu}>
-          <BiSpreadsheet style={customStyles.icons} />
-          Loans
-        </button>
-        {displayLoans && (
-          <div>
-            <Link href="/Loans">
-              <button
-                className={getSubStyle(61)}
-                onClick={updateActiveMenu.bind(this, {
-                  id: 61,
-                  name: "Loans Upload",
-                })}
-              >
-                <FiUpload style={customStyles.icons} />
-                Loans Upload
-              </button>
-            </Link>
-          </div>
+        {userRole == 4 && (
+          <>
+            <hr></hr>
+            <button className={styles.sidemenu} onClick={toggleLoansMenu}>
+              <BiSpreadsheet style={customStyles.icons} />
+              Loans
+            </button>
+            {displayLoans && (
+              <div>
+                <Link href="/Loans">
+                  <button
+                    className={getSubStyle(61)}
+                    onClick={updateActiveMenu.bind(this, {
+                      id: 61,
+                      name: "Loans Upload",
+                    })}
+                  >
+                    <FiUpload style={customStyles.icons} />
+                    Loans Upload
+                  </button>
+                </Link>
+              </div>
+            )}
+          </>
         )}
-        </>
-)}
         {userRole == 4 && (
           <div>
             <hr></hr>
@@ -1225,7 +1223,7 @@ const Sidebar = ({ children, applyPageName }) => {
             </Link>
           </div>
         )}
-          {userRole == 3 && (
+        {userRole == 3 && (
           <>
             <hr></hr>
             <Link href="/Announcement" className={styles.sidemenulink}>
@@ -1590,27 +1588,31 @@ const Sidebar = ({ children, applyPageName }) => {
                       </button>
                     </Link>
                     {userRole == 3 && (
-                    <>
-                    <Link href="/Reports/LeaveReport">
-                      <button
-                        className={getSubofSubStyle(351)}
-                        onClick={updateActiveMenu.bind(this, {
-                          id: 351,
-                          name: "LeaveReport",
-                        })}
-                      >
-                        <TbReportAnalytics style={customStyles.icons} />
-                        Leave Report
-                      </button>
-                    </Link></>
+                      <>
+                        <Link href="/Reports/LeaveReport">
+                          <button
+                            className={getSubofSubStyle(351)}
+                            onClick={updateActiveMenu.bind(this, {
+                              id: 351,
+                              name: "LeaveReport",
+                            })}
+                          >
+                            <TbReportAnalytics style={customStyles.icons} />
+                            Leave Report
+                          </button>
+                        </Link>
+                      </>
                     )}
                   </div>
                 )}
-                 <button className={styles.subsidemenu} onClick={togglePhilhealthMenu}>
+                <button
+                  className={styles.subsidemenu}
+                  onClick={togglePhilhealthMenu}
+                >
                   <TbReportSearch style={customStyles.icons} />
                   Philhealth
                 </button>
-                { displayPhilhealthMonthly && (
+                {displayPhilhealthMonthly && (
                   <div>
                     <Link href="/Reports/PhilHealth/PhilHealthMonthly">
                       <button
@@ -1634,7 +1636,7 @@ const Sidebar = ({ children, applyPageName }) => {
                         })}
                       >
                         <TbReportAnalytics style={customStyles.icons} />
-                      ER-2
+                        ER-2
                       </button>
                     </Link>
                     <Link href="/Reports/PhilHealth/RF-1PDF">
@@ -1649,7 +1651,7 @@ const Sidebar = ({ children, applyPageName }) => {
                         RF-1PDF
                       </button>
                     </Link>
-                    </div>
+                  </div>
                 )}
 
                 <Link href="/Reports/PayrollSummary/payrollsummary">
@@ -1704,10 +1706,7 @@ const Sidebar = ({ children, applyPageName }) => {
           </button>
         </Link>
         <hr></hr>
-        <Link
-          href="/SupportTickets"
-          className={styles.sidemenulink}
-        >
+        <Link href="/SupportTickets" className={styles.sidemenulink}>
           <button
             className={getStyle(601)}
             onClick={updateActiveMenu.bind(this, {
@@ -1719,7 +1718,6 @@ const Sidebar = ({ children, applyPageName }) => {
             Support tickets
           </button>
         </Link>
-      
       </div>
     </div>
   );

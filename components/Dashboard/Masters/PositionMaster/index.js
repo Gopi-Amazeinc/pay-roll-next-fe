@@ -100,28 +100,31 @@ const PositionMasterDash = () => {
                 </tr>
               </thead>
               <tbody>
-                {positionMaster.map((data) => {
-                  return (
-                    <tr key={data.id}>
-                      <td>{data.short}</td>
-                      <td>{data.description}</td>
-                      <td>
-                        <div className="row">
-                          <div className="col-lg-2">
-                            <Link href={`/Masters/PositionMaster/Edit/${data.id}`}>
-                              <button className="edit-btn" >Edit</button>
-                            </Link>
-                          </div>
-                          <div className="col-lg-2">
-                            <button className="edit-btn" onClick={() => handleDelete(data.id)}>Delete</button>
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                  )
-                })
-
-                }
+                {Array.isArray(positionMaster) &&
+                  positionMaster.length > 0 && (
+                    <>
+                      {positionMaster.map((data) => {
+                        return (
+                          <tr key={data.id}>
+                            <td>{data.short}</td>
+                            <td>{data.description}</td>
+                            <td>
+                              <div className="row">
+                                <div className="col-lg-2">
+                                  <Link href={`/Masters/PositionMaster/Edit/${data.id}`}>
+                                    <button className="edit-btn" >Edit</button>
+                                  </Link>
+                                </div>
+                                <div className="col-lg-2">
+                                  <button className="edit-btn" onClick={() => handleDelete(data.id)}>Delete</button>
+                                </div>
+                              </div>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                    </>
+                  )}
               </tbody>
             </table>
           </div>

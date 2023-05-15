@@ -71,22 +71,26 @@ function WorkLocationMasterDash() {
                     </tr>
                 </thead>
                 <tbody >
-                    {
-                        workLocation.map((data, index) => {
-                            return (
-                                <tr className="text-dark" key={index}>
-                                    <td>{data.short}</td>
-                                    <td>{data.description}</td>
-                                    <td>
-                                        <Link href={`/Masters/WorkLocationMaster/Edit/${data.id}`}>
-                                            <button className='edit-btn'>Edit</button>
-                                        </Link>&nbsp;&nbsp;&nbsp;&nbsp;
-                                        <button className='edit-btn' onClick={deleteWorkLocation.bind(this, data.id)}>Delete</button>
-                                    </td>
-                                </tr>
-                            )
-                        })
-                    }
+
+                    {Array.isArray(workLocation) &&
+                        workLocation.length > 0 && (
+                            <>
+                                {workLocation.map((data, index) => {
+                                    return (
+                                        <tr key={index}>
+                                            <td>{data.short}</td>
+                                            <td>{data.description}</td>
+                                            <td>
+                                                <Link href={`/Masters/WorkLocationMaster/Edit/${data.id}`}>
+                                                    <button className='edit-btn'>Edit</button>
+                                                </Link>&nbsp;&nbsp;&nbsp;&nbsp;
+                                                <button className='edit-btn' onClick={deleteWorkLocation.bind(this, data.id)}>Delete</button>
+                                            </td>
+                                        </tr>
+                                    );
+                                })}
+                            </>
+                        )}
                 </tbody>
             </table>
         </div>

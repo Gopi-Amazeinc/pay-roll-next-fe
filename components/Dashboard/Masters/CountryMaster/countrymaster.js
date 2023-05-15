@@ -54,7 +54,7 @@ function CountryMasterDash() {
                         <div className="col-lg-1">
                             <b>
                                 <p className="mt-2 text-center">
-                                    
+
                                     <BiFilterAlt /> Filter by:
                                 </p>
                             </b>
@@ -77,7 +77,7 @@ function CountryMasterDash() {
                                 <button
                                     className="AddButton"
                                 >
-                                    
+
                                     <AiOutlinePlusCircle />
                                     Add New
                                 </button>
@@ -95,30 +95,36 @@ function CountryMasterDash() {
                                 </tr>
                             </thead>
                             <tbody>
-                                {country.map((data, index) => {
-                                    return (
-                                        <tr className="text-dark" key={index}>
-                                            <td>{data.short}</td>
-                                            <td>{data.description}</td>
-                                            <td>
-                                                <Link href={`/Masters/CountryMaster/Edit/${data.id}`}>
-                                                    <button
-                                                        id={Styles.editbtn}
-                                                    >
-                                                        Edit
-                                                    </button>
-                                                </Link>
-                                                &nbsp;&nbsp;&nbsp;&nbsp;
-                                                <button
-                                                    id={Styles.editbtn}
-                                                    onClick={deleteCountry.bind(this, data.id)}
-                                                >
-                                                    Delete
-                                                </button>
-                                            </td>
-                                        </tr>
-                                    );
-                                })}
+
+                                {Array.isArray(country) &&
+                                    country.length > 0 && (
+                                        <>
+                                            {country.map((data, index) => {
+                                                return (
+                                                    <tr className="text-dark" key={index}>
+                                                        <td>{data.short}</td>
+                                                        <td>{data.description}</td>
+                                                        <td>
+                                                            <Link href={`/Masters/CountryMaster/Edit/${data.id}`}>
+                                                                <button
+                                                                    id={Styles.editbtn}
+                                                                >
+                                                                    Edit
+                                                                </button>
+                                                            </Link>
+                                                            &nbsp;&nbsp;&nbsp;&nbsp;
+                                                            <button
+                                                                id={Styles.editbtn}
+                                                                onClick={deleteCountry.bind(this, data.id)}
+                                                            >
+                                                                Delete
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                );
+                                            })}
+                                        </>
+                                    )}
                             </tbody>
                         </table>
                     </div>
