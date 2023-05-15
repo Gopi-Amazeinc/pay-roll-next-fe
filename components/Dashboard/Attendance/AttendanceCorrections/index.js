@@ -73,8 +73,8 @@ const Attendancecorrectiondashboard = () => {
       confirmButtonText: "Yes, Approve it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.get(hostURL + "Payroll/ApproveAttedanceCoorection?id=" + data.id + "&UserID=" + data.staffID + "&SigninDate=" + SDate + "&SignoutDate=" + EDate
-        );
+        apiService.commonGetCall("Payroll/ApproveAttedanceCoorection?id=" + data.id + "&UserID=" + data.staffID + "&SigninDate=" + SDate + "&SignoutDate=" + EDate);
+        // axios.get(hostURL + "Payroll/ApproveAttedanceCoorection?id=" + data.id + "&UserID=" + data.staffID + "&SigninDate=" + SDate + "&SignoutDate=" + EDate );
         Swal.fire({
           icon: "success",
           titleText: "Approved Successfully",
@@ -156,7 +156,8 @@ const Attendancecorrectiondashboard = () => {
       confirmButtonText: "Yes, Cancel it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.get(hostURL + "Payroll/DeleteAttendanceCorrection?id=" + id);
+        apiService.commonGetCall("Payroll/DeleteAttendanceCorrection?id=" + id);
+        //  axios.get(hostURL + "Payroll/DeleteAttendanceCorrection?id=" + id);
         Swal.fire({
           icon: "success",
           titleText: "Cancelled Successfully",

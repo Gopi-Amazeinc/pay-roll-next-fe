@@ -19,7 +19,6 @@ export default function AttendanceCorrectionform() {
     // useEffect(() => {
     //     let res = sessionStorage.getItem("asd");
     //     setUserIDdata(res)
-
     // }, []);
 
 
@@ -28,7 +27,7 @@ export default function AttendanceCorrectionform() {
         // console.log("form data", formData);
         debugger
         await apiService.commonPostCall("Payroll/InsertAttendanceCorrection", data);
-        //   await axios.post(hostURL + "Payroll/InsertAttendanceCorrection", data);
+        // await axios.post(hostURL + "Payroll/InsertAttendanceCorrection", data);
         Swal.fire('Data Inserted successfully');
         location.href = "/Attendance/AttendanceCorrections";
         console.log("Inserted data:", data);
