@@ -11,7 +11,20 @@ const AttendenceDetails = () => {
   const [roleID, setRoleID] = useState();
   let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
   // function Attendance() {
+  const [start, setStart] = useState("");
+  const [end, setEnd] = useState("");
 
+  const filterData = (start, end) => {
+    const filteredData = data.filter(item => {
+      return item.start_date >= start && item.end_date <= end;
+    });
+    return filteredData;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setData(filterData(start, end));
+  }
   useEffect(() => {
     const userid = sessionStorage.getItem("userID");
     const roleid = sessionStorage.getItem("roleID");
@@ -39,7 +52,7 @@ const AttendenceDetails = () => {
     <div>
       <div className="container">
         <div className="row mt-3">
-          <div className="col-lg-3" style={{marginLeft:"10px"}}>
+          <div className="col-lg-3" style={{ marginLeft: "10px" }}>
             <Link className={Styles.header} href="/Attendance/AttendanceDetails"  >   My Attendance Details  </Link>
           </div>
           {roleID == 3 && (
@@ -68,30 +81,32 @@ const AttendenceDetails = () => {
           )}
         </div>
         <div className={Styles.filter}>
-          <div className="card p-3  border-0 shadow-lg rounded-3 mt-4">
-            <div className="row">
-              <div className="col-lg-1">
-                <p>Filter By</p>
-              </div>
-              <div className="col-lg-3">
-                <p>Start Date</p>
-                <input type="date" className="form-control" />
-              </div>
+          <form onSubmit={handleSubmit}>
+            <div className="card p-3  border-0 shadow-lg rounded-3 mt-4">
+              <div className="row">
+                <div className="col-lg-1">
+                  <p>Filter By</p>
+                </div>
+                <div className="col-lg-3">
+                  <p>Start Date</p>
+                  <input type="date" className="form-control" value={start} onChange={(e) => setStart(e.target.value)} />
+                </div>
 
-              <div className="col-lg-3">
-                <p>End Date</p>
-                <input type="date" className="form-control" />
-              </div>
+                <div className="col-lg-3">
+                  <p>End Date</p>
+                  <input type="date" className="form-control" value={end} onChange={(e) => setEnd(e.target.value)} />
+                </div>
 
-              <div className="col-lg-2">
-                <br />
-                <p></p>
-                <button className="button" id="AddButton">
-                  Download
-                </button>
+                <div className="col-lg-2">
+                  <br />
+                  <p></p>
+                  <button className="button" id="AddButton">
+                    Download
+                  </button>
+                </div>
               </div>
             </div>
-          </div>
+          </form>
         </div>
 
         <div className="row mt-4">
@@ -126,14 +141,14 @@ const AttendenceDetails = () => {
                             <td>{data.signinDate}</td>
                             <td>{data.signInType}</td>
                             <td>{data.signInWorkType}</td>
-                            <td>{data.expectedInTime}</td>
-                            <td>{data.punchInTime}</td>
+                            <td>{data.expectedIn}</td>
+                            <td>{data.expectedOut}</td>
                             <td>{data.punchinip}</td>
                             <td>{data.expectedOutTime}</td>
                             <td>{data.punchOutTime}</td>
-                            <td>{data.punchoutip}</td>
-                            <td>{data.signOutType}</td>
-                            <td>{data.punchOutWorkType}</td>
+                            <td>{data.ot}</td>
+                            <td>{data.undertime}</td>
+                            <td>{data.latepunchin}</td>
                             {/* <td>{data.hr1}</td>
                         <td>{data.underTime}</td>
                         <td>{data.late}</td> */}
