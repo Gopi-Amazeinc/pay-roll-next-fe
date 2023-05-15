@@ -17,14 +17,13 @@ const Index = () => {
   function changePathName(data) {
     setPgNo(data);
 
-    // document.getElementById(data).style.color = "green"
   }
 
   return (
     <Layout>
       <div className="container">
-        <h5>APIs yet to be provided</h5>
         <div>
+          <br></br>
           <div className={Styles.wizardHorizontal}>
             <div
               id={1}
@@ -34,7 +33,7 @@ const Index = () => {
                 onClick={() => changePathName(1)}
                 className={Styles.wizardLabel}
               >
-                Employee Profile{" "}
+                Employee Profile
               </p>
             </div>
             <div
@@ -45,7 +44,6 @@ const Index = () => {
                 onClick={() => changePathName(2)}
                 className={Styles.wizardLabel}
               >
-                {" "}
                 Position Details
               </p>
             </div>
