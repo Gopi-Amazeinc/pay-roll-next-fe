@@ -1,25 +1,24 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import axios from "axios";
 import Swal from "sweetalert2";
 import { apiService } from "@/services/api.service";
 
 const Attendancecorrectiondashboard = () => {
-  const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+  const [roleID, setRoleID] = useState();
+  const [userID, setUserID] = useState();
+
   const [pending, setPending] = useState(false);
   const [approved, setApproved] = useState(false);
   const [rejected, setRejected] = useState(false);
-  const [roleID, setRoleID] = useState();
-  const [userID, setUserID] = useState();
 
   const [pendingDashboardData, setpendingDashboardData] = useState([]);
   const [approvedDashboardData, setapprovedDashboardData] = useState([]);
   const [rejectedDashboardData, setrejectedDashboardData] = useState([]);
 
-  const [managerPending, getManagerPending] = useState([]);
-  const [managerApproved, getManagerApproved] = useState([]);
-  const [managerRejected, getManagerRejected] = useState([]);
+  const [managerPending, setManagerPendingData] = useState([]);
+  const [managerApproved, setManagerApprovedData] = useState([]);
+  const [managerRejected, setManagerRejectedData] = useState([]);
 
   const [SDate, setSDate] = useState("");
   const [EDate, setEDate] = useState("");
@@ -41,28 +40,91 @@ const Attendancecorrectiondashboard = () => {
     setApproved(false);
   };
 
+  useEffect(() => {
+    const usrID = sessionStorage.getItem("userID");
+    setUserID(usrID);
+
+    const userRoleID = sessionStorage.getItem("roleID");
+    setRoleID(userRoleID);
+
+    setPending(true);
+
+    getCurrentMonthDates();
+
+    if (userRoleID === 3) {
+      getPendingManager(fromDate, endDate);
+      getApprovedManager(fromDate, endDate);
+      getRejectedManager(fromDate, endDate);
+    } else {
+      getPendingData(fromDate, endDate);
+      getApprovedData(fromDate, endDate);
+      getRejectedData(fromDate, endDate);
+    }
+  }, [1]);
+
+  const getCurrentMonthDates = () => {
+    let newDate = new Date();
+    let firstDayOfMonth = new Date(newDate.getFullYear(), newDate.getMonth());
+    let fromDate = formateDate(firstDayOfMonth);
+
+    const year = newDate.getFullYear();
+    const month = newDate.getMonth() + 1;
+    const lastDay = new Date(year, month, 0).getDate();
+    const endDate = `${year}-${month.toString().padStart(2, "0")}-${lastDay
+      .toString()
+      .padStart(2, "0")}`;
+
+    setSDate(fromDate);
+    setDate(endDate);
+  };
+
+  const formateDate = (datetoformat) => {
+    const day = datetoformat.getDate().toString().padStart(2, "0");
+    const month = (datetoformat.getMonth() + 1).toString().padStart(2, "0");
+    const year = datetoformat.getFullYear().toString();
+    return `${year}-${month}-${day}`;
+  };
+
   const getPendingManager = async (SDate, EDate) => {
-    const res = await apiService.commonGetCall("Payroll/GetPendingAttendanceCorrectionBySupervisor?userID=" + userID + "&SDate=" + SDate + "&EDate=" + EDate);
+    const res = await apiService.commonGetCall(
+      "Payroll/GetPendingAttendanceCorrectionBySupervisor?userID=" +
+        userID +
+        "&SDate=" +
+        SDate +
+        "&EDate=" +
+        EDate
+    );
     // const res = await axios.get( hostURL + "Payroll/GetPendingAttendanceCorrectionBySupervisor?userID=" + userID +"&SDate=" + SDate +"&EDate=" +EDate);
-    console.log(res, "manager pending");
-    getManagerPending(res.data);
+    setManagerPendingData(res.data);
   };
 
   const getApprovedManager = async (SDate, EDate) => {
-    const res = await apiService.commonGetCall("Payroll/GetApprovedAttendanceCorrectionBySupervisor?userID=" + userID + "&SDate=" + SDate + "&EDate=" + EDate);
+    const res = await apiService.commonGetCall(
+      "Payroll/GetApprovedAttendanceCorrectionBySupervisor?userID=" +
+        userID +
+        "&SDate=" +
+        SDate +
+        "&EDate=" +
+        EDate
+    );
     // const res = await axios.get( hostURL + "Payroll/GetApprovedAttendanceCorrectionBySupervisor?userID=" + userID +  "&SDate=" +  SDate +  "&EDate=" +EDate );
-    console.log(res, "manager Approved");
-    getManagerApproved(res.data);
+    setManagerApprovedData(res.data);
   };
 
   const getRejectedManager = async (SDate, EDate) => {
-    const res = await apiService.commonGetCall("Payroll/GetApprovedAttendanceCorrectionBySupervisor?userID=" + userID + "&SDate=" + SDate + "&EDate=" + EDate);
+    const res = await apiService.commonGetCall(
+      "Payroll/GetApprovedAttendanceCorrectionBySupervisor?userID=" +
+        userID +
+        "&SDate=" +
+        SDate +
+        "&EDate=" +
+        EDate
+    );
     //  const res = await axios.get( hostURL + "Payroll/GetApprovedAttendanceCorrectionBySupervisor?userID=" +  userID + "&SDate=" + SDate + "&EDate=" + EDate);
-    console.log(res, "manager Rejected");
-    getManagerRejected(res.data);
+    setManagerRejectedData(res.data);
   };
 
-  const approve = (data) => {
+  const approveAttedanceCorrection = async (data) => {
     Swal.fire({
       title: "Confirm To Approve?",
       text: "You won't be able to revert this!",
@@ -71,9 +133,18 @@ const Attendancecorrectiondashboard = () => {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, Approve it!",
-    }).then((result) => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
-        apiService.commonGetCall("Payroll/ApproveAttedanceCoorection?id=" + data.id + "&UserID=" + data.staffID + "&SigninDate=" + SDate + "&SignoutDate=" + EDate);
+        await apiService.commonGetCall(
+          "Payroll/ApproveAttedanceCoorection?id=" +
+            data.id +
+            "&UserID=" +
+            data.staffID +
+            "&SigninDate=" +
+            SDate +
+            "&SignoutDate=" +
+            EDate
+        );
         // axios.get(hostURL + "Payroll/ApproveAttedanceCoorection?id=" + data.id + "&UserID=" + data.staffID + "&SigninDate=" + SDate + "&SignoutDate=" + EDate );
         Swal.fire({
           icon: "success",
@@ -84,68 +155,49 @@ const Attendancecorrectiondashboard = () => {
     });
   };
 
-  function formateDate(datetoformat) {
-    const day = datetoformat.getDate().toString().padStart(2, "0");
-    const month = (datetoformat.getMonth() + 1).toString().padStart(2, "0");
-    const year = datetoformat.getFullYear().toString();
-    return `${year}-${month}-${day}`;
-  }
-
-  async function getPendingData(SDate, EDate) {
-    let staffID = sessionStorage.getItem("userID");
-    const res = await apiService.commonGetCall("Payroll/GetPendingAttendanceCorrectionByStaffID?userID=" + staffID + "&SDate=" + SDate + "&EDate=" + EDate);
+  const getPendingData = async (SDate, EDate) => {
+    const res = await apiService.commonGetCall(
+      "Payroll/GetPendingAttendanceCorrectionByStaffID?userID=" +
+        userID +
+        "&SDate=" +
+        SDate +
+        "&EDate=" +
+        EDate
+    );
     // const res = await axios.get( hostURL +  "Payroll/GetPendingAttendanceCorrectionByStaffID?userID=" + staffID + "&SDate=" + SDate + "&EDate=" + EDate);
     console.log(res, "pending");
     setpendingDashboardData(res.data);
-  }
+  };
 
-  async function getApprovedData(SDate, EDate) {
-    let staffID = sessionStorage.getItem("userID");
-    const res = await apiService.commonGetCall("Payroll/GetApprovedAttendanceCorrectionByStaffID?userID=" + staffID + "&SDate=" + SDate + "&EDate=" + EDate);
+  const getApprovedData = async (SDate, EDate) => {
+    const res = await apiService.commonGetCall(
+      "Payroll/GetApprovedAttendanceCorrectionByStaffID?userID=" +
+        userID +
+        "&SDate=" +
+        SDate +
+        "&EDate=" +
+        EDate
+    );
     // const res = await axios.get( hostURL +"Payroll/GetApprovedAttendanceCorrectionByStaffID?userID=" + staffID +"&SDate=" + SDate + "&EDate=" + EDate  );
     console.log(res, "approved");
     setapprovedDashboardData(res.data);
-  }
+  };
 
-  async function getRejectedData(SDate, EDate) {
-    let staffID = sessionStorage.getItem("userID");
-    const res = await apiService.commonGetCall("Payroll/GetRejectedAttendanceCorrectionByStaffID?userID=" + staffID + "&SDate=" + SDate + "&EDate=" + EDate);
+  const getRejectedData = async (SDate, EDate) => {
+    const res = await apiService.commonGetCall(
+      "Payroll/GetRejectedAttendanceCorrectionByStaffID?userID=" +
+        userID +
+        "&SDate=" +
+        SDate +
+        "&EDate=" +
+        EDate
+    );
     //  const res = await axios.get(hostURL + "Payroll/GetRejectedAttendanceCorrectionByStaffID?userID=" +staffID + "&SDate=" + SDate + "&EDate=" + EDate );
     console.log(res, "rejected");
     setrejectedDashboardData(res.data);
-  }
+  };
 
-  useEffect(() => {
-    const usrID = sessionStorage.getItem("userID");
-    setUserID(usrID);
-    const userRoleID = sessionStorage.getItem("roleID");
-    setRoleID(userRoleID);
-    let Newtoday = new Date();
-    let firstDayOfMonth = new Date(Newtoday.getFullYear(), Newtoday.getMonth());
-    let fromDate = formateDate(firstDayOfMonth);
-
-    const date = new Date();
-    const year = date.getFullYear();
-    const month = date.getMonth() + 1;
-    const lastDay = new Date(year, month, 0).getDate();
-    const EndDate = `${year}-${month.toString().padStart(2, "0")}-${lastDay
-      .toString()
-      .padStart(2, "0")}`;
-
-    console.log(EndDate);
-
-    setSDate(fromDate);
-    setEDate(EndDate);
-
-    getPendingData(fromDate, EndDate);
-    getApprovedData(fromDate, EndDate);
-    getRejectedData(fromDate, EndDate);
-    getPendingManager(fromDate, EndDate);
-    getApprovedManager(fromDate, EndDate);
-    getRejectedManager(fromDate, EndDate);
-  }, [1]);
-
-  const Delete = (id) => {
+  const deleteAttendanceCorrection = (id) => {
     Swal.fire({
       title: "Are You Sure To Cancel?",
       text: "You won't be able to revert this!",
@@ -154,9 +206,11 @@ const Attendancecorrectiondashboard = () => {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, Cancel it!",
-    }).then((result) => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
-        apiService.commonGetCall("Payroll/DeleteAttendanceCorrection?id=" + id);
+        await apiService.commonGetCall(
+          "Payroll/DeleteAttendanceCorrection?id=" + id
+        );
         //  axios.get(hostURL + "Payroll/DeleteAttendanceCorrection?id=" + id);
         Swal.fire({
           icon: "success",
@@ -243,7 +297,10 @@ const Attendancecorrectiondashboard = () => {
                           <td>{data.status}</td>
                           <td>
                             <button
-                              onClick={Delete.bind(this, data.id)}
+                              onClick={deleteAttendanceCorrection.bind(
+                                this,
+                                data.id
+                              )}
                               className="edit-btn"
                             >
                               Cancel
@@ -282,7 +339,10 @@ const Attendancecorrectiondashboard = () => {
                         <td>{data.endTime}</td>
                         <td>
                           <button
-                            onClick={approve.bind(this, data)}
+                            onClick={approveAttedanceCorrection.bind(
+                              this,
+                              data
+                            )}
                             className="edit-btn"
                           >
                             Accept
