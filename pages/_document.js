@@ -10,7 +10,7 @@ export default function Document() {
           width= "auto" height= "auto"
         />
         </Head>
-      <body style={{ backgroundColor: '#ffffff' }}>
+      <body >
         <Main />
         <NextScript />
       </body>
