@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { apiService } from "@/services/api.service";
 
 
 function AnnoucementDash() {
@@ -28,14 +29,16 @@ function AnnoucementDash() {
   const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
 
   async function getupcomingdata() {
-    let res = await axios.get(hostURL + "HR/GetCompleteAnnouncementsByBuildingID?BuildingID=57");
+    const res = await apiService.commonGetCall("HR/GetCompleteAnnouncementsByBuildingID?BuildingID=57");
+//  let res = await axios.get(hostURL + "HR/GetCompleteAnnouncementsByBuildingID?BuildingID=57");
     setcompletedashboard(res.data);
     console.log(res.data);
   }
 
 
   async function getcompletedata() {
-    let res = await axios.get(hostURL + "HR/GetAnnouncementsByBuildingID?BuildingID=57");
+    const res = await apiService.commonGetCall("HR/GetAnnouncementsByBuildingID?BuildingID=57");
+    // let res = await axios.get(hostURL + "HR/GetAnnouncementsByBuildingID?BuildingID=57");
     setupcommingdashboard(res.data);
     console.log(res.data);
 
@@ -123,7 +126,7 @@ function AnnoucementDash() {
           )
         }
 
-        
+
         {
           upcomming && (
             <table className='table table-hover'>
@@ -159,7 +162,7 @@ function AnnoucementDash() {
           )
         }
 
-    
+
 
       </div>
     </>
