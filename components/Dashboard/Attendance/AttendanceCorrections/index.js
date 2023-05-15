@@ -20,8 +20,8 @@ const Attendancecorrectiondashboard = () => {
   const [managerApproved, setManagerApprovedData] = useState([]);
   const [managerRejected, setManagerRejectedData] = useState([]);
 
-  const [SDate, setSDate] = useState("");
-  const [EDate, setEDate] = useState("");
+  const [startDate, setStartDate] = useState("");
+  const [endDate, setEndDate] = useState("");
 
   const togglePending = () => {
     setPending(true);
@@ -52,13 +52,13 @@ const Attendancecorrectiondashboard = () => {
     getCurrentMonthDates();
 
     if (userRoleID === 3) {
-      getPendingManager(fromDate, endDate);
-      getApprovedManager(fromDate, endDate);
-      getRejectedManager(fromDate, endDate);
+      getPendingManager(startDate, endDate);
+      getApprovedManager(startDate, endDate);
+      getRejectedManager(startDate, endDate);
     } else {
-      getPendingData(fromDate, endDate);
-      getApprovedData(fromDate, endDate);
-      getRejectedData(fromDate, endDate);
+      getPendingData(startDate, endDate);
+      getApprovedData(startDate, endDate);
+      getRejectedData(startDate, endDate);
     }
   }, [1]);
 
@@ -70,12 +70,12 @@ const Attendancecorrectiondashboard = () => {
     const year = newDate.getFullYear();
     const month = newDate.getMonth() + 1;
     const lastDay = new Date(year, month, 0).getDate();
-    const endDate = `${year}-${month.toString().padStart(2, "0")}-${lastDay
+    const toDate = `${year}-${month.toString().padStart(2, "0")}-${lastDay
       .toString()
       .padStart(2, "0")}`;
 
-    setSDate(fromDate);
-    setDate(endDate);
+    setStartDate(fromDate);
+    setEndDate(toDate);
   };
 
   const formateDate = (datetoformat) => {
