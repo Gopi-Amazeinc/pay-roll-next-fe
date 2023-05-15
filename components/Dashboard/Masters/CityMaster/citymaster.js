@@ -145,23 +145,28 @@ function CityMasterDash() {
               </tr>
             </thead>
             <tbody>
-              {
-                CityMaster.map((data) => {
-                  return (
-                    <tr key={data.id}>
-                      <td>{data.country}</td>
-                      <td>{data.state}</td>
-                      <td>{data.short}</td>
-                      <td>{data.description}</td>
-                      <td>
-                        <Link href={`/Masters/CityMaster/Edit/${data.id}`}>
-                          <button className="edit-btn">Edit</button></Link>
-                        &nbsp;
-                        <button className="edit-btn" onClick={() => DeleteCityMaster(data.id)}>Delete</button>
-                      </td>
-                    </tr>
-                  );
-                })}
+
+              {Array.isArray(CityMaster) &&
+                CityMaster.length > 0 && (
+                  <>
+                    {CityMaster.map((data) => {
+                      return (
+                        <tr key={data.id}>
+                          <td>{data.country}</td>
+                          <td>{data.state}</td>
+                          <td>{data.short}</td>
+                          <td>{data.description}</td>
+                          <td>
+                            <Link href={`/Masters/CityMaster/Edit/${data.id}`}>
+                              <button className="edit-btn">Edit</button></Link>
+                            &nbsp;
+                            <button className="edit-btn" onClick={() => DeleteCityMaster(data.id)}>Delete</button>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </>
+                )}
             </tbody>
           </table>
         </div>

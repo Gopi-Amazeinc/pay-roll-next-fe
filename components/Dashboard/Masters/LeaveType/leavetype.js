@@ -5,6 +5,7 @@ import Layout from '../../../layout/layout'
 import { useState, useEffect } from 'react'
 import axios from "axios";
 import Swal from "sweetalert2";
+import ReactPaginate from "react-paginate";
 function LeaveTypeDashboard() {
     let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
     const [leaveTypeData, SetleaveTypeData] = useState([]);
@@ -36,6 +37,18 @@ function LeaveTypeDashboard() {
             }
         });
     };
+
+    const [keyword, setKeyword] = useState("");
+
+    const PER_PAGE = 2;
+    const [currentPage, setCurrentPage] = useState(0);
+    function handlePageClick({ selected: selectedPage }) {
+        setCurrentPage(selectedPage)
+    }
+    const offset = currentPage * PER_PAGE;
+    const pageCount = Math.ceil(leaveTypeData.length / PER_PAGE);
+
+
     return (
         <Layout>
             <div className="container">
@@ -59,6 +72,7 @@ function LeaveTypeDashboard() {
                                 placeholder="Search"
                                 id="term"
                                 className="form-control"
+                                onChange={e => setKeyword(e.target.value)}
                             ></input>
                         </div>
                         <div className="col-lg-3" style={{ textAlign: "center" }}></div>
@@ -94,36 +108,70 @@ function LeaveTypeDashboard() {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {leaveTypeData.map((data, index) => {
-                                        return (
-                                            <tr classNameName="text-dark" key={index}>
-                                                <td>{data.short}</td>
-                                                <td>{data.description}</td>
-                                                <td>
-                                                    <Link href={`/Masters/LeaveType/Edit/${data.id}`}>
-                                                        <button
-                                                            id={leavetypeStyles.actionButton}
-                                                            style={{ fontSize: "12px", marginRight: "5%" }}
-                                                        >
-                                                            Edit
-                                                        </button>
-                                                    </Link>
-                                                    <button
-                                                        id={leavetypeStyles.actionButton}
-                                                        style={{ fontSize: "12px" }}
-                                                        onClick={() => handelDelete(data.id)}
-                                                    >
-                                                        Delete
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        );
-                                    })}
+
+
+                                    {Array.isArray(leaveTypeData) &&
+                                        leaveTypeData.length > 0 && (
+                                            <>
+                                                {leaveTypeData
+                                                    .filter(data => {
+                                                        if ((data.short.toLowerCase().includes(keyword.toLowerCase())) || (data.description.toLowerCase().includes(keyword))) {
+                                                            return data;
+                                                        }
+                                                    })
+                                                    .slice(offset, offset + PER_PAGE)
+                                                    .map((data, index) => {
+                                                        return (
+                                                            <tr classNameName="text-dark" key={index}>
+                                                                <td>{data.short}</td>
+                                                                <td>{data.description}</td>
+                                                                <td>
+                                                                    <Link href={`/Masters/LeaveType/Edit/${data.id}`}>
+                                                                        <button
+                                                                            className="edit-btn"
+                                                                        >
+                                                                            Edit
+                                                                        </button>
+                                                                    </Link>
+                                                                    <button
+                                                                        className="edit-btn"
+                                                                        onClick={() => handelDelete(data.id)}
+                                                                    >
+                                                                        Delete
+                                                                    </button>
+                                                                </td>
+                                                            </tr>
+                                                        );
+                                                    })}
+                                            </>
+                                        )}
                                 </tbody>
                             </table>
                         </div>
                     </div>
                     <div className="col-md-1"></div>
+
+                    <div className="mb-4 mt-4 text-center">
+                        <ReactPaginate
+                            previousLabel={"Previous"}
+                            nextLabel={"Next"}
+                            breakLabel={"..."}
+                            pageCount={pageCount}
+                            marginPagesDisplayed={2}
+                            pageRangeDisplayed={3}
+                            onPageChange={handlePageClick}
+                            containerClassName={"pagination  justify-content-center"}
+                            pageClassName={"page-item "}
+                            pageLinkClassName={"page-link"}
+                            previousClassName={"page-item"}
+                            previousLinkClassName={"page-link"}
+                            nextClassName={"page-item"}
+                            nextLinkClassName={"page-link"}
+                            breakClassName={"page-item"}
+                            breakLinkClassName={"page-link"}
+                            activeClassName={"active primary"}
+                        />
+                    </div>
                 </div>
             </div>
         </Layout>

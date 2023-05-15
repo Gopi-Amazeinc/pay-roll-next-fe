@@ -61,7 +61,7 @@ const DepartmentMasterDashboard = () => {
                         <div className="col-lg-1">
                             <b>
                                 <p className="mt-2 text-center">
-                                  
+
                                     Filter by:
                                 </p>
                             </b>
@@ -101,29 +101,32 @@ const DepartmentMasterDashboard = () => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {
-                                    Department.map((data) => {
-                                        return (
-                                            <tr key={data.id}>
-                                                <td>{data.department_name}</td>
-                                                <td>{data.department_Desc}</td>
 
-                                                <td>
-                                                    <div className="row">
-                                                        <div className="col-lg-3">
-                                                            <Link href={`/Masters/DepartmentMaster/Edit/${data.id}`}>   <button className="edit-btn" >Edit</button></Link>
-                                                        </div>
+                                {Array.isArray(Department) &&
+                                    Department.length > 0 && (
+                                        <>
+                                            {Department.map((data) => {
+                                                return (
+                                                    <tr key={data.id}>
+                                                        <td>{data.department_name}</td>
+                                                        <td>{data.department_Desc}</td>
 
-                                                        <div className="col-lg-3">
-                                                            <button className="edit-btn" onClick={() => handleDelete(data.id)}>Delete</button>
-                                                        </div>
-                                                    </div>
-                                                </td>
-                                            </tr>
+                                                        <td>
+                                                            <div className="row">
+                                                                <div className="col-lg-3">
+                                                                    <Link href={`/Masters/DepartmentMaster/Edit/${data.id}`}>   <button className="edit-btn" >Edit</button></Link>
+                                                                </div>
 
-                                        )
-                                    })
-                                }
+                                                                <div className="col-lg-3">
+                                                                    <button className="edit-btn" onClick={() => handleDelete(data.id)}>Delete</button>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                );
+                                            })}
+                                        </>
+                                    )}
 
                             </tbody>
                         </table>

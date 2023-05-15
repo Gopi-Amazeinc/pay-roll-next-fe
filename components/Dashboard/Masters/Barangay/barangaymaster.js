@@ -1,19 +1,13 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
-
+import { apiService } from "@/services/api.service";
 import { AiOutlinePlusCircle } from "react-icons/ai";
-
-import axios from "axios";
 import Swal from "sweetalert2";
 
 export default function BarangayMasterDash() {
-  const [barangaymaster, setbarangaymaster] = useState([]);
-
-  const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-
+  const [barangaymaster, setbarangaymaster] = useState([])
   const getbarangaymaster = async () => {
-    // This API is used to fetch the data from Barangay Master table
-    let res = await axios.get(hostURL + "Master/GetBarangayMaster");
+    let res = await apiService.commonGetCall("Master/GetBarangayMaster");
     setbarangaymaster(res.data);
   };
   useEffect(() => {
@@ -22,9 +16,8 @@ export default function BarangayMasterDash() {
 
   const handleDelete = async (id) => {
     try {
-      // This API is used to delete the BarangayMaster data based on ID
-      let res = await axios.get(
-        hostURL + `Master/DeleteBarangayMaster?id=${id}`
+      let res = await apiService.commonGetCall(
+        `Master/DeleteBarangayMaster?id=${id}`
       );
       console.log(res.data);
       Swal.fire("Data deleted successfully");
@@ -62,7 +55,7 @@ export default function BarangayMasterDash() {
         <div className="col-lg-2">
           <Link href="/Masters/BarangayMaster/new">
             <button className=" AddButton">
-              
+              {AiOutlinePlusCircle}
               ADD NEW
             </button>
           </Link>
@@ -81,32 +74,38 @@ export default function BarangayMasterDash() {
             </tr>
           </thead>
           <tbody>
-            {barangaymaster.map((data, index) => {
-              return (
-                <tr className="text-dark" key={index}>
-                  <td>{data.countryname}</td>
-                  <td>{data.statename}</td>
-                  <td>{data.cityname}</td>
-                  <td>{data.name}</td>
-                  <td>
-                    <Link href={`/Masters/BarangayMaster/Edit/${data.id}`}>
-                      <button
-                        className="edit-btn"
-                      >
-                        Edit
-                      </button>
-                    </Link>
-                    &nbsp;
-                    <button
-                      onClick={() => handleDelete(data.id)}
-                      className="edit-btn"
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              );
-            })}
+
+            {Array.isArray(barangaymaster) &&
+              barangaymaster.length > 0 && (
+                <>
+                  {barangaymaster.map((data, index) => {
+                    return (
+                      <tr className="text-dark" key={index}>
+                        <td>{data.countryname}</td>
+                        <td>{data.statename}</td>
+                        <td>{data.cityname}</td>
+                        <td>{data.name}</td>
+                        <td>
+                          <Link href={`/Masters/BarangayMaster/Edit/${data.id}`}>
+                            <button
+                              className="edit-btn"
+                            >
+                              Edit
+                            </button>
+                          </Link>
+                          &nbsp;
+                          <button
+                            onClick={() => handleDelete(data.id)}
+                            className="edit-btn"
+                          >
+                            Delete
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </>
+              )}
           </tbody>
         </table>
       </div>
