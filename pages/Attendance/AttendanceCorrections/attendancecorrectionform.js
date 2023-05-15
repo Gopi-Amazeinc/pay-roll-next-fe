@@ -27,11 +27,13 @@ export default function AttendanceCorrectionform() {
         // const formData = { ...data, Attendance: Attendance };
         // console.log("form data", formData);
         debugger
-      await axios.post(hostURL + "Payroll/InsertAttendanceCorrection", data);
+        await apiService.commonPostCall("Payroll/InsertAttendanceCorrection", data);
+//   await axios.post(hostURL + "Payroll/InsertAttendanceCorrection", data);
         Swal.fire('Data Inserted successfully');
         location.href = "/Attendance/AttendanceCorrections";
         console.log("Inserted data:", data);
     }
+
 
 
     function clearForm(existingData = null) {

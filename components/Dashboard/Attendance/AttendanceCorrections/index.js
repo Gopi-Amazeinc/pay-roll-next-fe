@@ -3,6 +3,7 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { apiService } from "@/services/api.service";
 
 const Attendancecorrectiondashboard = () => {
   const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
@@ -41,43 +42,22 @@ const Attendancecorrectiondashboard = () => {
   };
 
   const getPendingManager = async (SDate, EDate) => {
-    const res = await axios.get(
-      hostURL +
-        "Payroll/GetPendingAttendanceCorrectionBySupervisor?userID=" +
-        userID +
-        "&SDate=" +
-        SDate +
-        "&EDate=" +
-        EDate
-    );
+    const res = await apiService.commonGetCall("Payroll/GetPendingAttendanceCorrectionBySupervisor?userID=" + userID +"&SDate=" + SDate +"&EDate=" +EDate);
+ // const res = await axios.get( hostURL + "Payroll/GetPendingAttendanceCorrectionBySupervisor?userID=" + userID +"&SDate=" + SDate +"&EDate=" +EDate);
     console.log(res, "manager pending");
     getManagerPending(res.data);
   };
 
   const getApprovedManager = async (SDate, EDate) => {
-    const res = await axios.get(
-      hostURL +
-        "Payroll/GetApprovedAttendanceCorrectionBySupervisor?userID=" +
-        userID +
-        "&SDate=" +
-        SDate +
-        "&EDate=" +
-        EDate
-    );
+    const res = await apiService.commonGetCall("Payroll/GetApprovedAttendanceCorrectionBySupervisor?userID=" + userID +  "&SDate=" +  SDate +  "&EDate=" +EDate);
+// const res = await axios.get( hostURL + "Payroll/GetApprovedAttendanceCorrectionBySupervisor?userID=" + userID +  "&SDate=" +  SDate +  "&EDate=" +EDate );
     console.log(res, "manager Approved");
     getManagerApproved(res.data);
   };
 
   const getRejectedManager = async (SDate, EDate) => {
-    const res = await axios.get(
-      hostURL +
-        "Payroll/GetApprovedAttendanceCorrectionBySupervisor?userID=" +
-        userID +
-        "&SDate=" +
-        SDate +
-        "&EDate=" +
-        EDate
-    );
+    const res = await apiService.commonGetCall("Payroll/GetApprovedAttendanceCorrectionBySupervisor?userID=" +  userID + "&SDate=" + SDate + "&EDate=" + EDate);
+//  const res = await axios.get( hostURL + "Payroll/GetApprovedAttendanceCorrectionBySupervisor?userID=" +  userID + "&SDate=" + SDate + "&EDate=" + EDate);
     console.log(res, "manager Rejected");
     getManagerRejected(res.data);
   };
@@ -93,16 +73,7 @@ const Attendancecorrectiondashboard = () => {
       confirmButtonText: "Yes, Approve it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.get(
-          hostURL +
-            "Payroll/ApproveAttedanceCoorection?id=" +
-            data.id +
-            "&UserID=" +
-            data.staffID +
-            "&SigninDate=" +
-            SDate +
-            "&SignoutDate=" +
-            EDate
+        axios.get( hostURL + "Payroll/ApproveAttedanceCoorection?id=" + data.id +"&UserID=" + data.staffID + "&SigninDate=" +  SDate + "&SignoutDate=" +  EDate
         );
         Swal.fire({
           icon: "success",
@@ -122,45 +93,24 @@ const Attendancecorrectiondashboard = () => {
 
   async function getPendingData(SDate, EDate) {
     let staffID = sessionStorage.getItem("userID");
-    const res = await axios.get(
-      hostURL +
-        "Payroll/GetPendingAttendanceCorrectionByStaffID?userID=" +
-        staffID +
-        "&SDate=" +
-        SDate +
-        "&EDate=" +
-        EDate
-    );
+    const res = await apiService.commonGetCall("Payroll/GetPendingAttendanceCorrectionByStaffID?userID=" + staffID + "&SDate=" + SDate + "&EDate=" + EDate);
+  // const res = await axios.get( hostURL +  "Payroll/GetPendingAttendanceCorrectionByStaffID?userID=" + staffID + "&SDate=" + SDate + "&EDate=" + EDate);
     console.log(res, "pending");
     setpendingDashboardData(res.data);
   }
 
   async function getApprovedData(SDate, EDate) {
     let staffID = sessionStorage.getItem("userID");
-    const res = await axios.get(
-      hostURL +
-        "Payroll/GetApprovedAttendanceCorrectionByStaffID?userID=" +
-        staffID +
-        "&SDate=" +
-        SDate +
-        "&EDate=" +
-        EDate
-    );
+    const res = await apiService.commonGetCall("Payroll/GetApprovedAttendanceCorrectionByStaffID?userID=" + staffID +"&SDate=" + SDate + "&EDate=" + EDate);
+  // const res = await axios.get( hostURL +"Payroll/GetApprovedAttendanceCorrectionByStaffID?userID=" + staffID +"&SDate=" + SDate + "&EDate=" + EDate  );
     console.log(res, "approved");
     setapprovedDashboardData(res.data);
   }
 
   async function getRejectedData(SDate, EDate) {
     let staffID = sessionStorage.getItem("userID");
-    const res = await axios.get(
-      hostURL +
-        "Payroll/GetRejectedAttendanceCorrectionByStaffID?userID=" +
-        staffID +
-        "&SDate=" +
-        SDate +
-        "&EDate=" +
-        EDate
-    );
+    const res = await apiService.commonGetCall("Payroll/GetRejectedAttendanceCorrectionByStaffID?userID=" +staffID + "&SDate=" + SDate + "&EDate=" + EDate);
+//  const res = await axios.get(hostURL + "Payroll/GetRejectedAttendanceCorrectionByStaffID?userID=" +staffID + "&SDate=" + SDate + "&EDate=" + EDate );
     console.log(res, "rejected");
     setrejectedDashboardData(res.data);
   }
