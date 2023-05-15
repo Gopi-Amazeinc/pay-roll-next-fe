@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
 import { apiService } from "@/services/api.service";
-import { AiOutlinePlusCircle } from "react-icons/ai";
 import Swal from "sweetalert2";
 
 export default function BarangayMasterDash() {
@@ -50,12 +49,12 @@ export default function BarangayMasterDash() {
         <div className="col-lg-10">
           <p className="Heading">
             SHOWING <span></span>RESULTS
+            
           </p>
         </div>
         <div className="col-lg-2">
           <Link href="/Masters/BarangayMaster/new">
             <button className=" AddButton">
-              {AiOutlinePlusCircle}
               ADD NEW
             </button>
           </Link>
