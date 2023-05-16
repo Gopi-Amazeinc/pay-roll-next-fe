@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import axios from 'axios';
 import Layout from '../../../layout/layout'
-import Styles from '../../../../styles/GroupMaster.module.css'
+import { BiFilterAlt } from "react-icons/bi";
+import { AiOutlinePlus } from "react-icons/ai";
 import Swal from 'sweetalert2'
 function GroupMaster() {
 
@@ -39,59 +40,77 @@ function GroupMaster() {
 
     return (
         <Layout>
-            <div>
-                <h3 className='Heading'>Group Master</h3>
-                <div className='card p-3 border-0  rounded-3 mt-4 mx-0'>
-                    <div className='row'>
-                        <div className='col-lg-1'>
-                            <p>Filter By</p>
+            <div className="container">
+                <p className="Heading">Group Master</p>
+                <div className="card p-3 rounded-3 shadow border-0">
+                    <div className="row">
+                        <div className="col-1">
+                            <p> <BiFilterAlt /> Filter By</p>
                         </div>
-                        <div className='col-lg-5'>
-                            <input type="text" className='form-control' placeholder='Search...' />
+                        <div className="col-5">
+                            <input
+                                type="text"
+                                placeholder="Search"
+                                className="form-control"
+                            ></input>
                         </div>
                     </div>
                 </div>
-                <div className='row mt-3'>
-                    <div className='col-lg-2 Heading'>
-                        <h6>SHOWING RESULTS</h6>
-                    </div>
-                    <div className='col-lg-8'></div>
-                    <div className='col-lg-2 mt-2 text-end'>
-                        <Link href="/Masters/GroupMaster/new" >
-                            <button className='AddButton'>
-                                Add
-                            </button>
 
+                <div className="row mt-3">
+                    <p className="col-2 result-heading">Showing {groupMaster.length} Results</p>
+                    <div className="col-8"></div>
+                    <div className="col-2">
+                        <Link href="/Masters/GroupMaster/new">
+                            <button className=" AddButton">
+                                <AiOutlinePlus />    Add New
+                            </button>
                         </Link>
                     </div>
                 </div>
-                <table className='table table-hover mt-4 '>
-                    <thead className='bg-info text-white '>
-                        <tr>
-                            <th>Short</th>
-                            <th>Description</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            groupMaster.map((data, index) => {
-                                return (
-                                    <tr key={index}>
-                                        <td>{data.short}</td>
-                                        <td>{data.description}</td>
-                                        <td>
-                                            <Link href={`/Masters/GroupMaster/Edit/${data.id}`}>
-                                                <button id={Styles.editbtn}>Edit</button>
-                                            </Link>&nbsp;&nbsp;&nbsp;&nbsp;
-                                            <button onClick={deleteGroupData.bind(this, data.id)} id={Styles.editbtn}>Delete</button>
-                                        </td>
-                                    </tr>
-                                )
-                            })
-                        }
-                    </tbody>
-                </table>
+
+                <div className="mt-3">
+                    <table className="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Short</th>
+                                <th>Description</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {Array.isArray(groupMaster) &&
+                                groupMaster.length > 0 && (
+                                    <>
+                                        {groupMaster.map((data, index) => {
+                                            return (
+                                                <tr key={index}>
+                                                    <td>{data.short}</td>
+                                                    <td>{data.description}</td>
+                                                    <td>
+                                                        <Link href={`/Masters/GroupMaster/Edit/${data.id}`}>
+                                                            <button
+                                                                className="edit-btn"
+                                                            >
+                                                                Edit
+                                                            </button>
+                                                        </Link>
+                                                        &nbsp;&nbsp;
+                                                        <button
+                                                            onClick={deleteGroupData.bind(this, data.id)}
+                                                            className="edit-btn"
+                                                        >
+                                                            Delete
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            );
+                                        })}
+                                    </>
+                                )}
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </Layout>
     )

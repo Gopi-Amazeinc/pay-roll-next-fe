@@ -147,7 +147,7 @@ export default function DependentDetails() {
                                                     {
                                                         RelationShipMaster.map((data, index) => {
                                                             return (
-                                                                <option value={data.id}>{data.short}</option>
+                                                                <option key={index} value={data.id}>{data.short}</option>
                                                             )
                                                         })
                                                     }
@@ -173,11 +173,11 @@ export default function DependentDetails() {
 
                                             <input type='radio' value='Male'
                                                 {...register("Gender", { required: true })} className='inputwidth' ></input>
-                                            <label class="form-check-label ml-1" for="inlineRadio1">Male</label>
+                                            <label className="form-check-label ml-1" htmlFor="inlineRadio1">Male</label>
 
                                             <input type='radio' value='Female'
                                                 {...register("Gender", { required: true })} className=' inputwidth' ></input>
-                                            <label class="form-check-label ml-1" for="inlineRadio1">Female</label>
+                                            <label className="form-check-label ml-1" htmlFor="inlineRadio1">Female</label>
 
                                             {errors.Gender && <span style={customStyles.errorMsg}> Please Enter Date of Birth</span>}
 

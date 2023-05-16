@@ -21,27 +21,11 @@ import Swal from "sweetalert2";
 import axios from "axios";
 
 const Dashboard = () => {
-  let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+  // let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
   const count = 1;
 
   const [userName, setUserName] = useState();
   const [userEmail, setUserEmail] = useState();
-
-  // const getGaugeColors=(percent)=> {
-  //   if (percent <= 0.25) {
-  //     return ['#f2efe6', '#ff0000'];
-  //   } else if (percent <= 0.75) {
-  //     return ['#f2efe6', '#ff0000'];
-  //   } else {
-  //     return ['#f2efe6', '#00cc00'];
-  //   }
-  // }
-  // const percent= 0.35;
-  //   const colors = getGaugeColors(percent);
-
-
-  // const userName = "Anup";
-  // const email = "anup@amazeinc.in";
 
   const [viewMode, setViewMode] = useState("tab1");
 
@@ -73,7 +57,6 @@ const Dashboard = () => {
     setPunchintime(currentTime.toLocaleTimeString());
     setSubmitted(true);
   }, []);
-
 
   const modelopen = () => {
     setModalOpen(!modalOpen);
@@ -115,7 +98,7 @@ const Dashboard = () => {
     const staffPunchedinID = res.data || res;
     if (staffPunchedinID) {
       sessionStorage.setItem("StaffPunchedinID", staffPunchedinID);
-      setActionType(StaffPunchedinID)
+      setActionType(staffPunchedinID);
       Swal.fire("Punched In Successfully");
     }
     // }
@@ -134,146 +117,6 @@ const Dashboard = () => {
       <div className="container-fluid">
         <div className="row">
           <div className={dashboard.card1}>
-            <div className="row">
-              <div className="col-md-12">
-                <div
-                  className="card  p-0 mb-4"
-                  style={{ borderRadius: "20px" }}
-                >
-                  <div
-                    className="card-body"
-                    style={{
-                      backgroundColor: "#FBB584",
-                      borderTopLeftRadius: "20px",
-                      borderTopRightRadius: "20px",
-                    }}
-                  >
-                    <div
-                      className="d-flex align-items-center"
-                      style={{ height: "10px" }}
-                    >
-                      <Image
-                        src={leaveIcon}
-                        alt="Leave icon"
-                        width={20}
-                        height={20}
-                      />
-                      <h5
-                        className={dashboard.cardheader}
-                        style={{ color: "white" }}
-                      >
-                        Leaves
-                      </h5>
-                    </div>
-                    <p
-                      className="card-subtitle mt-1 mb-0"
-                      style={{ color: "white" }}
-                    >
-                      Always file your leaves on time
-                    </p>
-                  </div>
-                  <div className="card-body">
-                    <div className="row">
-                      <div className="col-md-6">
-                        <button className={dashboard.pendingbtn}>
-                          {count} Pending
-                        </button>
-                      </div>
-                      <div className="col-md-6">
-                        <button className={dashboard.pendingbtn}>
-                          {count} Rejected
-                        </button>
-                      </div>
-                    </div>
-
-                    <br></br>
-
-                    <div className="row">
-                      <div className="col-md-6">
-                        <button className={dashboard.pendingbtn}>
-                          {count} Cancelled
-                        </button>
-                      </div>
-                      <div className="col-md-6">
-                        <button className={dashboard.pendingbtn}>
-                          {count} Approved
-                        </button>
-                        <br></br>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-lg-12">
-                <div className="card" style={{ borderRadius: "20px" }}>
-                  <div
-                    className="card-body"
-                    style={{ marginBottom: "46px", height: "130px" }}
-                  >
-                    <h5 className="card-title" style={{ color: "#3247d5" }}>
-                      Announcement Title
-                    </h5>
-                    <p className="card-text">Announcement content goes here.</p>
-                    <Link
-                      className={dashboard.announcement}
-                      href="/Announcement"
-                    >
-                      See All
-                      <RiArrowDropDownLine style={{ fontSize: "30px" }} />
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className={dashboard.card1}>
-            <div className="card p-0  mb-4" style={{ borderRadius: "20px" }}>
-              <div
-                className="card-body"
-                style={{
-                  backgroundColor: "#B96AE9",
-                  borderTopLeftRadius: "20px",
-                  borderTopRightRadius: "20px",
-                }}
-              >
-                <div
-                  className="d-flex align-items-center"
-                  style={{ height: "10px" }}
-                >
-                  <AiOutlineGift style={{ color: "white", fontSize: "25px" }} />
-                  <h5
-                    className={dashboard.cardheader}
-                    style={{ color: "white" }}
-                  >
-                    Celebrants
-                  </h5>
-                </div>
-                <p
-                  className="card-subtitle mt-1 mb-0"
-                  style={{ color: "white" }}
-                >
-                  Get to know who are the celebrants
-                </p>
-              </div>
-              <div className="col-lg-6 " style={{ marginBottom: "110px" }}>
-                <div className="row">
-                  <br />
-                  <div className="col-lg-12 dashbutton bttn">
-                    <div className="tab-slider--nav">
-                      <ul className="tab-slider--tabs">
-                        <li rel="tab1" onClick={() => setViewMode("tab1")}>
-                          All
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* </div> */}
-            </div>
             <div className="card p-0" style={{ borderRadius: "20px" }}>
               <div
                 className="card-header"
@@ -334,14 +177,14 @@ const Dashboard = () => {
                               alt="Leave icon"
                               width={15}
                               height={19}
-                            />  PUNCH IN
+                            />{" "}
+                            PUNCH IN
                           </button>
                         </div>
                         <div className="col-lg-4 mt-3 ">
                           <span>{punchintime.toLocaleString()}</span>
                         </div>
                       </>
-
                     )}
 
                     <div className="col-lg-7">
@@ -415,6 +258,147 @@ const Dashboard = () => {
                       </div>
                     </ModalBody>
                   </Modal>
+                </div>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-lg-12">
+                <div className="card" style={{ borderRadius: "20px", marginTop: "30px" }}>
+                  <div
+                    className="card-body"
+                    style={{ marginBottom: "46px", height: "160px" }}
+                  >
+                    <h5 className="card-title" style={{ color: "#3247d5" }}>
+                      Announcement Title
+                    </h5>
+                    <p className="card-text">Announcement content goes here.</p>
+                    <Link
+                      className={dashboard.announcement}
+                      href="/Announcement"
+                    >
+                      See All
+                      <RiArrowDropDownLine style={{ fontSize: "30px" }} />
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className={dashboard.card1}>
+            <div className="card p-0  mb-4" style={{ borderRadius: "20px" }}>
+              <div
+                className="card-body"
+                style={{
+                  backgroundColor: "#B96AE9",
+                  borderTopLeftRadius: "20px",
+                  borderTopRightRadius: "20px",
+                }}
+              >
+                <div
+                  className="d-flex align-items-center"
+                  style={{ height: "10px" }}
+                >
+                  <AiOutlineGift style={{ color: "white", fontSize: "25px" }} />
+                  <h5
+                    className={dashboard.cardheader}
+                    style={{ color: "white" }}
+                  >
+                    Celebrants
+                  </h5>
+                </div>
+                <p
+                  className="card-subtitle mt-1 mb-0"
+                  style={{ color: "white" }}
+                >
+                  Get to know who are the celebrants
+                </p>
+              </div>
+              <div className="col-lg-6 " style={{ marginBottom: "110px" }}>
+                <div className="row">
+                  <br />
+                  <div className="col-lg-12 dashbutton bttn">
+                    <div className="tab-slider--nav">
+                      <ul className="tab-slider--tabs">
+                        <li rel="tab1" onClick={() => setViewMode("tab1")}>
+                          All
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* </div> */}
+            </div>
+
+            <div className="row">
+              <div className="col-md-12">
+                <div
+                  className="card  p-0 mb-4"
+                  style={{ borderRadius: "20px" }}
+                >
+                  <div
+                    className="card-body"
+                    style={{
+                      backgroundColor: "#FBB584",
+                      borderTopLeftRadius: "20px",
+                      borderTopRightRadius: "20px",
+                    }}
+                  >
+                    <div
+                      className="d-flex align-items-center"
+                      style={{ height: "10px" }}
+                    >
+                      <Image
+                        src={leaveIcon}
+                        alt="Leave icon"
+                        width={20}
+                        height={20}
+                      />
+                      <h5
+                        className={dashboard.cardheader}
+                        style={{ color: "white" }}
+                      >
+                        Leaves
+                      </h5>
+                    </div>
+                    <p
+                      className="card-subtitle mt-1 mb-0"
+                      style={{ color: "white" }}
+                    >
+                      Always file your leaves on time
+                    </p>
+                  </div>
+                  <div className="card-body">
+                    <div className="row">
+                      <div className="col-md-6">
+                        <button className={dashboard.pendingbtn}>
+                          {count} Pending
+                        </button>
+                      </div>
+                      <div className="col-md-6">
+                        <button className={dashboard.pendingbtn}>
+                          {count} Rejected
+                        </button>
+                      </div>
+                    </div>
+
+                    <br></br>
+
+                    <div className="row">
+                      <div className="col-md-6">
+                        <button className={dashboard.pendingbtn}>
+                          {count} Cancelled
+                        </button>
+                      </div>
+                      <div className="col-md-6">
+                        <button className={dashboard.pendingbtn}>
+                          {count} Approved
+                        </button>
+                        <br></br>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -752,6 +736,6 @@ const Dashboard = () => {
       </div>
     </Layout>
   );
-}
+};
 
 export default Dashboard;

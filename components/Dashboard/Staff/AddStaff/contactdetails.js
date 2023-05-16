@@ -190,7 +190,7 @@ export default function ContactDetails() {
                                                     {
                                                         adresscountrylistData.map((data, index) => {
                                                             return (
-                                                                <option value={data.id}>{data.short}</option>
+                                                                <option key={index} value={data.id}>{data.short}</option>
                                                             )
                                                         })
                                                     }
@@ -209,7 +209,7 @@ export default function ContactDetails() {
                                                     {
                                                         Provincelist.map((data, index) => {
                                                             return (
-                                                                <option value={data.id}>{data.short}</option>
+                                                                <option key={index} value={data.id}>{data.short}</option>
                                                             )
                                                         })
                                                     }
@@ -229,7 +229,7 @@ export default function ContactDetails() {
                                                     {
                                                         Citylist.map((data, index) => {
                                                             return (
-                                                                <option value={data.id}>{data.short}</option>
+                                                                <option key={index} value={data.id}>{data.short}</option>
                                                             )
                                                         })
                                                     }
@@ -297,7 +297,7 @@ export default function ContactDetails() {
                                                     {
                                                         CountrylistData.map((data, index) => {
                                                             return (
-                                                                <option value={data.id}>{data.short}</option>
+                                                                <option key={index} value={data.id}>{data.short}</option>
                                                             )
                                                         })
                                                     }
@@ -316,7 +316,7 @@ export default function ContactDetails() {
                                                     {
                                                         Provincelist.map((data, index) => {
                                                             return (
-                                                                <option value={data.id}>{data.short}</option>
+                                                                <option key={index} value={data.id}>{data.short}</option>
                                                             )
                                                         })
                                                     }
@@ -336,7 +336,7 @@ export default function ContactDetails() {
                                                     {
                                                         Citylist.map((data, index) => {
                                                             return (
-                                                                <option value={data.id}>{data.short}</option>
+                                                                <option key={index} value={data.id}>{data.short}</option>
                                                             )
                                                         })
                                                     }
@@ -492,7 +492,7 @@ export default function ContactDetails() {
                     </div><br></br>
 
 
-                    <div class="d-flex justify-content-center w-100 mt-2 mb-2 pr-2">
+                    <div className="d-flex justify-content-center w-100 mt-2 mb-2 pr-2">
                         <button className='submit-button'>Sumbit</button>
                     </div>
                 </div>
