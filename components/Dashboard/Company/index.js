@@ -76,7 +76,7 @@ async function DeleteComany(id){
             <div className="alignForm"></div>
             <div className="row">
                 <div className="col-md-12">
-                    <table class="table table-striped table-hover mt-4">
+                    <table  className="table table-striped table-hover mt-4">
                         <thead className="bg-info text-white ">
                             <tr>
                                 <th>Company Logo</th>
@@ -86,7 +86,7 @@ async function DeleteComany(id){
                                 <th>Address</th>
                                 <th>Email</th>
                                 <th>Phone No.</th>
-                                <th style={{ paddingLeft: " 47px;" }}>Actions</th>
+                                <th style={{ paddingLeft:"47px"}}>Actions</th>
                             </tr>
                         </thead>
                         <tbody>

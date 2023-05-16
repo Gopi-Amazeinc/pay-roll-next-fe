@@ -13,12 +13,13 @@ import { Modal, ModalBody, ModalFooter } from "reactstrap";
 import { BiEdit } from "react-icons/bi";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import Pnchingreen from "@/public/pnchin-green.svg";
+import { apiService } from "@/services/api.service";
+
 // import GaugeChart from 'react-gauge-chart';
 import dynamic from "next/dynamic";
 const GaugeChart = dynamic(() => import("react-gauge-chart"), { ssr: false });
 
 import Swal from "sweetalert2";
-import axios from "axios";
 
 const Dashboard = () => {
   // let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
@@ -94,7 +95,7 @@ const Dashboard = () => {
       ApprovalStatus: "Manager Pending HR Pending",
       WorkType: parseInt(workType),
     };
-    let res = await axios.post(hostURL + "HR/InsertAttendanceWeb", entity);
+    let res = await apiService.commonGetCall("HR/InsertAttendanceWeb", entity);
     const staffPunchedinID = res.data || res;
     if (staffPunchedinID) {
       sessionStorage.setItem("StaffPunchedinID", staffPunchedinID);
