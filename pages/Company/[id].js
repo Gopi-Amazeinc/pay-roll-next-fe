@@ -1,19 +1,14 @@
 import React from 'react';
 import { useRouter } from 'next/router'
-import Companyform from "@/pages/Company/companyform";
-
-
-function companyid(){
+const Id = () => {
     const router = useRouter()
     const { id } = router.query
-
+  
     return (
-        <>
-            <Companyform editData={{ id }} />;
-
-        </>
-
+        <div>
+            <p>Your logic for Company ID: {id}</p>
+        </div>
     );
 }
 
-export default companyid;
+export default Id;

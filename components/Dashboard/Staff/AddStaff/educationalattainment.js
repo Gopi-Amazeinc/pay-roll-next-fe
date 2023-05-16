@@ -200,7 +200,7 @@ export default function EducationDetails() {
                                                     {
                                                         EducationAttainmentlist.map((data, index) => {
                                                             return (
-                                                                <option value={data.id}>{data.short}</option>
+                                                                <option key={index} value={data.id}>{data.short}</option>
                                                             )
                                                         })
                                                     }
@@ -221,7 +221,7 @@ export default function EducationDetails() {
                                                     {
                                                         CourseDetails.map((data, index) => {
                                                             return (
-                                                                <option value={data.id}>{data.short}</option>
+                                                                <option key={index} value={data.id}>{data.short}</option>
                                                             )
                                                         })
                                                     }
@@ -241,7 +241,7 @@ export default function EducationDetails() {
                                                     {
                                                         MajorDetails.map((data, index) => {
                                                             return (
-                                                                <option value={data.id}>{data.short}</option>
+                                                                <option key={index} value={data.id}>{data.short}</option>
                                                             )
                                                         })
                                                     }
@@ -271,7 +271,7 @@ export default function EducationDetails() {
                                                     {
                                                         LicenseOrCertificationMaster.map((data, index) => {
                                                             return (
-                                                                <option value={data.id}>{data.short}</option>
+                                                                <option key={index} value={data.id}>{data.short}</option>
                                                             )
                                                         })
                                                     }
@@ -291,7 +291,7 @@ export default function EducationDetails() {
                                                     {
                                                         Countrylist.map((data, index) => {
                                                             return (
-                                                                <option value={data.id}>{data.short}</option>
+                                                                <option key={index} value={data.id}>{data.short}</option>
                                                             )
                                                         })
                                                     }

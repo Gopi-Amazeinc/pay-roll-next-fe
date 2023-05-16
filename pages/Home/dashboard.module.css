@@ -42,11 +42,7 @@
   color: #808080;
 }
 
-.card {
-  border-radius: 15px;
-  background-color: #fff;
 
-}
 
 .card-header {
   background-color: #B96AE9;
@@ -190,8 +186,9 @@ button.close:hover {
 .announcement {
   text-decoration: none;
   float: right;
-  margin-top: 60px;
+  margin-top: 80px;
   font-weight: bold;
+
 }
 
 .card-title {

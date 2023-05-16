@@ -1,8 +1,8 @@
 import React from 'react'
 import Link from 'next/link'
-
+import { BiFilterAlt } from "react-icons/bi";
+import { AiOutlinePlus } from "react-icons/ai";
 import { useEffect, useState } from "react";
-
 import axios from "axios";
 import Swal from 'sweetalert2'
 
@@ -44,90 +44,80 @@ function StateMasterDashboard() {
 
   }
   return (
-
     <div className="container">
-      <h3 className="Heading">Province Master</h3>
-      <div className="card p-3 border-0 shadow rounded-3 mt-4 mx-0">
+      <p className="Heading">Province Master</p>
+      <div className="card p-3 rounded-3 shadow border-0">
         <div className="row">
-          <div className="col-lg-1">
-            <p>Filter By</p>
+          <div className="col-1">
+            <p> <BiFilterAlt /> Filter By</p>
           </div>
-
-          <div className="col-lg-3">
+          <div className="col-5">
             <input
               type="text"
+              placeholder="Search"
               className="form-control"
-              placeholder="Search..."
-            />
-          </div>
-
-          <div className="col-lg-3">
-            <select className="form-control">
-              <option value="">Select Country</option>
-              {country.map((data, index) => {
-                return (
-                  <option key={index} value={data.id}>{data.short}</option>
-                )
-              })}
-            </select>
+            ></input>
           </div>
         </div>
       </div>
 
-      <div className="row mt-4">
-        <div className="col-lg-2">
-          <p className="Heading fs-6 ">SHOWING RESULTS</p>
-        </div>
-        <div className="col-lg-8"></div>
-        <div className="col-lg-2 mx-0">
-          <Link
-            href="/Masters/StateMaster/new"
-
-          >
-            <button className="AddButton">Add New</button>
+      <div className="row mt-3">
+        <p className="col-2 result-heading">Showing {state.length} Results</p>
+        <div className="col-8"></div>
+        <div className="col-2">
+          <Link href="/Masters/StateMaster/new">
+            <button className=" AddButton">
+              <AiOutlinePlus />    Add New
+            </button>
           </Link>
         </div>
       </div>
 
-      <table className="table table-hover mt-4 mx-0">
-        <thead className="bg-info text-white ">
-          <tr>
-            <th>Country</th>
-            <th>Province Name</th>
-            <th>Description</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {state.map((data, index) => {
-            return (
-              <tr className="text-dark" key={index}>
-                <td>{data.country}</td>
-                <td>{data.short}</td>
-                <td>{data.description}</td>
-                <td>
-                  <Link href={`/Masters/StateMaster/Edit/${data.id}`}>
-                    <button
-                      className='edit-btn'
-                    >
-                      Edit
-                    </button>
-                  </Link>
-                  &nbsp;&nbsp;&nbsp;&nbsp;
-                  <button
-                    className='edit-btn'
-                    onClick={deleteState.bind(this, data.id)}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
+      <div className="mt-3">
+        <table className="table table-striped">
+          <thead>
+            <tr>
+              <th>Country</th>
+              <th>Province Name</th>
+              <th>Description</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {Array.isArray(state) &&
+              state.length > 0 && (
+                <>
+                  {state.map((data, index) => {
+                    return (
+                      <tr key={index}>
+                        <td>{data.country}</td>
+                        <td>{data.short}</td>
+                        <td>{data.description}</td>
+                        <td>
+                          <Link href={`/Masters/StateMaster/Edit/${data.id}`}>
+                            <button
+                              className='edit-btn'
+                            >
+                              Edit
+                            </button>
+                          </Link>
+                          &nbsp;&nbsp;
+                          <button
+                            className='edit-btn'
+                            onClick={deleteState.bind(this, data.id)}
+                          >
+                            Delete
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </>
+              )}
+          </tbody>
+        </table>
+      </div>
     </div>
-
   );
 }
 

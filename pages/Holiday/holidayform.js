@@ -25,8 +25,6 @@ function Holidayform({editData}) {
       clearForm();
     }
   }, []);
-
-  
   const getHolidayByID = async (id) => {
     const res = await apiService.commonGetCall("HR/GetHolidaysByID?ID=" + id);
     clearForm(res.data[0]);

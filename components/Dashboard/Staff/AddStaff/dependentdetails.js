@@ -147,7 +147,7 @@ export default function DependentDetails() {
                                                     {
                                                         RelationShipMaster.map((data, index) => {
                                                             return (
-                                                                <option value={data.id}>{data.short}</option>
+                                                                <option key={index} value={data.id}>{data.short}</option>
                                                             )
                                                         })
                                                     }
