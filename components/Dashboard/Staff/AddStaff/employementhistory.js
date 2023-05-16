@@ -25,6 +25,9 @@ export default function EmploymentDetails() {
             fontWeight: '500',
             color: 'red'
         },
+        span: {
+            color: 'red'
+        }
     };
 
     const customPopupDivision = {
@@ -150,28 +153,28 @@ export default function EmploymentDetails() {
                                 </div>
                                 <div style={customPopupDivision.popupcontent}>
                                     <div style={customPopupDivision.popupinputs}>
-                                        <p>Company Name<span >*</span></p>
+                                        <p>Company Name<span style={customStyles.span}>*</span></p>
                                         <div>
                                             <input type='text' placeholder='Enter Comapany Name..' onkeypress="return /[A-Za-z/\s/g]/i.test(event.key)"
                                                 {...register("CompanyName", { required: true })} className='form-control inputwidth' ></input>
-                                            {errors.CompanyName && <span style={customStyles.errorMsg}> Please Enter Comapany Name</span>}
+                                            {errors.CompanyName && <span style={customStyles.errorMsg}> Please enter comapany name</span>}
                                         </div>
                                     </div>
 
                                     <div style={customPopupDivision.popupinputs}>
-                                        <p>Position Title <span >*</span></p>
+                                        <p>Position Title <span style={customStyles.span}>*</span></p>
                                         <div>
                                             <input type='text' placeholder='Enter Position Title ..'
                                                 {...register("PositionTitle", { required: true })} className='form-control inputwidth' ></input>
-                                            {errors.PositionTitle && <span style={customStyles.errorMsg}> Please Enter Position Title</span>}
+                                            {errors.PositionTitle && <span style={customStyles.errorMsg}> Please enter position title</span>}
                                         </div>
                                     </div>
 
                                     <div style={customPopupDivision.popupinputs}>
-                                        <p>Employment Type<span >*</span></p>
+                                        <p>Employment Type<span style={customStyles.span}>*</span></p>
                                         {
                                             <div>
-                                                <select className='form-control inputwidth' {...register("EmployementTypeID", { required: true })} style={customStyles.inputLabel}>
+                                                <select className='form-select' {...register("EmployementTypeID", { required: true })} style={customStyles.inputLabel}>
                                                     <option value="">Select Employment Type</option>
                                                     {
                                                         EmploymentTypeMaster.map((data) => {
@@ -181,7 +184,7 @@ export default function EmploymentDetails() {
                                                         })
                                                     }
                                                 </select>
-                                                {errors.EmployementTypeID && <span style={customStyles.errorMsg}> Please Enter Employment TYpe</span>}
+                                                {errors.EmployementTypeID && <span style={customStyles.errorMsg}> Please select employment type</span>}
                                             </div>
                                         }
                                     </div>
@@ -189,27 +192,26 @@ export default function EmploymentDetails() {
 
 
                                     <div style={customPopupDivision.popupinputs}>
-                                        <p>Start Date<span >*</span></p>
+                                        <p>Start Date<span style={customStyles.span}>*</span></p>
                                         <div>
                                             <input type='date' placeholder='Enter Start Date..'
                                                 {...register("StartDate", { required: true })} className='form-control inputwidth'></input>
-                                            {errors.StartDate && <span style={customStyles.errorMsg}> Please Enter Start Date</span>}
+                                            {errors.StartDate && <span style={customStyles.errorMsg}> Please select start date</span>}
                                         </div>
                                     </div>
 
                                     <div style={customPopupDivision.popupinputs}>
-                                        <p>End Date<span >*</span></p>
+                                        <p>End Date<span style={customStyles.span}>*</span></p>
                                         <div>
                                             <input type='date' placeholder='Enter End Date..'
                                                 {...register("EndDate", { required: true })} className='form-control inputwidth'></input>
-                                            {errors.EndDate && <span style={customStyles.errorMsg}> Please Enter End Date</span>}
+                                            {errors.EndDate && <span style={customStyles.errorMsg}> Please enter end date</span>}
                                         </div>
                                     </div>
 
                                 </div>
 
                                 <div class="d-flex justify-content-center w-100 mt-2 mb-2 pr-2">
-                                    {/* <button className='close-button' onClick={closeModal}>Cancel</button> */}
                                     {
                                         actionType == "insert" && (
                                             <button className='submit-button' >Submit</button>

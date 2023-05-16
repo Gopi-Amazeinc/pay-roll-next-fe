@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";;
 import Link from "next/link";
 import Layout from '../../../layout/layout';
-import axios from "axios";
+import { apiService } from "@/services/api.service";
+import ReactPaginate from "react-paginate";
 import Swal from 'sweetalert2';
 import { BiFilterAlt } from "react-icons/bi";
 import { AiOutlinePlus } from "react-icons/ai";
@@ -11,14 +12,12 @@ const DepartmentMasterDashboard = () => {
     const [Department, setDepartmentMaster] = useState([])
 
     const getDepartmentMaster = async () => {
-        let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-        const { data } = await axios.get(hostURL + "Master/GetDepartmentMaster"); //gurukiran@amazeinc.in, Api call to fetch the data that is being displayed in table
+        const { data } = await apiService.commonGetCall("Master/GetDepartmentMaster") //gurukiran@amazeinc.in, Api call to fetch the data that is being displayed in table
         setDepartmentMaster(data)
     }
 
     const handleDelete = async (id) => {
         try {
-            let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
             Swal.fire({
                 title: 'Are you sure?',
                 text: "You won't be able to revert this!",
@@ -30,7 +29,7 @@ const DepartmentMasterDashboard = () => {
             }).then((result) => {
                 if (result.isConfirmed) {
 
-                    const res = axios.get(hostURL + `Master/DeleteDepartmentMaster?ID=${id}`); //gurukiran@amazeinc.in, api call to delete the data from the table
+                    const res = apiService.commonGetCall(`Master/DeleteDepartmentMaster?ID=${id}`); //gurukiran@amazeinc.in, api call to delete the data from the table
                     console.log(res.data);
                     // alert("Data deleted successfully");
                     Swal.fire(
@@ -53,6 +52,14 @@ const DepartmentMasterDashboard = () => {
         getDepartmentMaster();
     }, [])
 
+    const PER_PAGE = 2;
+    const [currentPage, setCurrentPage] = useState(0);
+    function handlePageClick({ selected: selectedPage }) {
+        setCurrentPage(selectedPage)
+    }
+    const offset = currentPage * PER_PAGE;
+    const pageCount = Math.ceil(Department.length / PER_PAGE);
+    const [keyword, setKeyword] = useState("");
 
     return (
         <Layout>
@@ -68,6 +75,7 @@ const DepartmentMasterDashboard = () => {
                                 type="text"
                                 placeholder="Search"
                                 className="form-control"
+                                onChange={e => setKeyword(e.target.value)}
                             ></input>
                         </div>
                     </div>
@@ -98,34 +106,63 @@ const DepartmentMasterDashboard = () => {
                             {Array.isArray(Department) &&
                                 Department.length > 0 && (
                                     <>
-                                        {Department.map((data, index) => {
-                                            return (
-                                                <tr key={index}>
-                                                    <td>{data.department_name}</td>
-                                                    <td>{data.department_Desc}</td>
-                                                    <td>
-                                                        <Link href={`/Masters/DepartmentMaster/Edit/${data.id}`}>
+                                        {Department
+                                            .filter(data => {
+                                                if ((data.department_name.toLowerCase().includes(keyword.toLowerCase())) || (data.department_Desc.toLowerCase().includes(keyword))) {
+                                                    return data;
+                                                }
+                                            })
+                                            .slice(offset, offset + PER_PAGE)
+                                            .map((data, index) => {
+                                                return (
+                                                    <tr key={index}>
+                                                        <td>{data.department_name}</td>
+                                                        <td>{data.department_Desc}</td>
+                                                        <td>
+                                                            <Link href={`/Masters/DepartmentMaster/Edit/${data.id}`}>
+                                                                <button
+                                                                    className="edit-btn"
+                                                                >
+                                                                    Edit
+                                                                </button>
+                                                            </Link>
+                                                            &nbsp;&nbsp;
                                                             <button
+                                                                onClick={() => handleDelete(data.id)}
                                                                 className="edit-btn"
                                                             >
-                                                                Edit
+                                                                Delete
                                                             </button>
-                                                        </Link>
-                                                        &nbsp;&nbsp;
-                                                        <button
-                                                            onClick={() => handleDelete(data.id)}
-                                                            className="edit-btn"
-                                                        >
-                                                            Delete
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                            );
-                                        })}
+                                                        </td>
+                                                    </tr>
+                                                );
+                                            })}
                                     </>
                                 )}
                         </tbody>
                     </table>
+                </div>
+
+                <div className="mb-4 mt-4 text-center">
+                    <ReactPaginate
+                        previousLabel={"Previous"}
+                        nextLabel={"Next"}
+                        breakLabel={"..."}
+                        pageCount={pageCount}
+                        marginPagesDisplayed={2}
+                        pageRangeDisplayed={3}
+                        onPageChange={handlePageClick}
+                        containerClassName={"pagination  justify-content-center"}
+                        pageClassName={"page-item "}
+                        pageLinkClassName={"page-link"}
+                        previousClassName={"page-item"}
+                        previousLinkClassName={"page-link"}
+                        nextClassName={"page-item"}
+                        nextLinkClassName={"page-link"}
+                        breakClassName={"page-item"}
+                        breakLinkClassName={"page-link"}
+                        activeClassName={"active primary"}
+                    />
                 </div>
             </div>
         </Layout>
