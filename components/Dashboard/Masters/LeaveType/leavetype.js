@@ -2,22 +2,20 @@ import React from "react";
 import Link from "next/link";
 import Layout from '../../../layout/layout'
 import { useState, useEffect } from 'react'
-import axios from "axios";
+import { apiService } from "@/services/api.service";
 import Swal from "sweetalert2";
 import { AiOutlinePlus } from "react-icons/ai";
 import ReactPaginate from "react-paginate";
 import { BiFilterAlt } from "react-icons/bi";
 function LeaveTypeDashboard() {
-    let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
     const [leaveTypeData, SetleaveTypeData] = useState([]);
-
 
     useEffect(() => {
         getData();
     }, [1]);
 
     const getData = async () => {
-        let res = await axios.get(hostURL + "Master/GetLeaveType");
+        let res = await apiService.commonGetCall("Master/GetLeaveType");
         SetleaveTypeData(res.data);
     };
 
@@ -32,7 +30,7 @@ function LeaveTypeDashboard() {
             confirmButtonText: "Yes",
         }).then(async (result) => {
             if (result.isConfirmed) {
-                await axios.get(hostURL + "Master/DeleteLeaveTypeMaster?ID=" + id);
+                await apiService.commonGetCall("Master/DeleteLeaveTypeMaster?ID=" + id);
                 Swal.fire("SubSection Deleted successfully.");
                 getData();
             }
