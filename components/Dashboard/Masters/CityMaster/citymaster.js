@@ -1,19 +1,19 @@
 import React from "react";
 import Link from "next/link";
 import { useEffect, useState } from "react";
-import axios from 'axios'
+import { apiService } from "@/services/api.service";
 import Swal from "sweetalert2";
 import Layout from '../../../layout/layout'
 import { BiFilterAlt } from "react-icons/bi";
 import { AiOutlinePlus } from "react-icons/ai";
+import ReactPaginate from "react-paginate";
 
 function CityMasterDash() {
 
   const [CityMaster, setCityMaster] = useState([]);
-  
+
   const getCityMaster = async () => {
-    let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-    let res = await axios.get(hostURL + "Master/GetCityType"); //This Api is useed for Get the Dashborad data ciyType Master
+    let res = await apiService.commonGetCall("Master/GetCityType"); //This Api is useed for Get the Dashborad data ciyType Master
     setCityMaster(res.data);
   };
 
@@ -22,13 +22,8 @@ function CityMasterDash() {
   }, []);
 
   async function DeleteCityMaster(id) {
-    debugger;
     try {
-      let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-
-      const res = await axios.get(
-        hostURL + `Master/DeleteCityType?id=${id}` // this is for deleting the data for dashborad using delete api call  
-      );
+      const res = await apiService.commonGetCall(`Master/DeleteCityType?id=${id}`);
       console.log(res.data);
       Swal.fire({
         icon: "success",
@@ -47,7 +42,14 @@ function CityMasterDash() {
     }
   }
 
-
+  const PER_PAGE = 2;
+  const [currentPage, setCurrentPage] = useState(0);
+  function handlePageClick({ selected: selectedPage }) {
+    setCurrentPage(selectedPage)
+  }
+  const offset = currentPage * PER_PAGE;
+  const pageCount = Math.ceil(CityMaster.length / PER_PAGE);
+  const [keyword, setKeyword] = useState("");
 
 
   return (
@@ -64,6 +66,7 @@ function CityMasterDash() {
                 type="text"
                 placeholder="Search"
                 className="form-control"
+                onChange={e => setKeyword(e.target.value)}
               ></input>
             </div>
             <div className="col-3">
@@ -103,26 +106,55 @@ function CityMasterDash() {
               {Array.isArray(CityMaster) &&
                 CityMaster.length > 0 && (
                   <>
-                    {CityMaster.map((data) => {
-                      return (
-                        <tr key={data.id}>
-                          <td>{data.country}</td>
-                          <td>{data.state}</td>
-                          <td>{data.short}</td>
-                          <td>{data.description}</td>
-                          <td>
-                            <Link href={`/Masters/CityMaster/Edit/${data.id}`}>
-                              <button className="edit-btn">Edit</button></Link>
-                            &nbsp;&nbsp;
-                            <button className="edit-btn" onClick={() => DeleteCityMaster(data.id)}>Delete</button>
-                          </td>
-                        </tr>
-                      );
-                    })}
+                    {CityMaster
+                      .filter(data => {
+                        if ((data.short.toLowerCase().includes(keyword.toLowerCase())) || (data.description.toLowerCase().includes(keyword))) {
+                          return data;
+                        }
+                      })
+                      .slice(offset, offset + PER_PAGE)
+                      .map((data) => {
+                        return (
+                          <tr key={data.id}>
+                            <td>{data.country}</td>
+                            <td>{data.state}</td>
+                            <td>{data.short}</td>
+                            <td>{data.description}</td>
+                            <td>
+                              <Link href={`/Masters/CityMaster/Edit/${data.id}`}>
+                                <button className="edit-btn">Edit</button></Link>
+                              &nbsp;&nbsp;
+                              <button className="edit-btn" onClick={() => DeleteCityMaster(data.id)}>Delete</button>
+                            </td>
+                          </tr>
+                        );
+                      })}
                   </>
                 )}
             </tbody>
           </table>
+        </div>
+
+        <div className="mb-4 mt-4 text-center">
+          <ReactPaginate
+            previousLabel={"Previous"}
+            nextLabel={"Next"}
+            breakLabel={"..."}
+            pageCount={pageCount}
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={3}
+            onPageChange={handlePageClick}
+            containerClassName={"pagination  justify-content-center"}
+            pageClassName={"page-item "}
+            pageLinkClassName={"page-link"}
+            previousClassName={"page-item"}
+            previousLinkClassName={"page-link"}
+            nextClassName={"page-item"}
+            nextLinkClassName={"page-link"}
+            breakClassName={"page-item"}
+            breakLinkClassName={"page-link"}
+            activeClassName={"active primary"}
+          />
         </div>
       </div>
     </Layout>

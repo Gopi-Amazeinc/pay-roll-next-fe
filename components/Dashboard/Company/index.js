@@ -1,55 +1,34 @@
-import React, { useEffect, useState } from 'react';
-
-import table from '../../../styles/company.module.css'
-import company from '../../../styles/company.module.css'
-import Link from 'next/link.js';
-import axios from 'axios';
-
+import React, { useEffect, useState } from "react";
+// import table from '../../../styles/company.module.css'
+import company from "@/styles/company.module.css";
+import { apiService } from "@/services/api.service";
+import Swal from "sweetalert2";
+import Link from "next/link.js";
 
 const Companydashboard = () => {
+  const [Company, setCompany] = useState([]);
 
-
-    const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-
-    const [Company, setCompany]=useState([]);
-
-
-   async function getCompany(){
-    let res =  await axios.get(hostURL + "Payroll/GetCompanyAddressDetails");
+  const getCompanyAddressDetails = async () => {
+    let res = await apiService.commonGetCall(
+      "Payroll/GetCompanyAddressDetails"
+    );
     setCompany(res.data);
+  };
+
+  useEffect(() => {
+    getCompanyAddressDetails();
+  }, [1]);
+  const deleteComany = async (id) => {
+    try {
+      let res = await apiService.commonGetCall(`HR/DeleteHolidays?id=${id}`);
+      console.log(res.data);
+      Swal.fire("Data deleted successfully");
+      getCompanyAddressDetails();
+    } catch (error) {
+      console.error(error);
+      Swal.fire("failed to  delete data");
     }
-
-    useEffect(()=>{
-        getCompany()
-    },[1]
-)
-
-function getdata(){
-    sessionStorage.setItem("id", data.id);
-
-}
-
-function  Cleardata(){
-    sessionStorage.setItem("id","");
-
-}
-
-
-async function DeleteComany(id){
-    try{
-        let res = await axios.get(hostURL + `HR/DeleteHolidays?id=${id}`);
-        console.log(res.data);
-        Swal.fire('Data deleted successfully')
-        getCompany();
-
-    }
-    catch (error){
-        console.error(error);
-        Swal.fire('failed to  delete data')
-
-    }
-
-};
+  };
 
 
 

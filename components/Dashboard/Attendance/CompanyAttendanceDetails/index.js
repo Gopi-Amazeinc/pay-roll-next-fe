@@ -3,6 +3,7 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { apiService } from "@/services/api.service";
+import Styles from "@/styles/attendancedetails.module.css";
 
 
 const CompanyAttendanceDetails = () => {
@@ -19,8 +20,8 @@ const CompanyAttendanceDetails = () => {
             const SDate = '2023-10-10';
             const EDate = "2023-11-11";
             if (userID) {
-     const res = await apiService.commonGetCall("HR/GetAttendanceByManagerID?SupervisorID=" + SupervisorID + '&SDate=' + SDate + '&EDate=' + EDate);
-//   let res = await axios.get(hostURL + "HR/GetAttendanceByManagerID?SupervisorID=" + SupervisorID + '&SDate=' + SDate + '&EDate=' + EDate);
+                const res = await apiService.commonGetCall("HR/GetAttendanceByManagerID?SupervisorID=" + SupervisorID + '&SDate=' + SDate + '&EDate=' + EDate);
+                //   let res = await axios.get(hostURL + "HR/GetAttendanceByManagerID?SupervisorID=" + SupervisorID + '&SDate=' + SDate + '&EDate=' + EDate);
                 setAttendence(res.data);
             }
         }
@@ -32,11 +33,11 @@ const CompanyAttendanceDetails = () => {
         <div>
             <div className='container'>
                 <div className='row mt-3'>
-                    <div className='col-lg-3 text-end'>
-                        <Link className='Heading active' href="/Attendance/AttendanceDetails">My Attendence Details</Link>
+                    <div className='col-lg-3 ' >
+                        <Link className={Styles.mainheader} href="/Attendance/AttendanceDetails">My Attendence Details</Link>
                     </div>
-                    <div className='col-lg-3'>
-                        <Link className='Heading active' href="/Attendance/MyTeamAttendanceDetails">Company Attendance Details</Link>
+                    <div className='col-lg-3' style={{marginLeft:"-50px"}}>
+                        <Link className={Styles.mainheader} href="/Attendance/MyTeamAttendanceDetails">Company Attendance Details</Link>
                     </div>
                 </div>
                 <h6>API Issue In Company AttendanceDetails</h6>

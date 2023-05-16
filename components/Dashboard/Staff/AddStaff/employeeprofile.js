@@ -163,30 +163,7 @@ function EmployeeProfile() {
     },
   };
 
-  const customPopupDivision = {
-    popupcontent: {
-      display: "flex",
-      flexWrap: "wrap",
-      justifyContent: "space-between",
-      alignItems: "center",
-      width: "100%",
-    },
-    popupinputs: {
-      width: "24%",
-      marginTop: "16px",
-    },
-    formcontrol: {
-      width: "350px !important",
-    },
-
-    cardinputs: {
-      display: "flex",
-      flexDirection: "column",
-      margin: "5px",
-      width: "215px",
-      justifyContent: "center",
-    },
-  };
+  
   // const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
   return (
     <div>
@@ -213,7 +190,7 @@ function EmployeeProfile() {
                     </select>
                     {errors.Title && (
                       <span style={customStyles.errorMsg}>
-                        Please Enter Title
+                        Please enter title
                       </span>
                     )}
                   </div>
@@ -230,7 +207,7 @@ function EmployeeProfile() {
                     {...register("FirstName", { required: true })}
                     className="form-control "
                   ></input>
-                  {errors.FirstName && <span> Please Enter First Name</span>}
+                  {errors.FirstName && <span style={customStyles.errorMsg}>Please enter first name</span>}
                 </div>
               </div>
               <div className="col-lg-3">
@@ -244,7 +221,7 @@ function EmployeeProfile() {
                     {...register("MiddleName", { required: true })}
                     className="form-control "
                   ></input>
-                  {errors.MiddleName && <span> Please Enter Middle Name</span>}
+                  {errors.MiddleName && <span style={customStyles.errorMsg}>Please enter middle name</span>}
                 </div>
               </div>
               <div className="col-lg-3">
@@ -260,7 +237,7 @@ function EmployeeProfile() {
                   ></input>
                   {errors.LastName && (
                     <span style={customStyles.errorMsg}>
-                      Please Enter Last Name
+                      Please enter last name
                     </span>
                   )}
                 </div>
@@ -279,7 +256,7 @@ function EmployeeProfile() {
                     {...register("NickName", { required: true })}
                     className="form-control "
                   ></input>
-                  {errors.NickName && <span> Please Enter Nick Name</span>}
+                  {errors.NickName && <span style={customStyles.errorMsg}> Please enter nick name</span>}
                 </div>
               </div>
               <div className="col-lg-3">
@@ -295,7 +272,7 @@ function EmployeeProfile() {
                   ></input>
                   {errors.DateOfBirth && (
                     <span style={customStyles.errorMsg}>
-                      Please Enter Date of Birth
+                      Please select date of birth
                     </span>
                   )}
                 </div>
@@ -312,7 +289,7 @@ function EmployeeProfile() {
                     className="form-control "
                   ></input>
                   {errors.PlaceOfBirth && (
-                    <span> Please Enter Place of Birth</span>
+                    <span style={customStyles.errorMsg}> Please enter place of birth</span>
                   )}
                 </div>
               </div>
@@ -332,7 +309,7 @@ function EmployeeProfile() {
                       })}
                     </select>
                     {errors.Country_Of_Birth && (
-                      <span> Please Enter Country Of Birth</span>
+                      <span style={customStyles.errorMsg}> Please select country of birth</span>
                     )}
                   </div>
                 }
@@ -357,7 +334,7 @@ function EmployeeProfile() {
                     </select>
                     {errors.GenderID && (
                       <span style={customStyles.errorMsg}>
-                        Please Enter Gender
+                        Please select gender
                       </span>
                     )}
                   </div>
@@ -370,7 +347,7 @@ function EmployeeProfile() {
                 {
                   <div>
                     <select
-                      className="form-select "
+                      className="form-select"
                       {...register("MaritalStatusID", { required: true })}
                     >
                       <option value="">Select Marital Status</option>
@@ -380,7 +357,7 @@ function EmployeeProfile() {
                     </select>
                     {errors.MaritalStatusID && (
                       <span style={customStyles.errorMsg}>
-                        Please Enter Marital Status
+                        Please enter marital status
                       </span>
                     )}
                   </div>
@@ -399,25 +376,25 @@ function EmployeeProfile() {
                   ></input>
                   {errors.PersonalEmail && (
                     <span style={customStyles.errorMsg}>
-                      Please Enter Personal Email
+                      Please enter personal email
                     </span>
                   )}
                 </div>
               </div>
               <div className="col-lg-3">
                 <p>
-                  Mother's Maiden Name<span style={customStyles.span}>*</span>
+                  Mother's Name<span style={customStyles.span}>*</span>
                 </p>
                 <div>
                   <input
                     type="text"
-                    placeholder="Personal Email"
+                    placeholder="Mothers Name"
                     {...register("MothersName", { required: true })}
                     className="form-control "
                   ></input>
                   {errors.MothersName && (
                     <span style={customStyles.errorMsg}>
-                      Please Enter Mother Maiden Name
+                      Please enter mother's name
                     </span>
                   )}
                 </div>
@@ -432,18 +409,18 @@ function EmployeeProfile() {
                 <div>
                   <input
                     type="text"
-                    placeholder="Father Maiden Name"
+                    placeholder="Father's Name"
                     {...register("FathersName", { required: true })}
                     className="form-control "
                   ></input>
                   {errors.FathersName && (
                     <span style={customStyles.errorMsg}>
-                      Please Enter Father Maiden Name
+                      Please enter father's name
                     </span>
                   )}
                 </div>
               </div>
-              <div className="col-lg-3">dropzone goes here</div>
+              <div className="col-lg-3"><h5>dropzone goes here</h5></div>
               <div className="col-lg-3"></div>
               <div className="col-lg-3"></div>
             </div>
@@ -459,7 +436,7 @@ function EmployeeProfile() {
                 </p>
                 <div>
                   <select
-                    className="form-select "
+                    className="form-select"
                     {...register("ReligionID", { required: true })}
                   >
                     <option value="">Select Religion</option>
@@ -469,7 +446,7 @@ function EmployeeProfile() {
                   </select>
                   {errors.ReligionID && (
                     <span style={customStyles.errorMsg}>
-                      Please Enter Religion
+                      Please select religion
                     </span>
                   )}
                 </div>
@@ -492,7 +469,7 @@ function EmployeeProfile() {
                     </select>
                     {errors.CitizenshipID && (
                       <span style={customStyles.errorMsg}>
-                        Please Enter Citizen Ship
+                        Please select citizenship
                       </span>
                     )}
                   </div>
@@ -515,7 +492,7 @@ function EmployeeProfile() {
                     </select>
                     {errors.NationalityID && (
                       <span style={customStyles.errorMsg}>
-                        Please Enter Nationality
+                        Please select nationality
                       </span>
                     )}
                   </div>
@@ -538,7 +515,7 @@ function EmployeeProfile() {
                     </select>
                     {errors.LanguageSpokenID && (
                       <span style={customStyles.errorMsg}>
-                        Please Enter Spoken Language
+                        Please select language spoken
                       </span>
                     )}
                   </div>
@@ -567,7 +544,7 @@ function EmployeeProfile() {
                     </select>
                     {errors.BloodTypeID && (
                       <span style={customStyles.errorMsg}>
-                        Please Enter Blood Group
+                        Please select blood group
                       </span>
                     )}
                   </div>
@@ -593,12 +570,16 @@ function EmployeeProfile() {
                       {...register("IsPWD", { required: true })}
                     />
                     No
+                    
+                    <div>
                     {errors.IsPWD && (
                       <span style={customStyles.errorMsg}>
-                        Please Enter Blood Group
+                        Please select PWD
                       </span>
                     )}
+                    </div>
                   </div>
+                  
                 }
               </div>
               <div className="col-lg-3"></div>
@@ -617,13 +598,13 @@ function EmployeeProfile() {
                 <div>
                   <input
                     type="text"
-                    placeholder="Original BMS *"
+                    placeholder="Original BMS"
                     {...register("OriginalBMS", { required: true })}
                     className="form-control"
                   ></input>
                   {errors.OriginalBMS && (
                     <span style={customStyles.errorMsg}>
-                      Please Enter Original BMS *
+                      Please enter original BMS
                     </span>
                   )}
                 </div>
@@ -636,7 +617,7 @@ function EmployeeProfile() {
                 <div>
                   <input
                     type="date"
-                    placeholder="Previous Effectivity BMSDate"
+                    placeholder="Previous Effectivity BMS Date"
                     {...register("EffectivityDateOfOriginalBMS", {
                       required: true,
                     })}
@@ -644,7 +625,7 @@ function EmployeeProfile() {
                   ></input>
                   {errors.EffectivityDateOfOriginalBMS && (
                     <span style={customStyles.errorMsg}>
-                      Please Enter Effectivity date of Original BMS
+                      Please enter effectivity date of original BMS
                     </span>
                   )}
                 </div>
@@ -662,7 +643,7 @@ function EmployeeProfile() {
                   ></input>
                   {errors.PreviousBMS && (
                     <span style={customStyles.errorMsg}>
-                      Please Enter Previous BMS
+                      Please enter previous BMS
                     </span>
                   )}
                 </div>
@@ -683,7 +664,7 @@ function EmployeeProfile() {
                   ></input>
                   {errors.EffectivityOfPreviousBMS && (
                     <span style={customStyles.errorMsg}>
-                      Please Enter Effectivity date of Original BMS
+                      Please enter effectivity date of original BMS
                     </span>
                   )}
                 </div>

@@ -3,26 +3,22 @@ import Link from 'next/link'
 import { BiFilterAlt } from "react-icons/bi";
 import { AiOutlinePlus } from "react-icons/ai";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import { apiService } from "@/services/api.service";
 import Swal from 'sweetalert2'
+import ReactPaginate from "react-paginate";
 
 function StateMasterDashboard() {
   const [state, setStateData] = useState([]);
   const [country, setCountryData] = useState([]);
-  let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
 
   useEffect(() => {
     getData();
   }, []);
 
   async function getData() {
-    let res = await axios.get(
-      hostURL + "Master/GetStateType"  //naveen.th@amazeinc.in, Get API for State master, to fetch data
-    );
+    let res = await apiService.commonGetCall("Master/GetStateType");
     setStateData(res.data);
-    let res1 = await axios.get(
-      hostURL + "Master/GetCountryType" //naveen.th@amazeinc.in, Get API for Country master, to fetch data
-    );
+    let res1 = await apiService.commonGetCall("Master/GetCountryType");
     setCountryData(res1.data);
   }
 
@@ -37,12 +33,21 @@ function StateMasterDashboard() {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.get(hostURL + "Master/DeleteStateType?ID=" + id); //naveen.th@amazeinc.in, Delete API for State master, to delete data
+        apiService.commonGetCall("Master/DeleteStateType?ID=" + id); //naveen.th@amazeinc.in, Delete API for State master, to delete data
         getData()
       }
     });
-
   }
+
+  const [keyword, setKeyword] = useState("");
+  const PER_PAGE = 2;
+  const [currentPage, setCurrentPage] = useState(0);
+  function handlePageClick({ selected: selectedPage }) {
+    setCurrentPage(selectedPage)
+  }
+  const offset = currentPage * PER_PAGE;
+  const pageCount = Math.ceil(state.length / PER_PAGE);
+
   return (
     <div className="container">
       <p className="Heading">Province Master</p>
@@ -56,6 +61,7 @@ function StateMasterDashboard() {
               type="text"
               placeholder="Search"
               className="form-control"
+              onChange={e => setKeyword(e.target.value)}
             ></input>
           </div>
         </div>
@@ -87,36 +93,66 @@ function StateMasterDashboard() {
             {Array.isArray(state) &&
               state.length > 0 && (
                 <>
-                  {state.map((data, index) => {
-                    return (
-                      <tr key={index}>
-                        <td>{data.country}</td>
-                        <td>{data.short}</td>
-                        <td>{data.description}</td>
-                        <td>
-                          <Link href={`/Masters/StateMaster/Edit/${data.id}`}>
+                  {state
+                    .filter(data => {
+                      if ((data.short.toLowerCase().includes(keyword.toLowerCase())) || (data.description.toLowerCase().includes(keyword))) {
+                        return data;
+                      }
+                    })
+                    .slice(offset, offset + PER_PAGE)
+                    .map((data, index) => {
+                      return (
+                        <tr key={index}>
+                          <td>{data.country}</td>
+                          <td>{data.short}</td>
+                          <td>{data.description}</td>
+                          <td>
+                            <Link href={`/Masters/StateMaster/Edit/${data.id}`}>
+                              <button
+                                className='edit-btn'
+                              >
+                                Edit
+                              </button>
+                            </Link>
+                            &nbsp;&nbsp;
                             <button
                               className='edit-btn'
+                              onClick={deleteState.bind(this, data.id)}
                             >
-                              Edit
+                              Delete
                             </button>
-                          </Link>
-                          &nbsp;&nbsp;
-                          <button
-                            className='edit-btn'
-                            onClick={deleteState.bind(this, data.id)}
-                          >
-                            Delete
-                          </button>
-                        </td>
-                      </tr>
-                    );
-                  })}
+                          </td>
+                        </tr>
+                      );
+                    })}
                 </>
               )}
           </tbody>
         </table>
       </div>
+
+      <div className="mb-4 mt-4 text-center">
+        <ReactPaginate
+          previousLabel={"Previous"}
+          nextLabel={"Next"}
+          breakLabel={"..."}
+          pageCount={pageCount}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={3}
+          onPageChange={handlePageClick}
+          containerClassName={"pagination  justify-content-center"}
+          pageClassName={"page-item "}
+          pageLinkClassName={"page-link"}
+          previousClassName={"page-item"}
+          previousLinkClassName={"page-link"}
+          nextClassName={"page-item"}
+          nextLinkClassName={"page-link"}
+          breakClassName={"page-item"}
+          breakLinkClassName={"page-link"}
+          activeClassName={"active primary"}
+        />
+      </div>
+
     </div>
   );
 }
