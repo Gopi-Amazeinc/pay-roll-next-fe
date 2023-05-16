@@ -3,27 +3,30 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Styles from "@/styles/attendancedetails.module.css";
+import { apiService } from "@/services/api.service";
 
 const MyTeamAttendence = () => {
     const [MyTeamAttendence, setMyTeamAttendence] = useState([]);
     const [userID, setUserID] = useState();
 
-    let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+
+
 
     useEffect(() => {
         async function getAttendenceByID() {
             debugger
-            // const userid = sessionStorage.getItem("userID");
-            const SupervisorID = 10348;
-            const SDate = '2000-10-10';
+            const userid = sessionStorage.getItem("userID");
+            const Supervisor = 20540;
+            const SDate = "2000-10-10";
             const EDate = "2025-11-11";
-            if (userID) {
-                let res = await axios.get(hostURL + "HR/GetAttendanceByManagerID?SupervisorID=" + SupervisorID + '&SDate=' + SDate + '&EDate=' + EDate);
-                setAttendence(res.data);
+            if (userid) {
+                const res = await apiService.commonGetCall("HR/GetAttendanceByManagerID?Supervisor=" + Supervisor + '&SDate=' + SDate + '&EDate=' + EDate);
+                setMyTeamAttendence(res.data);
             }
         }
         getAttendenceByID();
     }, []);
+
 
 
     return (
@@ -31,13 +34,13 @@ const MyTeamAttendence = () => {
             <div className='container'>
                 <div className='row mt-3'>
                     <div className='col-lg-3' style={{ marginLeft: "15px" }}>
-                        <Link  className={Styles.mainheader} href="/Attendance/AttendanceDetails">My Attendence Details</Link>
+                        <Link className={Styles.mainheader} href="/Attendance/AttendanceDetails">My Attendence Details</Link>
                     </div>
-                    <div className='col-lg-4' style={{ marginLeft: "-30px" }}>
-                        <Link  className={Styles.mainheader} href="/Attendance/MyTeamAttendanceDetails">My Team Attendance Details</Link>
+                    <div className='col-lg-4' style={{ marginLeft: "-30px" }}>  
+                        <Link className={Styles.mainheader} href="/Attendance/MyTeamAttendanceDetails">My Team Attendance Details</Link>
                     </div>
                 </div>
-                <h6 style={{ marginLeft: "10px" }} >API Issue In Company AttendanceDetails</h6>
+
 
                 <div className='card p-3 border-0 shadow-lg rounded-3 mt-4'>
                     <div className='row'>
@@ -79,15 +82,16 @@ const MyTeamAttendence = () => {
                         <tr style={{ whiteSpace: 'nowrap' }}>
                             <th >Date</th>
                             <th>Staff Name</th>
-                            <th>Position</th>
-                            <th>Department</th>
-                            <th>Sign in Type</th>
+                            <th>Shift</th>
+                            <th>Day Type	</th>
                             <th>Expected in Time</th>
-                            <th>Punch in Time</th>
-                            <th >Punch in Location/IP Address</th>
-                            <th>Punched in From</th>
-                            <th>Sign in Type</th>
                             <th>Expected Out Time</th>
+                            <th>Punch in Time</th>
+                            <th>Punch Out Time	</th>
+                            <th >Work Hours(HH:MM)	</th>
+                            <th>Overtime</th>
+                            <th>Late</th>
+
                         </tr>
                     </thead>
                     <tbody>
@@ -98,7 +102,7 @@ const MyTeamAttendence = () => {
                                         return (
                                             <tr key={data.id}>
                                                 <td>{data.date}</td>
-                                                <td>{data.staffName}</td>
+                                                <td>{data.staffname1}</td>
                                                 <td>{data.position}</td>
                                                 <td>{data.department}</td>
                                                 <td>{data.signInType}</td>
@@ -118,7 +122,7 @@ const MyTeamAttendence = () => {
                                     })
                                 }
                             </>
-                        )}
+                         )} 
                     </tbody>
                 </table>
             </div>

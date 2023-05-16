@@ -7,7 +7,7 @@ import Styles from "@/styles/attendancedetails.module.css";
 
 
 const CompanyAttendanceDetails = () => {
-    const [MyTeamAttendence, setMyTeamAttendence] = useState([]);
+    const [CompanyAttendence, setCompanyAttendence] = useState([]);
     const [userID, setUserID] = useState();
 
     let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
@@ -15,14 +15,14 @@ const CompanyAttendanceDetails = () => {
     useEffect(() => {
         async function getAttendenceByID() {
             debugger
-            // const userid = sessionStorage.getItem("userID");
-            const SupervisorID = 10348;
+             const userid = sessionStorage.getItem("userID");
+            const Supervisor = 20540;
             const SDate = '2023-10-10';
             const EDate = "2023-11-11";
-            if (userID) {
-                const res = await apiService.commonGetCall("HR/GetAttendanceByManagerID?SupervisorID=" + SupervisorID + '&SDate=' + SDate + '&EDate=' + EDate);
+            if (userid) {
+                const res = await apiService.commonGetCall("HR/GetAttendanceByManagerID?Supervisor=" + Supervisor + '&SDate=' + SDate + '&EDate=' + EDate);
                 //   let res = await axios.get(hostURL + "HR/GetAttendanceByManagerID?SupervisorID=" + SupervisorID + '&SDate=' + SDate + '&EDate=' + EDate);
-                setAttendence(res.data);
+                setCompanyAttendence(res.data);
             }
         }
         getAttendenceByID();
@@ -94,10 +94,10 @@ const CompanyAttendanceDetails = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {Array.isArray(MyTeamAttendence) && MyTeamAttendence.length > 0 && (
+                        {Array.isArray(CompanyAttendence) && CompanyAttendence.length > 0 && (
                             <>
                                 {
-                                    MyTeamAttendence.map((data) => {
+                                    CompanyAttendence.map((data) => {
                                         return (
                                             <tr key={data.id}>
                                                 <td>{data.date}</td>
@@ -117,7 +117,7 @@ const CompanyAttendanceDetails = () => {
                                     })
                                 }
                             </>
-                        )}
+                         )} 
                     </tbody>
                 </table>
             </div>
