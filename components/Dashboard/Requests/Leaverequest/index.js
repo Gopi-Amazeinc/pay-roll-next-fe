@@ -18,10 +18,10 @@ const localizer = momentLocalizer(moment);
 function LeaveListDashboard() {
 
     const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-    var date = new Date();
-    let Sdate = date.toISOString().slice(0, 10);
-    var edate = new Date();
-    let Edate = edate.toISOString().slice(0, 10);
+    // var date = new Date();
+    let Sdate =sessionStorage.getItem("Sdate")
+    // var edate = new Date();
+    let Edate = sessionStorage.getItem("Edate")
 
     const [pending, setPending] = useState(false)
     const [approved, setApproved] = useState(false)
@@ -77,6 +77,7 @@ function LeaveListDashboard() {
     const [rejecteddata, setRejectedData] = useState([])
 
     const getPendingData = async () => {
+        debugger
         const staffID = sessionStorage.getItem("userID")
         const res = await apiService.commonGetCall("Employee/GetPendingStaffLeavesByStaffID?ID=" + staffID + "&TypeID=1&Sdate=" + Sdate + "&Edate=" + Edate)
         setPendingData(res.data);
