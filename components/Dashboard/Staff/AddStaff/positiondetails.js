@@ -210,7 +210,7 @@ function PositionDetails() {
                                                     {
                                                         rolelistData.map((data, index) => {
                                                             return (
-                                                                <option   value={data.id}>{data.short}</option>
+                                                                <option  key={data.id} value={data.id}>{data.short}</option>
                                                             )
                                                         })
                                                     }
@@ -230,7 +230,7 @@ function PositionDetails() {
                                                     {
                                                         bandlistData.map((data, index) => {
                                                             return (
-                                                                <option value={data.id}>{data.short}</option>
+                                                                <option key={data.id} value={data.id}>{data.short}</option>
                                                             )
                                                         })
                                                     }
@@ -247,9 +247,9 @@ function PositionDetails() {
                                                 <select className='form-control inputwidth' {...register("Level", { required: true })} style={customStyles.inputLabel}>
                                                     <option value="">Select Level </option>
                                                     {
-                                                        levellistData.map((data, index) => {
+                                                        levellistData.map((data) => {
                                                             return (
-                                                                <option   value={data.id}>{data.short}</option>
+                                                                <option  key={data.id} value={data.id}>{data.short}</option>
                                                             )
                                                         })
                                                     }
@@ -267,9 +267,9 @@ function PositionDetails() {
                                                 <select className='form-control inputwidth' {...register("DesignationID", { required: true })} style={customStyles.inputLabel}>
                                                     <option value="">Select Designation</option>
                                                     {
-                                                        designationlistData.map((data, index) => {
+                                                        designationlistData.map((data) => {
                                                             return (
-                                                                <option   value={data.id}>{data.short}</option>
+                                                                <option  key={data.id} value={data.id}>{data.short}</option>
                                                             )
                                                         })
                                                     }
@@ -344,7 +344,7 @@ function PositionDetails() {
                                                     {
                                                         grouplistData.map((data, index) => {
                                                             return (
-                                                                <option   value={data.id}>{data.short}</option>
+                                                                <option  key={data.id} value={data.id}>{data.short}</option>
                                                             )
                                                         })
                                                     }
@@ -363,7 +363,7 @@ function PositionDetails() {
                                                     {
                                                         divisionlistData.map((data, index) => {
                                                             return (
-                                                                <option   value={data.id}>{data.short}</option>
+                                                                <option  key={data.id} value={data.id}>{data.short}</option>
                                                             )
                                                         })
                                                     }
@@ -383,7 +383,7 @@ function PositionDetails() {
                                                     {
                                                         departmentlistData.map((data, index) => {
                                                             return (
-                                                                <option   value={data.id}>{data.department_name}</option>
+                                                                <option key={data.id}  value={data.id}>{data.department_name}</option>
                                                             )
                                                         })
                                                     }
@@ -402,7 +402,7 @@ function PositionDetails() {
                                                     {
                                                         sectionlistData.map((data, index) => {
                                                             return (
-                                                                <option   value={data.id}>{data.sort}</option>
+                                                                <option  key={data.id} value={data.id}>{data.sort}</option>
                                                             )
                                                         })
                                                     }
@@ -422,7 +422,7 @@ function PositionDetails() {
                                                     {
                                                         stafflistData.map((data, index) => {
                                                             return (
-                                                                <option   value={data.id}>{data.name}</option>
+                                                                <option key={data.id}  value={data.id}>{data.name}</option>
                                                             )
                                                         })
                                                     }
@@ -441,7 +441,7 @@ function PositionDetails() {
                                                     {
                                                         stafflistData.map((data, index) => {
                                                             return (
-                                                                <option  value={data.id}>{data.name}</option>
+                                                                <option key={data.id} value={data.id}>{data.name}</option>
                                                             )
                                                         })
                                                     }
@@ -497,7 +497,7 @@ function PositionDetails() {
                                                     {
                                                         workCountrylistData.map((data, index) => {
                                                             return (
-                                                                <option   value={data.id}>{data.short}</option>
+                                                                <option key={data.id}  value={data.id}>{data.short}</option>
                                                             )
                                                         })
                                                     }
@@ -516,7 +516,7 @@ function PositionDetails() {
                                                     {
                                                         Provincelist.map((data, index) => {
                                                             return (
-                                                                <option   value={data.id}>{data.short}</option>
+                                                                <option key={data.id}  value={data.id}>{data.short}</option>
                                                             )
                                                         })
                                                     }
@@ -536,7 +536,7 @@ function PositionDetails() {
                                                     {
                                                         Citylist.map((data, index) => {
                                                             return (
-                                                                <option   value={data.id}>{data.short}</option>
+                                                                <option key={data.id}  value={data.id}>{data.short}</option>
                                                             )
                                                         })
                                                     }
@@ -555,7 +555,7 @@ function PositionDetails() {
                                                     {
                                                         worklocationlist.map((data, index) => {
                                                             return (
-                                                                <option   value={data.id}>{data.short}</option>
+                                                                <option  key={data.id} value={data.id}>{data.short}</option>
                                                             )
                                                         })
                                                     }

@@ -154,7 +154,7 @@ export default function ContactDetails() {
                                                 <select className='form-control inputwidth'  {...register("AddressType1", { required: true })} style={customStyles.inputLabel}>
                                                     <option value="">Select One</option>
                                                     <option value="Current" >Current</option>
-                                                    <option value="Permanennt">Permanennt</option>
+                                                    <option value="Permanent">Permanent</option>
 
                                                 </select>
                                                 {errors.AddressType1 && <span style={customStyles.errorMsg}> Address Type 1 </span>}
@@ -188,9 +188,9 @@ export default function ContactDetails() {
                                                 <select className='form-control inputwidth' {...register("CountryID1", { required: true })} style={customStyles.inputLabel}>
                                                     <option value="">Select Country</option>
                                                     {
-                                                        adresscountrylistData.map((data, index) => {
+                                                        adresscountrylistData.map((data) => {
                                                             return (
-                                                                <option key={index} value={data.id}>{data.short}</option>
+                                                                <option key={data.id} value={data.id}>{data.short}</option>
                                                             )
                                                         })
                                                     }
@@ -207,9 +207,9 @@ export default function ContactDetails() {
                                                 <select className='form-control inputwidth' {...register("ProvinceID1", { required: true })} style={customStyles.inputLabel}>
                                                     <option value="">Select Province</option>
                                                     {
-                                                        Provincelist.map((data, index) => {
+                                                        Provincelist.map((data) => {
                                                             return (
-                                                                <option key={index} value={data.id}>{data.short}</option>
+                                                                <option key={data.id} value={data.id}>{data.short}</option>
                                                             )
                                                         })
                                                     }
@@ -227,9 +227,9 @@ export default function ContactDetails() {
                                                 <select className='form-control inputwidth' {...register("CityID1", { required: true })} style={customStyles.inputLabel}>
                                                     <option value="">Select  City</option>
                                                     {
-                                                        Citylist.map((data, index) => {
+                                                        Citylist.map((data) => {
                                                             return (
-                                                                <option key={index} value={data.id}>{data.short}</option>
+                                                                <option key={data.id} value={data.id}>{data.short}</option>
                                                             )
                                                         })
                                                     }
@@ -295,9 +295,9 @@ export default function ContactDetails() {
                                                 <select className='form-control inputwidth' {...register("CountryID2", { required: true })} style={customStyles.inputLabel}>
                                                     <option value="">Select Country</option>
                                                     {
-                                                        CountrylistData.map((data, index) => {
+                                                        CountrylistData.map((data) => {
                                                             return (
-                                                                <option key={index} value={data.id}>{data.short}</option>
+                                                                <option key={data.id} value={data.id}>{data.short}</option>
                                                             )
                                                         })
                                                     }
@@ -314,9 +314,9 @@ export default function ContactDetails() {
                                                 <select className='form-control inputwidth' {...register("ProvinceID2", { required: true })} style={customStyles.inputLabel}>
                                                     <option value="">Select Province</option>
                                                     {
-                                                        Provincelist.map((data, index) => {
+                                                        Provincelist.map((data) => {
                                                             return (
-                                                                <option key={index} value={data.id}>{data.short}</option>
+                                                                <option key={data.id} value={data.id}>{data.short}</option>
                                                             )
                                                         })
                                                     }
@@ -334,9 +334,9 @@ export default function ContactDetails() {
                                                 <select className='form-control inputwidth' {...register("CityID2", { required: true })} style={customStyles.inputLabel}>
                                                     <option value="">Select  City</option>
                                                     {
-                                                        Citylist.map((data, index) => {
+                                                        Citylist.map((data) => {
                                                             return (
-                                                                <option key={index} value={data.id}>{data.short}</option>
+                                                                <option key={data.id} value={data.id}>{data.short}</option>
                                                             )
                                                         })
                                                     }

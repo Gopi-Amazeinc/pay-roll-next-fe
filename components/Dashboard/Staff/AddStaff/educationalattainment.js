@@ -96,7 +96,7 @@ export default function EducationDetails() {
 
             await axios.post(hostURL + "HR/UpdateEducationDetails", Entity);
             Swal.fire("Updated Successfully!")
-            getBankDetails();
+            getData();
         }
     }
 
@@ -113,7 +113,7 @@ export default function EducationDetails() {
             CountryID: existingData ? existingData.countryID : "",
             StartDate: existingData ? existingData.startDate : "",
             EndDate: existingData ? existingData.endDate : "",
-            AttachmentEdu: existingData ? existingData.attachmentEdu : "",
+            AttachmentEdu: "No Image",
             StaffID: sessionStorage.getItem('userID')
         }
         reset(etty);
@@ -198,9 +198,9 @@ export default function EducationDetails() {
                                                     onChange={getType.bind(this)} >
                                                     <option value="">Select Educational Attainment</option>
                                                     {
-                                                        EducationAttainmentlist.map((data, index) => {
+                                                        EducationAttainmentlist.map((data) => {
                                                             return (
-                                                                <option key={index} value={data.id}>{data.short}</option>
+                                                                <option key={data.id} value={data.id}>{data.short}</option>
                                                             )
                                                         })
                                                     }
@@ -219,9 +219,9 @@ export default function EducationDetails() {
                                                     onChange={getMajorType.bind(this)} >
                                                     <option value="">Select Course</option>
                                                     {
-                                                        CourseDetails.map((data, index) => {
+                                                        CourseDetails.map((data) => {
                                                             return (
-                                                                <option key={index} value={data.id}>{data.short}</option>
+                                                                <option key={data.id} value={data.id}>{data.short}</option>
                                                             )
                                                         })
                                                     }
@@ -239,9 +239,9 @@ export default function EducationDetails() {
                                                     onChange={getType.bind(this)} >
                                                     <option value="">Select Major</option>
                                                     {
-                                                        MajorDetails.map((data, index) => {
+                                                        MajorDetails.map((data) => {
                                                             return (
-                                                                <option key={index} value={data.id}>{data.short}</option>
+                                                                <option key={data.id} value={data.id}>{data.short}</option>
                                                             )
                                                         })
                                                     }
@@ -269,9 +269,9 @@ export default function EducationDetails() {
                                                 <select className='form-control inputwidth' {...register("LicenseOrCertificationID", { required: true })} style={customStyles.inputLabel}>
                                                     <option value="">Select Licenses/Certifications</option>
                                                     {
-                                                        LicenseOrCertificationMaster.map((data, index) => {
+                                                        LicenseOrCertificationMaster.map((data) => {
                                                             return (
-                                                                <option key={index} value={data.id}>{data.short}</option>
+                                                                <option key={data.id} value={data.id}>{data.short}</option>
                                                             )
                                                         })
                                                     }
@@ -289,9 +289,9 @@ export default function EducationDetails() {
                                                     onChange={getType.bind(this)} >
                                                     <option value="">Select Country</option>
                                                     {
-                                                        Countrylist.map((data, index) => {
+                                                        Countrylist.map((data) => {
                                                             return (
-                                                                <option key={index} value={data.id}>{data.short}</option>
+                                                                <option key={data.id} value={data.id}>{data.short}</option>
                                                             )
                                                         })
                                                     }
