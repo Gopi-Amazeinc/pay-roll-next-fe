@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from "react";
-// import { Button, Modal, ModalBody, ModalFooter } from "reactstrap";
 import Modal from 'react-modal';
 import Link from "next/link";
-import axios from "axios";
 import Swal from 'sweetalert2';
 import * as XLSX from "xlsx";
-import Styles from "../../../pages/OT/Ot.module.css"
+import Styles from "@/pages/OT/Ot.module.css"
 import { DownloadTableExcel } from 'react-export-table-to-excel';
 const Myovertimedetails = () => {
 
