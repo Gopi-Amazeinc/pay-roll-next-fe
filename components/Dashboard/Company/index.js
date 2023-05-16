@@ -33,7 +33,6 @@ const Companydashboard = () => {
   return (
     <div>
       <div className="container">
-        <br />
         <div className="row">
           <div className="col-md-10">
             <p className="text-primary fs-6 mt-3 fw-bold">

@@ -8,7 +8,6 @@ import Swal from "sweetalert2";
 import * as XLSX from "xlsx";
 
 const TeamLoans = () => {
-  let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
 
   const [loansData, setLoansData] = useState([]);
 
