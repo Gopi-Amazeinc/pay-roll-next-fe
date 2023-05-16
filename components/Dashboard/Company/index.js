@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-
+import { apiService } from "@/services/api.service";
 import table from '../../../styles/company.module.css'
 import company from '../../../styles/company.module.css'
 import Link from 'next/link.js';
 import axios from 'axios';
-
+import Swal from 'sweetalert2';
 
 const Companydashboard = () => {
 
@@ -15,7 +15,7 @@ const Companydashboard = () => {
 
 
    async function getCompany(){
-    let res =  await axios.get(hostURL + "Payroll/GetCompanyAddressDetails");
+    let res =  await apiService.commonGetCall ("Payroll/GetCompanyAddressDetails");
     setCompany(res.data);
     }
 
@@ -36,18 +36,14 @@ function  Cleardata(){
 
 
 async function DeleteComany(id){
-    try{
-        let res = await axios.get(hostURL + `HR/DeleteHolidays?id=${id}`);
+    
+        let res = await apiService.commonGetCall (`Payroll/DeleteCompany_AddressDetails?id=${id}`);
         console.log(res.data);
         Swal.fire('Data deleted successfully')
         getCompany();
 
-    }
-    catch (error){
-        console.error(error);
-        Swal.fire('failed to  delete data')
-
-    }
+ 
+   
 
 };
 
@@ -66,8 +62,8 @@ async function DeleteComany(id){
                     </div>
                     <div className="col-md-4">
                        <Link href="/Company/companyform">
-                       <button className={company.button}>ADD NEW</button>
-                       </Link>
+                       <button className={company.button} onClick={Cleardata.bind(this)}>ADD NEW</button>
+                       </Link> 
                     </div>
                 </div>
                 <br />
