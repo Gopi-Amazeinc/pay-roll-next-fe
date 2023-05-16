@@ -23,6 +23,9 @@ export default function DependentDetails() {
             fontWeight: '500',
             color: 'red'
         },
+        span: {
+            color: 'red'
+        }
     };
 
     const customPopupDivision = {
@@ -153,19 +156,19 @@ export default function DependentDetails() {
                                 <div style={customPopupDivision.popupcontent}>
 
                                     <div style={customPopupDivision.popupinputs}>
-                                        <p>Dependent Name(First Name, Middle, Initial and Last Name) <span >*</span></p>
+                                        <p>Dependent Name(First Name, Middle, Initial and Last Name) <span style={customStyles.span}>*</span></p>
                                         <div>
                                             <input type='text' placeholder='Department Name'
-                                                {...register("DependentName", { required: true })} className='form-control inputwidth' ></input>
-                                            {errors.DependentName && <span style={customStyles.errorMsg}> Please Enter Department Name</span>}
+                                                {...register("DependentName", { required: true })} className='form-control ' ></input>
+                                            {errors.DependentName && <span style={customStyles.errorMsg}> Please enter department name</span>}
                                         </div>
                                     </div>
 
                                     <div style={customPopupDivision.popupinputs}>
-                                        <p>Relationship<span >*</span></p>
+                                        <p>Relationship<span style={customStyles.span}>*</span></p>
                                         {
                                             <div>
-                                                <select className='form-control inputwidth' {...register("RelationshipID", { required: true })} style={customStyles.inputLabel}>
+                                                <select className='form-select ' {...register("RelationshipID", { required: true })} style={customStyles.inputLabel}>
                                                     <option value="">Select Relationship</option>
                                                     {
                                                         RelationShipMaster.map((data) => {
@@ -182,37 +185,40 @@ export default function DependentDetails() {
 
 
                                     <div style={customPopupDivision.popupinputs}>
-                                        <p>Date Of Birth<span >*</span></p>
+                                        <p>Date Of Birth<span style={customStyles.span}>*</span></p>
                                         <div>
                                             <input type='date' placeholder='Date Of Birth'
-                                                {...register("DateOfBirth", { required: true })} className='form-control inputwidth' ></input>
-                                            {errors.DateOfBirth && <span style={customStyles.errorMsg}> Please Enter Date of Birth</span>}
+                                                {...register("DateOfBirth", { required: true })} className='form-control ' ></input>
+                                            {errors.DateOfBirth && <span style={customStyles.errorMsg}> Please enter date of birth</span>}
                                         </div>
                                     </div>
 
                                     <div style={customPopupDivision.popupinputs}>
-                                        <p>Gender<span >*</span></p>
+                                        <p>Gender<span style={customStyles.span}>*</span></p>
                                         <div className="d-flex" style={{ justifyContent: 'start' }} >
-
+                                            <div>
                                             <input type='radio' value='Male'
-                                                {...register("Gender", { required: true })} className='inputwidth' ></input>
+                                                {...register("Gender", { required: true })} className='' ></input>
                                             <label className="form-check-label ml-1" htmlFor="inlineRadio1">Male</label>
-
+                                            &nbsp;&nbsp;
                                             <input type='radio' value='Female'
-                                                {...register("Gender", { required: true })} className=' inputwidth' ></input>
+                                                {...register("Gender", { required: true })} className=' ' ></input>
                                             <label className="form-check-label ml-1" htmlFor="inlineRadio1">Female</label>
+                                            </div>
+                                            <div>
+                                            {errors.Gender && <span style={customStyles.errorMsg}> Please select gender</span>}
 
-                                            {errors.Gender && <span style={customStyles.errorMsg}> Please Enter Date of Birth</span>}
+                                            </div>
 
                                         </div>
                                     </div>
 
                                     <div style={customPopupDivision.popupinputs}>
-                                        <p>Attachment<span >*</span></p>
+                                        <p>Attachment<span style={customStyles.span}>*</span></p>
                                         <div>
                                             <input type='file'
-                                                {...register("Attachment", { required: false })} className='form-control inputwidth' ></input>
-                                            {errors.Attachment && <span style={customStyles.errorMsg}> Please Enter Attachment</span>}
+                                                {...register("Attachment", { required: false })} className='form-control ' ></input>
+                                            {errors.Attachment && <span style={customStyles.errorMsg}> Please upload Attachment</span>}
                                         </div>
                                     </div>
 

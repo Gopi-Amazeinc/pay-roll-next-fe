@@ -39,6 +39,9 @@ function PositionDetails() {
             fontWeight: '500',
             color: 'red'
         },
+        span: {
+            color: "red",
+          },
     };
 
     const customPopupDivision = {
@@ -190,22 +193,23 @@ function PositionDetails() {
                                 <div className="d-flex justify-content-between">
                                     <p className='modal-heading'>Position Details</p>
                                 </div>
+                                <hr></hr>
                                 <div style={customPopupDivision.popupcontent}>
 
 
                                     <div style={customPopupDivision.popupinputs}>
-                                        <p>Employee ID<span >*</span></p>
+                                        <p>Employee ID<span style={customStyles.span}>*</span></p>
                                         <div>
-                                            <input type='text' placeholder='Employee ID '
-                                                {...register("EmployeeCode", { required: true })} className='form-control inputwidth' ></input>
-                                            {errors.EmployeeCode && <span style={customStyles.errorMsg}> Please Employee ID *</span>}
+                                            <input type='text' placeholder='Employee ID'
+                                                {...register("EmployeeCode", { required: true })} className='form-control ' ></input>
+                                            {errors.EmployeeCode && <span style={customStyles.errorMsg}> Please enter Employee ID *</span>}
                                         </div>
                                     </div>
                                     {
                                         <div style={customPopupDivision.popupinputs}>
-                                            <p>Position Title<span >*</span></p>
+                                            <p>Position Title<span style={customStyles.span}>*</span></p>
                                             {<div>
-                                                <select className='form-control inputwidth' {...register("PositionID", { required: true })} style={customStyles.inputLabel}>
+                                                <select className='form-select' {...register("PositionID", { required: true })} style={customStyles.inputLabel}>
                                                     <option value="">Select Position</option>
                                                     {
                                                         rolelistData.map((data, index) => {
@@ -215,17 +219,17 @@ function PositionDetails() {
                                                         })
                                                     }
                                                 </select>
-                                                {errors.PositionID && <span style={customStyles.errorMsg}> Select  Position</span>}
+                                                {errors.PositionID && <span style={customStyles.errorMsg}> Please select position</span>}
                                             </div>}
                                         </div>
                                     }
 
 
                                     <div style={customPopupDivision.popupinputs}>
-                                        <p>Band<span >*</span></p>
+                                        <p>Band<span style={customStyles.span}>*</span></p>
                                         {
                                             <div>
-                                                <select className='form-control inputwidth' {...register("BandID", { required: true })} style={customStyles.inputLabel}>
+                                                <select className='form-select' {...register("BandID", { required: true })} style={customStyles.inputLabel}>
                                                     <option value="">Select Band </option>
                                                     {
                                                         bandlistData.map((data, index) => {
@@ -235,17 +239,17 @@ function PositionDetails() {
                                                         })
                                                     }
                                                 </select>
-                                                {errors.BandID && <span style={customStyles.errorMsg}> Please Enter Band</span>}
+                                                {errors.BandID && <span style={customStyles.errorMsg}> Please select band</span>}
                                             </div>
                                         }
                                     </div>
 
                                     {
                                         <div style={customPopupDivision.popupinputs}>
-                                            <p>Level <span >*</span></p>
+                                            <p>Level<span style={customStyles.span}>*</span></p>
                                             {<div>
-                                                <select className='form-control inputwidth' {...register("Level", { required: true })} style={customStyles.inputLabel}>
-                                                    <option value="">Select Level </option>
+                                                <select className='form-control ' {...register("Level", { required: true })} style={customStyles.inputLabel}>
+                                                    <option value="">Select Level</option>
                                                     {
                                                         levellistData.map((data) => {
                                                             return (
@@ -254,7 +258,7 @@ function PositionDetails() {
                                                         })
                                                     }
                                                 </select>
-                                                {errors.Level && <span style={customStyles.errorMsg}> Select Level</span>}
+                                                {errors.Level && <span style={customStyles.errorMsg}>PLease select level</span>}
                                             </div>}
                                         </div>
                                     }
@@ -262,9 +266,9 @@ function PositionDetails() {
 
                                     {
                                         <div style={customPopupDivision.popupinputs}>
-                                            <p>Designation<span >*</span></p>
+                                            <p>Designation<span style={customStyles.span}>*</span></p>
                                             {<div>
-                                                <select className='form-control inputwidth' {...register("DesignationID", { required: true })} style={customStyles.inputLabel}>
+                                                <select className='form-select' {...register("DesignationID", { required: true })} style={customStyles.inputLabel}>
                                                     <option value="">Select Designation</option>
                                                     {
                                                         designationlistData.map((data) => {
@@ -274,16 +278,16 @@ function PositionDetails() {
                                                         })
                                                     }
                                                 </select>
-                                                {errors.DesignationID && <span style={customStyles.errorMsg}> Select Designation</span>}
+                                                {errors.DesignationID && <span style={customStyles.errorMsg}>PLease select designation</span>}
                                             </div>}
                                         </div>
                                     }
 
                                     {
                                         <div style={customPopupDivision.popupinputs}>
-                                            <p>Login Type<span >*</span></p>
+                                            <p>Login Type<span style={customStyles.span}>*</span></p>
                                             {<div>
-                                                <select className='form-control inputwidth' {...register("PositionLogin", { required: true })} style={customStyles.inputLabel}>
+                                                <select className='form-select' {...register("PositionLogin", { required: true })} style={customStyles.inputLabel}>
                                                     <option value="">Select Login Type</option>
                                                     <option value="2">Manager</option>
                                                     <option value="6">Employee</option>
@@ -295,7 +299,7 @@ function PositionDetails() {
                                                     <option value="12">HR Head</option>
                                                     <option value="17">Payroll Manager</option>
                                                 </select>
-                                                {errors.PositionLogin && <span style={customStyles.errorMsg}> Select LoginType</span>}
+                                                {errors.PositionLogin && <span style={customStyles.errorMsg}>Please select login type</span>}
                                             </div>}
                                         </div>
                                     }
@@ -311,16 +315,17 @@ function PositionDetails() {
                                 <div className="d-flex justify-content-between">
                                     <p className='modal-heading'>Organization Hierarchy</p>
                                 </div>
+                                <hr></hr>
                                 <div style={customPopupDivision.popupcontent}>
 
 
 
                                     {
                                         <div style={customPopupDivision.popupinputs}>
-                                            <p>Entity  <span >*</span></p>
+                                            <p>Entity<span style={customStyles.span}>*</span></p>
                                             {<div>
-                                                <select className='form-control inputwidth' {...register("Entity", { required: true })} style={customStyles.inputLabel}>
-                                                    <option value="0" >Select Entity</option>
+                                                <select className='form-select' {...register("Entity", { required: true })} style={customStyles.inputLabel}>
+                                                    <option value="" >Select Entity</option>
                                                     <option value="Ayala Land Premier Inc." >Ayala Land Premier Inc.</option>
                                                     <option value="Avida Land Corporation" >Avida Land Corporation
                                                     </option>
@@ -329,17 +334,17 @@ function PositionDetails() {
                                                     <option value="Ayala Land Inc." >Ayala Land Inc.
                                                     </option>
                                                 </select>
-                                                {errors.Entity && <span style={customStyles.errorMsg}> Select  Entity </span>}
+                                                {errors.Entity && <span style={customStyles.errorMsg}>Please select entity </span>}
                                             </div>}
                                         </div>
                                     }
 
 
                                     <div style={customPopupDivision.popupinputs}>
-                                        <p>Group <span >*</span></p>
+                                        <p>Group <span style={customStyles.span}>*</span></p>
                                         {
                                             <div>
-                                                <select className='form-control inputwidth' {...register("GroupID", { required: true })} style={customStyles.inputLabel}>
+                                                <select className='form-select' {...register("GroupID", { required: true })} style={customStyles.inputLabel}>
                                                     <option value="">Select Group </option>
                                                     {
                                                         grouplistData.map((data, index) => {
@@ -349,16 +354,16 @@ function PositionDetails() {
                                                         })
                                                     }
                                                 </select>
-                                                {errors.GroupID && <span style={customStyles.errorMsg}> Please Enter Group</span>}
+                                                {errors.GroupID && <span style={customStyles.errorMsg}> Please select group</span>}
                                             </div>
                                         }
                                     </div>
 
                                     {
                                         <div style={customPopupDivision.popupinputs}>
-                                            <p>Division  <span >*</span></p>
+                                            <p>Division<span style={customStyles.span}>*</span></p>
                                             {<div>
-                                                <select className='form-control inputwidth' {...register("DivisionID", { required: true })} style={customStyles.inputLabel}>
+                                                <select className='form-select ' {...register("DivisionID", { required: true })} style={customStyles.inputLabel}>
                                                     <option value="">Select Division  </option>
                                                     {
                                                         divisionlistData.map((data, index) => {
@@ -376,9 +381,9 @@ function PositionDetails() {
 
                                     {
                                         <div style={customPopupDivision.popupinputs}>
-                                            <p>Department<span >*</span></p>
+                                            <p>Department<span style={customStyles.span}>*</span></p>
                                             {<div>
-                                                <select className='form-control inputwidth' {...register("DepartmentID", { required: true })} style={customStyles.inputLabel}>
+                                                <select className='form-select ' {...register("DepartmentID", { required: true })} style={customStyles.inputLabel}>
                                                     <option value="">Select Department</option>
                                                     {
                                                         departmentlistData.map((data, index) => {
@@ -388,16 +393,16 @@ function PositionDetails() {
                                                         })
                                                     }
                                                 </select>
-                                                {errors.DepartmentID && <span style={customStyles.errorMsg}> Select Department</span>}
+                                                {errors.DepartmentID && <span style={customStyles.errorMsg}>Please select department</span>}
                                             </div>}
                                         </div>
                                     }
 
                                     {
                                         <div style={customPopupDivision.popupinputs}>
-                                            <p>Section<span >*</span></p>
+                                            <p>Section<span style={customStyles.span}>*</span></p>
                                             {<div>
-                                                <select className='form-control inputwidth' {...register("SectionID", { required: true })} style={customStyles.inputLabel}>
+                                                <select className='form-select' {...register("SectionID", { required: true })} style={customStyles.inputLabel}>
                                                     <option value="">Select Section</option>
                                                     {
                                                         sectionlistData.map((data, index) => {
@@ -407,7 +412,7 @@ function PositionDetails() {
                                                         })
                                                     }
                                                 </select>
-                                                {errors.SectionID && <span style={customStyles.errorMsg}> Select Section</span>}
+                                                {errors.SectionID && <span style={customStyles.errorMsg}>Please select section</span>}
                                             </div>}
                                         </div>
                                     }
@@ -415,10 +420,10 @@ function PositionDetails() {
 
                                     {
                                         <div style={customPopupDivision.popupinputs}>
-                                            <p>Immediate Manager<span >*</span></p>
+                                            <p>Immediate Manager<span style={customStyles.span}>*</span></p>
                                             {<div>
-                                                <select className='form-control inputwidth' {...register("ManagerID", { required: true })} style={customStyles.inputLabel}>
-                                                    <option value="">Select  Name</option>
+                                                <select className='form-select' {...register("ManagerID", { required: true })} style={customStyles.inputLabel}>
+                                                    <option value="">Select Immediate Manager</option>
                                                     {
                                                         stafflistData.map((data, index) => {
                                                             return (
@@ -427,17 +432,17 @@ function PositionDetails() {
                                                         })
                                                     }
                                                 </select>
-                                                {errors.ManagerID && <span style={customStyles.errorMsg}> Select ImmediateManager</span>}
+                                                {errors.ManagerID && <span style={customStyles.errorMsg}>Please select immediate manager</span>}
                                             </div>}
                                         </div>
                                     }
 
                                     {
                                         <div style={customPopupDivision.popupinputs}>
-                                            <p>Next Level Manager<span >*</span></p>
+                                            <p>Next Level Manager<span style={customStyles.span}>*</span></p>
                                             {<div>
-                                                <select className='form-control inputwidth' {...register("NextLevelManagerID", { required: true })} style={customStyles.inputLabel}>
-                                                    <option value="">Select Name</option>
+                                                <select className='form-select ' {...register("NextLevelManagerID", { required: true })} style={customStyles.inputLabel}>
+                                                    <option value="">Select Next Level Manager</option>
                                                     {
                                                         stafflistData.map((data, index) => {
                                                             return (
@@ -446,18 +451,18 @@ function PositionDetails() {
                                                         })
                                                     }
                                                 </select>
-                                                {errors.NextLevelManagerID && <span style={customStyles.errorMsg}> Select Next Level Manager</span>}
+                                                {errors.NextLevelManagerID && <span style={customStyles.errorMsg}>Please select next level manager</span>}
                                             </div>}
                                         </div>
                                     }
 
 
                                     <div style={customPopupDivision.popupinputs}>
-                                        <p>SAP Vendor Code<span >*</span></p>
+                                        <p>SAP Vendor Code<span style={customStyles.span}>*</span></p>
                                         <div>
                                             <input type='text' placeholder='SAP Vendor Code '
-                                                {...register("SAPVendorNo", { required: true })} className='form-control inputwidth' ></input>
-                                            {errors.SAPVendorNo && <span style={customStyles.errorMsg}> Please SAP Vendor Code *</span>}
+                                                {...register("SAPVendorNo", { required: true })} className='form-control ' ></input>
+                                            {errors.SAPVendorNo && <span style={customStyles.errorMsg}> Please SAP vendor code</span>}
                                         </div>
                                     </div>
 
@@ -472,28 +477,29 @@ function PositionDetails() {
                                 <div className="d-flex justify-content-between">
                                     <p className='modal-heading'>Work Location</p>
                                 </div>
+                                <hr></hr>
                                 <div style={customPopupDivision.popupcontent}>
                                     {
                                         <div style={customPopupDivision.popupinputs}>
-                                            <p>Work Arrangement  <span >*</span></p>
+                                            <p>Work Arrangement  <span style={customStyles.span}>*</span></p>
                                             {<div>
-                                                <select className='form-control inputwidth' {...register("WorkArrangement", { required: true })} style={customStyles.inputLabel}>
+                                                <select className='form-select ' {...register("WorkArrangement", { required: true })} style={customStyles.inputLabel}>
                                                     <option value="">Select Work Arrangement </option>
                                                     <option value="Office Base">Office-based</option>
                                                     <option value="Site Base">Site-based</option>
                                                 </select>
-                                                {errors.WorkArrangement && <span style={customStyles.errorMsg}> Select  Work Arrangement </span>}
+                                                {errors.WorkArrangement && <span style={customStyles.errorMsg}>Please select work arrangement </span>}
                                             </div>}
                                         </div>
                                     }
 
 
                                     <div style={customPopupDivision.popupinputs}>
-                                        <p>Worksite Country <span >*</span></p>
+                                        <p>Worksite Country <span style={customStyles.span}>*</span></p>
                                         {
                                             <div>
-                                                <select className='form-control inputwidth' {...register("WorksiteCountryID", { required: true })} style={customStyles.inputLabel}>
-                                                    <option value="">Select  Country </option>
+                                                <select className='form-select ' {...register("WorksiteCountryID", { required: true })} style={customStyles.inputLabel}>
+                                                    <option value="">Select Worksite Country </option>
                                                     {
                                                         workCountrylistData.map((data, index) => {
                                                             return (
@@ -502,16 +508,16 @@ function PositionDetails() {
                                                         })
                                                     }
                                                 </select>
-                                                {errors.WorksiteCountryID && <span style={customStyles.errorMsg}> Please Worksite Country </span>}
+                                                {errors.WorksiteCountryID && <span style={customStyles.errorMsg}> Please select worksite country </span>}
                                             </div>
                                         }
                                     </div>
 
                                     {
                                         <div style={customPopupDivision.popupinputs}>
-                                            <p>Worksite Province  <span >*</span></p>
+                                            <p>Worksite Province  <span style={customStyles.span}>*</span></p>
                                             {<div>
-                                                <select className='form-control inputwidth' {...register("WorksiteProvinceID", { required: true })} style={customStyles.inputLabel}>
+                                                <select className='form-select ' {...register("WorksiteProvinceID", { required: true })} style={customStyles.inputLabel}>
                                                     <option value="">Select  Province  </option>
                                                     {
                                                         Provincelist.map((data, index) => {
@@ -521,7 +527,7 @@ function PositionDetails() {
                                                         })
                                                     }
                                                 </select>
-                                                {errors.WorksiteProvinceID && <span style={customStyles.errorMsg}> Select Worksite Province </span>}
+                                                {errors.WorksiteProvinceID && <span style={customStyles.errorMsg}> Select worksite province </span>}
                                             </div>}
                                         </div>
                                     }
@@ -529,9 +535,9 @@ function PositionDetails() {
 
                                     {
                                         <div style={customPopupDivision.popupinputs}>
-                                            <p>Worksite City<span >*</span></p>
+                                            <p>Worksite City<span style={customStyles.span}>*</span></p>
                                             {<div>
-                                                <select className='form-control inputwidth' {...register("WorksiteCityID", { required: true })} style={customStyles.inputLabel}>
+                                                <select className='form-select ' {...register("WorksiteCityID", { required: true })} style={customStyles.inputLabel}>
                                                     <option value="">Select  City</option>
                                                     {
                                                         Citylist.map((data, index) => {
@@ -541,16 +547,16 @@ function PositionDetails() {
                                                         })
                                                     }
                                                 </select>
-                                                {errors.WorksiteCityID && <span style={customStyles.errorMsg}> Select Worksite City</span>}
+                                                {errors.WorksiteCityID && <span style={customStyles.errorMsg}>Please select worksite city</span>}
                                             </div>}
                                         </div>
                                     }
 
                                     {
                                         <div style={customPopupDivision.popupinputs}>
-                                            <p>Working Location<span >*</span></p>
+                                            <p>Working Location<span style={customStyles.span}>*</span></p>
                                             {<div>
-                                                <select className='form-control inputwidth' {...register("WorksiteLocationID", { required: true })} style={customStyles.inputLabel}>
+                                                <select className='form-select ' {...register("WorksiteLocationID", { required: true })} style={customStyles.inputLabel}>
                                                     <option value="">Select Working Location</option>
                                                     {
                                                         worklocationlist.map((data, index) => {
@@ -560,7 +566,7 @@ function PositionDetails() {
                                                         })
                                                     }
                                                 </select>
-                                                {errors.WorksiteLocationID && <span style={customStyles.errorMsg}> Select Working Location</span>}
+                                                {errors.WorksiteLocationID && <span style={customStyles.errorMsg}>Please select working location</span>}
                                             </div>}
                                         </div>
                                     }
@@ -581,21 +587,21 @@ function PositionDetails() {
                             <div className='col-12'>
                                 <div className="d-flex justify-content-between">
                                     <p className='modal-heading'>Employment Details</p>
-
                                 </div>
+                                <hr/>
                                 <div style={customPopupDivision.popupcontent}>
 
                                     {
                                         <div style={customPopupDivision.popupinputs}>
-                                            <p>Employment Type  <span >*</span></p>
+                                            <p>Employment Type<span style={customStyles.span}>*</span></p>
                                             {<div>
-                                                <select className='form-control inputwidth' {...register("EmployementTypeID", { required: true })} style={customStyles.inputLabel}>
-                                                    <option value="0">Select Type</option>
+                                                <select className='form-select ' {...register("EmployementTypeID", { required: true })} style={customStyles.inputLabel}>
+                                                    <option value="">Select Type</option>
                                                     <option value="1">Consultant</option>
                                                     <option value="2">Project Hire</option>
                                                     <option value="3">Regular</option>
                                                 </select>
-                                                {errors.EmployementTypeID && <span style={customStyles.errorMsg}> Select  Work Arrangement </span>}
+                                                {errors.EmployementTypeID && <span style={customStyles.errorMsg}>Please select employment type </span>}
                                             </div>}
                                         </div>
                                     }
@@ -603,54 +609,54 @@ function PositionDetails() {
 
                                     {
                                         <div style={customPopupDivision.popupinputs}>
-                                            <p>Employment Status  <span >*</span></p>
+                                            <p>Employment Status<span style={customStyles.span}>*</span></p>
                                             {<div>
-                                                <select className='form-control inputwidth' {...register("EmploymentStatus", { required: true })} style={customStyles.inputLabel}>
+                                                <select className='form-select ' {...register("EmploymentStatus", { required: true })} style={customStyles.inputLabel}>
                                                     <option value="">Select Status </option>
                                                     <option value="Active">Active</option>
                                                     <option value="Inactive">Inactive</option>
                                                 </select>
-                                                {errors.EmploymentStatus && <span style={customStyles.errorMsg}> Select  Work Arrangement </span>}
+                                                {errors.EmploymentStatus && <span style={customStyles.errorMsg}>Please select employment status</span>}
                                             </div>}
                                         </div>
                                     }
 
 
                                     <div style={customPopupDivision.popupinputs}>
-                                        <p>Hired Date<span >*</span></p>
+                                        <p>Hired Date<span style={customStyles.span}>*</span></p>
                                         <div>
                                             <input type='date'
-                                                {...register("HiredDate", { required: true })} className='form-control inputwidth' ></input>
-                                            {errors.HiredDate && <span style={customStyles.errorMsg}> Please Enter Hired Date *</span>}
+                                                {...register("HiredDate", { required: true })} className='form-control ' ></input>
+                                            {errors.HiredDate && <span style={customStyles.errorMsg}> Please enter hired date</span>}
                                         </div>
                                     </div>
 
 
                                     <div style={customPopupDivision.popupinputs}>
-                                        <p>Confirmation Due Date<span >*</span></p>
+                                        <p>Confirmation Due Date<span style={customStyles.span}>*</span></p>
                                         <div>
-                                            <input type='date' placeholder='Confirmation Due Date'
-                                                {...register("ConfirmationDueDate", { required: true })} className='form-control inputwidth' ></input>
-                                            {errors.ConfirmationDueDate && <span style={customStyles.errorMsg}> Please Enter Previous Effectivity BMSDate</span>}
+                                            <input type='date' 
+                                                {...register("ConfirmationDueDate", { required: true })} className='form-control ' ></input>
+                                            {errors.ConfirmationDueDate && <span style={customStyles.errorMsg}> Please enter confirmation due date</span>}
                                         </div>
                                     </div>
 
                                     <div style={customPopupDivision.popupinputs}>
-                                        <p>Probation Start Date<span >*</span></p>
+                                        <p>Probation Start Date<span style={customStyles.span}>*</span></p>
                                         <div>
-                                            <input type='date' placeholder='Previous BMS'
-                                                {...register("ProbationStartDate", { required: true })} className='form-control inputwidth' ></input>
-                                            {errors.ProbationStartDate && <span style={customStyles.errorMsg}> Please Enter Previous BMS</span>}
+                                            <input type='date' 
+                                                {...register("ProbationStartDate", { required: true })} className='form-control ' ></input>
+                                            {errors.ProbationStartDate && <span style={customStyles.errorMsg}> Please enter start date</span>}
                                         </div>
                                     </div>
 
 
                                     <div style={customPopupDivision.popupinputs}>
-                                        <p>Probation End Date<span >*</span></p>
+                                        <p>Probation End Date<span style={customStyles.span}>*</span></p>
                                         <div>
                                             <input type='date' placeholder='ProbationEndDate'
-                                                {...register("ProbationEndDate", { required: true })} className='form-control inputwidth' ></input>
-                                            {errors.ProbationEndDate && <span style={customStyles.errorMsg}> Please Enter Effectivity date of Original BMS</span>}
+                                                {...register("ProbationEndDate", { required: true })} className='form-control ' ></input>
+                                            {errors.ProbationEndDate && <span style={customStyles.errorMsg}> Please enter probation end date</span>}
                                         </div>
                                     </div>
 

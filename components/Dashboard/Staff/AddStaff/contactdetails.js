@@ -25,6 +25,9 @@ export default function ContactDetails() {
             fontWeight: '500',
             color: 'red'
         },
+        span:{
+            color: 'red'
+        }
     };
 
     const customPopupDivision = {
@@ -149,43 +152,43 @@ export default function ContactDetails() {
                                 <div style={customPopupDivision.popupcontent}>
                                     {
                                         <div style={customPopupDivision.popupinputs}>
-                                            <p>Address Type 1  <span >*</span></p>
+                                            <p>Address Type 1<span style={customStyles.span}>*</span></p>
                                             {<div>
-                                                <select className='form-control inputwidth'  {...register("AddressType1", { required: true })} style={customStyles.inputLabel}>
+                                                <select className='form-select'  {...register("AddressType1", { required: true })} style={customStyles.inputLabel}>
                                                     <option value="">Select One</option>
                                                     <option value="Current" >Current</option>
                                                     <option value="Permanent">Permanent</option>
 
                                                 </select>
-                                                {errors.AddressType1 && <span style={customStyles.errorMsg}> Address Type 1 </span>}
+                                                {errors.AddressType1 && <span style={customStyles.errorMsg}> Please select address type 1 </span>}
                                             </div>}
                                         </div>
                                     }
 
                                     <div style={customPopupDivision.popupinputs}>
-                                        <p>Address line 1<span >*</span></p>
+                                        <p>Address line 1<span style={customStyles.span}>*</span></p>
                                         <div>
-                                            <textarea type='text' placeholder='Address line 1 '
-                                                {...register("AddressLine1", { required: true })} className='form-control inputwidth' ></textarea>
-                                            {errors.AddressLine1 && <span style={customStyles.errorMsg}> Please Employee ID *</span>}
+                                            <textarea type='text' placeholder='Address line 1'
+                                                {...register("AddressLine1", { required: true })} className='form-control ' ></textarea>
+                                            {errors.AddressLine1 && <span style={customStyles.errorMsg}> Please enter address line 1</span>}
                                         </div>
                                     </div>
 
                                     <div style={customPopupDivision.popupinputs}>
-                                        <p>Address line 2<span >*</span></p>
+                                        <p>Address line 2<span style={customStyles.span}>*</span></p>
                                         <div>
                                             <textarea type='text' placeholder='Address line 2 '
-                                                {...register("AddressLine2", { required: true })} className='form-control inputwidth' ></textarea>
-                                            {errors.AddressLine2 && <span style={customStyles.errorMsg}> Please Employee ID *</span>}
+                                                {...register("AddressLine2", { required: true })} className='form-control ' ></textarea>
+                                            {errors.AddressLine2 && <span style={customStyles.errorMsg}> Please enter address line 2</span>}
                                         </div>
                                     </div>
 
 
                                     {
                                         <div style={customPopupDivision.popupinputs}>
-                                            <p>Country<span >*</span></p>
+                                            <p>Country<span style={customStyles.span}>*</span></p>
                                             {<div>
-                                                <select className='form-control inputwidth' {...register("CountryID1", { required: true })} style={customStyles.inputLabel}>
+                                                <select className='form-select ' {...register("CountryID1", { required: true })} style={customStyles.inputLabel}>
                                                     <option value="">Select Country</option>
                                                     {
                                                         adresscountrylistData.map((data) => {
@@ -195,16 +198,16 @@ export default function ContactDetails() {
                                                         })
                                                     }
                                                 </select>
-                                                {errors.CountryID1 && <span style={customStyles.errorMsg}> Select Department</span>}
+                                                {errors.CountryID1 && <span style={customStyles.errorMsg}> Please select country</span>}
                                             </div>}
                                         </div>
                                     }
 
                                     {
                                         <div style={customPopupDivision.popupinputs}>
-                                            <p>Province<span >*</span></p>
+                                            <p>Province<span style={customStyles.span}>*</span></p>
                                             {<div>
-                                                <select className='form-control inputwidth' {...register("ProvinceID1", { required: true })} style={customStyles.inputLabel}>
+                                                <select className='form-select' {...register("ProvinceID1", { required: true })} style={customStyles.inputLabel}>
                                                     <option value="">Select Province</option>
                                                     {
                                                         Provincelist.map((data) => {
@@ -214,7 +217,7 @@ export default function ContactDetails() {
                                                         })
                                                     }
                                                 </select>
-                                                {errors.ProvinceID1 && <span style={customStyles.errorMsg}> Select Section</span>}
+                                                {errors.ProvinceID1 && <span style={customStyles.errorMsg}> Please select province</span>}
                                             </div>}
                                         </div>
                                     }
@@ -222,9 +225,9 @@ export default function ContactDetails() {
 
                                     {
                                         <div style={customPopupDivision.popupinputs}>
-                                            <p>City <span >*</span></p>
+                                            <p>City <span style={customStyles.span}>*</span></p>
                                             {<div>
-                                                <select className='form-control inputwidth' {...register("CityID1", { required: true })} style={customStyles.inputLabel}>
+                                                <select className='form-select ' {...register("CityID1", { required: true })} style={customStyles.inputLabel}>
                                                     <option value="">Select  City</option>
                                                     {
                                                         Citylist.map((data) => {
@@ -234,7 +237,7 @@ export default function ContactDetails() {
                                                         })
                                                     }
                                                 </select>
-                                                {errors.CityID1 && <span style={customStyles.errorMsg}> Select ImmediateManager</span>}
+                                                {errors.CityID1 && <span style={customStyles.errorMsg}> Please select city</span>}
                                             </div>}
                                         </div>
                                     }
@@ -250,15 +253,15 @@ export default function ContactDetails() {
                             <div className='col-12'>
                                 <div className="d-flex justify-content-between">
                                     <p className='modal-heading'>Employee Address 2</p>
-                                </div>
+                                </div>  
                                 <div style={customPopupDivision.popupcontent}>
 
 
                                     {
                                         <div style={customPopupDivision.popupinputs}>
-                                            <p>Address Type 2  <span >*</span></p>
+                                            <p>Address Type 2  <span style={customStyles.span}>*</span></p>
                                             {<div>
-                                                <select className='form-control inputwidth' {...register("AddressType2", { required: true })} style={customStyles.inputLabel}>
+                                                <select className='form-select ' {...register("AddressType2", { required: true })} style={customStyles.inputLabel}>
                                                     <option value="">Select One</option>
                                                     <option value="Permanent" >Permanent</option>
                                                     <option value="Current" >Current</option>
@@ -270,29 +273,29 @@ export default function ContactDetails() {
                                     }
 
                                     <div style={customPopupDivision.popupinputs}>
-                                        <p>Address line 1<span >*</span></p>
+                                        <p>Address line 1<span style={customStyles.span}>*</span></p>
                                         <div>
                                             <textarea type='text' placeholder='Address line 1 '
-                                                {...register("AddressLine3", { required: true })} className='form-control inputwidth' ></textarea>
-                                            {errors.AddressLine3 && <span style={customStyles.errorMsg}> Please Employee ID *</span>}
+                                                {...register("AddressLine3", { required: true })} className='form-control ' ></textarea>
+                                            {errors.AddressLine3 && <span style={customStyles.errorMsg}> Please enter address line 1</span>}
                                         </div>
                                     </div>
 
                                     <div style={customPopupDivision.popupinputs}>
-                                        <p>Address line 2<span >*</span></p>
+                                        <p>Address line 2<span style={customStyles.span}>*</span></p>
                                         <div>
                                             <textarea type='text' placeholder='Address line 2 '
-                                                {...register("AddressLine4", { required: true })} className='form-control inputwidth' ></textarea>
-                                            {errors.AddressLine4 && <span style={customStyles.errorMsg}> Please Employee ID *</span>}
+                                                {...register("AddressLine4", { required: true })} className='form-control ' ></textarea>
+                                            {errors.AddressLine4 && <span style={customStyles.errorMsg}> Please enter address line 2</span>}
                                         </div>
                                     </div>
 
 
                                     {
                                         <div style={customPopupDivision.popupinputs}>
-                                            <p>Country<span >*</span></p>
+                                            <p>Country<span style={customStyles.span}>*</span></p>
                                             {<div>
-                                                <select className='form-control inputwidth' {...register("CountryID2", { required: true })} style={customStyles.inputLabel}>
+                                                <select className='form-select' {...register("CountryID2", { required: true })} style={customStyles.inputLabel}>
                                                     <option value="">Select Country</option>
                                                     {
                                                         CountrylistData.map((data) => {
@@ -302,16 +305,16 @@ export default function ContactDetails() {
                                                         })
                                                     }
                                                 </select>
-                                                {errors.CountryID2 && <span style={customStyles.errorMsg}> Select Department</span>}
+                                                {errors.CountryID2 && <span style={customStyles.errorMsg}>Please select country</span>}
                                             </div>}
                                         </div>
                                     }
 
                                     {
                                         <div style={customPopupDivision.popupinputs}>
-                                            <p>Province<span >*</span></p>
+                                            <p>Province<span style={customStyles.span}>*</span></p>
                                             {<div>
-                                                <select className='form-control inputwidth' {...register("ProvinceID2", { required: true })} style={customStyles.inputLabel}>
+                                                <select className='form-select ' {...register("ProvinceID2", { required: true })} style={customStyles.inputLabel}>
                                                     <option value="">Select Province</option>
                                                     {
                                                         Provincelist.map((data) => {
@@ -321,7 +324,7 @@ export default function ContactDetails() {
                                                         })
                                                     }
                                                 </select>
-                                                {errors.ProvinceID2 && <span style={customStyles.errorMsg}> Select Section</span>}
+                                                {errors.ProvinceID2 && <span style={customStyles.errorMsg}> Please select province</span>}
                                             </div>}
                                         </div>
                                     }
@@ -329,10 +332,10 @@ export default function ContactDetails() {
 
                                     {
                                         <div style={customPopupDivision.popupinputs}>
-                                            <p>City <span >*</span></p>
+                                            <p>City <span style={customStyles.span}>*</span></p>
                                             {<div>
-                                                <select className='form-control inputwidth' {...register("CityID2", { required: true })} style={customStyles.inputLabel}>
-                                                    <option value="">Select  City</option>
+                                                <select className='form-select ' {...register("CityID2", { required: true })} style={customStyles.inputLabel}>
+                                                    <option value="">Select City</option>
                                                     {
                                                         Citylist.map((data) => {
                                                             return (
@@ -341,7 +344,7 @@ export default function ContactDetails() {
                                                         })
                                                     }
                                                 </select>
-                                                {errors.CityID2 && <span style={customStyles.errorMsg}> Select ImmediateManager</span>}
+                                                {errors.CityID2 && <span style={customStyles.errorMsg}> Please select city</span>}
                                             </div>}
                                         </div>
                                     }
@@ -361,56 +364,56 @@ export default function ContactDetails() {
 
 
                                     <div style={customPopupDivision.popupinputs}>
-                                        <p>Emergency Contact Name 1<span >*</span></p>
+                                        <p>Emergency Contact Name 1<span style={customStyles.span} >*</span></p>
                                         <div>
                                             <input type='text' placeholder='First Name, Middle Initial and Last Name '
-                                                {...register("EmergencyContactName1", { required: true })} className='form-control inputwidth' ></input>
-                                            {errors.EmergencyContactName1 && <span style={customStyles.errorMsg}> Please Employee ID *</span>}
+                                                {...register("EmergencyContactName1", { required: true })} className='form-control ' ></input>
+                                            {errors.EmergencyContactName1 && <span style={customStyles.errorMsg}> Please enter emergency contact name 1</span>}
                                         </div>
                                     </div>
                                     <div style={customPopupDivision.popupinputs}>
-                                        <p>Contact Relationship<span >*</span></p>
+                                        <p>Contact Relationship<span style={customStyles.span} >*</span></p>
                                         <div>
                                             <input type='text' placeholder='Contact Relationship'
-                                                {...register("EmergencyContactRelationship1", { required: true })} className='form-control inputwidth' ></input>
-                                            {errors.EmergencyContactRelationship1 && <span style={customStyles.errorMsg}> Please Employee ID *</span>}
+                                                {...register("EmergencyContactRelationship1", { required: true })} className='form-control ' ></input>
+                                            {errors.EmergencyContactRelationship1 && <span style={customStyles.errorMsg}> Please enter conatct relatioship</span>}
                                         </div>
                                     </div>
 
 
                                     <div style={customPopupDivision.popupinputs}>
-                                        <p>Contact Mobile Number<span >*</span></p>
+                                        <p>Contact Mobile Number<span style={customStyles.span} >*</span></p>
                                         <div>
                                             <input type='text' placeholder='+63 9xx xxx xxxxx '
-                                                {...register("EmergencyContactMobileNumber1", { required: true })} className='form-control inputwidth' ></input>
-                                            {errors.EmergencyContactMobileNumber1 && <span style={customStyles.errorMsg}> Please Employee ID *</span>}
+                                                {...register("EmergencyContactMobileNumber1", { required: true })} className='form-control ' ></input>
+                                            {errors.EmergencyContactMobileNumber1 && <span style={customStyles.errorMsg}> Please enter contact mobile number</span>}
                                         </div>
                                     </div>
 
                                     <div style={customPopupDivision.popupinputs}>
-                                        <p>Contact Address<span >*</span></p>
+                                        <p>Contact Address<span style={customStyles.span} >*</span></p>
                                         <div>
                                             <textarea type='text' placeholder=''
-                                                {...register("EmergencyContactAddress1", { required: true })} className='form-control inputwidth' ></textarea>
-                                            {errors.EmergencyContactAddress1 && <span style={customStyles.errorMsg}> Please Employee ID *</span>}
+                                                {...register("EmergencyContactAddress1", { required: true })} className='form-control ' ></textarea>
+                                            {errors.EmergencyContactAddress1 && <span style={customStyles.errorMsg}> Please enter contact address</span>}
                                         </div>
                                     </div>
 
                                     <div style={customPopupDivision.popupinputs}>
-                                        <p>Contact Email Address<span >*</span></p>
+                                        <p>Contact Email ID<span style={customStyles.span} >*</span></p>
                                         <div>
                                             <input type='text' placeholder='Email Address '
-                                                {...register("EmergencyContactEmailID1", { required: true })} className='form-control inputwidth' ></input>
-                                            {errors.EmergencyContactEmailID1 && <span style={customStyles.errorMsg}> Please Employee ID *</span>}
+                                                {...register("EmergencyContactEmailID1", { required: true })} className='form-control ' ></input>
+                                            {errors.EmergencyContactEmailID1 && <span style={customStyles.errorMsg}> Please enter contact email ID</span>}
                                         </div>
                                     </div>
 
                                     <div style={customPopupDivision.popupinputs}>
-                                        <p>Landline<span >*</span></p>
+                                        <p>Landline<span style={customStyles.span} >*</span></p>
                                         <div>
                                             <input type='text' placeholder='Landline '
-                                                {...register("EmergencyContactLandLineNumber1", { required: true })} className='form-control inputwidth' ></input>
-                                            {errors.EmergencyContactLandLineNumber1 && <span style={customStyles.errorMsg}> Please Employee ID *</span>}
+                                                {...register("EmergencyContactLandLineNumber1", { required: true })} className='form-control ' ></input>
+                                            {errors.EmergencyContactLandLineNumber1 && <span style={customStyles.errorMsg}> Please enter landline number</span>}
                                         </div>
                                     </div>
 
@@ -432,57 +435,57 @@ export default function ContactDetails() {
 
 
                                     <div style={customPopupDivision.popupinputs}>
-                                        <p>Emergency Contact Name 2<span >*</span></p>
+                                        <p>Emergency Contact Name 2<span style={customStyles.span}>*</span></p>
                                         <div>
                                             <input type='text' placeholder='First Name, Middle Initial and Last Name'
-                                                {...register("EmergencyContactName2", { required: true })} className='form-control inputwidth' ></input>
-                                            {errors.EmergencyContactName2 && <span style={customStyles.errorMsg}> Please Employee ID *</span>}
+                                                {...register("EmergencyContactName2", { required: true })} className='form-control ' ></input>
+                                            {errors.EmergencyContactName2 && <span style={customStyles.errorMsg}> Please enter emergency contact name 2</span>}
                                         </div>
                                     </div>
                                     <div style={customPopupDivision.popupinputs}>
-                                        <p>Contact Relationship<span >*</span></p>
+                                        <p>Contact Relationship<span style={customStyles.span}>*</span></p>
                                         <div>
                                             <input type='text' placeholder='Contact Relationship'
-                                                {...register("EmergencyContactRelationship2", { required: true })} className='form-control inputwidth' ></input>
-                                            {errors.EmergencyContactRelationship2 && <span style={customStyles.errorMsg}> Please Employee ID *</span>}
+                                                {...register("EmergencyContactRelationship2", { required: true })} className='form-control ' ></input>
+                                            {errors.EmergencyContactRelationship2 && <span style={customStyles.errorMsg}> Please enter contact relatioship</span>}
                                         </div>
                                     </div>
 
 
                                     <div style={customPopupDivision.popupinputs}>
-                                        <p>Contact Mobile Number<span >*</span></p>
+                                        <p>Contact Mobile Number<span style={customStyles.span}>*</span></p>
                                         <div>
                                             <input type='text' placeholder='+63 9xx xxx xxxxx '
-                                                {...register("EmergencyContactMobileNumber2", { required: true })} className='form-control inputwidth' ></input>
-                                            {errors.EmergencyContactMobileNumber2 && <span style={customStyles.errorMsg}> Please Employee ID *</span>}
+                                                {...register("EmergencyContactMobileNumber2", { required: true })} className='form-control ' ></input>
+                                            {errors.EmergencyContactMobileNumber2 && <span style={customStyles.errorMsg}> Please enter contact mobile number</span>}
                                         </div>
                                     </div>
 
                                     <div style={customPopupDivision.popupinputs}>
-                                        <p>Contact Address<span >*</span></p>
+                                        <p>Contact Address<span style={customStyles.span}>*</span></p>
                                         <div>
                                             <textarea type='text' placeholder='Contact Address'
-                                                {...register("EmergencyContactAddress2", { required: true })} className='form-control inputwidth' ></textarea>
-                                            {errors.EmergencyContactAddress2 && <span style={customStyles.errorMsg}> Please Employee ID *</span>}
+                                                {...register("EmergencyContactAddress2", { required: true })} className='form-control ' ></textarea>
+                                            {errors.EmergencyContactAddress2 && <span style={customStyles.errorMsg}> Please enter contact address</span>}
                                         </div>
                                     </div>
 
                                     <div style={customPopupDivision.popupinputs}>
-                                        <p>Contact Email Address<span >*</span></p>
+                                        <p>Contact Email ID<span style={customStyles.span}>*</span></p>
                                         <div>
-                                            <input type='text' placeholder=' Email Address'
-                                                {...register("EmergencyContactEmailID2", { required: true })} className='form-control inputwidth' ></input>
-                                            {errors.EmergencyContactEmailID2 && <span style={customStyles.errorMsg}> Please Employee ID *</span>}
+                                            <input type='text' placeholder='Contact Email ID'
+                                                {...register("EmergencyContactEmailID2", { required: true })} className='form-control ' ></input>
+                                            {errors.EmergencyContactEmailID2 && <span style={customStyles.errorMsg}> Please enter contact email ID</span>}
                                         </div>
                                     </div>
 
 
                                     <div style={customPopupDivision.popupinputs}>
-                                        <p>Landline<span >*</span></p>
-                                        <div>
+                                        <p>Landline<span style={customStyles.span}>*</span></p>
+                                        <div>   
                                             <input type='text' placeholder='Landline'
-                                                {...register("EmergencyContactLandLineNumber2", { required: true })} className='form-control inputwidth' ></input>
-                                            {errors.EmergencyContactLandLineNumber2 && <span style={customStyles.errorMsg}> Please Employee ID *</span>}
+                                                {...register("EmergencyContactLandLineNumber2", { required: true })} className='form-control ' ></input>
+                                            {errors.EmergencyContactLandLineNumber2 && <span style={customStyles.errorMsg}> Please enter landline number</span>}
                                         </div>
                                     </div>
 

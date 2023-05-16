@@ -29,6 +29,9 @@ export default function EducationDetails() {
             fontWeight: '500',
             color: 'red'
         },
+        span: {
+            color: 'red'
+        }
     };
 
     const customPopupDivision = {
@@ -192,9 +195,9 @@ export default function EducationDetails() {
 
                                     {
                                         <div style={customPopupDivision.popupinputs}>
-                                            <p>Educational Attainment<span >*</span></p>
+                                            <p>Educational Attainment<span style={customStyles.span}>*</span></p>
                                             {<div>
-                                                <select className='form-control inputwidth' {...register("EducationTypeID", { required: true })} style={customStyles.inputLabel}
+                                                <select className='form-select ' {...register("EducationTypeID", { required: true })} style={customStyles.inputLabel}
                                                     onChange={getType.bind(this)} >
                                                     <option value="">Select Educational Attainment</option>
                                                     {
@@ -205,7 +208,7 @@ export default function EducationDetails() {
                                                         })
                                                     }
                                                 </select>
-                                                {errors.EducationTypeID && <span style={customStyles.errorMsg}> Please Enter Education Attainment</span>}
+                                                {errors.EducationTypeID && <span style={customStyles.errorMsg}> Please enter educational attainment</span>}
                                             </div>}
                                         </div>
                                     }
@@ -213,9 +216,9 @@ export default function EducationDetails() {
 
                                     {
                                         <div style={customPopupDivision.popupinputs}>
-                                            <p>Course<span >*</span></p>
+                                            <p>Course<span  style={customStyles.span}>*</span></p>
                                             {<div>
-                                                <select className='form-control inputwidth' {...register("CourseID", { required: true })} style={customStyles.inputLabel}
+                                                <select className='form-control ' {...register("CourseID", { required: true })} style={customStyles.inputLabel}
                                                     onChange={getMajorType.bind(this)} >
                                                     <option value="">Select Course</option>
                                                     {
@@ -233,9 +236,9 @@ export default function EducationDetails() {
 
                                     {
                                         <div style={customPopupDivision.popupinputs}>
-                                            <p>Major<span >*</span></p>
+                                            <p>Major<span  style={customStyles.span}>*</span></p>
                                             {<div>
-                                                <select className='form-control inputwidth' {...register("MajorID", { required: true })} style={customStyles.inputLabel}
+                                                <select className='form-control ' {...register("MajorID", { required: true })} style={customStyles.inputLabel}
                                                     onChange={getType.bind(this)} >
                                                     <option value="">Select Major</option>
                                                     {
@@ -252,10 +255,10 @@ export default function EducationDetails() {
                                     }
 
                                     <div style={customPopupDivision.popupinputs}>
-                                        <p>School Name <span >*</span></p>
+                                        <p>School Name <span  style={customStyles.span}>*</span></p>
                                         <div>
                                             <input type='text' placeholder='School Name'
-                                                {...register("InstitutionName", { required: true })} className='form-control inputwidth' ></input>
+                                                {...register("InstitutionName", { required: true })} className='form-control ' ></input>
                                             {errors.InstitutionName && <span style={customStyles.errorMsg}> Please Enter School Name</span>}
                                         </div>
                                     </div>
@@ -263,10 +266,10 @@ export default function EducationDetails() {
 
 
                                     <div style={customPopupDivision.popupinputs}>
-                                        <p>Licenses/Certifications<span >*</span></p>
+                                        <p>Licenses/Certifications<span  style={customStyles.span}>*</span></p>
                                         {
                                             <div>
-                                                <select className='form-control inputwidth' {...register("LicenseOrCertificationID", { required: true })} style={customStyles.inputLabel}>
+                                                <select className='form-control ' {...register("LicenseOrCertificationID", { required: true })} style={customStyles.inputLabel}>
                                                     <option value="">Select Licenses/Certifications</option>
                                                     {
                                                         LicenseOrCertificationMaster.map((data) => {
@@ -283,9 +286,9 @@ export default function EducationDetails() {
 
                                     {
                                         <div style={customPopupDivision.popupinputs}>
-                                            <p>Country<span >*</span></p>
+                                            <p>Country<span  style={customStyles.span}>*</span></p>
                                             {<div>
-                                                <select className='form-control inputwidth' {...register("CountryID", { required: true })} style={customStyles.inputLabel}
+                                                <select className='form-control ' {...register("CountryID", { required: true })} style={customStyles.inputLabel}
                                                     onChange={getType.bind(this)} >
                                                     <option value="">Select Country</option>
                                                     {
@@ -303,26 +306,26 @@ export default function EducationDetails() {
 
 
                                     <div style={customPopupDivision.popupinputs}>
-                                        <p>Start Date <span >*</span></p>
+                                        <p>Start Date <span  style={customStyles.span}>*</span></p>
                                         <div>
                                             <input type='date' placeholder='Start Date' max="{{maxdate}}"
-                                                {...register("StartDate", { required: true })} className='form-control inputwidth' ></input>
+                                                {...register("StartDate", { required: true })} className='form-control ' ></input>
                                             {errors.StartDate && <span style={customStyles.errorMsg}> Please Enter Start Date</span>}
                                         </div>
                                     </div>
 
 
                                     <div style={customPopupDivision.popupinputs}>
-                                        <p>End Date <span >*</span></p>
+                                        <p>End Date <span  style={customStyles.span}>*</span></p>
                                         <div>
                                             <input type='date' placeholder='End Date' max="{{maxdate}}"
-                                                {...register("EndDate", { required: true })} className='form-control inputwidth' ></input>
+                                                {...register("EndDate", { required: true })} className='form-control ' ></input>
                                             {errors.EndDate && <span style={customStyles.errorMsg}> Please Enter End Date</span>}
                                         </div>
                                     </div>
 
                                     <div style={customPopupDivision.popupinputs}>
-                                        <p>Attachment <span >*</span></p>
+                                        <p>Attachment <span  style={customStyles.span}>*</span></p>
                                         <div>
                                             {/* <Dropzone></Dropzone> */}
                                         </div>

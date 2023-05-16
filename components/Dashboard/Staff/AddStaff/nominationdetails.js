@@ -24,6 +24,9 @@ export default function NominationDetails() {
             fontWeight: '500',
             color: 'red'
         },
+        span: {
+            color: 'red'
+        }
     };
 
     const customPopupDivision = {
@@ -145,19 +148,19 @@ export default function NominationDetails() {
                                 </div>
                                 <div style={customPopupDivision.popupcontent}>
                                     <div style={customPopupDivision.popupinputs}>
-                                        <p>Beneficiary Name(First Name, Middle, Initial and Last Name)<span >*</span></p>
+                                        <p>Beneficiary Name(First Name, Middle, Initial and Last Name)<span style={customStyles.span} >*</span></p>
                                         <div>
                                             <input type='text' placeholder='Enter Beneficiary Name..'
                                                 {...register("BeneficiaryName", { required: true })} className='form-control inputwidth' ></input>
-                                            {errors.BeneficiaryName && <span style={customStyles.errorMsg}> Please Enter Beneficiary Name</span>}
+                                            {errors.BeneficiaryName && <span style={customStyles.errorMsg}> Please enter beneficiary name</span>}
                                         </div>
                                     </div>
 
                                     <div style={customPopupDivision.popupinputs}>
-                                        <p>Beneficiary Relationship<span >*</span></p>
+                                        <p>Beneficiary Relationship<span style={customStyles.span}>*</span></p>
                                         {
                                             <div>
-                                                <select className='form-control inputwidth' {...register("BeneficiaryRelationshipID", { required: true })} style={customStyles.inputLabel}>
+                                                <select className='form-select' {...register("BeneficiaryRelationshipID", { required: true })} style={customStyles.inputLabel}>
                                                     <option value="">Select Relationship</option>
                                                     {
                                                         RelationShipMaster.map((data) => {
@@ -167,40 +170,40 @@ export default function NominationDetails() {
                                                         })
                                                     }
                                                 </select>
-                                                {errors.BeneficiaryRelationshipID && <span style={customStyles.errorMsg}> Please Enter GuardianRelationship</span>}
+                                                {errors.BeneficiaryRelationshipID && <span style={customStyles.errorMsg}> Please select beneficiary relatioship</span>}
                                             </div>
                                         }
                                     </div>
 
 
                                     <div style={customPopupDivision.popupinputs}>
-                                        <p>Percentage<span >*</span></p>
+                                        <p>Percentage<span style={customStyles.span}>*</span></p>
                                         <div>
                                             <input type='text' placeholder='Enter Percentage..'
                                                 {...register("Percentage", { required: true })} className='form-control inputwidth'></input>
-                                            {errors.Percentage && <span style={customStyles.errorMsg}> Please Enter Percentage</span>}
+                                            {errors.Percentage && <span style={customStyles.errorMsg}> Please enter percentage</span>}
                                         </div>
                                     </div>
 
                                     <div style={customPopupDivision.popupinputs}>
-                                        <p>Nominee Type<span >*</span></p>
+                                        <p>Nominee Type<span style={customStyles.span}>*</span></p>
                                         {
                                             <div>
-                                                <select className='form-control inputwidth' {...register("NomineeType", { required: true })} style={customStyles.inputLabel}>
+                                                <select className='form-select' {...register("NomineeType", { required: true })} style={customStyles.inputLabel}>
                                                     <option value="">Select Nominee Type</option>
                                                     <option value="Insurance">Insurance</option>
                                                 </select>
-                                                {errors.NomineeType && <span style={customStyles.errorMsg}> Please Enter Nominee Type</span>}
+                                                {errors.NomineeType && <span style={customStyles.errorMsg}> Please select nominee type</span>}
                                             </div>
                                         }
                                     </div>
 
                                     <div style={customPopupDivision.popupinputs}>
-                                        <p>Beneficiary Date of Birth<span >*</span></p>
+                                        <p>Beneficiary Date of Birth<span style={customStyles.span}>*</span></p>
                                         <div>
                                             <input type='date' placeholder='Enter Beneficiary DOB..'
                                                 {...register("BeneficiaryDOB", { required: true })} className='form-control inputwidth'></input>
-                                            {errors.BeneficiaryDOB && <span style={customStyles.errorMsg}> Please Enter Beneficiary DOB</span>}
+                                            {errors.BeneficiaryDOB && <span style={customStyles.errorMsg}> Please enter beneficiary DOB</span>}
                                         </div>
                                     </div>
 
