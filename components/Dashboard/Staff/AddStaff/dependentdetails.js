@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from 'react';
 import { useForm } from "react-hook-form";
 import axios from 'axios';
@@ -75,6 +74,21 @@ export default function DependentDetails() {
             cleardata()
             getData();
         }
+        else{
+            let Enity = {
+                ID: data.ID,
+                DependentName: data.DependentName,
+                RelationshipID: data.RelationshipID,
+                Gender: data.Gender,
+                DateOfBirth: data.DateOfBirth,
+                StaffID: sessionStorage.getItem('userID'),
+                DependentAttachment: "No Image",
+            }
+            await axios.post(hostURL + "HR/UpdateDependentDetails", Enity);
+            Swal.fire("Updated Successfully!")
+            getData();
+            cleardata()
+        }
 
     }
 
@@ -83,19 +97,17 @@ export default function DependentDetails() {
     function cleardata(existingData = null) {
         debugger
         let etty = {
-            DependentName: "",
-            RelationshipID: "",
-            Gender:  "",
-            DateOfBirth: "",
+            ID: existingData ? existingData.id : "",
+            DependentName: existingData ? existingData.dependentName : "",
+            RelationshipID: existingData ? existingData.relationshipID : "",
+            Gender:  existingData ? existingData.gender : "",
+            DateOfBirth: existingData ? existingData.dateOfBirth : "",
             StaffID: sessionStorage.getItem('userID'),
             DependentAttachment: "No Image",
         }
         reset(etty);
+        setActionType(existingData ? "update" : 'insert');
     }
-
-
-
-
 
     useEffect(() => {
         debugger
@@ -107,15 +119,26 @@ export default function DependentDetails() {
     async function getData() {
         let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
 
-        // let res = await axios.get(hostURL + "HR/GetDependentDetails");
-        // setDependentList(res.data);
+        let res = await axios.get(hostURL + "HR/GetDependentDetails");
+        setDependentList(res.data);
 
         let res1 = await axios.get(hostURL + "Master/GetRelationShipMaster");
         setRelationShipMaster(res1.data);
-
+    }
+    async function editData(data) {
+        debugger;
+        let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+        let res = await axios.get(hostURL + "HR/GetDependentDetailsByID?ID=" + data);
+        cleardata(res.data[0]);
 
     }
 
+    async function deleteData(data) {
+        let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+        let res = await axios.get(hostURL + "HR/DeleteDependentDetails?ID=" + data);
+        getData();
+
+    }
 
     return (
         <div style={customStyles}>
@@ -145,14 +168,14 @@ export default function DependentDetails() {
                                                 <select className='form-control inputwidth' {...register("RelationshipID", { required: true })} style={customStyles.inputLabel}>
                                                     <option value="">Select Relationship</option>
                                                     {
-                                                        RelationShipMaster.map((data, index) => {
+                                                        RelationShipMaster.map((data) => {
                                                             return (
-                                                                <option key={index} value={data.id}>{data.short}</option>
+                                                                <option key={data.id} value={data.id}>{data.short}</option>
                                                             )
                                                         })
                                                     }
                                                 </select>
-                                                {errors.RelationshipID && <span style={customStyles.errorMsg}> Please Enter Title</span>}
+                                                {errors.RelationshipID && <span style={customStyles.errorMsg}> Please select relationship</span>}
                                             </div>
                                         }
                                     </div>
@@ -215,7 +238,7 @@ export default function DependentDetails() {
                                             <th>Gender</th>
                                             <th>Date Of Birth</th>
                                             <th>Status</th>
-
+                                            <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -228,10 +251,10 @@ export default function DependentDetails() {
                                                         <td>{data.gender}</td>
                                                         <td>{data.dateOfBirth}</td>
                                                         <td>{data.status}</td>
-                                                        {/* <td className='d-flex'>
+                                                        <td className='d-flex'>
                                                         <button className='editButton' onClick={editData.bind(this, data.id)}>Edit</button>
                                                         <button className='deleteButton' onClick={deleteData.bind(this, data.id)}>Delete</button>
-                                                    </td> */}
+                                                        </td>
                                                     </tr>
                                                 )
                                             })

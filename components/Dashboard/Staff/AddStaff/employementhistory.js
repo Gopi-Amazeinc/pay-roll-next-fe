@@ -74,21 +74,39 @@ export default function EmploymentDetails() {
             getData();
             cleardata()
         }
+        else{
+            let Entity = {
+                ID: data.ID,
+                CompanyName: data.CompanyName,
+                PositionTitle: data.PositionTitle,
+                EmployementTypeID: data.EmployementTypeID,
+                StartDate: data.StartDate,
+                EndDate: data.EndDate,
+                StaffID: sessionStorage.getItem('userID')
+        }
+
+        await axios.post(hostURL + "HR/UpdateEmploymentDetails", Entity);
+            Swal.fire("Updated Successfully!")
+            getData();
+            cleardata()
 
     }
+}
 
 
     function cleardata(existingData = null) {
         debugger
         let etty = {
-            CompanyName: "",
-            PositionTitle: "",
-            EmployementTypeID: "",
-            StartDate: "",
-            EndDate: "",
+            ID: existingData ? existingData.id : "",
+            CompanyName: existingData ? existingData.companyName : "",
+            PositionTitle: existingData ? existingData.positionTitle : "",
+            EmployementTypeID: existingData ? existingData.employementTypeID : "",
+            StartDate: existingData ? existingData.startDate : "",
+            EndDate: existingData ? existingData.endDate : "",
             StaffID: sessionStorage.getItem('userID')
         }
         reset(etty);
+        setActionType(existingData ? "update" : 'insert');
     }
 
     useEffect(() => {
@@ -97,14 +115,26 @@ export default function EmploymentDetails() {
 
     async function getData() {
         let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-        // let res = await axios.get(hostURL + "/HR/GetEmploymentDetails");
-        // setEmploymentData(res.data);
+        let res = await axios.get(hostURL + "HR/GetEmploymentDetails");
+        setEmploymentData(res.data);
 
 
         let res1 = await axios.get(hostURL + "/Master/GetEmploymentTypeMaster");
         setEmploymentTypeMaster(res1.data);
 
+    }
+    async function editData(data) {
+        debugger;
+        let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+        let res = await axios.get(hostURL + "HR/GetEmploymentDetailsByID?ID=" + data);
+        cleardata(res.data[0]);
 
+    }
+
+    async function deleteData(data) {
+        let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+        let res = await axios.get(hostURL + "HR/DeleteEmploymentDetails?ID=" + data);
+        getData();
 
     }
 
@@ -144,9 +174,9 @@ export default function EmploymentDetails() {
                                                 <select className='form-control inputwidth' {...register("EmployementTypeID", { required: true })} style={customStyles.inputLabel}>
                                                     <option value="">Select Employment Type</option>
                                                     {
-                                                        EmploymentTypeMaster.map((data, index) => {
+                                                        EmploymentTypeMaster.map((data) => {
                                                             return (
-                                                                <option key={index} value={data.id}>{data.short}</option>
+                                                                <option key={data.id} value={data.id}>{data.short}</option>
                                                             )
                                                         })
                                                     }
@@ -207,6 +237,7 @@ export default function EmploymentDetails() {
                                         <th>Employment Type</th>
                                         <th>Start Date</th>
                                         <th>End Date</th>
+                                        <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -216,14 +247,14 @@ export default function EmploymentDetails() {
                                                 <tr className="text-dark" key={index}>
                                                     <td>{data.companyName}</td>
                                                     <td>{data.positionTitle}</td>
-                                                    <td>{data.employmentType}</td>
+                                                    <td>{data.employementType}</td>
                                                     <td>{data.startDate}</td>
                                                     <td>{data.endDate}</td>
 
-                                                    {/* <td className='d-flex'>
+                                                    <td className='d-flex'>
                                                         <button className='editButton' onClick={editData.bind(this, data.id)}>Edit</button>
                                                         <button className='deleteButton' onClick={deleteData.bind(this, data.id)}>Delete</button>
-                                                    </td> */}
+                                                    </td>
                                                 </tr>
                                             )
                                         })
@@ -238,22 +269,6 @@ export default function EmploymentDetails() {
         </div>
     )
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+ 
 
 }
