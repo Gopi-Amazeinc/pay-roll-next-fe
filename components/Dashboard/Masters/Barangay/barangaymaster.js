@@ -4,6 +4,7 @@ import { apiService } from "@/services/api.service";
 import Swal from "sweetalert2";
 import { BiFilterAlt } from "react-icons/bi";
 import { AiOutlinePlus } from "react-icons/ai";
+import ReactPaginate from "react-paginate";
 
 export default function BarangayMasterDash() {
   const [barangaymaster, setbarangaymaster] = useState([])
@@ -28,6 +29,16 @@ export default function BarangayMasterDash() {
       Swal.fire("failed to  delete data");
     }
   };
+  const [keyword, setKeyword] = useState("");
+
+  const PER_PAGE = 2;
+  const [currentPage, setCurrentPage] = useState(0);
+  function handlePageClick({ selected: selectedPage }) {
+    setCurrentPage(selectedPage)
+  }
+  const offset = currentPage * PER_PAGE;
+  const pageCount = Math.ceil(barangaymaster.length / PER_PAGE);
+
 
   return (
     <div className="container">
@@ -42,6 +53,7 @@ export default function BarangayMasterDash() {
               type="text"
               placeholder="Search"
               className="form-control"
+              onChange={e => setKeyword(e.target.value)}
             ></input>
           </div>
         </div>
@@ -74,36 +86,65 @@ export default function BarangayMasterDash() {
             {Array.isArray(barangaymaster) &&
               barangaymaster.length > 0 && (
                 <>
-                  {barangaymaster.map((data, index) => {
-                    return (
-                      <tr key={index}>
-                        <td>{data.countryname}</td>
-                        <td>{data.statename}</td>
-                        <td>{data.cityname}</td>
-                        <td>{data.name}</td>
-                        <td>
-                          <Link href={`/Masters/BarangayMaster/Edit/${data.id}`}>
+                  {barangaymaster
+                    .filter(data => {
+                      if ((data.countryname.toLowerCase().includes(keyword.toLowerCase())) || (data.name.toLowerCase().includes(keyword))) {
+                        return data;
+                      }
+                    })
+                    .slice(offset, offset + PER_PAGE)
+                    .map((data, index) => {
+                      return (
+                        <tr key={index}>
+                          <td>{data.countryname}</td>
+                          <td>{data.statename}</td>
+                          <td>{data.cityname}</td>
+                          <td>{data.name}</td>
+                          <td>
+                            <Link href={`/Masters/BarangayMaster/Edit/${data.id}`}>
+                              <button
+                                className="edit-btn"
+                              >
+                                Edit
+                              </button>
+                            </Link>
+                            &nbsp;&nbsp;
                             <button
+                              onClick={() => handleDelete(data.id)}
                               className="edit-btn"
                             >
-                              Edit
+                              Delete
                             </button>
-                          </Link>
-                          &nbsp;&nbsp;
-                          <button
-                            onClick={() => handleDelete(data.id)}
-                            className="edit-btn"
-                          >
-                            Delete
-                          </button>
-                        </td>
-                      </tr>
-                    );
-                  })}
+                          </td>
+                        </tr>
+                      );
+                    })}
                 </>
               )}
           </tbody>
         </table>
+      </div>
+
+      <div className="mb-4 mt-4 text-center">
+        <ReactPaginate
+          previousLabel={"Previous"}
+          nextLabel={"Next"}
+          breakLabel={"..."}
+          pageCount={pageCount}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={3}
+          onPageChange={handlePageClick}
+          containerClassName={"pagination  justify-content-center"}
+          pageClassName={"page-item "}
+          pageLinkClassName={"page-link"}
+          previousClassName={"page-item"}
+          previousLinkClassName={"page-link"}
+          nextClassName={"page-item"}
+          nextLinkClassName={"page-link"}
+          breakClassName={"page-item"}
+          breakLinkClassName={"page-link"}
+          activeClassName={"active primary"}
+        />
       </div>
     </div>
   );
