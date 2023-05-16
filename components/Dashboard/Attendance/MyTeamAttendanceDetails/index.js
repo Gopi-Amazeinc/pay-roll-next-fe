@@ -2,6 +2,7 @@ import Link from 'next/link';
 import React from 'react';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import Styles from "@/styles/attendancedetails.module.css";
 
 const MyTeamAttendence = () => {
     const [MyTeamAttendence, setMyTeamAttendence] = useState([]);
@@ -30,10 +31,10 @@ const MyTeamAttendence = () => {
             <div className='container'>
                 <div className='row mt-3'>
                     <div className='col-lg-3' style={{ marginLeft: "15px" }}>
-                        <Link className='Heading active' href="/Attendance/AttendanceDetails">My Attendence Details</Link>
+                        <Link  className={Styles.mainheader} href="/Attendance/AttendanceDetails">My Attendence Details</Link>
                     </div>
                     <div className='col-lg-4' style={{ marginLeft: "-30px" }}>
-                        <Link className='Heading active' href="/Attendance/MyTeamAttendanceDetails">My Team Attendance Details</Link>
+                        <Link  className={Styles.mainheader} href="/Attendance/MyTeamAttendanceDetails">My Team Attendance Details</Link>
                     </div>
                 </div>
                 <h6 style={{ marginLeft: "10px" }} >API Issue In Company AttendanceDetails</h6>
