@@ -2,6 +2,8 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import { apiService } from "@/services/api.service";
 import Swal from "sweetalert2";
+import { BiFilterAlt } from "react-icons/bi";
+import { AiOutlinePlus } from "react-icons/ai";
 
 export default function BarangayMasterDash() {
   const [barangaymaster, setbarangaymaster] = useState([])
@@ -29,42 +31,38 @@ export default function BarangayMasterDash() {
 
   return (
     <div className="container">
-      <h5 className="Heading">Barangay Master</h5>
-      <div className="card shadow p-3 rounded-3 mt-4 mx-0">
+      <p className="Heading">Barangay Master</p>
+      <div className="card p-3 rounded-3 shadow border-0">
         <div className="row">
-          <div className="col-lg-1">
-            <p>Filter By</p>
+          <div className="col-1">
+            <p> <BiFilterAlt /> Filter By</p>
           </div>
-          <div className="col-lg-4">
+          <div className="col-5">
             <input
               type="text"
               placeholder="Search"
               className="form-control"
-            />
+            ></input>
           </div>
         </div>
       </div>
 
       <div className="row mt-3">
-        <div className="col-lg-10">
-          <p className="Heading">
-            SHOWING <span></span>RESULTS
-            
-          </p>
-        </div>
-        <div className="col-lg-2">
+        <p className="col-2 result-heading">Showing {barangaymaster.length} Results</p>
+        <div className="col-8"></div>
+        <div className="col-2">
           <Link href="/Masters/BarangayMaster/new">
             <button className=" AddButton">
-              ADD NEW
+              <AiOutlinePlus />    Add New
             </button>
           </Link>
         </div>
-        <div className="col-lg-1"></div>
       </div>
-      <div>
-        <table className="table table-striped mt-3">
+
+      <div className="mt-3">
+        <table className="table table-striped">
           <thead>
-            <tr className="bg-info text-white ">
+            <tr >
               <th>Country Name</th>
               <th>Province Name</th>
               <th>City Name</th>
@@ -73,13 +71,12 @@ export default function BarangayMasterDash() {
             </tr>
           </thead>
           <tbody>
-
             {Array.isArray(barangaymaster) &&
               barangaymaster.length > 0 && (
                 <>
                   {barangaymaster.map((data, index) => {
                     return (
-                      <tr className="text-dark" key={index}>
+                      <tr key={index}>
                         <td>{data.countryname}</td>
                         <td>{data.statename}</td>
                         <td>{data.cityname}</td>
@@ -92,7 +89,7 @@ export default function BarangayMasterDash() {
                               Edit
                             </button>
                           </Link>
-                          &nbsp;
+                          &nbsp;&nbsp;
                           <button
                             onClick={() => handleDelete(data.id)}
                             className="edit-btn"

@@ -6,6 +6,7 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { AiOutlinePlus } from "react-icons/ai";
 import ReactPaginate from "react-paginate";
+import { BiFilterAlt } from "react-icons/bi";
 function LeaveTypeDashboard() {
     let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
     const [leaveTypeData, SetleaveTypeData] = useState([]);
@@ -56,7 +57,7 @@ function LeaveTypeDashboard() {
                 <div className="card p-3 rounded-3 shadow border-0">
                     <div className="row">
                         <div className="col-1">
-                            <p>Filter By</p>
+                            <p> <BiFilterAlt /> Filter By</p>
                         </div>
                         <div className="col-5">
                             <input
@@ -75,7 +76,7 @@ function LeaveTypeDashboard() {
                     <div className="col-2">
                         <Link href="/Masters/LeaveType/new">
                             <button className=" AddButton">
-                            <AiOutlinePlus />    Add New
+                                <AiOutlinePlus />    Add New
                             </button>
                         </Link>
                     </div>
@@ -114,6 +115,7 @@ function LeaveTypeDashboard() {
                                                                     Edit
                                                                 </button>
                                                             </Link>
+                                                            &nbsp; &nbsp;
                                                             <button
                                                                 className="edit-btn"
                                                                 onClick={() => handelDelete(data.id)}

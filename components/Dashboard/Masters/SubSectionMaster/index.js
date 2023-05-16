@@ -1,8 +1,7 @@
 import Link from "next/link";
 import React from "react";
-
-import { AiOutlinePlusCircle } from "react-icons/ai";
-import Layout from '@/components/layout/layout.js';
+import { BiFilterAlt } from "react-icons/bi";
+import { AiOutlinePlus } from "react-icons/ai";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
@@ -20,10 +19,7 @@ const SubSectionMaster = () => {
     SetSubsectionData(res.data);
   }
 
-
-
   const handelDelete = (id) => {
-    debugger;
     Swal.fire({
       title: "Are you sure want to delete ?",
       text: "",
@@ -43,88 +39,75 @@ const SubSectionMaster = () => {
 
   return (
     <div className="container">
-      <h5 className=" Heading">
-        SubSection Master
-      </h5>
-      <div className="card p-3 border-0 rounded-3 mx-0">
+      <p className="Heading">SubSection Master</p>
+      <div className="card p-3 rounded-3 shadow border-0">
         <div className="row">
-          <div className="col-lg-1">
-            <p>Filter By</p>
+          <div className="col-1">
+            <p> <BiFilterAlt /> Filter By</p>
           </div>
-          <div className="col-lg-5">
+          <div className="col-5">
             <input
               type="text"
               placeholder="Search"
-              id="term"
-              className="form-control "
-            />
+              className="form-control"
+            ></input>
           </div>
-          <div className="col-lg-3"></div>
-          <div className="col-lg-3"></div>
         </div>
       </div>
+
       <div className="row mt-3">
-        <div className="col-lg-8">
-          <p className="Heading fs-6">
-            SHOWING <span>{subsection.length} </span>RESULTS
-          </p>
-        </div>
-        <div className="col-lg-2"></div>
-        <div className="col-lg-2">
-          <Link
-
-            href="/Masters/SubSectionMaster/new"
-          >
-
-            <button className=" AddButton"> <AiOutlinePlusCircle size={18} /> ADD NEW</button>
+        <p className="col-2 result-heading">Showing {subsection.length} Results</p>
+        <div className="col-8"></div>
+        <div className="col-2">
+          <Link href="/Masters/SubSectionMaster/new">
+            <button className=" AddButton">
+              <AiOutlinePlus />    Add New
+            </button>
           </Link>
         </div>
       </div>
-      <br />
-      <br />
-      <div className="container">
-        <div className="row ">
-          <table className=" table table-striped ">
-            <thead className="bg-info text-white ">
-              <tr>
-                <th>Short</th>
-                <th>Description</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
 
-              {Array.isArray(subsection) &&
-                subsection.length > 0 && (
-                  <>
-                    {subsection.map((data, index) => {
-                      return (
-                        <tr key={index}>
-                          <td>{data.short}</td>
-                          <td>{data.description}</td>
-                          <td>
-                            <Link href={`/Masters/SubSectionMaster/Edit/${data.id}`}>
-                              <button
-                                className="edit-btn"
-                              >
-                                Edit
-                              </button>
-                            </Link>
+      <div className="mt-3">
+        <table className="table table-striped">
+          <thead>
+            <tr>
+              <th>Short</th>
+              <th>Description</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {Array.isArray(subsection) &&
+              subsection.length > 0 && (
+                <>
+                  {subsection.map((data, index) => {
+                    return (
+                      <tr key={index}>
+                        <td>{data.short}</td>
+                        <td>{data.description}</td>
+                        <td>
+                          <Link href={`/Masters/SubSectionMaster/Edit/${data.id}`}>
                             <button
                               className="edit-btn"
-                              onClick={() => handelDelete(data.id)}
                             >
-                              Delete
+                              Edit
                             </button>
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </>
-                )}
-            </tbody>
-          </table>
-        </div>
+                          </Link>
+                          &nbsp;&nbsp;
+                          <button
+                            onClick={() => handelDelete(data.id)}
+                            className="edit-btn"
+                          >
+                            Delete
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </>
+              )}
+          </tbody>
+        </table>
       </div>
     </div>
   );
