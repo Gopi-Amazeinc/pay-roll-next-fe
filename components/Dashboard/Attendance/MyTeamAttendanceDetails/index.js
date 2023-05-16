@@ -32,7 +32,7 @@ const MyTeamAttendence = () => {
                     <div className='col-lg-3' style={{ marginLeft: "15px" }}>
                         <Link className='Heading active' href="/Attendance/AttendanceDetails">My Attendence Details</Link>
                     </div>
-                    <div className='col-lg-3' style={{ marginLeft: "-70px" }}>
+                    <div className='col-lg-4' style={{ marginLeft: "-30px" }}>
                         <Link className='Heading active' href="/Attendance/MyTeamAttendanceDetails">My Team Attendance Details</Link>
                     </div>
                 </div>

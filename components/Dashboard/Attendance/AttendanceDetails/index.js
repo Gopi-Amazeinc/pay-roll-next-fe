@@ -30,13 +30,13 @@ const AttendenceDetails = () => {
     }
   }, [userID]);
 
-  // const PER_PAGE = 5;
-  // const [currentPage, setCurrentPage] = useState(0);
-  // function handlePageClick({ selected: selectedPage }) {
-  //   setCurrentPage(selectedPage)
-  // }
-  // const offset = currentPage * PER_PAGE;
-  // const pageCount = Math.ceil(Attendence.length / PER_PAGE);
+  const PER_PAGE = 5;
+  const [currentPage, setCurrentPage] = useState(0);
+  function handlePageClick({ selected: selectedPage }) {
+    setCurrentPage(selectedPage)
+  }
+  const offset = currentPage * PER_PAGE;
+  const pageCount = Math.ceil(Attendence.length / PER_PAGE);
 
 
   const getCurrentMonthDates = () => {
@@ -118,7 +118,7 @@ const AttendenceDetails = () => {
           </div>
           {roleID == 3 && (
             <>
-              <div className="col-lg-3" style={{ marginLeft: "0px" }}>
+              <div className="col-lg-3" style={{ marginLeft: "-60px" }}>
                 <Link
                   className={Styles.header}
                   href="/Attendance/MyTeamAttendanceDetails"
@@ -130,7 +130,7 @@ const AttendenceDetails = () => {
           )}
           {roleID == 2 && (
             <>
-              <div className="col-lg-3" style={{ float: "left" }}>
+              <div className="col-lg-3" style={{ marginLeft: "-60px" }}>
                 <Link
                   className={Styles.header}
                   href="/Attendance/CompanyAttendanceDetails"
@@ -209,7 +209,7 @@ const AttendenceDetails = () => {
                   {Array.isArray(Attendence) && Attendence.length > 0 && (
                     <>
                       {Attendence
-                        // .slice(offset, offset + PER_PAGE)
+                        .slice(offset, offset + PER_PAGE)
                         .map((data) => {
                           return (
                             <tr className="" key={data.id}  >
@@ -240,7 +240,7 @@ const AttendenceDetails = () => {
             </div>
           </div>
         </div>
-        {/* <div className="mb-4 mt-4 text-center">
+        <div className="mb-4 mt-4 text-center">
           <ReactPaginate
             previousLabel={"Previous"}
             nextLabel={"Next"}
@@ -260,7 +260,7 @@ const AttendenceDetails = () => {
             breakLinkClassName={"page-link"}
             activeClassName={"active primary"}
           />
-        </div> */}
+        </div>
       </div>
     </div>
   );
