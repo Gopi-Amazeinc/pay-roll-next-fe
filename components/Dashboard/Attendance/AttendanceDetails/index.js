@@ -186,7 +186,7 @@ const AttendenceDetails = () => {
               <table
                 className="table table-striped table-bordered "
                 style={{ marginLeft: "0px", width: "100%" }}
-              >
+              >    
                 <thead className={"bg-info text-white "}>
                   <tr style={{ whiteSpace: "nowrap" }}>
                     <th>Date</th>
