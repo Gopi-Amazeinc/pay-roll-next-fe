@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react'
 import axios from "axios";
 import Swal from "sweetalert2";
 import { AiOutlinePlus } from "react-icons/ai";
-import ReactPaginate from "react-paginate";
+// import ReactPaginate from "react-paginate";
 import { BiFilterAlt } from "react-icons/bi";
 function LeaveTypeDashboard() {
     let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
@@ -41,13 +41,13 @@ function LeaveTypeDashboard() {
 
     const [keyword, setKeyword] = useState("");
 
-    const PER_PAGE = 2;
-    const [currentPage, setCurrentPage] = useState(0);
-    function handlePageClick({ selected: selectedPage }) {
-        setCurrentPage(selectedPage)
-    }
-    const offset = currentPage * PER_PAGE;
-    const pageCount = Math.ceil(leaveTypeData.length / PER_PAGE);
+    // const PER_PAGE = 2;
+    // const [currentPage, setCurrentPage] = useState(0);
+    // function handlePageClick({ selected: selectedPage }) {
+    //     setCurrentPage(selectedPage)
+    // }
+    // const offset = currentPage * PER_PAGE;
+    // const pageCount = Math.ceil(leaveTypeData.length / PER_PAGE);
 
 
     return (
@@ -101,7 +101,7 @@ function LeaveTypeDashboard() {
                                                     return data;
                                                 }
                                             })
-                                            .slice(offset, offset + PER_PAGE)
+                                            // .slice(offset, offset + PER_PAGE)
                                             .map((data, index) => {
                                                 return (
                                                     <tr classNameName="text-dark" key={index}>
@@ -132,7 +132,7 @@ function LeaveTypeDashboard() {
                     </table>
                 </div>
 
-                <div className="mb-4 mt-4 text-center">
+                {/* <div className="mb-4 mt-4 text-center">
                     <ReactPaginate
                         previousLabel={"Previous"}
                         nextLabel={"Next"}
@@ -152,7 +152,7 @@ function LeaveTypeDashboard() {
                         breakLinkClassName={"page-link"}
                         activeClassName={"active primary"}
                     />
-                </div>
+                </div> */}
             </div>
         </Layout>
     );
