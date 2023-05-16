@@ -3,14 +3,14 @@ import { BiFilterAlt } from "react-icons/bi";
 import { AiOutlinePlus } from "react-icons/ai";
 import Link from "next/link";
 import Layout from '../../../layout/layout'
-import axios from "axios";
+import { apiService } from "@/services/api.service";
+import ReactPaginate from "react-paginate";
 import Swal from "sweetalert2";
 function DivisionMasterDashboard() {
 
     let [divisionData, setDivisionData] = useState([])
-    let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
     const getData = async () => {
-        const res = await axios.get(hostURL + "Master/GetDivisionMaster") //getting division master data and displayed in a table [Shashank]
+        const res = await apiService.commonGetCall("Master/GetDivisionMaster") //getting division master data and displayed in a table [Shashank]
         console.log(res);
         setDivisionData(res.data)
     }
@@ -26,7 +26,7 @@ function DivisionMasterDashboard() {
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.get(hostURL + "Master/DeleteDivisionMaster?ID=" + id) // deleting data based on ID [Shashank]
+                apiService.commonGetCall("Master/DeleteDivisionMaster?ID=" + id)// deleting data based on ID [Shashank]
                 Swal.fire({
                     icon: "success",
                     titleText: "Deleted Successfully"
@@ -40,6 +40,16 @@ function DivisionMasterDashboard() {
     useEffect(() => {
         getData();
     }, [])
+
+
+    const PER_PAGE = 2;
+    const [currentPage, setCurrentPage] = useState(0);
+    function handlePageClick({ selected: selectedPage }) {
+        setCurrentPage(selectedPage)
+    }
+    const offset = currentPage * PER_PAGE;
+    const pageCount = Math.ceil(divisionData.length / PER_PAGE);
+    const [keyword, setKeyword] = useState("");
 
     return (
         <Layout>
@@ -55,6 +65,7 @@ function DivisionMasterDashboard() {
                                 type="text"
                                 placeholder="Search"
                                 className="form-control"
+                                onChange={e => setKeyword(e.target.value)}
                             ></input>
                         </div>
                     </div>
@@ -85,34 +96,63 @@ function DivisionMasterDashboard() {
                             {Array.isArray(divisionData) &&
                                 divisionData.length > 0 && (
                                     <>
-                                        {divisionData.map((data, index) => {
-                                            return (
-                                                <tr key={index}>
-                                                    <td>{data.short}</td>
-                                                    <td>{data.description}</td>
-                                                    <td>
-                                                        <Link href={`/Masters/DivisionMaster/Edit/${data.id}`}>
+                                        {divisionData
+                                            .filter(data => {
+                                                if ((data.short.toLowerCase().includes(keyword.toLowerCase())) || (data.description.toLowerCase().includes(keyword))) {
+                                                    return data;
+                                                }
+                                            })
+                                            .slice(offset, offset + PER_PAGE)
+                                            .map((data, index) => {
+                                                return (
+                                                    <tr key={index}>
+                                                        <td>{data.short}</td>
+                                                        <td>{data.description}</td>
+                                                        <td>
+                                                            <Link href={`/Masters/DivisionMaster/Edit/${data.id}`}>
+                                                                <button
+                                                                    className="edit-btn"
+                                                                >
+                                                                    Edit
+                                                                </button>
+                                                            </Link>
+                                                            &nbsp;&nbsp;
                                                             <button
+                                                                onClick={deleteDivision.bind(this, data.id)}
                                                                 className="edit-btn"
                                                             >
-                                                                Edit
+                                                                Delete
                                                             </button>
-                                                        </Link>
-                                                        &nbsp;&nbsp;
-                                                        <button
-                                                            onClick={deleteDivision.bind(this, data.id)}
-                                                            className="edit-btn"
-                                                        >
-                                                            Delete
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                            );
-                                        })}
+                                                        </td>
+                                                    </tr>
+                                                );
+                                            })}
                                     </>
                                 )}
                         </tbody>
                     </table>
+                </div>
+
+                <div className="mb-4 mt-4 text-center">
+                    <ReactPaginate
+                        previousLabel={"Previous"}
+                        nextLabel={"Next"}
+                        breakLabel={"..."}
+                        pageCount={pageCount}
+                        marginPagesDisplayed={2}
+                        pageRangeDisplayed={3}
+                        onPageChange={handlePageClick}
+                        containerClassName={"pagination  justify-content-center"}
+                        pageClassName={"page-item "}
+                        pageLinkClassName={"page-link"}
+                        previousClassName={"page-item"}
+                        previousLinkClassName={"page-link"}
+                        nextClassName={"page-item"}
+                        nextLinkClassName={"page-link"}
+                        breakClassName={"page-item"}
+                        breakLinkClassName={"page-link"}
+                        activeClassName={"active primary"}
+                    />
                 </div>
             </div>
         </Layout>

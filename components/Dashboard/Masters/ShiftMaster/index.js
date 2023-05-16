@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { AiOutlinePlus } from "react-icons/ai";
-import axios from "axios";
+import { apiService } from "@/services/api.service";
 import Swal from 'sweetalert2';
 import { BiFilterAlt } from "react-icons/bi";
+import ReactPaginate from "react-paginate";
 
 function ShiftMaster() {
   const [shiftDetails, setShiftDetails] = useState([]);
 
   const getShiftdetails = async () => {
-    let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-    const res = await axios.get(hostURL + "Master/GetShiftMaster");
+    const res = await apiService.commonGetCall("Master/GetShiftMaster");
     setShiftDetails(res.data);
   }
 
@@ -20,8 +20,7 @@ function ShiftMaster() {
 
   const handleDelete = async (id) => {
     try {
-      let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-      const res = await axios.get(hostURL + `Master/DeleteShiftMaster?ID=${id}`);
+      const res = await apiService.commonGetCall(`Master/DeleteShiftMaster?ID=${id}`);
       Swal.fire({
         icon: "success",
         title: "Hurray..",
@@ -38,6 +37,15 @@ function ShiftMaster() {
     }
   };
 
+  const PER_PAGE = 10;
+  const [currentPage, setCurrentPage] = useState(0);
+  function handlePageClick({ selected: selectedPage }) {
+    setCurrentPage(selectedPage)
+  }
+  const offset = currentPage * PER_PAGE;
+  const pageCount = Math.ceil(shiftDetails.length / PER_PAGE);
+  const [keyword, setKeyword] = useState("");
+
   return (
     <div className="container">
       <p className="Heading">Shift Master</p>
@@ -51,6 +59,7 @@ function ShiftMaster() {
               type="text"
               placeholder="Search"
               className="form-control"
+              onChange={e => setKeyword(e.target.value)}
             ></input>
           </div>
         </div>
@@ -84,28 +93,57 @@ function ShiftMaster() {
             {Array.isArray(shiftDetails) &&
               shiftDetails.length > 0 && (
                 <>
-                  {shiftDetails.map((data, index) => {
-                    return (
-                      <tr key={index}>
-                        <td>{data.short}</td>
-                        <td>{data.description}</td>
-                        <td>{data.shiftTimeings}</td>
-                        <td>{data.grace}</td>
-                        <td>{data.shiftType}</td>
-                        <td>
-                          <Link href={`/Masters/ShiftMaster/Edit/${data.id}`}>
-                            <button className="edit-btn">Edit</button>
-                          </Link>
-                          &nbsp; &nbsp;
-                          <button className="edit-btn" onClick={() => handleDelete(data.id)}>Delete</button>
-                        </td>
-                      </tr>
-                    );
-                  })}
+                  {shiftDetails
+                    .filter(data => {
+                      if ((data.short.toLowerCase().includes(keyword.toLowerCase())) || (data.description.toLowerCase().includes(keyword))) {
+                        return data;
+                      }
+                    })
+                    .slice(offset, offset + PER_PAGE)
+                    .map((data, index) => {
+                      return (
+                        <tr key={index}>
+                          <td>{data.short}</td>
+                          <td>{data.description}</td>
+                          <td>{data.shiftTimeings}</td>
+                          <td>{data.grace}</td>
+                          <td>{data.shiftType}</td>
+                          <td>
+                            <Link href={`/Masters/ShiftMaster/Edit/${data.id}`}>
+                              <button className="edit-btn">Edit</button>
+                            </Link>
+                            &nbsp; &nbsp;
+                            <button className="edit-btn" onClick={() => handleDelete(data.id)}>Delete</button>
+                          </td>
+                        </tr>
+                      );
+                    })}
                 </>
               )}
           </tbody>
         </table>
+      </div>
+
+      <div className="mb-4 mt-4 text-center">
+        <ReactPaginate
+          previousLabel={"Previous"}
+          nextLabel={"Next"}
+          breakLabel={"..."}
+          pageCount={pageCount}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={3}
+          onPageChange={handlePageClick}
+          containerClassName={"pagination  justify-content-center"}
+          pageClassName={"page-item "}
+          pageLinkClassName={"page-link"}
+          previousClassName={"page-item"}
+          previousLinkClassName={"page-link"}
+          nextClassName={"page-item"}
+          nextLinkClassName={"page-link"}
+          breakClassName={"page-item"}
+          breakLinkClassName={"page-link"}
+          activeClassName={"active primary"}
+        />
       </div>
     </div>
   );

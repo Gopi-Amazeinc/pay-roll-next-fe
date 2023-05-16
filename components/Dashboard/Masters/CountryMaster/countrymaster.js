@@ -3,22 +3,20 @@ import React from 'react'
 import { BiFilterAlt } from "react-icons/bi";
 import Link from "next/link";
 import Layout from '../../../layout/layout'
-import axios from "axios";
+import { apiService } from "@/services/api.service";
 import Swal from 'sweetalert2';
 import { AiOutlinePlus } from "react-icons/ai";
+import ReactPaginate from "react-paginate";
 
 function CountryMasterDash() {
     const [country, setCountryData] = useState([]);
-    let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
 
     useEffect(() => {
         getData();
     }, []);
 
     async function getData() {
-        let res = await axios.get(
-            hostURL + "Master/GetCountryType"   //naveen.th@amazeinc.in, Get API for Country master, to fetch data
-        );
+        let res = await apiService.commonGetCall("Master/GetCountryType");
         setCountryData(res.data);
     }
     const deleteCountry = async (id) => {
@@ -32,14 +30,21 @@ function CountryMasterDash() {
             confirmButtonText: "Yes, delete it!",
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.get(hostURL + "Master/DeleteCountryType?ID=" + id);   //naveen.th@amazeinc.in, Delete API for Country master, to delete data by ID
+                apiService.commonGetCall("Master/DeleteCountryType?ID=" + id);   //naveen.th@amazeinc.in, Delete API for Country master, to delete data by ID
                 getData()
             }
         });
     }
 
 
-
+    const PER_PAGE = 2;
+    const [currentPage, setCurrentPage] = useState(0);
+    function handlePageClick({ selected: selectedPage }) {
+        setCurrentPage(selectedPage)
+    }
+    const offset = currentPage * PER_PAGE;
+    const pageCount = Math.ceil(country.length / PER_PAGE);
+    const [keyword, setKeyword] = useState("")
 
     return (
         <Layout>
@@ -48,13 +53,14 @@ function CountryMasterDash() {
                 <div className="card p-3 rounded-3 shadow border-0">
                     <div className="row">
                         <div className="col-1">
-                               <p> <BiFilterAlt /> Filter By</p>
+                            <p> <BiFilterAlt /> Filter By</p>
                         </div>
                         <div className="col-5">
                             <input
                                 type="text"
                                 placeholder="Search"
                                 className="form-control"
+                                onChange={e => setKeyword(e.target.value)}
                             ></input>
                         </div>
                     </div>
@@ -85,34 +91,63 @@ function CountryMasterDash() {
                             {Array.isArray(country) &&
                                 country.length > 0 && (
                                     <>
-                                        {country.map((data, index) => {
-                                            return (
-                                                <tr key={index}>
-                                                    <td>{data.short}</td>
-                                                    <td>{data.description}</td>
-                                                    <td>
-                                                        <Link href={`/Masters/CountryMaster/Edit/${data.id}`}>
+                                        {country
+                                            .filter(data => {
+                                                if ((data.short.toLowerCase().includes(keyword.toLowerCase())) || (data.description.toLowerCase().includes(keyword))) {
+                                                    return data;
+                                                }
+                                            })
+                                            .slice(offset, offset + PER_PAGE)
+                                            .map((data, index) => {
+                                                return (
+                                                    <tr key={index}>
+                                                        <td>{data.short}</td>
+                                                        <td>{data.description}</td>
+                                                        <td>
+                                                            <Link href={`/Masters/CountryMaster/Edit/${data.id}`}>
+                                                                <button
+                                                                    className="edit-btn"
+                                                                >
+                                                                    Edit
+                                                                </button>
+                                                            </Link>
+                                                            &nbsp;&nbsp;
                                                             <button
-                                                            className="edit-btn"
+                                                                className="edit-btn"
+                                                                onClick={deleteCountry.bind(this, data.id)}
                                                             >
-                                                                Edit
+                                                                Delete
                                                             </button>
-                                                        </Link>
-                                                        &nbsp;&nbsp;
-                                                        <button
-                                                        className="edit-btn"
-                                                            onClick={deleteCountry.bind(this, data.id)}
-                                                        >
-                                                            Delete
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                            );
-                                        })}
+                                                        </td>
+                                                    </tr>
+                                                );
+                                            })}
                                     </>
                                 )}
                         </tbody>
                     </table>
+                </div>
+
+                <div className="mb-4 mt-4 text-center">
+                    <ReactPaginate
+                        previousLabel={"Previous"}
+                        nextLabel={"Next"}
+                        breakLabel={"..."}
+                        pageCount={pageCount}
+                        marginPagesDisplayed={2}
+                        pageRangeDisplayed={3}
+                        onPageChange={handlePageClick}
+                        containerClassName={"pagination  justify-content-center"}
+                        pageClassName={"page-item "}
+                        pageLinkClassName={"page-link"}
+                        previousClassName={"page-item"}
+                        previousLinkClassName={"page-link"}
+                        nextClassName={"page-item"}
+                        nextLinkClassName={"page-link"}
+                        breakClassName={"page-item"}
+                        breakLinkClassName={"page-link"}
+                        activeClassName={"active primary"}
+                    />
                 </div>
             </div>
         </Layout>
