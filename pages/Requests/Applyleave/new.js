@@ -35,6 +35,9 @@ const ApplyLeave = () => {
         title: "Hurray..",
         text: "Data was inserted...!",
       });
+      sessionStorage.setItem("Sdate",data.SDateOfLeave);
+      sessionStorage.setItem("Edate",data.EDateOfLeave);
+      console.log(data);
     } catch (error) {
       Swal.fire("Data not inserted");
     }
@@ -112,7 +115,8 @@ const ApplyLeave = () => {
                 type="text"
                 className="form-control"
                 value={userID}
-                disabled
+                {...register("StaffID")}
+                
               />
             </div>
           </div>
