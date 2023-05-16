@@ -398,3 +398,12 @@ thead {
   border-radius: 0.25rem;
 
 }
+
+tr:nth-child(even) {
+  background-color: #ffffff;
+}
+
+tr:nth-child(odd) > td:not(:first-child),
+tr:nth-child(odd) td:first-child {
+  background-color: #ffffff;
+}

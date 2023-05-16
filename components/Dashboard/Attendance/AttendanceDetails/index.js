@@ -30,13 +30,13 @@ const AttendenceDetails = () => {
     }
   }, [userID]);
 
-  const PER_PAGE = 5;
-  const [currentPage, setCurrentPage] = useState(0);
-  function handlePageClick({ selected: selectedPage }) {
-      setCurrentPage(selectedPage)
-  }
-  const offset = currentPage * PER_PAGE;
-  const pageCount = Math.ceil(Attendence.length / PER_PAGE);
+  // const PER_PAGE = 5;
+  // const [currentPage, setCurrentPage] = useState(0);
+  // function handlePageClick({ selected: selectedPage }) {
+  //   setCurrentPage(selectedPage)
+  // }
+  // const offset = currentPage * PER_PAGE;
+  // const pageCount = Math.ceil(Attendence.length / PER_PAGE);
 
 
   const getCurrentMonthDates = () => {
@@ -94,11 +94,11 @@ const AttendenceDetails = () => {
     if (userID) {
       const res = await apiService.commonGetCall(
         "HR/GetAttendanceByEmployeeID?userID=" +
-          userID +
-          "&SDate=" +
-          SDate +
-          "&EDate=" +
-          EDate
+        userID +
+        "&SDate=" +
+        SDate +
+        "&EDate=" +
+        EDate
       );
       // let res = await axios.get(hostURL + "HR/GetAttendanceByEmployeeID?userID=" + userID + "&SDate=" + SDate + "&EDate=" + EDate);
       setAttendence(res.data);
@@ -120,7 +120,7 @@ const AttendenceDetails = () => {
             <>
               <div className="col-lg-3" style={{ marginLeft: "-80px" }}>
                 <Link
-                  className="Heading active"
+                  className={Styles.header}
                   href="/Attendance/MyTeamAttendanceDetails"
                 >
                   My Team Attendance Details
@@ -132,7 +132,7 @@ const AttendenceDetails = () => {
             <>
               <div className="col-lg-3" style={{ marginLeft: "-80px" }}>
                 <Link
-                  className="Heading active"
+                  className={Styles.header}
                   href="/Attendance/CompanyAttendanceDetails"
                 >
                   Company Attendance Details
@@ -209,30 +209,30 @@ const AttendenceDetails = () => {
                   {Array.isArray(Attendence) && Attendence.length > 0 && (
                     <>
                       {Attendence
-                    .slice(offset, offset + PER_PAGE)
-                      .map((data) => {
-                        return (
-                          <tr key={data.id}>
-                            <td>{data.signinDate}</td>
-                            <td>{data.signInType}</td>
-                            <td>{data.signInWorkType}</td>
-                            <td>{data.expectedIn}</td>
-                            <td>{data.expectedOut}</td>
-                            <td>{data.punchinip}</td>
-                            <td>{data.expectedOutTime}</td>
-                            <td>{data.punchOutTime}</td>
-                            <td>{data.ot}</td>
-                            <td>{data.undertime}</td>
-                            <td>{data.latepunchin}</td>
-                            {/* <td>{data.hr1}</td>
+                        // .slice(offset, offset + PER_PAGE)
+                        .map((data) => {
+                          return (
+                            <tr className="" key={data.id}  >
+                              <td>{data.signinDate}</td>
+                              <td>{data.signInType}</td>
+                              <td>{data.signInWorkType}</td>
+                              <td>{data.expectedIn}</td>
+                              <td>{data.expectedOut}</td>
+                              <td>{data.punchinip}</td>
+                              <td>{data.expectedOutTime}</td>
+                              <td>{data.punchOutTime}</td>
+                              <td>{data.ot}</td>
+                              <td>{data.undertime}</td>
+                              <td>{data.latepunchin}</td>
+                              {/* <td>{data.hr1}</td>
                         <td>{data.underTime}</td>
                         <td>{data.late}</td> */}
-                            {/* <td>
+                              {/* <td>
                               <button className='edit-btn'>Cancel</button>
                             </td> */}
-                          </tr>
-                        );
-                      })}
+                            </tr>
+                          );
+                        })}
                     </>
                   )}
                 </tbody>
@@ -240,27 +240,27 @@ const AttendenceDetails = () => {
             </div>
           </div>
         </div>
-        <div className="mb-4 mt-4 text-center">
-                    <ReactPaginate
-                        previousLabel={"Previous"}
-                        nextLabel={"Next"}
-                        breakLabel={"..."}
-                        pageCount={pageCount}
-                        marginPagesDisplayed={2}
-                        pageRangeDisplayed={3}
-                        onPageChange={handlePageClick}
-                        containerClassName={"pagination  justify-content-center"}
-                        pageClassName={"page-item "}
-                        pageLinkClassName={"page-link"}
-                        previousClassName={"page-item"}
-                        previousLinkClassName={"page-link"}
-                        nextClassName={"page-item"}
-                        nextLinkClassName={"page-link"}
-                        breakClassName={"page-item"}
-                        breakLinkClassName={"page-link"}
-                        activeClassName={"active primary"}
-                    />
-                </div>
+        {/* <div className="mb-4 mt-4 text-center">
+          <ReactPaginate
+            previousLabel={"Previous"}
+            nextLabel={"Next"}
+            breakLabel={"..."}
+            pageCount={pageCount}
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={3}
+            onPageChange={handlePageClick}
+            containerClassName={"pagination  justify-content-center"}
+            pageClassName={"page-item "}
+            pageLinkClassName={"page-link"}
+            previousClassName={"page-item"}
+            previousLinkClassName={"page-link"}
+            nextClassName={"page-item"}
+            nextLinkClassName={"page-link"}
+            breakClassName={"page-item"}
+            breakLinkClassName={"page-link"}
+            activeClassName={"active primary"}
+          />
+        </div> */}
       </div>
     </div>
   );
