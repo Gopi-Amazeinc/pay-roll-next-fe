@@ -71,10 +71,40 @@ export default function NominationDetails() {
             await axios.post(hostURL + "HR/InsertNomination", Entity);
             Swal.fire("Added successfully")
         }
+        else{
+            let Entity = {
+                ID: data.ID,
+                BeneficiaryName: data.BeneficiaryName,
+                BeneficiaryRelationshipID: data.BeneficiaryRelationshipID,
+                Percentage: data.Percentage,
+                NomineeType: data.NomineeType,
+                BeneficiaryDOB: data.BeneficiaryDOB,
+                NominationAttachment: "No Image",
+                StaffID: sessionStorage.getItem('userID')
+            }
+            await axios.post(hostURL + "HR/UpdateNomination", Entity);
+            Swal.fire("Updated Successfully!")
+            getData();
+            cleardata()
+        }
 
     }
 
-
+    function cleardata(existingData = null) {
+        debugger
+        let etty = {
+                ID: existingData ? existingData.id : "",
+                BeneficiaryName: existingData ? existingData.beneficiaryName : "",
+                BeneficiaryRelationshipID: existingData ? existingData.beneficiaryRelationshipID : "",
+                Percentage: existingData ? existingData.percentage : "",
+                NomineeType: existingData ? existingData.nomineeType : "",
+                BeneficiaryDOB: existingData ? existingData.beneficiaryDOB : "",
+                NominationAttachment: "No Image",
+                StaffID: sessionStorage.getItem('userID')
+        }
+        reset(etty);
+        setActionType(existingData ? "update" : 'insert');
+    }
 
 
     useEffect(() => {
@@ -83,13 +113,26 @@ export default function NominationDetails() {
 
     async function getData() {
         let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-        // let res = await axios.get(hostURL + "/HR/GetNomination");
-        // setNominationData(res.data);
+        let res = await axios.get(hostURL + "/HR/GetNomination");
+        setNominationData(res.data);
 
         let res1 = await axios.get(hostURL + "/Master/GetRelationShipMaster");
         setRelationShipMaster(res1.data);
     }
+    async function editData(data) {
+        debugger;
+        let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+        let res = await axios.get(hostURL + "HR/GetNominationByID?ID=" + data);
+        cleardata(res.data[0]);
 
+    }
+
+    async function deleteData(data) {
+        let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+        let res = await axios.get(hostURL + "HR/DeleteNomination?ID=" + data);
+        getData();
+
+    }
     return (
         <div>
             <div className='container-fluid'>
@@ -117,9 +160,9 @@ export default function NominationDetails() {
                                                 <select className='form-control inputwidth' {...register("BeneficiaryRelationshipID", { required: true })} style={customStyles.inputLabel}>
                                                     <option value="">Select Relationship</option>
                                                     {
-                                                        RelationShipMaster.map((data, index) => {
+                                                        RelationShipMaster.map((data) => {
                                                             return (
-                                                                <option key={index} value={data.id}>{data.short}</option>
+                                                                <option key={data.id} value={data.id}>{data.short}</option>
                                                             )
                                                         })
                                                     }
@@ -200,7 +243,7 @@ export default function NominationDetails() {
                                         <th>Nominee Type</th>
                                         <th>Beneficiary Date of Birth</th>
                                         <th>Status</th>
-                                        {/* <th>Actions</th> */}
+                                        <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -214,10 +257,10 @@ export default function NominationDetails() {
                                                     <td>{data.nomineeType}</td>
                                                     <td>{data.beneficiaryDOB}</td>
                                                     <td>{data.status}</td>
-                                                    {/* <td className='d-flex'>
+                                                    <td className='d-flex'>
                                                         <button className='editButton' onClick={editData.bind(this, data.id)}>Edit</button>
                                                         <button className='deleteButton' onClick={deleteData.bind(this, data.id)}>Delete</button>
-                                                    </td> */}
+                                                    </td>
                                                 </tr>
                                             )
                                         })

@@ -8,15 +8,16 @@ import { DownloadTableExcel } from "react-export-table-to-excel";
 import { apiService } from "@/services/api.service";
 
 const Myovertimedetails = () => {
-  const [dashboard, setDashboard] = useState([]);
+  const [otDetails, setotDetails] = useState([]);
+  const [items, setItems] = useState([]);
 
   // useEffect(() => {
-  //     async function getData() {
+  //     async function getApproveStaffOverTimeDetails() {
   //         let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
   //         const { dataApproved } = await apiService.commonGetCall( "Payroll/GetApproveStaffOverTimeDetails")
-  //         setApprovedData(dataApproved);
+  //         setotDetails(dataApproved);
   //     }
-  //     getData();
+  //     getApproveStaffOverTimeDetails();
   // }, [])
 
   const [modalOpen, setModalOpen] = useState(false);
@@ -105,7 +106,7 @@ const Myovertimedetails = () => {
                       id={Styles.UploadLoansButton}
                       className="form-control CancelBTN"
                     >
-                      Export To Excel{" "}
+                      Export To Excel
                     </button>
                   </DownloadTableExcel>
                 </div>
@@ -184,7 +185,7 @@ const Myovertimedetails = () => {
                     </tr>
                   </thead>
                   <tbody>
-                    {dashboard.map((data) => {
+                    {otDetails.map((data) => {
                       return (
                         <tr key={data.id}>
                           <td>{data.Date}</td>
