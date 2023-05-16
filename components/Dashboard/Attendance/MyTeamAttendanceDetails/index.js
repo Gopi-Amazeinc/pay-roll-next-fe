@@ -29,14 +29,14 @@ const MyTeamAttendence = () => {
         <div>
             <div className='container'>
                 <div className='row mt-3'>
-                    <div className='col-lg-3' style={{ marginLeft: "15px" }}>
+                    <div className='col-lg-3 text-end'>
                         <Link className='Heading active' href="/Attendance/AttendanceDetails">My Attendence Details</Link>
                     </div>
-                    <div className='col-lg-3' style={{ marginLeft: "-70px" }}>
+                    <div className='col-lg-3'>
                         <Link className='Heading active' href="/Attendance/MyTeamAttendanceDetails">My Team Attendance Details</Link>
                     </div>
                 </div>
-                <h6 style={{ marginLeft: "10px" }} >API Issue In Company AttendanceDetails</h6>
+                <h6>API Issue In Company AttendanceDetails</h6>
 
                 <div className='card p-3 border-0 shadow-lg rounded-3 mt-4'>
                     <div className='row'>
@@ -73,7 +73,7 @@ const MyTeamAttendence = () => {
                     </div>
                 </div>
 
-                <table className='table table-hover mt-2 ' style={{ marginLeft: "13px" }} >
+                <table className='table table-hover mt-2 '>
                     <thead className='bg-info text-white '>
                         <tr style={{ whiteSpace: 'nowrap' }}>
                             <th >Date</th>

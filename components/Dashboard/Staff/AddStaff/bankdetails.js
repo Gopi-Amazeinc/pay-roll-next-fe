@@ -177,7 +177,7 @@ export default function BankDetails() {
                                                     {
                                                         BankMaster.map((data, index) => {
                                                             return (
-                                                                <option key={index} value={data.id}>{data.short}</option>
+                                                                <option value={data.id}>{data.short}</option>
                                                             )
                                                         })
                                                     }

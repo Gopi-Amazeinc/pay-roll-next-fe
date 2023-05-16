@@ -22,8 +22,8 @@ const Shiftdetails = () => {
   }, []);
   return (
     <>
-      <div className="row mt-3"  >
-        <div className="col-lg-3 " style={{marginLeft: "15px"}}>
+      <div className="row mt-3">
+        <div className="col-lg-3 ">
           <Link href="/Attendance/shiftdetails" className="Heading active">
             {" "}
             My Weekly Shift
@@ -66,7 +66,7 @@ const Shiftdetails = () => {
         </div>
       </div>
       <div className="row mt-3">
-        <table className="table table-striped mt-3" style={{marginLeft: "22px",width:"98%"}}>
+        <table className="table table-striped mt-3">
           <thead>
             <tr className="bg-info text-white">
               <th>START DATE</th>

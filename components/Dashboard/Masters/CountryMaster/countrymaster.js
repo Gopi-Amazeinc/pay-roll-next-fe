@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import React from 'react'
 import { BiFilterAlt } from "react-icons/bi";
+import Styles from '../../../../styles/CountryMasterDash.module.css'
+import { AiOutlinePlusCircle } from "react-icons/ai";
 import Link from "next/link";
 import Layout from '../../../layout/layout'
 import axios from "axios";
 import Swal from 'sweetalert2';
-import { AiOutlinePlus } from "react-icons/ai";
+
 
 function CountryMasterDash() {
     const [country, setCountryData] = useState([]);
@@ -43,76 +45,83 @@ function CountryMasterDash() {
 
     return (
         <Layout>
-            <div className="container">
-                <p className="Heading">Country Master</p>
-                <div className="card p-3 rounded-3 shadow border-0">
-                    <div className="row">
-                        <div className="col-1">
-                               <p> <BiFilterAlt /> Filter By</p>
+            <div>
+                <br></br>
+                <p id={Styles.title}>Country Master</p>
+
+                <div className="container-fluid mt-4">
+                    <div className="row shadow-lg p-2 rounded-4 p-3 ">
+                        <div className="col-lg-1">
+                            <b>
+                                <p className="mt-2 text-center">
+                                    
+                                    <BiFilterAlt /> Filter by:
+                                </p>
+                            </b>
                         </div>
-                        <div className="col-5">
+                        <div className="col-lg-5">
                             <input
-                                type="text"
+                                type="search"
+                                className=" mt-2 form-control"
                                 placeholder="Search"
-                                className="form-control"
-                            ></input>
+                            />
                         </div>
                     </div>
-                </div>
-
-                <div className="row mt-3">
-                    <p className="col-2 result-heading">Showing {country.length} Results</p>
-                    <div className="col-8"></div>
-                    <div className="col-2">
-                        <Link href="/Masters/CountryMaster/new">
-                            <button className=" AddButton">
-                                <AiOutlinePlus />    Add New
-                            </button>
-                        </Link>
+                    <div className="row mt-4">
+                        <div className="col-lg-8">
+                            {/* <p id={Styles.p}>SHOWING 2 RESULTS</p> */}
+                        </div>
+                        <div className="col-lg-2"></div>
+                        <div className="col-lg-2">
+                            <Link href="/Masters/CountryMaster/new">
+                                <button
+                                    className="AddButton"
+                                >
+                                    
+                                    <AiOutlinePlusCircle />
+                                    Add New
+                                </button>
+                            </Link>
+                        </div>
                     </div>
-                </div>
 
-                <div className="mt-3">
-                    <table className="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Country Name</th>
-                                <th>Description</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {Array.isArray(country) &&
-                                country.length > 0 && (
-                                    <>
-                                        {country.map((data, index) => {
-                                            return (
-                                                <tr key={index}>
-                                                    <td>{data.short}</td>
-                                                    <td>{data.description}</td>
-                                                    <td>
-                                                        <Link href={`/Masters/CountryMaster/Edit/${data.id}`}>
-                                                            <button
-                                                            className="edit-btn"
-                                                            >
-                                                                Edit
-                                                            </button>
-                                                        </Link>
-                                                        &nbsp;&nbsp;
-                                                        <button
-                                                        className="edit-btn"
-                                                            onClick={deleteCountry.bind(this, data.id)}
-                                                        >
-                                                            Delete
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                            );
-                                        })}
-                                    </>
-                                )}
-                        </tbody>
-                    </table>
+                    <div className="row ">
+                        <table className="table table-hover mt-4 ">
+                            <thead className="bg-info text-white ">
+                                <tr>
+                                    <th>Country Name</th>
+                                    <th>Description</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {country.map((data, index) => {
+                                    return (
+                                        <tr className="text-dark" key={index}>
+                                            <td>{data.short}</td>
+                                            <td>{data.description}</td>
+                                            <td>
+                                                <Link href={`/Masters/CountryMaster/Edit/${data.id}`}>
+                                                    <button
+                                                        id={Styles.editbtn}
+                                                    >
+                                                        Edit
+                                                    </button>
+                                                </Link>
+                                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                                <button
+                                                    id={Styles.editbtn}
+                                                    onClick={deleteCountry.bind(this, data.id)}
+                                                >
+                                                    Delete
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    );
+                                })}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </Layout>

@@ -3,8 +3,6 @@ import Link from 'next/link'
 import Layout from '../../../layout/layout'
 import axios from 'axios'
 import Swal from 'sweetalert2';
-import { BiFilterAlt } from "react-icons/bi";
-import { AiOutlinePlus } from "react-icons/ai";
 
 function LevelTypeDash() {
 
@@ -43,38 +41,34 @@ function LevelTypeDash() {
     }, [])
     return (
         <Layout>
-            <div className="container">
-                <p className="Heading">Job Level Type</p>
-                <div className="card p-3 rounded-3 shadow border-0">
-                    <div className="row">
-                        <div className="col-1">
-                            <p> <BiFilterAlt /> Filter By</p>
+            <div className='container'>
+                <h3 className='Heading'>Job Level Type</h3>
+                <div className='card p-3 border-0 rounded-3 mt-4 mx-0'>
+                    <div className='row p-3'>
+                        <div className='col-lg-1'>
+                            <p>Filter By</p>
                         </div>
-                        <div className="col-5">
-                            <input
-                                type="text"
-                                placeholder="Search"
-                                className="form-control"
-                            ></input>
+
+                        <div className='col-lg-2'>
+                            <input type="date" className='form-control' placeholder='Effective Date' />
+                        </div>
+
+                        <div className='col-lg-5'>
+                            <input type="text" className='form-control' placeholder='Search...' />
                         </div>
                     </div>
                 </div>
-
-                <div className="row mt-3">
-                    <p className="col-2 result-heading">Showing {dashboard.length} Results</p>
-                    <div className="col-8"></div>
-                    <div className="col-2">
-                        <Link href="/Masters/JobLevel/new">
-                            <button className=" AddButton">
-                                <AiOutlinePlus />    Add New
-                            </button>
-                        </Link>
+                <div className='row mt-3'>
+                    <div className='col-lg-2 Heading fs-6 '>
+                        <h6>SHOWING {dashboard.length} RESULTS</h6>
                     </div>
-                </div>
+                    <div className='col-lg-8'></div>
+                    <div className='col-lg-2 mt-2 text-end'>
+                        <Link href="/Masters/JobLevel/new" ><button className='AddButton'>Add New</button></Link>
+                    </div>
 
-                <div className="mt-3">
-                    <table className="table table-striped">
-                        <thead>
+                    <table className='table table-striped mt-4 '>
+                        <thead className='bg-info text-white '>
                             <tr>
                                 <th>Leave Type</th>
                                 <th>Description</th>
@@ -82,35 +76,20 @@ function LevelTypeDash() {
                             </tr>
                         </thead>
                         <tbody>
-                            {Array.isArray(dashboard) &&
-                                dashboard.length > 0 && (
-                                    <>
-                                        {dashboard.map((data, index) => {
-                                            return (
-                                                <tr key={index}>
-                                                    <td>{data.short}</td>
-                                                    <td>{data.description}</td>
-                                                    <td>
-                                                        <Link href={`/Masters/JobLevel/Edit/${data.id}`}>
-                                                            <button
-                                                                className="edit-btn"
-                                                            >
-                                                                Edit
-                                                            </button>
-                                                        </Link>
-                                                        &nbsp;&nbsp;
-                                                        <button
-                                                            onClick={deleteLevelType.bind(this, data.id)}
-                                                            className="edit-btn"
-                                                        >
-                                                            Delete
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                            );
-                                        })}
-                                    </>
-                                )}
+                            {
+                                dashboard.map((data) => {
+                                    return (
+                                        <tr key={data.id}>
+                                            <td>{data.short}</td>
+                                            <td>{data.description}</td>
+                                            <td>
+                                                <Link href={`/Masters/JobLevel/Edit/${data.id}`}><button className='edit-btn mx-1'>Edit</button></Link>
+                                                <button className='edit-btn ' onClick={deleteLevelType.bind(this, data.id)}>Delete</button>
+                                            </td>
+                                        </tr>
+                                    )
+                                })
+                            }
                         </tbody>
                     </table>
                 </div>

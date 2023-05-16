@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { BiFilterAlt } from "react-icons/bi";
-import { AiOutlinePlus } from "react-icons/ai";
+import Styles from '../../../../styles/DivisionMasterDashboard.module.css'
+import { AiOutlinePlusCircle } from "react-icons/ai";
+import table from "../../../../styles/table.module.css";
 import Link from "next/link";
 import Layout from '../../../layout/layout'
 import axios from "axios";
@@ -43,78 +45,68 @@ function DivisionMasterDashboard() {
 
     return (
         <Layout>
-            <div className="container">
+            <div>
                 <p className="Heading">Division Master</p>
-                <div className="card p-3 rounded-3 shadow border-0">
-                    <div className="row">
-                        <div className="col-1">
-                            <p> <BiFilterAlt /> Filter By</p>
+                <div className="container mt-4">
+                    <div className="row shadow p-2 rounded-3 ">
+                        <div className="col-lg-1">
+                            <b>
+                                <p className="mt-2 text-center">
+                                    
+                                    <BiFilterAlt /> Filter by:
+                                </p>
+                            </b>
                         </div>
-                        <div className="col-5">
+                        <div className="col-lg-5">
                             <input
-                                type="text"
+                                type="search"
+                                className=" mt-2 form-control"
                                 placeholder="Search"
-                                className="form-control"
-                            ></input>
+                            />
                         </div>
                     </div>
-                </div>
-
-                <div className="row mt-3">
-                    <p className="col-2 result-heading">Showing {divisionData.length} Results</p>
-                    <div className="col-8"></div>
-                    <div className="col-2">
-                        <Link href="/Masters/DivisionMaster/new">
-                            <button className=" AddButton">
-                                <AiOutlinePlus />    Add New
-                            </button>
-                        </Link>
+                    <div className="row mt-4">
+                        <div className="col-lg-8">
+                            <p className="Heading fs-6">SHOWING {divisionData.length} RESULTS</p>
+                        </div>
+                        <div className="col-lg-2"></div>
+                        <div className="col-lg-2">
+                            <Link href="/Masters/DivisionMaster/new"> <button
+                                className="AddButton"
+                            > <AiOutlinePlusCircle />
+                                Add New
+                            </button></Link>
+                        </div>
                     </div>
-                </div>
-
-                <div className="mt-3">
-                    <table className="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Short Name</th>
-                                <th>Description</th>
-                                <th>Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {Array.isArray(divisionData) &&
-                                divisionData.length > 0 && (
-                                    <>
-                                        {divisionData.map((data, index) => {
+                        <div className="row">
+                            <table className="table table-striped mt-3">
+                                <thead className="bg-info text-white">
+                                    <tr>
+                                        <th>Short Name</th>
+                                        <th>Description</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {
+                                        divisionData.map((data) => {
                                             return (
-                                                <tr key={index}>
+                                                <tr key={data.id}>
                                                     <td>{data.short}</td>
                                                     <td>{data.description}</td>
                                                     <td>
-                                                        <Link href={`/Masters/DivisionMaster/Edit/${data.id}`}>
-                                                            <button
-                                                                className="edit-btn"
-                                                            >
-                                                                Edit
-                                                            </button>
-                                                        </Link>
-                                                        &nbsp;&nbsp;
-                                                        <button
-                                                            onClick={deleteDivision.bind(this, data.id)}
-                                                            className="edit-btn"
-                                                        >
-                                                            Delete
-                                                        </button>
+                                                        <Link href={`/Masters/DivisionMaster/Edit/${data.id}`}><button className='edit-btn mx-2'>Edit</button></Link>
+                                                        <button className='edit-btn' onClick={deleteDivision.bind(this, data.id)}>Delete</button>
                                                     </td>
                                                 </tr>
-                                            );
-                                        })}
-                                    </>
-                                )}
-                        </tbody>
-                    </table>
+                                            )
+                                        })
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
-            </div>
         </Layout>
     )
 }

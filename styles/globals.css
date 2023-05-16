@@ -103,16 +103,8 @@
 
 .Heading {
   color: #3247d5;
-  font-size: 24px !important;
+  font-size: 19px !important;
   text-transform: capitalize;
-  text-decoration: none;
-  font-weight: bold;
-  margin-top: 1.5%;
-}
-
-.result-heading {
-  color: #3247d5;
-  font-size: 17px !important;
   text-decoration: none;
   font-weight: bold;
 }
@@ -262,10 +254,10 @@
 }
 
 .card {
-  padding: 1%;
+  padding: 20px;
   background: #fff;
   box-shadow: 1px 1px 15px 3px #0000001f;
-  border-radius: 100%;
+  border-radius: 12px;
   width: 100%;
   position: relative;
   display: -webkit-box;
@@ -279,7 +271,7 @@
   word-wrap: break-word;
   background-color: #fff;
   background-clip: border-box;
-  border: 0px solid rgba(0, 0, 0, 0.125);
+  border: 1px solid rgba(0, 0, 0, 0.125);
 }
 
 .button {
@@ -367,7 +359,7 @@ thead {
   font-size: 15px;
 }
 
-.toggleButton.focus {
+.toggleButton:focus {
   color: white;
   background-color: #3247d5;
 }
@@ -397,13 +389,4 @@ thead {
   border: 1px solid #ced4da;
   border-radius: 0.25rem;
 
-}
-
-tr:nth-child(even) {
-  background-color: #ffffff;
-}
-
-tr:nth-child(odd) > td:not(:first-child),
-tr:nth-child(odd) td:first-child {
-  background-color: #ffffff;
 }
