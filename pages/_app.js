@@ -4,9 +4,9 @@ import { RouteGuard } from "@/components/layout/route_guard";
 export default function App({ Component, pageProps }) {
   return (
     <>
-    <RouteGuard>
+    {/* <RouteGuard> */}
   <Component {...pageProps} />
-  </RouteGuard>
+  {/* </RouteGuard> */}
   </>
   );
 }

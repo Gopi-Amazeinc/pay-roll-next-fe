@@ -8,9 +8,9 @@ import { RouteGuard } from "@/components/layout/route_guard";
 export default function Home() {
   return (
     <>
-        {/* <RouteGuard> */}
+     
       <Layout></Layout>
-      {/* </RouteGuard> */}
+ 
     </>
   );
 }
