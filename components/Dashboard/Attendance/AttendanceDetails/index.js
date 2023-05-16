@@ -118,7 +118,7 @@ const AttendenceDetails = () => {
           </div>
           {roleID == 3 && (
             <>
-              <div className="col-lg-3" style={{ marginLeft: "0px" }}>
+              <div className="col-lg-3" style={{ marginLeft: "-60px" }}>
                 <Link
                   className={Styles.header}
                   href="/Attendance/MyTeamAttendanceDetails"
@@ -130,7 +130,7 @@ const AttendenceDetails = () => {
           )}
           {roleID == 2 && (
             <>
-              <div className="col-lg-3" style={{ float: "left" }}>
+              <div className="col-lg-3" style={{ marginLeft: "-60px" }}>
                 <Link
                   className={Styles.header}
                   href="/Attendance/CompanyAttendanceDetails"
