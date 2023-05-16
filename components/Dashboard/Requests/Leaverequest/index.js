@@ -152,14 +152,19 @@ function LeaveListDashboard() {
         <div className="col-md-12">
             <div className="row">
                 <div className="col-md-7">
-                    <h5>Api is not Working for Approval Reject and Pending</h5>
-                    <Link className="Heading " href="/Requests/leavelistdashboard"><u> My Leave Details</u></Link>
+                    {/* <h5>Api is not Working for Approval Reject and Pending</h5> */}
+                    {
+                        sessionStorage.getItem("roleID")==2  && (
+                            <Link href="/Requests/hrleaverequest" className="Heading mx-5" ><u>All Staff Leave Details</u></Link>
+                        )
+                    }
+                    {/* <Link className="Heading" href="/Requests/leavelistdashboard"><u> My Leave Details</u></Link> */}
 
-                    <Link href="/Requests/hrleaverequest" className="Heading mx-5" ><u>All Staff Leave Details</u></Link>
+                    
 
 
                 </div>
-                <div className="col-md-4"><a className="leavecol">Leave Balance</a></div>
+                {/* <div className="col-md-4"><a className="leavecol">Leave Balance</a></div> */}
             </div>
             <br />
 
