@@ -75,13 +75,11 @@ const Index = () => {
     }
 
     const getPendingDetails = async () => {
-        // debugger;
         const res = await apiService.commonGetCall("Payroll/GetPendingStaffOverTimeDetails")
         setNewDashboardData(res.data);
         console.log("Pending emp", res.data);
     }
     const getApprovedDetails = async () => {
-        // debugger;
         const res = await apiService.commonGetCall("Payroll/GetApproveStaffOverTimeDetails")
         setnewApprovedData(res.data);
         console.log("Approved", res.data);
@@ -117,7 +115,6 @@ const Index = () => {
         console.log("Modal data", res.data);
     }
     const approve = (id) => {
-        // debugger;
         Swal.fire({
             title: 'Confirm To Approve?',
             text: "You won't be able to revert this!",
@@ -139,8 +136,9 @@ const Index = () => {
     }
     let id;
     const reject = () => {
-        // debugger;
+        debugger;
         id = sessionStorage.getItem("id")
+        let reason = watch("Reason")
         Swal.fire({
             title: 'Confirm To Reject?',
             text: "You won't be able to revert this!",
@@ -151,9 +149,7 @@ const Index = () => {
             confirmButtonText: 'Yes, Reject it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                var Reason = watch("Reason")
-                // staffID = sessionStorage.getItem("userID");
-                apiService.commonPostCall("Payroll/UpdateOtFromManager?id=" + id + "&Status=ManagerRejected" + "RejectedReason=" + Reason);
+                apiService.commonPostCall(`Payroll/UpdateOtFromManager?id=${id}&Status=ManagerRejected&RejectedReason=${reason}`);
                 Swal.fire({
                     icon: "success",
                     titleText: "Rejected Successfully"
@@ -442,8 +438,6 @@ const Index = () => {
                                 <th>Date Request</th>
                                 <th>Start Time</th>
                                 <th>End Time</th>
-                                {/* <th>OT Details</th> */}
-                                {/* <th>Purpose</th> */}
                                 <th>Status</th>
                                 {/* <th>Actions</th> */}
                             </tr>
@@ -467,7 +461,7 @@ const Index = () => {
                     </table>
                 )
             }
-            <Modal isOpen={modalOpen} style={customStyles} contentLabel="Example Modal">
+            <Modal ariaHideApp={false} isOpen={modalOpen} style={customStyles} contentLabel="Example Modal">
                 <div className='row'>
                     <div className='col-lg-6'>
                         <div className=" modal-header">
@@ -512,7 +506,7 @@ const Index = () => {
                     </div>
                 </div>
             </Modal>
-            <Modal isOpen={isOpen} style={customStyles}>
+            <Modal ariaHideApp={false} isOpen={isOpen} style={customStyles}>
                 <div className='container'>
                     <div className='row card-header'>
                         <div className='col-lg-8 mt-3'>
@@ -520,7 +514,7 @@ const Index = () => {
                         </div>
                         <div className='col-lg-3'></div>
                         <div className='col-lg-1 mt-3 mb-3'>
-                            <button onClick={() => ModalIsOpen(false)} className='btn-primary'>X</button>
+                            <button onClick={() => ModalIsOpen(false)}>X</button>
                         </div>
                     </div>
                     <div className='row mt-3'>
@@ -531,7 +525,7 @@ const Index = () => {
                     <div className='row'>
                         <div className='col-lg-8'></div>
                         <div className='col-lg-2 mb-3'>
-                            <button type='submit' className=' edit-btn mt-5'>Cancel</button>
+                            <button type='submit' className='edit-btn mt-5' onClick={() => ModalIsOpen(false)}>Cancel</button>
                         </div>
                         <div className='col-lg-2 mb-3'>
                             <button onClick={reject} type='submit' className='edit-btn mt-5'>Reject </button>
