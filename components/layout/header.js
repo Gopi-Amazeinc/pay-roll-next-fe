@@ -11,8 +11,13 @@ import Link from "next/link";
 
 const Header = ({ makelogout }) => {
   const [userName, setUserName] = useState();
-
   const [initial, setInitial] = useState("");
+  const [time, setTime] = useState(new Date());
+  const [hh, setHh] = useState("");
+  const [mm, setMm] = useState("");
+  const [ampm, setAmpm] = useState("");
+  const [open, setOpen] = useState(false);
+  const [open1, setOpen1] = useState(false);
 
   useEffect(() => {
     const Loginname = sessionStorage.getItem("userName");
@@ -22,10 +27,7 @@ const Header = ({ makelogout }) => {
     }
   }, []);
 
-  const [time, setTime] = useState(new Date());
-  const [hh, setHh] = useState("");
-  const [mm, setMm] = useState("");
-  const [ampm, setAmpm] = useState("");
+
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -54,7 +56,7 @@ const Header = ({ makelogout }) => {
     .toUpperCase();
 
   return (
-    <div className='header'>
+    <div className={HeaderStyles.header}>
       <div className="row" style={{ background: "#3247d5" }}>
         <div className="col-lg-2 mt-1">
           <Image
@@ -74,26 +76,35 @@ const Header = ({ makelogout }) => {
         </div>
 
         <div className="col-lg-4 mt-2 text-white">
-          <div className="notification">
-            <Image className={HeaderStyles.notification} src={Notification} alt="notifications" width={36} height={30} />
+          <div className="notification absolute fixed" style={{ top: "100px", left: "100px" }}>
+            <Image className={HeaderStyles.notification} src={Notification} alt="notifications" width={36} height={30} onClick={() => setOpen(!open)} />
+            {open && (
+              <div className={HeaderStyles.card}>
+
+                <button className="btn btn-danger" style={{ float: "right" }}>Clear all</button>
+                <p style={{ color: "balck" }} >Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur facere atque vel laudantium deserunt officia, reiciendis quod consequatur ab inventore. </p>
+              </div>
+            )}
             <span className={HeaderStyles.initial}>{initial}</span>
 
           </div>
           <div className={HeaderStyles.dropdown} >
             <p className={HeaderStyles.logout}>
-              Hi {userName}! <FaCaretDown style={{ cursor: "pointer" }} />
+              Hi {userName}! <FaCaretDown style={{ cursor: "pointer" }} onClick={() => setOpen1(!open1)} />
             </p>
-            <div className={HeaderStyles.dropdowncontent}>
-              <Link className={HeaderStyles.profile} href="/Staff/AddStaff">
-                <h6><CgProfile size={"22px"} /> &nbsp; &nbsp; My Profile  </h6>
-              </Link>
-              <h6 style={{ whiteSpace: "nowrap" }}>
-                <Link href='/SharedComponent/MyAccountSetting' className={HeaderStyles.accountsetting} >  <AiOutlineSetting size={"22px"} /> &nbsp; &nbsp; Account Setting </Link>
-              </h6>
-              <h6 onClick={makelogout} style={{ color: "red" }}>
-                <FiLogOut size={"22px"} /> &nbsp; &nbsp; Logout
-              </h6>
-            </div>
+            {open1 && (
+              <div className={HeaderStyles.dropdowncontent}>
+                <Link className={HeaderStyles.profile} href="/Staff/AddStaff">
+                  <h6><CgProfile size={"22px"} /> &nbsp; &nbsp; My Profile  </h6>
+                </Link>
+                <h6 style={{ whiteSpace: "nowrap" }}>
+                  <Link href='/SharedComponent/MyAccountSetting' className={HeaderStyles.accountsetting} >  <AiOutlineSetting size={"22px"} /> &nbsp; &nbsp; Account Setting </Link>
+                </h6>
+                <h6 onClick={makelogout} style={{ color: "red" }}>
+                  <FiLogOut size={"22px"} /> &nbsp; &nbsp; Logout
+                </h6>
+              </div>
+            )}
           </div>
         </div>
       </div>

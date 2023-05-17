@@ -1,14 +1,13 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
-import "./loader.module.css";
+import LoadSpinner from "./loader.module.css";
 
-export function Loader() {
+export const Loader = () => {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    debugger;
     const handleStart = () => setLoading(true);
     const handleComplete = () => setLoading(false);
 
@@ -23,5 +22,9 @@ export function Loader() {
     };
   }, [router]);
 
-  return loading ? <div id="spinner"></div> : <div id="pause"></div>;
-}
+  return loading ? (
+    <div className={LoadSpinner.spinner}></div>
+  ) : (
+    <div className={LoadSpinner.pause}></div>
+  );
+};

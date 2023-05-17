@@ -13,41 +13,37 @@ import { Modal, ModalBody, ModalFooter } from "reactstrap";
 import { BiEdit } from "react-icons/bi";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import Pnchingreen from "@/public/pnchin-green.svg";
+import { apiService } from "@/services/api.service";
+
 // import GaugeChart from 'react-gauge-chart';
 import dynamic from "next/dynamic";
 const GaugeChart = dynamic(() => import("react-gauge-chart"), { ssr: false });
 
 import Swal from "sweetalert2";
-import axios from "axios";
 
 const Dashboard = () => {
-  let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
   const count = 1;
+
+
+  var time = new Date().toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+  var Time = time.toString();
 
   const [userName, setUserName] = useState();
   const [userEmail, setUserEmail] = useState();
 
-  // const getGaugeColors=(percent)=> {
-  //   if (percent <= 0.25) {
-  //     return ['#f2efe6', '#ff0000'];
-  //   } else if (percent <= 0.75) {
-  //     return ['#f2efe6', '#ff0000'];
-  //   } else {
-  //     return ['#f2efe6', '#00cc00'];
-  //   }
-  // }
-  // const percent= 0.35;
-  //   const colors = getGaugeColors(percent);
-
-
-  // const userName = "Anup";
-  // const email = "anup@amazeinc.in";
+  const [userID, setUserID] = useState();
+  const [roleID, setRoleID] = useState();
 
   const [viewMode, setViewMode] = useState("tab1");
 
   const [items, setItems] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [punchintime, setPunchintime] = useState(false);
+
+  const [StartTime, setStartTime] = useState(Time);
+  const [EndTime, setEndTime] = useState(Time);
+
+
   const [actionType, setActionType] = useState("");
   const [workType, setWorkType] = useState();
   const [localIPAddress, setLocalIPAddress] = useState("");
@@ -60,6 +56,10 @@ const Dashboard = () => {
     setUserEmail(Loginemail);
     const punchinID = sessionStorage.getItem("StaffPunchedinID");
     setActionType(punchinID);
+    const userid = sessionStorage.getItem("userID");
+    const roleid = sessionStorage.getItem("roleID");
+    setUserID(userid);
+    setRoleID(roleid);
 
     const getLocalIPAddress = async () => {
       const response = await fetch("https://api.ipify.org/?format=json");
@@ -68,12 +68,29 @@ const Dashboard = () => {
     };
 
     getLocalIPAddress();
+    var todayDate = new Date().toISOString().slice(0, 10);
+    apiService.commonGetCall("HR/GetAttendance").then((staffData) => {
+      debugger;
+      let staffDetails = staffData.data.filter(
+        (x) => x.filterdate == todayDate && x.staffID == userID
+      );
+      if (staffDetails.length && staffDetails[0].signinDate != null) {
+        setPunchedIn(true);
+        setWorkTypeID(staffDetails[0].workTypeID);
+        setStartTime(staffDetails[0].startTime);
+      }
 
-    const currentTime = new Date();
-    setPunchintime(currentTime.toLocaleTimeString());
-    setSubmitted(true);
+      if (staffDetails.length && staffDetails[0].signoutDate != null) {
+        setPunchedOut(true);
+        setWorkTypeID(staffDetails[0].workTypeID);
+        setEndTime(staffDetails[0].endTime);
+      }
+
+      // const currentTime = new Date();
+      // setPunchintime(currentTime.toLocaleTimeString());
+      // setSubmitted(true);
+    });
   }, []);
-
 
   const modelopen = () => {
     setModalOpen(!modalOpen);
@@ -100,9 +117,9 @@ const Dashboard = () => {
     // }
 
     const ipaddress = localIPAddress;
-    var options = { hour12: false };
-    var date = new Date();
-    var entity = {
+    const options = { hour12: false };
+    const date = new Date();
+    let entity = {
       UserID: sessionStorage.getItem("userID"),
       SigninDate: date.toLocaleString("en-US", options),
       SigninLocation: "Office",
@@ -111,14 +128,42 @@ const Dashboard = () => {
       ApprovalStatus: "Manager Pending HR Pending",
       WorkType: parseInt(workType),
     };
-    let res = await axios.post(hostURL + "HR/InsertAttendanceWeb", entity);
+    let res = await apiService.commonPostCall("HR/InsertAttendanceWeb", entity);
     const staffPunchedinID = res.data || res;
     if (staffPunchedinID) {
       sessionStorage.setItem("StaffPunchedinID", staffPunchedinID);
-      setActionType(StaffPunchedinID)
+      setActionType(staffPunchedinID);
       Swal.fire("Punched In Successfully");
     }
     // }
+  };
+
+  const handlePunchout = async () => {
+    var options = { hour12: false };
+    var date = new Date();
+    await apiService.commonGetCall("HR/GetAttendance").then(async (res) => {
+      debugger;
+      var todayDate = new Date().toISOString().slice(0, 10);
+      let temp = res.data.filter(
+        (x) => x.filterdate == todayDate && x.userID == userID
+      );
+      let ID = temp[0].id;
+
+      var entity = {
+        ID: ID,
+        SignoutDate: date.toLocaleString("en-US", options),
+        SignoutLocation: "Office",
+        StatusID: 2,
+        punchoutip:
+          ipaddress == undefined || null ? "101.120.111.222" : ipaddress,
+        PunchoutWorkType: parseInt(workType),
+      };
+      let res1 = await apiService.commonPostCall("HR/UpdateAttendanceWeb", entity);
+      if (res1.data && res1.status == 200) {
+        setActionType(res1);
+        setPunchedOut(true);
+      }
+    });
   };
 
   return (
@@ -134,6 +179,224 @@ const Dashboard = () => {
       <div className="container-fluid">
         <div className="row">
           <div className={dashboard.card1}>
+            <div className="card p-0" style={{ borderRadius: "20px" }}>
+              <div
+                className="card-header"
+                style={{
+                  backgroundColor: "#02CFFF",
+                  borderTopLeftRadius: "20px",
+                  borderTopRightRadius: "20px",
+                }}
+              >
+                <div
+                  className="d-flex align-items-center"
+                  style={{ height: "10px", padding: "9px" }}
+                >
+                  <AiOutlineGift style={{ color: "white", fontSize: "25px" }} />
+                  <h5
+                    className={dashboard.cardheader}
+                    style={{ color: "white" }}
+                  >
+                    Attendance Tracker
+                  </h5>
+                </div>
+                <p
+                  className="card-subtitle mt-1 mb-0"
+                  style={{ color: "white" }}
+                >
+                  Always Register Your Attendance
+                </p>
+              </div>
+              <div
+                className="card-body"
+                style={{ borderRadius: "0 0 10px 10px" }}
+              >
+                <div className="col-lg-12">
+                  <div className="row">
+                    {actionType == null ? (
+                      <>
+                        <div className="col-lg-7">
+                          <button
+                            className={dashboard.punchin}
+                            onClick={() => modelopen()}
+                          >
+                            PUNCH IN
+                          </button>
+                        </div>
+                        <div className="col-lg-4 mt-3 ">
+                          <span> PunchIn time </span>
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <div className="col-lg-7">
+                          <button
+                            className={dashboard.buttonclick}
+                            // onClick={() => modelopen()}
+                          >
+                            <Image
+                              src={Pnchingreen}
+                              alt="Leave icon"
+                              width={15}
+                              height={19}
+                            />{" "}
+                            PUNCH IN
+                          </button>
+                        </div>
+                        <div className="col-lg-4 mt-3 ">
+                          <span>{StartTime}</span>
+                        </div>
+                      </>
+                    )}
+
+                    <div className="col-lg-7">
+                      <button
+                        className={dashboard.punchin}
+                        onClick={() => setModalOpen(!modalOpen)}
+                      >
+                        PUNCH OUT
+                      </button>
+                    </div>
+                    <div className="col-lg-4 mt-3">
+                      <span className="mt-3"> PunchOut Time </span>
+                    </div>
+                  </div>
+
+                  <Modal
+                    toggle={() => setModalOpen(!modalOpen)}
+                    isOpen={modalOpen}
+                  >
+                    <div className=" modal-header">
+                      <h5 className=" modal-title">Work Type Details </h5>
+                      <button
+                        aria-label="Close"
+                        className={dashboard.close}
+                        type="button"
+                        onClick={() => setModalOpen(!modalOpen)}
+                      >
+                        <span aria-hidden={true}>×</span>
+                      </button>
+                    </div>
+                    <ModalBody>
+                      <div className="row">
+                        <div className="col-lg-12">
+                          <select
+                            name=""
+                            id=""
+                            className="form-select"
+                            onChange={(event) =>
+                              handleworkType(event.target.value)
+                            }
+                          >
+                            <option defaultValue={"Select One"}>Select One</option>
+                            <option value="0">Work From Home</option>
+                            <option value="1">Office</option>
+                          </select>
+                        </div>
+                        <div className="row">
+                          <div className="col-lg-6">
+                            <ModalFooter>
+                              {actionType == null ? (
+                                <button
+                                  color="primary"
+                                  type="button"
+                                  className="button"
+                                  onClick={() => handlePunchin()}
+                                >
+                                  Punchin
+                                </button>
+                              ) : (
+                                <button
+                                  color="primary"
+                                  type="button"
+                                  className="button"
+                                  onClick={() => handlePunchout()}
+                                >
+                                  PunchOut
+                                </button>
+                              )}
+                            </ModalFooter>
+                          </div>
+                        </div>
+                      </div>
+                    </ModalBody>
+                  </Modal>
+                </div>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-lg-12">
+                <div
+                  className="card"
+                  style={{ borderRadius: "20px", marginTop: "30px" }}
+                >
+                  <div
+                    className="card-body"
+                    style={{ marginBottom: "46px", height: "160px" }}
+                  >
+                    <h5 className="card-title" style={{ color: "#3247d5" }}>
+                      Announcement Title
+                    </h5>
+                    <p className="card-text">Announcement content goes here.</p>
+                    <Link
+                      className={dashboard.announcement}
+                      href="/Announcement"
+                    >
+                      See All
+                      <RiArrowDropDownLine style={{ fontSize: "30px" }} />
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className={dashboard.card1}>
+            <div className="card p-0  mb-4" style={{ borderRadius: "20px" }}>
+              <div
+                className="card-body"
+                style={{
+                  backgroundColor: "#B96AE9",
+                  borderTopLeftRadius: "20px",
+                  borderTopRightRadius: "20px",
+                }}
+              >
+                <div
+                  className="d-flex align-items-center"
+                  style={{ height: "10px" }}
+                >
+                  <AiOutlineGift style={{ color: "white", fontSize: "25px" }} />
+                  <h5
+                    className={dashboard.cardheader}
+                    style={{ color: "white" }}
+                  >
+                    Celebrants
+                  </h5>
+                </div>
+                <p
+                  className="card-subtitle mt-1 mb-0"
+                  style={{ color: "white" }}
+                >
+                  Get to know who are the celebrants
+                </p>
+              </div>
+              <div className="col-lg-6 " style={{ marginBottom: "110px" }}>
+                <div className="row">
+                  <br />
+                  <div className="col-lg-12 dashbutton bttn">
+                    <div className="tab-slider--nav">
+                      <ul className="tab-slider--tabs">
+                        <li rel="tab1" onClick={() => setViewMode("tab1")}>
+                          All
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* </div> */}
+            </div>
+
             <div className="row">
               <div className="col-md-12">
                 <div
@@ -205,219 +468,6 @@ const Dashboard = () => {
                 </div>
               </div>
             </div>
-            <div className="row">
-              <div className="col-lg-12">
-                <div className="card" style={{ borderRadius: "20px" }}>
-                  <div
-                    className="card-body"
-                    style={{ marginBottom: "46px", height: "130px" }}
-                  >
-                    <h5 className="card-title" style={{ color: "#3247d5" }}>
-                      Announcement Title
-                    </h5>
-                    <p className="card-text">Announcement content goes here.</p>
-                    <Link
-                      className={dashboard.announcement}
-                      href="/Announcement"
-                    >
-                      See All
-                      <RiArrowDropDownLine style={{ fontSize: "30px" }} />
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className={dashboard.card1}>
-            <div className="card p-0  mb-4" style={{ borderRadius: "20px" }}>
-              <div
-                className="card-body"
-                style={{
-                  backgroundColor: "#B96AE9",
-                  borderTopLeftRadius: "20px",
-                  borderTopRightRadius: "20px",
-                }}
-              >
-                <div
-                  className="d-flex align-items-center"
-                  style={{ height: "10px" }}
-                >
-                  <AiOutlineGift style={{ color: "white", fontSize: "25px" }} />
-                  <h5
-                    className={dashboard.cardheader}
-                    style={{ color: "white" }}
-                  >
-                    Celebrants
-                  </h5>
-                </div>
-                <p
-                  className="card-subtitle mt-1 mb-0"
-                  style={{ color: "white" }}
-                >
-                  Get to know who are the celebrants
-                </p>
-              </div>
-              <div className="col-lg-6 " style={{ marginBottom: "110px" }}>
-                <div className="row">
-                  <br />
-                  <div className="col-lg-12 dashbutton bttn">
-                    <div className="tab-slider--nav">
-                      <ul className="tab-slider--tabs">
-                        <li rel="tab1" onClick={() => setViewMode("tab1")}>
-                          All
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* </div> */}
-            </div>
-            <div className="card p-0" style={{ borderRadius: "20px" }}>
-              <div
-                className="card-header"
-                style={{
-                  backgroundColor: "#02CFFF",
-                  borderTopLeftRadius: "20px",
-                  borderTopRightRadius: "20px",
-                }}
-              >
-                <div
-                  className="d-flex align-items-center"
-                  style={{ height: "10px", padding: "9px" }}
-                >
-                  <AiOutlineGift style={{ color: "white", fontSize: "25px" }} />
-                  <h5
-                    className={dashboard.cardheader}
-                    style={{ color: "white" }}
-                  >
-                    Attendance Tracker
-                  </h5>
-                </div>
-                <p
-                  className="card-subtitle mt-1 mb-0"
-                  style={{ color: "white" }}
-                >
-                  Always Register Your Attendance
-                </p>
-              </div>
-              <div
-                className="card-body"
-                style={{ borderRadius: "0 0 10px 10px" }}
-              >
-                <div className="col-lg-12">
-                  <div className="row">
-                    {actionType == null ? (
-                      <>
-                        <div className="col-lg-7">
-                          <button
-                            className={dashboard.punchin}
-                            onClick={() => modelopen()}
-                          >
-                            PUNCH IN
-                          </button>
-                        </div>
-                        <div className="col-lg-4 mt-3 ">
-                          <span> PunchIn time </span>
-                        </div>
-                      </>
-                    ) : (
-                      <>
-                        <div className="col-lg-7">
-                          <button
-                            className={dashboard.buttonclick}
-                          // onClick={() => modelopen()}
-                          >
-                            <Image
-                              src={Pnchingreen}
-                              alt="Leave icon"
-                              width={15}
-                              height={19}
-                            />  PUNCH IN
-                          </button>
-                        </div>
-                        <div className="col-lg-4 mt-3 ">
-                          <span>{punchintime.toLocaleString()}</span>
-                        </div>
-                      </>
-
-                    )}
-
-                    <div className="col-lg-7">
-                      <button
-                        className={dashboard.punchin}
-                        onClick={() => setModalOpen(!modalOpen)}
-                      >
-                        PUNCH OUT
-                      </button>
-                    </div>
-                    <div className="col-lg-4 mt-3">
-                      <span className="mt-3"> PunchOut Time </span>
-                    </div>
-                  </div>
-
-                  <Modal
-                    toggle={() => setModalOpen(!modalOpen)}
-                    isOpen={modalOpen}
-                  >
-                    <div className=" modal-header">
-                      <h5 className=" modal-title">Work Type Details </h5>
-                      <button
-                        aria-label="Close"
-                        className={dashboard.close}
-                        type="button"
-                        onClick={() => setModalOpen(!modalOpen)}
-                      >
-                        <span aria-hidden={true}>×</span>
-                      </button>
-                    </div>
-                    <ModalBody>
-                      <div className="row">
-                        <div className="col-lg-12">
-                          <select
-                            name=""
-                            id=""
-                            className="form-control"
-                            onChange={(event) =>
-                              handleworkType(event.target.value)
-                            }
-                          >
-                            <option disabled>SelectOne</option>
-                            <option value="0">Work From Home</option>
-                            <option value="1">Office</option>
-                          </select>
-                        </div>
-                        <div className="row">
-                          <div className="col-lg-6">
-                            <ModalFooter>
-                              {actionType == null ? (
-                                <button
-                                  color="primary"
-                                  type="button"
-                                  className="button"
-                                  onClick={() => handlePunchin()}
-                                >
-                                  Punchin
-                                </button>
-                              ) : (
-                                <button
-                                  color="primary"
-                                  type="button"
-                                  className="button"
-                                >
-                                  PunchOut
-                                </button>
-                              )}
-                            </ModalFooter>
-                          </div>
-                        </div>
-                      </div>
-                    </ModalBody>
-                  </Modal>
-                </div>
-              </div>
-            </div>
           </div>
           <div className={dashboard.card2}>
             <div
@@ -454,7 +504,7 @@ const Dashboard = () => {
                     needleColor={"#afb4bd"}
                     needleBaseColor={"#afb4bd"}
                     textOffsetY={-40}
-                  // hideText={true} // If you want to hide the text
+                    // hideText={true} // If you want to hide the text
                   />
                 </div>
                 {/* <Image src={images} alt="Picture of the author" width={100} height={80} className={dashboard.profileimg1} /> */}
@@ -752,6 +802,6 @@ const Dashboard = () => {
       </div>
     </Layout>
   );
-}
+};
 
 export default Dashboard;

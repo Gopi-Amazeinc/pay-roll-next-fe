@@ -6,7 +6,7 @@ import axios from 'axios';
 import { BsCheckCircleFill } from 'react-icons/bs'
 import { RxCrossCircled } from 'react-icons/rx'
 import Swal from 'sweetalert2';
-
+import { apiService } from "@/services/api.service";
 const Myteamlocatordashboard = () => {
     const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
     const [Stafflocator, setStafflocator] = useState([]);
@@ -16,11 +16,11 @@ const Myteamlocatordashboard = () => {
 
 
     const getStafflocator = async () => {
-        let res = await axios.get(hostURL + "Payroll/GetLocatorRequests");
+        let res = await apiService.commonGetCall("Payroll/GetLocatorRequests");
         setStafflocator(res.data);
-        res = await axios.get(hostURL + "Payroll/GetApprovedStaffLocatorRequests");
+        res = await apiService.commonGetCall("Payroll/GetApprovedStaffLocatorRequests");
         setApprovedStafflocatorrequests(res.data);
-        res = await axios.get(hostURL + "Payroll/GetRejectStaffLocatorRequests");
+        res = await apiService.commonGetCall("Payroll/GetRejectStaffLocatorRequests");
         setRejectedStafflocatorRequests(res.data);
     }
 
@@ -31,7 +31,7 @@ const Myteamlocatordashboard = () => {
 
     const approvRequest = async (id) => {
         debugger;
-        await axios.post(hostURL + "Payroll/UpdateLocatorStatus?ID=" + id+"&ApproveStatus=Approved")
+        await apiService.commonPostCall("Payroll/UpdateLocatorStatus?ID=" + id + "&ApproveStatus=Approved")
         Swal.fire(" Locator Details Approved")
         getStafflocator()
     }

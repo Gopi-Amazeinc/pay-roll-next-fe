@@ -1,18 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { BiFilterAlt } from "react-icons/bi";
-
-import { AiOutlinePlusCircle } from "react-icons/ai";
-
+import { AiOutlinePlus } from "react-icons/ai";
 import Link from "next/link";
-
-import axios from "axios";
+import { apiService } from "@/services/api.service";
 import Swal from "sweetalert2";
+import ReactPaginate from "react-paginate";
 const PositionMasterDash = () => {
   const [positionMaster, setPositionMaster] = useState([]);
 
   const getPositionMaster = async () => {
-    let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-    const { data } = await axios.get(hostURL + "Master/GetRoleType"); //gurukiran@amazeinc.in, api call to fetch the data that is being displayed onto the table
+    const { data } = await apiService.commonGetCall("Master/GetRoleType"); //gurukiran@amazeinc.in, api call to fetch the data that is being displayed onto the table
     setPositionMaster(data)
   }
   useEffect(() => {
@@ -21,7 +18,6 @@ const PositionMasterDash = () => {
 
   const handleDelete = async (id) => {
     try {
-      let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
       Swal.fire({
         title: 'Are you sure?',
         text: "You won't be able to revert this!",
@@ -33,9 +29,8 @@ const PositionMasterDash = () => {
       }).then((result) => {
         if (result.isConfirmed) {
 
-          const res = axios.get(hostURL + `Master/DeleteRoleType?ID=${id}`); //gurukiran@amazeinc.in, api call to delete the data from the table
+          const res = apiService.commonGetCall(`Master/DeleteRoleType?ID=${id}`); //gurukiran@amazeinc.in, api call to delete the data from the table
           console.log(res.data);
-          // alert("Data deleted successfully");
           Swal.fire(
             'Deleted!',
             'Your file has been deleted.',
@@ -51,81 +46,117 @@ const PositionMasterDash = () => {
     }
   };
 
+  const PER_PAGE = 2;
+  const [currentPage, setCurrentPage] = useState(0);
+  function handlePageClick({ selected: selectedPage }) {
+    setCurrentPage(selectedPage)
+  }
+  const offset = currentPage * PER_PAGE;
+  const pageCount = Math.ceil(positionMaster.length / PER_PAGE);
+  const [keyword, setKeyword] = useState("");
 
   return (
     <div className="container">
-      <p className="Heading">Position  Master</p>
-      <div className="container mt-3">
-        <div className="row shadow p-2 rounded-3 ">
-          <div className="col-lg-2">
-            <b>
-              <p className="mt-2 text-center">
-                <BiFilterAlt />  Filter by:
-              </p>
-            </b>
+      <p className="Heading">Position Master</p>
+      <div className="card p-3 rounded-3 shadow border-0">
+        <div className="row">
+          <div className="col-1">
+            <p> <BiFilterAlt /> Filter By</p>
           </div>
-          <div className="col-lg-5">
+          <div className="col-5">
             <input
-              type="search"
-              className=" mt-2 form-control"
+              type="text"
               placeholder="Search"
-            />
+              className="form-control"
+              onChange={e => setKeyword(e.target.value)}
+            ></input>
           </div>
         </div>
-        <div className="row mt-4">
-          <div className="col-lg-8">
-            <p className="Heading fs-6">SHOWING {positionMaster.length} RESULTS</p>
-          </div>
-          <div className="col-lg-2"></div>
-          <div className="col-lg-2">
+      </div>
 
-            <Link href="/Masters/PositionMaster/new"><button
-
-              className=" AddButton"
-
-            >  <AiOutlinePlusCircle />
-              Add New
-            </button></Link>
-          </div>
+      <div className="row mt-3">
+        <p className="col-2 result-heading">Showing {positionMaster.length} Results</p>
+        <div className="col-8"></div>
+        <div className="col-2">
+          <Link href="/Masters/PositionMaster/new">
+            <button className=" AddButton">
+              <AiOutlinePlus />    Add New
+            </button>
+          </Link>
         </div>
+      </div>
 
-        <div className="container-fluid mt-4">
-          <div className="row">
-            <table className="table">
-              <thead >
-                <tr className="tr">
-                  <th>Position Name</th>
-                  <th>Description</th>
-                  <th>Action</th>
-                </tr>
-              </thead>
-              <tbody>
-                {positionMaster.map((data) => {
-                  return (
-                    <tr key={data.id}>
-                      <td>{data.short}</td>
-                      <td>{data.description}</td>
-                      <td>
-                        <div className="row">
-                          <div className="col-lg-2">
+      <div className="mt-3">
+        <table className="table table-striped">
+          <thead>
+            <tr>
+              <th>Position Name</th>
+              <th>Description</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {Array.isArray(positionMaster) &&
+              positionMaster.length > 0 && (
+                <>
+                  {positionMaster
+                    .filter(data => {
+                      if ((data.short.toLowerCase().includes(keyword.toLowerCase())) || (data.description.toLowerCase().includes(keyword))) {
+                        return data;
+                      }
+                    })
+                    .slice(offset, offset + PER_PAGE)
+                    .map((data, index) => {
+                      return (
+                        <tr key={index}>
+                          <td>{data.short}</td>
+                          <td>{data.description}</td>
+                          <td>
                             <Link href={`/Masters/PositionMaster/Edit/${data.id}`}>
-                              <button className="edit-btn" >Edit</button>
+                              <button
+                                className="edit-btn"
+                              >
+                                Edit
+                              </button>
                             </Link>
-                          </div>
-                          <div className="col-lg-2">
-                            <button className="edit-btn" onClick={() => handleDelete(data.id)}>Delete</button>
-                          </div>
-                        </div>
-                      </td>
-                    </tr>
-                  )
-                })
+                            &nbsp;&nbsp;
+                            <button
+                              onClick={() => handleDelete(data.id)}
+                              className="edit-btn"
+                            >
+                              Delete
+                            </button>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                </>
+              )}
+          </tbody>
+        </table>
+      </div>
 
-                }
-              </tbody>
-            </table>
-          </div>
-        </div>
+
+      <div className="mb-4 mt-4 text-center">
+        <ReactPaginate
+          previousLabel={"Previous"}
+          nextLabel={"Next"}
+          breakLabel={"..."}
+          pageCount={pageCount}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={3}
+          onPageChange={handlePageClick}
+          containerClassName={"pagination  justify-content-center"}
+          pageClassName={"page-item "}
+          pageLinkClassName={"page-link"}
+          previousClassName={"page-item"}
+          previousLinkClassName={"page-link"}
+          nextClassName={"page-item"}
+          nextLinkClassName={"page-link"}
+          breakClassName={"page-item"}
+          breakLinkClassName={"page-link"}
+          activeClassName={"active primary"}
+        />
       </div>
     </div>
   )

@@ -2,6 +2,7 @@ import Layout from "@/components/layout/layout"
 import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import Link from 'next/link';
+import { apiService } from "@/services/api.service";
 import {
     Calendar as BigCalendar,
     momentLocalizer,
@@ -17,10 +18,10 @@ const localizer = momentLocalizer(moment);
 function LeaveListDashboard() {
 
     const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-    var date = new Date();
-    let Sdate = date.toISOString().slice(0, 10);
-    var edate = new Date();
-    let Edate = edate.toISOString().slice(0, 10);
+    // var date = new Date();
+    let Sdate =sessionStorage.getItem("Sdate")
+    // var edate = new Date();
+    let Edate = sessionStorage.getItem("Edate")
 
     const [pending, setPending] = useState(false)
     const [approved, setApproved] = useState(false)
@@ -76,20 +77,21 @@ function LeaveListDashboard() {
     const [rejecteddata, setRejectedData] = useState([])
 
     const getPendingData = async () => {
+        debugger
         const staffID = sessionStorage.getItem("userID")
-        const res = await axios.get(hostURL + "Employee/GetPendingStaffLeavesByStaffID?ID=" + staffID + "&TypeID=1&Sdate=" + Sdate + "&Edate=" + Edate)
+        const res = await apiService.commonGetCall("Employee/GetPendingStaffLeavesByStaffID?ID=" + staffID + "&TypeID=1&Sdate=" + Sdate + "&Edate=" + Edate)
         setPendingData(res.data);
         console.log(res.data);
     }
     const getApprovedData = async () => {
         const staffID = sessionStorage.getItem("userID")
-        const res = await axios.get(hostURL + "Employee/GetApprovedStaffLeavesByStaffID?ID=" + staffID + "&TypeID=1&Sdate=" + Sdate + "&Edate=" + Edate)
+        const res = await apiService.commonGetCall("Employee/GetApprovedStaffLeavesByStaffID?ID=" + staffID + "&TypeID=1&Sdate=" + Sdate + "&Edate=" + Edate)
         setApprovedData(res.data);
         console.log(res.data);
     }
     const getRejectedData = async () => {
         const staffID = sessionStorage.getItem("userID")
-        const res = await axios.get(hostURL + "Employee/GetRejectedStaffLeavesByStaffID?ID=" + staffID + "&TypeID=1&Sdate=" + Sdate + "&Edate=" + Edate)
+        const res = await apiService.commonGetCall("Employee/GetRejectedStaffLeavesByStaffID?ID=" + staffID + "&TypeID=1&Sdate=" + Sdate + "&Edate=" + Edate)
         setRejectedData(res.data);
         console.log(res.data);
     }
@@ -151,14 +153,19 @@ function LeaveListDashboard() {
         <div className="col-md-12">
             <div className="row">
                 <div className="col-md-7">
-                    <h5>Api is not Working for Approval Reject and Pending</h5>
-                    <Link className="Heading " href="/Requests/leavelistdashboard"><u> My Leave Details</u></Link>
+                    {/* <h5>Api is not Working for Approval Reject and Pending</h5> */}
+                    {
+                        sessionStorage.getItem("roleID")==2  && (
+                            <Link href="/Requests/hrleaverequest" className="Heading mx-5" ><u>All Staff Leave Details</u></Link>
+                        )
+                    }
+                    {/* <Link className="Heading" href="/Requests/leavelistdashboard"><u> My Leave Details</u></Link> */}
 
-                    <Link href="/Requests/hrleaverequest" className="Heading mx-5" ><u>All Staff Leave Details</u></Link>
+                    
 
 
                 </div>
-                <div className="col-md-4"><a className="leavecol">Leave Balance</a></div>
+                {/* <div className="col-md-4"><a className="leavecol">Leave Balance</a></div> */}
             </div>
             <br />
 

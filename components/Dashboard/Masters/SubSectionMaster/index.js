@@ -1,14 +1,13 @@
 import Link from "next/link";
 import React from "react";
-
-import { AiOutlinePlusCircle } from "react-icons/ai";
-import Layout from '@/components/layout/layout.js';
+import { BiFilterAlt } from "react-icons/bi";
+import { AiOutlinePlus } from "react-icons/ai";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import { apiService } from "@/services/api.service";
 import Swal from "sweetalert2";
+import ReactPaginate from "react-paginate";
 
 const SubSectionMaster = () => {
-  let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
   const [subsection, SetSubsectionData] = useState([]);
 
   useEffect(() => {
@@ -16,14 +15,11 @@ const SubSectionMaster = () => {
   }, []);
 
   const getData = async () => {
-    let res = await axios.get(hostURL + "Master/GetSubSectionMaster");
+    let res = await apiService.commonGetCall("Master/GetSubSectionMaster");
     SetSubsectionData(res.data);
   }
 
-
-
   const handelDelete = (id) => {
-    debugger;
     Swal.fire({
       title: "Are you sure want to delete ?",
       text: "",
@@ -34,93 +30,123 @@ const SubSectionMaster = () => {
       confirmButtonText: "Yes",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        await axios.get(hostURL + "Master/DeleteSubSectionMaster?ID=" + id)
+        await apiService.commonGetCall("Master/DeleteSubSectionMaster?ID=" + id)
         Swal.fire("SubSection Deleted successfully.");
         getData();
       }
     });
   };
 
+  const PER_PAGE = 2;
+  const [currentPage, setCurrentPage] = useState(0);
+  function handlePageClick({ selected: selectedPage }) {
+    setCurrentPage(selectedPage)
+  }
+  const offset = currentPage * PER_PAGE;
+  const pageCount = Math.ceil(subsection.length / PER_PAGE);
+  const [keyword, setKeyword] = useState("");
+
   return (
     <div className="container">
-      <h5 className=" Heading">
-        SubSection Master
-      </h5>
-      <div className="card p-3 border-0 rounded-3 mx-0">
+      <p className="Heading">SubSection Master</p>
+      <div className="card p-3 rounded-3 shadow border-0">
         <div className="row">
-          <div className="col-lg-1">
-            <p>Filter By</p>
+          <div className="col-1">
+            <p> <BiFilterAlt /> Filter By</p>
           </div>
-          <div className="col-lg-5">
+          <div className="col-5">
             <input
               type="text"
               placeholder="Search"
-              id="term"
-              className="form-control "
-            />
+              className="form-control"
+              onChange={e => setKeyword(e.target.value)}
+            ></input>
           </div>
-          <div className="col-lg-3"></div>
-          <div className="col-lg-3"></div>
         </div>
       </div>
+
       <div className="row mt-3">
-        <div className="col-lg-8">
-          <p className="Heading fs-6">
-            SHOWING <span>{subsection.length} </span>RESULTS
-          </p>
-        </div>
-        <div className="col-lg-2"></div>
-        <div className="col-lg-2">
-          <Link
-
-            href="/Masters/SubSectionMaster/new"
-          >
-
-            <button className=" AddButton"> <AiOutlinePlusCircle size={18} /> ADD NEW</button>
+        <p className="col-2 result-heading">Showing {subsection.length} Results</p>
+        <div className="col-8"></div>
+        <div className="col-2">
+          <Link href="/Masters/SubSectionMaster/new">
+            <button className=" AddButton">
+              <AiOutlinePlus />    Add New
+            </button>
           </Link>
         </div>
       </div>
-      <br />
-      <br />
-      <div className="container">
-        <div className="row ">
-          <table className=" table table-striped ">
-            <thead className="bg-info text-white ">
-              <tr>
-                <th>Short</th>
-                <th>Description</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {subsection.map((data, index) => {
-                return (
-                  <tr className="text-dark" key={index}>
-                    <td>{data.short}</td>
-                    <td>{data.description}</td>
-                    <td>
-                      <Link href={`/Masters/SubSectionMaster/Edit/${data.id}`}>
-                        <button
-                          className="edit-btn"
-                          style={{ fontSize: "12px", marginRight: "5%" }}
-                        >
-                          Edit
-                        </button>
-                      </Link>
-                      <button
-                        className="edit-btn"
-                        style={{ fontSize: "12px" }}
-                        onClick={() => handelDelete(data.id)}
-                      >
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
+
+      <div className="mt-3">
+        <table className="table table-striped">
+          <thead>
+            <tr>
+              <th>Short</th>
+              <th>Description</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {Array.isArray(subsection) &&
+              subsection.length > 0 && (
+                <>
+                  {subsection
+                    .filter(data => {
+                      if ((data.short.toLowerCase().includes(keyword.toLowerCase())) || (data.description.toLowerCase().includes(keyword))) {
+                        return data;
+                      }
+                    })
+                    .slice(offset, offset + PER_PAGE)
+                    .map((data, index) => {
+                      return (
+                        <tr key={index}>
+                          <td>{data.short}</td>
+                          <td>{data.description}</td>
+                          <td>
+                            <Link href={`/Masters/SubSectionMaster/Edit/${data.id}`}>
+                              <button
+                                className="edit-btn"
+                              >
+                                Edit
+                              </button>
+                            </Link>
+                            &nbsp;&nbsp;
+                            <button
+                              onClick={() => handelDelete(data.id)}
+                              className="edit-btn"
+                            >
+                              Delete
+                            </button>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                </>
+              )}
+          </tbody>
+        </table>
+      </div>
+
+      <div className="mb-4 mt-4 text-center">
+        <ReactPaginate
+          previousLabel={"Previous"}
+          nextLabel={"Next"}
+          breakLabel={"..."}
+          pageCount={pageCount}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={3}
+          onPageChange={handlePageClick}
+          containerClassName={"pagination  justify-content-center"}
+          pageClassName={"page-item "}
+          pageLinkClassName={"page-link"}
+          previousClassName={"page-item"}
+          previousLinkClassName={"page-link"}
+          nextClassName={"page-item"}
+          nextLinkClassName={"page-link"}
+          breakClassName={"page-item"}
+          breakLinkClassName={"page-link"}
+          activeClassName={"active primary"}
+        />
       </div>
     </div>
   );

@@ -1,28 +1,24 @@
 import React from 'react'
 import Link from 'next/link'
-
+import { BiFilterAlt } from "react-icons/bi";
+import { AiOutlinePlus } from "react-icons/ai";
 import { useEffect, useState } from "react";
-
-import axios from "axios";
+import { apiService } from "@/services/api.service";
 import Swal from 'sweetalert2'
+import ReactPaginate from "react-paginate";
 
 function StateMasterDashboard() {
   const [state, setStateData] = useState([]);
   const [country, setCountryData] = useState([]);
-  let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
 
   useEffect(() => {
     getData();
   }, []);
 
   async function getData() {
-    let res = await axios.get(
-      hostURL + "Master/GetStateType"  //naveen.th@amazeinc.in, Get API for State master, to fetch data
-    );
+    let res = await apiService.commonGetCall("Master/GetStateType");
     setStateData(res.data);
-    let res1 = await axios.get(
-      hostURL + "Master/GetCountryType" //naveen.th@amazeinc.in, Get API for Country master, to fetch data
-    );
+    let res1 = await apiService.commonGetCall("Master/GetCountryType");
     setCountryData(res1.data);
   }
 
@@ -37,97 +33,127 @@ function StateMasterDashboard() {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.get(hostURL + "Master/DeleteStateType?ID=" + id); //naveen.th@amazeinc.in, Delete API for State master, to delete data
+        apiService.commonGetCall("Master/DeleteStateType?ID=" + id); //naveen.th@amazeinc.in, Delete API for State master, to delete data
         getData()
       }
     });
-
   }
+
+  const [keyword, setKeyword] = useState("");
+  const PER_PAGE = 2;
+  const [currentPage, setCurrentPage] = useState(0);
+  function handlePageClick({ selected: selectedPage }) {
+    setCurrentPage(selectedPage)
+  }
+  const offset = currentPage * PER_PAGE;
+  const pageCount = Math.ceil(state.length / PER_PAGE);
+
   return (
-
     <div className="container">
-      <h3 className="Heading">Province Master</h3>
-      <div className="card p-3 border-0 shadow rounded-3 mt-4 mx-0">
+      <p className="Heading">Province Master</p>
+      <div className="card p-3 rounded-3 shadow border-0">
         <div className="row">
-          <div className="col-lg-1">
-            <p>Filter By</p>
+          <div className="col-1">
+            <p> <BiFilterAlt /> Filter By</p>
           </div>
-
-          <div className="col-lg-3">
+          <div className="col-5">
             <input
               type="text"
+              placeholder="Search"
               className="form-control"
-              placeholder="Search..."
-            />
-          </div>
-
-          <div className="col-lg-3">
-            <select className="form-control">
-              <option value="">Select Country</option>
-              {country.map((data, index) => {
-                return (
-                  <option key={index} value={data.id}>{data.short}</option>
-                )
-              })}
-            </select>
+              onChange={e => setKeyword(e.target.value)}
+            ></input>
           </div>
         </div>
       </div>
 
-      <div className="row mt-4">
-        <div className="col-lg-2">
-          <p className="Heading fs-6 ">SHOWING RESULTS</p>
-        </div>
-        <div className="col-lg-8"></div>
-        <div className="col-lg-2 mx-0">
-          <Link
-            href="/Masters/StateMaster/new"
-
-          >
-            <button className="AddButton">Add New</button>
+      <div className="row mt-3">
+        <p className="col-2 result-heading">Showing {state.length} Results</p>
+        <div className="col-8"></div>
+        <div className="col-2">
+          <Link href="/Masters/StateMaster/new">
+            <button className=" AddButton">
+              <AiOutlinePlus />    Add New
+            </button>
           </Link>
         </div>
       </div>
 
-      <table className="table table-hover mt-4 mx-0">
-        <thead className="bg-info text-white ">
-          <tr>
-            <th>Country</th>
-            <th>Province Name</th>
-            <th>Description</th>
-            <th>Action</th>
-          </tr>
-        </thead>
-        <tbody>
-          {state.map((data, index) => {
-            return (
-              <tr className="text-dark" key={index}>
-                <td>{data.country}</td>
-                <td>{data.short}</td>
-                <td>{data.description}</td>
-                <td>
-                  <Link href={`/Masters/StateMaster/Edit/${data.id}`}>
-                    <button
-                      className='edit-btn'
-                    >
-                      Edit
-                    </button>
-                  </Link>
-                  &nbsp;&nbsp;&nbsp;&nbsp;
-                  <button
-                    className='edit-btn'
-                    onClick={deleteState.bind(this, data.id)}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            );
-          })}
-        </tbody>
-      </table>
-    </div>
+      <div className="mt-3">
+        <table className="table table-striped">
+          <thead>
+            <tr>
+              <th>Country</th>
+              <th>Province Name</th>
+              <th>Description</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {Array.isArray(state) &&
+              state.length > 0 && (
+                <>
+                  {state
+                    .filter(data => {
+                      if ((data.short.toLowerCase().includes(keyword.toLowerCase())) || (data.description.toLowerCase().includes(keyword))) {
+                        return data;
+                      }
+                    })
+                    .slice(offset, offset + PER_PAGE)
+                    .map((data, index) => {
+                      return (
+                        <tr key={index}>
+                          <td>{data.country}</td>
+                          <td>{data.short}</td>
+                          <td>{data.description}</td>
+                          <td>
+                            <Link href={`/Masters/StateMaster/Edit/${data.id}`}>
+                              <button
+                                className='edit-btn'
+                              >
+                                Edit
+                              </button>
+                            </Link>
+                            &nbsp;&nbsp;
+                            <button
+                              className='edit-btn'
+                              onClick={deleteState.bind(this, data.id)}
+                            >
+                              Delete
+                            </button>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                </>
+              )}
+          </tbody>
+        </table>
+      </div>
 
+      <div className="mb-4 mt-4 text-center">
+        <ReactPaginate
+          previousLabel={"Previous"}
+          nextLabel={"Next"}
+          breakLabel={"..."}
+          pageCount={pageCount}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={3}
+          onPageChange={handlePageClick}
+          containerClassName={"pagination  justify-content-center"}
+          pageClassName={"page-item "}
+          pageLinkClassName={"page-link"}
+          previousClassName={"page-item"}
+          previousLinkClassName={"page-link"}
+          nextClassName={"page-item"}
+          nextLinkClassName={"page-link"}
+          breakClassName={"page-item"}
+          breakLinkClassName={"page-link"}
+          activeClassName={"active primary"}
+        />
+      </div>
+
+    </div>
   );
 }
 

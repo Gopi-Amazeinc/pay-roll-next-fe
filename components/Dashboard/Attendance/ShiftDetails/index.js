@@ -2,6 +2,7 @@
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import axios from "axios";
+import { apiService } from "@/services/api.service";
 // import Styles from '../../styles/shiftdetails.module.css'
 const Shiftdetails = () => {
   const [shiftDetails, setShiftDetails] = useState([]);
@@ -10,19 +11,19 @@ const Shiftdetails = () => {
 
   const getShiftDetails = async () => {
     staffID = sessionStorage.getItem("userID");
-    const { data } = await axios.get(
-      hostURL + "HR/GetStaffShiftDetailsByband?staffID=" + staffID
-    );
-    console.log(data);
-    setShiftDetails(data);
+    const res = await apiService.commonGetCall("HR/GetStaffShiftDetailsByband?staffID=" + staffID);
+    // const { data } = await axios.get(hostURL + "HR/GetStaffShiftDetailsByband?staffID=" + staffID
+    //     );
+    console.log(res);
+    setShiftDetails(res);
   };
   useEffect(() => {
     getShiftDetails();
   }, []);
   return (
     <>
-      <div className="row mt-3">
-        <div className="col-lg-3 ">
+      <div className="row mt-3"  >
+        <div className="col-lg-3 " style={{marginLeft: "15px"}}>
           <Link href="/Attendance/shiftdetails" className="Heading active">
             {" "}
             My Weekly Shift
@@ -65,7 +66,7 @@ const Shiftdetails = () => {
         </div>
       </div>
       <div className="row mt-3">
-        <table className="table table-striped mt-3">
+        <table className="table table-striped mt-3" style={{marginLeft: "22px",width:"98%"}}>
           <thead>
             <tr className="bg-info text-white">
               <th>START DATE</th>
@@ -76,7 +77,7 @@ const Shiftdetails = () => {
             </tr>
           </thead>
           <tbody>
-            { Array.isArray(shiftDetails) && shiftDetails.length > 0 && (
+            {Array.isArray(shiftDetails) && shiftDetails.length > 0 && (
               <>
                 {shiftDetails.map((data) => {
                   return (

@@ -1,4 +1,4 @@
-#spinner {
+.spinner {
     -webkit-animation: frames 1s infinite linear;
     animation: frames 1s infinite linear;
     background: transparent;
@@ -25,7 +25,7 @@
     }
 }
 
-#pause {
+.pause {
     display: block;
     background: transparent;
     width: 100%;

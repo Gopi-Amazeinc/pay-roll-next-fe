@@ -4,6 +4,7 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import Modal from 'react-modal';
 import { AiOutlineClose } from 'react-icons/ai'
+import { apiService } from "@/services/api.service";
 import leave from "../../../../pages/Requests/Compensationtimeout/compensation.module.css"
 
 const Compensationtimeout = () => {
@@ -64,38 +65,38 @@ const Compensationtimeout = () => {
 
     const getPendingData = async () => {
         staffID = sessionStorage.getItem("userID");
-        const res = await axios.get(hostURL + "Payroll/GetPendingCompensationTimeOutByStaffID?UserID=" + staffID)
+        const res = await apiService.commonGetCall("Payroll/GetPendingCompensationTimeOutByStaffID?UserID=" + staffID)
         // sessionStorage.setItem("supervisorID", res.data[0].supervisor)
         getPending(res.data)
     }
 
     const getApprovedData = async () => {
         staffID = sessionStorage.getItem("userID");
-        const res = await axios.get(hostURL + "Payroll/GetApproveCompensationTimeOutByStaffID?UserID=" + staffID)
+        const res = await apiService.commonGetCall("Payroll/GetApproveCompensationTimeOutByStaffID?UserID=" + staffID)
         getApproved(res.data)
     }
 
     const getRejectedData = async () => {
         staffID = sessionStorage.getItem("userID");
-        const res = await axios.get(hostURL + "Payroll/GetRejectCompensationTimeOutByStaffID?UserID=" + staffID)
+        const res = await apiService.commonGetCall("Payroll/GetRejectCompensationTimeOutByStaffID?UserID=" + staffID)
         getRejected(res.data)
     }
 
     const getManagerApprovedData = async () => {
-        const res = await axios.get(hostURL + "Payroll/GetApproveCompensationTimeOutBySupervisor?UserID=" + 20540)
+        const res = await apiService.commonGetCall("Payroll/GetApproveCompensationTimeOutBySupervisor?UserID=" + 20540)
         console.log(res.data)
         getManagerApproved(res.data)
     }
 
     const getManagerRejectedData = async () => {
-        const res = await axios.get(hostURL + "Payroll/GetRejectCompensationTimeOutBySupervisor?UserID=" + 20540)
+        const res = await apiService.commonGetCall("Payroll/GetRejectCompensationTimeOutBySupervisor?UserID=" + 20540)
         console.log(res.data)
         getManagerRejected(res.data)
     }
 
     const getPendingCompensation = async () => {
         staffID = sessionStorage.getItem("userID");
-        const res = await axios.get(hostURL + "Payroll/GetPendingCompensationTimeOutBySupervisor?UserID=" + 20540)
+        const res = await apiService.commonGetCall("Payroll/GetPendingCompensationTimeOutBySupervisor?UserID=" + 20540)
         console.log(res.data)
         getComponsation(res.data)
     }
@@ -112,7 +113,7 @@ const Compensationtimeout = () => {
             confirmButtonText: 'Yes, Cancel it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.get(hostURL + "Payroll/DeleteCompensationTimeOut?id=" + id)
+                apiService.commonGetCall("Payroll/DeleteCompensationTimeOut?id=" + id)
                 Swal.fire({
                     icon: "success",
                     titleText: "Cancelled Successfully"
@@ -134,7 +135,7 @@ const Compensationtimeout = () => {
             confirmButtonText: 'Yes, Approve it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.post(hostURL + "Payroll/ApproveCompensationTimeOut?id=" + id)
+                apiService.commonPostCall("Payroll/ApproveCompensationTimeOut?id=" + id)
                 Swal.fire({
                     icon: "success",
                     titleText: "Approved Successfully"
