@@ -209,7 +209,7 @@ export default function EducationDetails() {
                                                         })
                                                     }
                                                 </select>
-                                                {errors.EducationTypeID && <span style={customStyles.errorMsg}> Please enter educational attainment</span>}
+                                                {errors.EducationTypeID && <span style={customStyles.errorMsg}> Please select educational attainment</span>}
                                             </div>}
                                         </div>
                                     }
@@ -219,7 +219,7 @@ export default function EducationDetails() {
                                         <div style={customPopupDivision.popupinputs}>
                                             <p>Course<span  style={customStyles.span}>*</span></p>
                                             {<div>
-                                                <select className='form-control ' {...register("CourseID", { required: true })} style={customStyles.inputLabel}
+                                                <select className='form-select ' {...register("CourseID", { required: true })} style={customStyles.inputLabel}
                                                     onChange={getMajorType.bind(this)} >
                                                     <option value="">Select Course</option>
                                                     {
@@ -230,7 +230,7 @@ export default function EducationDetails() {
                                                         })
                                                     }
                                                 </select>
-                                                {errors.CourseID && <span style={customStyles.errorMsg}> Please Enter Course</span>}
+                                                {errors.CourseID && <span style={customStyles.errorMsg}> Please select course</span>}
                                             </div>}
                                         </div>
                                     }
@@ -239,7 +239,7 @@ export default function EducationDetails() {
                                         <div style={customPopupDivision.popupinputs}>
                                             <p>Major<span  style={customStyles.span}>*</span></p>
                                             {<div>
-                                                <select className='form-control ' {...register("MajorID", { required: true })} style={customStyles.inputLabel}
+                                                <select className='form-select ' {...register("MajorID", { required: true })} style={customStyles.inputLabel}
                                                     onChange={getType.bind(this)} >
                                                     <option value="">Select Major</option>
                                                     {
@@ -250,7 +250,7 @@ export default function EducationDetails() {
                                                         })
                                                     }
                                                 </select>
-                                                {errors.MajorID && <span style={customStyles.errorMsg}> Please Enter Major</span>}
+                                                {errors.MajorID && <span style={customStyles.errorMsg}> Please select major</span>}
                                             </div>}
                                         </div>
                                     }
@@ -260,7 +260,7 @@ export default function EducationDetails() {
                                         <div>
                                             <input type='text' placeholder='School Name'
                                                 {...register("InstitutionName", { required: true })} className='form-control ' ></input>
-                                            {errors.InstitutionName && <span style={customStyles.errorMsg}> Please Enter School Name</span>}
+                                            {errors.InstitutionName && <span style={customStyles.errorMsg}> Please enter school name</span>}
                                         </div>
                                     </div>
 
@@ -270,7 +270,7 @@ export default function EducationDetails() {
                                         <p>Licenses/Certifications<span  style={customStyles.span}>*</span></p>
                                         {
                                             <div>
-                                                <select className='form-control ' {...register("LicenseOrCertificationID", { required: true })} style={customStyles.inputLabel}>
+                                                <select className='form-select ' {...register("LicenseOrCertificationID", { required: true })} style={customStyles.inputLabel}>
                                                     <option value="">Select Licenses/Certifications</option>
                                                     {
                                                         LicenseOrCertificationMaster.map((data) => {
@@ -280,7 +280,7 @@ export default function EducationDetails() {
                                                         })
                                                     }
                                                 </select>
-                                                {errors.LicenseOrCertificationID && <span style={customStyles.errorMsg}> Please Licenses/Certifications</span>}
+                                                {errors.LicenseOrCertificationID && <span style={customStyles.errorMsg}> Please select Licenses/Certifications</span>}
                                             </div>
                                         }
                                     </div>
@@ -289,7 +289,7 @@ export default function EducationDetails() {
                                         <div style={customPopupDivision.popupinputs}>
                                             <p>Country<span  style={customStyles.span}>*</span></p>
                                             {<div>
-                                                <select className='form-control ' {...register("CountryID", { required: true })} style={customStyles.inputLabel}
+                                                <select className='form-select ' {...register("CountryID", { required: true })} style={customStyles.inputLabel}
                                                     onChange={getType.bind(this)} >
                                                     <option value="">Select Country</option>
                                                     {
@@ -300,7 +300,7 @@ export default function EducationDetails() {
                                                         })
                                                     }
                                                 </select>
-                                                {errors.CountryID && <span style={customStyles.errorMsg}> Please Enter Country</span>}
+                                                {errors.CountryID && <span style={customStyles.errorMsg}> Please select country</span>}
                                             </div>}
                                         </div>
                                     }
@@ -311,7 +311,7 @@ export default function EducationDetails() {
                                         <div>
                                             <input type='date' placeholder='Start Date' max="{{maxdate}}"
                                                 {...register("StartDate", { required: true })} className='form-control ' ></input>
-                                            {errors.StartDate && <span style={customStyles.errorMsg}> Please Enter Start Date</span>}
+                                            {errors.StartDate && <span style={customStyles.errorMsg}> Please select start date</span>}
                                         </div>
                                     </div>
 
@@ -321,7 +321,7 @@ export default function EducationDetails() {
                                         <div>
                                             <input type='date' placeholder='End Date' max="{{maxdate}}"
                                                 {...register("EndDate", { required: true })} className='form-control ' ></input>
-                                            {errors.EndDate && <span style={customStyles.errorMsg}> Please Enter End Date</span>}
+                                            {errors.EndDate && <span style={customStyles.errorMsg}> Please select end date</span>}
                                         </div>
                                     </div>
 

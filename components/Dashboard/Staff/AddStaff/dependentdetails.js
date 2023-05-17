@@ -217,7 +217,7 @@ export default function DependentDetails() {
                                         <p>Attachment<span style={customStyles.span}>*</span></p>
                                         <div>
                                             <input type='file'
-                                                {...register("Attachment", { required: false })} className='form-control ' ></input>
+                                                {...register("Attachment", { required: false })} className='form-control' ></input>
                                             {errors.Attachment && <span style={customStyles.errorMsg}> Please upload Attachment</span>}
                                         </div>
                                     </div>

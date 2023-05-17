@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useForm } from "react-hook-form";
 import axios from 'axios';
-// import Dropzone from '../../SharedComponent/dropzone'
+import Dropzone from '../../../../pages/SharedComponent/dropzone'
 
 export default function IDDetails() {
 
@@ -10,6 +10,7 @@ export default function IDDetails() {
     const [IDTypeMaster, setIDTypeMaster] = useState([]);
     const [IDDetails, setIDDetails] = useState([]);
     const [Type, setType] = useState(0);
+    const { upload, setupload} = useState([]);
 
 
 
@@ -28,6 +29,9 @@ export default function IDDetails() {
             fontWeight: '500',
             color: 'red'
         },
+        span: {
+            color: 'red'
+        }
     };
 
     const customPopupDivision = {
@@ -130,12 +134,6 @@ export default function IDDetails() {
     }
 
 
-
-
-
-
-
-
     async function editData(data) {
         debugger;
         let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
@@ -151,9 +149,13 @@ export default function IDDetails() {
 
     }
 
-
-
-
+   
+        const handleDrop = (acceptedFiles) => {
+         
+debugger
+            console.log(acceptedFiles)
+        };
+    
 
     return (
         <div>
@@ -168,10 +170,10 @@ export default function IDDetails() {
                                 <div style={customPopupDivision.popupcontent}>
 
                                     <div style={customPopupDivision.popupinputs}>
-                                        <p>ID Type<span >*</span></p>
+                                        <p>ID Type<span style={customStyles.span}>*</span></p>
                                         {
                                             <div>
-                                                <select className='form-control inputwidth'
+                                                <select className='form-select'
                                                     value={Type} onChange={(e) => setType(e.target.value)}
                                                     style={customStyles.inputLabel}>
                                                     <option value="">Select ID Type</option>
@@ -183,47 +185,55 @@ export default function IDDetails() {
                                                         })
                                                     }
                                                 </select>
-                                                {errors.IDTypeID && <span style={customStyles.errorMsg}> Please Enter ID Number</span>}
+                                                {errors.IDTypeID && <span style={customStyles.errorMsg}> Please select ID type</span>}
 
                                             </div>
                                         }
                                     </div>
 
                                     <div style={customPopupDivision.popupinputs}>
-                                        <p>ID Number<span >*</span></p>
+                                        <p>ID Number<span style={customStyles.span}>*</span></p>
                                         <div>
                                             <input type='text' placeholder='ID Number'
-                                                {...register("IDNumber", { required: true })} className='form-control inputwidth' ></input>
-                                            {errors.IDNumber && <span style={customStyles.errorMsg}> Please Enter ID Number</span>}
+                                                {...register("IDNumber", { required: true })} className='form-control ' ></input>
+                                            {errors.IDNumber && <span style={customStyles.errorMsg}> Please enter ID number</span>}
                                         </div>
                                     </div>
 
                                     <div style={customPopupDivision.popupinputs}>
-                                        <p>Name on ID<span >*</span></p>
+                                        <p>Name on ID<span style={customStyles.span}>*</span></p>
                                         <div>
                                             <input type='text' placeholder='Name on ID'
-                                                {...register("NameOnID", { required: true })} className='form-control inputwidth' ></input>
-                                            {errors.NameOnID && <span style={customStyles.errorMsg}> Please Enter Name on ID</span>}
+                                                {...register("NameOnID", { required: true })} className='form-control ' ></input>
+                                            {errors.NameOnID && <span style={customStyles.errorMsg}> Please enter name on ID</span>}
                                         </div>
                                     </div>
 
                                     {
                                         Type == 4 && (
                                             <div style={customPopupDivision.popupinputs}>
-                                                <p>Name Of ID<span >*</span></p>
+                                                <p>Name Of ID<span style={customStyles.span}>*</span></p>
                                                 <div>
                                                     <input type='text' placeholder='Name of ID'
-                                                        {...register("NameOfID", { required: true })} className='form-control inputwidth' ></input>
-                                                    {errors.NameOfID && <span style={customStyles.errorMsg}> Please Enter Name of ID</span>}
+                                                        {...register("NameOfID", { required: true })} className='form-control ' ></input>
+                                                    {errors.NameOfID && <span style={customStyles.errorMsg}> Please enter name of ID</span>}
                                                 </div>
                                             </div>
                                         )
                                     }
 
                                     <div style={customPopupDivision.popupinputs}>
-                                        <p>Attachments<span >*</span></p>
+                                        <p>Attachments<span style={customStyles.span}>*</span></p>
                                         <div>
-                                            {/* <Dropzone /> */}
+                                            {/* <Dropzone onChange={uploadData(Event)}/> */}
+                                            <Dropzone >
+      {({ getRootProps, getInputProps }) => (
+        <div {...getRootProps()}>
+          <input {...getInputProps()} onChange={handleDrop}/>
+          <p>Drag and drop files here or click to select files</p>
+        </div>
+      )}
+    </Dropzone>
                                         </div>
                                     </div>
                                 </div>
@@ -232,7 +242,6 @@ export default function IDDetails() {
                         </div>
                         <br></br>
                         <div className="d-flex justify-content-center w-100 mt-2 mb-2 pr-2">
-                            {/* <button className='close-button' onClick={closeModal}>Cancel</button> */}
                             {
                                 actionType == "insert" && (
                                     <button className='submit-button' >Submit</button>

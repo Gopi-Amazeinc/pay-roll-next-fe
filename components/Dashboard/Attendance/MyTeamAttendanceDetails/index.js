@@ -102,7 +102,6 @@ const MyTeamAttendence = () => {
           "&EDate=" +
           EDate
       );
-      // let res = await axios.get(hostURL + "HR/GetAttendanceByEmployeeID?userID=" + userID + "&SDate=" + SDate + "&EDate=" + EDate);
       setMyTeamAttendence(res.data);
     }
   };

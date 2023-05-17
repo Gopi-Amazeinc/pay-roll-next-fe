@@ -23,6 +23,9 @@ export default function BankDetails() {
             fontWeight: '500',
             color: 'red'
         },
+        span: {
+            color: 'red'
+        }
     };
 
     const customPopupDivision = {
@@ -148,10 +151,10 @@ export default function BankDetails() {
                                 <div style={customPopupDivision.popupcontent}>
 
                                     <div style={customPopupDivision.popupinputs}>
-                                        <p>Name Of Bank<span >*</span></p>
+                                        <p>Name Of Bank<span style={customStyles.span}>*</span></p>
                                         {
                                             <div>
-                                                <select className='form-control inputwidth'{...register("BankID", { required: true })} style={customStyles.inputLabel}>
+                                                <select className='form-select '{...register("BankID", { required: true })} style={customStyles.inputLabel}>
                                                     <option value="">Select Bank</option>
                                                     {
                                                         BankMaster.map((data) => {
@@ -160,48 +163,48 @@ export default function BankDetails() {
                                                             )
                                                         })
                                                     }
-                                                    {errors.BankID && <span style={customStyles.errorMsg}> Please Enter Title</span>}
+                                                   
                                                 </select>
-
+                                                {errors.BankID && <span style={customStyles.errorMsg}> Please select name of bank</span>}
                                             </div>
                                         }
                                     </div>
 
                                     <div style={customPopupDivision.popupinputs}>
-                                        <p>Account Holder Name<span >*</span></p>
+                                        <p>Account Holder Name<span style={customStyles.span}>*</span></p>
                                         <div>
                                             <input type='text' placeholder='Account Holder Name'
-                                                {...register("AccountHolderName", { required: true })} className='form-control inputwidth' ></input>
-                                            {errors.AccountHolderName && <span style={customStyles.errorMsg}> Please Enter Account Holder Name</span>}
+                                                {...register("AccountHolderName", { required: true })} className='form-control ' ></input>
+                                            {errors.AccountHolderName && <span style={customStyles.errorMsg}> Please enter account holder name</span>}
                                         </div>
                                     </div>
 
                                     <div style={customPopupDivision.popupinputs}>
-                                        <p>Bank Account Number<span >*</span></p>
+                                        <p>Bank Account Number<span style={customStyles.span}>*</span></p>
                                         <div>
                                             <input type='text' placeholder='Bank Account Number'
-                                                {...register("BankAccountNumber", { required: true })} className='form-control inputwidth' ></input>
-                                            {errors.BankAccountNumber && <span style={customStyles.errorMsg}> Please Enter Bank Account Number</span>}
+                                                {...register("BankAccountNumber", { required: true })} className='form-control ' ></input>
+                                            {errors.BankAccountNumber && <span style={customStyles.errorMsg}> Please enter bank account number</span>}
                                         </div>
                                     </div>
 
 
                                     <div style={customPopupDivision.popupinputs}>
-                                        <p>Branch<span >*</span></p>
+                                        <p>Branch<span style={customStyles.span}>*</span></p>
                                         <div>
                                             <input type='text' placeholder='Branch'
-                                                {...register("BranchName", { required: true })} className='form-control inputwidth' ></input>
-                                            {errors.BranchName && <span style={customStyles.errorMsg}> Please Enter Branch</span>}
+                                                {...register("BranchName", { required: true })} className='form-control ' ></input>
+                                            {errors.BranchName && <span style={customStyles.errorMsg}> Please enter branch</span>}
                                         </div>
                                     </div>
 
 
                                     <div style={customPopupDivision.popupinputs}>
-                                        <p>Branch Address<span >*</span></p>
+                                        <p>Branch Address<span style={customStyles.span}>*</span></p>
                                         <div>
                                             <input type='text' placeholder='Branch Address'
-                                                {...register("BranchAddress", { required: true })} className='form-control inputwidth' ></input>
-                                            {errors.BranchAddress && <span style={customStyles.errorMsg}> Please Enter Branch Address</span>}
+                                                {...register("BranchAddress", { required: true })} className='form-control ' ></input>
+                                            {errors.BranchAddress && <span style={customStyles.errorMsg}> Please enter branch address</span>}
                                         </div>
                                     </div>
 
