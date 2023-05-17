@@ -495,7 +495,7 @@ export default function ContactDetails() {
 
 
                     <div className="d-flex justify-content-center w-100 mt-2 mb-2 pr-2">
-                        <button className='submit-button'>Sumbit</button>
+                        <button className='staffSubmitBtn'>Submit</button>
                     </div>
                 </div>
             </form>

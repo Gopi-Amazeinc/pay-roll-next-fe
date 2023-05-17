@@ -12,21 +12,24 @@ export default function IDDetails() {
     const [IDTypeMaster, setIDTypeMaster] = useState([]);
     const [IDDetails, setIDDetails] = useState([]);
     const [Type, setType] = useState(0);
+    const [filePath, setFilePath] = useState();
 
     const onDrop = useCallback(acceptedFiles => {
           debugger
-          console.log(acceptedFiles,"wwfewdvsdsddsdvcffff")
+          console.log(acceptedFiles,"Uploaded file")
           uploadFile(acceptedFiles)
           
     }, [])
     const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
 
     const uploadFile = async (data)=>{
+      let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
       const formData = new FormData();
       formData.append('file_upload', data[0], data[0].name);
       let res = await axios.post(hostURL + "Payroll/ProjectAttachments", formData);
-      console.log(res,"uploaded file - path")
+      console.log(res,"File Path")
       Swal.fire("Uploaded successfully")
+      setFilePath(res.data);
     }
 
     const customStyles = {
@@ -96,35 +99,32 @@ export default function IDDetails() {
     async function onSubmit(data) {
         debugger
         console.log(data)
-        
-
         if (actionType == "insert") {
             let Entity = {
                 IDTypeID: Type,
                 IDNumber: data.IDNumber,
                 NameOnID: data.NameOnID,
-                IDAttachment: "No Image",
+                IDAttachment: filePath,
                 StaffID: sessionStorage.getItem('userID'),
                 NameOfID: data.NameOfID
             }
-
             await axios.post(hostURL + "Payroll/InsertID_Details", Entity);
+            Swal.fire("Saved Successfully!")
             setType(0);
             getData();
             cleardata();
         } else {
-
             let Entity = {
                 ID: data.ID,
                 IDTypeID: Type,
                 IDNumber: data.IDNumber,
                 NameOnID: data.NameOnID,
-                IDAttachment: "No Image",
+                IDAttachment: "NoImage",
                 StaffID: sessionStorage.getItem('userID'),
                 NameOfID: data.NameOfID
             }
-
             await axios.post(hostURL + "Payroll/UpdateID_Details", Entity);
+            Swal.fire("Updated Successfully!")
             setType(0);
             getData();
             cleardata();
@@ -277,7 +277,6 @@ export default function IDDetails() {
                         Attachments<span style={customStyles.span}>*</span>
                       </p>
                       <div>
-                        {/* <Dropzone onChange={uploadData(Event)}/> */}
                         <div {...getRootProps()}>
                           <input {...getInputProps()} />
                           {isDragActive ? (
@@ -297,10 +296,10 @@ export default function IDDetails() {
               <br></br>
               <div className="d-flex justify-content-center w-100 mt-2 mb-2 pr-2">
                 {actionType == "insert" && (
-                  <button className="submit-button">Submit</button>
+                  <button className="staffSubmitBtn">Submit</button>
                 )}
                 {actionType == "update" && (
-                  <button className="submit-button">Update</button>
+                  <button className="staffSubmitBtn">Update</button>
                 )}
               </div>
             </form>
@@ -327,13 +326,13 @@ export default function IDDetails() {
                           <td>{data.status}</td>
                           <td className="d-flex">
                             <button
-                              className="editButton"
+                              className="staffEditBtn"
                               onClick={editData.bind(this, data.id)}
                             >
                               Edit
-                            </button>
+                            </button>&nbsp;
                             <button
-                              className="deleteButton"
+                              className="staffDeleteBtn"
                               onClick={deleteData.bind(this, data.id)}
                             >
                               Delete

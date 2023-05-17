@@ -157,13 +157,6 @@ function PositionDetails() {
         setStafflistData(res8.data);
 
 
-        // let res9 = await axios.get(hostURL + "/HR/GetCostCentersMaster");
-        // setCostlistData(res9.data);
-
-        // let res10 = await axios.get(hostURL + "/Master/GetCountryType");
-        // setCountrytypeListData(res10.data);
-
-
         let res11 = await axios.get(hostURL + "/Master/GetStateType");
         setProvincelistData(res11.data);
 
@@ -675,7 +668,7 @@ function PositionDetails() {
 
 
                     <div className="d-flex justify-content-center w-100 mt-2 mb-2 pr-2">
-                        <button className='submit-button'>Sumbit</button>
+                        <button className='staffSubmitBtn'>Submit</button>
                     </div>
 
 

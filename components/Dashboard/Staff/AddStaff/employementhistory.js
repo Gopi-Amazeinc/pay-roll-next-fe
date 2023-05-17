@@ -214,12 +214,12 @@ export default function EmploymentDetails() {
                                 <div class="d-flex justify-content-center w-100 mt-2 mb-2 pr-2">
                                     {
                                         actionType == "insert" && (
-                                            <button className='submit-button' >Submit</button>
+                                            <button className='staffSubmitBtn' >Submit</button>
                                         )
                                     }
                                     {
                                         actionType == "update" && (
-                                            <button className='submit-button' >Update</button>
+                                            <button className='staffSubmitBtn' >Update</button>
                                         )
                                     }
                                 </div>
@@ -246,19 +246,39 @@ export default function EmploymentDetails() {
                                     {
                                         EmploymentDetals.map((data, index) => {
                                             return (
-                                                <tr className="text-dark" key={index}>
-                                                    <td>{data.companyName}</td>
-                                                    <td>{data.positionTitle}</td>
-                                                    <td>{data.employementType}</td>
-                                                    <td>{data.startDate}</td>
-                                                    <td>{data.endDate}</td>
+                                              <tr
+                                                className="text-dark"
+                                                key={index}
+                                              >
+                                                <td>{data.companyName}</td>
+                                                <td>{data.positionTitle}</td>
+                                                <td>{data.employementType}</td>
+                                                <td>{data.startDate}</td>
+                                                <td>{data.endDate}</td>
 
-                                                    <td className='d-flex'>
-                                                        <button className='editButton' onClick={editData.bind(this, data.id)}>Edit</button>
-                                                        <button className='deleteButton' onClick={deleteData.bind(this, data.id)}>Delete</button>
-                                                    </td>
-                                                </tr>
-                                            )
+                                                <td className="d-flex">
+                                                  <button
+                                                    className="staffEditBtn"
+                                                    onClick={editData.bind(
+                                                      this,
+                                                      data.id
+                                                    )}
+                                                  >
+                                                    Edit
+                                                  </button>
+                                                  &nbsp;
+                                                  <button
+                                                    className="staffDeleteBtn"
+                                                    onClick={deleteData.bind(
+                                                      this,
+                                                      data.id
+                                                    )}
+                                                  >
+                                                    Delete
+                                                  </button>
+                                                </td>
+                                              </tr>
+                                            );
                                         })
                                     }
                                 </tbody>
