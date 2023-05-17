@@ -32,8 +32,7 @@ const ApplyLeave = () => {
       await apiService.commonPostCall("HR/InsertStaffLeaves", data);
       Swal.fire({
         icon: "success",
-        title: "Hurray..",
-        text: "Data was inserted...!",
+        text: "Leave request was inserted successfully...!",
       });
       sessionStorage.setItem("Sdate",data.SDateOfLeave);
       sessionStorage.setItem("Edate",data.EDateOfLeave);
@@ -126,9 +125,9 @@ const ApplyLeave = () => {
               <label htmlFor="">Attachment</label>
               {/* <DropZone {...register("MedicalUrl", { required: true })} /> */}
               <input
-                type="text"
+                type="file"
                 className="form-control"
-                {...register("MedicalUrl", { required: true })}
+                {...register("MedicalUrl")}
               />
             </div>
             <div className="col-lg-2"></div>
