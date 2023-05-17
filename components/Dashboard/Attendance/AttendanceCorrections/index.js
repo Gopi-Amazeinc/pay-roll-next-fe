@@ -1,12 +1,16 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import { useRef } from 'react';
 import Link from "next/link";
 import Swal from "sweetalert2";
 import { apiService } from "@/services/api.service";
 import Styles from "@/styles/attendancedetails.module.css";
 import { useRouter } from "next/router";
+import { DownloadTableExcel } from 'react-export-table-to-excel';
 
 const Attendancecorrectiondashboard = () => {
+  const tableRef = useRef(null);
+
   const [roleID, setRoleID] = useState();
   const [userID, setUserID] = useState();
 
@@ -271,7 +275,12 @@ const Attendancecorrectiondashboard = () => {
                       </Link>
                     </div>
                     <div className="col-lg-4">
+                    <DownloadTableExcel
+                      filename="Attendance table"
+                      sheet="Attendance"
+                    currentTableRef={tableRef.current}>
                       <button className="button">Download</button>
+                      </DownloadTableExcel>
                     </div>
                   </div>
                 </>
@@ -320,7 +329,8 @@ const Attendancecorrectiondashboard = () => {
         </div>
 
         {pending && roleID != "2" && (
-          <table className="table table-hover">
+          <table className="table table-hover"
+          ref={tableRef}>
             <thead className="bg-info text-white">
               <tr>
                 <th>Date</th>
@@ -337,11 +347,11 @@ const Attendancecorrectiondashboard = () => {
                 pendingDashboardData.length > 0 && (
                   <>
                     {pendingDashboardData
-                      //  .filter(data => {
-                      //   if ((data.countryname.toLowerCase().includes(keyword.toLowerCase())) || (data.name.toLowerCase().includes(keyword))) {
-                      //     return data;
-                      //   }
-                      // })
+                       .filter(data => {
+                        if ((data.startTime.toLowerCase().includes(keyword))||(data.date.toLowerCase().includes(keyword))||(data.endTime.toLowerCase().includes(keyword))) {
+                          return data;
+                        }
+                      })
                       .map((data) => {
                         return (
                           <tr key={data.id}>
@@ -371,7 +381,7 @@ const Attendancecorrectiondashboard = () => {
         )}
 
         {pending && roleID == "2" && (
-          <table className="table table-hover">
+          <table className="table table-hover" ref={tableRef}>
             <thead className="bg-info text-white">
               <tr>
                 <th>Employee Name</th>
@@ -414,7 +424,7 @@ const Attendancecorrectiondashboard = () => {
         )}
 
         {approved && roleID != "2" && (
-          <table className="table table-hover">
+          <table className="table table-hover" ref={tableRef}>
             <thead className="bg-info text-white">
               <tr>
                 <th>Date</th>
@@ -447,7 +457,7 @@ const Attendancecorrectiondashboard = () => {
         )}
 
         {approved && roleID == "2" && (
-          <table className="table table-hover">
+          <table className="table table-hover" ref={tableRef}>
             <thead className="bg-info text-white">
               <tr>
                 <th>Employee Name</th>
@@ -478,7 +488,7 @@ const Attendancecorrectiondashboard = () => {
         )}
 
         {rejected && roleID != "2" && (
-          <table className="table table-hover">
+          <table className="table table-hover" ref={tableRef}>
             <thead className="bg-info text-white">
               <tr>
                 <th>Date</th>
@@ -511,7 +521,7 @@ const Attendancecorrectiondashboard = () => {
         )}
 
         {rejected && roleID == "2" && (
-          <table className="table table-hover">
+          <table className="table table-hover" ref={tableRef}>
             <thead className="bg-info text-white">
               <tr>
                 <th>Employee Name</th>
