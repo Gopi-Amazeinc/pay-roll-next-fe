@@ -193,7 +193,7 @@ const Compensationtimeout = () => {
                         <input type="text" className='form-control' placeholder='Search...' />
                     </div>
                     {
-                        sessionStorage.getItem("roleID") != "2" && (
+                        sessionStorage.getItem("roleID") != "3" && (
                             <div className='col-lg-6'>
                                 <Link href="/Requests/Compensationtimeout/new"><button className='submit-button'>Add Compensation Time Out</button></Link>
                             </div>
