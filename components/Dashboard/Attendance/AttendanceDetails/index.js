@@ -2,10 +2,14 @@ import Link from "next/link";
 import React from "react";
 import { apiService } from "@/services/api.service";
 import { useEffect, useState } from "react";
+import { useRef } from 'react';
 import Styles from "@/styles/attendancedetails.module.css";
 import ReactPaginate from "react-paginate";
+import { DownloadTableExcel } from 'react-export-table-to-excel';
+
 
 const AttendenceDetails = () => {
+  const tableRef = useRef(null);
   const [Attendence, setAttendence] = useState([]);
 
   const [userID, setUserID] = useState();
@@ -100,7 +104,6 @@ const AttendenceDetails = () => {
         "&EDate=" +
         EDate
       );
-      // let res = await axios.get(hostURL + "HR/GetAttendanceByEmployeeID?userID=" + userID + "&SDate=" + SDate + "&EDate=" + EDate);
       setAttendence(res.data);
     }
   };
@@ -171,9 +174,14 @@ const AttendenceDetails = () => {
               <div className="col-lg-2">
                 <br />
                 <p></p>
-                <button className="button" id="AddButton">
-                  Download
-                </button>
+                <DownloadTableExcel
+                  filename="users table"
+                  sheet="users"
+                  currentTableRef={tableRef.current}>
+                  <button className="button" id="AddButton">
+                    Download
+                  </button>
+                </DownloadTableExcel>
               </div>
             </div>
           </div>
@@ -186,6 +194,7 @@ const AttendenceDetails = () => {
               <table
                 className="table table-striped table-bordered "
                 style={{ marginLeft: "0px", width: "100%" }}
+                ref={tableRef}
               >
                 <thead className={"bg-info text-white "}>
                   <tr style={{ whiteSpace: "nowrap" }}>

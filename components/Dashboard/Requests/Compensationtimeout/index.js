@@ -15,6 +15,9 @@ const Compensationtimeout = () => {
     const [pending, setPending] = useState(false)
     const [approved, setApproved] = useState(false)
     const [rejected, setRejected] = useState(false)
+    const [managertogglePending, setManagerTogglePending] = useState(false)
+    const [managerToggleapproved, setManagerToggleApproved] = useState(false)
+    const [managertogglerejected, setManagerToggleRejected] = useState(false);
 
 
     const [pendingDashboard, getPending] = useState([])
@@ -35,6 +38,9 @@ const Compensationtimeout = () => {
         setPending(true)
         setApproved(false)
         setRejected(false)
+        setManagerTogglePending(true)
+        setManagerToggleApproved(false)
+        setManagerToggleRejected(false)
     }
 
     const toggleApproved = (e) => {
@@ -42,6 +48,10 @@ const Compensationtimeout = () => {
         setApproved(true)
         setPending(false)
         setRejected(false)
+        setManagerTogglePending(false);
+        setManagerToggleApproved(true);
+        setManagerToggleRejected(false);
+        console.log("pending manager login")
     }
 
     const toggleRejected = (e) => {
@@ -49,6 +59,9 @@ const Compensationtimeout = () => {
         setRejected(true)
         setApproved(false)
         setPending(false)
+        setManagerTogglePending(false);
+        setManagerToggleApproved(false);
+        setManagerToggleRejected(true);
     }
 
     const customStyles = {
@@ -62,7 +75,7 @@ const Compensationtimeout = () => {
 
 
     let staffID;
-
+    staffID = sessionStorage.getItem("userID")
     const getPendingData = async () => {
         staffID = sessionStorage.getItem("userID");
         const res = await apiService.commonGetCall("Payroll/GetPendingCompensationTimeOutByStaffID?UserID=" + staffID)
@@ -73,7 +86,7 @@ const Compensationtimeout = () => {
     const getApprovedData = async () => {
         staffID = sessionStorage.getItem("userID");
         const res = await apiService.commonGetCall("Payroll/GetApproveCompensationTimeOutByStaffID?UserID=" + staffID)
-        getApproved(res.data)
+        getApproved(res.data, "employee approved")
     }
 
     const getRejectedData = async () => {
@@ -97,7 +110,7 @@ const Compensationtimeout = () => {
     const getPendingCompensation = async () => {
         staffID = sessionStorage.getItem("userID");
         const res = await apiService.commonGetCall("Payroll/GetPendingCompensationTimeOutBySupervisor?UserID=" + 20540)
-        console.log(res.data)
+        console.log(res.data, "manager pending")
         getComponsation(res.data)
     }
 
@@ -176,6 +189,7 @@ const Compensationtimeout = () => {
         getRejectedData();
         getManagerApprovedData();
         getManagerRejectedData();
+        console.log("working useEffect")
     }, [1])
 
     return (
@@ -192,7 +206,7 @@ const Compensationtimeout = () => {
                         <input type="text" className='form-control' placeholder='Search...' />
                     </div>
                     {
-                        sessionStorage.getItem("roleID") != "2" && (
+                        sessionStorage.getItem("roleID") != "3" && (
                             <div className='col-lg-6'>
                                 <Link href="/Requests/Compensationtimeout/new"><button className='submit-button'>Add Compensation Time Out</button></Link>
                             </div>
@@ -204,9 +218,9 @@ const Compensationtimeout = () => {
             <div className='row mt-3'>
                 <div className='col-lg-4'>
                     <div className='btn-group'>
-                        <button onClick={togglePending} className='toggleButton' >Pending</button>
-                        <button onClick={toggleApproved} className='toggleButton'  >Approved</button>
-                        <button onClick={toggleRejected} className='toggleButton' >Rejected</button>
+                        <button onClick={() => togglePending} className='toggleButton' >Pending</button>
+                        <button onClick={() => toggleApproved} className='toggleButton'  >Approved</button>
+                        <button onClick={() => toggleRejected} className='toggleButton' >Rejected</button>
                     </div>
                 </div>
             </div>
@@ -244,7 +258,7 @@ const Compensationtimeout = () => {
                     <h6>Showing Results</h6>
                 </div>
                 {
-                    pending && sessionStorage.getItem("roleID") != "2" && (
+                    pending && sessionStorage.getItem("roleID") != "3" && (
                         <table className='table table-hover'>
                             <thead className='bg-info text-white'>
                                 <tr>
@@ -281,7 +295,7 @@ const Compensationtimeout = () => {
 
                 {
 
-                    pending && sessionStorage.getItem("roleID") == "2" && (
+                    managertogglePending && sessionStorage.getItem("roleID") == "3" && (
                         <table className='table table-hover'>
                             <thead className='bg-info text-white'>
                                 <tr>
@@ -316,7 +330,7 @@ const Compensationtimeout = () => {
                 }
 
                 {
-                    approved && sessionStorage.getItem("roleID") != "2" && (
+                    approved && sessionStorage.getItem("roleID") != "3" && (
                         <table className='table table-hover'>
                             <thead className='bg-info text-white'>
                                 <tr>
@@ -349,7 +363,7 @@ const Compensationtimeout = () => {
 
                 {
 
-                    approved && sessionStorage.getItem("roleID") == "2" && (
+                    managerToggleapproved && sessionStorage.getItem("roleID") == "3" && (
                         <table className='table table-hover'>
                             <thead className='bg-info text-white'>
                                 <tr>
@@ -379,7 +393,7 @@ const Compensationtimeout = () => {
                 }
 
                 {
-                    rejected && sessionStorage.getItem("roleID") != "2" && (
+                    rejected && sessionStorage.getItem("roleID") != "3" && (
                         <table className='table table-hover'>
                             <thead className='bg-info text-white'>
                                 <tr>
@@ -412,7 +426,7 @@ const Compensationtimeout = () => {
 
                 {
 
-                    rejected && sessionStorage.getItem("roleID") == "2" && (
+                    managertogglerejected && sessionStorage.getItem("roleID") == "3" && (
                         <table className='table table-hover'>
                             <thead className='bg-info text-white'>
                                 <tr>

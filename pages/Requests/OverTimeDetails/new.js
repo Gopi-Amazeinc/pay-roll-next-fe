@@ -8,7 +8,9 @@ import axios from 'axios';
 import Styles from "@../../../pages/OT/Ot.module.css"
 import Link from 'next/link';
 import { apiService } from "@/services/api.service";
+import { useRouter } from "next/router";
 const OverTimeDetails = () => {
+  const router = useRouter();
   const { register, handleSubmit, watch, reset, formState } = useForm();
   const [dashboardData, setDashboardData] = useState([]);
   const { errors } = formState;
@@ -85,9 +87,9 @@ const OverTimeDetails = () => {
         "LegalExccessRestNightOt": dashboardData[0].legalExccessRestNightOt == null ? 0 : dashboardData[0].legalExccessRestNightOt
       }
       await apiService.commonPostCall("HR/InsertStaffOverTimeDetails", details);
-      Swal.fire('Data Inserted successfully')
+      Swal.fire('Data Inserted successfully');
+      router.push("/Requests/OverTimeDetails");
       console.log("Inserted data:", details);
-      location.href = ("/Requests/OverTimeDetails");
     }
     catch {
       Swal.fire("Insert is not working");

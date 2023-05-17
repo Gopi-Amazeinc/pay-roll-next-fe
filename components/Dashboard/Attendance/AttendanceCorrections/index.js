@@ -1,10 +1,16 @@
 import React from "react";
 import { useState, useEffect } from "react";
+import { useRef } from 'react';
 import Link from "next/link";
 import Swal from "sweetalert2";
 import { apiService } from "@/services/api.service";
+import Styles from "@/styles/attendancedetails.module.css";
+import { useRouter } from "next/router";
+import { DownloadTableExcel } from 'react-export-table-to-excel';
 
 const Attendancecorrectiondashboard = () => {
+  const tableRef = useRef(null);
+
   const [roleID, setRoleID] = useState();
   const [userID, setUserID] = useState();
 
@@ -22,6 +28,8 @@ const Attendancecorrectiondashboard = () => {
 
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+
+  const [keyword, setKeyword] = useState("");
 
   const togglePending = () => {
     setPending(true);
@@ -42,26 +50,32 @@ const Attendancecorrectiondashboard = () => {
   };
 
   useEffect(() => {
-    const usrID = sessionStorage.getItem("userID");
-    setUserID(usrID);
+    const userid = sessionStorage.getItem("userID");
+    setUserID(userid);
 
     const userRoleID = sessionStorage.getItem("roleID");
     setRoleID(userRoleID);
 
     setPending(true);
+  }, []);
 
-    getCurrentMonthDates();
-
-    if (roleID === 3) {
-      getPendingManager(startDate, endDate);
-      getApprovedManager(startDate, endDate);
-      getRejectedManager(startDate, endDate);
-    } else {
-      getPendingData(startDate, endDate);
-      getApprovedData(startDate, endDate);
-      getRejectedData(startDate, endDate);
+  useEffect(() => {
+    if (userID) {
+      const resu = getCurrentMonthDates();
+      if (resu) {
+        if (roleID == 3) {
+          debugger;
+          getPendingManager(resu.setStartDate, resu.setEndDate);
+          getApprovedManager(resu.setStartDate, resu.setEndDate);
+          getRejectedManager(resu.setStartDate, resu.setEndDate);
+        } else {
+          getPendingData(resu.setStartDate, resu.setEndDate);
+          getApprovedData(resu.setStartDate, resu.setEndDate);
+          getRejectedData(resu.setStartDate, resu.setEndDate);
+        }
+      }
     }
-  }, [1]);
+  }, [roleID]);
 
   const getCurrentMonthDates = () => {
     let newDate = new Date();
@@ -77,6 +91,10 @@ const Attendancecorrectiondashboard = () => {
 
     setStartDate(fromDate);
     setEndDate(toDate);
+    return {
+      setStartDate: fromDate,
+      setEndDate: toDate,
+    };
   };
 
   const formateDate = (datetoformat) => {
@@ -89,11 +107,11 @@ const Attendancecorrectiondashboard = () => {
   const getPendingManager = async (SDate, EDate) => {
     const res = await apiService.commonGetCall(
       "Payroll/GetPendingAttendanceCorrectionBySupervisor?userID=" +
-      userID +
-      "&SDate=" +
-      SDate +
-      "&EDate=" +
-      EDate
+        userID +
+        "&SDate=" +
+        SDate +
+        "&EDate=" +
+        EDate
     );
     // const res = await axios.get( hostURL + "Payroll/GetPendingAttendanceCorrectionBySupervisor?userID=" + userID +"&SDate=" + SDate +"&EDate=" +EDate);
     setManagerPendingData(res.data);
@@ -102,11 +120,11 @@ const Attendancecorrectiondashboard = () => {
   const getApprovedManager = async (SDate, EDate) => {
     const res = await apiService.commonGetCall(
       "Payroll/GetApprovedAttendanceCorrectionBySupervisor?userID=" +
-      userID +
-      "&SDate=" +
-      SDate +
-      "&EDate=" +
-      EDate
+        userID +
+        "&SDate=" +
+        SDate +
+        "&EDate=" +
+        EDate
     );
     // const res = await axios.get( hostURL + "Payroll/GetApprovedAttendanceCorrectionBySupervisor?userID=" + userID +  "&SDate=" +  SDate +  "&EDate=" +EDate );
     setManagerApprovedData(res.data);
@@ -115,11 +133,11 @@ const Attendancecorrectiondashboard = () => {
   const getRejectedManager = async (SDate, EDate) => {
     const res = await apiService.commonGetCall(
       "Payroll/GetApprovedAttendanceCorrectionBySupervisor?userID=" +
-      userID +
-      "&SDate=" +
-      SDate +
-      "&EDate=" +
-      EDate
+        userID +
+        "&SDate=" +
+        SDate +
+        "&EDate=" +
+        EDate
     );
     //  const res = await axios.get( hostURL + "Payroll/GetApprovedAttendanceCorrectionBySupervisor?userID=" +  userID + "&SDate=" + SDate + "&EDate=" + EDate);
     setManagerRejectedData(res.data);
@@ -138,13 +156,13 @@ const Attendancecorrectiondashboard = () => {
       if (result.isConfirmed) {
         await apiService.commonGetCall(
           "Payroll/ApproveAttedanceCoorection?id=" +
-          data.id +
-          "&UserID=" +
-          data.staffID +
-          "&SigninDate=" +
-          SDate +
-          "&SignoutDate=" +
-          EDate
+            data.id +
+            "&UserID=" +
+            data.staffID +
+            "&SigninDate=" +
+            SDate +
+            "&SignoutDate=" +
+            EDate
         );
         Swal.fire({
           icon: "success",
@@ -158,11 +176,11 @@ const Attendancecorrectiondashboard = () => {
   const getPendingData = async (SDate, EDate) => {
     const res = await apiService.commonGetCall(
       "Payroll/GetPendingAttendanceCorrectionByStaffID?userID=" +
-      userID +
-      "&SDate=" +
-      SDate +
-      "&EDate=" +
-      EDate
+        userID +
+        "&SDate=" +
+        SDate +
+        "&EDate=" +
+        EDate
     );
     // const res = await axios.get( hostURL +  "Payroll/GetPendingAttendanceCorrectionByStaffID?userID=" + staffID + "&SDate=" + SDate + "&EDate=" + EDate);
     console.log(res, "pending");
@@ -172,11 +190,11 @@ const Attendancecorrectiondashboard = () => {
   const getApprovedData = async (SDate, EDate) => {
     const res = await apiService.commonGetCall(
       "Payroll/GetApprovedAttendanceCorrectionByStaffID?userID=" +
-      userID +
-      "&SDate=" +
-      SDate +
-      "&EDate=" +
-      EDate
+        userID +
+        "&SDate=" +
+        SDate +
+        "&EDate=" +
+        EDate
     );
     // const res = await axios.get( hostURL +"Payroll/GetApprovedAttendanceCorrectionByStaffID?userID=" + staffID +"&SDate=" + SDate + "&EDate=" + EDate  );
     console.log(res, "approved");
@@ -186,11 +204,11 @@ const Attendancecorrectiondashboard = () => {
   const getRejectedData = async (SDate, EDate) => {
     const res = await apiService.commonGetCall(
       "Payroll/GetRejectedAttendanceCorrectionByStaffID?userID=" +
-      userID +
-      "&SDate=" +
-      SDate +
-      "&EDate=" +
-      EDate
+        userID +
+        "&SDate=" +
+        SDate +
+        "&EDate=" +
+        EDate
     );
     //  const res = await axios.get(hostURL + "Payroll/GetRejectedAttendanceCorrectionByStaffID?userID=" +staffID + "&SDate=" + SDate + "&EDate=" + EDate );
     console.log(res, "rejected");
@@ -223,8 +241,13 @@ const Attendancecorrectiondashboard = () => {
 
   return (
     <div className="container">
-      <h3 className="text-primary fs-5 mt-3">Attendance Correction </h3>
-      <div className="card p-3 border-0 shadow-lg rounded-3 mt-4" style={{ marginLeft: "-8px" }}>
+      <div className="mt-3">
+        <h3 className={Styles.mainheader}>Attendance Correction </h3>
+      </div>
+      <div
+        className="card p-3 border-0 shadow-lg rounded-3 mt-4"
+        style={{ marginLeft: "-8px" }}
+      >
         <div className="row p-3">
           <div className="col-lg-1">
             <p>Filter By</p>
@@ -235,6 +258,7 @@ const Attendancecorrectiondashboard = () => {
               type="text"
               className="form-control"
               placeholder="Search..."
+              onChange={(e) => setKeyword(e.target.value)}
             />
           </div>
 
@@ -245,16 +269,23 @@ const Attendancecorrectiondashboard = () => {
                   <div className="row">
                     <div className="col-lg-8">
                       <Link href="/Attendance/AttendanceCorrections/attendancecorrectionform">
-                        <button className="button">Add Attendance Correction</button>
+                        <button className="button">
+                          Add Attendance Correction
+                        </button>
                       </Link>
                     </div>
                     <div className="col-lg-4">
+                    <DownloadTableExcel
+                      filename="Attendance table"
+                      sheet="Attendance"
+                    currentTableRef={tableRef.current}>
                       <button className="button">Download</button>
+                      </DownloadTableExcel>
                     </div>
                   </div>
                 </>
               ))}
-            {roleID != 3 ||
+            {roleID != 3 || (
               <>
                 <div className="row">
                   <div className="col-lg-4">
@@ -262,8 +293,7 @@ const Attendancecorrectiondashboard = () => {
                   </div>
                 </div>
               </>
-
-            }
+            )}
           </div>
         </div>
       </div>
@@ -271,16 +301,22 @@ const Attendancecorrectiondashboard = () => {
       <div className="row mt-3">
         <div className="col-lg-4">
           <div className="btn-group">
-            <button onClick={togglePending}
-              className={`toggleButton ${pending ? 'focus' : ''}`}>
+            <button
+              onClick={togglePending}
+              className={`toggleButton ${pending ? "focus" : ""}`}
+            >
               Pending
             </button>
-            <button onClick={toggleApproved}
-              className={`toggleButton ${approved ? 'focus' : ''}`}>
+            <button
+              onClick={toggleApproved}
+              className={`toggleButton ${approved ? "focus" : ""}`}
+            >
               Approved
             </button>
-            <button onClick={toggleRejected}
-              className={`toggleButton ${rejected ? 'focus' : ''}`}>
+            <button
+              onClick={toggleRejected}
+              className={`toggleButton ${rejected ? "focus" : ""}`}
+            >
               Rejected
             </button>
           </div>
@@ -293,7 +329,8 @@ const Attendancecorrectiondashboard = () => {
         </div>
 
         {pending && roleID != "2" && (
-          <table className="table table-hover">
+          <table className="table table-hover"
+          ref={tableRef}>
             <thead className="bg-info text-white">
               <tr>
                 <th>Date</th>
@@ -309,28 +346,34 @@ const Attendancecorrectiondashboard = () => {
               {Array.isArray(pendingDashboardData) &&
                 pendingDashboardData.length > 0 && (
                   <>
-                    {pendingDashboardData.map((data) => {
-                      return (
-                        <tr key={data.id}>
-                          <td>{data.date}</td>
-                          <td>{data.startTime}</td>
-                          <td>{data.endTime}</td>
-                          <td>{data.Comments}</td>
-                          <td>{data.status}</td>
-                          <td>
-                            <button
-                              onClick={deleteAttendanceCorrection.bind(
-                                this,
-                                data.id
-                              )}
-                              className="edit-btn"
-                            >
-                              Cancel
-                            </button>
-                          </td>
-                        </tr>
-                      );
-                    })}
+                    {pendingDashboardData
+                       .filter(data => {
+                        if ((data.startTime.toLowerCase().includes(keyword))||(data.date.toLowerCase().includes(keyword))||(data.endTime.toLowerCase().includes(keyword))) {
+                          return data;
+                        }
+                      })
+                      .map((data) => {
+                        return (
+                          <tr key={data.id}>
+                            <td>{data.date}</td>
+                            <td>{data.startTime}</td>
+                            <td>{data.endTime}</td>
+                            <td>{data.Comments}</td>
+                            <td>{data.status}</td>
+                            <td>
+                              <button
+                                onClick={deleteAttendanceCorrection.bind(
+                                  this,
+                                  data.id
+                                )}
+                                className="edit-btn"
+                              >
+                                Cancel
+                              </button>
+                            </td>
+                          </tr>
+                        );
+                      })}
                   </>
                 )}
             </tbody>
@@ -338,7 +381,7 @@ const Attendancecorrectiondashboard = () => {
         )}
 
         {pending && roleID == "2" && (
-          <table className="table table-hover">
+          <table className="table table-hover" ref={tableRef}>
             <thead className="bg-info text-white">
               <tr>
                 <th>Employee Name</th>
@@ -381,7 +424,7 @@ const Attendancecorrectiondashboard = () => {
         )}
 
         {approved && roleID != "2" && (
-          <table className="table table-hover">
+          <table className="table table-hover" ref={tableRef}>
             <thead className="bg-info text-white">
               <tr>
                 <th>Date</th>
@@ -414,7 +457,7 @@ const Attendancecorrectiondashboard = () => {
         )}
 
         {approved && roleID == "2" && (
-          <table className="table table-hover">
+          <table className="table table-hover" ref={tableRef}>
             <thead className="bg-info text-white">
               <tr>
                 <th>Employee Name</th>
@@ -445,7 +488,7 @@ const Attendancecorrectiondashboard = () => {
         )}
 
         {rejected && roleID != "2" && (
-          <table className="table table-hover">
+          <table className="table table-hover" ref={tableRef}>
             <thead className="bg-info text-white">
               <tr>
                 <th>Date</th>
@@ -478,7 +521,7 @@ const Attendancecorrectiondashboard = () => {
         )}
 
         {rejected && roleID == "2" && (
-          <table className="table table-hover">
+          <table className="table table-hover" ref={tableRef}>
             <thead className="bg-info text-white">
               <tr>
                 <th>Employee Name</th>

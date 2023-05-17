@@ -114,7 +114,7 @@ const TeamLoans = () => {
   const uploadLoan = async () => {
     const transformedData = await transformedLoans(items);
     if (transformedData.length > 0) {
-      await apiService.commonGetCall(
+      await apiService.commonPostCall(
         "Payroll/InsertEmployeeLoans",
         transformedData
       );

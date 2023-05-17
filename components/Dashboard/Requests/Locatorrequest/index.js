@@ -163,53 +163,55 @@ const Locatordashboard = () => {
     }, [activeTabIndex]);
     return (
         <Layout>
-            <div className='row mt-3'>
-                <div className='col-lg-3 text-end'>
-                    <Link className='Heading active' href="/Requests/Locatorrequest">My OBASIS Details</Link>
-                </div>
-                {/* <div className='col-lg-3'>
+            <div className="container">
+                <div className='row mt-3'>
+                    <div className='col-lg-3 text-end'>
+                        <Link className='Heading active' href="/Requests/Locatorrequest">My OBASIS Details</Link>
+                    </div>
+                    {/* <div className='col-lg-3'>
                     <Link className='Heading active' href="/Requests/Myteamlocator">Company OBASIS Details</Link>
                 </div> */}
-            </div> <br />
-            <div className='card p-3 border-0 shadow-lg rounded-3 mt-4'>
-                <div className='row'>
-                    <div className='col-lg-1'>
-                        <p>Filter By</p>
-                    </div>
+                </div> <br />
+                <div className='card p-3 border-0 shadow-lg rounded-3 mt-4'>
+                    <div className='row'>
+                        <div className='col-lg-1'>
+                            <p>Filter By</p>
+                        </div>
 
-                    <div className='col-lg-3'>
-                        <p>From Date</p>
-                        <input type="date" className='form-control' />
-                    </div>
+                        <div className='col-lg-3'>
+                            <p>From Date</p>
+                            <input type="date" className='form-control' />
+                        </div>
 
-                    <div className='col-lg-3'>
-                        <p>To Date</p>
-                        <input type="date" className='form-control' />
-                    </div>
+                        <div className='col-lg-3'>
+                            <p>To Date</p>
+                            <input type="date" className='form-control' />
+                        </div>
 
-                    <div className='col-lg-4'><br /><p></p>
-                        <input type="text" className='form-control' placeholder="Search For date ,or Status" />
+                        <div className='col-lg-4'><br /><p></p>
+                            <input type="text" className='form-control' placeholder="Search For date ,or Status" />
+                        </div>
                     </div>
-                </div>
-            </div><br />
-            <div className="row">
-                <div className="col-lg-9">
-                    <div className={Styles.flex}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        {tabsData.map((tab, idx) => {
-                            return (
-                                <button key={idx} ref={(el) => (tabsRef.current[idx] = el)} className='toggleButton' onClick={() => setActiveTabIndex(idx)} >
-                                    {tab.label}
-                                </button>
-                            );
-                        })}
+                </div><br />
+                <div className="row">
+                    <div className="col-lg-9">
+                        <div className={Styles.flex}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            {tabsData.map((tab, idx) => {
+                                return (
+                                    <button key={idx} ref={(el) => (tabsRef.current[idx] = el)} className='toggleButton' onClick={() => setActiveTabIndex(idx)} >
+                                        {tab.label}
+                                    </button>
+                                );
+                            })}
+                        </div>
                     </div>
-                </div>
-                <div className="col-lg-3">
-                    <Link href="/Requests/Locatorrequest/new"><button className="submit-button">New Requests </button></Link>
+                    <div className="col-lg-3">
+                        <Link href="/Requests/Locatorrequest/new"><button className="submit-button">New Requests </button></Link>
 
-                </div>
-                <div className="py-4">
-                    {tabsData[activeTabIndex].content}
+                    </div>
+                    <div className="py-4">
+                        {tabsData[activeTabIndex].content}
+                    </div>
                 </div>
             </div>
         </Layout>

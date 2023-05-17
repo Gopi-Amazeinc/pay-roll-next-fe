@@ -104,7 +104,7 @@ function PositionDetails() {
                 StaffID: sessionStorage.getItem('userID')
 
             }
-            let res = await axios.post(hostURL + "/HR/InsertPositionDetails", Enity);
+            let res = await axios.post(hostURL + "/Payroll/InsertPositionDetails", Enity);
             if (res.data && res.status == 200) {
                
                 sessionStorage.setItem("InsertStatus", true)
@@ -155,13 +155,6 @@ function PositionDetails() {
 
         let res8 = await axios.get(hostURL + "/HR/GetAllStaffNew");
         setStafflistData(res8.data);
-
-
-        // let res9 = await axios.get(hostURL + "/HR/GetCostCentersMaster");
-        // setCostlistData(res9.data);
-
-        // let res10 = await axios.get(hostURL + "/Master/GetCountryType");
-        // setCountrytypeListData(res10.data);
 
 
         let res11 = await axios.get(hostURL + "/Master/GetStateType");
@@ -675,7 +668,7 @@ function PositionDetails() {
 
 
                     <div className="d-flex justify-content-center w-100 mt-2 mb-2 pr-2">
-                        <button className='submit-button'>Sumbit</button>
+                        <button className='staffSubmitBtn'>Submit</button>
                     </div>
 
 

@@ -103,7 +103,7 @@ function EmployeeProfile() {
         PreviousBMS: data.PreviousBMS,
         EffectivityOfPreviousBMS: data.EffectivityOfPreviousBMS,
       };
-      let res = await apiService.commonPostCall( "Employee/InsertStaff", Enity);
+      let res = await apiService.commonPostCall( "Payroll/InsertStaff", Enity);
       if (res.data && res.status == 200) {
         Swal.fire("Added successfully!!");
       }
@@ -671,18 +671,12 @@ function EmployeeProfile() {
               </div>
             </div>
             <br></br>
-            <div className="row">
-              <div className="d-flex">
-                <button
-                  className="btn btn-primary"
-                  type="submit"
-                  id="AddButton"
-                >
-                  Submit
-                </button>
-              </div>
-            </div>
+            
           </div>
+
+          <div className="d-flex justify-content-center w-100 mt-4 mb-2 pr-2">
+                        <button className='staffSubmitBtn'>Submit</button>
+                    </div>
         </form>
       </div>
     </div>

@@ -363,7 +363,7 @@ const Sidebar = ({ children, applyPageName }) => {
             <hr></hr>
             <button className={styles.sidemenu} onClick={toggleOtMenu}>
               <BiCalendar style={customStyles.icons} />
-              OT
+              Over Time
             </button>
             {displayOt && (
               <div>
@@ -376,7 +376,7 @@ const Sidebar = ({ children, applyPageName }) => {
                     })}
                   >
                     <BiCalendarCheck style={customStyles.icons} />
-                    Over Time Details
+                    Add Over Time 
                   </button>
                 </Link>
               </div>
@@ -405,7 +405,7 @@ const Sidebar = ({ children, applyPageName }) => {
                 Attendance Details
               </button>
             </Link>
-            {userRole != 3 && (
+            {userRole != 5 && (
               <Link
                 href="/Attendance/OverTimeUnitsUpload"
                 className={styles.sidemenulink}
