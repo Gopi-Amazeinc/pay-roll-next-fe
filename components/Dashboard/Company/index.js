@@ -20,7 +20,7 @@ const Companydashboard = () => {
   }, [1]);
   const deleteComany = async (id) => {
     try {
-      let res = await apiService.commonGetCall(`HR/DeleteHolidays?id=${id}`);
+      let res = await apiService.commonGetCall(`Payroll/DeleteCompany_AddressDetails?id=${id}`);
       console.log(res.data);
       Swal.fire("Data deleted successfully");
       getCompanyAddressDetails();
@@ -85,7 +85,7 @@ const Companydashboard = () => {
                                             </Link>
                                             &nbsp;
 
-                                            <button className="btn btn-primary" onClick={() => DeleteComany(data.id)}>Delete</button>
+                                            <button className="btn btn-primary" onClick={() => deleteComany(data.id)}>Delete</button>
                                         </td>
                                     </tr>
                                 )
