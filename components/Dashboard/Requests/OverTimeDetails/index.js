@@ -6,7 +6,9 @@ import loan from "../../../../pages/Requests/Applyloans/applyloans.module.css"
 import Modal from 'react-modal';
 import Styles from "@../../../pages/OT/Ot.module.css"
 import { apiService } from "@/services/api.service";
+import { useForm } from 'react-hook-form';
 const Index = () => {
+    const { register, handleSubmit, watch, formState } = useForm();
     const [pending, setPending] = useState(false)
     const [approved, setApproved] = useState(false)
     const [rejected, setRejected] = useState(false);
@@ -149,8 +151,9 @@ const Index = () => {
             confirmButtonText: 'Yes, Reject it!'
         }).then((result) => {
             if (result.isConfirmed) {
+                var Reason = watch("Reason")
                 // staffID = sessionStorage.getItem("userID");
-                apiService.commonPostCall("Payroll/UpdateOtFromManager?id=" + id + "&Status=ManagerRejected" + "RejectedReason=")
+                apiService.commonPostCall("Payroll/UpdateOtFromManager?id=" + id + "&Status=ManagerRejected" + "RejectedReason=" + Reason);
                 Swal.fire({
                     icon: "success",
                     titleText: "Rejected Successfully"
@@ -302,7 +305,6 @@ const Index = () => {
                                 <th>Date Request</th>
                                 <th>Start Time</th>
                                 <th>End Time</th>
-                                {/* <th>OT Details</th> */}
                                 {/* <th>Purpose</th> */}
                                 <th>Status</th>
                                 {/* <th>Actions</th> */}
@@ -523,7 +525,7 @@ const Index = () => {
                     </div>
                     <div className='row mt-3'>
                         <div className='col-lg-12'>
-                            <textarea rows={4} className='form-control'></textarea>
+                            <textarea rows={4} {...register("Reason")} className='form-control'></textarea>
                         </div>
                     </div>
                     <div className='row'>
