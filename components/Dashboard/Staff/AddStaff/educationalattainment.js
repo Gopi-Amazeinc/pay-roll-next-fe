@@ -156,8 +156,9 @@ export default function EducationDetails() {
     }
 
     async function deleteData(data) {
+        debugger
         let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-        let res = await axios.get(hostURL + "Shared/DeleteIDDetails?ID=" + data);
+        let res = await axios.get(hostURL + "HR/DeleteEducationDetails?ID=" + data);
         getData();
 
     }
@@ -333,7 +334,7 @@ export default function EducationDetails() {
 
                                 </div>
 
-                                <div class="d-flex justify-content-center w-100 mt-2 mb-2 pr-2">
+                                <div className="d-flex justify-content-center w-100 mt-2 mb-2 pr-2">
                                     {
                                         actionType == "insert" && (
                                             <button className='submit-button' >Submit</button>

@@ -4,21 +4,28 @@ import Link from "next/link";
 import Swal from "sweetalert2";
 import * as XLSX from "xlsx";
 import Styles from "@/pages/OT/Ot.module.css";
+import { useRef } from "react";
 import { DownloadTableExcel } from "react-export-table-to-excel";
 import { apiService } from "@/services/api.service";
 
 const Myovertimedetails = () => {
   const [otDetails, setotDetails] = useState([]);
   const [items, setItems] = useState([]);
+  const tableRef = useRef(null);
 
-  // useEffect(() => {
-  //     async function getApproveStaffOverTimeDetails() {
-  //         let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-  //         const { dataApproved } = await apiService.commonGetCall( "Payroll/GetApproveStaffOverTimeDetails")
-  //         setotDetails(dataApproved);
-  //     }
-  //     getApproveStaffOverTimeDetails();
-  // }, [])
+  useEffect(() => {
+    // TODO:CHECK API
+    getApproveStaffOverTimeDetails();
+  }, []);
+
+  const getApproveStaffOverTimeDetails = async () => {
+    const staffOverTimeDetails = await apiService.commonGetCall(
+      "Payroll/GetStaffOverTimeDetailsUpload"
+    );
+    staffOverTimeDetails.data.length > 0
+      ? setotDetails(staffOverTimeDetails.data)
+      : Swal.fire("Sorry, No Data!");
+  };
 
   const [modalOpen, setModalOpen] = useState(false);
   const openEditModal = () => {
@@ -67,6 +74,88 @@ const Myovertimedetails = () => {
       setItems(d);
     });
   };
+
+  const uploadLoan = async () => {
+    const transformedData = await transformedLoans(items);
+    if (transformedData.length > 0) {
+      await apiService.commonPostCall(
+        "Payroll/InsertStaffOvetimeOTupload",
+        transformedData
+      );
+      Swal.fire(" Over Time Uploaded succefully!");
+    } else {
+      Swal.fire(" No Over Time Uploaded!");
+    }
+    setModalOpen(false);
+    getApproveStaffOverTimeDetails();
+  };
+
+  const transformedLoans = async (items) => {
+    console.log(items);
+    debugger;
+    const loans = await Promise.all(
+      items && items.length > 0
+        ? items.map(async (ot) => {
+            const res = await apiService.commonGetCall(
+              "Payroll/GetStaffByEmployeeID?EmployeID=" + ot.EmployeeID
+            );
+            let staffData;
+            // const staffData = res.data[0];
+            if (res.length != 0) {
+              staffData = res[0].id;
+            } else {
+              staffData = 0;
+            }
+            return {
+              StaffID: staffData,
+              OT_name: ot.name,
+              Hours: ot.hours,
+              PayDate: ot.Date,
+            };
+          })
+        : []
+    );
+    return loans;
+  };
+
+  // TODO: Download excel usinf react-export toexcel
+  // const { onDownload } = useDownloadExcel({
+  //   currentTableRef: tableRef.current,
+  //   filename: "Users table",
+  //   sheet: "Users"
+  // });
+
+  // TODO: Download excel using xlsx method
+  const exportToExcel = () => {
+    /* table id is passed over here */
+    let element = document.getElementById("lvs");
+    const ws = XLSX.utils.table_to_sheet(element);
+
+    /* generate workbook and add the worksheet */
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+
+    /* save to file */
+    XLSX.writeFile(wb, "AttendanceUnitsUploadTemplate.xlsx");
+  };
+
+  /* 
+  // TODO: Example code
+const data = [
+  { Name: "John", Age: 30, Email: "john@example.com" },
+  { Name: "Jane", Age: 25, Email: "jane@example.com" },
+  { Name: "Bob", Age: 40, Email: "bob@example.com" },
+];
+
+const workbook = XLSX.utils.book_new();
+const worksheet = XLSX.utils.json_to_sheet(data);
+
+XLSX.utils.book_append_sheet(workbook, worksheet, "Sheet1");
+
+XLSX.writeFile(workbook, "output.xlsx");
+
+
+*/
 
   return (
     <div>
@@ -122,7 +211,7 @@ const Myovertimedetails = () => {
                   Upload Loans
                 </h5>
                 <button
-                  aria-label="Close"
+                  ariaLabel="Close"
                   className={Styles.close}
                   type="button"
                   onClick={closeModal}
@@ -146,7 +235,7 @@ const Myovertimedetails = () => {
                   />
                 </div>
                 <div className="col-lg-4">
-                  <Link href="https://103.12.1.76/ALIAPI/Images/UploadLoanTemplate.xlsx">
+                  <Link href="https://103.12.1.76/ALIAPI/Images/.xlsx">
                     <span
                       style={{ color: "navy", textDecoration: "underline" }}
                     >
@@ -160,6 +249,7 @@ const Myovertimedetails = () => {
                     <button
                       className="mt-4"
                       id={Styles.UploadStaffButton}
+                      onClick={() => uploadLoan()}
                       color="primary"
                       type="button"
                     >
@@ -178,7 +268,7 @@ const Myovertimedetails = () => {
                     <tr>
                       <th>Employee ID </th>
                       <th>Employee Name</th>
-                      <th>Position</th>
+                      {/* <th>Position</th> */}
                       <th>Pay Date</th>
                       <th>Component Name</th>
                       <th>No of Hours</th>
@@ -188,11 +278,11 @@ const Myovertimedetails = () => {
                     {otDetails.map((data) => {
                       return (
                         <tr key={data.id}>
-                          <td>{data.Date}</td>
-                          <td>{data.StartTime}</td>
-                          <td>{data.EndTime}</td>
-                          <td>{data.Comments}</td>
-                          <td>{data.status}</td>
+                          <td>{data.employeID}</td>
+                          <td>{data.staffname}</td>
+                          <td>{data.filterdate}</td>
+                          <td>{data.oT_name}</td>
+                          <td>{data.hours}</td>
                         </tr>
                       );
                     })}
