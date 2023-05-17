@@ -8,9 +8,6 @@ import Modal from 'react-modal';
 import Styles from "@../../../pages/OT/Ot.module.css"
 import { apiService } from "@/services/api.service";
 const Index = () => {
-    let staffID;
-    // let roleID = sessionStorage.getItem("roleID")
-    const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
     const [pending, setPending] = useState(false)
     const [approved, setApproved] = useState(false)
     const [rejected, setRejected] = useState(false);
@@ -97,29 +94,25 @@ const Index = () => {
     }
     const getManagerPendingDetails = async () => {
         // debugger;
-        // staffID = sessionStorage.getItem("userID");
         const res = await apiService.commonGetCall("Payroll/GetPendingOverTimeDetailsByManagerID?ManagerID=" + userID)
         setManagerPendingData(res.data)
-        console.log("Manager Pending", res.data)
+        console.log("Manager Pending", res.data);
     }
     const getManagerApprovedData = async () => {
         // debugger;
-        // staffID = sessionStorage.getItem("userID");
         const res = await apiService.commonGetCall("Payroll/GetApprovedOverTimeDetailsByManagerID?ManagerID=" + userID)
         setManagerApprovedData(res.data)
-        console.log("Manager Approved", res.data)
+        console.log("Manager Approved", res.data);
     }
 
     const getManagerRejectedData = async () => {
         // debugger;
-        // staffID = sessionStorage.getItem("userID");
         const res = await apiService.commonGetCall("Payroll/GetRejectOverTimeDetailsByManagerID?ManagerID=" + userID)
         setManagerRejectedData(res.data)
-        console.log("Manager Rejected", res.data)
+        console.log("Manager Rejected", res.data);
     }
     const getModalData = async (startTime, endTime, date, userID) => {
-        // debugger;
-        // staffID = sessionStorage.getItem("userID");       
+        // debugger;      
         const res = await apiService.commonGetCall("HR/GetOtNightOt?StartTime=" + startTime + "&EndTime=" + endTime + "&Shift=1&StaffID=" + userID + "&Date=" + date);
         setModalData(res.data);
         console.log("Modal data", res.data);
@@ -147,8 +140,8 @@ const Index = () => {
     }
     let id;
     const reject = () => {
+        // debugger;
         id = sessionStorage.getItem("id")
-        // alert(id)
         Swal.fire({
             title: 'Confirm To Reject?',
             text: "You won't be able to revert this!",
@@ -160,7 +153,7 @@ const Index = () => {
         }).then((result) => {
             if (result.isConfirmed) {
                 // staffID = sessionStorage.getItem("userID");
-                apiService.commonPostCall("Payroll/UpdateOtFromManager?id=" + id + "&Status=ManagerApproved" + "RejectedReason=")
+                apiService.commonPostCall("Payroll/UpdateOtFromManager?id=" + id + "&Status=ManagerRejected" + "RejectedReason=")
                 Swal.fire({
                     icon: "success",
                     titleText: "Rejected Successfully"
@@ -419,7 +412,7 @@ const Index = () => {
                                 <th>Date Request</th>
                                 <th>Start Time</th>
                                 <th>End Time</th>
-                                {/* <th>OT Details</th>                                 */}
+                                {/* <th>OT Details</th> */}
                                 <th>Status</th>
                             </tr>
                         </thead>
