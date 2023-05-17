@@ -2,13 +2,34 @@ import { useEffect, useState } from 'react';
 import { useForm } from "react-hook-form";
 import axios from 'axios';
 import Swal from 'sweetalert2';
-// import Dropzone from '../../SharedComponent/dropzone'
+import React, {useCallback} from 'react'
+import {useDropzone} from 'react-dropzone'
 
 export default function NominationDetails() {
     const [RelationShipMaster, setRelationShipMaster] = useState([]);
     const [NominationDetals, setNominationData] = useState([]);
     const { register, handleSubmit, watch, reset, formState: { errors } } = useForm();
     const [actionType, setActionType] = useState("insert");
+
+    const [filePath, setFilePath] = useState();
+
+    const onDrop = useCallback(acceptedFiles => {
+          debugger
+          console.log(acceptedFiles,"Uploaded file")
+          uploadFile(acceptedFiles)
+          
+    }, [])
+    const {getRootProps, getInputProps, isDragActive} = useDropzone({onDrop})
+
+    const uploadFile = async (data)=>{
+        let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+      const formData = new FormData();
+      formData.append('file_upload', data[0], data[0].name);
+      let res = await axios.post(hostURL + "Payroll/ProjectAttachments", formData);
+      console.log(res,"File Path")
+      Swal.fire("Uploaded successfully")
+      setFilePath(res.data);
+    }
     const customStyles = {
         content: {
             width: '85%',
@@ -67,12 +88,14 @@ export default function NominationDetails() {
                 Percentage: data.Percentage,
                 NomineeType: data.NomineeType,
                 BeneficiaryDOB: data.BeneficiaryDOB,
-                NominationAttachment: "No Image",
+                NominationAttachment: filePath,
                 StaffID: sessionStorage.getItem('userID')
             }
 
-            await axios.post(hostURL + "HR/InsertNomination", Entity);
+            await axios.post(hostURL + "Payroll/InsertNomination", Entity);
             Swal.fire("Added successfully")
+            getData();
+            cleardata()
         }
         else{
             let Entity = {
@@ -85,7 +108,7 @@ export default function NominationDetails() {
                 NominationAttachment: "No Image",
                 StaffID: sessionStorage.getItem('userID')
             }
-            await axios.post(hostURL + "HR/UpdateNomination", Entity);
+            await axios.post(hostURL + "Payroll/UpdateNomination", Entity);
             Swal.fire("Updated Successfully!")
             getData();
             cleardata()
@@ -102,7 +125,7 @@ export default function NominationDetails() {
                 Percentage: existingData ? existingData.percentage : "",
                 NomineeType: existingData ? existingData.nomineeType : "",
                 BeneficiaryDOB: existingData ? existingData.beneficiaryDOB : "",
-                NominationAttachment: "No Image",
+                NominationAttachment: existingData ? existingData.nominationAttachment : "",
                 StaffID: sessionStorage.getItem('userID')
         }
         reset(etty);
@@ -125,9 +148,9 @@ export default function NominationDetails() {
     async function editData(data) {
         debugger;
         let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-        let res = await axios.get(hostURL + "HR/GetNominationByID?ID=" + data);
+        let res = await axios.get(hostURL + "Payroll/GetNominationByID?ID=" + data);
         cleardata(res.data[0]);
-
+        getData();
     }
 
     async function deleteData(data) {
@@ -137,148 +160,216 @@ export default function NominationDetails() {
 
     }
     return (
-        <div>
-            <div className='container-fluid'>
-                <div className='card'>
-                    <form onSubmit={handleSubmit(onSubmit)} >
-                        <div className='row'>
-                            <div className='col-12'>
-                                <div className="d-flex justify-content-between">
-                                    <p className='modal-heading'>Nomination Details</p>
-                                </div>
-                                <div style={customPopupDivision.popupcontent}>
-                                    <div style={customPopupDivision.popupinputs}>
-                                        <p>Beneficiary Name(First Name, Middle, Initial and Last Name)<span style={customStyles.span} >*</span></p>
-                                        <div>
-                                            <input type='text' placeholder='Enter Beneficiary Name..'
-                                                {...register("BeneficiaryName", { required: true })} className='form-control inputwidth' ></input>
-                                            {errors.BeneficiaryName && <span style={customStyles.errorMsg}> Please enter beneficiary name</span>}
-                                        </div>
-                                    </div>
-
-                                    <div style={customPopupDivision.popupinputs}>
-                                        <p>Beneficiary Relationship<span style={customStyles.span}>*</span></p>
-                                        {
-                                            <div>
-                                                <select className='form-select' {...register("BeneficiaryRelationshipID", { required: true })} style={customStyles.inputLabel}>
-                                                    <option value="">Select Relationship</option>
-                                                    {
-                                                        RelationShipMaster.map((data) => {
-                                                            return (
-                                                                <option key={data.id} value={data.id}>{data.short}</option>
-                                                            )
-                                                        })
-                                                    }
-                                                </select>
-                                                {errors.BeneficiaryRelationshipID && <span style={customStyles.errorMsg}> Please select beneficiary relatioship</span>}
-                                            </div>
-                                        }
-                                    </div>
-
-
-                                    <div style={customPopupDivision.popupinputs}>
-                                        <p>Percentage<span style={customStyles.span}>*</span></p>
-                                        <div>
-                                            <input type='text' placeholder='Enter Percentage..'
-                                                {...register("Percentage", { required: true })} className='form-control inputwidth'></input>
-                                            {errors.Percentage && <span style={customStyles.errorMsg}> Please enter percentage</span>}
-                                        </div>
-                                    </div>
-
-                                    <div style={customPopupDivision.popupinputs}>
-                                        <p>Nominee Type<span style={customStyles.span}>*</span></p>
-                                        {
-                                            <div>
-                                                <select className='form-select' {...register("NomineeType", { required: true })} style={customStyles.inputLabel}>
-                                                    <option value="">Select Nominee Type</option>
-                                                    <option value="Insurance">Insurance</option>
-                                                </select>
-                                                {errors.NomineeType && <span style={customStyles.errorMsg}> Please select nominee type</span>}
-                                            </div>
-                                        }
-                                    </div>
-
-                                    <div style={customPopupDivision.popupinputs}>
-                                        <p>Beneficiary Date of Birth<span style={customStyles.span}>*</span></p>
-                                        <div>
-                                            <input type='date' placeholder='Enter Beneficiary DOB..'
-                                                {...register("BeneficiaryDOB", { required: true })} className='form-control inputwidth'></input>
-                                            {errors.BeneficiaryDOB && <span style={customStyles.errorMsg}> Please enter beneficiary DOB</span>}
-                                        </div>
-                                    </div>
-
-                                    <div style={customPopupDivision.popupinputs}>
-                                        <p>Attachment<span >*</span></p>
-                                        <div>
-                                            {/* <Dropzone /> */}
-
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="d-flex justify-content-center w-100 mt-2 mb-2 pr-2">
-                                    {/* <button className='close-button' onClick={closeModal}>Cancel</button> */}
-                                    {
-                                        actionType == "insert" && (
-                                            <button className='submit-button' >Submit</button>
-                                        )
-                                    }
-                                    {
-                                        actionType == "update" && (
-                                            <button className='submit-button' >Update</button>
-                                        )
-                                    }
-                                </div>
-                            </div>
-                        </div>
-                        <br></br>
-                    </form>
-
-
-                    <div className='row'>
-                        <div className='col-12'>
-                            <table className='table table-hover mb-5'>
-                                <thead className='bg-info text-white '>
-                                    <tr>
-                                        <th>Beneficiary Name</th>
-                                        <th>Beneficiary Relationship</th>
-                                        <th>Percentage</th>
-                                        <th>Nominee Type</th>
-                                        <th>Beneficiary Date of Birth</th>
-                                        <th>Status</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {
-                                        NominationDetals.map((data, index) => {
-                                            return (
-                                                <tr className="text-dark" key={index}>
-                                                    <td>{data.beneficiaryName}</td>
-                                                    <td>{data.beneficiaryRelationshipName}</td>
-                                                    <td>{data.percentage}</td>
-                                                    <td>{data.nomineeType}</td>
-                                                    <td>{data.beneficiaryDOB}</td>
-                                                    <td>{data.status}</td>
-                                                    <td className='d-flex'>
-                                                        <button className='editButton' onClick={editData.bind(this, data.id)}>Edit</button>
-                                                        <button className='deleteButton' onClick={deleteData.bind(this, data.id)}>Delete</button>
-                                                    </td>
-                                                </tr>
-                                            )
-                                        })
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
+      <div>
+        <div className="container-fluid">
+          <div className="card">
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <div className="row">
+                <div className="col-12">
+                  <div className="d-flex justify-content-between">
+                    <p className="modal-heading">Nomination Details</p>
+                  </div>
+                  <div style={customPopupDivision.popupcontent}>
+                    <div style={customPopupDivision.popupinputs}>
+                      <p>
+                        Beneficiary Name(First Name, Middle, Initial and Last
+                        Name)<span style={customStyles.span}>*</span>
+                      </p>
+                      <div>
+                        <input
+                          type="text"
+                          placeholder="Enter Beneficiary Name.."
+                          {...register("BeneficiaryName", { required: true })}
+                          className="form-control inputwidth"
+                        ></input>
+                        {errors.BeneficiaryName && (
+                          <span style={customStyles.errorMsg}>
+                            {" "}
+                            Please enter beneficiary name
+                          </span>
+                        )}
+                      </div>
                     </div>
 
+                    <div style={customPopupDivision.popupinputs}>
+                      <p>
+                        Beneficiary Relationship
+                        <span style={customStyles.span}>*</span>
+                      </p>
+                      {
+                        <div>
+                          <select
+                            className="form-select"
+                            {...register("BeneficiaryRelationshipID", {
+                              required: true,
+                            })}
+                            style={customStyles.inputLabel}
+                          >
+                            <option value="">Select Relationship</option>
+                            {RelationShipMaster.map((data) => {
+                              return (
+                                <option key={data.id} value={data.id}>
+                                  {data.short}
+                                </option>
+                              );
+                            })}
+                          </select>
+                          {errors.BeneficiaryRelationshipID && (
+                            <span style={customStyles.errorMsg}>
+                              {" "}
+                              Please select beneficiary relatioship
+                            </span>
+                          )}
+                        </div>
+                      }
+                    </div>
 
+                    <div style={customPopupDivision.popupinputs}>
+                      <p>
+                        Percentage<span style={customStyles.span}>*</span>
+                      </p>
+                      <div>
+                        <input
+                          type="text"
+                          placeholder="Enter Percentage.."
+                          {...register("Percentage", { required: true })}
+                          className="form-control inputwidth"
+                        ></input>
+                        {errors.Percentage && (
+                          <span style={customStyles.errorMsg}>
+                            {" "}
+                            Please enter percentage
+                          </span>
+                        )}
+                      </div>
+                    </div>
 
+                    <div style={customPopupDivision.popupinputs}>
+                      <p>
+                        Nominee Type<span style={customStyles.span}>*</span>
+                      </p>
+                      {
+                        <div>
+                          <select
+                            className="form-select"
+                            {...register("NomineeType", { required: true })}
+                            style={customStyles.inputLabel}
+                          >
+                            <option value="">Select Nominee Type</option>
+                            <option value="Insurance">Insurance</option>
+                          </select>
+                          {errors.NomineeType && (
+                            <span style={customStyles.errorMsg}>
+                              {" "}
+                              Please select nominee type
+                            </span>
+                          )}
+                        </div>
+                      }
+                    </div>
+
+                    <div style={customPopupDivision.popupinputs}>
+                      <p>
+                        Beneficiary Date of Birth
+                        <span style={customStyles.span}>*</span>
+                      </p>
+                      <div>
+                        <input
+                          type="date"
+                          placeholder="Enter Beneficiary DOB.."
+                          {...register("BeneficiaryDOB", { required: true })}
+                          className="form-control inputwidth"
+                        ></input>
+                        {errors.BeneficiaryDOB && (
+                          <span style={customStyles.errorMsg}>
+                            {" "}
+                            Please enter beneficiary DOB
+                          </span>
+                        )}
+                      </div>
+                    </div>
+
+                    <div style={customPopupDivision.popupinputs}>
+                      <p>
+                        Attachment<span>*</span>
+                      </p>
+                      <div>
+                        <div {...getRootProps()}>
+                          <input {...getInputProps()} />
+                          {isDragActive ? (
+                            <p>Drop the files here ...</p>
+                          ) : (
+                            <p>
+                              Drag 'n' drop some files here, or click to select
+                              files
+                            </p>
+                          )}
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="d-flex justify-content-center w-100 mt-2 mb-2 pr-2">
+                    {actionType == "insert" && (
+                      <button className="staffSubmitBtn">Submit</button>
+                    )}
+                    {actionType == "update" && (
+                      <button className="staffSubmitBtn">Update</button>
+                    )}
+                  </div>
                 </div>
+              </div>
+              <br></br>
+            </form>
 
+            <div className="row">
+              <div className="col-12">
+                <table className="table table-hover mb-5">
+                  <thead className="bg-info text-white ">
+                    <tr>
+                      <th>Beneficiary Name</th>
+                      <th>Beneficiary Relationship</th>
+                      <th>Percentage</th>
+                      <th>Nominee Type</th>
+                      <th>Beneficiary Date of Birth</th>
+                      <th>Status</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {NominationDetals.map((data, index) => {
+                      return (
+                        <tr className="text-dark" key={index}>
+                          <td>{data.beneficiaryName}</td>
+                          <td>{data.beneficiaryRelationshipName}</td>
+                          <td>{data.percentage}</td>
+                          <td>{data.nomineeType}</td>
+                          <td>{data.beneficiaryDOB}</td>
+                          <td>{data.status}</td>
+                          <td className="d-flex">
+                            <button
+                              className="staffEditBtn"
+                              onClick={editData.bind(this, data.id)}
+                            >
+                              Edit
+                            </button>&nbsp;
+                            <button
+                              className="staffDeleteBtn"
+                              onClick={deleteData.bind(this, data.id)}
+                            >
+                              Delete
+                            </button>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
             </div>
+          </div>
         </div>
-    )
+      </div>
+    );
 
 }
