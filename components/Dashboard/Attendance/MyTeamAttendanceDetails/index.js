@@ -147,7 +147,10 @@ const MyTeamAttendence = () => {
 
             <div className="col-lg-2">
               <p>End Date</p>
-              <input type="date" className="form-control" />
+              <input type="date" className="form-control"
+               value={endDate || ""}
+               onChange={(e) => getEndDate(e.target.value)}
+              />
             </div>
 
             <div className="col-lg-2">
