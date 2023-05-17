@@ -6,21 +6,20 @@ import Image from "next/image";
 import Enable from "../../../../public/Images/enable.png";
 import Disable from "../../../../public/Images/disable.png";
 import Cancel from "../../../../public/Images/cancel.png";
-import axios from "axios";
+import { apiService } from "@/services/api.service";
 import Swal from "sweetalert2";
 import { BiFilterAlt } from "react-icons/bi";
+import ReactPaginate from "react-paginate";
 
 const LoanMasterDash = () => {
-  let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
   const [loanMaster, SetLoanMasterData] = useState([]);
 
   useEffect(() => {
     getData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getData = async () => {
-    let res = await axios.get(hostURL + "Master/GetLoanMaster");
+    let res = await apiService.commonGetCall("Master/GetLoanMaster");
     SetLoanMasterData(res.data);
   };
 
@@ -29,7 +28,7 @@ const LoanMasterDash = () => {
       ID: data.id,
       Enable_Disable: !data.enable_Disable,
     };
-    await axios.post(hostURL + "Master/Enable_Disable_Loans", etty);
+    await apiService.commonPostCall("Master/Enable_Disable_Loans", etty);
     if (etty.Enable_Disable == true) {
       Swal.fire("Loan Enable.");
     } else {
@@ -49,12 +48,22 @@ const LoanMasterDash = () => {
       confirmButtonText: "Yes",
     }).then(async (result) => {
       if (result.isConfirmed) {
-        await axios.get(hostURL + "Master/DeleteLoanMaster?ID=" + id);
+        await apiService.commonGetCall("Master/DeleteLoanMaster?ID=" + id);
         Swal.fire("Loan Deleted successfully.");
         getData();
       }
     });
   };
+
+  const PER_PAGE = 2;
+  const [currentPage, setCurrentPage] = useState(0);
+  function handlePageClick({ selected: selectedPage }) {
+    setCurrentPage(selectedPage)
+  }
+  const offset = currentPage * PER_PAGE;
+  const pageCount = Math.ceil(loanMaster.length / PER_PAGE);
+  const [keyword, setKeyword] = useState("");
+
   return (
     <div className="container">
       <p className="Heading"> Loan Type Dashboard</p>
@@ -68,6 +77,7 @@ const LoanMasterDash = () => {
               type="text"
               placeholder="Search"
               className="form-control"
+              onChange={e => setKeyword(e.target.value)}
             ></input>
           </div>
         </div>
@@ -98,47 +108,76 @@ const LoanMasterDash = () => {
             {Array.isArray(loanMaster) &&
               loanMaster.length > 0 && (
                 <>
-                  {loanMaster.map((data, index) => {
-                    return (
-                      <tr className="text-dark" key={index}>
-                        <td>{data.type}</td>
-                        <td>{data.description}</td>
-                        <td>
-                          <span onClick={() => enableDisableLoanType(data)}>
-                            {data.enable_Disable ? (
-                              <Image
-                                className="img-fluid "
-                                src={Enable}
-                                alt="Digi Office"
-                                width={50}
-                                height={60}
-                              />
-                            ) : (
-                              <Image
-                                className="img-fluid "
-                                src={Disable}
-                                alt="Digi Office"
-                                width={50}
-                                height={60}
-                              />
-                            )}
-                          </span>
-                          <Image
-                            className="img-fluid"
-                            onClick={() => handelDelete(data.id)}
-                            src={Cancel}
-                            alt="Digi Office"
-                            width={30}
-                            height={60}
-                          />
-                        </td>
-                      </tr>
-                    );
-                  })}
+                  {loanMaster
+                    .filter(data => {
+                      if ((data.type.toLowerCase().includes(keyword.toLowerCase())) || (data.description.toLowerCase().includes(keyword))) {
+                        return data;
+                      }
+                    })
+                    .slice(offset, offset + PER_PAGE)
+                    .map((data, index) => {
+                      return (
+                        <tr className="text-dark" key={index}>
+                          <td>{data.type}</td>
+                          <td>{data.description}</td>
+                          <td>
+                            <span onClick={() => enableDisableLoanType(data)}>
+                              {data.enable_Disable ? (
+                                <Image
+                                  className="img-fluid "
+                                  src={Enable}
+                                  alt="Digi Office"
+                                  width={50}
+                                  height={60}
+                                />
+                              ) : (
+                                <Image
+                                  className="img-fluid "
+                                  src={Disable}
+                                  alt="Digi Office"
+                                  width={50}
+                                  height={60}
+                                />
+                              )}
+                            </span>
+                            <Image
+                              className="img-fluid"
+                              onClick={() => handelDelete(data.id)}
+                              src={Cancel}
+                              alt="Digi Office"
+                              width={30}
+                              height={60}
+                            />
+                          </td>
+                        </tr>
+                      );
+                    })}
                 </>
               )}
           </tbody>
         </table>
+      </div>
+
+      <div className="mb-4 mt-4 text-center">
+        <ReactPaginate
+          previousLabel={"Previous"}
+          nextLabel={"Next"}
+          breakLabel={"..."}
+          pageCount={pageCount}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={3}
+          onPageChange={handlePageClick}
+          containerClassName={"pagination  justify-content-center"}
+          pageClassName={"page-item "}
+          pageLinkClassName={"page-link"}
+          previousClassName={"page-item"}
+          previousLinkClassName={"page-link"}
+          nextClassName={"page-item"}
+          nextLinkClassName={"page-link"}
+          breakClassName={"page-item"}
+          breakLinkClassName={"page-link"}
+          activeClassName={"active primary"}
+        />
       </div>
     </div>
   );

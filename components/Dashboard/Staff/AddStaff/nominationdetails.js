@@ -24,6 +24,9 @@ export default function NominationDetails() {
             fontWeight: '500',
             color: 'red'
         },
+        span: {
+            color: 'red'
+        }
     };
 
     const customPopupDivision = {
@@ -71,10 +74,40 @@ export default function NominationDetails() {
             await axios.post(hostURL + "HR/InsertNomination", Entity);
             Swal.fire("Added successfully")
         }
+        else{
+            let Entity = {
+                ID: data.ID,
+                BeneficiaryName: data.BeneficiaryName,
+                BeneficiaryRelationshipID: data.BeneficiaryRelationshipID,
+                Percentage: data.Percentage,
+                NomineeType: data.NomineeType,
+                BeneficiaryDOB: data.BeneficiaryDOB,
+                NominationAttachment: "No Image",
+                StaffID: sessionStorage.getItem('userID')
+            }
+            await axios.post(hostURL + "HR/UpdateNomination", Entity);
+            Swal.fire("Updated Successfully!")
+            getData();
+            cleardata()
+        }
 
     }
 
-
+    function cleardata(existingData = null) {
+        debugger
+        let etty = {
+                ID: existingData ? existingData.id : "",
+                BeneficiaryName: existingData ? existingData.beneficiaryName : "",
+                BeneficiaryRelationshipID: existingData ? existingData.beneficiaryRelationshipID : "",
+                Percentage: existingData ? existingData.percentage : "",
+                NomineeType: existingData ? existingData.nomineeType : "",
+                BeneficiaryDOB: existingData ? existingData.beneficiaryDOB : "",
+                NominationAttachment: "No Image",
+                StaffID: sessionStorage.getItem('userID')
+        }
+        reset(etty);
+        setActionType(existingData ? "update" : 'insert');
+    }
 
 
     useEffect(() => {
@@ -83,13 +116,26 @@ export default function NominationDetails() {
 
     async function getData() {
         let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-        // let res = await axios.get(hostURL + "/HR/GetNomination");
-        // setNominationData(res.data);
+        let res = await axios.get(hostURL + "/HR/GetNomination");
+        setNominationData(res.data);
 
         let res1 = await axios.get(hostURL + "/Master/GetRelationShipMaster");
         setRelationShipMaster(res1.data);
     }
+    async function editData(data) {
+        debugger;
+        let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+        let res = await axios.get(hostURL + "HR/GetNominationByID?ID=" + data);
+        cleardata(res.data[0]);
 
+    }
+
+    async function deleteData(data) {
+        let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+        let res = await axios.get(hostURL + "HR/DeleteNomination?ID=" + data);
+        getData();
+
+    }
     return (
         <div>
             <div className='container-fluid'>
@@ -102,62 +148,62 @@ export default function NominationDetails() {
                                 </div>
                                 <div style={customPopupDivision.popupcontent}>
                                     <div style={customPopupDivision.popupinputs}>
-                                        <p>Beneficiary Name(First Name, Middle, Initial and Last Name)<span >*</span></p>
+                                        <p>Beneficiary Name(First Name, Middle, Initial and Last Name)<span style={customStyles.span} >*</span></p>
                                         <div>
                                             <input type='text' placeholder='Enter Beneficiary Name..'
                                                 {...register("BeneficiaryName", { required: true })} className='form-control inputwidth' ></input>
-                                            {errors.BeneficiaryName && <span style={customStyles.errorMsg}> Please Enter Beneficiary Name</span>}
+                                            {errors.BeneficiaryName && <span style={customStyles.errorMsg}> Please enter beneficiary name</span>}
                                         </div>
                                     </div>
 
                                     <div style={customPopupDivision.popupinputs}>
-                                        <p>Beneficiary Relationship<span >*</span></p>
+                                        <p>Beneficiary Relationship<span style={customStyles.span}>*</span></p>
                                         {
                                             <div>
-                                                <select className='form-control inputwidth' {...register("BeneficiaryRelationshipID", { required: true })} style={customStyles.inputLabel}>
+                                                <select className='form-select' {...register("BeneficiaryRelationshipID", { required: true })} style={customStyles.inputLabel}>
                                                     <option value="">Select Relationship</option>
                                                     {
-                                                        RelationShipMaster.map((data, index) => {
+                                                        RelationShipMaster.map((data) => {
                                                             return (
-                                                                <option key={index} value={data.id}>{data.short}</option>
+                                                                <option key={data.id} value={data.id}>{data.short}</option>
                                                             )
                                                         })
                                                     }
                                                 </select>
-                                                {errors.BeneficiaryRelationshipID && <span style={customStyles.errorMsg}> Please Enter GuardianRelationship</span>}
+                                                {errors.BeneficiaryRelationshipID && <span style={customStyles.errorMsg}> Please select beneficiary relatioship</span>}
                                             </div>
                                         }
                                     </div>
 
 
                                     <div style={customPopupDivision.popupinputs}>
-                                        <p>Percentage<span >*</span></p>
+                                        <p>Percentage<span style={customStyles.span}>*</span></p>
                                         <div>
                                             <input type='text' placeholder='Enter Percentage..'
                                                 {...register("Percentage", { required: true })} className='form-control inputwidth'></input>
-                                            {errors.Percentage && <span style={customStyles.errorMsg}> Please Enter Percentage</span>}
+                                            {errors.Percentage && <span style={customStyles.errorMsg}> Please enter percentage</span>}
                                         </div>
                                     </div>
 
                                     <div style={customPopupDivision.popupinputs}>
-                                        <p>Nominee Type<span >*</span></p>
+                                        <p>Nominee Type<span style={customStyles.span}>*</span></p>
                                         {
                                             <div>
-                                                <select className='form-control inputwidth' {...register("NomineeType", { required: true })} style={customStyles.inputLabel}>
+                                                <select className='form-select' {...register("NomineeType", { required: true })} style={customStyles.inputLabel}>
                                                     <option value="">Select Nominee Type</option>
                                                     <option value="Insurance">Insurance</option>
                                                 </select>
-                                                {errors.NomineeType && <span style={customStyles.errorMsg}> Please Enter Nominee Type</span>}
+                                                {errors.NomineeType && <span style={customStyles.errorMsg}> Please select nominee type</span>}
                                             </div>
                                         }
                                     </div>
 
                                     <div style={customPopupDivision.popupinputs}>
-                                        <p>Beneficiary Date of Birth<span >*</span></p>
+                                        <p>Beneficiary Date of Birth<span style={customStyles.span}>*</span></p>
                                         <div>
                                             <input type='date' placeholder='Enter Beneficiary DOB..'
                                                 {...register("BeneficiaryDOB", { required: true })} className='form-control inputwidth'></input>
-                                            {errors.BeneficiaryDOB && <span style={customStyles.errorMsg}> Please Enter Beneficiary DOB</span>}
+                                            {errors.BeneficiaryDOB && <span style={customStyles.errorMsg}> Please enter beneficiary DOB</span>}
                                         </div>
                                     </div>
 
@@ -200,7 +246,7 @@ export default function NominationDetails() {
                                         <th>Nominee Type</th>
                                         <th>Beneficiary Date of Birth</th>
                                         <th>Status</th>
-                                        {/* <th>Actions</th> */}
+                                        <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -214,10 +260,10 @@ export default function NominationDetails() {
                                                     <td>{data.nomineeType}</td>
                                                     <td>{data.beneficiaryDOB}</td>
                                                     <td>{data.status}</td>
-                                                    {/* <td className='d-flex'>
+                                                    <td className='d-flex'>
                                                         <button className='editButton' onClick={editData.bind(this, data.id)}>Edit</button>
                                                         <button className='deleteButton' onClick={deleteData.bind(this, data.id)}>Delete</button>
-                                                    </td> */}
+                                                    </td>
                                                 </tr>
                                             )
                                         })

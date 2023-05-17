@@ -3,10 +3,11 @@ import React from 'react';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { apiService } from "@/services/api.service";
+import Styles from "@/styles/attendancedetails.module.css";
 
 
 const CompanyAttendanceDetails = () => {
-    const [MyTeamAttendence, setMyTeamAttendence] = useState([]);
+    const [CompanyAttendence, setCompanyAttendence] = useState([]);
     const [userID, setUserID] = useState();
 
     let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
@@ -14,14 +15,14 @@ const CompanyAttendanceDetails = () => {
     useEffect(() => {
         async function getAttendenceByID() {
             debugger
-            // const userid = sessionStorage.getItem("userID");
-            const SupervisorID = 10348;
+             const userid = sessionStorage.getItem("userID");
+            const Supervisor = 20540;
             const SDate = '2023-10-10';
             const EDate = "2023-11-11";
-            if (userID) {
-     const res = await apiService.commonGetCall("HR/GetAttendanceByManagerID?SupervisorID=" + SupervisorID + '&SDate=' + SDate + '&EDate=' + EDate);
-//   let res = await axios.get(hostURL + "HR/GetAttendanceByManagerID?SupervisorID=" + SupervisorID + '&SDate=' + SDate + '&EDate=' + EDate);
-                setAttendence(res.data);
+            if (userid) {
+                const res = await apiService.commonGetCall("HR/GetAttendanceByManagerID?Supervisor=" + Supervisor + '&SDate=' + SDate + '&EDate=' + EDate);
+                //   let res = await axios.get(hostURL + "HR/GetAttendanceByManagerID?SupervisorID=" + SupervisorID + '&SDate=' + SDate + '&EDate=' + EDate);
+                setCompanyAttendence(res.data);
             }
         }
         getAttendenceByID();
@@ -32,11 +33,11 @@ const CompanyAttendanceDetails = () => {
         <div>
             <div className='container'>
                 <div className='row mt-3'>
-                    <div className='col-lg-3 text-end'>
-                        <Link className='Heading active' href="/Attendance/AttendanceDetails">My Attendence Details</Link>
+                    <div className='col-lg-3 ' >
+                        <Link className={Styles.mainheader} href="/Attendance/AttendanceDetails">My Attendence Details</Link>
                     </div>
-                    <div className='col-lg-3'>
-                        <Link className='Heading active' href="/Attendance/MyTeamAttendanceDetails">Company Attendance Details</Link>
+                    <div className='col-lg-3' style={{marginLeft:"-50px"}}>
+                        <Link className={Styles.mainheader} href="/Attendance/MyTeamAttendanceDetails">Company Attendance Details</Link>
                     </div>
                 </div>
                 <h6>API Issue In Company AttendanceDetails</h6>
@@ -93,10 +94,10 @@ const CompanyAttendanceDetails = () => {
                         </tr>
                     </thead>
                     <tbody>
-                        {Array.isArray(MyTeamAttendence) && MyTeamAttendence.length > 0 && (
+                        {Array.isArray(CompanyAttendence) && CompanyAttendence.length > 0 && (
                             <>
                                 {
-                                    MyTeamAttendence.map((data) => {
+                                    CompanyAttendence.map((data) => {
                                         return (
                                             <tr key={data.id}>
                                                 <td>{data.date}</td>
@@ -116,7 +117,7 @@ const CompanyAttendanceDetails = () => {
                                     })
                                 }
                             </>
-                        )}
+                         )} 
                     </tbody>
                 </table>
             </div>

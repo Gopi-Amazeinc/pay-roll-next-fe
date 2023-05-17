@@ -73,7 +73,7 @@
   border-radius: 5px;
 }
 
-.dropdown:hover .dropdowncontent {
+.dropdown .dropdowncontent {
   display: block;
 }
 

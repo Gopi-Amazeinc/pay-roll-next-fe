@@ -3,18 +3,24 @@ import { BiFilterAlt } from "react-icons/bi";
 import { AiOutlinePlus } from "react-icons/ai";
 import Link from 'next/link'
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import ReactPaginate from "react-paginate";
+import { apiService } from "@/services/api.service";
 import Swal from 'sweetalert2'
 
 export default function SubsidaryMasterDash() {
 
     const [SubsidaryMaster, setSubsidaryMaster] = useState([]);
     const [keyword, setKeyword] = useState("");
-
-    const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+    const PER_PAGE = 2;
+    const [currentPage, setCurrentPage] = useState(0);
+    function handlePageClick({ selected: selectedPage }) {
+        setCurrentPage(selectedPage)
+    }
+    const offset = currentPage * PER_PAGE;
+    const pageCount = Math.ceil(SubsidaryMaster.length / PER_PAGE);
 
     const getSubsidaryMaster = async () => {
-        let res = await axios.get(hostURL + "Master/GetSubsidaryMaster");
+        let res = await apiService.commonGetCall("Master/GetSubsidaryMaster");
         setSubsidaryMaster(res.data);
     }
 
@@ -25,7 +31,7 @@ export default function SubsidaryMasterDash() {
 
     const handleDelete = async (id) => {
         try {
-            let res = await axios.get(hostURL + `Master/DeleteSubsidaryMaster?id=${id}`);
+            let res = await apiService.commonGetCall(`Master/DeleteSubsidaryMaster?id=${id}`);
             console.log(res.data);
             Swal.fire('Data deleted successfully')
             getSubsidaryMaster();
@@ -80,34 +86,63 @@ export default function SubsidaryMasterDash() {
                         {Array.isArray(SubsidaryMaster) &&
                             SubsidaryMaster.length > 0 && (
                                 <>
-                                    {SubsidaryMaster.map((data, index) => {
-                                        return (
-                                            <tr key={index}>
-                                                <td>{data.name}</td>
-                                                <td>{data.description}</td>
-                                                <td>
-                                                    <Link href={`/Masters/SubSidaryMaster/Edit/${data.id}`}>
+                                    {SubsidaryMaster
+                                        .filter(data => {
+                                            if ((data.name.toLowerCase().includes(keyword.toLowerCase())) || (data.description.toLowerCase().includes(keyword))) {
+                                                return data;
+                                            }
+                                        })
+                                        .slice(offset, offset + PER_PAGE)
+                                        .map((data, index) => {
+                                            return (
+                                                <tr key={index}>
+                                                    <td>{data.name}</td>
+                                                    <td>{data.description}</td>
+                                                    <td>
+                                                        <Link href={`/Masters/SubSidaryMaster/Edit/${data.id}`}>
+                                                            <button
+                                                                className="edit-btn"
+                                                            >
+                                                                Edit
+                                                            </button>
+                                                        </Link>
+                                                        &nbsp;&nbsp;
                                                         <button
+                                                            onClick={() => handleDelete(data.id)}
                                                             className="edit-btn"
                                                         >
-                                                            Edit
+                                                            Delete
                                                         </button>
-                                                    </Link>
-                                                    &nbsp;&nbsp;
-                                                    <button
-                                                        onClick={() => handleDelete(data.id)}
-                                                        className="edit-btn"
-                                                    >
-                                                        Delete
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        );
-                                    })}
+                                                    </td>
+                                                </tr>
+                                            );
+                                        })}
                                 </>
                             )}
                     </tbody>
                 </table>
+            </div>
+
+            <div className="mb-4 mt-4 text-center">
+                <ReactPaginate
+                    previousLabel={"Previous"}
+                    nextLabel={"Next"}
+                    breakLabel={"..."}
+                    pageCount={pageCount}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={3}
+                    onPageChange={handlePageClick}
+                    containerClassName={"pagination  justify-content-center"}
+                    pageClassName={"page-item "}
+                    pageLinkClassName={"page-link"}
+                    previousClassName={"page-item"}
+                    previousLinkClassName={"page-link"}
+                    nextClassName={"page-item"}
+                    nextLinkClassName={"page-link"}
+                    breakClassName={"page-item"}
+                    breakLinkClassName={"page-link"}
+                    activeClassName={"active primary"}
+                />
             </div>
         </div>
     )

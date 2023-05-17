@@ -119,27 +119,6 @@ export default function BankDetails() {
 
     }
 
-
-
-    // const deleteModal = async (id) => {
-    //     debugger
-    //     let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-    //     let res = await axios.get(hostURL + "Employee/DeleteBankDetails?ID=" + id);
-    //     let res1 = await axios.get(hostURL + "Employee/GetBankDetails");
-    //     setBandMasterData(res1.data);
-    // }
-
-
-    // const openEditModal = async (id) => {
-    //     debugger
-    //     let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-    //     let res = await axios.get(hostURL + "Employee/GetBankDetailsByID?ID=" + id);
-    //     clearForm(res.data[0]);
-    //     setIsOpen(true);
-    // }
-
-
-
     useEffect(() => {
         getBankDetails()
 
@@ -175,9 +154,9 @@ export default function BankDetails() {
                                                 <select className='form-control inputwidth'{...register("BankID", { required: true })} style={customStyles.inputLabel}>
                                                     <option value="">Select Bank</option>
                                                     {
-                                                        BankMaster.map((data, index) => {
+                                                        BankMaster.map((data) => {
                                                             return (
-                                                                <option key={index} value={data.id}>{data.short}</option>
+                                                                <option key={data.id} value={data.id}>{data.short}</option>
                                                             )
                                                         })
                                                     }

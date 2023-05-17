@@ -176,9 +176,9 @@ export default function IDDetails() {
                                                     style={customStyles.inputLabel}>
                                                     <option value="">Select ID Type</option>
                                                     {
-                                                        IDTypeMaster.map((data, index) => {
+                                                        IDTypeMaster.map((data) => {
                                                             return (
-                                                                <option key={index} value={data.id}>{data.short}</option>
+                                                                <option key={data.id} value={data.id}>{data.short}</option>
                                                             )
                                                         })
                                                     }

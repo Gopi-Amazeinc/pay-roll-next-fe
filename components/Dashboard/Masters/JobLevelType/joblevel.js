@@ -1,17 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Layout from '../../../layout/layout'
-import axios from 'axios'
+import { apiService } from "@/services/api.service";
 import Swal from 'sweetalert2';
 import { BiFilterAlt } from "react-icons/bi";
 import { AiOutlinePlus } from "react-icons/ai";
+import ReactPaginate from "react-paginate";
 
 function LevelTypeDash() {
 
     let [dashboard, setDashboardData] = useState([])
-    let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
     const getLevelType = async () => {
-        const res = await axios.get(hostURL + "Master/GetLevelType") //getting job level type data and displayed in a table [Shashank]
+        const res = await apiService.commonGetCall("Master/GetLevelType") //getting job level type data and displayed in a table [Shashank]
         console.log(res.data)
         setDashboardData(res.data)
     }
@@ -27,7 +27,7 @@ function LevelTypeDash() {
             confirmButtonText: 'Yes, delete it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.get(hostURL + "Master/DeleteLevelType?ID=" + id) // deleting data based on ID [Shashank]
+                apiService.commonGetCall("Master/DeleteLevelType?ID=" + id)// deleting data based on ID [Shashank]
                 Swal.fire({
                     icon: "success",
                     titleText: "Deleted Successfully"
@@ -41,6 +41,16 @@ function LevelTypeDash() {
     useEffect(() => {
         getLevelType();
     }, [])
+
+    const PER_PAGE = 2;
+    const [currentPage, setCurrentPage] = useState(0);
+    function handlePageClick({ selected: selectedPage }) {
+        setCurrentPage(selectedPage)
+    }
+    const offset = currentPage * PER_PAGE;
+    const pageCount = Math.ceil(dashboard.length / PER_PAGE);
+    const [keyword, setKeyword] = useState("");
+
     return (
         <Layout>
             <div className="container">
@@ -55,6 +65,7 @@ function LevelTypeDash() {
                                 type="text"
                                 placeholder="Search"
                                 className="form-control"
+                                onChange={e => setKeyword(e.target.value)}
                             ></input>
                         </div>
                     </div>
@@ -85,34 +96,63 @@ function LevelTypeDash() {
                             {Array.isArray(dashboard) &&
                                 dashboard.length > 0 && (
                                     <>
-                                        {dashboard.map((data, index) => {
-                                            return (
-                                                <tr key={index}>
-                                                    <td>{data.short}</td>
-                                                    <td>{data.description}</td>
-                                                    <td>
-                                                        <Link href={`/Masters/JobLevel/Edit/${data.id}`}>
+                                        {dashboard
+                                            .filter(data => {
+                                                if ((data.short.toLowerCase().includes(keyword.toLowerCase())) || (data.description.toLowerCase().includes(keyword))) {
+                                                    return data;
+                                                }
+                                            })
+                                            .slice(offset, offset + PER_PAGE)
+                                            .map((data, index) => {
+                                                return (
+                                                    <tr key={index}>
+                                                        <td>{data.short}</td>
+                                                        <td>{data.description}</td>
+                                                        <td>
+                                                            <Link href={`/Masters/JobLevel/Edit/${data.id}`}>
+                                                                <button
+                                                                    className="edit-btn"
+                                                                >
+                                                                    Edit
+                                                                </button>
+                                                            </Link>
+                                                            &nbsp;&nbsp;
                                                             <button
+                                                                onClick={deleteLevelType.bind(this, data.id)}
                                                                 className="edit-btn"
                                                             >
-                                                                Edit
+                                                                Delete
                                                             </button>
-                                                        </Link>
-                                                        &nbsp;&nbsp;
-                                                        <button
-                                                            onClick={deleteLevelType.bind(this, data.id)}
-                                                            className="edit-btn"
-                                                        >
-                                                            Delete
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                            );
-                                        })}
+                                                        </td>
+                                                    </tr>
+                                                );
+                                            })}
                                     </>
                                 )}
                         </tbody>
                     </table>
+                </div>
+
+                <div className="mb-4 mt-4 text-center">
+                    <ReactPaginate
+                        previousLabel={"Previous"}
+                        nextLabel={"Next"}
+                        breakLabel={"..."}
+                        pageCount={pageCount}
+                        marginPagesDisplayed={2}
+                        pageRangeDisplayed={3}
+                        onPageChange={handlePageClick}
+                        containerClassName={"pagination  justify-content-center"}
+                        pageClassName={"page-item "}
+                        pageLinkClassName={"page-link"}
+                        previousClassName={"page-item"}
+                        previousLinkClassName={"page-link"}
+                        nextClassName={"page-item"}
+                        nextLinkClassName={"page-link"}
+                        breakClassName={"page-item"}
+                        breakLinkClassName={"page-link"}
+                        activeClassName={"active primary"}
+                    />
                 </div>
             </div>
         </Layout>

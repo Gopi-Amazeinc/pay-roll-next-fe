@@ -2,10 +2,14 @@ import Link from "next/link";
 import React from "react";
 import { apiService } from "@/services/api.service";
 import { useEffect, useState } from "react";
+import { useRef } from 'react';
 import Styles from "@/styles/attendancedetails.module.css";
 import ReactPaginate from "react-paginate";
+import { DownloadTableExcel } from 'react-export-table-to-excel';
+
 
 const AttendenceDetails = () => {
+  const tableRef = useRef(null);
   const [Attendence, setAttendence] = useState([]);
 
   const [userID, setUserID] = useState();
@@ -110,7 +114,7 @@ const AttendenceDetails = () => {
         <div className="row mt-3">
           <div className="col-lg-3" style={{ float: "left" }}>
             <Link
-              className={Styles.header}
+              className={Styles.mainheader}
               href="/Attendance/AttendanceDetails"
             >
               My Attendance Details
@@ -118,9 +122,9 @@ const AttendenceDetails = () => {
           </div>
           {roleID == 3 && (
             <>
-              <div className="col-lg-3" style={{ marginLeft: "0px" }}>
+              <div className="col-lg-3" style={{ marginLeft: "-60px" }}>
                 <Link
-                  className={Styles.header}
+                  className={Styles.mainheader}
                   href="/Attendance/MyTeamAttendanceDetails"
                 >
                   My Team Attendance Details
@@ -130,9 +134,9 @@ const AttendenceDetails = () => {
           )}
           {roleID == 2 && (
             <>
-              <div className="col-lg-3" style={{ float: "left" }}>
+              <div className="col-lg-3" style={{ marginLeft: "-60px" }}>
                 <Link
-                  className={Styles.header}
+                  className={Styles.mainheader}
                   href="/Attendance/CompanyAttendanceDetails"
                 >
                   Company Attendance Details
@@ -171,9 +175,14 @@ const AttendenceDetails = () => {
               <div className="col-lg-2">
                 <br />
                 <p></p>
-                <button className="button" id="AddButton">
-                  Download
-                </button>
+                <DownloadTableExcel
+                  filename="users table"
+                  sheet="users"
+                  currentTableRef={tableRef.current}>
+                  <button className="button" id="AddButton">
+                    Download
+                  </button>
+                </DownloadTableExcel>
               </div>
             </div>
           </div>
@@ -186,6 +195,7 @@ const AttendenceDetails = () => {
               <table
                 className="table table-striped table-bordered "
                 style={{ marginLeft: "0px", width: "100%" }}
+                ref={tableRef}
               >
                 <thead className={"bg-info text-white "}>
                   <tr style={{ whiteSpace: "nowrap" }}>
