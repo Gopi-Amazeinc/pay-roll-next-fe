@@ -104,7 +104,6 @@ const AttendenceDetails = () => {
         "&EDate=" +
         EDate
       );
-      // let res = await axios.get(hostURL + "HR/GetAttendanceByEmployeeID?userID=" + userID + "&SDate=" + SDate + "&EDate=" + EDate);
       setAttendence(res.data);
     }
   };

@@ -22,17 +22,28 @@ const GaugeChart = dynamic(() => import("react-gauge-chart"), { ssr: false });
 import Swal from "sweetalert2";
 
 const Dashboard = () => {
-  // let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
   const count = 1;
+
+
+  var time = new Date().toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+  var Time = time.toString();
 
   const [userName, setUserName] = useState();
   const [userEmail, setUserEmail] = useState();
+
+  const [userID, setUserID] = useState();
+  const [roleID, setRoleID] = useState();
 
   const [viewMode, setViewMode] = useState("tab1");
 
   const [items, setItems] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [punchintime, setPunchintime] = useState(false);
+
+  const [StartTime, setStartTime] = useState(Time);
+  const [EndTime, setEndTime] = useState(Time);
+
+
   const [actionType, setActionType] = useState("");
   const [workType, setWorkType] = useState();
   const [localIPAddress, setLocalIPAddress] = useState("");
@@ -45,6 +56,10 @@ const Dashboard = () => {
     setUserEmail(Loginemail);
     const punchinID = sessionStorage.getItem("StaffPunchedinID");
     setActionType(punchinID);
+    const userid = sessionStorage.getItem("userID");
+    const roleid = sessionStorage.getItem("roleID");
+    setUserID(userid);
+    setRoleID(roleid);
 
     const getLocalIPAddress = async () => {
       const response = await fetch("https://api.ipify.org/?format=json");
@@ -53,10 +68,28 @@ const Dashboard = () => {
     };
 
     getLocalIPAddress();
+    var todayDate = new Date().toISOString().slice(0, 10);
+    apiService.commonGetCall("HR/GetAttendance").then((staffData) => {
+      debugger;
+      let staffDetails = staffData.data.filter(
+        (x) => x.filterdate == todayDate && x.staffID == userID
+      );
+      if (staffDetails.length && staffDetails[0].signinDate != null) {
+        setPunchedIn(true);
+        setWorkTypeID(staffDetails[0].workTypeID);
+        setStartTime(staffDetails[0].startTime);
+      }
 
-    const currentTime = new Date();
-    setPunchintime(currentTime.toLocaleTimeString());
-    setSubmitted(true);
+      if (staffDetails.length && staffDetails[0].signoutDate != null) {
+        setPunchedOut(true);
+        setWorkTypeID(staffDetails[0].workTypeID);
+        setEndTime(staffDetails[0].endTime);
+      }
+
+      // const currentTime = new Date();
+      // setPunchintime(currentTime.toLocaleTimeString());
+      // setSubmitted(true);
+    });
   }, []);
 
   const modelopen = () => {
@@ -84,9 +117,9 @@ const Dashboard = () => {
     // }
 
     const ipaddress = localIPAddress;
-    var options = { hour12: false };
-    var date = new Date();
-    var entity = {
+    const options = { hour12: false };
+    const date = new Date();
+    let entity = {
       UserID: sessionStorage.getItem("userID"),
       SigninDate: date.toLocaleString("en-US", options),
       SigninLocation: "Office",
@@ -95,7 +128,7 @@ const Dashboard = () => {
       ApprovalStatus: "Manager Pending HR Pending",
       WorkType: parseInt(workType),
     };
-    let res = await apiService.commonGetCall("HR/InsertAttendanceWeb", entity);
+    let res = await apiService.commonPostCall("HR/InsertAttendanceWeb", entity);
     const staffPunchedinID = res.data || res;
     if (staffPunchedinID) {
       sessionStorage.setItem("StaffPunchedinID", staffPunchedinID);
@@ -103,6 +136,34 @@ const Dashboard = () => {
       Swal.fire("Punched In Successfully");
     }
     // }
+  };
+
+  const handlePunchout = async () => {
+    var options = { hour12: false };
+    var date = new Date();
+    await apiService.commonGetCall("HR/GetAttendance").then(async (res) => {
+      debugger;
+      var todayDate = new Date().toISOString().slice(0, 10);
+      let temp = res.data.filter(
+        (x) => x.filterdate == todayDate && x.userID == userID
+      );
+      let ID = temp[0].id;
+
+      var entity = {
+        ID: ID,
+        SignoutDate: date.toLocaleString("en-US", options),
+        SignoutLocation: "Office",
+        StatusID: 2,
+        punchoutip:
+          ipaddress == undefined || null ? "101.120.111.222" : ipaddress,
+        PunchoutWorkType: parseInt(workType),
+      };
+      let res1 = await apiService.commonPostCall("HR/UpdateAttendanceWeb", entity);
+      if (res1.data && res1.status == 200) {
+        setActionType(res1);
+        setPunchedOut(true);
+      }
+    });
   };
 
   return (
@@ -171,7 +232,7 @@ const Dashboard = () => {
                         <div className="col-lg-7">
                           <button
                             className={dashboard.buttonclick}
-                          // onClick={() => modelopen()}
+                            // onClick={() => modelopen()}
                           >
                             <Image
                               src={Pnchingreen}
@@ -183,7 +244,7 @@ const Dashboard = () => {
                           </button>
                         </div>
                         <div className="col-lg-4 mt-3 ">
-                          <span>{punchintime.toLocaleString()}</span>
+                          <span>{StartTime}</span>
                         </div>
                       </>
                     )}
@@ -222,12 +283,12 @@ const Dashboard = () => {
                           <select
                             name=""
                             id=""
-                            className="form-control"
+                            className="form-select"
                             onChange={(event) =>
                               handleworkType(event.target.value)
                             }
                           >
-                            <option disabled>SelectOne</option>
+                            <option defaultValue={"Select One"}>Select One</option>
                             <option value="0">Work From Home</option>
                             <option value="1">Office</option>
                           </select>
@@ -249,6 +310,7 @@ const Dashboard = () => {
                                   color="primary"
                                   type="button"
                                   className="button"
+                                  onClick={() => handlePunchout()}
                                 >
                                   PunchOut
                                 </button>
@@ -264,7 +326,10 @@ const Dashboard = () => {
             </div>
             <div className="row">
               <div className="col-lg-12">
-                <div className="card" style={{ borderRadius: "20px", marginTop: "30px" }}>
+                <div
+                  className="card"
+                  style={{ borderRadius: "20px", marginTop: "30px" }}
+                >
                   <div
                     className="card-body"
                     style={{ marginBottom: "46px", height: "160px" }}
@@ -439,7 +504,7 @@ const Dashboard = () => {
                     needleColor={"#afb4bd"}
                     needleBaseColor={"#afb4bd"}
                     textOffsetY={-40}
-                  // hideText={true} // If you want to hide the text
+                    // hideText={true} // If you want to hide the text
                   />
                 </div>
                 {/* <Image src={images} alt="Picture of the author" width={100} height={80} className={dashboard.profileimg1} /> */}
