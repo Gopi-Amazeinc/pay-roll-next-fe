@@ -3,6 +3,8 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import Swal from "sweetalert2";
 import { apiService } from "@/services/api.service";
+import Styles from "@/styles/attendancedetails.module.css";
+import { useRouter } from "next/router";
 
 const Attendancecorrectiondashboard = () => {
   const [roleID, setRoleID] = useState();
@@ -23,6 +25,8 @@ const Attendancecorrectiondashboard = () => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
 
+  const [keyword, setKeyword] = useState("");
+
   const togglePending = () => {
     setPending(true);
     setRejected(false);
@@ -42,26 +46,30 @@ const Attendancecorrectiondashboard = () => {
   };
 
   useEffect(() => {
-    const usrID = sessionStorage.getItem("userID");
-    setUserID(usrID);
+    const userid = sessionStorage.getItem("userID");
+    setUserID(userid);
 
     const userRoleID = sessionStorage.getItem("roleID");
     setRoleID(userRoleID);
 
     setPending(true);
-
-    getCurrentMonthDates();
-  }, [1]);
+  }, []);
 
   useEffect(() => {
-    if (roleID === 3) {
-      getPendingManager(startDate, endDate);
-      getApprovedManager(startDate, endDate);
-      getRejectedManager(startDate, endDate);
-    } else {
-      getPendingData(startDate, endDate);
-      getApprovedData(startDate, endDate);
-      getRejectedData(startDate, endDate);
+    if (userID) {
+      const resu = getCurrentMonthDates();
+      if (resu) {
+        if (roleID == 3) {
+          debugger;
+          getPendingManager(resu.setStartDate, resu.setEndDate);
+          getApprovedManager(resu.setStartDate, resu.setEndDate);
+          getRejectedManager(resu.setStartDate, resu.setEndDate);
+        } else {
+          getPendingData(resu.setStartDate, resu.setEndDate);
+          getApprovedData(resu.setStartDate, resu.setEndDate);
+          getRejectedData(resu.setStartDate, resu.setEndDate);
+        }
+      }
     }
   }, [roleID]);
 
@@ -79,6 +87,10 @@ const Attendancecorrectiondashboard = () => {
 
     setStartDate(fromDate);
     setEndDate(toDate);
+    return {
+      setStartDate: fromDate,
+      setEndDate: toDate,
+    };
   };
 
   const formateDate = (datetoformat) => {
@@ -225,7 +237,9 @@ const Attendancecorrectiondashboard = () => {
 
   return (
     <div className="container">
-      <h3 className="text-primary fs-5 mt-3">Attendance Correction </h3>
+      <div className="mt-3">
+        <h3 className={Styles.mainheader}>Attendance Correction </h3>
+      </div>
       <div
         className="card p-3 border-0 shadow-lg rounded-3 mt-4"
         style={{ marginLeft: "-8px" }}
@@ -240,6 +254,7 @@ const Attendancecorrectiondashboard = () => {
               type="text"
               className="form-control"
               placeholder="Search..."
+              onChange={(e) => setKeyword(e.target.value)}
             />
           </div>
 
@@ -321,28 +336,34 @@ const Attendancecorrectiondashboard = () => {
               {Array.isArray(pendingDashboardData) &&
                 pendingDashboardData.length > 0 && (
                   <>
-                    {pendingDashboardData.map((data) => {
-                      return (
-                        <tr key={data.id}>
-                          <td>{data.date}</td>
-                          <td>{data.startTime}</td>
-                          <td>{data.endTime}</td>
-                          <td>{data.Comments}</td>
-                          <td>{data.status}</td>
-                          <td>
-                            <button
-                              onClick={deleteAttendanceCorrection.bind(
-                                this,
-                                data.id
-                              )}
-                              className="edit-btn"
-                            >
-                              Cancel
-                            </button>
-                          </td>
-                        </tr>
-                      );
-                    })}
+                    {pendingDashboardData
+                      //  .filter(data => {
+                      //   if ((data.countryname.toLowerCase().includes(keyword.toLowerCase())) || (data.name.toLowerCase().includes(keyword))) {
+                      //     return data;
+                      //   }
+                      // })
+                      .map((data) => {
+                        return (
+                          <tr key={data.id}>
+                            <td>{data.date}</td>
+                            <td>{data.startTime}</td>
+                            <td>{data.endTime}</td>
+                            <td>{data.Comments}</td>
+                            <td>{data.status}</td>
+                            <td>
+                              <button
+                                onClick={deleteAttendanceCorrection.bind(
+                                  this,
+                                  data.id
+                                )}
+                                className="edit-btn"
+                              >
+                                Cancel
+                              </button>
+                            </td>
+                          </tr>
+                        );
+                      })}
                   </>
                 )}
             </tbody>

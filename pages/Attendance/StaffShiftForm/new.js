@@ -10,12 +10,12 @@ import { apiService } from "@/services/api.service";
 
 const New = () => {
     const [staffshift, setStaffShift] = useState([]);
+    const router = useRouter();
     // const [selectedOption, setSelectedOption] = useState('');
     const { register, handleSubmit, watch, reset, formState } = useForm();
     const { errors } = formState;
 
     const getShiftname = async () => {
-        let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
         const res = await apiService.commonGetCall("Master/GetShiftMaster");
         setStaffShift(res.data)
     }
@@ -41,10 +41,10 @@ const New = () => {
         reset(details);
     }
     const onSubmit = async (data) => {
-        const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-        await axios.post(hostURL + "HR/InsertStaffShiftDetails", data)
+        await apiService.commonPostCall("HR/InsertStaffShiftDetails", data);
         Swal.fire("Added successfully!");
-        Router.push("/Attendance/ShiftDetails")
+        // console.log(data);
+        router.push("/Attendance/ShiftDetails")
     }
 
     useEffect(() => {

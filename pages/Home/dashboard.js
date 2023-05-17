@@ -24,8 +24,11 @@ import Swal from "sweetalert2";
 const Dashboard = () => {
   const count = 1;
 
-
-  var time = new Date().toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true });
+  var time = new Date().toLocaleString("en-US", {
+    hour: "numeric",
+    minute: "numeric",
+    hour12: true,
+  });
   var Time = time.toString();
 
   const [userName, setUserName] = useState();
@@ -38,14 +41,15 @@ const Dashboard = () => {
 
   const [items, setItems] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
-  const [punchintime, setPunchintime] = useState(false);
 
+  const [punchedIn, setPunchedIn] = useState(false);
+  const [punchedOut, setPunchedOut] = useState(false);
+
+  const [WorkTypeID, setWorkTypeID] = useState();
   const [StartTime, setStartTime] = useState(Time);
   const [EndTime, setEndTime] = useState(Time);
 
-
   const [actionType, setActionType] = useState("");
-  const [workType, setWorkType] = useState();
   const [localIPAddress, setLocalIPAddress] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
@@ -57,8 +61,8 @@ const Dashboard = () => {
     const punchinID = sessionStorage.getItem("StaffPunchedinID");
     setActionType(punchinID);
     const userid = sessionStorage.getItem("userID");
-    const roleid = sessionStorage.getItem("roleID");
     setUserID(userid);
+    const roleid = sessionStorage.getItem("roleID");
     setRoleID(roleid);
 
     const getLocalIPAddress = async () => {
@@ -68,29 +72,34 @@ const Dashboard = () => {
     };
 
     getLocalIPAddress();
+  }, [1]);
+
+  useEffect(() => {
     var todayDate = new Date().toISOString().slice(0, 10);
-    apiService.commonGetCall("HR/GetAttendance").then((staffData) => {
-      debugger;
-      let staffDetails = staffData.data.filter(
-        (x) => x.filterdate == todayDate && x.staffID == userID
-      );
-      if (staffDetails.length && staffDetails[0].signinDate != null) {
-        setPunchedIn(true);
-        setWorkTypeID(staffDetails[0].workTypeID);
-        setStartTime(staffDetails[0].startTime);
-      }
+    debugger;
+    if (userID) {
+      apiService.commonGetCall("HR/GetAttendance").then((staffData) => {
+        let staffDetails = staffData.data.filter(
+          (x) => x.filterdate == todayDate && x.userID == userID
+        );
+        if (staffDetails.length && staffDetails[0].signinDate != null) {
+          setPunchedIn(true);
+          setWorkTypeID(staffDetails[0].signInTypeID);
+          setStartTime(staffDetails[0].startTime);
+        }
 
-      if (staffDetails.length && staffDetails[0].signoutDate != null) {
-        setPunchedOut(true);
-        setWorkTypeID(staffDetails[0].workTypeID);
-        setEndTime(staffDetails[0].endTime);
-      }
+        if (staffDetails.length && staffDetails[0].signoutDate != null) {
+          setPunchedOut(true);
+          setWorkTypeID(staffDetails[0].signOutTypeID);
+          setEndTime(staffDetails[0].endTime);
+        }
 
-      // const currentTime = new Date();
-      // setPunchintime(currentTime.toLocaleTimeString());
-      // setSubmitted(true);
-    });
-  }, []);
+        // const currentTime = new Date();
+        // setPunchintime(currentTime.toLocaleTimeString());
+        // setSubmitted(true);
+      });
+    }
+  }, [userID]);
 
   const modelopen = () => {
     setModalOpen(!modalOpen);
@@ -98,9 +107,7 @@ const Dashboard = () => {
     // setActionType("punchin")
   };
   const handleworkType = (value) => {
-    debugger;
-    console.log(value);
-    setWorkType(value);
+    setWorkTypeID(value);
   };
 
   // const handlePunchin = () => {
@@ -108,39 +115,59 @@ const Dashboard = () => {
   // }
   // TODO: Written By: Gopi -> Add code to punchhin user or staff
   const handlePunchin = async () => {
-    debugger;
-    setModalOpen(!modalOpen);
-    // if (punchintime != true) {
-    //   Swal.fire("Already Punched In for the day");
-    // } else (workType == undefined || workType == null) {
-    //   Swal.fire("Please Fill Work Type");
-    // }
+    if (punchedIn === true) {
+      Swal.fire("Already Punched In for the day");
+    } else if (
+      WorkTypeID == undefined ||
+      WorkTypeID == null ||
+      WorkTypeID == 0
+    ) {
+      Swal.fire("Please Fill Work Type");
+    } else {
+      const options = { hour12: false };
+      const date = new Date();
+      let entity = {
+        UserID: sessionStorage.getItem("userID"),
+        SigninDate: date.toLocaleString("en-US", options),
+        SigninLocation: "Office",
+        StatusID: 1,
+        punchinip:
+        localIPAddress == undefined || null ? "101.120.111.222" : localIPAddress,
+        ApprovalStatus: "Manager Pending HR Pending",
+        WorkType: parseInt(WorkTypeID),
+      };
+      let res = await apiService.commonPostCall(
+        "HR/InsertAttendanceWeb",
+        entity
+      );
+      if (res.data && res.status == 200) {
+        setPunchedIn(true);
+      }
 
-    const ipaddress = localIPAddress;
-    const options = { hour12: false };
-    const date = new Date();
-    let entity = {
-      UserID: sessionStorage.getItem("userID"),
-      SigninDate: date.toLocaleString("en-US", options),
-      SigninLocation: "Office",
-      StatusID: 1,
-      punchinip: ipaddress == undefined || null ? "101.120.111.222" : ipaddress,
-      ApprovalStatus: "Manager Pending HR Pending",
-      WorkType: parseInt(workType),
-    };
-    let res = await apiService.commonPostCall("HR/InsertAttendanceWeb", entity);
-    const staffPunchedinID = res.data || res;
-    if (staffPunchedinID) {
-      sessionStorage.setItem("StaffPunchedinID", staffPunchedinID);
-      setActionType(staffPunchedinID);
-      Swal.fire("Punched In Successfully");
+      // const staffPunchedinID = res.data || res;
+      // if (staffPunchedinID) {
+      //   sessionStorage.setItem("StaffPunchedinID", staffPunchedinID);
+      //   setActionType(staffPunchedinID);
+      //   Swal.fire("Punched In Successfully");
+      // }
+      // }
     }
-    // }
+    setModalOpen(!modalOpen);
   };
 
   const handlePunchout = async () => {
-    var options = { hour12: false };
-    var date = new Date();
+    if (punchedOut === true) {
+      Swal.fire("Already Punched out for the day");
+    } else if (
+      WorkTypeID == undefined ||
+      WorkTypeID == null ||
+      WorkTypeID == 0
+    ) {
+      Swal.fire("Please Fill Work Type");
+    }
+    else {
+    let options = { hour12: false };
+    let date = new Date();
     await apiService.commonGetCall("HR/GetAttendance").then(async (res) => {
       debugger;
       var todayDate = new Date().toISOString().slice(0, 10);
@@ -155,15 +182,20 @@ const Dashboard = () => {
         SignoutLocation: "Office",
         StatusID: 2,
         punchoutip:
-          ipaddress == undefined || null ? "101.120.111.222" : ipaddress,
-        PunchoutWorkType: parseInt(workType),
+        localIPAddress == undefined || null ? "101.120.111.222" : localIPAddress,
+        PunchoutWorkType: parseInt(WorkTypeID),
       };
-      let res1 = await apiService.commonPostCall("HR/UpdateAttendanceWeb", entity);
+      let res1 = await apiService.commonPostCall(
+        "HR/UpdateAttendanceWeb",
+        entity
+      );
       if (res1.data && res1.status == 200) {
-        setActionType(res1);
+        // setActionType(res1);
         setPunchedOut(true);
       }
     });
+  }
+  setModalOpen(!modalOpen);
   };
 
   return (
@@ -213,7 +245,7 @@ const Dashboard = () => {
               >
                 <div className="col-lg-12">
                   <div className="row">
-                    {actionType == null ? (
+                    {!punchedIn ? (
                       <>
                         <div className="col-lg-7">
                           <button
@@ -239,7 +271,7 @@ const Dashboard = () => {
                               alt="Leave icon"
                               width={15}
                               height={19}
-                            />{" "}
+                            />
                             PUNCH IN
                           </button>
                         </div>
@@ -248,20 +280,43 @@ const Dashboard = () => {
                         </div>
                       </>
                     )}
-
-                    <div className="col-lg-7">
-                      <button
-                        className={dashboard.punchin}
-                        onClick={() => setModalOpen(!modalOpen)}
-                      >
-                        PUNCH OUT
-                      </button>
-                    </div>
-                    <div className="col-lg-4 mt-3">
-                      <span className="mt-3"> PunchOut Time </span>
-                    </div>
+                    {!punchedOut ? (
+                      <>
+                        <div className="col-lg-7">
+                          <button
+                            className={dashboard.punchin}
+                            onClick={() => setModalOpen(!modalOpen)}
+                          >
+                            PUNCH OUT
+                          </button>
+                        </div>
+                        <div className="col-lg-4 mt-3">
+                          <span className="mt-3"> PunchOut Time </span>
+                        </div>
+                      </>
+                    ) : (
+                      <>
+                        <div className="col-lg-7">
+                          <button
+                            className={dashboard.buttonclick}
+                            // onClick={() => modelopen()}
+                          >
+                            <Image
+                              src={Pnchingreen}
+                              alt="Leave icon"
+                              width={15}
+                              height={19}
+                            />
+                            PUNCH OUT
+                          </button>
+                        </div>
+                        &nbsp;
+                        <div className="col-lg-4 mt-3 ">
+                          <span>{EndTime}</span>
+                        </div>
+                      </>
+                    )}
                   </div>
-
                   <Modal
                     toggle={() => setModalOpen(!modalOpen)}
                     isOpen={modalOpen}
@@ -284,19 +339,20 @@ const Dashboard = () => {
                             name=""
                             id=""
                             className="form-select"
+                            // value={WorkTypeID}
                             onChange={(event) =>
                               handleworkType(event.target.value)
                             }
                           >
-                            <option defaultValue={"Select One"}>Select One</option>
-                            <option value="0">Work From Home</option>
-                            <option value="1">Office</option>
+                            <option value="0">Select One</option>
+                            <option value="1">Work From Home</option>
+                            <option value="2">Office</option>
                           </select>
                         </div>
                         <div className="row">
                           <div className="col-lg-6">
                             <ModalFooter>
-                              {actionType == null ? (
+                              {!punchedIn ? (
                                 <button
                                   color="primary"
                                   type="button"
