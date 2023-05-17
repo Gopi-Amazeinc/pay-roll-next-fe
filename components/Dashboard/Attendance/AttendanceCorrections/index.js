@@ -23,6 +23,9 @@ const Attendancecorrectiondashboard = () => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
 
+
+  const [keyword, setKeyword] = useState("");
+
   const togglePending = () => {
     setPending(true);
     setRejected(false);
@@ -240,6 +243,7 @@ const Attendancecorrectiondashboard = () => {
               type="text"
               className="form-control"
               placeholder="Search..."
+              onChange={e => setKeyword(e.target.value)}
             />
           </div>
 
@@ -321,7 +325,13 @@ const Attendancecorrectiondashboard = () => {
               {Array.isArray(pendingDashboardData) &&
                 pendingDashboardData.length > 0 && (
                   <>
-                    {pendingDashboardData.map((data) => {
+                    {pendingDashboardData
+                    //  .filter(data => {
+                    //   if ((data.countryname.toLowerCase().includes(keyword.toLowerCase())) || (data.name.toLowerCase().includes(keyword))) {
+                    //     return data;
+                    //   }
+                    // })
+                    .map((data) => {
                       return (
                         <tr key={data.id}>
                           <td>{data.date}</td>
