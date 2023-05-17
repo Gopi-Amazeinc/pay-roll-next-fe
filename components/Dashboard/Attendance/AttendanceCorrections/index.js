@@ -332,33 +332,33 @@ const Attendancecorrectiondashboard = () => {
                 pendingDashboardData.length > 0 && (
                   <>
                     {pendingDashboardData
-                    //  .filter(data => {
-                    //   if ((data.countryname.toLowerCase().includes(keyword.toLowerCase())) || (data.name.toLowerCase().includes(keyword))) {
-                    //     return data;
-                    //   }
-                    // })
-                    .map((data) => {
-                      return (
-                        <tr key={data.id}>
-                          <td>{data.date}</td>
-                          <td>{data.startTime}</td>
-                          <td>{data.endTime}</td>
-                          <td>{data.Comments}</td>
-                          <td>{data.status}</td>
-                          <td>
-                            <button
-                              onClick={deleteAttendanceCorrection.bind(
-                                this,
-                                data.id
-                              )}
-                              className="edit-btn"
-                            >
-                              Cancel
-                            </button>
-                          </td>
-                        </tr>
-                      );
-                    })}
+                      //  .filter(data => {
+                      //   if ((data.countryname.toLowerCase().includes(keyword.toLowerCase())) || (data.name.toLowerCase().includes(keyword))) {
+                      //     return data;
+                      //   }
+                      // })
+                      .map((data) => {
+                        return (
+                          <tr key={data.id}>
+                            <td>{data.date}</td>
+                            <td>{data.startTime}</td>
+                            <td>{data.endTime}</td>
+                            <td>{data.Comments}</td>
+                            <td>{data.status}</td>
+                            <td>
+                              <button
+                                onClick={deleteAttendanceCorrection.bind(
+                                  this,
+                                  data.id
+                                )}
+                                className="edit-btn"
+                              >
+                                Cancel
+                              </button>
+                            </td>
+                          </tr>
+                        );
+                      })}
                   </>
                 )}
             </tbody>
