@@ -1,7 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react';
-import axios from 'axios';
 import Swal from 'sweetalert2';
 import loan from "../../../../pages/Requests/Applyloans/applyloans.module.css"
 import Modal from 'react-modal';
@@ -56,7 +55,6 @@ const Index = () => {
 
     const openEditModal = () => {
         setModalOpen(true)
-        console.log("Modal opened");
     }
     const closeModal = () => {
         setModalOpen(false)
@@ -87,7 +85,6 @@ const Index = () => {
         console.log("Approved", res.data);
     }
     const getRejectedDetails = async () => {
-        // debugger;
         const res = await apiService.commonGetCall("Payroll/GetRejectStaffOverTimeDetails")
         setnewRejectedData(res.data);
         console.log("Rejected", res.data);
@@ -210,7 +207,7 @@ const Index = () => {
 
 
     return (
-        <div>
+        <div className='container'>
             <div className='row'>
                 <div className='col-lg-3 mt-3 text-primary fs-6 fw-bold'>
                     <h4 className='Heading'>My OvertimeDetails</h4>
