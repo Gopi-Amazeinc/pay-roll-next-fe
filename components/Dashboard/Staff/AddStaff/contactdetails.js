@@ -91,7 +91,7 @@ export default function ContactDetails() {
                 StaffID: sessionStorage.getItem('userID')
 
             }
-            let res = await axios.post(hostURL + "HR/InsertMyAddressDetails", Enity);
+            let res = await axios.post(hostURL + "Payroll/InsertMyAddressDetails", Enity);
             if (res.data && res.status == 200) {
                 //  setInsertStatus(true);
                 sessionStorage.setItem("InsertStatus", true)
@@ -138,7 +138,6 @@ export default function ContactDetails() {
         setCountrylistData(res.data);
     }
 
-    // <AiFillCloseCircle />
     return (
         <div style={customStyles}>
             <form onSubmit={handleSubmit(onSubmit)} >

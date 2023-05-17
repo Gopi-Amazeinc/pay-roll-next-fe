@@ -72,7 +72,7 @@ export default function EmploymentDetails() {
                 StaffID: sessionStorage.getItem('userID')
             }
 
-            await axios.post(hostURL + "HR/InsertEmploymentDetails", Entity);
+            await axios.post(hostURL + "Payroll/InsertEmploymentDetails", Entity);
             Swal.fire("Saved Successfully!")
             getData();
             cleardata()
@@ -88,7 +88,7 @@ export default function EmploymentDetails() {
                 StaffID: sessionStorage.getItem('userID')
         }
 
-        await axios.post(hostURL + "HR/UpdateEmploymentDetails", Entity);
+        await axios.post(hostURL + "Payroll/UpdateEmploymentDetails", Entity);
             Swal.fire("Updated Successfully!")
             getData();
             cleardata()
@@ -129,7 +129,7 @@ export default function EmploymentDetails() {
     async function editData(data) {
         debugger;
         let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-        let res = await axios.get(hostURL + "HR/GetEmploymentDetailsByID?ID=" + data);
+        let res = await axios.get(hostURL + "Payroll/GetEmploymentDetailsByID?ID=" + data);
         cleardata(res.data[0]);
 
     }

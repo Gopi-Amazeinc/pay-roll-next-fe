@@ -71,7 +71,7 @@ export default function NominationDetails() {
                 StaffID: sessionStorage.getItem('userID')
             }
 
-            await axios.post(hostURL + "HR/InsertNomination", Entity);
+            await axios.post(hostURL + "Payroll/InsertNomination", Entity);
             Swal.fire("Added successfully")
         }
         else{
@@ -85,7 +85,7 @@ export default function NominationDetails() {
                 NominationAttachment: "No Image",
                 StaffID: sessionStorage.getItem('userID')
             }
-            await axios.post(hostURL + "HR/UpdateNomination", Entity);
+            await axios.post(hostURL + "Payroll/UpdateNomination", Entity);
             Swal.fire("Updated Successfully!")
             getData();
             cleardata()
@@ -125,9 +125,9 @@ export default function NominationDetails() {
     async function editData(data) {
         debugger;
         let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-        let res = await axios.get(hostURL + "HR/GetNominationByID?ID=" + data);
+        let res = await axios.get(hostURL + "Payroll/GetNominationByID?ID=" + data);
         cleardata(res.data[0]);
-
+        getData();
     }
 
     async function deleteData(data) {
@@ -216,8 +216,7 @@ export default function NominationDetails() {
                                     </div>
                                 </div>
 
-                                <div class="d-flex justify-content-center w-100 mt-2 mb-2 pr-2">
-                                    {/* <button className='close-button' onClick={closeModal}>Cancel</button> */}
+                                <div className="d-flex justify-content-center w-100 mt-2 mb-2 pr-2">
                                     {
                                         actionType == "insert" && (
                                             <button className='submit-button' >Submit</button>

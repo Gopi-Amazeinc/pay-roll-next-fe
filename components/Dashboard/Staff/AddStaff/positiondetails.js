@@ -104,7 +104,7 @@ function PositionDetails() {
                 StaffID: sessionStorage.getItem('userID')
 
             }
-            let res = await axios.post(hostURL + "/HR/InsertPositionDetails", Enity);
+            let res = await axios.post(hostURL + "/Payroll/InsertPositionDetails", Enity);
             if (res.data && res.status == 200) {
                
                 sessionStorage.setItem("InsertStatus", true)

@@ -68,7 +68,7 @@ export default function DependentDetails() {
                 StaffID: sessionStorage.getItem('userID'),
                 DependentAttachment: "No Image",
             }
-            let res = await axios.post(hostURL + "HR/InsertDependentDetails", Enity);
+            let res = await axios.post(hostURL + "Payroll/InsertDependentDetails", Enity);
             if (res.data && res.status == 200) {
                 // setInsertStatus(true);
                 sessionStorage.setItem("InsertStatus", true)
@@ -87,7 +87,7 @@ export default function DependentDetails() {
                 StaffID: sessionStorage.getItem('userID'),
                 DependentAttachment: "No Image",
             }
-            await axios.post(hostURL + "HR/UpdateDependentDetails", Enity);
+            await axios.post(hostURL + "Payroll/UpdateDependentDetails", Enity);
             Swal.fire("Updated Successfully!")
             getData();
             cleardata()
@@ -131,7 +131,7 @@ export default function DependentDetails() {
     async function editData(data) {
         debugger;
         let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-        let res = await axios.get(hostURL + "HR/GetDependentDetailsByID?ID=" + data);
+        let res = await axios.get(hostURL + "Payroll/GetDependentDetailsByID?ID=" + data);
         cleardata(res.data[0]);
 
     }

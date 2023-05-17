@@ -103,7 +103,7 @@ function EmployeeProfile() {
         PreviousBMS: data.PreviousBMS,
         EffectivityOfPreviousBMS: data.EffectivityOfPreviousBMS,
       };
-      let res = await apiService.commonPostCall( "Employee/InsertStaff", Enity);
+      let res = await apiService.commonPostCall( "Payroll/InsertStaff", Enity);
       if (res.data && res.status == 200) {
         Swal.fire("Added successfully!!");
       }

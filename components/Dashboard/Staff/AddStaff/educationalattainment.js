@@ -77,7 +77,7 @@ export default function EducationDetails() {
                 AttachmentEdu: "No Image",
                 StaffID: sessionStorage.getItem('userID')
             }
-            await axios.post(hostURL + "Master/InsertEducationDetails", Entity);
+            await axios.post(hostURL + "Payroll/InsertEducationDetails", Entity);
             Swal.fire("Added Successfully!")
             cleardata();
             getData();
@@ -97,7 +97,7 @@ export default function EducationDetails() {
                 StaffID: sessionStorage.getItem('userID')
             }
 
-            await axios.post(hostURL + "HR/UpdateEducationDetails", Entity);
+            await axios.post(hostURL + "Payroll/UpdateEducationDetails", Entity);
             Swal.fire("Updated Successfully!")
             getData();
         }
@@ -141,7 +141,7 @@ export default function EducationDetails() {
         let res2 = await axios.get(hostURL + "/Master/GetCountryType");
         setCountryData(res2.data);
 
-        let res1 = await axios.get(hostURL + "/Master/GetLicenseOrCertificationMaster");
+        let res1 = await axios.get(hostURL + "/Payroll/GetLicenseOrCertificationMaster");
         setLicenseOrCertificationMaster(res1.data);
 
     }
@@ -150,7 +150,7 @@ export default function EducationDetails() {
     async function editData(data) {
         debugger;
         let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-        let res = await axios.get(hostURL + "HR/GetEducationDetailsByID?ID=" + data);
+        let res = await axios.get(hostURL + "Payroll/GetEducationDetailsByID?ID=" + data);
         cleardata(res.data[0]);
 
     }

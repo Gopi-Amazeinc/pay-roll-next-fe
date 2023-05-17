@@ -69,7 +69,7 @@ export default function BankDetails() {
                 "BranchAddress": data.BranchAddress,
                 "StaffID": sessionStorage.getItem('userID')
             }
-            await axios.post(hostURL + "HR/InsertBankDetails", Entity);
+            await axios.post(hostURL + "Payroll/InsertBankDetails", Entity);
             Swal.fire("Saved Successfully!")
             getBankDetails();
             cleardata();
@@ -84,7 +84,7 @@ export default function BankDetails() {
                 "StaffID": sessionStorage.getItem('userID')
             }
 
-            await axios.post(hostURL + "HR/UpdateBankDetails", Entity);
+            await axios.post(hostURL + "Payroll/UpdateBankDetails", Entity);
             Swal.fire("Updated Successfully!")
             getBankDetails();
         }
@@ -110,7 +110,7 @@ export default function BankDetails() {
     async function editData(data) {
         debugger;
         let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-        let res = await axios.get(hostURL + "HR/GetBankDetailsByID?ID=" + data);
+        let res = await axios.get(hostURL + "Payroll/GetBankDetailsByID?ID=" + data);
         cleardata(res.data[0]);
 
     }
