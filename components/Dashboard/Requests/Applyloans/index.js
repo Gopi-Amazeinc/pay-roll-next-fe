@@ -186,7 +186,7 @@ const ApplyloansDashboard = () => {
 
                                                     <td>
                                                         <button
-                                                            className="btn btn-primary"
+                                                            className="edit-btn"
                                                             onClick={() => DeleteApplyLoans(data.id)}
                                                         >
                                                             Delete
