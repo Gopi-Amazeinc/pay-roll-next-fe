@@ -2,18 +2,15 @@ import Layout from "@/components/layout/layout"
 import Link from "next/link";
 import { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
-import axios from "axios";
 import Swal from "sweetalert2";
-import { HiLocationMarker } from "react-icons/hi";
+import { useRouter } from "next/router";
 import styles from '@/../../styles/Locatorrequest.module.css'
 import { apiService } from "@/services/api.service";
 
 const Locatorrequest = () => {
     const { register, handleSubmit, reset, formState } = useForm();
-
+    const router = useRouter();
     const { errors } = formState;
-
-    const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
 
     const [userID, setUserIDData] = useState("")
 
@@ -31,7 +28,7 @@ const Locatorrequest = () => {
             await apiService.commonPostCall("Payroll/InsertLocatorTable", formData);
             Swal.fire('Data Inserted successfully')
             console.log("Inserted data", data);
-            location.href = ("/Requests/Locatorrequest");
+            router.push("/Requests/Locatorrequest")
         } catch (error) {
             Swal.fire("Insert is not working");
         }
@@ -40,7 +37,7 @@ const Locatorrequest = () => {
     return (
         <Layout>
             <form onSubmit={handleSubmit(onSubmit)} className='card p-3 border-0 shadow-lg rounded-3 mt-4'>
-                <div className="row ">  
+                <div className="row ">
                     <div className="col-lg-2">
                         <label htmlFor="" className={styles.p}>Date<span style={{ color: "red" }}>*</span></label>
                         <input type="date" className="form-control" {...register('Date', { required: true })} />

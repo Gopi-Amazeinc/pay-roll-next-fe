@@ -81,9 +81,9 @@ const Locatordashboard = () => {
 
                 <div className="row mt-5">
                     <div className="col-4">
-                        <button onClick={togglePending} className="toggleButton">Pending</button>
-                        <button onClick={toggleApproved} className="toggleButton">Approved</button>
-                        <button onClick={toggleRejected} className="toggleButton">Rejected</button>
+                        <button onClick={togglePending} className={`toggleButton ${pending ? "focus" : ""}`}>Pending</button>
+                        <button onClick={toggleApproved} className={`toggleButton ${approved ? "focus" : ""}`}>Approved</button>
+                        <button onClick={toggleRejected} className={`toggleButton ${rejected ? "focus" : ""}`}>Rejected</button>
                     </div>
                     <div className="col-6"></div>
                     <div className="col-2">
