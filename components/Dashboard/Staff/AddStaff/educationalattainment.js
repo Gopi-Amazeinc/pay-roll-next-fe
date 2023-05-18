@@ -217,11 +217,10 @@ export default function EducationDetails() {
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="row">
               <div className="col-12">
-                <div className="d-flex justify-content-between">
-                  <p className="modal-heading">
+              <h6>
                     Educational Attainment Details
-                  </p>
-                </div>
+                  </h6>
+                  <hr/>
                 <div style={customPopupDivision.popupcontent}>
                   {
                     <div style={customPopupDivision.popupinputs}>
@@ -494,14 +493,14 @@ export default function EducationDetails() {
                 <thead className="bg-info text-white ">
                   <tr>
                     <th>Educational Attainment</th>
+                    <th>Country</th>
                     <th>Course</th>
                     <th>Major</th>
                     <th>School Name</th>
                     <th>Licenses/Certifications</th>
-                    <th>Country</th>
                     <th>Start Date</th>
                     <th>End Date</th>
-                    <th>Attachment</th>
+                    {/* <th>Attachment</th> */}
                     <th>Status</th>
                     <th>Actions</th>
                   </tr>
@@ -512,13 +511,13 @@ export default function EducationDetails() {
                       <tr className="text-dark" key={index}>
                         <td>{data.educationType}</td>
                         <td>{data.country}</td>
-                        <td>{data.major}</td>
                         <td>{data.course}</td>
+                        <td>{data.major}</td>
                         <td>{data.institutionName}</td>
                         <td>{data.licenseOrCertification}</td>
-                        <td>{data.country}</td>
                         <td>{data.startDate}</td>
                         <td>{data.endDate}</td>
+                        {/* <th style={{width:'40%'}}>{data.attachmentEdu}</th> */}
                         <td>{data.status}</td>
                         <td className="d-flex">
                             <button
