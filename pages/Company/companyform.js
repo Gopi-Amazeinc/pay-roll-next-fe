@@ -9,83 +9,48 @@ import { useRouter } from "next/router";
 import Link from "next/link";
 
 
-const Companyform = ({ editData }) => {
-  const router = useRouter();
-  const { register, handleSubmit, watch, reset, formState: { errors }, } = useForm();
 
+function MyForm1({ data }) {
+
+  const { register, handleSubmit, watch, reset, formState: { errors }, } = useForm();
   const [actionType, setActionType] = useState("insert");
 
-  const [PolicyType, setPolicyType] = useState("insert");
+  const router = useRouter();
 
-  const [TaxType, setTaxType] = useState("insert");
+  // const onSubmit = (data) => {
 
+  //   console.log(data);
+  // };
 
-
-  const [countrydata, setCountryData] = useState([]);
-  const [provincedata, setProvinceData] = useState([]);
-  const [citydata, setCityData] = useState([]);
-  const [Barangay, setBarangayData] = useState([]);
 
   useEffect(() => {
-    getMasters();
-  }, []);
-
-  useEffect(() => {
-    const { id } = editData || {};
-    if (id != null) {
-      GetCompanyByID(id);
+    const { id } = data || {};
+    if (id)
+    // (id != null)
+    {
+      getCompanyByID(id);
       // getWorkPolicyByID(id);
-      // GetTaxByID(id);
+      // getTaxByID(id);
     }
 
     else {
       clearForm();
-      PolicyForm();
-      TaxForm();
+      // PolicyForm();
+      // TaxForm();
     }
 
-  }, [editData]);
-
-  const getMasters = async () => {
-    const [countryRes, provinceRes, cityRes, barangayRes] = await Promise.all([
-      apiService.commonGetMasters("Master/GetCountryType"),
-      apiService.commonGetMasters("Master/GetStateType"),
-      apiService.commonGetMasters("Master/GetCityType"),
-      apiService.commonGetMasters("Master/GetBarangayMaster"),
-    ]);
-
-    setCountryData(countryRes.data);
-    setProvinceData(provinceRes.data);
-    setCityData(cityRes.data);
-    setBarangayData(barangayRes.data);
-  };
+  }, []);
 
 
-
-
-  async function GetCompanyByID(id) {
+  async function getCompanyByID(id) {
     let res = await apiService.commonGetCall("Payroll/GetCompanyAddressDetailsByID?ID=" + id);
     clearForm(res.data[0]);
   }
 
 
-  async function getWorkPolicyByID(id) {
-    let res = await apiService.commonGetCall("Payroll/GetCompany_WorkPolicyByID?ID=" + id);
-    PolicyForm(res.data[0]);
-
-  }
-
-
-  async function GetTaxByID(id) {
-    let res = await apiService.commonGetCall("Payroll/GetCompany_TaxComputationByID?ID=" + id);
-    TaxForm(res.data[0]);
-
-  }
-
-
-
 
   async function clearForm(CompanyData = null) {
+    debugger
     let details = {
       "ID": CompanyData ? CompanyData.id : "",
       "Company_logo": CompanyData ? CompanyData.company_logo : "",
@@ -126,7 +91,11 @@ const Companyform = ({ editData }) => {
     setActionType(CompanyData ? "update" : "insert");
   }
 
+
+
+
   async function onSubmit(data) {
+
     if (actionType == "insert") {
       await apiService.commonPostCall("Payroll/InsertCompany_AddressDetails", data);
       console.log(data);
@@ -144,24 +113,246 @@ const Companyform = ({ editData }) => {
     }
   }
 
+  return (
+    <form onSubmit={handleSubmit(onSubmit)}>
+      <div className="shadow-lg p-3 mb-5 bg-white rounded">
+        {/* <form onSubmit={handleSubmit(onSubmit)}> */}
+        <div className="row">
+          <div className="col-lg-2">
+            <p className={styles.p}>Company Logo</p>
+            <input type="text" className="form-control" {...register('Company_logoe', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
+            {/* {errors.Name && <p className="error-message" style={{ color: "red" }}>{errors.Name.message}</p>} */}
+          </div>
+          <div className="col-lg-2">
+            <p className={styles.p}>Company Name<span style={{ color: "red" }}>*</span></p>
+            <input type="text" className="form-control" {...register('Nature_Of_Business', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
+          </div>
+          <div className="col-lg-2">
+            <p className={styles.p}>Nature of Business</p>
+            <input type="text" className="form-control"  {...register('Nature_Of_Business', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
+          </div>
+          <div className="col-lg-3">
+            <p className={styles.p}>Address1</p>
+            <input type="text" className="form-control"  {...register('Address1', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
+          </div>
+          <div className="col-lg-3">
+            <p className={styles.p}>Address2</p>
+            <input type="text" className="form-control"  {...register('Address2', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-lg-2">
+            <p className={styles.p}>Zip Code</p>
+            <input type="text" className="form-control"   {...register('Zipcode', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
+          </div>
+          <div className="col-lg-2">
+            <p className={styles.p}>RDO</p>
+            <input type="text" className="form-control"  {...register('RDO', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
+          </div>
+          <div className="col-lg-2">
+            <p className={styles.p}>Email</p>
+            <input type="text" className="form-control"  {...register('Email', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
+          </div>
+          <div className="col-lg-2">
+            <p className={styles.p}>Phone</p>
+            <input type="text" className="form-control"  {...register('Phone', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
+          </div>
+          <div className="col-lg-2">
+            <p className={styles.p}>Fax</p>
+            <input type="text" className="form-control"  {...register('Fax', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
+          </div>
+          <div className="col-lg-2">
+            <p className={styles.p}>TIN<span style={{ color: "red" }}>*</span></p>
+            <input type="text" className="form-control"  {...register('Tin', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-lg-2">
+            <p className={styles.p}>SSS No<span style={{ color: "red" }}>*</span></p>
+            <input type="text" className="form-control"  {...register('SSN_No', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
+          </div>
+          <div className="col-lg-2">
+            <p className={styles.p}>PhilHealth No.<span style={{ color: "red" }}>*</span></p>
+            <input type="text" className="form-control"  {...register('PhilHealthNumber', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
+          </div>
+          <div className="col-lg-2">
+            <p className={styles.p}>HDMF No.<span style={{ color: "red" }}>*</span></p>
+            <input type="text" className="form-control"  {...register('HDMFNumber', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
+          </div>
+          <div className="col-lg-2">
+            <p className={styles.p}>Country</p>
+            <select className="form-select"  >
+              <option>Select Country</option>
+              {/* {
+                    countrydata.map((data) => {
+                      return (
+                        <option value={data.id} key={data.id}>{data.short}</option>
+
+                      )
+                    })
+                  } */}
+
+              <option>India</option>
+              <option>USA</option>
+              <option>Japan</option>
+              <option>China</option>
+              <option>Pakistana</option>
 
 
-  async function PolicyForm(CompanyData = null) {
+
+            </select>
+          </div>
+          <div className="col-lg-2">
+            <p className={styles.p}>Province</p>
+            <select className="form-select"  >
+              <option value={"Select Province"}>Select Province</option>
+              {/* {
+                    provincedata.map((data) => {
+                      return (
+                        <option value={data.id} key={data.id}>{data.short}</option>
+                      )
+                    })
+
+                  } */}
+
+              <option>Karnataka</option>
+              <option>New Yark</option>
+              <option>Talin</option>
+              <option>Shingai</option>
+              <option>Islamabada</option>
+
+            </select>
+          </div>
+          <div className="col-lg-2">
+            <p className={styles.p}>City</p>
+            <select className="form-select"  >
+              <option value={"Select City"}>Select City</option>
+              {/* {
+                    citydata.map((data) => {
+                      return (
+                        <option value={data.id} key={data.id}>{data.short}</option>
+
+                      )
+                    })
+                  } */}
+
+              <option>Banglore</option>
+              <option>Califonia</option>
+              <option>Shidny</option>
+              <option>Shida</option>
+              <option>Taliban</option>
+            </select>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-lg-2">
+            <p className={styles.p}>Barangay <span style={{ color: "red" }}>*</span></p>
+            <select className="form-select"  >
+              <option value={"Select Barangay"}>Select Barangay</option>
+              {/* {
+                    Barangay.map((data) => {
+                      return (
+                        <option value={data.id} key={data.id} >{data.name}</option>
+                      )
+                    })
+                  } */}
+
+              <option>Jp Nagar</option>
+              <option>fonia</option>
+              <option>ss layot</option>
+              <option>KtG nagar</option>
+              <option>afanistan</option>
+            </select>
+          </div>
+          <div className="col-lg-2">
+            <p className={styles.p}>Company Bank ACC NO<span style={{ color: "red" }}>*</span></p>
+            <input type="text" className="form-control"  {...register('CompanyBankAccNo', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
+          </div>
+          <div className="col-lg-2">
+            <p className={styles.p}>CompanyId Code <span style={{ color: "red" }}>*</span></p>
+            <input type="text" className="form-control"  {...register('CompanyCode', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-lg-2">
+            <p className={styles.p}>E-Signatory</p>
+            <input type="text" className="form-control"   {...register('E_Signatory', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-lg-4"></div>
+          <div className="col-lg-4">
+
+            {
+              actionType == "insert" && (<button type="submit" className={styles.button}>Save</button>)
+            }
+
+            {
+              actionType == "update" && (<button type="submit" className={styles.button}>Update</button>)
+            }
+          </div>
+          <div className="col-lg-4">
+            <Link href="/Company">
+              <button className={styles.button} >Cancel</button>
+            </Link>
+          </div>
+        </div>
+        {/* </form> */}
+      </div>
+
+
+
+    </form>
+  );
+}
+
+
+function MyForm2({ data }) {
+  const router = useRouter();
+  const { register, handleSubmit, watch, reset, formState: { errors }, } = useForm();
+  const [PolicyType, setPolicyType] = useState("insert");
+
+
+  useEffect(() => {
+    const { id } = data || {};
+    if (id)
+    // (id != null)
+    {
+      // getCompanyByID(id);
+      getWorkPolicyByID(id);
+      // getTaxByID(id);
+    }
+
+    else {
+      // clearForm();
+      PolicyForm();
+      // TaxForm();
+    }
+
+  }, []);
+
+
+  async function getWorkPolicyByID(id) {
+    let res = await apiService.commonGetCall("Payroll/GetCompany_WorkPolicyByID?ID=" + id);
+    PolicyForm(res.data[0]);
+  }
+
+
+  async function PolicyForm(PolicyData = null) {
     let details = {
-      "ID": CompanyData ? CompanyData.id : "",
-      "Work_Days_Per_Year": CompanyData ? work_Days_Per_Year : "",
-      "Work_Months_Per_Year": CompanyData ? work_Months_Per_Year : "",
-      "DailyRate": CompanyData ? CompanyData.dailyRate : "",
-      "Address1": CompanyData ? CompanyData.address1 : "",
-      "Address2": CompanyData ? CompanyData.address2 : "",
+      "ID": PolicyData ? PolicyData.id : "",
+      "Work_Days_Per_Year": PolicyData ? PolicyData.work_Days_Per_Year : "",
+      "Work_Months_Per_Year": PolicyData ? PolicyData.work_Months_Per_Year : "",
+      "DailyRate": PolicyData ? PolicyData.dailyRate : ""
+
     };
     reset(details);
-    setPolicyType(CompanyData ? "update" : "insert");
+    setPolicyType(PolicyData ? "update" : "insert");
   }
 
   const policySubmit = async (data) => {
     if (PolicyType == "insert") {
-      await apiService.commonPostCall("Payroll/InsertCompany_WorkPolicy", data);
+      await apiService.commonPostCall("Master/InsertCompany_WorkPolicy", data);
       console.log(data);
       Swal.fire("Data Inserted successfully");
       router.push("/Company");
@@ -177,17 +368,102 @@ const Companyform = ({ editData }) => {
   }
 
 
+  return (
+    <>
+      <div className="shadow-lg p-3 mb-5 bg-white rounded">
+        <p className={styles.p}>Work Policy</p>
+        <form onSubmit={handleSubmit(policySubmit)}>
+          <div className="row">
+            <div className="col-lg-2">
+              <p className={styles.p}>Work Days Per Year <span style={{ color: "red" }}>*</span></p>
+              <input type="text" className="form-control" {...register('Work_Days_Per_Year', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
+            </div>
+            <div className="col-lg-2">
+              <p className={styles.p}>Work Months Per Year<span style={{ color: "red" }}>*</span></p>
+              <select className="form-select" {...register('Work_Months_Per_Year', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} >
+                <option value>Select Months</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+              </select>
+            </div>
+            <div className="col-lg-2">
+              <p className={styles.p}>Daily Rate Factor<span style={{ color: "red" }}>*</span></p>
+              <input type="text" className="form-control" {...register('DailyRate', { required: "Please add a Short Name" })} />
+            </div>
+          </div>
+
+          <br />
+          <div className="row">
+            <div className="col-lg-2">
+              <Link href="/Company">
+                <button className={styles.button} >Cancel</button>
+              </Link>
+            </div>
+            <div className="col-lg-2">
+              {
+                PolicyType == "insert" && (<button type="submit" className={styles.button}>Save</button>)
+              }
+
+              {
+                PolicyType == "update" && (<button type="submit" className={styles.button}>Update</button>)
+              }
+            </div>
+            <div className="col-lg-2">
 
 
-  async function TaxForm(CompanyData = null) {
+            </div>
+          </div>
+        </form>
+      </div>
+
+    </>
+  )
+
+}
+
+
+function MyForm3({ data }) {
+  const router = useRouter();
+  const { register, handleSubmit, watch, reset, formState: { errors }, } = useForm();
+  const [TaxType, setTaxType] = useState("insert");
+
+
+  useEffect(() => {
+    const { id } = data || {};
+    if (id)
+    // (id != null)
+    {
+      // getCompanyByID(id);
+      // getWorkPolicyByID(id);
+      getTaxByID(id);
+    }
+
+    else {
+      // clearForm();
+      // PolicyForm();
+      TaxForm();
+    }
+
+  }, []);
+
+
+  async function getTaxByID(id) {
+    let res = await apiService.commonGetCall("Payroll/GetCompany_TaxComputationByID?ID=" + id);
+    TaxForm(res.data[0]);
+
+  }
+
+
+  async function TaxForm(TaxData = null) {
     let details = {
-      "ID": CompanyData ? CompanyData.id : "",
-      "PayrollCalendar": CompanyData ? CompanyData.payrollCalendar : "",
-      "Non_Tax_Essential_Sealing": CompanyData ? non_Tax_Essential_Sealing : "",
-      "Deminimis_Exemption": CompanyData ? CompanyData.Deminimis_Exemption : ""
+      "ID": TaxData ? TaxData.id : "",
+      "PayrollCalendar": TaxData ? TaxData.payrollCalendar : "",
+      "Non_Tax_Essential_Sealing": TaxData ? non_Tax_Essential_Sealing : "",
+      "Deminimis_Exemption": TaxData ? TaxData.deminimis_Exemption : ""
     };
     reset(details);
-    setTaxType(CompanyData ? "update" : "insert");
+    setTaxType(TaxData ? "update" : "insert");
   }
 
 
@@ -210,233 +486,155 @@ const Companyform = ({ editData }) => {
 
 
 
+  return (
+    <>
+      <form onSubmit={handleSubmit(taxSubmit)} >
+        <div className="shadow-lg p-3 mb-5 bg-white rounded">
+          <div className="row">
+            <div className="col-lg-2">
+              <p className={styles.p}>TAX COMPUTATIONS</p>
+            </div>
+            <div className="col-lg-10"></div>
+          </div>
+          <div className="row mt-3">
+
+            <div className="col-lg-2">
+              <p className={styles.p}>Payroll Calendar</p>
+            </div>
+            <div className="col-lg-6">
+              <p className={styles.p}><input type="checkbox"  {...register('PayrollCalendar', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
+                &nbsp;Calendar Year(From January to December)</p>
+            </div>
+            <div className="col-lg-4"></div>
+          </div>
+          <div className="row mt-2">
+            <div className="col-lg-2">
+              <p className={styles.p}>Tax Calculation:</p>
+            </div>
+            <div className="col-lg-2">
+              <p className={styles.p}><input type="radio" name="yes" />Semi Monthly</p>
+            </div>
+            <div className="col-lg-2">
+              <p className={styles.p}><input type="radio" name="yes" />Annual</p>
+            </div>
+            <div className="col-lg-6"></div>
+          </div>
+          <div className="row">
+            <div className="col-lg-4">
+              <p className={styles.p}>Non-Tax Exemption Ceiling<span style={{ color: "red" }}>*</span></p>
+              <input type="text" className="form-control" {...register('Non_Tax_Essential_Sealing]', { required: "Please add a Short Name", })}></input>
+            </div>
+            <div className="col-lg-4">
+              <p className={styles.p}>Deminimis Exemption Ceiling<span style={{ color: "red" }}>*</span></p>
+              <input type="text" className="form-control" {...register('Deminimis_Exemption', { required: "Please add a Short Name", })}></input>
+            </div>
+            <div className="col-lg-4"></div>
+          </div>
+
+        </div>
+        <div className="row">
+          <div className="col-lg-4"></div>
+          <div className="col-lg-4">
+            {
+              TaxType == "insert" && (<button type="submit" className={styles.button}>Save</button>)
+            }
+
+            {
+              TaxType == "update" && (<button type="submit" className={styles.button}>Update</button>)
+            }
+          </div>
+          <div className="col-lg-4">
+            <Link href="/Company">
+              <button className={styles.button} >Cancel</button>
+            </Link>
+          </div>
+
+        </div>
+      </form>
+    </>
+  )
 
 
+
+
+
+
+
+
+}
+
+
+function MyForm4({ data }) {
+
+  const router = useRouter();
+  const { register, handleSubmit, watch, reset, formState: { errors }, } = useForm();
+  const [payroll, setPayroll] = useState("insert");
+
+
+  useEffect(() => {
+    const { id } = data || {};
+    if (id)
+    // (id != null)
+    {
+      // getCompanyByID(id);
+      // getWorkPolicyByID(id);
+      // getTaxByID(id);
+      getPayrollByID();
+
+    }
+
+    else {
+      // clearForm();
+      // PolicyForm();
+      // TaxForm();
+      payRollForm();
+    }
+
+  }, []);
+
+
+  async function getPayrollByID(id) {
+    let res = await apiService.commonGetCall("Payroll/GetCompany_PayrollComputationByID?ID=" + id);
+    payRollForm(res.data[0]);
+
+  }
+
+
+  async function payRollForm(PayRollData = null) {
+    let details = {
+      "ID": PayRollData ? PayRollData.id : "",
+      "PayrollCalendar": PayRollData ? PayRollData.payrollCalendar : "",
+      "Non_Tax_Essential_Sealing": PayRollData ? non_Tax_Essential_Sealing : "",
+      "Deminimis_Exemption": PayRollData ? PayRollData.deminimis_Exemption : ""
+    };
+    reset(details);
+    setPayroll(PayRollData ? "update" : "insert");
+  }
+
+
+  const payRollSubmmit = async (data) => {
+    if (payroll == "insert") {
+      await apiService.commonPostCall("/Payroll/InsertCompany_PayrollComputation", data);
+      console.log(data);
+      Swal.fire("Data Inserted successfully");
+      router.push("/Company");
+      // console.log(JSON.stringify(data))
+      // console.log(data.Company_logoe[0])
+      // console.log(data.E_Signatory[0])
+    }
+    else {
+      await apiService.commonPostCall("/Payroll/UpdateCompany_PayrollComputation", data);
+      Swal.fire("Data Updated successfully");
+      router.push("/Company");
+    }
+  }
 
 
   return (
     <>
-      <Layout>
-        <div>
-          <h4 style={{ color: "red" }}>Api Issue</h4>
-          <br />
-          <h4 style={{ color: "blue" }}>Company Profile</h4>
-        </div>
-        <br />
-        <div className="shadow-lg p-3 mb-5 bg-white rounded">
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="row">
-              <div className="col-lg-2">
-                <p className={styles.p}>Company Logo</p>
-                <input type="file" className="form-control" {...register('Company_logoe', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
-                {/* {errors.Name && <p className="error-message" style={{ color: "red" }}>{errors.Name.message}</p>} */}
-              </div>
-              <div className="col-lg-2">
-                <p className={styles.p}>Company Name<span style={{ color: "red" }}>*</span></p>
-                <input type="text" className="form-control" {...register('Nature_Of_Business', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
-              </div>
-              <div className="col-lg-2">
-                <p className={styles.p}>Nature of Business</p>
-                <input type="text" className="form-control"  {...register('Nature_Of_Business', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
-              </div>
-              <div className="col-lg-3">
-                <p className={styles.p}>Address1</p>
-                <input type="text" className="form-control"  {...register('Address1', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
-              </div>
-              <div className="col-lg-3">
-                <p className={styles.p}>Address2</p>
-                <input type="text" className="form-control"  {...register('Address2', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-lg-2">
-                <p className={styles.p}>Zip Code</p>
-                <input type="text" className="form-control"   {...register('Zipcode', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
-              </div>
-              <div className="col-lg-2">
-                <p className={styles.p}>RDO</p>
-                <input type="text" className="form-control"  {...register('RDO', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
-              </div>
-              <div className="col-lg-2">
-                <p className={styles.p}>Email</p>
-                <input type="text" className="form-control"  {...register('Email', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
-              </div>
-              <div className="col-lg-2">
-                <p className={styles.p}>Phone</p>
-                <input type="text" className="form-control"  {...register('Phone', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
-              </div>
-              <div className="col-lg-2">
-                <p className={styles.p}>Fax</p>
-                <input type="text" className="form-control"  {...register('Fax', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
-              </div>
-              <div className="col-lg-2">
-                <p className={styles.p}>TIN<span style={{ color: "red" }}>*</span></p>
-                <input type="text" className="form-control"  {...register('Tin', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-lg-2">
-                <p className={styles.p}>SSS No<span style={{ color: "red" }}>*</span></p>
-                <input type="text" className="form-control"  {...register('SSN_No', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
-              </div>
-              <div className="col-lg-2">
-                <p className={styles.p}>PhilHealth No.<span style={{ color: "red" }}>*</span></p>
-                <input type="text" className="form-control"  {...register('PhilHealthNumber', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
-              </div>
-              <div className="col-lg-2">
-                <p className={styles.p}>HDMF No.<span style={{ color: "red" }}>*</span></p>
-                <input type="text" className="form-control"  {...register('HDMFNumber', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
-              </div>
-              <div className="col-lg-2">
-                <p className={styles.p}>Country</p>
-                <select className="form-select"  >
-                  <option>Select Country</option>
-                  {
-                    countrydata.map((data) => {
-                      return (
-                        <option value={data.id} key={data.id}>{data.short}</option>
-
-                      )
-                    })
-
-                  }
-                </select>
-              </div>
-              <div className="col-lg-2">
-                <p className={styles.p}>Province</p>
-                <select className="form-select"  >
-                  <option value={"Select Province"}>Select Province</option>
-                  {
-                    provincedata.map((data) => {
-                      return (
-                        <option value={data.id} key={data.id}>{data.short}</option>
-                      )
-                    })
-
-                  }
-
-                </select>
-              </div>
-              <div className="col-lg-2">
-                <p className={styles.p}>City</p>
-                <select className="form-select"  >
-                  <option value={"Select City"}>Select City</option>
-                  {
-                    citydata.map((data) => {
-                      return (
-                        <option value={data.id} key={data.id}>{data.short}</option>
-
-                      )
-                    })
-
-
-                  }
-                </select>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-lg-2">
-                <p className={styles.p}>Barangay <span style={{ color: "red" }}>*</span></p>
-                <select className="form-select"  >
-                  <option value={"Select Barangay"}>Select Barangay</option>
-                  {
-                    Barangay.map((data) => {
-                      return (
-                        <option value={data.id} key={data.id} >{data.name}</option>
-                      )
-                    })
-                  }
-                </select>
-              </div>
-              <div className="col-lg-2">
-                <p className={styles.p}>Company Bank ACC NO<span style={{ color: "red" }}>*</span></p>
-                <input type="text" className="form-control"  {...register('CompanyBankAccNo', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
-              </div>
-              <div className="col-lg-2">
-                <p className={styles.p}>CompanyId Code <span style={{ color: "red" }}>*</span></p>
-                <input type="text" className="form-control"  {...register('CompanyCode', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-lg-2">
-                <p className={styles.p}>E-Signatory</p>
-                <input type="file" className="form-control"   {...register('E_Signatory', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-lg-4"></div>
-              <div className="col-lg-4">
-
-                {
-                  actionType == "insert" && (<button type="submit" className={styles.button}>Save</button>)
-                }
-
-                {
-                  actionType == "update" && (<button type="submit" className={styles.button}>Update</button>)
-                }
-              </div>
-              <div className="col-lg-4">
-                <Link href="/Company">
-                  <button className={styles.button} >Cancel</button>
-                </Link>
-              </div>
-            </div>
-          </form>
-        </div>
-
-
-
-        <div className="shadow-lg p-3 mb-5 bg-white rounded">
-          <p className={styles.p}>Work Policy</p>
-          <form onSubmit={() => handleSubmit(policySubmit)}>
-            <div className="row">
-              <div className="col-lg-2">
-                <p className={styles.p}>Work Days Per Year <span style={{ color: "red" }}>*</span></p>
-                <input type="text" className="form-control" {...register('Work_Days_Per_Year', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
-              </div>
-              <div className="col-lg-2">
-                <p className={styles.p}>Work Months Per Year<span style={{ color: "red" }}>*</span></p>
-                <select className="form-select" {...register('Work_Months_Per_Year', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} >
-                  <option value>Select Months</option>
-                  <option value="1">One</option>
-                  <option value="2">Two</option>
-                  <option value="3">Three</option>
-                </select>
-              </div>
-              <div className="col-lg-2">
-                <p className={styles.p}>Daily Rate Factor<span style={{ color: "red" }}>*</span></p>
-                <input type="text" className="form-control" {...register('DailyRate', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
-              </div>
-            </div>
-          </form>
-          <br />
-          <div className="row">
-            <div className="col-lg-2">
-              <Link href="/Company">
-                <button className={styles.button} >Cancel</button>
-              </Link>
-            </div>
-            <div className="col-lg-2">
-              {
-                PolicyType == "insert" && (<button type="submit" className={styles.button}>Save</button>)
-              }
-
-              {
-                PolicyType == "update" && (<button type="submit" className={styles.button}>Update</button>)
-              }
-            </div>
-            <div className="col-lg-2">
-
-            </div>
-          </div>
-        </div>
-
-
-
-
-
-        <div className="shadow-lg p-3 mb-5 bg-white rounded">
-          <p className={styles.p}>PAYROLL COMPUTATION</p>
+      <div className="shadow-lg p-3 mb-5 bg-white rounded">
+        <p className={styles.p}>PAYROLL COMPUTATION</p>
+        <form onSubmit={handleSubmit(payRollSubmmit)}>
           <div className="row">
             <div className="col-lg-2">
               <p>Periods Per Month <span style={{ color: "red" }}>*</span></p>
@@ -633,80 +831,47 @@ const Companyform = ({ editData }) => {
           <div className="row">
             <div className="col-lg-4"></div>
             <div className="col-lg-4">
-              <button className={styles.button}>UPDATE</button>
-            </div>
-            <div className="col-lg-4"></div>
-          </div>
-        </div>
-
-
-
-
-
-        <div className="shadow-lg p-3 mb-5 bg-white rounded">
-          <form onSubmit={handleSubmit(taxSubmit)} >
-            <div className="row">
-              <div className="col-lg-2">
-                <p className={styles.p}>TAX COMPUTATIONS</p>
-              </div>
-              <div className="col-lg-10"></div>
-            </div>
-            <div className="row mt-3">
-
-              <div className="col-lg-2">
-                <p className={styles.p}>Payroll Calendar</p>
-              </div>
-              <div className="col-lg-6">
-                <p className={styles.p}><input type="checkbox"  {...register('PayrollCalendar', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
-                  &nbsp;Calendar Year(From January to December)</p>
-              </div>
-              <div className="col-lg-4"></div>
-            </div>
-            <div className="row mt-2">
-              <div className="col-lg-2">
-                <p className={styles.p}>Tax Calculation:</p>
-              </div>
-              <div className="col-lg-2">
-                <p className={styles.p}><input type="radio" name="yes" />Semi Monthly</p>
-              </div>
-              <div className="col-lg-2">
-                <p className={styles.p}><input type="radio" name="yes" />Annual</p>
-              </div>
-              <div className="col-lg-6"></div>
-            </div>
-            <div className="row">
-              <div className="col-lg-4">
-                <p className={styles.p}>Non-Tax Exemption Ceiling<span style={{ color: "red" }}>*</span></p>
-                <input type="text" className="form-control" {...register('Non_Tax_Essential_Sealing]', { required: "Please add a Short Name", })}></input>
-              </div>
-              <div className="col-lg-4">
-                <p className={styles.p}>Deminimis Exemption Ceiling<span style={{ color: "red" }}>*</span></p>
-                <input type="text" className="form-control" {...register('Deminimis_Exemption', { required: "Please add a Short Name", })}></input>
-              </div>
-              <div className="col-lg-4"></div>
-            </div>
-          </form>
-        </div>
-        <div className="row">
-          <div className="col-lg-4"></div>
-          <div className="col-lg-4">
             {
-              TaxType == "insert" && (<button type="submit" className={styles.button}>Save</button>)
+              payroll == "insert" && (<button type="submit" className={styles.button}>Save</button>)
             }
 
             {
-              TaxType == "update" && (<button type="submit" className={styles.button}>Update</button>)
+              payroll == "update" && (<button type="submit" className={styles.button}>Update</button>)
             }
-          </div>
-          <div className="col-lg-4">
+            </div>
+            <div className="col-lg-4">
             <Link href="/Company">
               <button className={styles.button} >Cancel</button>
             </Link>
+            </div>
           </div>
-        </div>
-      </Layout >
+          </form>
+      </div>
     </>
-  );
+  )
+
+
+
+}
+
+
+
+
+
+const Companyform = ({ editData }) => {
+
+  return (
+    <>
+      <Layout>
+        <MyForm1 data={editData} />
+        <MyForm2 data={editData} />
+        <MyForm4 data={editData} />
+        <MyForm3 data={editData} />
+        
+      </Layout>
+    </>
+  )
+
 }
 
 export default Companyform;

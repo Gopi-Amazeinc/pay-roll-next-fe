@@ -45,7 +45,7 @@ const Dashboard = () => {
   const [punchedIn, setPunchedIn] = useState(false);
   const [punchedOut, setPunchedOut] = useState(false);
 
-  const [WorkTypeID, setWorkTypeID] = useState();
+  const [WorkTypeID, setWorkTypeID] = useState(0);
   const [StartTime, setStartTime] = useState(Time);
   const [EndTime, setEndTime] = useState(Time);
 
@@ -101,9 +101,16 @@ const Dashboard = () => {
     }
   }, [userID]);
 
-  const modelopen = () => {
-    setModalOpen(!modalOpen);
-    console.log(modelopen);
+  const modelopenForPunch = () => {
+    if(punchedIn == false){
+      Swal.fire("Please Punchin first")
+      // setModalOpen(!modalOpen);
+    }
+    else {
+      setModalOpen(!modalOpen);
+    }
+
+   
     // setActionType("punchin")
   };
   const handleworkType = (value) => {
@@ -250,7 +257,7 @@ const Dashboard = () => {
                         <div className="col-lg-7">
                           <button
                             className={dashboard.punchin}
-                            onClick={() => modelopen()}
+                            onClick={() => setModalOpen(!modalOpen)}
                           >
                             PUNCH IN
                           </button>
@@ -285,7 +292,7 @@ const Dashboard = () => {
                         <div className="col-lg-7">
                           <button
                             className={dashboard.punchin}
-                            onClick={() => setModalOpen(!modalOpen)}
+                            onClick={() => modelopenForPunch()}
                           >
                             PUNCH OUT
                           </button>
@@ -339,7 +346,7 @@ const Dashboard = () => {
                             name=""
                             id=""
                             className="form-select"
-                            // value={WorkTypeID}
+                            value={WorkTypeID}
                             onChange={(event) =>
                               handleworkType(event.target.value)
                             }
@@ -356,7 +363,7 @@ const Dashboard = () => {
                                 <button
                                   color="primary"
                                   type="button"
-                                  className="button"
+                                  className={WorkTypeID == 0 ? "button-disabled":"button"}
                                   onClick={() => handlePunchin()}
                                 >
                                   Punchin
@@ -365,7 +372,7 @@ const Dashboard = () => {
                                 <button
                                   color="primary"
                                   type="button"
-                                  className="button"
+                                  className={WorkTypeID == 0 ? "button-disabled":"button"}
                                   onClick={() => handlePunchout()}
                                 >
                                   PunchOut
