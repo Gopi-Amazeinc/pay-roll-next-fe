@@ -101,9 +101,16 @@ const Dashboard = () => {
     }
   }, [userID]);
 
-  const modelopen = () => {
-    setModalOpen(!modalOpen);
-    console.log(modelopen);
+  const modelopenForPunch = () => {
+    if(punchedIn == false){
+      Swal.fire("Please Punchin first")
+      // setModalOpen(!modalOpen);
+    }
+    else {
+      setModalOpen(!modalOpen);
+    }
+
+   
     // setActionType("punchin")
   };
   const handleworkType = (value) => {
@@ -250,7 +257,7 @@ const Dashboard = () => {
                         <div className="col-lg-7">
                           <button
                             className={dashboard.punchin}
-                            onClick={() => modelopen()}
+                            onClick={() => setModalOpen(!modalOpen)}
                           >
                             PUNCH IN
                           </button>
@@ -285,7 +292,7 @@ const Dashboard = () => {
                         <div className="col-lg-7">
                           <button
                             className={dashboard.punchin}
-                            onClick={() => setModalOpen(!modalOpen)}
+                            onClick={() => modelopenForPunch()}
                           >
                             PUNCH OUT
                           </button>
