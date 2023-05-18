@@ -169,18 +169,18 @@ const Index = () => {
         var endTime = sessionStorage.getItem("EndTime");
         setManagerTogglePending(true);
         setPending(true)
-        // if (roleID == 5) {
-            getPendingDetails();
+        if (roleID == 5) {
+            getPendingDetails();   
             getApprovedDetails();
             getRejectedDetails();
             getModalData(startTime, endTime, date, userID);
-        // }
-        // else if (roleID == 3) {
+        }
+        else if (roleID == 3) {
             getManagerPendingDetails(userID);
             getManagerApprovedData(userID);
             getManagerRejectedData(userID);
             getModalData(startTime, endTime, date, userID);
-        // }
+        }
 
     }, [])
     const Delete = (id) => {
