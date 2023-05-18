@@ -104,83 +104,83 @@ const Attendancecorrectiondashboard = () => {
     return `${year}-${month}-${day}`;
   };
 
-  const getPendingManager = async (SDate, EDate) => {
-    const res = await apiService.commonGetCall(
-      "Payroll/GetPendingAttendanceCorrectionBySupervisor?userID=" +
-        userID +
-        "&SDate=" +
-        SDate +
-        "&EDate=" +
-        EDate
-    );
-    // const res = await axios.get( hostURL + "Payroll/GetPendingAttendanceCorrectionBySupervisor?userID=" + userID +"&SDate=" + SDate +"&EDate=" +EDate);
-    setManagerPendingData(res.data);
-  };
+  // const getPendingManager = async (SDate, EDate) => {
+  //   const res = await apiService.commonGetCall(
+  //     "Payroll/GetPendingAttendanceCorrectionBySupervisor?userID=" +
+  //     userID +
+  //     "&SDate=" +
+  //     SDate +
+  //     "&EDate=" +
+  //     EDate
+  //   );
+  //   // const res = await axios.get( hostURL + "Payroll/GetPendingAttendanceCorrectionBySupervisor?userID=" + userID +"&SDate=" + SDate +"&EDate=" +EDate);
+  //   setManagerPendingData(res.data);
+  // };
 
-  const getApprovedManager = async (SDate, EDate) => {
-    const res = await apiService.commonGetCall(
-      "Payroll/GetApprovedAttendanceCorrectionBySupervisor?userID=" +
-        userID +
-        "&SDate=" +
-        SDate +
-        "&EDate=" +
-        EDate
-    );
-    // const res = await axios.get( hostURL + "Payroll/GetApprovedAttendanceCorrectionBySupervisor?userID=" + userID +  "&SDate=" +  SDate +  "&EDate=" +EDate );
-    setManagerApprovedData(res.data);
-  };
+  // const getApprovedManager = async (SDate, EDate) => {
+  //   const res = await apiService.commonGetCall(
+  //     "Payroll/GetApprovedAttendanceCorrectionBySupervisor?userID=" +
+  //     userID +
+  //     "&SDate=" +
+  //     SDate +
+  //     "&EDate=" +
+  //     EDate
+  //   );
+  //   // const res = await axios.get( hostURL + "Payroll/GetApprovedAttendanceCorrectionBySupervisor?userID=" + userID +  "&SDate=" +  SDate +  "&EDate=" +EDate );
+  //   setManagerApprovedData(res.data);
+  // };
 
-  const getRejectedManager = async (SDate, EDate) => {
-    const res = await apiService.commonGetCall(
-      "Payroll/GetApprovedAttendanceCorrectionBySupervisor?userID=" +
-        userID +
-        "&SDate=" +
-        SDate +
-        "&EDate=" +
-        EDate
-    );
-    //  const res = await axios.get( hostURL + "Payroll/GetApprovedAttendanceCorrectionBySupervisor?userID=" +  userID + "&SDate=" + SDate + "&EDate=" + EDate);
-    setManagerRejectedData(res.data);
-  };
+  // const getRejectedManager = async (SDate, EDate) => {
+  //   const res = await apiService.commonGetCall(
+  //     "Payroll/GetApprovedAttendanceCorrectionBySupervisor?userID=" +
+  //     userID +
+  //     "&SDate=" +
+  //     SDate +
+  //     "&EDate=" +
+  //     EDate
+  //   );
+  //   //  const res = await axios.get( hostURL + "Payroll/GetApprovedAttendanceCorrectionBySupervisor?userID=" +  userID + "&SDate=" + SDate + "&EDate=" + EDate);
+  //   setManagerRejectedData(res.data);
+  // };
 
-  const approveAttedanceCorrection = async (data) => {
-    Swal.fire({
-      title: "Confirm To Approve?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, Approve it!",
-    }).then(async (result) => {
-      if (result.isConfirmed) {
-        await apiService.commonGetCall(
-          "Payroll/ApproveAttedanceCoorection?id=" +
-            data.id +
-            "&UserID=" +
-            data.staffID +
-            "&SigninDate=" +
-            SDate +
-            "&SignoutDate=" +
-            EDate
-        );
-        Swal.fire({
-          icon: "success",
-          titleText: "Approved Successfully",
-        });
-        getPendingManager(SDate, EDate);
-      }
-    });
-  };
+  // const approveAttedanceCorrection = async (data) => {
+  //   Swal.fire({
+  //     title: "Confirm To Approve?",
+  //     text: "You won't be able to revert this!",
+  //     icon: "warning",
+  //     showCancelButton: true,
+  //     confirmButtonColor: "#3085d6",
+  //     cancelButtonColor: "#d33",
+  //     confirmButtonText: "Yes, Approve it!",
+  //   }).then(async (result) => {
+  //     if (result.isConfirmed) {
+  //       await apiService.commonGetCall(
+  //         "Payroll/ApproveAttedanceCoorection?id=" +
+  //         data.id +
+  //         "&UserID=" +
+  //         data.staffID +
+  //         "&SigninDate=" +
+  //         SDate +
+  //         "&SignoutDate=" +
+  //         EDate
+  //       );
+  //       Swal.fire({
+  //         icon: "success",
+  //         titleText: "Approved Successfully",
+  //       });
+  //       getPendingManager(SDate, EDate);
+  //     }
+  //   });
+  // };
 
   const getPendingData = async (SDate, EDate) => {
     const res = await apiService.commonGetCall(
       "Payroll/GetPendingAttendanceCorrectionByStaffID?userID=" +
-        userID +
-        "&SDate=" +
-        SDate +
-        "&EDate=" +
-        EDate
+      userID +
+      "&SDate=" +
+      SDate +
+      "&EDate=" +
+      EDate
     );
     // const res = await axios.get( hostURL +  "Payroll/GetPendingAttendanceCorrectionByStaffID?userID=" + staffID + "&SDate=" + SDate + "&EDate=" + EDate);
     console.log(res, "pending");
@@ -190,11 +190,11 @@ const Attendancecorrectiondashboard = () => {
   const getApprovedData = async (SDate, EDate) => {
     const res = await apiService.commonGetCall(
       "Payroll/GetApprovedAttendanceCorrectionByStaffID?userID=" +
-        userID +
-        "&SDate=" +
-        SDate +
-        "&EDate=" +
-        EDate
+      userID +
+      "&SDate=" +
+      SDate +
+      "&EDate=" +
+      EDate
     );
     // const res = await axios.get( hostURL +"Payroll/GetApprovedAttendanceCorrectionByStaffID?userID=" + staffID +"&SDate=" + SDate + "&EDate=" + EDate  );
     console.log(res, "approved");
@@ -204,11 +204,11 @@ const Attendancecorrectiondashboard = () => {
   const getRejectedData = async (SDate, EDate) => {
     const res = await apiService.commonGetCall(
       "Payroll/GetRejectedAttendanceCorrectionByStaffID?userID=" +
-        userID +
-        "&SDate=" +
-        SDate +
-        "&EDate=" +
-        EDate
+      userID +
+      "&SDate=" +
+      SDate +
+      "&EDate=" +
+      EDate
     );
     //  const res = await axios.get(hostURL + "Payroll/GetRejectedAttendanceCorrectionByStaffID?userID=" +staffID + "&SDate=" + SDate + "&EDate=" + EDate );
     console.log(res, "rejected");
@@ -241,9 +241,30 @@ const Attendancecorrectiondashboard = () => {
 
   return (
     <div className="container">
-      <div className="mt-3">
-        <h3 className={Styles.mainheader}>Attendance Correction </h3>
+      <div className="row mt-3">
+        <div className="col-lg-3" style={{ float: "left" }}>
+          <Link
+            className={Styles.mainheader}
+            href="/Attendance/AttendanceCorrections"
+          >
+            Attendance Correction
+          </Link>
+        </div>
+        {roleID == 3 && (
+          <>
+            <div className="col-lg-3" style={{ marginLeft: "-60px" }}>
+              <Link
+                className={Styles.mainheader}
+                href="/Attendance/MyTeamAttendanceCorrection"
+              >
+                My Team Attendance Correction
+              </Link>
+            </div>
+          </>
+        )}
       </div>
+
+
       <div
         className="card p-3 border-0 shadow-lg rounded-3 mt-4"
         style={{ marginLeft: "-8px" }}
@@ -263,29 +284,28 @@ const Attendancecorrectiondashboard = () => {
           </div>
 
           <div className="col-lg-4">
-            {roleID != 5 ||
-              ("5" && (
-                <>
-                  <div className="row">
-                    <div className="col-lg-8">
-                      <Link href="/Attendance/AttendanceCorrections/attendancecorrectionform">
-                        <button className="button">
-                          Add Attendance Correction
-                        </button>
-                      </Link>
-                    </div>
-                    <div className="col-lg-4">
-                    <DownloadTableExcel
-                      filename="Attendance table"
-                      sheet="Attendance"
-                    currentTableRef={tableRef.current}>
-                      <button className="button">Download</button>
-                      </DownloadTableExcel>
-                    </div>
-                  </div>
-                </>
-              ))}
-            {roleID != 3 || (
+          {(roleID == 3 || roleID == 5) && (
+              <div className="row">
+                <div className="col-lg-8">
+                  <Link href="/Attendance/AttendanceCorrections/attendancecorrectionform">
+                    <button className="button">
+                      Add Attendance Correction
+                    </button>
+                  </Link>
+                </div>
+                <div className="col-lg-4">
+                  <DownloadTableExcel
+                    filename="Attendance table"
+                    sheet="Attendance"
+                    currentTableRef={tableRef.current}
+                  >
+                    <button className="button">Download</button>
+                  </DownloadTableExcel>
+                </div>
+              </div>
+            )}
+
+            {/* {roleID != 3 || (
               <>
                 <div className="row">
                   <div className="col-lg-4">
@@ -293,7 +313,7 @@ const Attendancecorrectiondashboard = () => {
                   </div>
                 </div>
               </>
-            )}
+            )} */}
           </div>
         </div>
       </div>
@@ -330,7 +350,7 @@ const Attendancecorrectiondashboard = () => {
 
         {pending && roleID != "2" && (
           <table className="table table-hover"
-          ref={tableRef}>
+            ref={tableRef}>
             <thead className="bg-info text-white">
               <tr>
                 <th>Date</th>
@@ -347,8 +367,8 @@ const Attendancecorrectiondashboard = () => {
                 pendingDashboardData.length > 0 && (
                   <>
                     {pendingDashboardData
-                       .filter(data => {
-                        if ((data.startTime.toLowerCase().includes(keyword))||(data.date.toLowerCase().includes(keyword))||(data.endTime.toLowerCase().includes(keyword))) {
+                      .filter(data => {
+                        if ((data.startTime.toLowerCase().includes(keyword)) || (data.date.toLowerCase().includes(keyword)) || (data.endTime.toLowerCase().includes(keyword))) {
                           return data;
                         }
                       })
