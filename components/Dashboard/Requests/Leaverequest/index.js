@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import Link from 'next/link';
 import { apiService } from "@/services/api.service";
+import { useRouter } from "next/navigation";
+
 import {
     Calendar as BigCalendar,
     momentLocalizer,
@@ -99,6 +101,8 @@ function LeaveListDashboard() {
         getPendingData();
         getApprovedData();
         getRejectedData();
+        setListView(true)
+        setPending(true);
     }, [])
 
     const events = [
@@ -107,7 +111,7 @@ function LeaveListDashboard() {
         //     title: "Board meeting",
         //     start: new Date(2018, 0, 29, 9, 0, 0),
         //     end: new Date(2018, 0, 29, 13, 0, 0),
-        //     resourceId: 1
+        //     
         // },
         // {
         //     id: 1,
@@ -189,7 +193,7 @@ function LeaveListDashboard() {
                         <br /><br />
                     </div>
                     <div className="col-lg-8">
-                        <div className="card shadow">
+                        <div className="card p-3 border-0 shadow-lg rounded-3 mt-4">
                             <div className="row" style={{ marginBottom: "3px" }}>
                                 <div className="col-lg-4 ">
                                     <div className="card shadow p-1">
@@ -216,7 +220,7 @@ function LeaveListDashboard() {
                             <div className='col-lg-4 mx-5'>
                                 <div className='btn-group'>
                                     <button onClick={toggleCalender} className="toggleButton">Calender</button>
-                                    <button onClick={toggleListView} className="toggleButton">List View</button>
+                                    <button onClick={toggleListView} className={`toggleButton ${listview ? "focus" : ""}`}>List View</button>
 
                                 </div>
                             </div>
@@ -261,9 +265,9 @@ function LeaveListDashboard() {
                             <div className='row mt-3'>
                                 <div className='col-lg-4'>
                                     <div className='btn-group'>
-                                        <button onClick={togglePending} className="toggleButton" role="button" aria-pressed="true">Pending</button>
-                                        <button onClick={toggleApproved} className="toggleButton" role="button" aria-pressed="true">Approved</button>
-                                        <button onClick={toggleRejected} className="toggleButton">Rejected</button>
+                                        <button onClick={togglePending} className={`toggleButton ${pending ? "focus" : ""}`}>Pending</button>
+                                        <button onClick={toggleApproved} className={`toggleButton ${approved ? "focus" : ""}`}>Approved</button>
+                                        <button onClick={toggleRejected} className={`toggleButton ${rejected ? "focus" : ""}`}>Rejected</button>
                                         <br /><br />
                                     </div>
                                 </div>

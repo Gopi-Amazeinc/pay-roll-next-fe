@@ -27,9 +27,10 @@ const ApplyLeave = () => {
   }, []);
 
   async function onSubmit(data) {
+    let StaffID=sessionStorage.getItem("userID");
     try {
       debugger;
-      await apiService.commonPostCall("HR/InsertStaffLeaves", data);
+      await apiService.commonPostCall("HR/InsertStaffLeaves", data,StaffID);
       Swal.fire({
         icon: "success",
         text: "Leave request was inserted successfully...!",
@@ -108,7 +109,7 @@ const ApplyLeave = () => {
                 {...register("EDateOfLeave", { required: true })}
               />
             </div>
-            <div className="col-lg-2">
+            {/* <div className="col-lg-2">
               <label>Staff ID</label>
               <input
                 type="text"
@@ -117,7 +118,7 @@ const ApplyLeave = () => {
                 {...register("StaffID")}
                 
               />
-            </div>
+            </div> */}
           </div>
           <br />
           <div className="row">
@@ -150,7 +151,7 @@ const ApplyLeave = () => {
         </form>
       </div>
       <br />
-      <ApplyLeaveDashboard></ApplyLeaveDashboard>
+      {/* <ApplyLeaveDashboard></ApplyLeaveDashboard> */}
     </Layout>
   );
 };
