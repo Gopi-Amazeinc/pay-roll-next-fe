@@ -27,6 +27,7 @@ const ApplyloansDashboard = () => {
     };
 
     useEffect(() => {
+        setNewRequest(true)
         getApplyLoans();
     }, [1]);
 
@@ -94,8 +95,8 @@ const ApplyloansDashboard = () => {
                     <div className="col-lg-12 dashbutton bttn">
                         <div className='col-lg-4 mx-2'><br />
                             <div className='btn-group'>
-                                <button onClick={toggleNewRequest} className='toggleButton'>New Request</button>
-                                <button onClick={toggleApproved} className='toggleButton'>Approved</button>
+                                <button onClick={toggleNewRequest} className={`toggleButton ${newrequest ? "focus" : ""}`}>New Request</button>
+                                <button onClick={toggleApproved} className={`toggleButton ${approved ? "focus" : ""}`}>Approved</button>
                             </div>
                         </div><br />
                     </div>
