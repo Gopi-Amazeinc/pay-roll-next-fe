@@ -50,7 +50,7 @@ const SupportTicketDashboard = ()  => {
   return (
     <Layout>
       <div>
-        <h1 style={{color:"red"}}>Api Pending </h1>
+        <h4 style={{color:"red"}}>Api Pending </h4>
         <br></br>
         <p id={Styles.title}>Support Tickets</p>
         <div className="container-fluid mt-4">

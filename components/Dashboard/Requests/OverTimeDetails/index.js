@@ -25,7 +25,7 @@ const Index = () => {
     const [modalData, setModalData] = useState([]);
     const [isOpen, ModalIsOpen] = useState(false)
     const [roleID, setRoleID] = useState();
-    const [userID, setUserID] = useState();
+    const [userID, setUserID] = useState()
     const togglePending = () => {
         setPending(true)
         setApproved(false)
@@ -96,7 +96,6 @@ const Index = () => {
         console.log("Manager Pending", res.data);
     }
     const getManagerApprovedData = async () => {
-        // debugger;
         const res = await apiService.commonGetCall("Payroll/GetApprovedOverTimeDetailsByManagerID?ManagerID=" + userID)
         setManagerApprovedData(res.data)
         console.log("Manager Approved", res.data);
@@ -168,18 +167,20 @@ const Index = () => {
         var date = sessionStorage.getItem("Date");
         var startTime = sessionStorage.getItem("StartTime");
         var endTime = sessionStorage.getItem("EndTime");
-        if (roleID == 5) {
+        setManagerTogglePending(true);
+        setPending(true)
+        // if (roleID == 5) {
             getPendingDetails();
             getApprovedDetails();
             getRejectedDetails();
             getModalData(startTime, endTime, date, userID);
-        }
-        else if (roleID == 3) {
+        // }
+        // else if (roleID == 3) {
             getManagerPendingDetails(userID);
             getManagerApprovedData(userID);
             getManagerRejectedData(userID);
             getModalData(startTime, endTime, date, userID);
-        }
+        // }
 
     }, [])
     const Delete = (id) => {
@@ -243,9 +244,9 @@ const Index = () => {
                 <div className="col-lg-12 dashbutton bttn">
                     <div className='col-lg-4 mx-2'><br />
                         <div className='btn-group'>
-                            <button onClick={togglePending} className="toggleButton">Pending</button>
-                            <button onClick={toggleApproved} className="toggleButton">Approved</button>
-                            <button onClick={toggleRejected} className="toggleButton">Rejected</button>
+                            <button onClick={togglePending} className={`toggleButton ${pending ? "focus" : ""}`}> Pending</button>
+                            <button onClick={toggleApproved} className={`toggleButton ${approved ? "focus" : ""}`}>Approved</button>
+                            <button onClick={toggleRejected} className={`toggleButton ${rejected ? "focus" : ""}`}>Rejected</button>
                         </div>
                     </div>
                     <br />
@@ -533,7 +534,7 @@ const Index = () => {
                     </div>
                 </div>
             </Modal>
-        </div>
+        </div >
     )
 }
 

@@ -405,7 +405,7 @@ const Sidebar = ({ children, applyPageName }) => {
                 Attendance Details
               </button>
             </Link>
-            {userRole != 5 && (
+            {userRole != 5 && userRole != 3  && (
               <Link
                 href="/Attendance/OverTimeUnitsUpload"
                 className={styles.sidemenulink}

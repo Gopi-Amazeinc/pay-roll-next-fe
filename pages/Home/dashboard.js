@@ -79,7 +79,7 @@ const Dashboard = () => {
     debugger;
     if (userID) {
       apiService.commonGetCall("HR/GetAttendance").then((staffData) => {
-        let staffDetails = staffData.data.filter(
+        const staffDetails = staffData.data.filter(
           (x) => x.filterdate == todayDate && x.userID == userID
         );
         if (staffDetails.length && staffDetails[0].signinDate != null) {
@@ -102,15 +102,13 @@ const Dashboard = () => {
   }, [userID]);
 
   const modelopenForPunch = () => {
-    if(punchedIn == false){
-      Swal.fire("Please Punchin first")
+    if (punchedIn == false) {
+      Swal.fire("Please Punchin first");
       // setModalOpen(!modalOpen);
-    }
-    else {
+    } else {
       setModalOpen(!modalOpen);
     }
 
-   
     // setActionType("punchin")
   };
   const handleworkType = (value) => {
@@ -139,7 +137,9 @@ const Dashboard = () => {
         SigninLocation: "Office",
         StatusID: 1,
         punchinip:
-        localIPAddress == undefined || null ? "101.120.111.222" : localIPAddress,
+          localIPAddress == undefined || null
+            ? "101.120.111.222"
+            : localIPAddress,
         ApprovalStatus: "Manager Pending HR Pending",
         WorkType: parseInt(WorkTypeID),
       };
@@ -163,6 +163,7 @@ const Dashboard = () => {
   };
 
   const handlePunchout = async () => {
+    debugger;
     if (punchedOut === true) {
       Swal.fire("Already Punched out for the day");
     } else if (
@@ -172,37 +173,43 @@ const Dashboard = () => {
     ) {
       Swal.fire("Please Fill Work Type");
     }
+    else if (WorkTypeID != staffDetails[0].signInTypeID ) {
+      
+      Swal.fire("please select correct work Type to Punchout!")
+    }
     else {
-    let options = { hour12: false };
-    let date = new Date();
-    await apiService.commonGetCall("HR/GetAttendance").then(async (res) => {
-      debugger;
-      var todayDate = new Date().toISOString().slice(0, 10);
-      let temp = res.data.filter(
-        (x) => x.filterdate == todayDate && x.userID == userID
-      );
-      let ID = temp[0].id;
+      let options = { hour12: false };
+      let date = new Date();
+      await apiService.commonGetCall("HR/GetAttendance").then(async (res) => {
+        debugger;
+        var todayDate = new Date().toISOString().slice(0, 10);
+        let temp = res.data.filter(
+          (x) => x.filterdate == todayDate && x.userID == userID
+        );
+        let ID = temp[0].id;
 
-      var entity = {
-        ID: ID,
-        SignoutDate: date.toLocaleString("en-US", options),
-        SignoutLocation: "Office",
-        StatusID: 2,
-        punchoutip:
-        localIPAddress == undefined || null ? "101.120.111.222" : localIPAddress,
-        PunchoutWorkType: parseInt(WorkTypeID),
-      };
-      let res1 = await apiService.commonPostCall(
-        "HR/UpdateAttendanceWeb",
-        entity
-      );
-      if (res1.data && res1.status == 200) {
-        // setActionType(res1);
-        setPunchedOut(true);
-      }
-    });
-  }
-  setModalOpen(!modalOpen);
+        var entity = {
+          ID: ID,
+          SignoutDate: date.toLocaleString("en-US", options),
+          SignoutLocation: "Office",
+          StatusID: 2,
+          punchoutip:
+            localIPAddress == undefined || null
+              ? "101.120.111.222"
+              : localIPAddress,
+          PunchoutWorkType: parseInt(WorkTypeID),
+        };
+        let res1 = await apiService.commonPostCall(
+          "HR/UpdateAttendanceWeb",
+          entity
+        );
+        if (res1.data && res1.status == 200) {
+          // setActionType(res1);
+          setPunchedOut(true);
+        }
+      });
+    }
+    setModalOpen(!modalOpen);
   };
 
   return (
@@ -363,7 +370,11 @@ const Dashboard = () => {
                                 <button
                                   color="primary"
                                   type="button"
-                                  className={WorkTypeID == 0 ? "button-disabled":"button"}
+                                  className={
+                                    WorkTypeID == 0
+                                      ? "button-disabled"
+                                      : "button"
+                                  }
                                   onClick={() => handlePunchin()}
                                 >
                                   Punchin
@@ -372,7 +383,11 @@ const Dashboard = () => {
                                 <button
                                   color="primary"
                                   type="button"
-                                  className={WorkTypeID == 0 ? "button-disabled":"button"}
+                                  className={
+                                    WorkTypeID == 0
+                                      ? "button-disabled"
+                                      : "button"
+                                  }
                                   onClick={() => handlePunchout()}
                                 >
                                   PunchOut
