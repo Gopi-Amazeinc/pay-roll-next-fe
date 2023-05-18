@@ -45,7 +45,7 @@ const Dashboard = () => {
   const [punchedIn, setPunchedIn] = useState(false);
   const [punchedOut, setPunchedOut] = useState(false);
 
-  const [WorkTypeID, setWorkTypeID] = useState();
+  const [WorkTypeID, setWorkTypeID] = useState(0);
   const [StartTime, setStartTime] = useState(Time);
   const [EndTime, setEndTime] = useState(Time);
 
@@ -339,7 +339,7 @@ const Dashboard = () => {
                             name=""
                             id=""
                             className="form-select"
-                            // value={WorkTypeID}
+                            value={WorkTypeID}
                             onChange={(event) =>
                               handleworkType(event.target.value)
                             }
@@ -356,7 +356,7 @@ const Dashboard = () => {
                                 <button
                                   color="primary"
                                   type="button"
-                                  className="button"
+                                  className={WorkTypeID == 0 ? "button-disabled":"button"}
                                   onClick={() => handlePunchin()}
                                 >
                                   Punchin
@@ -365,7 +365,7 @@ const Dashboard = () => {
                                 <button
                                   color="primary"
                                   type="button"
-                                  className="button"
+                                  className={WorkTypeID == 0 ? "button-disabled":"button"}
                                   onClick={() => handlePunchout()}
                                 >
                                   PunchOut

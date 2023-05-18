@@ -336,6 +336,26 @@
   width: 100%;
 }
 
+
+.button-disabled{
+  background-color: #7e8194;
+  color: #fff;
+  border-radius: 5px;
+  border: none;
+  text-transform: uppercase;
+  text-shadow: none;
+  letter-spacing: 0.5px;
+  padding: 8px;
+  width: auto;
+  font-size: 16px;
+  font-weight: 500;
+  cursor:no-drop !important;
+  text-transform: none;
+  overflow: visible;
+  margin: 0;
+  width: 100%;
+}
+
 #link {
   color: white;
 }
