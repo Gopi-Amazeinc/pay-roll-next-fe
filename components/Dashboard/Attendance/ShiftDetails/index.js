@@ -13,9 +13,9 @@ import { DownloadTableExcel } from "react-export-table-to-excel";
 // import Styles from '../../styles/shiftdetails.module.css'
 const Shiftdetails = () => {
 
-  const [pending, setPending] = useState(false);
-  const [approved, setApproved] = useState(false);
-  const [rejected, setRejected] = useState(false);
+  // const [pending, setPending] = useState(false);
+  // const [approved, setApproved] = useState(false);
+  // const [rejected, setRejected] = useState(false);
 
   const userid = sessionStorage.getItem("userID");
   const roleID = sessionStorage.getItem("roleID");
@@ -45,8 +45,8 @@ const Shiftdetails = () => {
 
   useEffect(() => {
     getShiftDetails();
-    getapprovedshiftDetails();
-    getrejectedshiftDetails();
+    // getapprovedshiftDetails();
+    // getrejectedshiftDetails();
   }, []);
 
 
@@ -79,17 +79,17 @@ const Shiftdetails = () => {
     setStartDate(selectedDate);
     setEndDate("");
   };
-  
+
   const getEndDate = (selectedDate) => {
     setEndDate(selectedDate);
     return getDateBySelectedDate(selectedDate);
   };
-  
+
   const getDateBySelectedDate = (endDatesss) => {
-    return getShiftDetails( startDate, endDatesss);
+    return getShiftDetails(startDate, endDatesss);
   };
 
- const getShiftDetails = async () => {
+  const getShiftDetails = async () => {
     const userid = sessionStorage.getItem("userID");
     debugger
     const res = await apiService.commonGetCall("HR/GetStaffShiftDetailsByband?staffID=" + userid);
@@ -97,52 +97,52 @@ const Shiftdetails = () => {
     setShiftDetails(res.data);
   };
 
-  const getapprovedshiftDetails = async () => {
-    const userid = sessionStorage.getItem("userID");
-    debugger
-    const res = await apiService.commonGetCall("Payroll/ApproveStaffShiftDetails?staffID=" + userid);
-    console.log(res);
-    setShiftDetails(res.data);
-  };
+  //   const getapprovedshiftDetails = async () => {
+  //     const userid = sessionStorage.getItem("userID");
+  //     debugger
+  //     const res = await apiService.commonGetCall("Payroll/ApproveStaffShiftDetails?staffID=" + userid);
+  //     console.log(res);
+  //     setShiftDetails(res.data);
+  //   };
   // useEffect(() => {
   //   setapprovedshiftDetails();
   // }, []);
 
 
-  const getrejectedshiftDetails = async () => {
-    const userid = sessionStorage.getItem("userID");
-    debugger
-    const res = await apiService.commonGetCall("Payroll/RejectStaffShiftDetails?staffID=" + userid);
-    console.log(res);
-    setrejectedshiftDetails(res.data);
-  };
+  // const getrejectedshiftDetails = async () => {
+  //   const userid = sessionStorage.getItem("userID");
+  //   debugger
+  //   const res = await apiService.commonGetCall("Payroll/RejectStaffShiftDetails?staffID=" + userid);
+  //   console.log(res);
+  //   setrejectedshiftDetails(res.data);
+  // };
   // useEffect(() => {
   //   getrejectedshiftDetails();
   // }, []);
 
- 
 
 
-  const togglePending = () => {
-    setPending(true);
-    setRejected(false);
-    setApproved(false);
 
-  };
+  // const togglePending = () => {
+  //   setPending(true);
+  //   setRejected(false);
+  //   setApproved(false);
 
-  const toggleApproved = () => {
-    setApproved(true);
-    setPending(false);
-    setRejected(false);
+  // };
 
-  };
+  // const toggleApproved = () => {
+  //   setApproved(true);
+  //   setPending(false);
+  //   setRejected(false);
 
-  const toggleRejected = () => {
-    setRejected(true);
-    setApproved(false);
-    setPending(false);
+  // };
 
-  };
+  // const toggleRejected = () => {
+  //   setRejected(true);
+  //   setApproved(false);
+  //   setPending(false);
+
+  // };
 
   return (
     <>
@@ -203,7 +203,7 @@ const Shiftdetails = () => {
           </div>
         </div>
       </div>
-
+      {/* 
       <div className="row mt-3">
         <div className="col-lg-4">
           <div className="btn-group">
@@ -228,8 +228,8 @@ const Shiftdetails = () => {
 
           </div>
         </div>
-      </div>
-      {pending && roleID == "5" && (
+      </div> */}
+      {/* {pending && roleID == "5" && (
         <table className="table table-striped mt-3" style={{ marginLeft: "22px", width: "98%" }} ref={tableRef}>
           <thead>
             <tr className="bg-info text-white">
@@ -322,8 +322,8 @@ const Shiftdetails = () => {
             )}
           </tbody>
         </table>
-      )}
-      {/* <div className="row mt-3">
+      )} */}
+      <div className="row mt-3">
         <table className="table table-striped mt-3" style={{ marginLeft: "22px", width: "98%" }} ref={tableRef}>
           <thead>
             <tr className="bg-info text-white">
@@ -332,6 +332,7 @@ const Shiftdetails = () => {
               <th>SHIFT NAME</th>
               <th>START TIME</th>
               <th>END TIME</th>
+              <th>Status</th>
             </tr>
           </thead>
           <tbody>
@@ -345,6 +346,7 @@ const Shiftdetails = () => {
                       <td>{data.shiftName}</td>
                       <td>{data.startTime}</td>
                       <td>{data.endTime}</td>
+                      <td>{data.status}</td>
                     </tr>
                   );
                 })}
@@ -352,7 +354,7 @@ const Shiftdetails = () => {
             )}
           </tbody>
         </table>
-      </div> */}
+      </div>
     </>
   );
 };
