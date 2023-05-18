@@ -25,7 +25,7 @@ const Index = () => {
     const [modalData, setModalData] = useState([]);
     const [isOpen, ModalIsOpen] = useState(false)
     const [roleID, setRoleID] = useState();
-    const [userID, setUserID] = useState();
+    const [userID, setUserID] = useState()
     const togglePending = () => {
         setPending(true)
         setApproved(false)
@@ -170,7 +170,7 @@ const Index = () => {
         setManagerTogglePending(true);
         setPending(true)
         if (roleID == 5) {
-            getPendingDetails();
+            getPendingDetails();   
             getApprovedDetails();
             getRejectedDetails();
             getModalData(startTime, endTime, date, userID);
