@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import Layout from '@/components/layout/layout'
 import { useForm } from 'react-hook-form'
 import Link from 'next/link';
-import axios from 'axios';
 import Swal from 'sweetalert2';
 import { useRouter } from 'next/router';
 import { apiService } from "@/services/api.service";
@@ -13,7 +12,6 @@ const Compensationtimeoutform =()=> {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const { register, handleSubmit, reset, formState: { errors }, } = useForm();
     const [actionType, setActionType] = useState("insert")
-    const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
 
     const onSubmit = async (data) => {
         if (actionType == "insert") {
