@@ -61,7 +61,7 @@ const Companydashboard = () => {
                                 <th>Company Logo</th>
                                 <th>Company Name</th>
                                 <th>Nature of Business</th>
-                                <th>Subsidiary Name</th>
+                                {/* <th>Subsidiary Name</th> */}
                                 <th>Address</th>
                                 <th>Email</th>
                                 <th>Phone No.</th>
@@ -75,8 +75,8 @@ const Companydashboard = () => {
                                         <td>{data.company_Logo}</td>
                                         <td>{data.company_Name}</td>
                                         <td>{data.nature_Of_Business}</td>
-                                        <td>{data.subsidiaryName}</td>
-                                        <td>{data.address1}</td>
+                                        {/* <td>{data.subsidiaryName}</td> */}
+                                        <td>{data.address2}</td>
                                         <td>{data.email}</td>
                                         <td>{data.phone}</td>
                                         <td>
