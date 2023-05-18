@@ -56,7 +56,7 @@ const Applyloans = () => {
                             <select className='form-select form-select-sm' {...register('loanType', {
                                 required: "loanType is required", pattern: { value: '^[A-Za-z0-9 ]+$', message: "Please enter a valid Position Name" }
                             })} >
-                                <option>Select Loan type</option>
+                                {/* <option>Select Loan type</option> */}
                                 <option value="">Select Loan Type </option>
                                 <option value="SSS Calamity">SSS Calamity </option>
                                 <option value="SSS Salary">SSS Salary </option>

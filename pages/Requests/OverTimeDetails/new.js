@@ -29,8 +29,8 @@ const OverTimeDetails = () => {
       bottom: 'auto',
       marginRight: '-50%',
       transform: 'translate(-50%, -50%)',
-      width: '60%',
-      height: '70%'
+      width: '50%',
+      height: '50%'
     }
   }
 
@@ -197,7 +197,7 @@ const OverTimeDetails = () => {
         </div>
         <div className='row'>
           <div className='col-lg-12'>
-            <table className="table table-hover">
+            <table className="table">
               <thead>
                 <tr>
                   <th>OT Type</th>
