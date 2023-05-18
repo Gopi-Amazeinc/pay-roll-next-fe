@@ -318,8 +318,8 @@ function MyForm2({ data }) {
     if (id)
     // (id != null)
     {
-      // getCompanyByID(id);
-      getWorkPolicyByID(id);
+      getCompanyByID(id);
+      // getWorkPolicyByID(id);
       // getTaxByID(id);
     }
 
@@ -332,10 +332,17 @@ function MyForm2({ data }) {
   }, []);
 
 
-  async function getWorkPolicyByID(id) {
-    let res = await apiService.commonGetCall("Payroll/GetCompany_WorkPolicyByID?ID=" + id);
+  // async function getWorkPolicyByID(id) {
+  //   let res = await apiService.commonGetCall("Payroll/GetCompany_WorkPolicyByID?ID=" + id);
+  //   PolicyForm(res.data[0]);
+  // }
+
+
+  async function getCompanyByID(id) {
+    let res = await apiService.commonGetCall("Payroll/GetCompanyAddressDetailsByID?ID=" + id);
     PolicyForm(res.data[0]);
   }
+
 
 
   async function PolicyForm(PolicyData = null) {
@@ -434,9 +441,9 @@ function MyForm3({ data }) {
     if (id)
     // (id != null)
     {
-      // getCompanyByID(id);
+      getCompanyByID(id);
       // getWorkPolicyByID(id);
-      getTaxByID(id);
+      // getTaxByID(id);
     }
 
     else {
@@ -448,18 +455,24 @@ function MyForm3({ data }) {
   }, []);
 
 
-  async function getTaxByID(id) {
-    let res = await apiService.commonGetCall("Payroll/GetCompany_TaxComputationByID?ID=" + id);
-    TaxForm(res.data[0]);
+  // async function getTaxByID(id) {
+  //   let res = await apiService.commonGetCall("Payroll/GetCompany_TaxComputationByID?ID=" + id);
+  //   TaxForm(res.data[0]);
+  // }
 
+
+  async function getCompanyByID(id) {
+    let res = await apiService.commonGetCall("Payroll/GetCompanyAddressDetailsByID?ID=" + id);
+    TaxForm(res.data[0]);
   }
+
 
 
   async function TaxForm(TaxData = null) {
     let details = {
       "ID": TaxData ? TaxData.id : "",
       "PayrollCalendar": TaxData ? TaxData.payrollCalendar : "",
-      "Non_Tax_Essential_Sealing": TaxData ? non_Tax_Essential_Sealing : "",
+      "Non_Tax_Essential_Sealing": TaxData ? TaxData.non_Tax_Essential_Sealing : "",
       "Deminimis_Exemption": TaxData ? TaxData.deminimis_Exemption : ""
     };
     reset(details);
@@ -576,10 +589,10 @@ function MyForm4({ data }) {
     if (id)
     // (id != null)
     {
-      // getCompanyByID(id);
+      getCompanyByID(id);
       // getWorkPolicyByID(id);
       // getTaxByID(id);
-      getPayrollByID();
+      // getPayrollByID();
 
     }
 
@@ -593,18 +606,25 @@ function MyForm4({ data }) {
   }, []);
 
 
-  async function getPayrollByID(id) {
-    let res = await apiService.commonGetCall("Payroll/GetCompany_PayrollComputationByID?ID=" + id);
-    payRollForm(res.data[0]);
+  // async function getPayrollByID(id) {
+  //   let res = await apiService.commonGetCall("Payroll/GetCompany_PayrollComputationByID?ID=" + id);
+  //   payRollForm(res.data[0]);
 
+  // }
+
+
+  async function getCompanyByID(id) {
+    let res = await apiService.commonGetCall("Payroll/GetCompanyAddressDetailsByID?ID=" + id);
+    payRollForm(res.data[0]);
   }
+
 
 
   async function payRollForm(PayRollData = null) {
     let details = {
       "ID": PayRollData ? PayRollData.id : "",
       "PayrollCalendar": PayRollData ? PayRollData.payrollCalendar : "",
-      "Non_Tax_Essential_Sealing": PayRollData ? non_Tax_Essential_Sealing : "",
+      "Non_Tax_Essential_Sealing": PayRollData ?PayRollData. non_Tax_Essential_Sealing : "",
       "Deminimis_Exemption": PayRollData ? PayRollData.deminimis_Exemption : ""
     };
     reset(details);

@@ -172,9 +172,8 @@ export default function DependentDetails() {
             <div className="card">
               <div className="row">
                 <div className="col-12">
-                  <div className="d-flex justify-content-between">
-                    <p className="modal-heading">Dependent Details</p>
-                  </div>
+                  <h6>Dependent Details</h6>
+                  <hr />
                   <div style={customPopupDivision.popupcontent}>
                     <div style={customPopupDivision.popupinputs}>
                       <p>
