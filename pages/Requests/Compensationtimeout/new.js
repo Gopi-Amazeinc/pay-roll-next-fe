@@ -36,6 +36,7 @@ const Compensationtimeoutform =()=> {
             "Actuval_StartTime": existingData ? existingData.Actuval_StartTime : "",
             "Actuval_EndTime": existingData ? existingData.Actuval_EndTime : "",
             "Comments": existingData ? existingData.Comments : "",
+            "Status":'Manager Pending',
         }
         reset(etty)
         setActionType(existingData ? "update" : "insert")

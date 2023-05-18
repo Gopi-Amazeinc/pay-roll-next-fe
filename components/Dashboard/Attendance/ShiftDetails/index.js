@@ -120,10 +120,7 @@ const Shiftdetails = () => {
   //   getrejectedshiftDetails();
   // }, []);
 
-
-
-
-  // const togglePending = () => {
+ // const togglePending = () => {
   //   setPending(true);
   //   setRejected(false);
   //   setApproved(false);
@@ -323,6 +320,7 @@ const Shiftdetails = () => {
           </tbody>
         </table>
       )} */}
+
       <div className="row mt-3">
         <table className="table table-striped mt-3" style={{ marginLeft: "22px", width: "98%" }} ref={tableRef}>
           <thead>
