@@ -12,7 +12,7 @@ const Compensationtimeout = () => {
 
     const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
 
-    const [pending, setPending] = useState(false)
+    const [pending, setPending] = useState(true)
     const [approved, setApproved] = useState(false)
     const [rejected, setRejected] = useState(false)
     const [managertogglePending, setManagerTogglePending] = useState(false)
@@ -35,7 +35,6 @@ const Compensationtimeout = () => {
 
     const togglePending = (e) => {
         e.preventDefault();
-        setPending(true)
         setApproved(false)
         setRejected(false)
         setManagerTogglePending(true)
@@ -218,9 +217,9 @@ const Compensationtimeout = () => {
             <div className='row mt-3'>
                 <div className='col-lg-4'>
                     <div className='btn-group'>
-                        <button onClick={() => togglePending} className='toggleButton' >Pending</button>
-                        <button onClick={() => toggleApproved} className='toggleButton'  >Approved</button>
-                        <button onClick={() => toggleRejected} className='toggleButton' >Rejected</button>
+                        <button onClick={togglePending} className='toggleButton' >Pending</button>
+                        <button onClick={toggleApproved} className='toggleButton'  >Approved</button>
+                        <button onClick={toggleRejected} className='toggleButton' >Rejected</button>
                     </div>
                 </div>
             </div>

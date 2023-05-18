@@ -166,9 +166,8 @@ export default function NominationDetails() {
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="row">
                 <div className="col-12">
-                  <div className="d-flex justify-content-between">
-                    <p className="modal-heading">Nomination Details</p>
-                  </div>
+                <h6>Nomination Details</h6>
+                <hr />
                   <div style={customPopupDivision.popupcontent}>
                     <div style={customPopupDivision.popupinputs}>
                       <p>
@@ -180,7 +179,7 @@ export default function NominationDetails() {
                           type="text"
                           placeholder="Enter Beneficiary Name.."
                           {...register("BeneficiaryName", { required: true })}
-                          className="form-control inputwidth"
+                          className="form-control "
                         ></input>
                         {errors.BeneficiaryName && (
                           <span style={customStyles.errorMsg}>
@@ -233,7 +232,7 @@ export default function NominationDetails() {
                           type="text"
                           placeholder="Enter Percentage.."
                           {...register("Percentage", { required: true })}
-                          className="form-control inputwidth"
+                          className="form-control "
                         ></input>
                         {errors.Percentage && (
                           <span style={customStyles.errorMsg}>
@@ -278,7 +277,7 @@ export default function NominationDetails() {
                           type="date"
                           placeholder="Enter Beneficiary DOB.."
                           {...register("BeneficiaryDOB", { required: true })}
-                          className="form-control inputwidth"
+                          className="form-control"
                         ></input>
                         {errors.BeneficiaryDOB && (
                           <span style={customStyles.errorMsg}>
@@ -341,7 +340,7 @@ export default function NominationDetails() {
                       return (
                         <tr className="text-dark" key={index}>
                           <td>{data.beneficiaryName}</td>
-                          <td>{data.beneficiaryRelationshipName}</td>
+                          <td>{data.short}</td>
                           <td>{data.percentage}</td>
                           <td>{data.nomineeType}</td>
                           <td>{data.beneficiaryDOB}</td>

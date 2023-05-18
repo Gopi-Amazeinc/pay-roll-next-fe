@@ -179,13 +179,10 @@ function PositionDetails() {
         <div style={customStyles}>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className='container-fluid'>
-
                     <div className='card'>
                         <div className='row'>
                             <div className='col-12'>
-                                <div className="d-flex justify-content-between">
-                                    <p className='modal-heading'>Position Details</p>
-                                </div>
+                                <h6>Position Details</h6>
                                 <hr></hr>
                                 <div style={customPopupDivision.popupcontent}>
 
@@ -305,9 +302,7 @@ function PositionDetails() {
                     <div className='card'>
                         <div className='row'>
                             <div className='col-12'>
-                                <div className="d-flex justify-content-between">
-                                    <p className='modal-heading'>Organization Hierarchy</p>
-                                </div>
+                                <h6>Organization Hierarchy</h6>
                                 <hr></hr>
                                 <div style={customPopupDivision.popupcontent}>
 
@@ -467,9 +462,7 @@ function PositionDetails() {
                     <div className='card'>
                         <div className='row'>
                             <div className='col-12'>
-                                <div className="d-flex justify-content-between">
-                                    <p className='modal-heading'>Work Location</p>
-                                </div>
+                                <h6>Work Location</h6>
                                 <hr></hr>
                                 <div style={customPopupDivision.popupcontent}>
                                     {
@@ -578,9 +571,7 @@ function PositionDetails() {
                     <div className='card'>
                         <div className='row'>
                             <div className='col-12'>
-                                <div className="d-flex justify-content-between">
-                                    <p className='modal-heading'>Employment Details</p>
-                                </div>
+                                <h6>Employment Details</h6>
                                 <hr/>
                                 <div style={customPopupDivision.popupcontent}>
 
