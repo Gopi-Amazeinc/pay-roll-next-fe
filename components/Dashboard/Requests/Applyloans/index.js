@@ -61,7 +61,7 @@ const ApplyloansDashboard = () => {
                 cancelButtonColor: "#d33",
                 confirmButtonText: "Yes, delete it!",
             }).then((res) => {
-                if (res) {
+                if (res.isConfirmed) {
                     apiService.commonGetCall(`Payroll/DeleteEmployeeLoans?id=${id}`);  // this is for deleting the data for dashborad using delete api call         
                 }
                 getApplyLoans();
@@ -117,169 +117,173 @@ const ApplyloansDashboard = () => {
 
                 {
                     newrequest && (
-                        <table className='table table-hover'>
-                            <thead className='bg-info text-white'>
-                                <tr>
-                                    <th>Date</th>
-                                    <th>Loan Approved Date</th>
-                                    <th>Loan Start Date</th>
-                                    <th>Loan End Date</th>
-                                    <th>Loan Type</th>
-                                    <th>Loan Amount</th>
-                                    <th>Tenure</th>
-                                    <th>Comments</th>
-                                    <th>HR Comments</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
+                        <div className="table-responsive">
+                            <table className='table table-hover' style={{ whiteSpace: "nowrap" }}>
+                                <thead className='bg-info text-white'>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Loan Approved Date</th>
+                                        <th>Loan Start Date</th>
+                                        <th>Loan End Date</th>
+                                        <th>Loan Type</th>
+                                        <th>Loan Amount</th>
+                                        <th>Tenure</th>
+                                        <th>Comments</th>
+                                        <th>HR Comments</th>
+                                        <th>Status</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
 
-                            <tbody>
-                                {
-                                    Applyloans.map((data) => {
-                                        return (
-                                            <tr key={data.id}>
-                                                <td>{data.dateFormated}</td>
-                                                <td>
-                                                    {
-                                                        data.approvedDate && (
-                                                            data.approvedDate
-                                                        )
-                                                    }
-                                                    {
-                                                        !data.approvedDate && (
-                                                            "Yet to approve"
-                                                        )
-                                                    }
-                                                </td>
-                                                <td>
-                                                    {
-                                                        data.loanstartdate && (
-                                                            data.loanstartdate
-                                                        )
-                                                    }
-                                                    {
-                                                        !data.loanstartdate && (
-                                                            "Yet to approve"
-                                                        )
-                                                    }
+                                <tbody>
+                                    {
+                                        Applyloans.map((data) => {
+                                            return (
+                                                <tr key={data.id}>
+                                                    <td>{data.dateFormated}</td>
+                                                    <td>
+                                                        {
+                                                            data.approvedDate && (
+                                                                data.approvedDate
+                                                            )
+                                                        }
+                                                        {
+                                                            !data.approvedDate && (
+                                                                "Yet to approve"
+                                                            )
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        {
+                                                            data.loanstartdate && (
+                                                                data.loanstartdate
+                                                            )
+                                                        }
+                                                        {
+                                                            !data.loanstartdate && (
+                                                                "Yet to approve"
+                                                            )
+                                                        }
 
-                                                </td>
-                                                <td>{
-                                                    data.loanenddate && (
-                                                        data.loanenddate
-                                                    )}
-                                                    {
-                                                        !data.loanenddate && (
-                                                            "Yet to approve"
-                                                        )
-                                                    }
-                                                </td>
+                                                    </td>
+                                                    <td>{
+                                                        data.loanenddate && (
+                                                            data.loanenddate
+                                                        )}
+                                                        {
+                                                            !data.loanenddate && (
+                                                                "Yet to approve"
+                                                            )
+                                                        }
+                                                    </td>
 
-                                                <td>{data.loanType}</td>
-                                                <td>{data.loanAmount}</td>
-                                                <td>{data.period}</td>
-                                                <td>{data.comments}</td>
-                                                <td>{data.managerComments}</td>
-                                                <td>{data.status}</td>
+                                                    <td>{data.loanType}</td>
+                                                    <td>{data.loanAmount}</td>
+                                                    <td>{data.period}</td>
+                                                    <td>{data.comments}</td>
+                                                    <td>{data.managerComments}</td>
+                                                    <td>{data.status}</td>
 
-                                                <td>
-                                                    <button
-                                                        className="btn btn-primary"
-                                                        onClick={() => DeleteApplyLoans(data.id)}
-                                                    >
-                                                        Delete
-                                                    </button>
-                                                </td>
-                                            </tr>
-                                        )
-                                    })
-                                }
-                            </tbody>
-                        </table>
+                                                    <td>
+                                                        <button
+                                                            className="btn btn-primary"
+                                                            onClick={() => DeleteApplyLoans(data.id)}
+                                                        >
+                                                            Delete
+                                                        </button>
+                                                    </td>
+                                                </tr>
+                                            )
+                                        })
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
                     )
                 }
                 {
                     approved && (
-                        <table className='table table-hover'>
-                            <thead className='bg-info text-white'>
-                                <tr>
-                                    <th>Date</th>
-                                    <th>Loan Approved Date</th>
-                                    <th>Loan Start Date</th>
-                                    <th>Loan End Date</th>
-                                    <th>Loan Type</th>
-                                    <th>Loan Amount</th>
-                                    <th>Comments</th>
-                                    <th>Manager Comments</th>
-                                    <th>HR Comments</th>
-                                    <th>Finance Comments</th>
-                                    <th>Payroll Comments</th>
-                                    <th>Status</th>
+                        <div className="table-responsive">
+                            <table className='table table-hover' style={{ whiteSpace: "nowrap" }}>
+                                <thead className='bg-info text-white'>
+                                    <tr>
+                                        <th>Date</th>
+                                        <th>Loan Approved Date</th>
+                                        <th>Loan Start Date</th>
+                                        <th>Loan End Date</th>
+                                        <th>Loan Type</th>
+                                        <th>Loan Amount</th>
+                                        <th>Comments</th>
+                                        <th>Manager Comments</th>
+                                        <th>HR Comments</th>
+                                        <th>Finance Comments</th>
+                                        <th>Payroll Comments</th>
+                                        <th>Status</th>
 
-                                </tr>
-                            </thead>
+                                    </tr>
+                                </thead>
 
-                            <tbody>
-                                {
-                                    newApproved.map((data) => {
-                                        return (
-                                            <tr key={data.id}>
-                                                <td>{data.modifiedDate}</td>
-                                                <td>
-                                                    {
-                                                        data.approvedDate && (
-                                                            data.approvedDate
-                                                        )
-                                                    }
-                                                    {
-                                                        !data.approvedDate && (
-                                                            "Yet to approve"
-                                                        )
-                                                    }
-                                                </td>
-                                                <td>
-                                                    {
-                                                        data.loanstartdate && (
-                                                            data.loanstartdate
-                                                        )
-                                                    }
-                                                    {
-                                                        !data.loanstartdate && (
-                                                            "Yet to approve"
-                                                        )
-                                                    }
+                                <tbody>
+                                    {
+                                        newApproved.map((data) => {
+                                            return (
+                                                <tr key={data.id}>
+                                                    <td>{data.modifiedDate}</td>
+                                                    <td>
+                                                        {
+                                                            data.approvedDate && (
+                                                                data.approvedDate
+                                                            )
+                                                        }
+                                                        {
+                                                            !data.approvedDate && (
+                                                                "Yet to approve"
+                                                            )
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        {
+                                                            data.loanstartdate && (
+                                                                data.loanstartdate
+                                                            )
+                                                        }
+                                                        {
+                                                            !data.loanstartdate && (
+                                                                "Yet to approve"
+                                                            )
+                                                        }
 
-                                                </td>
-                                                <td>{
-                                                    data.loanenddate && (
-                                                        data.loanenddate
-                                                    )}
-                                                    {
-                                                        !data.loanenddate && (
-                                                            "Yet to approve"
-                                                        )
-                                                    }
-                                                </td>
-                                                <td>{data.loanType}</td>
-                                                <td>{data.loanAmount}</td>
-                                                <td>{data.comments}</td>
-                                                <td>{data.managerComments}</td>
-                                                <td>{data.hrComments}</td>
-                                                <td>{data.financeComments}</td>
-                                                <td>{data.payrollComments}</td>
-                                                <td>{data.status}</td>
-                                                {/* <td>{data.comments}</td>
+                                                    </td>
+                                                    <td>{
+                                                        data.loanenddate && (
+                                                            data.loanenddate
+                                                        )}
+                                                        {
+                                                            !data.loanenddate && (
+                                                                "Yet to approve"
+                                                            )
+                                                        }
+                                                    </td>
+                                                    <td>{data.loanType}</td>
+                                                    <td>{data.loanAmount}</td>
+                                                    <td>{data.comments}</td>
+                                                    <td>{data.managerComments}</td>
+                                                    <td>{data.hrComments}</td>
+                                                    <td>{data.financeComments}</td>
+                                                    <td>{data.payrollComments}</td>
+                                                    <td>{data.status}</td>
+                                                    {/* <td>{data.comments}</td>
                                             <td>{data.status}</td>
                                             <td>
                                                 <button onClick={Delete.bind(this, data.id)} className='edit-btn'>Cancel</button>
                                             </td> */}
-                                            </tr>
-                                        )
-                                    })
-                                }
-                            </tbody>
-                        </table>
+                                                </tr>
+                                            )
+                                        })
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
                     )
                 }
             </div>
