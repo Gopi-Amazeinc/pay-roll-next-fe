@@ -6,7 +6,6 @@ import Layout from "@/components/layout/layout"
 import { apiService } from "@/services/api.service";
 
 const Locatordashboard = () => {
-    const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
     const [locator, setlocator] = useState([]);
     const [Approvedlocatorrequests, setApprovedlocatorrequests] = useState([]);
     const [RejectedlocatorRequests, setRejectedlocatorRequests] = useState([]);
@@ -30,9 +29,9 @@ const Locatordashboard = () => {
         {
             label: 'PENDING',
             content:
-                <div className="container-fluid mt-4">
+                <div className="container mt-4">
                     <div className="row">
-                        <table className='table  table-striped mt-3 text-center' id={Styles.table} >
+                        <table className='table  table-striped mt-3' >
                             <thead>
                                 <tr id={Styles.tr}>
                                     <th>Control Number</th>
@@ -75,9 +74,9 @@ const Locatordashboard = () => {
         {
             label: 'APPROVED',
             content:
-                <div className="container-fluid mt-4">
+                <div className="container mt-4">
                     <div className="row">
-                        <table className='table  table-striped mt-3 text-center' id={Styles.table} >
+                        <table className='table  table-striped mt-3' >
                             <thead>
                                 <tr id={Styles.tr}>
                                     <th>Control Number</th>
@@ -112,9 +111,9 @@ const Locatordashboard = () => {
         {
             label: 'REJECTED',
             content:
-                <div className="container-fluid mt-4">
+                <div className="container mt-4">
                     <div className="row">
-                        <table className='table  table-striped mt-3 text-center' id={Styles.table} >
+                        <table className='table  table-striped mt-3 ' >
                             <thead>
                                 <tr id={Styles.tr}>
                                     <th>Control Number</th>

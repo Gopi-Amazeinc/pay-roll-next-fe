@@ -358,7 +358,7 @@ const Attendancecorrectiondashboard = () => {
                             <td>{data.date}</td>
                             <td>{data.startTime}</td>
                             <td>{data.endTime}</td>
-                            <td>{data.Comments}</td>
+                            <td>{data.comments}</td>
                             <td>{data.status}</td>
                             <td>
                               <button

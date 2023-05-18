@@ -466,7 +466,7 @@ const Index = () => {
                     <div className='col-lg-6'>
                         <div className=" modal-header">
                             <h5 className=" modal-title" id="exampleModalLabel">
-                                Overtime Details
+                                Overtime Detail
                             </h5>
                         </div>
                     </div>
