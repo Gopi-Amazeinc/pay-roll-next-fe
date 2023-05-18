@@ -60,7 +60,7 @@ const SupportTicketDashboard = ()  => {
             </div>
             <div className="col-lg-2"></div>
             <div className="col-lg-2">
-              <Link href="/SupportTickets/supporttickets"><button
+              <Link href="/SupportTickets/supportform"><button
                 className="btn btn-primary btn-sm  shadow-lg"
                 id={Styles.addNew} onClick={ClearData.bind(this)}
               >
@@ -99,7 +99,7 @@ const SupportTicketDashboard = ()  => {
                         <td>{data.priority}</td>
                         <td>{data.status}</td>
                         <td>
-                          <Link href="/SupportTickets/supporttickets">
+                          <Link href="/SupportTickets">
                             <button className="btn btn-primary" onClick={getData.bind(this, data)}>Edit</button>
                           </Link>
                           &nbsp;
