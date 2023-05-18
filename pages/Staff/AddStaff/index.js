@@ -125,7 +125,7 @@ const Index = () => {
           ) : (
             <IDDetails />
           )}
-          <center>
+          <div className="d-flex justify-content-center mt-4 mb-2">
             <br></br>
             {pgNo > 1 && (
               <button
@@ -151,7 +151,7 @@ const Index = () => {
                 Next
               </button>
             )}
-          </center>
+          </div>
         </div>
       </div>
     </Layout>

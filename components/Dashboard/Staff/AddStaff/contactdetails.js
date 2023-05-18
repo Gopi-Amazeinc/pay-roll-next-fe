@@ -145,9 +145,9 @@ export default function ContactDetails() {
                     <div className='card'>
                         <div className='row'>
                             <div className='col-12'>
-                                <div className="d-flex justify-content-between">
-                                    <p className='modal-heading'>Employee Address 1</p>
-                                </div>
+                                
+                                <h6>Employee Address 1</h6>
+                                <hr />
                                 <div style={customPopupDivision.popupcontent}>
                                     {
                                         <div style={customPopupDivision.popupinputs}>
@@ -250,9 +250,8 @@ export default function ContactDetails() {
                     <div className='card'>
                         <div className='row'>
                             <div className='col-12'>
-                                <div className="d-flex justify-content-between">
-                                    <p className='modal-heading'>Employee Address 2</p>
-                                </div>  
+                            <h6>Employee Address 2</h6>
+                                <hr />
                                 <div style={customPopupDivision.popupcontent}>
 
 
@@ -356,9 +355,8 @@ export default function ContactDetails() {
                     <div className='card'>
                         <div className='row'>
                             <div className='col-12'>
-                                <div className="d-flex justify-content-between">
-                                    <p className='modal-heading'>Emergency Contact 1</p>
-                                </div>
+                                <h6>Emergency Contact 1</h6>
+                                <hr />
                                 <div style={customPopupDivision.popupcontent}>
 
 
@@ -427,9 +425,8 @@ export default function ContactDetails() {
                     <div className='card'>
                         <div className='row'>
                             <div className='col-12'>
-                                <div className="d-flex justify-content-between">
-                                    <p className='modal-heading'>Emergency Contact 2</p>
-                                </div>
+                            <h6>Emergency Contact 2</h6>
+                                <hr />
                                 <div style={customPopupDivision.popupcontent}>
 
 

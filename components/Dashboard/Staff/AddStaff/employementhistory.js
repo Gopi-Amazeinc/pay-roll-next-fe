@@ -142,154 +142,195 @@ export default function EmploymentDetails() {
     }
 
     return (
-        <div>
-            <div className='container-fluid'>
-                <div className='card'>
-                    <form onSubmit={handleSubmit(onSubmit)}>
-                        <div className='row'>
-                            <div className='col-12'>
-                                <div className="d-flex justify-content-between">
-                                    <p className='modal-heading'>Employment History Details</p>
-                                </div>
-                                <div style={customPopupDivision.popupcontent}>
-                                    <div style={customPopupDivision.popupinputs}>
-                                        <p>Company Name<span style={customStyles.span}>*</span></p>
-                                        <div>
-                                            <input type='text' placeholder='Enter Comapany Name..' onkeypress="return /[A-Za-z/\s/g]/i.test(event.key)"
-                                                {...register("CompanyName", { required: true })} className='form-control inputwidth' ></input>
-                                            {errors.CompanyName && <span style={customStyles.errorMsg}> Please enter comapany name</span>}
-                                        </div>
-                                    </div>
+      <div>
+        <div className="container-fluid">
+          <div className="card">
+            <form onSubmit={handleSubmit(onSubmit)}>
+              <div className="row">
+                <div className="col-12">
+            
+                  <h6>Employment History Details</h6>
+                  <hr />
+                  <div style={customPopupDivision.popupcontent}>
+                    <div style={customPopupDivision.popupinputs}>
+                      <p>
+                        Company Name<span style={customStyles.span}>*</span>
+                      </p>
+                      <div>
+                        <input
+                          type="text"
+                          placeholder="Enter Comapany Name.."
+                          onkeypress="return /[A-Za-z/\s/g]/i.test(event.key)"
+                          {...register("CompanyName", { required: true })}
+                          className="form-control "
+                        ></input>
+                        {errors.CompanyName && (
+                          <span style={customStyles.errorMsg}>
+                            {" "}
+                            Please enter comapany name
+                          </span>
+                        )}
+                      </div>
+                    </div>
 
-                                    <div style={customPopupDivision.popupinputs}>
-                                        <p>Position Title <span style={customStyles.span}>*</span></p>
-                                        <div>
-                                            <input type='text' placeholder='Enter Position Title ..'
-                                                {...register("PositionTitle", { required: true })} className='form-control inputwidth' ></input>
-                                            {errors.PositionTitle && <span style={customStyles.errorMsg}> Please enter position title</span>}
-                                        </div>
-                                    </div>
+                    <div style={customPopupDivision.popupinputs}>
+                      <p>
+                        Position Title <span style={customStyles.span}>*</span>
+                      </p>
+                      <div>
+                        <input
+                          type="text"
+                          placeholder="Enter Position Title .."
+                          {...register("PositionTitle", { required: true })}
+                          className="form-control "
+                        ></input>
+                        {errors.PositionTitle && (
+                          <span style={customStyles.errorMsg}>
+                            {" "}
+                            Please enter position title
+                          </span>
+                        )}
+                      </div>
+                    </div>
 
-                                    <div style={customPopupDivision.popupinputs}>
-                                        <p>Employment Type<span style={customStyles.span}>*</span></p>
-                                        {
-                                            <div>
-                                                <select className='form-select' {...register("EmployementTypeID", { required: true })} style={customStyles.inputLabel}>
-                                                    <option value="">Select Employment Type</option>
-                                                    {
-                                                        EmploymentTypeMaster.map((data) => {
-                                                            return (
-                                                                <option key={data.id} value={data.id}>{data.short}</option>
-                                                            )
-                                                        })
-                                                    }
-                                                </select>
-                                                {errors.EmployementTypeID && <span style={customStyles.errorMsg}> Please select employment type</span>}
-                                            </div>
-                                        }
-                                    </div>
+                    <div style={customPopupDivision.popupinputs}>
+                      <p>
+                        Employment Type<span style={customStyles.span}>*</span>
+                      </p>
+                      {
+                        <div>
+                          <select
+                            className="form-select"
+                            {...register("EmployementTypeID", {
+                              required: true,
+                            })}
+                            style={customStyles.inputLabel}
+                          >
+                            <option value="">Select Employment Type</option>
+                            {EmploymentTypeMaster.map((data) => {
+                              return (
+                                <option key={data.id} value={data.id}>
+                                  {data.short}
+                                </option>
+                              );
+                            })}
+                          </select>
+                          {errors.EmployementTypeID && (
+                            <span style={customStyles.errorMsg}>
+                              {" "}
+                              Please select employment type
+                            </span>
+                          )}
+                        </div>
+                      }
+                    </div>
 
-
-
-                                    <div style={customPopupDivision.popupinputs}>
+                    {/* <div style={customPopupDivision.popupinputs}>
                                         <p>Start Date<span style={customStyles.span}>*</span></p>
                                         <div>
                                             <input type='date' placeholder='Enter Start Date..'
-                                                {...register("StartDate", { required: true })} className='form-control inputwidth'></input>
+                                                {...register("StartDate", { required: true })} className='form-control '></input>
                                             {errors.StartDate && <span style={customStyles.errorMsg}> Please select start date</span>}
                                         </div>
-                                    </div>
-
-                                    <div style={customPopupDivision.popupinputs}>
-                                        <p>End Date<span style={customStyles.span}>*</span></p>
-                                        <div>
-                                            <input type='date' placeholder='Enter End Date..'
-                                                {...register("EndDate", { required: true })} className='form-control inputwidth'></input>
-                                            {errors.EndDate && <span style={customStyles.errorMsg}> Please enter end date</span>}
-                                        </div>
-                                    </div>
-
-                                </div>
-
-                                <div class="d-flex justify-content-center w-100 mt-2 mb-2 pr-2">
-                                    {
-                                        actionType == "insert" && (
-                                            <button className='staffSubmitBtn' >Submit</button>
-                                        )
-                                    }
-                                    {
-                                        actionType == "update" && (
-                                            <button className='staffSubmitBtn' >Update</button>
-                                        )
-                                    }
-                                </div>
-                            </div>
-                        </div>
-                        <br></br>
-                    </form>
-
-
-                    <div className='row'>
-                        <div className='col-12'>
-                                <table className='table table-hover mb-5'>
-                                    <thead className='bg-info text-white '>
-                                    <tr>
-                                        <th>Company Name</th>
-                                        <th>Position Title</th>
-                                        <th>Employment Type</th>
-                                        <th>Start Date</th>
-                                        <th>End Date</th>
-                                        <th>Actions</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {
-                                        EmploymentDetals.map((data, index) => {
-                                            return (
-                                              <tr
-                                                className="text-dark"
-                                                key={index}
-                                              >
-                                                <td>{data.companyName}</td>
-                                                <td>{data.positionTitle}</td>
-                                                <td>{data.employementType}</td>
-                                                <td>{data.startDate}</td>
-                                                <td>{data.endDate}</td>
-
-                                                <td className="d-flex">
-                                                  <button
-                                                    className="staffEditBtn"
-                                                    onClick={editData.bind(
-                                                      this,
-                                                      data.id
-                                                    )}
-                                                  >
-                                                    Edit
-                                                  </button>
-                                                  &nbsp;
-                                                  <button
-                                                    className="staffDeleteBtn"
-                                                    onClick={deleteData.bind(
-                                                      this,
-                                                      data.id
-                                                    )}
-                                                  >
-                                                    Delete
-                                                  </button>
-                                                </td>
-                                              </tr>
-                                            );
-                                        })
-                                    }
-                                </tbody>
-                            </table>
-                        </div>
+                                    </div> */}
+                    <div style={customPopupDivision.popupinputs}>
+                      <p>
+                        Start Date
+                        <span style={customStyles.span}>*</span>
+                      </p>
+                      <div>
+                        <input
+                          type="date"
+                          placeholder="Enter Start Date.."
+                          {...register("StartDate", { required: true })}
+                          className="form-control"
+                        ></input>
+                         {errors.StartDate && <span style={customStyles.errorMsg}> Please select start date</span>}
+                      </div>
                     </div>
-                </div>
+                    <div style={customPopupDivision.popupinputs}>
+                      <p>
+                        End Date<span style={customStyles.span}>*</span>
+                      </p>
+                      <div>
+                        <input
+                          type="date"
+                          placeholder="Enter End Date.."
+                          {...register("EndDate", { required: true })}
+                          className="form-control "
+                        ></input>
+                        {errors.EndDate && (
+                          <span style={customStyles.errorMsg}>
+                            {" "}
+                            Please enter end date
+                          </span>
+                        )}
+                      </div>
+                    </div>
+                  </div>
 
+                  <div class="d-flex justify-content-center w-100 mt-2 mb-2 pr-2">
+                    {actionType == "insert" && (
+                      <button className="staffSubmitBtn">Submit</button>
+                    )}
+                    {actionType == "update" && (
+                      <button className="staffSubmitBtn">Update</button>
+                    )}
+                  </div>
+                </div>
+              </div>
+              <br></br>
+            </form>
+
+            <div className="row">
+              <div className="col-12">
+                <table className="table table-hover mb-5">
+                  <thead className="bg-info text-white ">
+                    <tr>
+                      <th>Company Name</th>
+                      <th>Position Title</th>
+                      <th>Employment Type</th>
+                      <th>Start Date</th>
+                      <th>End Date</th>
+                      <th>Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {EmploymentDetals.map((data, index) => {
+                      return (
+                        <tr className="text-dark" key={index}>
+                          <td>{data.companyName}</td>
+                          <td>{data.positionTitle}</td>
+                          <td>{data.employementTypeID}</td>
+                          <td>{data.startDate}</td>
+                          <td>{data.endDate}</td>
+
+                          <td className="d-flex">
+                            <button
+                              className="staffEditBtn"
+                              onClick={editData.bind(this, data.id)}
+                            >
+                              Edit
+                            </button>
+                            &nbsp;
+                            <button
+                              className="staffDeleteBtn"
+                              onClick={deleteData.bind(this, data.id)}
+                            >
+                              Delete
+                            </button>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              </div>
             </div>
+          </div>
         </div>
-    )
+      </div>
+    );
 
  
 

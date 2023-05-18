@@ -91,6 +91,7 @@ export default function BankDetails() {
       await axios.post(hostURL + "Payroll/UpdateBankDetails", Entity);
       Swal.fire("Updated Successfully!");
       getBankDetails();
+      cleardata();
     }
   }
 
@@ -119,9 +120,10 @@ export default function BankDetails() {
   }
 
   async function deleteData(data) {
+    debugger
     let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-    let res = await axios.get(hostURL + "HR/DeleteIDDetails?ID=" + data);
-    getData();
+    let res = await axios.get(hostURL + "HR/DeleteBankDetails?ID=" + data);
+    getBankDetails();
   }
 
   useEffect(() => {
@@ -144,9 +146,8 @@ export default function BankDetails() {
           <div className="card">
             <div className="row">
               <div className="col-12">
-                <div className="d-flex justify-content-between">
-                  <p className="modal-heading">Bank Details</p>
-                </div>
+              <h6>Bank Details</h6>
+              <hr/>
                 <div style={customPopupDivision.popupcontent}>
                   <div style={customPopupDivision.popupinputs}>
                     <p>
