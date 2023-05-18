@@ -390,7 +390,7 @@ export default function ContactDetails() {
                                     <div style={customPopupDivision.popupinputs}>
                                         <p>Contact Address<span style={customStyles.span} >*</span></p>
                                         <div>
-                                            <textarea type='text' placeholder=''
+                                            <textarea type='text' placeholder='Contact Address'
                                                 {...register("EmergencyContactAddress1", { required: true })} className='form-control ' ></textarea>
                                             {errors.EmergencyContactAddress1 && <span style={customStyles.errorMsg}> Please enter contact address</span>}
                                         </div>

@@ -130,6 +130,7 @@ export default function EducationDetails() {
       await axios.post(hostURL + "Payroll/UpdateEducationDetails", Entity);
       Swal.fire("Updated Successfully!");
       getData();
+      cleardata();
     }
   }
 
