@@ -103,7 +103,7 @@ export default function EmploymentDetails() {
             ID: existingData ? existingData.id : "",
             CompanyName: existingData ? existingData.companyName : "",
             PositionTitle: existingData ? existingData.positionTitle : "",
-            EmployementTypeID: existingData ? existingData.employementTypeID : "",
+            EmployementTypeID: existingData ? existingData.employementType : "",
             StartDate: existingData ? existingData.startDate : "",
             EndDate: existingData ? existingData.endDate : "",
             StaffID: sessionStorage.getItem('userID')

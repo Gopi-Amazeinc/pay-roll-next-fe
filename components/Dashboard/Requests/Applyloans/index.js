@@ -27,11 +27,12 @@ const ApplyloansDashboard = () => {
     };
 
     useEffect(() => {
+        setNewRequest(true)
         getApplyLoans();
     }, [1]);
 
     const getnewApprovedData = async () => {
-        let res = await apiService.commonGetCall("Payroll/GetEmployeeLoans"); //This Api is useed for Get the Dashborad data band Master
+        let res = await apiService.commonGetCall("Payroll/GetEmployeeLoansByApproved"); //This Api is useed for Get the Dashborad data band Master
         setnewApprovedData(res.data);
     };
 
@@ -94,8 +95,8 @@ const ApplyloansDashboard = () => {
                     <div className="col-lg-12 dashbutton bttn">
                         <div className='col-lg-4 mx-2'><br />
                             <div className='btn-group'>
-                                <button onClick={toggleNewRequest} className='toggleButton'>New Request</button>
-                                <button onClick={toggleApproved} className='toggleButton'>Approved</button>
+                                <button onClick={toggleNewRequest} className={`toggleButton ${newrequest ? "focus" : ""}`}>New Request</button>
+                                <button onClick={toggleApproved} className={`toggleButton ${approved ? "focus" : ""}`}>Approved</button>
                             </div>
                         </div><br />
                     </div>
@@ -138,7 +139,7 @@ const ApplyloansDashboard = () => {
                                     Applyloans.map((data) => {
                                         return (
                                             <tr key={data.id}>
-                                                <td>{data.modifiedDate}</td>
+                                                <td>{data.dateFormated}</td>
                                                 <td>
                                                     {
                                                         data.approvedDate && (
@@ -225,14 +226,46 @@ const ApplyloansDashboard = () => {
                                         return (
                                             <tr key={data.id}>
                                                 <td>{data.modifiedDate}</td>
-                                                <td>{data.approvedDate}</td>
-                                                <td>{data.loanstartdate}</td>
-                                                <td>{data.loanenddate}</td>
+                                                <td>
+                                                    {
+                                                        data.approvedDate && (
+                                                            data.approvedDate
+                                                        )
+                                                    }
+                                                    {
+                                                        !data.approvedDate && (
+                                                            "Yet to approve"
+                                                        )
+                                                    }
+                                                </td>
+                                                <td>
+                                                    {
+                                                        data.loanstartdate && (
+                                                            data.loanstartdate
+                                                        )
+                                                    }
+                                                    {
+                                                        !data.loanstartdate && (
+                                                            "Yet to approve"
+                                                        )
+                                                    }
+
+                                                </td>
+                                                <td>{
+                                                    data.loanenddate && (
+                                                        data.loanenddate
+                                                    )}
+                                                    {
+                                                        !data.loanenddate && (
+                                                            "Yet to approve"
+                                                        )
+                                                    }
+                                                </td>
                                                 <td>{data.loanType}</td>
                                                 <td>{data.loanAmount}</td>
                                                 <td>{data.comments}</td>
                                                 <td>{data.managerComments}</td>
-                                                <td>{data.hRComments}</td>
+                                                <td>{data.hrComments}</td>
                                                 <td>{data.financeComments}</td>
                                                 <td>{data.payrollComments}</td>
                                                 <td>{data.status}</td>
