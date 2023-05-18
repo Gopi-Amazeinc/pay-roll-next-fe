@@ -89,7 +89,7 @@ const Shiftdetails = () => {
     return getShiftDetails(startDate, endDatesss);
   };
 
-  const getShiftDetails = async () => {
+  const getShiftDetails = async (SDate, EDate) => {
     const userid = sessionStorage.getItem("userID");
     debugger
     const res = await apiService.commonGetCall("HR/GetStaffShiftDetailsByband?staffID=" + userid);
