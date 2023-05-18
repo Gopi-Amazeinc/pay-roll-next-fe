@@ -95,6 +95,7 @@ const Shiftdetails = () => {
     const res = await apiService.commonGetCall("HR/GetStaffShiftDetailsByband?staffID=" + userid);
     console.log(res);
     setShiftDetails(res.data);
+    // https://103.12.1.103/PayrollDemoAPI/Master/GetStaffShiftDetails
   };
 
   //   const getapprovedshiftDetails = async () => {
