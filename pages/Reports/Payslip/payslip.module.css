@@ -1,11 +1,13 @@
-.button{
-    font-size: 12px;
-    font-weight: 600;
-    color: #3247d5;
-    text-align: center;
-    cursor: pointer;
-    transition: color .25s ease-in-out;
+.payrollbutton{
+    width: 88%;
+    height: 35px;
+    font-size: 14px;
+    box-sizing: border-box;
+    color: #fff;
+    background: #3247d5;
+    border-radius: 5px solid #3247d5;
     border: 2px solid #3247d5;
+    text-transform: uppercase;
 }
 
 

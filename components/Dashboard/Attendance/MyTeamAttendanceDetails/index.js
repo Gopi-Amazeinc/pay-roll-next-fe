@@ -173,7 +173,7 @@ const MyTeamAttendence = () => {
               />
             </div>
 
-            <div className="col-lg-3">
+            <div className="col-lg-2">
               <button className="button">Upload</button>
               <br />
               <p></p>
@@ -187,10 +187,10 @@ const MyTeamAttendence = () => {
             </div>
           </div>
         </div>
-
+        <br/>
         <table
-          className="table table-hover mt-2 "
-          style={{ marginLeft: "13px" }}
+          className="table table-hover"
+          style={{ marginLeft: "0px" }}
           ref={tableRef}
         >
           <thead className="bg-info text-white ">
