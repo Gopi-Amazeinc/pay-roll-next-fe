@@ -206,8 +206,8 @@ function LeaveListDashboard() {
                     <div className='row mt-3'>
                         <div className='col-lg-4 mx-5'>
                             <div className='btn-group'>
-                                <button onClick={toggleCalender} className={'btn ' + leave.btn}>Calender</button>
-                                <button onClick={toggleListView} className={'btn ' + leave.btn}>List View</button>
+                                <button OnClick={toggleCalender} className={'btn ' + leave.btn}>Calender</button>
+                                <button OnClick={toggleListView} className={'btn ' + leave.btn}>List View</button>
 
                             </div>
                         </div>
