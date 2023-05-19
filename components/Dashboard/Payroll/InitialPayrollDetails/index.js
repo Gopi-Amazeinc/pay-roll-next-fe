@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import Modal from 'react-modal';
 import Swal from 'sweetalert2';
 import axios from 'axios'
+import ReactPaginate from "react-paginate";
 import Link from 'next/link'
 import { DownloadTableExcel } from 'react-export-table-to-excel';
 
@@ -40,7 +41,13 @@ const InitialPayrollDetails = () => {
         // console.log(Object.values(res.data));
         handleDelete(data.staffID, data.endDateFormated);
     }
-
+    const PER_PAGE = 9;
+    const [currentPage, setCurrentPage] = useState(0);
+    function handlePageClick({ selected: selectedPage }) {
+        setCurrentPage(selectedPage);
+    }
+    const offset = currentPage * PER_PAGE;
+    const pageCount = Math.ceil(preliminarySalary.length / PER_PAGE);
     const customStyles = {
         content: {
             top: '50%',
@@ -86,10 +93,11 @@ const InitialPayrollDetails = () => {
         }
     };
     return (
-        <div>
-            <h6>Delete operation is not happening</h6>
-            <h3 className='text-primary fs-5 mt-3 Heading'>Initial Payroll Details</h3>
-            <div className='card p-3 border-0 shadow-lg rounded-3 mt-4'>
+        <div className='container-fluid'>
+
+            <p className=' Heading'>Initial Payroll Details</p>
+            <br />
+            <div className='card p-4 '>
                 <div className='row'>
                     <div className='col-lg-1'>
                         <p>Filter By</p>
@@ -127,31 +135,33 @@ const InitialPayrollDetails = () => {
             <div className='row '>
                 <div className='col-lg-4'> </div>
                 <div className='col-lg-5'>
-                    <h4 className='Heading' >Employees in selected Period</h4>
+                    <p className='Heading' >Employees in selected Period</p>
                 </div>
-                <div className='col-lg-3'>
+                <div className='col-lg-2'>
                     <button type='button' className='EditDelteBTN' onClick={() => handleDelete.bind(this)}>Delete</button>
                 </div>
-
+            </div>
+            <div className='row'>
                 <div className='col-lg-12'>
                     <span>Select All <input type="checkbox" checked={selectedRows.length === preliminarySalary.length} onChange={e => handleRowSelect(e, 'all')} /></span>
-                    <table className='table  mt-4 text-cente table-smr table-striped  text-center'>
+                    <br />
+                    <table className='table'>
                         <thead>
-                            <tr className='tr' style={{ whiteSpace: 'nowrap' }}>
-                                <th className='text-white'>Select</th>
-                                <th className='text-white'>Employee ID</th>
-                                <th className='text-white'>Staff ID</th>
-                                <th className='text-white'>Employee Name</th>
-                                <th className='text-white'>End Date </th>
-                                <th className='text-white'>Department</th>
-                                <th className='text-white'>Basic Monthly Salary</th>
-                                <th className='text-white'>Semi Monthly Salary</th>
-                                <th className='text-white'>Action</th>
+                            <tr className='text-white' style={{ whiteSpace: 'nowrap' }}>
+                                <th>Select</th>
+                                <th>Employee ID</th>
+                                <th>Staff ID</th>
+                                <th>Employee Name</th>
+                                <th>End Date </th>
+                                <th>Department</th>
+                                <th>Basic Monthly Salary</th>
+                                <th>Semi Monthly Salary</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody >
                             {
-                                preliminarySalary.map((data, index) => {
+                                preliminarySalary.slice(offset, offset + PER_PAGE).map((data, index) => {
                                     return (
                                         <tr className="text-dark" key={index}>
                                             <td>
@@ -192,10 +202,10 @@ const InitialPayrollDetails = () => {
                             <div className='col-lg-12'>
                                 <table className='table  table-bordered mt-4 text-center table-striped ' >
                                     <thead>
-                                        <tr >
-                                            <th className='text-white'>Component Name</th>
-                                            <th className='text-white'>Amount </th>
-                                            <th className='text-white'>Component Type</th>
+                                        <tr className='text-white' >
+                                            <th>Component Name</th>
+                                            <th>Amount </th>
+                                            <th>Component Type</th>
                                         </tr>
                                     </thead>
                                     <tbody >
@@ -217,8 +227,28 @@ const InitialPayrollDetails = () => {
                     </div>
                 </Modal>
             </div>
-
-        </div>
+            <div className="text-center">
+                <ReactPaginate
+                    previousLabel={"Previous"}
+                    nextLabel={"Next"}
+                    breakLabel={"..."}
+                    pageCount={pageCount}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={3}
+                    onPageChange={handlePageClick}
+                    containerClassName={"pagination  justify-content-center"}
+                    pageClassName={"page-item "}
+                    pageLinkClassName={"page-link"}
+                    previousClassName={"page-item"}
+                    previousLinkClassName={"page-link"}
+                    nextClassName={"page-item"}
+                    nextLinkClassName={"page-link"}
+                    breakClassName={"page-item"}
+                    breakLinkClassName={"page-link"}
+                    activeClassName={"active primary"}
+                />
+            </div>
+        </div >
 
     )
 }

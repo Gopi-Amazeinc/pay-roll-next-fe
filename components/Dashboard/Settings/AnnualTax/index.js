@@ -40,28 +40,36 @@ const AnnualTax = () => {
     }
     return (
         <div>
-            <div className='container'>
-                <h3 className='Heading  mt-3'>Annual Tax Configuration</h3>
+            <div className='container-fluid'>
+                <label className='Heading '>Annual Tax Configuration</label>
+                <br /><br />
+                <div className='row'>
+                    <div className='col-lg-12'>
+                        <div className='card p-3 border-0 rounded-3'>
+                            <div className='row'>
+                                <div className='col-lg-1'>
+                                    <p>Filter By</p>
+                                </div>
 
-                <div className='card p-3 border-0 shadow-lg rounded-3 mt-4'>
-                    <div className='row'>
-                        <div className='col-lg-1'>
-                            <p>Filter By</p>
+                                <div className='col-lg-3'>
+                                    <input type="text" className='form-control' placeholder='Search...' />
+                                </div>
+                            </div>
                         </div>
-
-                        <div className='col-lg-4'>
-                            <input type="text" className='form-control' placeholder='Search...' />
-                        </div>
-                    </div>
-                </div>
+                    </div></div>
                 <br></br>
                 <div className='row'>
                     <div className='col-lg-10'></div>
-                    <div className='col-lg-2 mt-2 text-end'>
-                        <Link href="/Settings/AnnualTax/new" onClick={clearSession} className='btn text-white' style={{ backgroundColor: "#3247d5" }} >Add New</Link>
+                    <div className='col-lg-2'>
+                        
+                        <Link href="/Settings/AnnualTax/new"><button onClick={clearSession} className='AddButton'  >Add New</button></Link>
+                        
                     </div>
-
-                    <table className='table table-hover mt-2 '>
+                </div>
+                <br/>
+                <div className='row'><div className='col-lg-12'>
+                
+                    <table className='table table-hover '>
                         <thead className='bg-info text-white '>
                             <tr>
                                 <th>Tax low level limit</th>
@@ -90,7 +98,7 @@ const AnnualTax = () => {
                                             <td>
                                                 <Link href={`/Settings/AnnualTax/Edit/${data.id}`}>
                                                     <button
-                                                        className='edit-btn text-white ' style={{ backgroundColor: "#3247d5" }}
+                                                        className='edit-btn'
                                                     // onClick={edit.bind(this, data.id)}
                                                     >
                                                         Edit
@@ -98,7 +106,7 @@ const AnnualTax = () => {
                                                 </Link>
                                                 &nbsp;&nbsp;&nbsp;&nbsp;
                                                 <button
-                                                    className='edit-btn text-white ' style={{ backgroundColor: "#3247d5" }}
+                                                    className='edit-btn' 
                                                     onClick={deleteAnnualTax.bind(
                                                         this,
                                                         data.id
@@ -113,6 +121,8 @@ const AnnualTax = () => {
                             }
                         </tbody>
                     </table>
+                {/* </div> */}
+                </div>
                 </div>
             </div>
         </div >

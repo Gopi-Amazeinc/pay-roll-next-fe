@@ -118,10 +118,13 @@ const InitialPayrollForm = () => {
     }
     return (
         <Layout>
-            <div>
-                <h3 className='Heading mt-5'>Initial Payroll</h3>
-                <div className="row card card1 mb-1">
+
+            <div className='container-fluid'>
+                <h3 className='Heading'>Initial Payroll</h3>
+                <br />
+                <div className="card p-3 " style={{ paddingLeft: "10px" }}>
                     <form>
+
                         <div className="row">
                             <div className="col-lg-3">
                                 <p>Select Paycode </p>
@@ -144,12 +147,13 @@ const InitialPayrollForm = () => {
                                 <input placeholder="Search" type="text" className="form-control form-control-sm" />
                             </div>
                             <div className='col-lg-1'></div>
-                            <div className="col-lg-2 mt-3">
+                            <div className="col-lg-2 ">
                                 <br />
+                                <p></p>
                                 <Button
-                                    style={{ background: "#3247d5" }}
+                                    style={{ background: "#3247d5", border: "none" }}
                                     type="button"
-                                    className='fw-bold'
+                                    className='form-control  '
                                     id="collapseExample"
                                     onClick={() => {
                                         setCollapseOpen(!collapseOpen),
@@ -161,7 +165,8 @@ const InitialPayrollForm = () => {
                             </div>
                             <div className='col-lg-3'></div>
                         </div>
-                        <div className='row mt-3'>
+                        <br />
+                        <div className='row '>
                             <br></br>
                             <div className="col-lg-3">
                                 <p > Position </p>
@@ -249,18 +254,25 @@ const InitialPayrollForm = () => {
                                 {
                                     dashboard.map((data, index) => {
                                         return (
-                                            <tr className="text-dark" key={index}>
-                                                <td>
-                                                    <input onClick={handleRunpayrollClick} onChange={handlePreliminaryData.bind(this, data)} type='checkbox' />
-                                                </td>
-                                                <td>{data.employeID}</td>
-                                                <td>{data.name}</td>
-                                                <td>{data.role}</td>
-                                                <td>{data.department_name}</td>
-                                                <td>{data.emailID}</td>
-                                                <td>{data.joiningDate}</td>
-                                                <td>{data.supervisor}</td>
-                                            </tr>
+                                            <div className='row'>
+                                                <div className='col-lg-12'>
+
+                                                    <tr className="text-dark" key={index}>
+                                                        <td>
+                                                            <input onClick={handleRunpayrollClick} onChange={handlePreliminaryData.bind(this, data)} type='checkbox' />
+                                                        </td>
+                                                        <td>{data.employeID}</td>
+                                                        <td>{data.name}</td>
+                                                        <td>{data.role}</td>
+                                                        <td>{data.department_name}</td>
+                                                        <td>{data.emailID}</td>
+                                                        <td>{data.joiningDate}</td>
+                                                        <td>{data.supervisor}</td>
+                                                    </tr>
+
+                                                </div>
+                                            </div>
+
                                         )
                                     })
                                 }
@@ -268,6 +280,7 @@ const InitialPayrollForm = () => {
                         </table> </Collapse>
 
                 </div>
+
                 </div>
             </div>
         </Layout >

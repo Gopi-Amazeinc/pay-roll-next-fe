@@ -52,7 +52,6 @@ function StaffDashbaord() {
   return (
     <div>
       <div className="container">
-      <h5>Masters, disable/enable, edit APIs pending</h5>
       <h5 className="Heading">Staff Dashboard</h5>
         <div className="card p-3 border-0 shadow-lg rounded-3 mt-4">
           <div className="row">

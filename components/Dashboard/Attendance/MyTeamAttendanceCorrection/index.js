@@ -276,7 +276,7 @@ const MyTeamAttendancecorrectiondashboard = () => {
                         <p>Filter By</p>
                     </div>
 
-                    <div className="col-lg-5">
+                    <div className="col-lg-4">
                         <input
                             type="text"
                             className="form-control"
@@ -289,7 +289,7 @@ const MyTeamAttendancecorrectiondashboard = () => {
                         {roleID != 3 || (
                             <>
                                 <div className="row">
-                                    <div className="col-lg-4">
+                                    <div className="col-lg-5">
                                         <button className="button">Download</button>
                                     </div>
                                 </div>
@@ -415,7 +415,7 @@ const MyTeamAttendancecorrectiondashboard = () => {
                                                         className="edit-btn"
                                                     >
                                                         Accept
-                                                    </button>
+                                                    </button>&nbsp;
                                                     <button className="edit-btn">Reject</button>
                                                 </td>
                                             </tr>

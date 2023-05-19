@@ -74,77 +74,75 @@ function GroupMasterForm({ editData }) {
 
     return (
         <Layout>
-            <p className='Heading'>Group Master</p>
-            <div className="container">
-                <div className="card p-4 border-0 rounded-3 mt-3 mx-0">
-                    <div className="row ">
-                        <div className="col-lg-4" >
-                            <label id={Styles.label}>Name<span id={Styles.asterisk}>* </span></label>
-                        </div>
-                        <div className="col-lg-4" >
-                            <label id={Styles.label}>Description<span id={Styles.asterisk}>* </span></label>
+            <div className='container-fluid'>
+                <p className='Heading'>Group Master</p>
+                <div className="row">
+                    <div className='col-lg-12'>
+                        <div className="card p-3 border-0 rounded-3">
+                            <form onSubmit={handleSubmit(onSubmit)}>
+                                <div className="row ">
+                                    <div className="col-lg-2">
+                                        <label className='fw-bold'>Name<span id={Styles.asterisk}>* </span></label>
+                                        <input
+                                            name="Short"
+                                            className="form-control"
+                                            type="text"
+                                            {...register("Short", { required: true })}
+                                            placeholder="Short Name"
+                                        />
+                                        <div>
+                                            {errors.Short && (
+                                                <span style={customStyles.errorMsg}>
+                                                    Please enter name
+                                                </span>
+                                            )}
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-5">
+                                        <label className='fw-bold'>Description<span id={Styles.asterisk}>* </span></label>
+                                        <textarea
+                                            name="Description"
+                                            className="form-control"
+                                            {...register("Description", { required: true })}
+                                            placeholder="Description"
+                                        />
+                                        <div>
+                                            {errors.Description && (
+                                                <span style={customStyles.errorMsg}>
+                                                    Please enter description
+                                                </span>
+                                            )}
+                                        </div>
+                                    </div>
+                                </div>
+                                <br></br>
+                                <div className="row ">
+                                    <div className="col-lg-8"></div>
+                                    <div className="col-lg-2">
+                                        <Link href='/Masters/GroupMaster'><button
+                                            type="button"
+                                            className="AddButton"
+                                        >
+                                            Close
+                                        </button></Link>
+                                    </div>
+
+                                    <div className='col-lg-2'>
+                                        {actionType == "insert" && (
+                                            <button type="submit" className="AddButton">
+                                                Save
+                                            </button>
+                                        )}
+                                        {actionType == "update" && (
+                                            <button type="submit" className="AddButton">
+                                                Update
+                                            </button>
+                                        )}
+                                    </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
-                    <form onSubmit={handleSubmit(onSubmit)}>
-                        <div className="row ">
-                            <div className="col-lg-4">
-                                <input
-                                    name="Short"
-                                    className="form-control"
-                                    type="text"
-                                    {...register("Short", { required: true })}
-                                    placeholder="Short Name"
-                                />
-                                <div>
-                                    {errors.Short && (
-                                        <span style={customStyles.errorMsg}>
-                                            Please enter name
-                                        </span>
-                                    )}
-                                </div>
-                            </div>
-                            <div className="col-lg-4">
-                                <textarea
-                                    name="Description"
-                                    className="form-control"
-                                    {...register("Description", { required: true })}
-                                    placeholder="Description"
-                                />
-                                <div>
-                                    {errors.Description && (
-                                        <span style={customStyles.errorMsg}>
-                                            Please enter description
-                                        </span>
-                                    )}
-                                </div>
-                            </div>
-                        </div>
-                        <br></br>
-                        <div className="row ">
-                            <div className="col-lg-8"></div>
-                            <div className="col-lg-2">
-                                <Link href='/Masters/GroupMaster'><button
-                                    type="button"
-                                    className="AddButton"
-                                >
-                                    Close
-                                </button></Link>
-                            </div>
-
-                            <div className='col-lg-2'>
-                                {actionType == "insert" && (
-                                    <button type="submit" className="AddButton">
-                                        Save
-                                    </button>
-                                )}
-                                {actionType == "update" && (
-                                    <button type="submit" className="AddButton">
-                                        Update
-                                    </button>
-                                )}
-                            </div>
-                        </div>
-                    </form>
                 </div>
             </div>
         </Layout>
