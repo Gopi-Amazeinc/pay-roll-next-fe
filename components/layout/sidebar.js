@@ -281,11 +281,17 @@ const Sidebar = ({ children, applyPageName }) => {
   return (
     <div className="container-fluid">
       <div className="row" style={{ height: "90vh", overflowY: "auto" }}>
-        <div className="col-lg-12 mb-4" style={{ paddingRight: '0px', paddingLeft: '0px' }}>
+        <div
+          className="col-lg-12 mb-4"
+          style={{ paddingRight: "0px", paddingLeft: "0px" }}
+        >
           <Link href="/Home/dashboard" className={styles.sidemenulink}>
             <button
               className={getStyle(1)}
-              onClick={updateActiveMenu.bind(this, { id: 1, name: "Dashboard" })}
+              onClick={updateActiveMenu.bind(this, {
+                id: 1,
+                name: "Dashboard",
+              })}
             >
               <AiOutlineHome style={customStyles.icons} />
               Home
@@ -316,7 +322,10 @@ const Sidebar = ({ children, applyPageName }) => {
                         Staff Dashboard
                       </button>
                     </Link>
-                    <Link href="/Staff/AddStaff" className={styles.sidemenulink}>
+                    <Link
+                      href="/Staff/AddStaff"
+                      className={styles.sidemenulink}
+                    >
                       <button
                         className={getSubStyle(22)}
                         onClick={updateActiveMenu.bind(this, {
@@ -1258,501 +1267,520 @@ const Sidebar = ({ children, applyPageName }) => {
               </Link>
             </>
           )}
-          {userRole == 4 || userRole == 5 && (
-            <div>
-              <hr></hr>
-              <button className={styles.sidemenu} onClick={togleReportsMeanu}>
-                <TbReportSearch style={customStyles.icons} />
-                Reports
-              </button>
-              {userRole == 5 && displayReports && (
-                <>
-               <Link href="/Reports/Payslip">
+          {userRole == 4 ||
+            (userRole == 5 && (
+              <div>
+                <hr></hr>
+                <button className={styles.sidemenu} onClick={togleReportsMeanu}>
+                  <TbReportSearch style={customStyles.icons} />
+                  Reports
+                </button>
+                {userRole == 5 && displayReports && (
+                  <>
+                    <Link href="/Reports/Payslip">
+                      <button
+                        className={getSubStyle(50451)}
+                        onClick={updateActiveMenu.bind(this, {
+                          id: 50451,
+                          name: "Payslip",
+                        })}
+                      >
+                        <TbReport style={customStyles.icons} />
+                        Payslip
+                      </button>
+                    </Link>
+
+                    <Link href="/Reports/BIR/bir2316">
+                      <button
+                        className={getSubStyle(50451)}
+                        onClick={updateActiveMenu.bind(this, {
+                          id: 50451,
+                          name: "BIR2316",
+                        })}
+                      >
+                        <TbReport style={customStyles.icons} />
+                        BIR 2316
+                      </button>
+                    </Link>
+                    <Link href="/Reports/Salary/salaryIncreasePdf">
+                      <button
+                        className={getSubStyle(50451)}
+                        onClick={updateActiveMenu.bind(this, {
+                          id: 50451,
+                          name: "Salary Increase PDF",
+                        })}
+                      >
+                        <TbReport style={customStyles.icons} />
+                        Salary Increase PDF
+                      </button>
+                    </Link>
+                    <Link href="/Reports/LeaveReport">
+                      <button
+                        className={getSubofSubStyle(50451)}
+                        onClick={updateActiveMenu.bind(this, {
+                          id: 50451,
+                          name: "LeaveReport",
+                        })}
+                      >
+                        <TbReportAnalytics style={customStyles.icons} />
+                        Leave Report
+                      </button>
+                    </Link>
+                  </>
+                )}
+                {userRole == 4 && displayReports && (
+                  <div>
                     <button
-                      className={getSubStyle(5041)}
-                      onClick={updateActiveMenu.bind(this, {
-                        id: 5041,
-                        name: "Payslip",
-                      })}
+                      className={styles.subsidemenu}
+                      onClick={togglePagibigMenu}
                     >
-                      <TbReport style={customStyles.icons} />
-                      Payslip
+                      <TbReportSearch style={customStyles.icons} />
+                      Pagibig
                     </button>
-                  </Link>
+                    {dispalyPagibig && (
+                      <div>
+                        <Link href="/Reports/Pagibig/pagibigmonthly">
+                          <button
+                            className={getSubofSubStyle(301)}
+                            onClick={updateActiveMenu.bind(this, {
+                              id: 301,
+                              name: "PAGIBIG MONTHLY",
+                            })}
+                          >
+                            <TbReportAnalytics style={customStyles.icons} />
+                            PAGIBIG MONTHLY
+                          </button>
+                        </Link>
 
-                  <Link href="/Reports/BIR/bir2316">
+                        <Link href="/Reports/Pagibig/m1excel">
+                          <button
+                            className={getSubofSubStyle(302)}
+                            onClick={updateActiveMenu.bind(this, {
+                              id: 302,
+                              name: "M1-Excel",
+                            })}
+                          >
+                            <TbReportAnalytics style={customStyles.icons} />
+                            M1-EXCEL
+                          </button>
+                        </Link>
+
+                        <Link href="/Reports/Pagibig/m1mcrf">
+                          <button
+                            className={getSubofSubStyle(303)}
+                            onClick={updateActiveMenu.bind(this, {
+                              id: 303,
+                              name: "M1 MCRF",
+                            })}
+                          >
+                            <TbReportAnalytics style={customStyles.icons} />
+                            M1-MCRF
+                          </button>
+                        </Link>
+
+                        <Link href="/Reports/Pagibig/pagibigml1report">
+                          <button
+                            className={getSubofSubStyle(304)}
+                            onClick={updateActiveMenu.bind(this, {
+                              id: 304,
+                              name: "ML1-REPORT",
+                            })}
+                          >
+                            <TbReportAnalytics style={customStyles.icons} />
+                            ML1-REPORT
+                          </button>
+                        </Link>
+
+                        <Link href="/Reports/Pagibig/pagibigp2report">
+                          <button
+                            className={getSubofSubStyle(305)}
+                            onClick={updateActiveMenu.bind(this, {
+                              id: 305,
+                              name: "P2-4",
+                            })}
+                          >
+                            <TbReportAnalytics style={customStyles.icons} />
+                            P2-4
+                          </button>
+                        </Link>
+
+                        <Link href="/Reports/Pagibig/stlrf">
+                          <button
+                            className={getSubofSubStyle(306)}
+                            onClick={updateActiveMenu.bind(this, {
+                              id: 306,
+                              name: "STLRF",
+                            })}
+                          >
+                            <TbReportAnalytics style={customStyles.icons} />
+                            STLRF
+                          </button>
+                        </Link>
+
+                        <Link href="/Reports/Pagibig/stlrfexcel">
+                          <button
+                            className={getSubofSubStyle(307)}
+                            onClick={updateActiveMenu.bind(this, {
+                              id: 307,
+                              name: "STLRF EXCEL",
+                            })}
+                          >
+                            <TbReportAnalytics style={customStyles.icons} />
+                            STLRF EXCEL
+                          </button>
+                        </Link>
+                      </div>
+                    )}
+
                     <button
-                      className={getSubStyle(5042)}
-                      onClick={updateActiveMenu.bind(this, {
-                        id: 5042,
-                        name: "BIR2316",
-                      })}
+                      className={styles.subsidemenu}
+                      onClick={toggleTaxReportsMenu}
                     >
-                      <TbReport style={customStyles.icons} />
-                      BIR 2316
+                      <TbReportSearch style={customStyles.icons} />
+                      Tax Reports
                     </button>
-                  </Link>
-                  <Link href="/Reports/Salary/salaryIncreasePdf">
+                    {displayTaxReports && (
+                      <div>
+                        <Link href="/Reports/TaxReports/withholdingtaxreport">
+                          <button
+                            className={getSubofSubStyle(311)}
+                            onClick={updateActiveMenu.bind(this, {
+                              id: 311,
+                              name: "WITHHOLDING TAX",
+                            })}
+                          >
+                            <TbReportAnalytics style={customStyles.icons} />
+                            WithHolding Tax
+                          </button>
+                        </Link>
+                      </div>
+                    )}
+
                     <button
-                      className={getSubStyle(5043)}
-                      onClick={updateActiveMenu.bind(this, {
-                        id: 5043,
-                        name: "Salary Increase PDF",
-                      })}
+                      className={styles.subsidemenu}
+                      onClick={toggleBIRMenu}
                     >
-                      <TbReport style={customStyles.icons} />
-                     Salary Increase PDF
+                      <TbReportSearch style={customStyles.icons} />
+                      BIR
                     </button>
-                  </Link>
-                </>
-              )}
-              {userRole == 4 && displayReports && (
-                <div>
-                  <button
-                    className={styles.subsidemenu}
-                    onClick={togglePagibigMenu}
-                  >
-                    <TbReportSearch style={customStyles.icons} />
-                    Pagibig
-                  </button>
-                  {dispalyPagibig && (
-                    <div>
-                      <Link href="/Reports/Pagibig/pagibigmonthly">
-                        <button
-                          className={getSubofSubStyle(301)}
-                          onClick={updateActiveMenu.bind(this, {
-                            id: 301,
-                            name: "PAGIBIG MONTHLY",
-                          })}
-                        >
-                          <TbReportAnalytics style={customStyles.icons} />
-                          PAGIBIG MONTHLY
-                        </button>
-                      </Link>
+                    {dispalyBIR && (
+                      <div>
+                        <Link href="/Reports/BIR/bir1601c">
+                          <button
+                            className={getSubofSubStyle(321)}
+                            onClick={updateActiveMenu.bind(this, {
+                              id: 321,
+                              name: "1601-C",
+                            })}
+                          >
+                            <TbReportAnalytics style={customStyles.icons} />
+                            1601-C
+                          </button>
+                        </Link>
 
-                      <Link href="/Reports/Pagibig/m1excel">
-                        <button
-                          className={getSubofSubStyle(302)}
-                          onClick={updateActiveMenu.bind(this, {
-                            id: 302,
-                            name: "M1-Excel",
-                          })}
-                        >
-                          <TbReportAnalytics style={customStyles.icons} />
-                          M1-EXCEL
-                        </button>
-                      </Link>
+                        <Link href="/Reports/BIR/bir1604c">
+                          <button
+                            className={getSubofSubStyle(322)}
+                            onClick={updateActiveMenu.bind(this, {
+                              id: 322,
+                              name: "1604-C",
+                            })}
+                          >
+                            <TbReportAnalytics style={customStyles.icons} />
+                            1604-C
+                          </button>
+                        </Link>
 
-                      <Link href="/Reports/Pagibig/m1mcrf">
-                        <button
-                          className={getSubofSubStyle(303)}
-                          onClick={updateActiveMenu.bind(this, {
-                            id: 303,
-                            name: "M1 MCRF",
-                          })}
-                        >
-                          <TbReportAnalytics style={customStyles.icons} />
-                          M1-MCRF
-                        </button>
-                      </Link>
+                        <Link href="/Reports/BIR/bir1604cf">
+                          <button
+                            className={getSubofSubStyle(323)}
+                            onClick={updateActiveMenu.bind(this, {
+                              id: 323,
+                              name: "1604-CF",
+                            })}
+                          >
+                            <TbReportAnalytics style={customStyles.icons} />
+                            1604-CF
+                          </button>
+                        </Link>
 
-                      <Link href="/Reports/Pagibig/pagibigml1report">
-                        <button
-                          className={getSubofSubStyle(304)}
-                          onClick={updateActiveMenu.bind(this, {
-                            id: 304,
-                            name: "ML1-REPORT",
-                          })}
-                        >
-                          <TbReportAnalytics style={customStyles.icons} />
-                          ML1-REPORT
-                        </button>
-                      </Link>
+                        <Link href="/Reports/BIR/bir2316">
+                          <button
+                            className={getSubofSubStyle(324)}
+                            onClick={updateActiveMenu.bind(this, {
+                              id: 324,
+                              name: "2316",
+                            })}
+                          >
+                            <TbReportAnalytics style={customStyles.icons} />
+                            2316
+                          </button>
+                        </Link>
 
-                      <Link href="/Reports/Pagibig/pagibigp2report">
-                        <button
-                          className={getSubofSubStyle(305)}
-                          onClick={updateActiveMenu.bind(this, {
-                            id: 305,
-                            name: "P2-4",
-                          })}
-                        >
-                          <TbReportAnalytics style={customStyles.icons} />
-                          P2-4
-                        </button>
-                      </Link>
+                        <Link href="/Reports/BIR/biralphalist7">
+                          <button
+                            className={getSubofSubStyle(325)}
+                            onClick={updateActiveMenu.bind(this, {
+                              id: 325,
+                              name: "Alpha List",
+                            })}
+                          >
+                            <TbReportAnalytics style={customStyles.icons} />
+                            Alpha List
+                          </button>
+                        </Link>
 
-                      <Link href="/Reports/Pagibig/stlrf">
-                        <button
-                          className={getSubofSubStyle(306)}
-                          onClick={updateActiveMenu.bind(this, {
-                            id: 306,
-                            name: "STLRF",
-                          })}
-                        >
-                          <TbReportAnalytics style={customStyles.icons} />
-                          STLRF
-                        </button>
-                      </Link>
+                        <Link href="/Reports/BIR/bir1604f">
+                          <button
+                            className={getSubofSubStyle(326)}
+                            onClick={updateActiveMenu.bind(this, {
+                              id: 326,
+                              name: "BIR 1604-F",
+                            })}
+                          >
+                            <TbReportAnalytics style={customStyles.icons} />
+                            BIR 1604-F
+                          </button>
+                        </Link>
 
-                      <Link href="/Reports/Pagibig/stlrfexcel">
-                        <button
-                          className={getSubofSubStyle(307)}
-                          onClick={updateActiveMenu.bind(this, {
-                            id: 307,
-                            name: "STLRF EXCEL",
-                          })}
-                        >
-                          <TbReportAnalytics style={customStyles.icons} />
-                          STLRF EXCEL
-                        </button>
-                      </Link>
-                    </div>
-                  )}
-
-                  <button
-                    className={styles.subsidemenu}
-                    onClick={toggleTaxReportsMenu}
-                  >
-                    <TbReportSearch style={customStyles.icons} />
-                    Tax Reports
-                  </button>
-                  {displayTaxReports && (
-                    <div>
-                      <Link href="/Reports/TaxReports/withholdingtaxreport">
-                        <button
-                          className={getSubofSubStyle(311)}
-                          onClick={updateActiveMenu.bind(this, {
-                            id: 311,
-                            name: "WITHHOLDING TAX",
-                          })}
-                        >
-                          <TbReportAnalytics style={customStyles.icons} />
-                          WithHolding Tax
-                        </button>
-                      </Link>
-                    </div>
-                  )}
-
-                  <button className={styles.subsidemenu} onClick={toggleBIRMenu}>
-                    <TbReportSearch style={customStyles.icons} />
-                    BIR
-                  </button>
-                  {dispalyBIR && (
-                    <div>
-                      <Link href="/Reports/BIR/bir1601c">
-                        <button
-                          className={getSubofSubStyle(321)}
-                          onClick={updateActiveMenu.bind(this, {
-                            id: 321,
-                            name: "1601-C",
-                          })}
-                        >
-                          <TbReportAnalytics style={customStyles.icons} />
-                          1601-C
-                        </button>
-                      </Link>
-
-                      <Link href="/Reports/BIR/bir1604c">
-                        <button
-                          className={getSubofSubStyle(322)}
-                          onClick={updateActiveMenu.bind(this, {
-                            id: 322,
-                            name: "1604-C",
-                          })}
-                        >
-                          <TbReportAnalytics style={customStyles.icons} />
-                          1604-C
-                        </button>
-                      </Link>
-
-                      <Link href="/Reports/BIR/bir1604cf">
-                        <button
-                          className={getSubofSubStyle(323)}
-                          onClick={updateActiveMenu.bind(this, {
-                            id: 323,
-                            name: "1604-CF",
-                          })}
-                        >
-                          <TbReportAnalytics style={customStyles.icons} />
-                          1604-CF
-                        </button>
-                      </Link>
-
-                      <Link href="/Reports/BIR/bir2316">
-                        <button
-                          className={getSubofSubStyle(324)}
-                          onClick={updateActiveMenu.bind(this, {
-                            id: 324,
-                            name: "2316",
-                          })}
-                        >
-                          <TbReportAnalytics style={customStyles.icons} />
-                          2316
-                        </button>
-                      </Link>
-
-                      <Link href="/Reports/BIR/biralphalist7">
-                        <button
-                          className={getSubofSubStyle(325)}
-                          onClick={updateActiveMenu.bind(this, {
-                            id: 325,
-                            name: "Alpha List",
-                          })}
-                        >
-                          <TbReportAnalytics style={customStyles.icons} />
-                          Alpha List
-                        </button>
-                      </Link>
-
-                      <Link href="/Reports/BIR/bir1604f">
-                        <button
-                          className={getSubofSubStyle(326)}
-                          onClick={updateActiveMenu.bind(this, {
-                            id: 326,
-                            name: "BIR 1604-F",
-                          })}
-                        >
-                          <TbReportAnalytics style={customStyles.icons} />
-                          BIR 1604-F
-                        </button>
-                      </Link>
-
-                      <Link href="/Reports/BIR/bir1700">
-                        <button
-                          className={getSubofSubStyle(327)}
-                          onClick={updateActiveMenu.bind(this, {
-                            id: 327,
-                            name: "BIR 1700",
-                          })}
-                        >
-                          <TbReportAnalytics style={customStyles.icons} />
-                          BIR 1700
-                        </button>
-                      </Link>
-                    </div>
-                  )}
-                  <button
-                    className={styles.subsidemenu}
-                    onClick={toggleBankReportsMenu}
-                  >
-                    <TbReportSearch style={customStyles.icons} />
-                    Bank reports
-                  </button>
-                  {displayBankReports && (
-                    <div>
-                      <Link href="/Reports/BankReports/bankmemo">
-                        <button
-                          className={getSubofSubStyle(331)}
-                          onClick={updateActiveMenu.bind(this, {
-                            id: 331,
-                            name: "1601-C",
-                          })}
-                        >
-                          <TbReportAnalytics style={customStyles.icons} />
-                          Bank Memo
-                        </button>
-                      </Link>
-                      <Link href="/Reports/BankReports/debitauthorization">
-                        <button
-                          className={getSubofSubStyle(332)}
-                          onClick={updateActiveMenu.bind(this, {
-                            id: 332,
-                            name: "Debit Authorization",
-                          })}
-                        >
-                          <TbReportAnalytics style={customStyles.icons} />
-                          Debit Authorization
-                        </button>
-                      </Link>
-                      <Link href="/Reports/BankReports/bankremittance">
-                        <button
-                          className={getSubofSubStyle(333)}
-                          onClick={updateActiveMenu.bind(this, {
-                            id: 333,
-                            name: "Bank Remittance",
-                          })}
-                        >
-                          <TbReportAnalytics style={customStyles.icons} />
-                          Bank Remittance
-                        </button>
-                      </Link>
-                    </div>
-                  )}
-
-                  <button className={styles.subsidemenu} onClick={toggleSSSMenu}>
-                    <TbReportSearch style={customStyles.icons} />
-                    SSS
-                  </button>
-                  {displaySSS && (
-                    <div>
-                      <Link href="/Reports/SSS/SSSMonthly">
-                        <button
-                          className={getSubofSubStyle(341)}
-                          onClick={updateActiveMenu.bind(this, {
-                            id: 341,
-                            name: "SSS MONTHLY",
-                          })}
-                        >
-                          <TbReportAnalytics style={customStyles.icons} />
-                          SSS MONTHLY
-                        </button>
-                      </Link>
-                      <Link href="/Reports/SSS/SSSSalaryLoan">
-                        <button
-                          className={getSubofSubStyle(342)}
-                          onClick={updateActiveMenu.bind(this, {
-                            id: 342,
-                            name: "SSS Salary Loan",
-                          })}
-                        >
-                          <TbReportAnalytics style={customStyles.icons} />
-                          SSS Salary Loan
-                        </button>
-                      </Link>
-                      <Link href="/Reports/SSS/R-5">
-                        <button
-                          className={getSubofSubStyle(343)}
-                          onClick={updateActiveMenu.bind(this, {
-                            id: 343,
-                            name: "R-5",
-                          })}
-                        >
-                          <TbReportAnalytics style={customStyles.icons} />
-                          R-5
-                        </button>
-                      </Link>
-                      <Link href="/Reports/SSS/ML-1">
-                        <button
-                          className={getSubofSubStyle(344)}
-                          onClick={updateActiveMenu.bind(this, {
-                            id: 344,
-                            name: " ML-1",
-                          })}
-                        >
-                          <TbReportAnalytics style={customStyles.icons} />
-                          ML-1
-                        </button>
-                      </Link>
-                      <Link href="/Reports/SSS/R1-A">
-                        <button
-                          className={getSubofSubStyle(345)}
-                          onClick={updateActiveMenu.bind(this, {
-                            id: 345,
-                            name: " R1-A",
-                          })}
-                        >
-                          <TbReportAnalytics style={customStyles.icons} />
-                          R1-A
-                        </button>
-                      </Link>
-                      {userRole == 3 && (
-                        <>
-                          <Link href="/Reports/LeaveReport">
-                            <button
-                              className={getSubofSubStyle(351)}
-                              onClick={updateActiveMenu.bind(this, {
-                                id: 351,
-                                name: "LeaveReport",
-                              })}
-                            >
-                              <TbReportAnalytics style={customStyles.icons} />
-                              Leave Report
-                            </button>
-                          </Link>
-                        </>
-                      )}
-                    </div>
-                  )}
-                  <button
-                    className={styles.subsidemenu}
-                    onClick={togglePhilhealthMenu}
-                  >
-                    <TbReportSearch style={customStyles.icons} />
-                    Philhealth
-                  </button>
-                  {displayPhilhealthMonthly && (
-                    <div>
-                      <Link href="/Reports/PhilHealth/PhilHealthMonthly">
-                        <button
-                          className={getSubofSubStyle(351)}
-                          onClick={updateActiveMenu.bind(this, {
-                            id: 351,
-                            name: "PHILHEALTH MONTHLY",
-                          })}
-                        >
-                          <TbReportAnalytics style={customStyles.icons} />
-                          PHILHEALTH MONTHLY
-                        </button>
-                      </Link>
-
-                      <Link href="/Reports/PhilHealth/ER-2">
-                        <button
-                          className={getSubofSubStyle(352)}
-                          onClick={updateActiveMenu.bind(this, {
-                            id: 352,
-                            name: " ER-2",
-                          })}
-                        >
-                          <TbReportAnalytics style={customStyles.icons} />
-                          ER-2
-                        </button>
-                      </Link>
-                      <Link href="/Reports/PhilHealth/RF-1PDF">
-                        <button
-                          className={getSubofSubStyle(353)}
-                          onClick={updateActiveMenu.bind(this, {
-                            id: 353,
-                            name: " RF-1PDF",
-                          })}
-                        >
-                          <TbReportAnalytics style={customStyles.icons} />
-                          RF-1PDF
-                        </button>
-                      </Link>
-                    </div>
-                  )}
-
-                  <Link href="/Reports/PayrollSummary/payrollsummary">
+                        <Link href="/Reports/BIR/bir1700">
+                          <button
+                            className={getSubofSubStyle(327)}
+                            onClick={updateActiveMenu.bind(this, {
+                              id: 327,
+                              name: "BIR 1700",
+                            })}
+                          >
+                            <TbReportAnalytics style={customStyles.icons} />
+                            BIR 1700
+                          </button>
+                        </Link>
+                      </div>
+                    )}
                     <button
-                      className={getSubStyle(502)}
-                      onClick={updateActiveMenu.bind(this, {
-                        id: 502,
-                        name: "Payroll Summary",
-                      })}
+                      className={styles.subsidemenu}
+                      onClick={toggleBankReportsMenu}
                     >
-                      <TbReport style={customStyles.icons} />
-                      Payroll Summary
+                      <TbReportSearch style={customStyles.icons} />
+                      Bank reports
                     </button>
-                  </Link>
-                  <Link href="/Reports/ytdreport">
+                    {displayBankReports && (
+                      <div>
+                        <Link href="/Reports/BankReports/bankmemo">
+                          <button
+                            className={getSubofSubStyle(331)}
+                            onClick={updateActiveMenu.bind(this, {
+                              id: 331,
+                              name: "1601-C",
+                            })}
+                          >
+                            <TbReportAnalytics style={customStyles.icons} />
+                            Bank Memo
+                          </button>
+                        </Link>
+                        <Link href="/Reports/BankReports/debitauthorization">
+                          <button
+                            className={getSubofSubStyle(332)}
+                            onClick={updateActiveMenu.bind(this, {
+                              id: 332,
+                              name: "Debit Authorization",
+                            })}
+                          >
+                            <TbReportAnalytics style={customStyles.icons} />
+                            Debit Authorization
+                          </button>
+                        </Link>
+                        <Link href="/Reports/BankReports/bankremittance">
+                          <button
+                            className={getSubofSubStyle(333)}
+                            onClick={updateActiveMenu.bind(this, {
+                              id: 333,
+                              name: "Bank Remittance",
+                            })}
+                          >
+                            <TbReportAnalytics style={customStyles.icons} />
+                            Bank Remittance
+                          </button>
+                        </Link>
+                      </div>
+                    )}
+
                     <button
-                      className={getSubStyle(503)}
-                      onClick={updateActiveMenu.bind(this, {
-                        id: 503,
-                        name: " YTD Reports",
-                      })}
+                      className={styles.subsidemenu}
+                      onClick={toggleSSSMenu}
                     >
-                      <TbReportAnalytics style={customStyles.icons} />
-                      YTD Reports
+                      <TbReportSearch style={customStyles.icons} />
+                      SSS
                     </button>
-                  </Link>
-                  <Link href="/Reports/Payslip">
+                    {displaySSS && (
+                      <div>
+                        <Link href="/Reports/SSS/SSSMonthly">
+                          <button
+                            className={getSubofSubStyle(341)}
+                            onClick={updateActiveMenu.bind(this, {
+                              id: 341,
+                              name: "SSS MONTHLY",
+                            })}
+                          >
+                            <TbReportAnalytics style={customStyles.icons} />
+                            SSS MONTHLY
+                          </button>
+                        </Link>
+                        <Link href="/Reports/SSS/SSSSalaryLoan">
+                          <button
+                            className={getSubofSubStyle(342)}
+                            onClick={updateActiveMenu.bind(this, {
+                              id: 342,
+                              name: "SSS Salary Loan",
+                            })}
+                          >
+                            <TbReportAnalytics style={customStyles.icons} />
+                            SSS Salary Loan
+                          </button>
+                        </Link>
+                        <Link href="/Reports/SSS/R-5">
+                          <button
+                            className={getSubofSubStyle(343)}
+                            onClick={updateActiveMenu.bind(this, {
+                              id: 343,
+                              name: "R-5",
+                            })}
+                          >
+                            <TbReportAnalytics style={customStyles.icons} />
+                            R-5
+                          </button>
+                        </Link>
+                        <Link href="/Reports/SSS/ML-1">
+                          <button
+                            className={getSubofSubStyle(344)}
+                            onClick={updateActiveMenu.bind(this, {
+                              id: 344,
+                              name: " ML-1",
+                            })}
+                          >
+                            <TbReportAnalytics style={customStyles.icons} />
+                            ML-1
+                          </button>
+                        </Link>
+                        <Link href="/Reports/SSS/R1-A">
+                          <button
+                            className={getSubofSubStyle(345)}
+                            onClick={updateActiveMenu.bind(this, {
+                              id: 345,
+                              name: " R1-A",
+                            })}
+                          >
+                            <TbReportAnalytics style={customStyles.icons} />
+                            R1-A
+                          </button>
+                        </Link>
+                        {userRole == 3 && (
+                          <>
+                            <Link href="/Reports/LeaveReport">
+                              <button
+                                className={getSubofSubStyle(351)}
+                                onClick={updateActiveMenu.bind(this, {
+                                  id: 351,
+                                  name: "LeaveReport",
+                                })}
+                              >
+                                <TbReportAnalytics style={customStyles.icons} />
+                                Leave Report
+                              </button>
+                            </Link>
+                          </>
+                        )}
+                      </div>
+                    )}
                     <button
-                      className={getSubStyle(504)}
-                      onClick={updateActiveMenu.bind(this, {
-                        id: 504,
-                        name: "Payslip",
-                      })}
+                      className={styles.subsidemenu}
+                      onClick={togglePhilhealthMenu}
                     >
-                      <TbReport style={customStyles.icons} />
-                      Payslip
+                      <TbReportSearch style={customStyles.icons} />
+                      Philhealth
                     </button>
-                  </Link>
-                </div>
-              )}
-            </div>
-          )}
+                    {displayPhilhealthMonthly && (
+                      <div>
+                        <Link href="/Reports/PhilHealth/PhilHealthMonthly">
+                          <button
+                            className={getSubofSubStyle(351)}
+                            onClick={updateActiveMenu.bind(this, {
+                              id: 351,
+                              name: "PHILHEALTH MONTHLY",
+                            })}
+                          >
+                            <TbReportAnalytics style={customStyles.icons} />
+                            PHILHEALTH MONTHLY
+                          </button>
+                        </Link>
+
+                        <Link href="/Reports/PhilHealth/ER-2">
+                          <button
+                            className={getSubofSubStyle(352)}
+                            onClick={updateActiveMenu.bind(this, {
+                              id: 352,
+                              name: " ER-2",
+                            })}
+                          >
+                            <TbReportAnalytics style={customStyles.icons} />
+                            ER-2
+                          </button>
+                        </Link>
+                        <Link href="/Reports/PhilHealth/RF-1PDF">
+                          <button
+                            className={getSubofSubStyle(353)}
+                            onClick={updateActiveMenu.bind(this, {
+                              id: 353,
+                              name: " RF-1PDF",
+                            })}
+                          >
+                            <TbReportAnalytics style={customStyles.icons} />
+                            RF-1PDF
+                          </button>
+                        </Link>
+                      </div>
+                    )}
+
+                    <Link href="/Reports/PayrollSummary/payrollsummary">
+                      <button
+                        className={getSubStyle(502)}
+                        onClick={updateActiveMenu.bind(this, {
+                          id: 502,
+                          name: "Payroll Summary",
+                        })}
+                      >
+                        <TbReport style={customStyles.icons} />
+                        Payroll Summary
+                      </button>
+                    </Link>
+                    <Link href="/Reports/ytdreport">
+                      <button
+                        className={getSubStyle(503)}
+                        onClick={updateActiveMenu.bind(this, {
+                          id: 503,
+                          name: " YTD Reports",
+                        })}
+                      >
+                        <TbReportAnalytics style={customStyles.icons} />
+                        YTD Reports
+                      </button>
+                    </Link>
+                    <Link href="/Reports/Payslip">
+                      <button
+                        className={getSubStyle(504)}
+                        onClick={updateActiveMenu.bind(this, {
+                          id: 504,
+                          name: "Payslip",
+                        })}
+                      >
+                        <TbReport style={customStyles.icons} />
+                        Payslip
+                      </button>
+                    </Link>
+                  </div>
+                )}
+              </div>
+            ))}
 
           <hr></hr>
           <Link href="" className={styles.sidemenulink}>
