@@ -1,0 +1,21 @@
+.filter{
+    margin-right: 10px;
+}
+
+.mainheader {
+    color: #3247d5;
+    font-size: 19px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.filterdate {
+    font-weight: 600;
+    font-size: 14px;
+}
+.mainheader{
+    margin-top: 30px;
+}
+.adddetail{
+    padding-top: 20px;
+}
