@@ -54,7 +54,7 @@ function WorkLocationMasterDash() {
                     <div className="col-lg-1">
                         <p> <BiFilterAlt /> Filter By</p>
                     </div>
-                    <div className="col-lg-5">
+                    <div className="col-lg-3">
                         <input
                             type="text"
                             placeholder="Search"

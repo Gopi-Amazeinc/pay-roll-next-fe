@@ -1,4 +1,4 @@
-import React,{useState,useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form';
 import subsidaryform from '../../../styles/SubsidaryMasterForm.module.css'
 import Link from 'next/link';
@@ -55,62 +55,57 @@ export default function SubsidaryMasterForm({ editData }) {
 
     return (
         <Layout>
-            <div className="container">
-                <div className="row">
-                    <div className="col-lg-4">
-                        <h3 className="Heading">Subsidiary Master Details</h3>
-                    </div>
-                    <div className="col-lg-6">
-                    </div>
-                    <div className="col-lg-2">
-                    </div>
-                </div>
-                <br />
-                <div className="card border-0 mx-0">
-                    <form onSubmit={handleSubmit(onSubmit)}>
-                        <div className="row">
-                            <div className="col-lg-4">
-                                <label>Subsidiary Description<span className={subsidaryform.span}>*</span></label> <br />
-                                <input type="text" className="form-control" {...register('Name', {
-                                    required: "Please add a Subsidiary Name", pattern: {
-                                        value: '^[A-Za-z0-9 ]+$',
-                                        message: "Please enter a valid Subsidiary Name"
-                                    }
-                                })} placeholder="Subsidiary Name" />
-                                {errors.Name && <p className="error-message" style={{ color: "red" }}>{errors.Name.message}</p>}
+            <div className="container-fluid">
+                <p className="Heading">Subsidiary Master Details</p>
+                <div className='row'>
+                    <div className='col-lg-12'>
+                        <div className="card border-0 rounded-3 p-3">
+                            <form onSubmit={handleSubmit(onSubmit)}>
+                                <div className='row'>
+                                    <div className="col-lg-2">
+                                        <label className='fw-bold'>Subsidiary Description<span className={subsidaryform.span}>*</span></label> <br />
+                                        <input type="text" className="form-control" {...register('Name', {
+                                            required: "Please add a Subsidiary Name", pattern: {
+                                                value: '^[A-Za-z0-9 ]+$',
+                                                message: "Please enter a valid Subsidiary Name"
+                                            }
+                                        })} placeholder="Subsidiary Name" />
+                                        {errors.Name && <p className="error-message" style={{ color: "red" }}>{errors.Name.message}</p>}
 
-                            </div>
-                            <div className="col-lg-4" style={{ marginBottom: "20px" }}>
-                                <label >Subsidiary Description<span className={subsidaryform.span}>*</span></label> <br />
-                                <textarea className="form-control"{...register('Description', {
-                                    required: "Please add a Description", pattern: {
-                                        value: '^[A-Za-z0-9 ]+$',
-                                        message: "Please enter a Description"
-                                    }
-                                })} placeholder='Description' />
-                                {errors.Description && <p className="error-message" style={{ color: "red" }}>{errors.Description.message}</p>}
-                            </div>
-                            <div className='row'>
-                                <div className='col-lg-8'></div>
-                                <div className="col-lg-2">
-                                    <Link href="/Masters/SubSidaryMaster"><button className='AddButton'>CANCEL</button></Link>
+                                    </div>
+                                    <div className="col-lg-5" style={{ marginBottom: "20px" }}>
+                                        <label className='fw-bold'>Subsidiary Description<span className={subsidaryform.span}>*</span></label> <br />
+                                        <textarea className="form-control"{...register('Description', {
+                                            required: "Please add a Description", pattern: {
+                                                value: '^[A-Za-z0-9 ]+$',
+                                                message: "Please enter a Description"
+                                            }
+                                        })} placeholder='Description' />
+                                        {errors.Description && <p className="error-message" style={{ color: "red" }}>{errors.Description.message}</p>}
+                                    </div>
                                 </div>
-                                <div className='col-lg-2'>
-                                    {actionType == "insert" && (
-                                        <button type="submit" className="AddButton">
-                                            Save
-                                        </button>
-                                    )}
-                                    {actionType == "update" && (
-                                        <button type="submit" className="AddButton">
-                                            Update
-                                        </button>
-                                    )}
+                                <br />
+                                <div className='row'>
+                                    <div className='col-lg-8'></div>
+                                    <div className="col-lg-2">
+                                        <Link href="/Masters/SubSidaryMaster"><button className='AddButton'>CANCEL</button></Link>
+                                    </div>
+                                    <div className='col-lg-2'>
+                                        {actionType == "insert" && (
+                                            <button type="submit" className="AddButton">
+                                                Save
+                                            </button>
+                                        )}
+                                        {actionType == "update" && (
+                                            <button type="submit" className="AddButton">
+                                                Update
+                                            </button>
+                                        )}
+                                    </div>
                                 </div>
-                            </div>
+                            </form>
                         </div>
-                    </form>
-
+                    </div>
                 </div>
             </div>
         </Layout >

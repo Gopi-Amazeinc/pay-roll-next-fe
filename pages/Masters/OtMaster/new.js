@@ -56,79 +56,76 @@ function Otmaster({ editData }) {
 
   return (
     <Layout>
-      <p className="Heading">OT Master</p>
-      <div className="container">
-        <div className={Styles.rowcss}>
-          <div className="col-md-12">
-            <div className="row">
+
+      <div className="container-fluid">
+        <p className="Heading">OT Master</p>
+        <div className="row">
+          <div className="col-lg-12">
+            <div className="card border-0 p-3 rounded-3">
               <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="card mx-0 border-0">
-                  <div className="row">
-                    <div className="col-md-4">
-                      <label > Day<span style={{ color: "red" }}>*</span></label>
-                      <input type="text" name="day" className='form-control' {...register("Day", {
-                        required: "This field is required", pattern: { value: '^[A-Za-z0-9 ]+$', message: "Please enter a valid Day" }
-                      })} />
-                      {errors.Day && <p className="error-message" style={{ color: "red" }}>{errors.Day.message}</p>}
-                    </div>
-                    <div className="col-md-4">
-                      <label > Normal<span style={{ color: "red" }}>*</span></label>
-                      <input type="text" name="normal" className='form-control' {...register("Normal", {
-                        required: "This field is required", pattern: { value: '^[A-Za-z0-9 ]+$', message: "Please enter valid Details" }
-                      })} />
-                      {errors.Normal && <p className="error-message" style={{ color: "red" }}>{errors.Normal.message}</p>}
-                    </div>
-                    <div className="col-md-4">
-                      <label > OT<span style={{ color: "red" }}>*</span></label>
-                      <input type="text" name="ot" className='form-control' onkeypress='return ((event.charCode >= 48 && event.charCode <= 57) || (event.charCode == 46))' {...register("OT", {
-                        required: "This field is required", pattern: {
-                          value: '^[0-9 .]+$', message: "Please enter valid Details"
-                        }
-                      })} />
-                      {errors.OT && <p className="error-message" style={{ color: "red" }}>{errors.OT.message}</p>}
-                    </div>
-                    <div className="col-md-4">
-                      <label > ND<span style={{ color: "red" }}>*</span></label>
-                      <input type="text" name="nd" className='form-control' {...register("ND", {
-                        required: "This field is required", pattern: { value: '^[A-Za-z0-9 ]+$', message: "Please enter valid Details" }
-                      })} />
-                      {errors.ND && <p className="error-message" style={{ color: "red" }}>{errors.ND.message}</p>}
-                    </div>
-                    <div className="col-md-4">
-                      <label > NDOT<span style={{ color: "red" }}>*</span></label>
-                      <input type="text" name="ndot" className='form-control' {...register("NDOT", {
-                        required: "This field is required", pattern: { value: '^[A-Za-z0-9 ]+$', message: "Please enter valid Details" }
-                      })} />
-                      {errors.NDOT && <p className="error-message" style={{ color: "red" }}>{errors.NDOT.message}</p>}
-                    </div>
+                <div className="row">
+                  <div className="col-lg-4">
+                    <label className="fw-bold"> Day<span style={{ color: "red" }}>*</span></label>
+                    <input type="text" name="day" className='form-control' {...register("Day", {
+                      required: "This field is required", pattern: { value: '^[A-Za-z0-9 ]+$', message: "Please enter a valid Day" }
+                    })} />
+                    {errors.Day && <p className="error-message" style={{ color: "red" }}>{errors.Day.message}</p>}
                   </div>
-                  <br />
-                  <div className="row">
-                    <div className="col-lg-8">
-                    </div>
-                    <div className="col-lg-2">
-                      <Link href="/Masters/OtMaster"><button className="AddButton" tabIndex="0">CANCEL</button></Link>
-                    </div>
-                    <div className="col-lg-2">
-                      {actionType == "insert" && (
-                        <button type="submit" className="AddButton">
-                          Save
-                        </button>
-                      )}
-                      {actionType == "update" && (
-                        <button type="submit" className="AddButton">
-                          Update
-                        </button>
-                      )}
-                    </div>
+                  <div className="col-lg-4">
+                    <label className="fw-bold"> Normal<span style={{ color: "red" }}>*</span></label>
+                    <input type="text" name="normal" className='form-control' {...register("Normal", {
+                      required: "This field is required", pattern: { value: '^[A-Za-z0-9 ]+$', message: "Please enter valid Details" }
+                    })} />
+                    {errors.Normal && <p className="error-message" style={{ color: "red" }}>{errors.Normal.message}</p>}
+                  </div>
+                  <div className="col-lg-4">
+                    <label className="fw-bold"> OT<span style={{ color: "red" }}>*</span></label>
+                    <input type="text" name="ot" className='form-control' onkeypress='return ((event.charCode >= 48 && event.charCode <= 57) || (event.charCode == 46))' {...register("OT", {
+                      required: "This field is required", pattern: {
+                        value: '^[0-9 .]+$', message: "Please enter valid Details"
+                      }
+                    })} />
+                    {errors.OT && <p className="error-message" style={{ color: "red" }}>{errors.OT.message}</p>}
+                  </div>
+                  <div className="col-lg-4">
+                    <label className="fw-bold"> ND<span style={{ color: "red" }}>*</span></label>
+                    <input type="text" name="nd" className='form-control' {...register("ND", {
+                      required: "This field is required", pattern: { value: '^[A-Za-z0-9 ]+$', message: "Please enter valid Details" }
+                    })} />
+                    {errors.ND && <p className="error-message" style={{ color: "red" }}>{errors.ND.message}</p>}
+                  </div>
+                  <div className="col-lg-4">
+                    <label className="fw-bold"> NDOT<span style={{ color: "red" }}>*</span></label>
+                    <input type="text" name="ndot" className='form-control' {...register("NDOT", {
+                      required: "This field is required", pattern: { value: '^[A-Za-z0-9 ]+$', message: "Please enter valid Details" }
+                    })} />
+                    {errors.NDOT && <p className="error-message" style={{ color: "red" }}>{errors.NDOT.message}</p>}
+                  </div>
+                </div>
+                <br />
+                <div className="row">
+                  <div className="col-lg-8">
+                  </div>
+                  <div className="col-lg-2">
+                    <Link href="/Masters/OtMaster"><button className="AddButton" tabIndex="0">CANCEL</button></Link>
+                  </div>
+                  <div className="col-lg-2">
+                    {actionType == "insert" && (
+                      <button type="submit" className="AddButton">
+                        Save
+                      </button>
+                    )}
+                    {actionType == "update" && (
+                      <button type="submit" className="AddButton">
+                        Update
+                      </button>
+                    )}
                   </div>
                 </div>
               </form>
             </div>
-
           </div>
         </div>
-        {/* </div> */}
       </div>
     </Layout>
   );
