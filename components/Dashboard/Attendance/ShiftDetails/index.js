@@ -3,7 +3,7 @@ import React, { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import axios from "axios";
 import { apiService } from "@/services/api.service";
-import Styles from "@/styles/shiftDetails.module.css";
+import Styles from "@/styles/shiftdetails.module.css";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { DownloadTableExcel } from "react-export-table-to-excel";
 
