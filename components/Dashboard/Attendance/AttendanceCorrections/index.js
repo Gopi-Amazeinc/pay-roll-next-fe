@@ -264,9 +264,9 @@ const Attendancecorrectiondashboard = () => {
         )}
       </div>
 
-
+      <br />
       <div
-        className="card p-3 border-0 shadow-lg rounded-3 mt-4"
+        className="card p-3 border-0 rounded-3 "
         style={{ marginLeft: "-8px" }}
       >
         <div className="row p-3">
@@ -317,8 +317,8 @@ const Attendancecorrectiondashboard = () => {
           </div>
         </div>
       </div>
-
-      <div className="row mt-3">
+      <br />
+      <div className="row ">
         <div className="col-lg-4">
           <div className="btn-group">
             <button

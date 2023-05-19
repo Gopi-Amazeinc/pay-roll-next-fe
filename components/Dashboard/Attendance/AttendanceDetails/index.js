@@ -110,7 +110,7 @@ const AttendenceDetails = () => {
   };
   return (
     <div>
-      <div className="container">
+      <div className="container-fluid">
         <div className="row mt-3">
           <div className="col-lg-3" style={{ float: "left", marginLeft: "10px" }}>
             <Link
@@ -147,7 +147,8 @@ const AttendenceDetails = () => {
         </div>
         <div className={Styles.filter}>
           {/* <form onSubmit={handleSubmit}> */}
-          <div className="card p-3  border-0 shadow-lg rounded-3 mt-4">
+          <br/>
+          <div className="card p-3  border-0  rounded-3">
             <div className="row">
               <div className="col-lg-1">
                 <p className={Styles.filterdate} >Filter By</p>
