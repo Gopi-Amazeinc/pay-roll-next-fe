@@ -194,7 +194,7 @@ const AttendenceDetails = () => {
           <div className="col-lg-12">
             <div className="table-responsive">
               <table
-                className="table table-striped table-bordered "
+                className="table table-striped  "
                 style={{ marginLeft: "0px", width: "100%" }}
                 ref={tableRef}
               >
