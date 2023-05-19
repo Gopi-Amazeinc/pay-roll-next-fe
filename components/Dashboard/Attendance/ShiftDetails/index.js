@@ -191,7 +191,7 @@ const Shiftdetails = () => {
               <div className="col-lg-2">
                 <br />
                 <Link href="/Attendance/StaffShiftForm/new" className={Styles.adddetail}>
-                  <button className="button" style={{ fontSize: "15px" }}><IoIosAddCircleOutline size={18} color={"white"} />  ADD SHIFT DETAILS</button>
+                  <button className="button" style={{ fontSize: "15px",marginTop:"7px" }}><IoIosAddCircleOutline size={18} color={"white"} />  ADD SHIFT DETAILS</button>
                 </Link>
               </div>
               <div className="col-lg-2">
@@ -200,7 +200,7 @@ const Shiftdetails = () => {
                   filename="users table"
                   sheet="users"
                   currentTableRef={tableRef.current}
-                > <button className="button" > DOWNLOAD</button></DownloadTableExcel>
+                > <button className="button" style={{marginTop:"7px"}} > DOWNLOAD</button></DownloadTableExcel>
 
               </div>
             </div>
@@ -328,7 +328,7 @@ const Shiftdetails = () => {
       )} */}
 
         <div className="row mt-3">
-          <table className="table table-striped mt-3" style={{ marginLeft: "18px", width: "98%" }} ref={tableRef}>
+          <table className="table table-striped mt-3"     style={{ marginLeft: "10px", width: "97%" }} ref={tableRef}>
             <thead>
               <tr className="bg-info text-white">
                 <th>START DATE</th>
