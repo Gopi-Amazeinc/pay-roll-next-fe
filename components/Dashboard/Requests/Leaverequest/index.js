@@ -4,6 +4,7 @@ import axios from 'axios';
 import Link from 'next/link';
 import { apiService } from "@/services/api.service";
 import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
 
 import {
     Calendar as BigCalendar,
@@ -18,8 +19,7 @@ moment.locale("en-GB");
 const localizer = momentLocalizer(moment);
 
 function LeaveListDashboard() {
-
-    const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+    const { register, handleSubmit, reset, formState } = useForm();
     // var date = new Date();
     let Sdate = sessionStorage.getItem("Sdate")
     // var edate = new Date();
@@ -73,27 +73,35 @@ function LeaveListDashboard() {
     //     getRejectedData(Sdate, Edate);
     // }
 
+    function handleEndDate(){
+        var startDate = watch("StartDate");
+        var endDate = watch("EndDate");
+        getPendingData(startDate,endDate);
+        getApprovedData(startDate,endDate);
+        getRejectedData(startDate,endDate);
+    }
+
 
     const [pendingdata, setPendingData] = useState([])
     const [approveddata, setApprovedData] = useState([])
     const [rejecteddata, setRejectedData] = useState([])
 
-    const getPendingData = async () => {
+    const getPendingData = async (startDate,endDate) => {
         debugger
         const staffID = sessionStorage.getItem("userID")
-        const res = await apiService.commonGetCall("Employee/GetPendingStaffLeavesByStaffID?ID=" + staffID + "&TypeID=1&Sdate=" + Sdate + "&Edate=" + Edate)
+        const res = await apiService.commonGetCall("Employee/GetPendingStaffLeavesByStaffID?ID=" + staffID + "&TypeID=1&Sdate=" + startDate + "&Edate=" + endDate)
         setPendingData(res.data);
         console.log(res.data);
     }
-    const getApprovedData = async () => {
+    const getApprovedData = async (startDate,endDate) => {
         const staffID = sessionStorage.getItem("userID")
-        const res = await apiService.commonGetCall("Employee/GetApprovedStaffLeavesByStaffID?ID=" + staffID + "&TypeID=1&Sdate=" + Sdate + "&Edate=" + Edate)
+        const res = await apiService.commonGetCall("Employee/GetApprovedStaffLeavesByStaffID?ID=" + staffID + "&TypeID=1&Sdate=" + startDate + "&Edate=" + endDate)
         setApprovedData(res.data);
         console.log(res.data);
     }
-    const getRejectedData = async () => {
+    const getRejectedData = async (startDate,endDate) => {
         const staffID = sessionStorage.getItem("userID")
-        const res = await apiService.commonGetCall("Employee/GetRejectedStaffLeavesByStaffID?ID=" + staffID + "&TypeID=1&Sdate=" + Sdate + "&Edate=" + Edate)
+        const res = await apiService.commonGetCall("Employee/GetRejectedStaffLeavesByStaffID?ID=" + staffID + "&TypeID=1&Sdate=" + startDate + "&Edate=" + endDate)
         setRejectedData(res.data);
         console.log(res.data);
     }
@@ -180,11 +188,11 @@ function LeaveListDashboard() {
                             <div className="row">
                                 <div className="col-lg-6">
                                     <p>START DATE:</p>
-                                    <input id="date" name="date" type="date" placeholder="Duration" className="form-control " />
+                                    <input id="date" name="date" type="date" {...register("StartDate")} placeholder="Duration" className="form-control " onChange={() => handleStartDate()}/>
                                 </div>
                                 <div className="col-lg-6">
                                     <p>END DATE:</p>
-                                    <input id="date" name="date" type="date" placeholder="Duration" onKeyDown={() => handleEndDate()} className="form-control " />
+                                    <input id="date" name="date" type="date" placeholder="Duration" {...register("EndDate")} onChange={() => handleEndDate()} className="form-control " />
                                 </div>
 
                                 <div className="col-lg-12 searchtxt mt-4"><br /><input type="search" placeholder="Search for date , Leave Type or Status" className="form-control " /></div>

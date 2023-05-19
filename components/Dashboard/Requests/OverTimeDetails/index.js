@@ -90,7 +90,6 @@ const Index = () => {
         console.log("Rejected", res.data);
     }
     const getManagerPendingDetails = async () => {
-        // debugger;
         const res = await apiService.commonGetCall("Payroll/GetPendingOverTimeDetailsByManagerID?ManagerID=" + userID)
         setManagerPendingData(res.data)
         console.log("Manager Pending", res.data);

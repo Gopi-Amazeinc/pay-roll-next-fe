@@ -403,7 +403,7 @@ const MyTeamAttendancecorrectiondashboard = () => {
                                         return (
                                             <tr key={data.id}>
                                                 <td>{data.staffname}</td>
-                                                <td>{data.date}</td>
+                                                <td>{data.attendanceDate}</td>
                                                 <td>{data.startTime}</td>
                                                 <td>{data.endTime}</td>
                                                 <td>

@@ -112,7 +112,7 @@ const AttendenceDetails = () => {
     <div>
       <div className="container">
         <div className="row mt-3">
-          <div className="col-lg-3" style={{ float: "left" }}>
+          <div className="col-lg-3" style={{ float: "left", marginLeft: "10px" }}>
             <Link
               className={Styles.mainheader}
               href="/Attendance/AttendanceDetails"
@@ -122,7 +122,7 @@ const AttendenceDetails = () => {
           </div>
           {roleID == 3 && (
             <>
-              <div className="col-lg-3" style={{ marginLeft: "-60px" }}>
+              <div className="col-lg-3">
                 <Link
                   className={Styles.mainheader}
                   href="/Attendance/MyTeamAttendanceDetails"
@@ -150,10 +150,10 @@ const AttendenceDetails = () => {
           <div className="card p-3  border-0 shadow-lg rounded-3 mt-4">
             <div className="row">
               <div className="col-lg-1">
-                <p>Filter By</p>
+                <p className={Styles.filterdate} >Filter By</p>
               </div>
               <div className="col-lg-3">
-                <p>Start Date</p>
+                <p className={Styles.filterdate} >Start Date</p>
                 <input
                   type="date"
                   className="form-control"
@@ -163,7 +163,7 @@ const AttendenceDetails = () => {
               </div>
 
               <div className="col-lg-3">
-                <p>End Date</p>
+                <p className={Styles.filterdate} >End Date</p>
                 <input
                   type="date"
                   className="form-control"
@@ -180,7 +180,7 @@ const AttendenceDetails = () => {
                   sheet="users"
                   currentTableRef={tableRef.current}>
                   <button className="button" id="AddButton">
-                    Download
+                    DOWNLOAD
                   </button>
                 </DownloadTableExcel>
               </div>
@@ -228,9 +228,9 @@ const AttendenceDetails = () => {
                               <td>{data.signInWorkType}</td>
                               <td>{data.expectedIn}</td>
                               <td>{data.expectedOut}</td>
-                              <td>{data.punchinip}</td>
-                              <td>{data.expectedOutTime}</td>
-                              <td>{data.punchOutTime}</td>
+                              <td>{data.stime}</td>
+                              <td>{data.etime}</td>
+                              <td>{data.hr}</td>
                               <td>{data.ot}</td>
                               <td>{data.undertime}</td>
                               <td>{data.latepunchin}</td>
