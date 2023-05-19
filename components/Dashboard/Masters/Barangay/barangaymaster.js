@@ -42,14 +42,13 @@ export default function BarangayMasterDash() {
 
   return (
     <div className="container-fluid">
-      <label className="Heading">Barangay Master</label>
-      <br /><br />
+      <p className="Heading">Barangay Master</p>
       <div className="card p-3 rounded-3 border-0">
         <div className="row">
           <div className="col-lg-1">
             <p> <BiFilterAlt /> Filter By</p>
           </div>
-          <div className="col-lg-5">
+          <div className="col-lg-3">
             <input
               type="text"
               placeholder="Search"

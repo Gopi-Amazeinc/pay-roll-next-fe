@@ -52,54 +52,58 @@ function BrandMasterForm({ editData }) {
 
     return (
         <Layout>
-            <div>
-                <h3 className="Heading">Band Master</h3>
-                <div className="card p-3 border-0 shadow rounded-3 mt-4 mx-0">
-                    <form onSubmit={handleSubmit(onSubmit)}>
-                        <div className="row">
-                            <div className="col-lg-2">
-                                <p>
-                                    Short Name<i className="text-danger">*</i>
-                                </p>
-                                <input type="text" className="form-control" placeholder="Short Name"{...register('Short', { required: true })} />
-                                {errors.Short && <p className="error-message" style={{ color: "red" }}>Please enter a valid Short Name</p>}
-                            </div>
+            <div className="container-fluid">
+                <p className="Heading">Band Master</p>
+                <div className="row">
+                    <div className="col-lg-12">
+                        <div className="card p-3 border-0 rounded-3">
+                            <form onSubmit={handleSubmit(onSubmit)}>
+                                <div className="row">
+                                    <div className="col-lg-2">
+                                        <label className="fw-bold">
+                                            Short Name <i className="text-danger">*</i>
+                                        </label>
+                                        <input type="text" className="form-control" placeholder="Short Name"{...register('Short', { required: true })} />
+                                        {errors.Short && <p className="error-message" style={{ color: "red" }}>Please enter a valid Short Name</p>}
+                                    </div>
 
-                            <div className="col-lg-5">
-                                <p>
-                                    Description<i className="text-danger">*</i>
-                                </p>
-                                <textarea
-                                    className="form-control"
-                                    placeholder="Description"
-                                    {...register('Description', { required: true, })}
-                                ></textarea>
-                                {errors.Description && <p className="text-danger" >Please enter a valid Descrption Name</p>}
+                                    <div className="col-lg-5">
+                                        <label className="fw-bold">
+                                            Description <i className="text-danger">*</i>
+                                        </label>
+                                        <textarea
+                                            className="form-control"
+                                            placeholder="Description"
+                                            {...register('Description', { required: true, })}
+                                        ></textarea>
+                                        {errors.Description && <p className="text-danger" >Please enter a valid Descrption Name</p>}
 
-                            </div>
+                                    </div>
+                                </div>
+                                <br />
+                                <div className="row">
+                                    <div className="col-lg-8"></div>
+                                    <div className="col-lg-2">
+                                        <Link href="/Masters/BrandMaster">
+                                            <button type="submit" className="AddButton">Cancel</button>
+                                        </Link>
+                                    </div>
+                                    <div className="col-lg-2 ">
+                                        {actionType == "insert" && (
+                                            <button type="submit" className="AddButton">
+                                                Save
+                                            </button>
+                                        )}
+                                        {actionType == "update" && (
+                                            <button type="submit" className="AddButton">
+                                                Update
+                                            </button>
+                                        )}
+                                    </div>
+                                </div>
+                            </form>
                         </div>
-
-                        <div className="row mt-4">
-                            <div className="col-lg-8"></div>
-                            <div className="col-lg-2">
-                                <Link href="/Masters/BrandMaster">
-                                    <button type="submit" className="AddButton">Cancel</button>
-                                </Link>
-                            </div>
-                            <div className="col-lg-2 ">
-                                {actionType == "insert" && (
-                                    <button type="submit" className="AddButton">
-                                        Save
-                                    </button>
-                                )}
-                                {actionType == "update" && (
-                                    <button type="submit" className="AddButton">
-                                        Update
-                                    </button>
-                                )}
-                            </div>
-                        </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </Layout>
