@@ -51,54 +51,67 @@ function Philhealth() {
 
     return (
         <div>
-            <div>
-                <br />
-                <p className={Styles.p}>Philhealth Configuration</p>
-                <div className={'card shadow-lg p-4 rounded-3 mt-4 ' + Styles.card}>
-                    <div className='row'>
-                        <div className='col-lg-4'>
-                            <input type="text" placeholder='Search..' className='form-control form-control-md' />
+            <div className='container-fluid'>
+
+                <label className="Heading">Philhealth Configuration</label>
+                <br /><br />
+                <div className='row'>
+                    <div className="col-lg-12">
+                        <div className='card p-3 border-0 rounded-3 '>
+                            <div className='row'>
+                                <div className='col-lg-1'>
+                                    <p>Filter By :</p>
+                                </div>
+
+                                <div className='col-lg-3'>
+                                    <input type="text" className='form-control' placeholder='Search...' />
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-
-                <div className='row mt-3'>
-                    <div className='col-lg-11'></div>
-                    <div className='col-lg-1'>
-                        <Link href="/Settings/Philhealth/new" >  <button className={Styles.addButton} onClick={clearFormData.bind(this)}>  ADD </button></Link>
+                <div className='row'>
+                    <div className='col-lg-10'></div>
+                    <div className='col-lg-2'>
+                        <br />
+                        <Link href="/Settings/Philhealth/new" >  <button className='AddButton' onClick={clearFormData.bind(this)}>  ADD </button></Link>
                     </div>
 
                 </div>
-
-                <table className='table  table-striped mt-3 text-center'>
-                    <thead>
-                        <tr className='bg-info text-white '>
-                            <th>Taxable income low limit</th>
-                            <th>Taxable income high limit</th>
-                            <th>Phihealth value</th>
-                            <th>Year</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            PhilhealthDash.map((data) => {
-                                return (
-                                    <tr key={data.id}>
-                                        <td>{data.taxiableincomelowlimit}</td>
-                                        <td>{data.taxiableincomehighlimit}</td>
-                                        <td>{data.phihealthvalue}</td>
-                                        <td>{data.year}</td>
-                                        <td>
-                                            <Link href={`/Settings/Philhealth/Edit/${data.id}`}><button className={Styles.actionButton}> Edit</button></Link>
-                                            &nbsp;
-                                            <button className={Styles.actionButton} onClick={() => DeletePhillhealth(data.id)} > Delete</button>
-                                        </td>
-                                    </tr>
-                                );
-                            })}
-                    </tbody>
-                </table>
+                <br />
+                <div className='row'>
+                    <div className='col-lg-12'>
+                        <table className='table table-hover'>
+                            <thead className='bg-info text-white '>
+                                <tr >
+                                    <th>Taxable income low limit</th>
+                                    <th>Taxable income high limit</th>
+                                    <th>Phihealth value</th>
+                                    <th>Year</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {
+                                    PhilhealthDash.map((data) => {
+                                        return (
+                                            <tr key={data.id}>
+                                                <td>{data.taxiableincomelowlimit}</td>
+                                                <td>{data.taxiableincomehighlimit}</td>
+                                                <td>{data.phihealthvalue}</td>
+                                                <td>{data.year}</td>
+                                                <td>
+                                                    <Link href={`/Settings/Philhealth/Edit/${data.id}`}><button className='edit-btn'> Edit</button></Link>
+                                                    &nbsp;
+                                                    <button className='edit-btn' onClick={() => DeletePhillhealth(data.id)} > Delete</button>
+                                                </td>
+                                            </tr>
+                                        );
+                                    })}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
     )
