@@ -40,12 +40,12 @@ export default function PayperiodSettingsDash() {
 
     return (
 
-        <div className='container'>
-            <h3 className='Heading'>Pay Period Settings</h3>
-            <br />
+        <div className='container-fluid'>
+            <label className='Heading'>Pay Period Settings</label>
+            <br /><br />
             <div className='row'>
                 <div className='col-lg-12'>
-                    <div className='card p-3 rounded-3'>
+                    <div className='card p-3 border-0  rounded-3'>
                         <div className='row'>
                             <div className='col-lg-1'>
                                 <p>Filter By</p>
@@ -59,10 +59,14 @@ export default function PayperiodSettingsDash() {
                 </div>
             </div>
             <div className='row '>
-                <div className='col-lg-10'></div>
-                <div className='col-lg-2 mt-4 text-end'>
-                    <Link href="/Settings/payperiodsetting/new" > <button className={Styles.addButton} onClick={clearData.bind(this)}>Add New</button> </Link>
+                <div className='col-lg-10'>
+
                 </div>
+                
+                <div className='col-lg-1  text-end'>
+                    <br />
+                    <Link href="/Settings/payperiodsetting/new" > <button className='AddButton' onClick={clearData.bind(this)}>Add New</button> </Link>
+                </div><div className='col-lg-1'></div>
             </div>
             < div className='table-responsive'>
                 <table className='table mt-4 table-striped text-center ' >
