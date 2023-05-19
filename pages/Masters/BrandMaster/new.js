@@ -1,26 +1,16 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Layout from "../../../components/layout/layout";
 import { useForm } from "react-hook-form";
-import { useEffect, useState } from "react";
-import axios from 'axios'
-
-
+import Swal from "sweetalert2";
+import { apiService } from "@/services/api.service";
+import { useRouter } from "next/router";
 
 function BrandMasterForm({ editData }) {
 
     const { register, handleSubmit, watch, reset, formState: { errors }, } = useForm();
-
     const [actionType, setActionType] = useState("insert");
-    console.log(editData)
-
-    useEffect(() => {
-        if (editData == "") {
-            clearForm();
-        } else {
-            clearForm(editData);
-        }
-    }, [1]);
+    const router = useRouter();
 
     function clearForm(BandMasterData = null) {
         let details = {
@@ -32,23 +22,33 @@ function BrandMasterForm({ editData }) {
         setActionType(BandMasterData ? "update" : "insert");
     }
 
-    async function onSubmit(data) {
-        console.log(data);
-        let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+    const onSubmit = async (data) => {
         if (actionType == "insert") {
-            try {
-
-                await axios.post(hostURL + "Master/InsertBrandMaster", data); // this for insrting the data using inserting Api call 
-            } catch (error) {
-
-            }
-
-
+            await apiService.commonPostCall("Master/InsertBrandMaster", data);
+            Swal.fire("Data Inserted successfully");
+            router.push("/Masters/BrandMaster");
         } else {
-            await axios.post(hostURL + "Master/UpdateBrandMaster", data); // this is for updating or Modifiying the data using  Update Api call
-            alert("updated");
+            await apiService.commonPostCall("Master/UpdateBrandMaster", data);
+            Swal.fire("Data Updated successfully");
+            router.push("/Masters/BrandMaster");
         }
-    }
+    };
+
+    useEffect(() => {
+        const { id } = editData || {};
+        if (id) {
+            // This API is used to fetch the data from BarangayMaster ByID table
+            getBrandMasterByID(id);
+        } else {
+            clearForm();
+        }
+    }, []);
+    const getBrandMasterByID = async (id) => {
+        const res = await apiService.commonGetCall(
+            "Master/GetBrandMasterByID?ID=" + id
+        );
+        clearForm(res.data[0]);
+    };
 
     return (
         <Layout>
@@ -61,8 +61,8 @@ function BrandMasterForm({ editData }) {
                                 <p>
                                     Short Name<i className="text-danger">*</i>
                                 </p>
-                                <input type="text" className="form-control" placeholder="Short Name"{...register('Short', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
-                                {errors.Short && <p className="error-message" style={{ color: "red" }}>{errors.Name.message}</p>}
+                                <input type="text" className="form-control" placeholder="Short Name"{...register('Short', { required: true })} />
+                                {errors.Short && <p className="error-message" style={{ color: "red" }}>Please enter a valid Short Name</p>}
                             </div>
 
                             <div className="col-lg-5">
@@ -72,9 +72,9 @@ function BrandMasterForm({ editData }) {
                                 <textarea
                                     className="form-control"
                                     placeholder="Description"
-                                    {...register('Description', { required: "Please add a Descrption Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Descrption Name" } })}
+                                    {...register('Description', { required: true, })}
                                 ></textarea>
-                                {errors.Description && <p className="error-message" style={{ color: "red" }}>{errors.Name.message}</p>}
+                                {errors.Description && <p className="text-danger" >Please enter a valid Descrption Name</p>}
 
                             </div>
                         </div>
@@ -83,7 +83,7 @@ function BrandMasterForm({ editData }) {
                             <div className="col-lg-8"></div>
                             <div className="col-lg-2">
                                 <Link href="/Masters/BrandMaster">
-                                    <button type="submit"className="AddButton">Cancel</button>
+                                    <button type="submit" className="AddButton">Cancel</button>
                                 </Link>
                             </div>
                             <div className="col-lg-2 ">

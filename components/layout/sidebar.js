@@ -44,32 +44,25 @@ const Sidebar = ({ children, applyPageName }) => {
   let [displayAttendence, toggleAttendence] = useState(false);
   let [displayLoans, toggleLoans] = useState(false);
   let [displayPayroll, togglePayRoll] = useState(false);
-  let [displayIntialRun, toggleIntialRun] = useState(false);
+  let [displayInitialRun, toggleInitialRun] = useState(false);
   let [displayFinalRun, toggleFinalRun] = useState(false);
   let [displaySettings, toggleSettings] = useState(false);
-  let [displayConfiguration, toggleConfiguration] = useState(false);
   let [displayMasters, toggleMasters] = useState(false);
   let [displayRequests, toggleRequests] = useState(false);
-  let [displayComapnay, togleCompany] = useState(false);
-  let [displayReports, togleReports] = useState(false);
+  let [displayComapnay, toggleCompany] = useState(false);
+  let [displayReports, toggleReports] = useState(false);
   let [dispalyPagibig, togglePagibig] = useState(false);
-  let [dispalyTaxReports, toggleTaxReports] = useState(false);
+  let [displayTaxReports, toggleTaxReports] = useState(false);
   let [dispalyBIR, toggleBIR] = useState(false);
-  let [displayBankReports, togleBankReports] = useState(false);
+  let [displayBankReports, toggleBankReports] = useState(false);
   let [displaySSS, toggleSSS] = useState(false);
   let [displayPhilhealthMonthly, togglePhilhealthMonthly] = useState(false);
-  // let [displayHolidays, toggleHolidays] = useState(false)
-  // sessionStorage.setItem("roleID", roleID);
 
   const [activeMenu, setActiveMenu] = useState(1);
   const updateActiveMenu = (data) => {
     setActiveMenu(data.id);
     console.log(activeMenu);
     sessionStorage.setItem("menuID", data.id);
-    sessionStorage.setItem("toggleAttendence", displayAttendence);
-    sessionStorage.setItem("toggleRequests", displayRequests);
-    sessionStorage.setItem("togglePayRoll", displayPayroll);
-    // applyPageName(data.name);
   };
 
   useEffect(() => {
@@ -83,19 +76,25 @@ const Sidebar = ({ children, applyPageName }) => {
 
     const menuID = sessionStorage.getItem("menuID");
 
-    if (menuID === "21") {
+    if (menuID > "20" && menuID < "25") {
       tooggleStaff(true);
     } else {
       tooggleStaff(false);
     }
 
-    if (menuID === "41") {
+    if (menuID === "31") {
+      toggleOt(true);
+    } else {
+      toggleOt(false);
+    }
+
+    if (menuID > "40" && menuID < "45") {
       toggleAttendence(true);
     } else {
       toggleAttendence(false);
     }
 
-    if (menuID === "51" || menuID === "52") {
+    if (menuID > "50" && menuID < "57") {
       toggleRequests(true);
     } else {
       toggleRequests(false);
@@ -107,10 +106,72 @@ const Sidebar = ({ children, applyPageName }) => {
       toggleLoans(false);
     }
 
-    if (menuID === "61" || menuID === "62" || menuID === "63") {
+    if (menuID > "700" && menuID < "740") {
       togglePayRoll(true);
     } else {
       togglePayRoll(false);
+    }
+    if (menuID > "709" && menuID < "720") {
+      toggleInitialRun(true);
+    } else {
+      toggleInitialRun(false);
+    }
+    if (menuID > "720" && menuID < "730") {
+      toggleFinalRun(true);
+    } else {
+      toggleFinalRun(false);
+    }
+
+    if (menuID === 81) {
+      toggleCompany(true);
+    } else {
+      toggleCompany(false);
+    }
+
+    if (menuID > "90" && menuID < "98") {
+      toggleSettings(true);
+    } else {
+      toggleSettings(false);
+    }
+    if (menuID > "100" && menuID < "120") {
+      toggleMasters(true);
+    } else {
+      toggleMasters(false);
+    }
+    if (menuID > "300" && menuID < "400") {
+      toggleReports(true);
+    } else {
+      toggleReports(false);
+    }
+    if (menuID > "300" && menuID < "310") {
+      togglePagibig(true);
+    } else {
+      togglePagibig(false);
+    }
+    if (menuID > "310" && menuID < "320") {
+      toggleTaxReports(true);
+    } else {
+      toggleTaxReports(false);
+    }
+    if (menuID > "320" && menuID < "330") {
+      toggleBIR(true);
+    } else {
+      toggleBIR(false);
+    }
+    if (menuID > "330" && menuID < "340") {
+      toggleBankReports(true);
+    } else {
+      toggleBankReports(false);
+    }
+    if (menuID > "340" && menuID < "350") {
+      toggleSSS(true);
+    } else {
+      toggleSSS(false);
+    }
+    if (menuID > "350" && menuID < "360") {
+      togglePhilhealthMonthly(true);
+    } else {
+      togglePhilhealthMonthly(false);
     }
   }, []);
 
@@ -143,8 +204,8 @@ const Sidebar = ({ children, applyPageName }) => {
     sessionStorage.setItem("toggleSSS", displaySSS);
   };
   const togleReportsMeanu = () => {
-    togleReports(!displayReports);
-    sessionStorage.setItem("togleReports", displayReports);
+    toggleReports(!displayReports);
+    sessionStorage.setItem("toggleReports", displayReports);
   };
 
   const togglePhilhealthMenu = () => {
@@ -152,10 +213,9 @@ const Sidebar = ({ children, applyPageName }) => {
     sessionStorage.setItem("togglePhilhealthMonthly", displayPhilhealthMonthly);
   };
 
-
   const toggleBankReportsMenu = () => {
-    togleBankReports(!displayBankReports);
-    sessionStorage.setItem("togleBankReports", displayBankReports);
+    toggleBankReports(!displayBankReports);
+    sessionStorage.setItem("toggleBankReports", displayBankReports);
   };
 
   const togglePagibigMenu = () => {
@@ -164,8 +224,8 @@ const Sidebar = ({ children, applyPageName }) => {
   };
 
   const toggleTaxReportsMenu = () => {
-    toggleTaxReports(!dispalyTaxReports);
-    sessionStorage.setItem("toggleTaxReports", dispalyTaxReports);
+    toggleTaxReports(!displayTaxReports);
+    sessionStorage.setItem("toggleTaxReports", displayTaxReports);
   };
 
   const toggleBIRMenu = () => {
@@ -189,17 +249,9 @@ const Sidebar = ({ children, applyPageName }) => {
     toggleRequests(!displayRequests);
     sessionStorage.setItem("toggleRequests", displayRequests);
   };
-
-  /* const toggleRequestsMenu = () => {
-    setDisplayRequests(!displayRequests);
-    UpdateActive({
-      id: 51,
-      name: "Leave Requests"
-    });
-  }; */
   const toggleLoansMenu = () => {
     toggleLoans(!displayLoans);
-    sessionStorage.setItem(" toggleLoans", toggleLoans);
+    sessionStorage.setItem("toggleLoans", displayLoans);
   };
 
   const togglePayRollMenu = () => {
@@ -207,38 +259,28 @@ const Sidebar = ({ children, applyPageName }) => {
     sessionStorage.setItem("togglePayroll", displayPayroll);
   };
   const toggleIntialRunMenu = () => {
-    toggleIntialRun(!displayIntialRun);
-    sessionStorage.setItem("toggleIntialRun", displayIntialRun);
+    toggleInitialRun(!displayInitialRun);
+    sessionStorage.setItem("toggleInitialRun", displayInitialRun);
   };
   const toggleFinalRunMenu = () => {
     toggleFinalRun(!displayFinalRun);
     sessionStorage.setItem("toggleFinalRun", displayFinalRun);
   };
   const toggleCompanyMenu = () => {
-    togleCompany(!displayComapnay);
-    sessionStorage.setItem("togleCompany", displayComapnay);
+    toggleCompany(!displayComapnay);
+    sessionStorage.setItem("toggleCompany", displayComapnay);
   };
-
   const toggleSettingsMenu = () => {
     toggleSettings(!displaySettings);
     sessionStorage.setItem("toggleSettings", displaySettings);
   };
-
-  const toggleConfigurationMenu = () => {
-    toggleConfiguration(!displayConfiguration);
-    sessionStorage.setItem("toggleConfiguration", displayRequests);
-  };
   const toggleMastersMenu = () => {
     toggleMasters(!displayMasters);
-    sessionStorage.setItem("toggleRequests", displayRequests);
+    sessionStorage.setItem("toggleMasters", displayMasters);
   };
-
-  // const toggleHolidaysMenu = () => {
-  //     toggleHolidays(!displayHolidays);
-  // };
   return (
     <div className="row" style={{ height: "90vh", overflowY: "auto" }}>
-      <div className="col-lg-12">
+      <div className="col-lg-12 mb-4">
         <Link href="/Home/dashboard" className={styles.sidemenulink}>
           <button
             className={getStyle(1)}
@@ -248,8 +290,8 @@ const Sidebar = ({ children, applyPageName }) => {
             Home
           </button>
         </Link>
-        {userRole == 9 ||
-          (userRole == 17 && (
+        {userRole == 2 ||
+          (userRole == 4 && (
             <div>
               <hr></hr>
               <button className={styles.sidemenu} onClick={tooggleStaffMenu}>
@@ -316,29 +358,31 @@ const Sidebar = ({ children, applyPageName }) => {
               )}
             </div>
           ))}
-
-        <hr></hr>
-        <button className={styles.sidemenu} onClick={toggleOtMenu}>
-          <BiCalendar style={customStyles.icons} />
-          OT
-        </button>
-        {displayOt && (
-          <div>
-            <Link href="/OT" className={styles.sidemenulink}>
-              <button
-                className={getSubStyle(31)}
-                onClick={updateActiveMenu.bind(this, {
-                  id: 31,
-                  name: "Over time details",
-                })}
-              >
-                <BiCalendarCheck style={customStyles.icons} />
-                Over Time Details
-              </button>
-            </Link>
-          </div>
+        {userRole == 4 && (
+          <>
+            <hr></hr>
+            <button className={styles.sidemenu} onClick={toggleOtMenu}>
+              <BiCalendar style={customStyles.icons} />
+              Over Time
+            </button>
+            {displayOt && (
+              <div>
+                <Link href="/OT" className={styles.sidemenulink}>
+                  <button
+                    className={getSubStyle(31)}
+                    onClick={updateActiveMenu.bind(this, {
+                      id: 31,
+                      name: "Over time details",
+                    })}
+                  >
+                    <BiCalendarCheck style={customStyles.icons} />
+                    Add Over Time 
+                  </button>
+                </Link>
+              </div>
+            )}
+          </>
         )}
-
         <hr></hr>
         <button className={styles.sidemenu} onClick={toggleAttendenceMenu}>
           <BiCalendar style={customStyles.icons} />
@@ -361,23 +405,23 @@ const Sidebar = ({ children, applyPageName }) => {
                 Attendance Details
               </button>
             </Link>
-
-            <Link
-              href="/Attendance/OverTimeUnitsUpload"
-              className={styles.sidemenulink}
-            >
-              <button
-                className={getSubStyle(42)}
-                onClick={updateActiveMenu.bind(this, {
-                  id: 42,
-                  name: "Overtime Units Upload",
-                })}
+            {userRole != 5 && userRole != 3  && (
+              <Link
+                href="/Attendance/OverTimeUnitsUpload"
+                className={styles.sidemenulink}
               >
-                <BiCalendarPlus style={customStyles.icons} />
-                Overtime Units Upload
-              </button>
-            </Link>
-
+                <button
+                  className={getSubStyle(42)}
+                  onClick={updateActiveMenu.bind(this, {
+                    id: 42,
+                    name: "Overtime Units Upload",
+                  })}
+                >
+                  <BiCalendarPlus style={customStyles.icons} />
+                  Overtime Units Upload
+                </button>
+              </Link>
+            )}
             <Link
               href="/Attendance/AttendanceCorrections"
               className={styles.sidemenulink}
@@ -410,7 +454,6 @@ const Sidebar = ({ children, applyPageName }) => {
             </Link>
           </div>
         )}
-
         <hr></hr>
         <button className={styles.sidemenu} onClick={togglerequestsMenu}>
           <HiOutlineUserGroup style={customStyles.icons} />
@@ -430,7 +473,7 @@ const Sidebar = ({ children, applyPageName }) => {
                 Leave Requests
               </button>
             </Link>
-            <Link href="/Requests/Overtimedetails">
+            <Link href="/Requests/OverTimeDetails">
               <button
                 className={getSubStyle(52)}
                 onClick={updateActiveMenu.bind(this, {
@@ -454,7 +497,7 @@ const Sidebar = ({ children, applyPageName }) => {
                 Loan Requests
               </button>
             </Link>
-            <Link href="/Requests/timesheet">
+            {/* <Link href="/Requests/Timesheet">
               <button
                 className={getSubStyle(54)}
                 onClick={updateActiveMenu.bind(this, {
@@ -463,9 +506,9 @@ const Sidebar = ({ children, applyPageName }) => {
                 })}
               >
                 <RiFileUserLine style={customStyles.icons} />
-                Timesheet Requests(doubt)
+                Timesheet Requests(clarify)
               </button>
-            </Link>
+            </Link> */}
             <Link href="/Requests/Locatorrequest">
               <button
                 className={getSubStyle(55)}
@@ -493,29 +536,32 @@ const Sidebar = ({ children, applyPageName }) => {
           </div>
         )}
 
-        <hr></hr>
-
-        <button className={styles.sidemenu} onClick={toggleLoansMenu}>
-          <BiSpreadsheet style={customStyles.icons} />
-          Loans
-        </button>
-        {displayLoans && (
-          <div>
-            <Link href="/Loans/teamloans">
-              <button
-                className={getSubStyle(61)}
-                onClick={updateActiveMenu.bind(this, {
-                  id: 61,
-                  name: "Loans Upload",
-                })}
-              >
-                <FiUpload style={customStyles.icons} />
-                Loans Upload
-              </button>
-            </Link>
-          </div>
+        {userRole == 4 && (
+          <>
+            <hr></hr>
+            <button className={styles.sidemenu} onClick={toggleLoansMenu}>
+              <BiSpreadsheet style={customStyles.icons} />
+              Loans
+            </button>
+            {displayLoans && (
+              <div>
+                <Link href="/Loans">
+                  <button
+                    className={getSubStyle(61)}
+                    onClick={updateActiveMenu.bind(this, {
+                      id: 61,
+                      name: "Loans Upload",
+                    })}
+                  >
+                    <FiUpload style={customStyles.icons} />
+                    Loans Upload
+                  </button>
+                </Link>
+              </div>
+            )}
+          </>
         )}
-        {userRole == 17 && (
+        {userRole == 4 && (
           <div>
             <hr></hr>
             <button className={styles.sidemenu} onClick={togglePayRollMenu}>
@@ -531,13 +577,13 @@ const Sidebar = ({ children, applyPageName }) => {
                   <GiMoneyStack style={customStyles.icons} />
                   Initial Run
                 </button>
-                {displayIntialRun && (
+                {displayInitialRun && (
                   <div>
                     <Link href="/Payroll/InitialPayroll">
                       <button
-                        className={getSubofSubStyle(710)}
+                        className={getSubofSubStyle(711)}
                         onClick={updateActiveMenu.bind(this, {
-                          id: 710,
+                          id: 711,
                           name: " payroll Summary",
                         })}
                       >
@@ -548,9 +594,9 @@ const Sidebar = ({ children, applyPageName }) => {
 
                     <Link href="/Payroll/InitialPayrollDetails">
                       <button
-                        className={getSubofSubStyle(711)}
+                        className={getSubofSubStyle(712)}
                         onClick={updateActiveMenu.bind(this, {
-                          id: 711,
+                          id: 712,
                           name: "payroll details",
                         })}
                       >
@@ -609,12 +655,11 @@ const Sidebar = ({ children, applyPageName }) => {
                     </Link>
                   </>
                 )}
-
                 <Link href="/Payroll/BankAdviceList">
                   <button
-                    className={getSubStyle(76)}
+                    className={getSubStyle(731)}
                     onClick={updateActiveMenu.bind(this, {
-                      id: 76,
+                      id: 731,
                       name: "Bank advice list",
                     })}
                   >
@@ -624,9 +669,9 @@ const Sidebar = ({ children, applyPageName }) => {
                 </Link>
                 <Link href="/Payroll/PayrollYTD">
                   <button
-                    className={getSubStyle(77)}
+                    className={getSubStyle(732)}
                     onClick={updateActiveMenu.bind(this, {
-                      id: 78,
+                      id: 732,
                       name: "Payroll YTD upload",
                     })}
                   >
@@ -638,8 +683,7 @@ const Sidebar = ({ children, applyPageName }) => {
             )}
           </div>
         )}
-
-        {userRole == 17 && (
+        {userRole == 4 && (
           <div>
             <hr></hr>
             <button className={styles.sidemenu} onClick={toggleCompanyMenu}>
@@ -664,8 +708,7 @@ const Sidebar = ({ children, applyPageName }) => {
             )}
           </div>
         )}
-
-        {userRole == 17 && (
+        {userRole == 4 && (
           <div>
             <hr></hr>
             <button className={styles.sidemenu} onClick={toggleSettingsMenu}>
@@ -674,7 +717,7 @@ const Sidebar = ({ children, applyPageName }) => {
             </button>
             {displaySettings && (
               <div>
-                <Link href="/Settings/PayperiodSetting">
+                <Link href="/Settings/payperiodsetting">
                   <button
                     className={getSubStyle(91)}
                     onClick={updateActiveMenu.bind(this, {
@@ -724,9 +767,9 @@ const Sidebar = ({ children, applyPageName }) => {
                 </Link>
                 <Link href="/Settings/Philhealth">
                   <button
-                    className={getSubStyle(121)}
+                    className={getSubStyle(95)}
                     onClick={updateActiveMenu.bind(this, {
-                      id: 121,
+                      id: 95,
                       name: "Philhealth",
                     })}
                   >
@@ -737,9 +780,9 @@ const Sidebar = ({ children, applyPageName }) => {
 
                 <Link href="/Settings/Mpf">
                   <button
-                    className={getSubStyle(122)}
+                    className={getSubStyle(96)}
                     onClick={updateActiveMenu.bind(this, {
-                      id: 122,
+                      id: 96,
                       name: "MPF",
                     })}
                   >
@@ -750,9 +793,9 @@ const Sidebar = ({ children, applyPageName }) => {
 
                 <Link href="/Settings/Pagibig">
                   <button
-                    className={getSubStyle(123)}
+                    className={getSubStyle(97)}
                     onClick={updateActiveMenu.bind(this, {
-                      id: 123,
+                      id: 97,
                       name: "Pagibig",
                     })}
                   >
@@ -765,7 +808,7 @@ const Sidebar = ({ children, applyPageName }) => {
           </div>
         )}
 
-        {/* {userRole == 17 && (
+        {/* {userRole == 4 && (
           <div>
             <hr></hr>
 
@@ -872,14 +915,14 @@ const Sidebar = ({ children, applyPageName }) => {
             )}
           </div>
         )} */}
-        {(userRole == 9 || userRole == 17) && (
+        {(userRole == 2 || userRole == 4) && (
           <div>
             <hr></hr>
             <button className={styles.sidemenu} onClick={toggleMastersMenu}>
               <RiUserStarLine style={customStyles.icons} />
               Masters
             </button>
-            {userRole == 9 && displayMasters && (
+            {userRole == 2 && displayMasters && (
               <div>
                 <Link href="/Masters/LeaveType">
                   <button
@@ -1103,7 +1146,7 @@ const Sidebar = ({ children, applyPageName }) => {
                 </Link>
                 {/* added code from configuartion here */}
 
-                <Link href="/Configuration/dailyrate">
+                {/* <Link href="/Configuration/dailyrate">
                   <button
                     className={getSubStyle(124)}
                     onClick={updateActiveMenu.bind(this, {
@@ -1114,12 +1157,12 @@ const Sidebar = ({ children, applyPageName }) => {
                     <MdOutlineAutoAwesomeMosaic style={customStyles.icons} />
                     Daily rate(D)
                   </button>
-                </Link>
+                </Link> */}
 
                 {/* code ends for data configuration here */}
               </div>
             )}
-            {userRole == 17 && displayMasters && (
+            {userRole == 4 && displayMasters && (
               <>
                 {/* <Link href="/Settings/componentmaster">
                   <button
@@ -1136,9 +1179,9 @@ const Sidebar = ({ children, applyPageName }) => {
 
                 <Link href="/Settings/componentmapping">
                   <button
-                    className={getSubStyle(92)}
+                    className={getSubStyle(118)}
                     onClick={updateActiveMenu.bind(this, {
-                      id: 92,
+                      id: 118,
                       name: "Component mapping",
                     })}
                   >
@@ -1149,9 +1192,9 @@ const Sidebar = ({ children, applyPageName }) => {
 
                 <Link href="/Settings/bir2316mapping">
                   <button
-                    className={getSubStyle(93)}
+                    className={getSubStyle(119)}
                     onClick={updateActiveMenu.bind(this, {
-                      id: 93,
+                      id: 119,
                       name: "BIR2316 Master",
                     })}
                   >
@@ -1163,8 +1206,7 @@ const Sidebar = ({ children, applyPageName }) => {
             )}
           </div>
         )}
-        {/* )} */}
-        {userRole == 6 && (
+        {userRole == 3 && (
           <div>
             <hr></hr>
             <Link href="/Holiday" className={styles.sidemenulink}>
@@ -1181,7 +1223,24 @@ const Sidebar = ({ children, applyPageName }) => {
             </Link>
           </div>
         )}
-        {userRole == 17 && (
+        {userRole == 3 && (
+          <>
+            <hr></hr>
+            <Link href="/Announcement" className={styles.sidemenulink}>
+              <button
+                className={getStyle(701)}
+                onClick={updateActiveMenu.bind(this, {
+                  id: 701,
+                  name: "Announcement",
+                })}
+              >
+                <HiOutlineTicket style={customStyles.icons} />
+                Announcement
+              </button>
+            </Link>
+          </>
+        )}
+        {userRole == 4 && (
           <div>
             <hr></hr>
             <button className={styles.sidemenu} onClick={togleReportsMeanu}>
@@ -1201,9 +1260,9 @@ const Sidebar = ({ children, applyPageName }) => {
                   <div>
                     <Link href="/Reports/Pagibig/pagibigmonthly">
                       <button
-                        className={getSubofSubStyle(1001)}
+                        className={getSubofSubStyle(301)}
                         onClick={updateActiveMenu.bind(this, {
-                          id: 1001,
+                          id: 301,
                           name: "PAGIBIG MONTHLY",
                         })}
                       >
@@ -1214,9 +1273,9 @@ const Sidebar = ({ children, applyPageName }) => {
 
                     <Link href="/Reports/Pagibig/m1excel">
                       <button
-                        className={getSubofSubStyle(1002)}
+                        className={getSubofSubStyle(302)}
                         onClick={updateActiveMenu.bind(this, {
-                          id: 1002,
+                          id: 302,
                           name: "M1-Excel",
                         })}
                       >
@@ -1227,9 +1286,9 @@ const Sidebar = ({ children, applyPageName }) => {
 
                     <Link href="/Reports/Pagibig/m1mcrf">
                       <button
-                        className={getSubofSubStyle(1003)}
+                        className={getSubofSubStyle(303)}
                         onClick={updateActiveMenu.bind(this, {
-                          id: 1003,
+                          id: 303,
                           name: "M1 MCRF",
                         })}
                       >
@@ -1240,9 +1299,9 @@ const Sidebar = ({ children, applyPageName }) => {
 
                     <Link href="/Reports/Pagibig/pagibigml1report">
                       <button
-                        className={getSubofSubStyle(1004)}
+                        className={getSubofSubStyle(304)}
                         onClick={updateActiveMenu.bind(this, {
-                          id: 1004,
+                          id: 304,
                           name: "ML1-REPORT",
                         })}
                       >
@@ -1253,9 +1312,9 @@ const Sidebar = ({ children, applyPageName }) => {
 
                     <Link href="/Reports/Pagibig/pagibigp2report">
                       <button
-                        className={getSubofSubStyle(1005)}
+                        className={getSubofSubStyle(305)}
                         onClick={updateActiveMenu.bind(this, {
-                          id: 1005,
+                          id: 305,
                           name: "P2-4",
                         })}
                       >
@@ -1266,9 +1325,9 @@ const Sidebar = ({ children, applyPageName }) => {
 
                     <Link href="/Reports/Pagibig/stlrf">
                       <button
-                        className={getSubofSubStyle(1006)}
+                        className={getSubofSubStyle(306)}
                         onClick={updateActiveMenu.bind(this, {
-                          id: 1006,
+                          id: 306,
                           name: "STLRF",
                         })}
                       >
@@ -1279,9 +1338,9 @@ const Sidebar = ({ children, applyPageName }) => {
 
                     <Link href="/Reports/Pagibig/stlrfexcel">
                       <button
-                        className={getSubofSubStyle(1007)}
+                        className={getSubofSubStyle(307)}
                         onClick={updateActiveMenu.bind(this, {
-                          id: 1007,
+                          id: 307,
                           name: "STLRF EXCEL",
                         })}
                       >
@@ -1299,13 +1358,13 @@ const Sidebar = ({ children, applyPageName }) => {
                   <TbReportSearch style={customStyles.icons} />
                   Tax Reports
                 </button>
-                {dispalyTaxReports && (
+                {displayTaxReports && (
                   <div>
                     <Link href="/Reports/TaxReports/withholdingtaxreport">
                       <button
-                        className={getSubofSubStyle(2001)}
+                        className={getSubofSubStyle(311)}
                         onClick={updateActiveMenu.bind(this, {
-                          id: 2001,
+                          id: 311,
                           name: "WITHHOLDING TAX",
                         })}
                       >
@@ -1324,9 +1383,9 @@ const Sidebar = ({ children, applyPageName }) => {
                   <div>
                     <Link href="/Reports/BIR/bir1601c">
                       <button
-                        className={getSubofSubStyle(3001)}
+                        className={getSubofSubStyle(321)}
                         onClick={updateActiveMenu.bind(this, {
-                          id: 3001,
+                          id: 321,
                           name: "1601-C",
                         })}
                       >
@@ -1337,9 +1396,9 @@ const Sidebar = ({ children, applyPageName }) => {
 
                     <Link href="/Reports/BIR/bir1604c">
                       <button
-                        className={getSubofSubStyle(3002)}
+                        className={getSubofSubStyle(322)}
                         onClick={updateActiveMenu.bind(this, {
-                          id: 3002,
+                          id: 322,
                           name: "1604-C",
                         })}
                       >
@@ -1350,9 +1409,9 @@ const Sidebar = ({ children, applyPageName }) => {
 
                     <Link href="/Reports/BIR/bir1604cf">
                       <button
-                        className={getSubofSubStyle(3003)}
+                        className={getSubofSubStyle(323)}
                         onClick={updateActiveMenu.bind(this, {
-                          id: 3003,
+                          id: 323,
                           name: "1604-CF",
                         })}
                       >
@@ -1363,9 +1422,9 @@ const Sidebar = ({ children, applyPageName }) => {
 
                     <Link href="/Reports/BIR/bir2316">
                       <button
-                        className={getSubofSubStyle(3004)}
+                        className={getSubofSubStyle(324)}
                         onClick={updateActiveMenu.bind(this, {
-                          id: 3004,
+                          id: 324,
                           name: "2316",
                         })}
                       >
@@ -1376,9 +1435,9 @@ const Sidebar = ({ children, applyPageName }) => {
 
                     <Link href="/Reports/BIR/biralphalist7">
                       <button
-                        className={getSubofSubStyle(3005)}
+                        className={getSubofSubStyle(325)}
                         onClick={updateActiveMenu.bind(this, {
-                          id: 3005,
+                          id: 325,
                           name: "Alpha List",
                         })}
                       >
@@ -1389,10 +1448,10 @@ const Sidebar = ({ children, applyPageName }) => {
 
                     <Link href="/Reports/BIR/bir1604f">
                       <button
-                        className={getSubofSubStyle(3006)}
+                        className={getSubofSubStyle(326)}
                         onClick={updateActiveMenu.bind(this, {
-                          id: 3006,
-                          name: " BIR 1604-F",
+                          id: 326,
+                          name: "BIR 1604-F",
                         })}
                       >
                         <TbReportAnalytics style={customStyles.icons} />
@@ -1402,10 +1461,10 @@ const Sidebar = ({ children, applyPageName }) => {
 
                     <Link href="/Reports/BIR/bir1700">
                       <button
-                        className={getSubofSubStyle(3007)}
+                        className={getSubofSubStyle(327)}
                         onClick={updateActiveMenu.bind(this, {
-                          id: 3007,
-                          name: " BIR 1700",
+                          id: 327,
+                          name: "BIR 1700",
                         })}
                       >
                         <TbReportAnalytics style={customStyles.icons} />
@@ -1425,9 +1484,9 @@ const Sidebar = ({ children, applyPageName }) => {
                   <div>
                     <Link href="/Reports/BankReports/bankmemo">
                       <button
-                        className={getSubofSubStyle(4010)}
+                        className={getSubofSubStyle(331)}
                         onClick={updateActiveMenu.bind(this, {
-                          id: 4010,
+                          id: 331,
                           name: "1601-C",
                         })}
                       >
@@ -1437,9 +1496,9 @@ const Sidebar = ({ children, applyPageName }) => {
                     </Link>
                     <Link href="/Reports/BankReports/debitauthorization">
                       <button
-                        className={getSubofSubStyle(4012)}
+                        className={getSubofSubStyle(332)}
                         onClick={updateActiveMenu.bind(this, {
-                          id: 4012,
+                          id: 332,
                           name: "Debit Authorization",
                         })}
                       >
@@ -1449,9 +1508,9 @@ const Sidebar = ({ children, applyPageName }) => {
                     </Link>
                     <Link href="/Reports/BankReports/bankremittance">
                       <button
-                        className={getSubofSubStyle(4011)}
+                        className={getSubofSubStyle(333)}
                         onClick={updateActiveMenu.bind(this, {
-                          id: 4011,
+                          id: 333,
                           name: "Bank Remittance",
                         })}
                       >
@@ -1470,9 +1529,9 @@ const Sidebar = ({ children, applyPageName }) => {
                   <div>
                     <Link href="/Reports/SSS/SSSMonthly">
                       <button
-                        className={getSubofSubStyle(4121)}
+                        className={getSubofSubStyle(341)}
                         onClick={updateActiveMenu.bind(this, {
-                          id: 4121,
+                          id: 341,
                           name: "SSS MONTHLY",
                         })}
                       >
@@ -1482,9 +1541,9 @@ const Sidebar = ({ children, applyPageName }) => {
                     </Link>
                     <Link href="/Reports/SSS/SSSSalaryLoan">
                       <button
-                        className={getSubofSubStyle(4122)}
+                        className={getSubofSubStyle(342)}
                         onClick={updateActiveMenu.bind(this, {
-                          id: 4122,
+                          id: 342,
                           name: "SSS Salary Loan",
                         })}
                       >
@@ -1494,9 +1553,9 @@ const Sidebar = ({ children, applyPageName }) => {
                     </Link>
                     <Link href="/Reports/SSS/R-5">
                       <button
-                        className={getSubofSubStyle(4123)}
+                        className={getSubofSubStyle(343)}
                         onClick={updateActiveMenu.bind(this, {
-                          id: 4123,
+                          id: 343,
                           name: "R-5",
                         })}
                       >
@@ -1506,9 +1565,9 @@ const Sidebar = ({ children, applyPageName }) => {
                     </Link>
                     <Link href="/Reports/SSS/ML-1">
                       <button
-                        className={getSubofSubStyle(4124)}
+                        className={getSubofSubStyle(344)}
                         onClick={updateActiveMenu.bind(this, {
-                          id: 4124,
+                          id: 344,
                           name: " ML-1",
                         })}
                       >
@@ -1518,9 +1577,9 @@ const Sidebar = ({ children, applyPageName }) => {
                     </Link>
                     <Link href="/Reports/SSS/R1-A">
                       <button
-                        className={getSubofSubStyle(4125)}
+                        className={getSubofSubStyle(345)}
                         onClick={updateActiveMenu.bind(this, {
-                          id: 4125,
+                          id: 345,
                           name: " R1-A",
                         })}
                       >
@@ -1528,19 +1587,38 @@ const Sidebar = ({ children, applyPageName }) => {
                         R1-A
                       </button>
                     </Link>
+                    {userRole == 3 && (
+                      <>
+                        <Link href="/Reports/LeaveReport">
+                          <button
+                            className={getSubofSubStyle(351)}
+                            onClick={updateActiveMenu.bind(this, {
+                              id: 351,
+                              name: "LeaveReport",
+                            })}
+                          >
+                            <TbReportAnalytics style={customStyles.icons} />
+                            Leave Report
+                          </button>
+                        </Link>
+                      </>
+                    )}
                   </div>
                 )}
-                 <button className={styles.subsidemenu} onClick={togglePhilhealthMenu}>
+                <button
+                  className={styles.subsidemenu}
+                  onClick={togglePhilhealthMenu}
+                >
                   <TbReportSearch style={customStyles.icons} />
                   Philhealth
                 </button>
-                { displayPhilhealthMonthly&& (
+                {displayPhilhealthMonthly && (
                   <div>
                     <Link href="/Reports/PhilHealth/PhilHealthMonthly">
                       <button
-                        className={getSubofSubStyle(4131)}
+                        className={getSubofSubStyle(351)}
                         onClick={updateActiveMenu.bind(this, {
-                          id: 4131,
+                          id: 351,
                           name: "PHILHEALTH MONTHLY",
                         })}
                       >
@@ -1551,21 +1629,21 @@ const Sidebar = ({ children, applyPageName }) => {
 
                     <Link href="/Reports/PhilHealth/ER-2">
                       <button
-                        className={getSubofSubStyle(4132)}
+                        className={getSubofSubStyle(352)}
                         onClick={updateActiveMenu.bind(this, {
-                          id: 4132,
+                          id: 352,
                           name: " ER-2",
                         })}
                       >
                         <TbReportAnalytics style={customStyles.icons} />
-                      ER-2
+                        ER-2
                       </button>
                     </Link>
                     <Link href="/Reports/PhilHealth/RF-1PDF">
                       <button
-                        className={getSubofSubStyle(4133)}
+                        className={getSubofSubStyle(353)}
                         onClick={updateActiveMenu.bind(this, {
-                          id: 4133,
+                          id: 353,
                           name: " RF-1PDF",
                         })}
                       >
@@ -1573,7 +1651,7 @@ const Sidebar = ({ children, applyPageName }) => {
                         RF-1PDF
                       </button>
                     </Link>
-                    </div>
+                  </div>
                 )}
 
                 <Link href="/Reports/PayrollSummary/payrollsummary">
@@ -1620,22 +1698,19 @@ const Sidebar = ({ children, applyPageName }) => {
         <hr></hr>
         <Link href="" className={styles.sidemenulink}>
           <button
-            className={getStyle(301)}
-            onClick={updateActiveMenu.bind(this, { id: 301, name: "Help" })}
+            className={getStyle(501)}
+            onClick={updateActiveMenu.bind(this, { id: 501, name: "Help" })}
           >
             <IoMdHelpCircleOutline style={customStyles.icons} />
             Help
           </button>
         </Link>
         <hr></hr>
-        <Link
-          href="/SupportTickets/supportticketdashboard"
-          className={styles.sidemenulink}
-        >
+        <Link href="/SupportTickets" className={styles.sidemenulink}>
           <button
-            className={getStyle(401)}
+            className={getStyle(601)}
             onClick={updateActiveMenu.bind(this, {
-              id: 401,
+              id: 601,
               name: "Support tickets",
             })}
           >
@@ -1643,23 +1718,6 @@ const Sidebar = ({ children, applyPageName }) => {
             Support tickets
           </button>
         </Link>
-        {userRole == 6 && (
-          <>
-            <hr></hr>
-            <Link href="/Announcement" className={styles.sidemenulink}>
-              <button
-                className={getStyle(501)}
-                onClick={updateActiveMenu.bind(this, {
-                  id: 501,
-                  name: "Announcement",
-                })}
-              >
-                <HiOutlineTicket style={customStyles.icons} />
-                Announcement
-              </button>
-            </Link>
-          </>
-        )}
       </div>
     </div>
   );

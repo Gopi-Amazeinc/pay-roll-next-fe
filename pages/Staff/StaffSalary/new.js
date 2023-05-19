@@ -5,9 +5,12 @@ import { useForm } from 'react-hook-form';
 import Link from 'next/link';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { apiService } from "@/services/api.service";
+import { useRouter } from "next/router";
 
-function AddStaffSalaryForm({editData}) {
-    let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL
+const AddStaffSalaryForm = ({ editData }) => {
+   const router = useRouter();
+   //  let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL
 
     const { register, handleSubmit, reset, formState } = useForm();
     const [Staff, setStaff] = useState([]);
@@ -17,17 +20,22 @@ function AddStaffSalaryForm({editData}) {
  
     useEffect(() => {
         getData();
+        const { id } = editData || {};
+        if (id) {
+         getByID(id);
+        } else {
+          clearForm();
+        }
      }, [1]);
 
-     async function getData() {
-        let res = await axios.get(hostURL + "HR/GetAllStaffNew"); // This API is used for fetch the  data for Dropdown
+     const getData = async()=> {
+        let res = await apiService.commonGetCall("HR/GetAllStaffNew"); // This API is used for fetch the  data for Dropdown
         setStaff(res.data);
-        if (editData == "") {
-           clearForm()
-        }
-        else{
-          clearForm(editData)
-        }
+     }
+     const getByID = async (id)=>{
+      debugger
+      const res = await apiService.commonGetCall("HR/GetMyDetailsByStaffID?id="+id);
+      clearForm(res.data[0]);
      }
 
      function clearForm(staffSalary = null) {
@@ -42,33 +50,19 @@ function AddStaffSalaryForm({editData}) {
         setActionType(staffSalary ? "update" : 'insert')
      }
 
-    async function onSubmit(data) {
-       console.log(data);
-       if (actionType == "insert") {
-          await axios.post(hostURL + 'Payroll/UpdateDe_minimis_Detailsforstaff', data);
+    const onSubmit = async(data) => {
+      debugger
+      if (actionType == "insert") {
+          await apiService.commonPostCall('Payroll/UpdateDe_minimis_Detailsforstaff', data);
           Swal.fire({ icon: "success", text: "Data Successfully added" })
           location.href = ("/Payroll/staffsalarycomponent");
-       }
-       else {
-          Swal.fire({
-             title: 'Are you sure?',
-             text: "You won't be able to revert this!",
-             icon: 'warning',
-             showCancelButton: true,
-             confirmButtonColor: '#3085d6',
-             cancelButtonColor: '#d33',
-             confirmButtonText: 'Yes, Update it!'
-          }).then((result) => {
-             if (result.isConfirmed) {
-                axios.post(hostURL + 'Payroll/UpdateDe_minimis_Detailsforstaff', data);
-                Swal.fire(
-                   'Updated!',
-                   'Your file has been updated.',
-                   'success'
-                )
-             }
-          })
-       }
+      } else 
+      {
+         await apiService.commonPostCall('Payroll/UpdateDe_minimis_Detailsforstaff', data);
+         Swal.fire({ icon: "success", text: "Data updated successfully" })
+         location.href = ("/Payroll/staffsalarycomponent");
+      }
+
     }
     
     
@@ -78,7 +72,7 @@ function AddStaffSalaryForm({editData}) {
           <div className="col-lg-10" >
              <br />
              <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="container-fluid">
+                <div className="container">
                    <div className="row">
                       <div className="col-md-12">
                          <div className="row">
@@ -130,30 +124,16 @@ function AddStaffSalaryForm({editData}) {
                                <div className='col-lg-8'></div>
                                <div className="col-lg-2">
  
-                                  {actionType == "insert" && (
- 
                                      <button type="submit" className="btn btn-primary AddButton">
  
                                         Save
  
                                      </button>
  
-                                  )}
- 
-                                  {actionType == "update" && (
- 
-                                     <button type="submit" className="btn btn-primary AddButton">
- 
-                                        Update
- 
-                                     </button>
- 
-                                  )}
- 
                                </div>
  
                                <div className='col-lg-2'>
-                                  <Link href="/Staff/staffsalarycomponent"><button className="btn btn-primary AddButton">Cancel</button></Link>
+                                  <Link href="/Staff/StaffSalary"><button className="btn btn-primary AddButton">Cancel</button></Link>
                                </div>
  
                             </div>

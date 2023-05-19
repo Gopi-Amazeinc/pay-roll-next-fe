@@ -1,44 +1,33 @@
-import React from "react";
+import React,{useState,useEffect} from "react";
 import { useForm } from "react-hook-form";
 import Layout from '@/components/layout/layout.js';
-import { useEffect, useState } from "react";
-import SubsectionFormStyles from "../../../styles/SubSectionMasterForm.module.css";
 import Link from "next/link";
-import axios from "axios";
 import Swal from "sweetalert2";
+import { apiService } from "@/services/api.service";
+import { useRouter } from "next/router";
 
 const SubSectionMasterForm = ({ editData }) => {
   let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+  const router = useRouter();
   const [actionType, setActionType] = useState("insert");
   // form validation rules
   const { register, handleSubmit, reset, formState } = useForm();
   const { errors } = formState;
 
-  // get functions to build form with useForm() hook
-  useEffect(() => {
-    const getSubSectionMasterList = async () => {
-      if (editData == "") {
-        clearForm();
-      } else {
-        clearForm(editData);
-      }
-    };
-    getSubSectionMasterList();
-  }, []);
-
   const onSubmit = async (data) => {
-    console.log(data);
     if (actionType == "insert") {
-      await axios.post(hostURL + "Master/InsertSubSectionMaster", data);
-      Swal.fire("SubSectionMaster Inserted succefully!");
-      location.href = "/Masters/SubSectionMaster";
+      await apiService.commonPostCall("Master/InsertSubSectionMaster", data);
+      Swal.fire("Data Inserted successfully");
+      router.push("/Masters/SubSectionMaster");
     } else {
-      let res = await axios.post(hostURL + "Master/UpdateSubSectionMaster", data);
-      sessionStorage.removeItem("id");
-      Swal.fire("SubSectionMaster updated succefully!");
-      location.href = "/Masters/SubSectionMaster";
+      debugger
+      await apiService.commonPostCall("Master/UpdateSubSectionMaster", data);
+      Swal.fire("Data Updated successfully");
+      router.push("/Masters/SubSectionMaster");
     }
   };
+
+
   const clearForm = (existingData = null) => {
     let etty = {
       ID: existingData ? existingData.id : "",
@@ -48,6 +37,25 @@ const SubSectionMasterForm = ({ editData }) => {
     reset(etty);
     setActionType(existingData ? "update" : "insert");
   };
+
+
+  useEffect(() => {
+    const { id } = editData || {};
+    if (id) {
+      // This API is used to fetch the data from BarangayMaster ByID table
+      getSubsectionMasterByID(id);
+    } else {
+      clearForm();
+    }
+  }, []);
+
+  const getSubsectionMasterByID = async (id) => {
+    const res = await apiService.commonGetCall(
+      "Master/GetSubSectionMasterByID?ID=" + id
+    );
+    clearForm(res.data[0]);
+  };
+
   const customStyles = {
     errorMsg: {
       fontSize: "12px",
@@ -125,18 +133,12 @@ const SubSectionMasterForm = ({ editData }) => {
                 </div>
                 <div className="col-lg-2">
                   {actionType == "insert" && (
-                    <button
-                      type="submit"
-                      className="AddButton"
-                    >
+                    <button type="submit" className="AddButton">
                       Save
                     </button>
                   )}
                   {actionType == "update" && (
-                    <button
-                      type="submit"
-                      className="AddButton"
-                    >
+                    <button type="submit" className="AddButton">
                       Update
                     </button>
                   )}

@@ -1,20 +1,13 @@
-
 import StateMasterForm from '../new';
-import axios from 'axios';
+import { useRouter } from 'next/router'
+function StateMaster() {
 
-const StateMasterEdit = ({ data }) => {
-  console.log(data)
+  const router = useRouter()
+  const { id } = router.query
+
   return (
-    <StateMasterForm editData={data}></StateMasterForm>
-  )
-
+    <StateMasterForm editData={{ id }} />
+  );
 }
-export default StateMasterEdit;
 
-export async function getServerSideProps(context) {
-  console.log(context);
-  const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-  let response = await axios.get(hostURL + "Master/GetStateTypeByID?ID=" + context.params.id);
-  const data = response.data[0];
-  return { props: { data } }
-}
+export default StateMaster;

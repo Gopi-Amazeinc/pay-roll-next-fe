@@ -1,20 +1,14 @@
+import PositionMasterDetails from '../new'
+import { useRouter } from 'next/router'
 
-import PositionMasterDetails from '../new';
-import axios from 'axios';
+const PositionMaster = () => {
 
-const PositionMasterEdit = ({ data }) => {
-  console.log(data)
+  const router = useRouter()
+  const { id } = router.query
+
   return (
-    <PositionMasterDetails editData={data}></PositionMasterDetails>
+    <PositionMasterDetails editData={{ id }} />
   )
-
 }
-export default PositionMasterEdit;
 
-export async function getServerSideProps(context) {
-  console.log(context);
-  const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-  let response = await axios.get(hostURL + 'Master/GetRoleTypeByID?ID=' + context.params.id);
-  const data = response.data[0];
-  return { props: { data } }
-}
+export default PositionMaster

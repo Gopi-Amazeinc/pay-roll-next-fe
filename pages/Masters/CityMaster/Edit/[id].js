@@ -1,20 +1,15 @@
 
-import CityMaster from '../new';
-import axios from 'axios';
+import { useRouter } from "next/router";
+import CityMasterForm from "../new";
 
-const CityMasterEdit = ({ data }) => {
-    console.log(data)
+function CityMaster() {
+
+    const router = useRouter()
+    const { id } = router.query
+    
     return (
-        <CityMaster editData={data}></CityMaster>
-    )
-
+        <CityMasterForm editData={{id}} />
+    );
 }
-export default CityMasterEdit;
 
-export async function getServerSideProps(context) {
-    console.log(context);
-    const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-    let response = await axios.get(hostURL + "Master/GetCityTypeByID?ID=" + context.params.id);
-    const data = response.data[0];
-    return { props: { data } }
-}
+export default CityMaster;

@@ -6,13 +6,14 @@ import Login from "./login";
 import Head from "next/head";
 import Footer from "./footer";
 import { useRouter } from "next/router";
+import { Loader } from "@/services/loadSpinner";
+import { apiService } from "@/services/api.service";
 
 const Index = ({ children }) => {
   const router = useRouter();
   const [isLogin, setILogin] = useState("no");
   const [pageName, setPageName] = useState("Dashboard");
   useEffect(() => {
-    console.log("layout rendered");
     let login = sessionStorage.getItem("isLogin");
     if (login && login == "yes") {
       setILogin("yes");
@@ -53,7 +54,7 @@ const Index = ({ children }) => {
         </Head>
         <div className="container-fluid">
           <div className="row" style={{ overflowX: "hidden" }}>
-            <div className="col-lg-12" style={{ height: "10vh" }}>
+            <div className="col-lg-12" style={{ height: "9vh" }}>
               <Header makelogout={logout}></Header>
             </div>
           </div>
@@ -70,13 +71,16 @@ const Index = ({ children }) => {
                 height: "90vh",
                 overflowY: "auto",
                 overflowX: "auto",
-                background: '#e5f3f5"',
+                background: "#e5f3f5",
               }}
             >
-              <main>
-                {children}
-                <br></br>
-              </main>
+              <>
+              {/* <Loader/> */}
+                <main>
+                  {children}
+                  <br></br>
+                </main>
+              </>
             </div>
           </div>
           <Footer></Footer>

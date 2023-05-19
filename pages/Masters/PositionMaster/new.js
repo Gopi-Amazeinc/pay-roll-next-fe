@@ -1,93 +1,61 @@
-import React, { useState, useEffect } from "react";
 import { useForm } from 'react-hook-form';
 import Layout from '@/components/layout/layout.js';
 import Styles from "../../../styles/employmentJobHistory.module.css";
-import axios from "axios";
 import Link from "next/link";
 import Swal from "sweetalert2";
+import { apiService } from "@/services/api.service";
+import { useRouter } from "next/router";
+import React, { useState, useEffect } from 'react';
 
 const PositionMasterDetails = ({ editData }) => {
 
     const { register, handleSubmit, reset, formState } = useForm();
     const { errors } = formState;
+    const router = useRouter();
     const [actionType, setActionType] = useState("insert");
 
-
-    let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-
-
+    const onSubmit = async (data) => {
+        if (actionType == "insert") {
+            await apiService.commonPostCall("Master/InsertRoleType", data);
+            Swal.fire("Data Inserted successfully");
+            router.push("/Masters/PositionMaster");
+        } else {
+            await apiService.commonPostCall("Master/UpdateRoleType", data);
+            Swal.fire("Data Updated successfully");
+            router.push("/Masters/PositionMaster");
+        }
+    };
 
     function clearForm(positionMasterData = null) {
-        debugger
         let details = {
-            
             "ID": positionMasterData ? positionMasterData.id : "",
             "Short": positionMasterData ? positionMasterData.short : "",
             "Description": positionMasterData ? positionMasterData.description : "",
-
         }
-
         reset(details);
-        setActionType(positionMasterData ? "update" : 'insert')
+        setActionType(positionMasterData ? "update" : "insert");
     }
 
-
-    async function onSubmit(data) {
-
-        console.log(data);
-        if (actionType == "insert") {
-
-            await axios.post(hostURL + 'Master/InsertRoleType', data); //gurukiran@amazeinc.in, api call to insert the data
-            Swal.fire({ icon: "success", text: "Data Successfully added" })
-
-            location.href = "/Masters/PositionMaster";
-        }
-
-
-        else {
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, Update it!'
-            }).then((result) => {
-
-                if (result.isConfirmed) {
-                    axios.post(hostURL + 'Master/UpdateRoleType', data); //gurukiran@amazeinc.in api call for updating the data
-                    Swal.fire(
-                        'Updated!',
-                        'Your file has been updated.',
-                        'success'
-                    )
-                    location.href = "/Masters/PositionMaster";
-                }
-            })
-
-
-
-        }
-
-    }
     useEffect(() => {
-        async function getPositionMasterbyID() {
-            if (editData == "") {
-                clearForm()
-            }
-            else {
-                clearForm(editData);
-            }
+        const { id } = editData || {};
+        if (id) {
+            // This API is used to fetch the data from BarangayMaster ByID table
+            getPositionMasterByID(id);
+        } else {
+            clearForm();
         }
-        getPositionMasterbyID();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+    const getPositionMasterByID = async (id) => {
+        const res = await apiService.commonGetCall(
+            "Master/GetRoleTypeByID?ID=" + id
+        );
+        clearForm(res.data[0]);
+    };
 
     return (
         <Layout>
             <div>
-                <div className="container-fluid">
+                <div className="container">
                     <div className={Styles.rowcss}>
                         <div className="col-md-12">
                             <div className="row">
@@ -147,25 +115,15 @@ const PositionMasterDetails = ({ editData }) => {
                                         </div>
                                         <div className="col-lg-2">
                                             {actionType == "insert" && (
-
                                                 <button type="submit" className="AddButton">
-
                                                     Save
-
                                                 </button>
-
                                             )}
-
                                             {actionType == "update" && (
-
                                                 <button type="submit" className="AddButton">
-
                                                     Update
-
                                                 </button>
-
                                             )}
-
                                         </div>
                                     </div>
                                 </form>

@@ -1,9 +1,13 @@
-import React from "react";
+import React from 'react';
 import { useState, useEffect } from "react";
+import { apiService } from "@/services/api.service";
 
-function AnnoucementDash() {
+const AnnoucementDash = () => {
   const [upcomming, setupcomming] = useState(false);
   const [completed, setcompleted] = useState(false);
+
+  const [upcommingdashboard, setupcommingdashboard] = useState([]);
+  const [completedashboard, setcompletedashboard] = useState([]);
 
   function toggleUpcomming() {
     setupcomming(true);
@@ -15,8 +19,32 @@ function AnnoucementDash() {
     setupcomming(false);
   }
 
-  const [upcommingdashboard, setupcommingdashboard] = useState([]);
-  const [completedashboard, setcompletedashboard] = useState([]);
+  // let BuildingID = sessionStorage.getItem("buildingID");
+  // console.log(completedashboard)
+  // console.log("buildingID",BuildingID)
+
+  async function getupcomingdata() {
+    const res = await apiService.commonGetCall(
+      "HR/GetCompleteAnnouncementsByBuildingID?BuildingID=57"
+    );
+    //  let res = await axios.get(hostURL + "HR/GetCompleteAnnouncementsByBuildingID?BuildingID=57");
+    setcompletedashboard(res.data);
+    console.log(res.data);
+  }
+
+  async function getcompletedata() {
+    const res = await apiService.commonGetCall(
+      "HR/GetAnnouncementsByBuildingID?BuildingID=57"
+    );
+    // let res = await axios.get(hostURL + "HR/GetAnnouncementsByBuildingID?BuildingID=57");
+    setupcommingdashboard(res.data);
+    console.log(res.data);
+  }
+
+  useEffect(() => {
+    getupcomingdata();
+    getcompletedata();
+  }, [1]);
 
   return (
     <>
@@ -55,9 +83,68 @@ function AnnoucementDash() {
             </div>
           </div>
         </div>
+        <br></br>
+
+        {completed && (
+          <table className="table table-hover">
+            <thead className="bg-info text-white">
+              <tr>
+                <th>Announcement Date</th>
+                <th>Announcement Time</th>
+                <th>Announcement</th>
+                <th>Announcement Description</th>
+                <th>Venue</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {completedashboard.map((data) => {
+                return (
+                  <tr key={data.id}>
+                    <td>{data.dateTime}</td>
+                    <td>{data.time}</td>
+                    <td>{data.reason}</td>
+                    <td>{data.description}</td>
+                    <td>{data.venue} </td>
+                    <td></td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        )}
+
+        {upcomming && (
+          <table className="table table-hover">
+            <thead className="bg-info text-white">
+              <tr>
+                <th>Announcement Date</th>
+                <th>Announcement Time</th>
+                <th>Announcement</th>
+                <th>Announcement Description</th>
+                <th>Venue</th>
+              </tr>
+            </thead>
+
+            <tbody>
+              {upcommingdashboard.map((data) => {
+                return (
+                  <tr key={data.id}>
+                    <td>{data.dateTime}</td>
+                    <td>{data.time}</td>
+                    <td>{data.reason}</td>
+                    <td>{data.description}</td>
+                    <td>{data.venue} </td>
+                    <td></td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        )}
       </div>
     </>
   );
-}
+};
 
 export default AnnoucementDash;

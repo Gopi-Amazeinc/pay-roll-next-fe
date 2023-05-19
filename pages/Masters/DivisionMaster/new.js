@@ -1,49 +1,28 @@
 import React, { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form';
 import Layout from '../../../components/layout/layout'
-import axios from 'axios';
-import Swal from 'sweetalert2';
 import Link from 'next/link';
+import { apiService } from "@/services/api.service";
+import Swal from 'sweetalert2';
+import { useRouter } from "next/router";
 function DivDivisionMaster({ editData }) {
-    let [actionType, setActionType] = useState("insert")
-    let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
 
-
-    // get functions to build form with useForm() hook
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
+    const router = useRouter();
+    const [actionType, setActionType] = useState("insert");
 
     const onSubmit = async (data) => {
-        console.log(JSON.stringify(data))
         if (actionType == "insert") {
-            await axios.post(hostURL + "Master/InsertDivisionMaster", data) // inserting new division master data [Shashank]
-            location.href = "/Masters/DivisionMaster"
-            Swal.fire({
-                icon: 'success',
-                title: 'Added Successfully',
-            })
+            await apiService.commonPostCall("Master/InsertDivisionMaster", data);
+            Swal.fire("Data Inserted successfully");
+            router.push("/Masters/DivisionMaster");
+        } else {
+            await apiService.commonPostCall("Master/UpdateDivisionMaster", data);
+            Swal.fire("Data Updated successfully");
+            router.push("/Masters/DivisionMaster");
         }
-        else {
-            Swal.fire({
-                title: 'Are you sure to update?',
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, update it!'
-            }).then((result) => {
-                if (result) {
-                    axios.post(hostURL + "Master/UpdateDivisionMaster", data) // updating existing data [Shashank]
-                    sessionStorage.removeItem("id")
-                    Swal.fire({
-                        icon: "success",
-                        titleText: "Updated Successfully"
-                    })
-                    location.href = "/Masters/DivisionMaster"
-                }
-            })
+    };
 
-        }
-    }
 
     function clearForm(existingData = null) {
         let etty = {
@@ -52,20 +31,25 @@ function DivDivisionMaster({ editData }) {
             "Description": existingData ? existingData.description : "",
         }
         reset(etty)
-        setActionType(existingData ? "update" : "insert")
+        setActionType(existingData ? "update" : "insert");
     }
 
 
-
     useEffect(() => {
-        if (editData == "") {
-            clearForm()
+        const { id } = editData || {};
+        if (id) {
+            // This API is used to fetch the data from BarangayMaster ByID table
+            getDivisionMasterByID(id);
+        } else {
+            clearForm();
         }
-        else {
-            clearForm(editData)
-        }
-    }, [])
-
+    }, []);
+    const getDivisionMasterByID = async (id) => {
+        const res = await apiService.commonGetCall(
+            "Master/GetDivisionMasterByID?ID=" + id
+        );
+        clearForm(res.data[0]);
+    };
 
     return (
         <Layout>
@@ -121,16 +105,16 @@ function DivDivisionMaster({ editData }) {
                                 </Link>
                             </div>
                             <div className="col-lg-2">
-                                {
-                                    actionType == "insert" && (
-                                        <button type='submit' className="AddButton">Save</button>
-                                    )
-                                }
-                                {
-                                    actionType == "update" && (
-                                        <button type='submit' className="AddButton">Update</button>
-                                    )
-                                }
+                                {actionType == "insert" && (
+                                    <button type="submit" className="AddButton">
+                                        Save
+                                    </button>
+                                )}
+                                {actionType == "update" && (
+                                    <button type="submit" className="AddButton">
+                                        Update
+                                    </button>
+                                )}
                             </div>
                         </div>
                     </form>

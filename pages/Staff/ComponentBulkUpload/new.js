@@ -6,9 +6,11 @@ import { useForm } from "react-hook-form";
 import Link from "next/link";
 import Swal from "sweetalert2";
 import Layout from "@/components/layout/layout";
+import { apiService } from "@/services/api.service";
+import { useRouter } from "next/router";
 
 const ComponentBulkUploadForm = ({ editData }) => {
-  const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+  const router = useRouter();
 
   const {
     register,
@@ -20,27 +22,30 @@ const ComponentBulkUploadForm = ({ editData }) => {
   const [staff, setStaffData] = useState([]);
   const [component, setComponentData] = useState([]);
   const [payment, setPayment] = useState([]);
-  const [actionType, setAction] = useState("insert");
+  const [actionType, setActionType] = useState("insert");
 
   useEffect(() => {
     getData();
+    const { id } = editData || {};
+    if (id) {
+      getByID(id);
+    } else {
+      clearForm();
+    }
   }, [1]);
 
   async function getData() {
-    let res = await axios.get(hostURL + "HR/GetAllStaffNew");
+    let res = await apiService.commonGetCall("HR/GetAllStaffNew");
     setStaffData(res.data);
-        // res = await axios.get(hostURL + "");
-        // setComponentData(res.data);
-        // res = await axios.get(hostURL + "");
-        // setPayment(res.data);
-    if (editData=="") {
-      clearForm();
-    } else {
-      clearForm(editData);
-    }
   }
+ const getByID =async(id)=>{
+  const res = await apiService.commonGetCall(
+    "Payroll/GetPayrollComponentBulkUploadByID?ID=" + id
+  );
+  clearForm(res.data[0]);
+ }
 
-  function clearForm(userData = null) {
+ function clearForm(userData = null) {
     let details = {
       ID: userData ? userData.id : "",
       EmployeeID: userData ? userData.employeeID : "",
@@ -48,33 +53,31 @@ const ComponentBulkUploadForm = ({ editData }) => {
       Amount: userData ? userData.amount : "",
       Paymentfrequeicy: userData ? userData.paymentfrequeicy : "",
     };
-    setAction(userData ? "update" : "insert");
     reset(details);
+    setActionType(userData ? "update" : "insert");
   }
-
-  async function onSubmit(data) {
-    debugger
+  const onSubmit= async(data)=> {
     if (actionType == "insert") {
-      await axios.post(hostURL + "HR/InsertPayrollComponentBulkUpload", data);
-      Swal.fire("Data Inserted successfully");
-      location.href = "/Staff/ComponentBulkUpload";
-    } else {
-      await axios.post(hostURL + "HR/UpdatePayrollComponentBulkUpload", data);
-      Swal.fire("Updated successfully");
-      location.href = "/Staff/ComponentBulkUpload";
-    }
+    await apiService.commonPostCall("HR/InsertPayrollComponentBulkUpload", data);
+    Swal.fire("Data Inserted successfully");
+    router.push("/Staff/ComponentBulkUpload")
+  } else {
+    await apiService.commonPostCall("HR/UpdatePayrollComponentBulkUpload", data);
+    Swal.fire("Data Updated successfully");
+    router.push("/Staff/ComponentBulkUpload");
+  }
   }
 
   return (
     <Layout>
       <div className="container">
-      <div className={Styles.card}>
-      <h3 className="text-primary fs-5 mb-2 fw-bold">Staff Add Component Mapping</h3>
+        <div className={Styles.card}>
+          <h3 className="text-primary fs-5 mb-2 fw-bold">Staff Add Component Mapping</h3>
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="row">
               <div className="col-lg-3">
                 <label className={Styles.labels}>
-                Staff Name<span style={{ color: "red" }}>*</span>{" "}
+                  Staff Name<span style={{ color: "red" }}>*</span>{" "}
                 </label>{" "}
                 <br />
                 <select
@@ -86,10 +89,10 @@ const ComponentBulkUploadForm = ({ editData }) => {
                   </option>
                   {staff.map((data) => {
                     return (
-                        <option value={data.id} key={data.id}>
+                      <option value={data.id} key={data.id}>
                         {data.name}
                       </option>
-                      
+
                     );
                   })}
                 </select>
@@ -163,7 +166,7 @@ const ComponentBulkUploadForm = ({ editData }) => {
                   </p>
                 )}
               </div>
-              
+
             </div>
             <br />
             <div className="row">
@@ -176,24 +179,13 @@ const ComponentBulkUploadForm = ({ editData }) => {
                     Cancel
                   </button>
                 </Link>
-                {actionType == "insert" && (
-                  <button
-                    type="submit"
-                    className="btn btn-primary"
-                    style={{ float: "right" }}
-                  >
-                    Save
-                  </button>
-                )}
-                {actionType == "update" && (
-                  <button
-                    type="submit"
-                    className="btn btn-primary"
-                    style={{ float: "right" }}
-                  >
-                    Update
-                  </button>
-                )}
+                <button
+                  type="submit"
+                  className="btn btn-primary"
+                  style={{ float: "right" }}
+                >
+                  Save
+                </button>
               </div>
             </div>
           </form>

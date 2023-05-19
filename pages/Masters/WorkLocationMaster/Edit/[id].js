@@ -1,20 +1,12 @@
+import WorkLocationMasterForm from '../new'
+import { useRouter } from 'next/router'
 
-import WorkLocationMasterForm from '../new';
-import axios from 'axios';
-
-const WorkLocationEdit = ({ data }) => {
-  console.log(data)
+function WorkLocationMaster() {
+  const router = useRouter()
+  const { id } = router.query
   return (
-    <WorkLocationMasterForm editData={data}></WorkLocationMasterForm>
+    <WorkLocationMasterForm editData={{ id }} />
   )
-
 }
-export default WorkLocationEdit;
 
-export async function getServerSideProps(context) {
-  console.log(context);
-  const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-  let response = await axios.get(hostURL + "Master/GetWorkingLocationMasterByID?ID=" + context.params.id);
-  const data = response.data[0];
-  return { props: { data } }
-}
+export default WorkLocationMaster

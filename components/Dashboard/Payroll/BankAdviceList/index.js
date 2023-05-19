@@ -3,19 +3,21 @@ import Link from "next/link";
 import { useEffect, useRef, useState } from "react";
 import axios from 'axios';
 import Modal from 'react-modal';
+import { apiService } from "@/services/api.service";
+
 
 
 const BankAdviceList = () => {
     const [dashboard, setDashboardData] = useState([]);
 
     useEffect(() => {
-        async function getData() {
-            let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+        async function getEmployeeSalary() {
+        
             // This API is used to Fetch the Employee salary  
-            let res = await axios.get(hostURL + "Payroll/GetEmployeeSalary");
+            let res = await apiService.commonGetCall("Payroll/GetEmployeeSalary");
             setDashboardData(res.data);
         }
-        getData()
+        getEmployeeSalary()
     }, []);
 
     const customStyles = {

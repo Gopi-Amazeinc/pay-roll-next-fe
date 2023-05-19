@@ -1,0 +1,33 @@
+.wizardLabel{
+    margin-top: 11px;
+    font-size: medium;
+    font-weight: 500;
+    color: white;
+    text-align: center;
+}
+.wizardHorizontal{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.circle { 
+    background-color: #2dd2e7 !important; 
+    height: 70px;
+    width: 110px;
+    border-radius: 50%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    margin-right: 1%;
+}
+
+.circlebg{
+    background-color:rgb(60, 210, 37) !important;
+    height: 70px;
+    width: 110px;
+    border-radius: 50%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    margin-right: 1%;
+}

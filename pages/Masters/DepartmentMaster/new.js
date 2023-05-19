@@ -3,56 +3,29 @@ import Styles from '../../../styles/DepartmentMasterForm.module.css'
 import { useForm } from 'react-hook-form';
 import Layout from '../../../components/layout/layout'
 import Link from 'next/link';
-import axios from 'axios';
 import Swal from 'sweetalert2';
+import { apiService } from "@/services/api.service";
+import { useRouter } from "next/router";
 const DepartmentMasterForm = ({ editData }) => {
-
-
-
     // get functions to build form with useForm() hook
     const { register, handleSubmit, reset, formState } = useForm();
     const { errors } = formState;
-    let [actionType, setActionType] = useState("insert");
-    let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+    const router = useRouter();
+    const [actionType, setActionType] = useState("insert");
 
-
-
-
-    async function onSubmit(data) {
-        // alert(JSON.stringify(data))
-        console.log(data);
+    const onSubmit = async (data) => {
         if (actionType == "insert") {
-
-
-            await axios.post(hostURL + 'Master/InsertDepartmentMaster', data); //gurukiran@amazeinc.in api call for insert of data
-            Swal.fire({ icon: "success", text: "Data Successfully added" })
-            location.href = "/Masters/DepartmentMaster/";
-
+            await apiService.commonPostCall("Master/InsertDepartmentMaster", data);
+            Swal.fire("Data Inserted successfully");
+            router.push("/Masters/DepartmentMaster");
+        } else {
+            debugger
+            await apiService.commonPostCall("Master/UpdateDepartmentMaster", data);
+            Swal.fire("Data Updated successfully");
+            router.push("/Masters/DepartmentMaster");
         }
-        else {
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, Update it!'
-            }).then((result) => {
+    };
 
-                if (result.isConfirmed) {
-                    axios.post(hostURL + 'Master/UpdateDepartmentMaster', data); //gurukiran@amazeinc.in api call for updating the data
-                    Swal.fire(
-                        'Updated!',
-                        'Your file has been updated.',
-                        'success'
-                    )
-                    location.href = "/Masters/DepartmentMaster/";
-                }
-            })
-        }
-
-    }
     function clearForm(departmentMaster = null) {
         let details = {
             "ID": departmentMaster ? departmentMaster.id : "",
@@ -60,20 +33,26 @@ const DepartmentMasterForm = ({ editData }) => {
             "Department_Desc": departmentMaster ? departmentMaster.department_Desc : "",
         }
         reset(details);
-        setActionType(departmentMaster ? "update" : 'insert')
+        setActionType(departmentMaster ? "update" : "insert");
     }
 
     useEffect(() => {
-        async function getDepartmentMasterByID() {
-            if (editData == "") {
-                clearForm()
-            }
-            else {
-                clearForm(editData);
-            }
+        const { id } = editData || {};
+        if (id) {
+            // This API is used to fetch the data from BarangayMaster ByID table
+            getDepartmentMasterByID(id);
+        } else {
+            clearForm();
         }
-        getDepartmentMasterByID();
     }, []);
+    const getDepartmentMasterByID = async (id) => {
+        const res = await apiService.commonGetCall(
+            "Master/GetDepartmentMasterByID?ID=" + id
+        );
+        clearForm(res.data[0]);
+    };
+
+
 
     return (
         <Layout>
@@ -129,25 +108,15 @@ const DepartmentMasterForm = ({ editData }) => {
                         </div>
                         <div className="col-lg-2">
                             {actionType == "insert" && (
-
                                 <button type="submit" className="AddButton">
-
                                     Save
-
                                 </button>
-
                             )}
-
                             {actionType == "update" && (
-
                                 <button type="submit" className="AddButton">
-
                                     Update
-
                                 </button>
-
                             )}
-                            {/* <button className=" btn btn-primary form-control shadow-lg ">Submit</button> */}
                         </div>
                     </div>
 

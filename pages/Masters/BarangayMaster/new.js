@@ -1,14 +1,17 @@
 import React from "react";
 import { useEffect, useState } from "react";
 import Barangay from "../../../styles/BarangayMasterForm.module.css";
-import axios from "axios";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
 import Swal from "sweetalert2";
 import Layout from "@/components/layout/layout";
+import { apiService } from "@/services/api.service";
+import { useRouter } from "next/router";
 
 const BarangayMasterForm = ({ editData }) => {
-  const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+  const router = useRouter();
+
+  // const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
 
   const {
     register,
@@ -17,16 +20,45 @@ const BarangayMasterForm = ({ editData }) => {
     reset,
     formState: { errors },
   } = useForm();
+
+  const [actionType, setActionType] = useState("insert");
+
   const [countrydata, setCountryData] = useState([]);
   const [provincedata, setProvinceData] = useState([]);
   const [citydata, setCityData] = useState([]);
-  const [actionType, setAction] = useState("insert");
 
   useEffect(() => {
-    getData();
-  }, [1]);
+    getMasters();
+    const { id } = editData || {};
+    if (id) {
+      // This API is used to fetch the data from BarangayMaster ByID table
+      getBarangayMasterByID(id);
+    } else {
+      clearForm();
+    }
+  }, []);
+  const getBarangayMasterByID = async (id) => {
+    const res = await apiService.commonGetCall(
+      "Master/GetBarangayMasterByID?ID=" + id
+    );
+    clearForm(res.data[0]);
+  };
 
-  function clearForm(userData = null) {
+  // let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+  // This API is used to fetch the data from CountryType table
+  const getMasters = async () => {
+    const [countryRes, provinceRes, cityRes] = await Promise.all([
+      apiService.commonGetMasters("Master/GetCountryType"),
+      apiService.commonGetMasters("Master/GetStateType"),
+      apiService.commonGetMasters("Master/GetCityType"),
+    ]);
+
+    setCountryData(countryRes.data);
+    setProvinceData(provinceRes.data);
+    setCityData(cityRes.data);
+  };
+
+  const clearForm = (userData = null) => {
     let details = {
       ID: userData ? userData.id : "",
       CountryID: userData ? userData.countryID : "",
@@ -34,41 +66,21 @@ const BarangayMasterForm = ({ editData }) => {
       CityID: userData ? userData.cityID : "",
       Name: userData ? userData.name : "",
     };
-    setAction(userData ? "update" : "insert");
     reset(details);
-  }
+    setActionType(userData ? "update" : "insert");
+  };
 
-  async function getData() {
-    let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-    // This API is used to fetch the data from CountryType table 
-    let res = await axios.get(hostURL + "Master/GetCountryType");
-    setCountryData(res.data);
-    // This API is used to fetch the data from StateType table
-    res = await axios.get(hostURL + "Master/GetStateType");
-    setProvinceData(res.data);
-    // This API is used to fetch the data from CityType table
-    res = await axios.get(hostURL + "Master/GetCityType");
-    setCityData(res.data);
-    debugger
-    if (editData == "") {
-      clearForm();
-    }
-    else {
-      clearForm(editData);
-    }
-  }
-
-  async function onSubmit(data) {
+  const onSubmit = async (data) => {
     if (actionType == "insert") {
-      await axios.post(hostURL + "Master/InsertBarangayMaster", data);
+      await apiService.commonPostCall("Master/InsertBarangayMaster", data);
       Swal.fire("Data Inserted successfully");
-      location.href = "/Masters/BarangayMaster";
+      router.push("/Masters/BarangayMaster");
     } else {
-      await axios.post(hostURL + "Master/UpdateBarangayMaster", data);
-      Swal.fire("Updated successfully");
-      location.href = "/Masters/BarangayMaster";
+      await apiService.commonPostCall("Master/UpdateBarangayMaster", data);
+      Swal.fire("Data Updated successfully");
+      router.push("/Masters/BarangayMaster");
     }
-  }
+  };
   return (
     <Layout>
       <div className="container">
@@ -85,8 +97,8 @@ const BarangayMasterForm = ({ editData }) => {
             <div className="row">
               <div className="col-lg-3">
                 <label className={Barangay.labels}>
-                  Country Name<span style={{ color: "red" }}>*</span>{" "}
-                </label>{" "}
+                  Country Name<span style={{ color: "red" }}>*</span>
+                </label>
                 <br />
                 <select
                   className={Barangay.selecter}
@@ -135,7 +147,7 @@ const BarangayMasterForm = ({ editData }) => {
               </div>
               <div className="col-lg-3">
                 <label className={Barangay.labels}>
-                  City<span style={{ color: "red" }}>*</span>{" "}
+                  City<span style={{ color: "red" }}>*</span>
                 </label>
                 <br />
                 <select
@@ -159,7 +171,7 @@ const BarangayMasterForm = ({ editData }) => {
               </div>
               <div className="col-lg-3">
                 <label className={Barangay.labels}>
-                  Barangay<span style={{ color: "red" }}>*</span>{" "}
+                  Barangay<span style={{ color: "red" }}>*</span>
                 </label>
                 <br />
                 <input
@@ -174,32 +186,22 @@ const BarangayMasterForm = ({ editData }) => {
                 )}
               </div>
             </div>
-            <br /> 
+            <br />
             <div className="row">
               <div className="col-lg-8"></div>
               <div className="col-lg-2">
                 <Link href="/Masters/BarangayMaster">
-                  <button
-                    className="AddButton"
-                  >
-                    CANCEL
-                  </button>
+                  <button className="AddButton">CANCEL</button>
                 </Link>
               </div>
               <div className="col-lg-2">
                 {actionType == "insert" && (
-                  <button
-                    type="submit"
-                    className="AddButton"
-                  >
+                  <button type="submit" className="AddButton">
                     Save
                   </button>
                 )}
                 {actionType == "update" && (
-                  <button
-                    type="submit"
-                    className="AddButton"
-                  >
+                  <button type="submit" className="AddButton">
                     Update
                   </button>
                 )}

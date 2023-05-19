@@ -50,7 +50,7 @@ const SupportTicketDashboard = ()  => {
   return (
     <Layout>
       <div>
-        <h1 style={{color:"red"}}>Api Pending </h1>
+        <h4 style={{color:"red"}}>Api Pending </h4>
         <br></br>
         <p id={Styles.title}>Support Tickets</p>
         <div className="container-fluid mt-4">
@@ -60,11 +60,11 @@ const SupportTicketDashboard = ()  => {
             </div>
             <div className="col-lg-2"></div>
             <div className="col-lg-2">
-              <Link href="/SupportTickets/supporttickets"><button
+              <Link href="/SupportTickets/supportform"><button
                 className="btn btn-primary btn-sm  shadow-lg"
                 id={Styles.addNew} onClick={ClearData.bind(this)}
               >
-                {" "}
+                
                 <AiOutlinePlusCircle />
                 Add
               </button></Link>
@@ -99,7 +99,7 @@ const SupportTicketDashboard = ()  => {
                         <td>{data.priority}</td>
                         <td>{data.status}</td>
                         <td>
-                          <Link href="/SupportTickets/supporttickets">
+                          <Link href="/SupportTickets">
                             <button className="btn btn-primary" onClick={getData.bind(this, data)}>Edit</button>
                           </Link>
                           &nbsp;

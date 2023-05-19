@@ -1,20 +1,12 @@
-
 import Otmaster from '../new';
-import axios from 'axios';
+import { useRouter } from 'next/router'
+function OtmasterEdit() {
+  const router = useRouter()
+  const { id } = router.query
 
-const OTmasterEdit = ({ data }) => {
-  console.log(data)
   return (
-    <Otmaster editData={data}></Otmaster>
-  )
-
+    <Otmaster editData={{ id }} />
+  );
 }
-export default OTmasterEdit;
 
-export async function getServerSideProps(context) {
-  console.log(context);
-  const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-  let response = await axios.get(hostURL + "Master/GetOTRatesByID?ID=" + context.params.id);
-  const data = response.data[0];
-  return { props: { data } }
-}
+export default OtmasterEdit;

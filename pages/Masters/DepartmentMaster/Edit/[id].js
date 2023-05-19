@@ -1,20 +1,13 @@
+import DepartmentMasterForm from '../new'
+import { useRouter } from 'next/router'
+const DepartmentMaster = () => {
 
-import DepartmentMasterForm from '../new';
-import axios from 'axios';
+    const router = useRouter()
+    const { id } = router.query
 
-const DepartmentMasterEdit = ({ data }) => {
-    console.log(data)
     return (
-        <DepartmentMasterForm editData={data}></DepartmentMasterForm>
+        <DepartmentMasterForm editData={{ id }} />
     )
-
 }
-export default DepartmentMasterEdit;
 
-export async function getServerSideProps(context) {
-    console.log(context);
-    const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-    let response = await axios.get(hostURL + 'Master/GetDepartmentMasterByID?id=' + context.params.id);
-    const data = response.data[0];
-    return { props: { data } }
-}
+export default DepartmentMaster

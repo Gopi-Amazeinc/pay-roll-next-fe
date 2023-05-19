@@ -29,7 +29,7 @@ const MyTeamOverTimeDetail = () => {
             <div className="col-md-1"> Filter By </div>
             <div className="col-md-2">
               <p>Pay Date </p>
-              <input type="date" onkeydown="return false" placeholder="Duration" id="sdate" name="sdate" className="form-control "></input>
+              <input type="date" onKeyDown={() => false} placeholder="Duration" id="sdate" name="sdate" className="form-control "></input>
             </div>
             <div className="col-md-4">
               <p></p><br></br>

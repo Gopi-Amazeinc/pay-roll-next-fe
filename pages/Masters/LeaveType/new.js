@@ -1,43 +1,30 @@
-import React from 'react'
 import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import leaveform from '../../../styles/LeaveTypeForm.module.css'
-import Layout from '../../../components/layout/layout'
-import axios from "axios";
-import { useEffect, useState } from "react";
+import Layout from '../../../components/layout/layout';
 import Swal from "sweetalert2";
+import { apiService } from "@/services/api.service";
+import { useRouter } from "next/router";
+import React,{useState,useEffect} from 'react';
 
 function LeaveTypeForm({ editData }) {
-
-    let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-    const [actionType, setActionType] = useState("insert");
-
     const { register, handleSubmit, reset, formState } = useForm();
     const { errors } = formState;
-
-
-    useEffect(() => {
-        if (editData == "") {
-            clearForm();
-        } else {
-            clearForm(editData);
-        }
-    }, [1]);
+    const router = useRouter();
+    const [actionType, setActionType] = useState("insert");
 
     const onSubmit = async (data) => {
-        debugger;
-        console.log(data);
         if (actionType == "insert") {
-            await axios.post(hostURL + "Master/InsertLeaveTypeMaster", data);
-            Swal.fire("SubSectionMaster Inserted succefully!");
-            location.href = "/Masters/LeaveType";
+            await apiService.commonPostCall("Master/InsertLeaveTypeMaster", data);
+            Swal.fire("Data Inserted successfully");
+            router.push("/Masters/LeaveType");
         } else {
-            let res = await axios.post(hostURL + "Master/UpdateLeaveTypeMaster", data);
-            sessionStorage.removeItem("id");
-            Swal.fire("SubSectionMaster updated succefully!");
-            location.href = "/Masters/LeaveType";
+            await apiService.commonPostCall("Master/UpdateLeaveTypeMaster", data);
+            Swal.fire("Data Updated successfully");
+            router.push("/Masters/LeaveType");
         }
     };
+
     const clearForm = (existingData = null) => {
         let etty = {
             ID: existingData ? existingData.id : "",
@@ -47,6 +34,23 @@ function LeaveTypeForm({ editData }) {
         reset(etty);
         setActionType(existingData ? "update" : "insert");
     };
+
+    useEffect(() => {
+        const { id } = editData || {};
+        if (id) {
+            // This API is used to fetch the data from BarangayMaster ByID table
+            geLeaveTypeByID(id);
+        } else {
+            clearForm();
+        }
+    }, []);
+    const geLeaveTypeByID = async (id) => {
+        const res = await apiService.commonGetCall(
+            "Master/GetLeaveTypeByID?ID=" + id
+        );
+        clearForm(res.data[0]);
+    };
+
     const customStyles = {
         errorMsg: {
             fontSize: "12px",
@@ -57,8 +61,6 @@ function LeaveTypeForm({ editData }) {
             fontSize: "16px",
         },
     };
-
-
 
     return (
         <Layout>
@@ -129,18 +131,12 @@ function LeaveTypeForm({ editData }) {
                                     </div>
                                     <div className="col-lg-2">
                                         {actionType == "insert" && (
-                                            <button
-                                                type="submit"
-                                                className="AddButton"
-                                            >
-                                                Submit
+                                            <button type="submit" className="AddButton">
+                                                Save
                                             </button>
                                         )}
                                         {actionType == "update" && (
-                                            <button
-                                                type="submit"
-                                                className="AddButton"
-                                            >
+                                            <button type="submit" className="AddButton">
                                                 Update
                                             </button>
                                         )}

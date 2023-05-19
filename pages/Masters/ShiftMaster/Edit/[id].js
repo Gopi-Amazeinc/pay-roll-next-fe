@@ -1,20 +1,19 @@
-
-import ShiftMaster from '../new';
+import React, { useState, useEffect } from "react";
+import Styles from "../../../../styles/employmentJobHistory.module.css";
+import Link from 'next/link';
+import Layout from '@/components/layout/layout.js';
+import { useForm } from 'react-hook-form';
 import axios from 'axios';
+import ShiftMasterForm from "../new";
+import { useRouter } from 'next/router'
 
-const ShiftMasterEdit = ({ data }) => {
-  console.log(data)
+function ShiftMaster() {
+  const router = useRouter()
+  const { id } = router.query
+
   return (
-    <ShiftMaster editData={data}></ShiftMaster>
-  )
-
+    <ShiftMasterForm editData={{ id }} />
+  );
 }
-export default ShiftMasterEdit;
 
-export async function getServerSideProps(context) {
-  console.log(context);
-  const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-  let response = await axios.get(hostURL + "Master/GetShiftMasterByID?ID=" + context.params.id);
-  const data = response.data[0];
-  return { props: { data } }
-}
+export default ShiftMaster;

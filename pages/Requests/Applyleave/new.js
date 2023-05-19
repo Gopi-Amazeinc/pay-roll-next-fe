@@ -4,6 +4,7 @@ import ApplyLeaveDashboard from "@/components/Dashboard/Requests/Applyleave/inde
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { apiService } from "@/services/api.service";
 
 // import Astyle from 'styles//Requests//applyleave.module.css';
 import { BsArrowLeftSquare } from "react-icons/bs";
@@ -16,7 +17,7 @@ const ApplyLeave = () => {
   const [leavetype, setLeaveType] = useState([]);
   const [userID, setUserId] = useState();
   const getDropdowndata = async () => {
-    const res = await axios.get(hostURL + "Master/GetLeaveType");
+    const res = await apiService.commonGetCall("Master/GetLeaveType");
     setLeaveType(res.data);
   };
   useEffect(() => {
@@ -26,14 +27,17 @@ const ApplyLeave = () => {
   }, []);
 
   async function onSubmit(data) {
+    let StaffID=sessionStorage.getItem("userID");
     try {
       debugger;
-      await axios.post(hostURL + "HR/InsertStaffLeaves", data);
+      await apiService.commonPostCall("HR/InsertStaffLeaves", data,StaffID);
       Swal.fire({
         icon: "success",
-        title: "Hurray..",
-        text: "Data was inserted...!",
+        text: "Leave request was inserted successfully...!",
       });
+      sessionStorage.setItem("Sdate",data.SDateOfLeave);
+      sessionStorage.setItem("Edate",data.EDateOfLeave);
+      console.log(data);
     } catch (error) {
       Swal.fire("Data not inserted");
     }
@@ -41,7 +45,6 @@ const ApplyLeave = () => {
   return (
     <Layout>
       <Link href="/Requests/Leaverequest">
-    
         <BsArrowLeftSquare /> Leave
       </Link>
       <div className="card p-3 border-0 shadow-lg  mt-4">
@@ -54,7 +57,7 @@ const ApplyLeave = () => {
 
             <div className="col-lg-2">
               <label htmlFor="">
-                Leave Type<i className="text-danger">*</i>{" "}
+                Leave Type<i className="text-danger">*</i>
               </label>
               <select
                 id="Department"
@@ -63,7 +66,7 @@ const ApplyLeave = () => {
                 {...register("LeaveType", { required: true })}
               >
                 <option value="" disabled="">
-                  Select Leave Type{" "}
+                  Select Leave Type
                 </option>
                 {leavetype.map((data, index) => {
                   return (
@@ -76,7 +79,7 @@ const ApplyLeave = () => {
             </div>
             <div className="col-lg-2">
               <label htmlFor="">
-                Leave Reason<i className="text-danger">*</i>{" "}
+                Leave Reason<i className="text-danger">*</i>
               </label>
               <textarea
                 cols="20"
@@ -106,15 +109,16 @@ const ApplyLeave = () => {
                 {...register("EDateOfLeave", { required: true })}
               />
             </div>
-            <div className="col-lg-2">
+            {/* <div className="col-lg-2">
               <label>Staff ID</label>
               <input
                 type="text"
                 className="form-control"
                 value={userID}
-                disabled
+                {...register("StaffID")}
+                
               />
-            </div>
+            </div> */}
           </div>
           <br />
           <div className="row">
@@ -122,9 +126,9 @@ const ApplyLeave = () => {
               <label htmlFor="">Attachment</label>
               {/* <DropZone {...register("MedicalUrl", { required: true })} /> */}
               <input
-                type="text"
+                type="file"
                 className="form-control"
-                {...register("MedicalUrl", { required: true })}
+                {...register("MedicalUrl")}
               />
             </div>
             <div className="col-lg-2"></div>
@@ -147,7 +151,7 @@ const ApplyLeave = () => {
         </form>
       </div>
       <br />
-      <ApplyLeaveDashboard></ApplyLeaveDashboard>
+      {/* <ApplyLeaveDashboard></ApplyLeaveDashboard> */}
     </Layout>
   );
 };

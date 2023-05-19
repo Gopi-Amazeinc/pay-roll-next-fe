@@ -1,20 +1,12 @@
+import SubsidaryMasterForm from '../new'
+import { useRouter } from 'next/router'
 
-import SubsidaryMasterForm from '../new';
-import axios from 'axios';
+export default function SubsidaryMaster() {
 
-const SubSidaryEdit = ({ data }) => {
-  console.log(data)
+  const router = useRouter()
+  const { id } = router.query
   return (
-    <SubsidaryMasterForm editData={data}></SubsidaryMasterForm>
+    <SubsidaryMasterForm editData={{ id }} />
   )
-
 }
-export default SubSidaryEdit;
 
-export async function getServerSideProps(context) {
-  console.log(context);
-  const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-  let response = await axios.get(hostURL + "Master/GetSubsidaryMasterByID?ID=" + context.params.id);
-  const data = response.data[0];
-  return { props: { data } }
-}

@@ -1,57 +1,122 @@
 import Link from "next/link";
-import { useEffect, useRef, useState } from 'react';
-import axios from "axios";
-import Styles from "@/styles/Locatorrequest.module.css";
+import { useEffect, useState } from 'react';
 import Layout from "@/components/layout/layout"
+import { apiService } from "@/services/api.service";
 
 const Locatordashboard = () => {
-    const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-    const [locator, setlocator] = useState([]);
-    const [Approvedlocatorrequests, setApprovedlocatorrequests] = useState([]);
-    const [RejectedlocatorRequests, setRejectedlocatorRequests] = useState([]);
+
+    const [pending, setPending] = useState(true)
+    const [approved, setApproved] = useState(false)
+    const [rejected, setRejected] = useState(false)
+
+    const [pendingDashboard, getPending] = useState([])
+    const [approvedDashboard, getApproved] = useState([])
+    const [rejecteddDashboard, getRejected] = useState([])
+
+    const togglePending = (e) => {
+        e.preventDefault();
+        setPending(true)
+        setApproved(false)
+        setRejected(false)
+    }
+
+    const toggleApproved = (e) => {
+        e.preventDefault();
+        setApproved(true)
+        setPending(false)
+        setRejected(false)
+    }
+
+    const toggleRejected = (e) => {
+        e.preventDefault();
+        setRejected(true)
+        setApproved(false)
+        setPending(false)
+    }
 
     const getlocator = async () => {
-        let res = await axios.get(hostURL + "Payroll/GetLocatorRequests");
-        setlocator(res.data);
-        res = await axios.get(hostURL + "Payroll/GetApprovedLocatorRequest");
-        setApprovedlocatorrequests(res.data);
-        res = await axios.get(hostURL + "Payroll/GetRejectedLocatorRequest");
-        setRejectedlocatorRequests(res.data);
+        let UserID = sessionStorage.getItem("userID")
+        let pending = await apiService.commonGetCall(`Payroll/GetLocatorRequests?UserID=${UserID}`);
+        console.log(pending, "pending")
+        getPending(pending.data);
+        let approved = await apiService.commonGetCall(`Payroll/GetApprovedLocatorRequest?UserID=${UserID}`);
+        console.log(pending, "approved")
+        getApproved(approved.data);
+        let rejected = await apiService.commonGetCall(`Payroll/GetRejectedLocatorRequest?UserID=${UserID}`);
+        console.log(pending, "rejected")
+        getRejected(rejected.data);
     }
 
     useEffect(() => {
         getlocator()
-    }, [1])
+    }, [])
 
-    const tabsData = [
-        {
-            label: 'PENDING',
-            content:
-                <div className="container-fluid mt-4">
+    return (
+        <Layout>
+            <div className="container">
+                <p className="Heading">My OBASIS Details</p>
+                <div className="card p-3 rounded-3 shadow border-0 ">
                     <div className="row">
-                        <table className='table  table-striped mt-3 text-center' id={Styles.table} >
+                        <div className="col-1">
+                            <p> Filter By</p>
+                        </div>
+                        <div className="col-2">
+                            <label>From Date</label>
+                            <input type="date" className="form-control" />
+                        </div>
+                        <div className="col-2">
+                            <label>To Date</label>
+                            <input type="date" className="form-control" />
+                        </div>
+                        <div className="col-5">
+                            <br />
+                            <input
+                                type="text"
+                                placeholder="Search"
+                                className="form-control"
+                            ></input>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="row mt-5">
+                    <div className="col-4">
+                        <button onClick={togglePending} className={`toggleButton ${pending ? "focus" : ""}`}>Pending</button>
+                        <button onClick={toggleApproved} className={`toggleButton ${approved ? "focus" : ""}`}>Approved</button>
+                        <button onClick={toggleRejected} className={`toggleButton ${rejected ? "focus" : ""}`}>Rejected</button>
+                    </div>
+                    <div className="col-6"></div>
+                    <div className="col-2">
+                        <Link href="/Requests/Locatorrequest/new"><button className="submit-button">New Requests </button></Link>
+                    </div>
+                </div>
+
+                <div>
+                    {pending && (
+                        <table className='table  table-striped mt-3' >
                             <thead>
-                                <tr id={Styles.tr}>
+                                <tr>
+                                    <th>Control Number</th>
                                     <th>Date</th>
-                                    <th>Destination</th>
-                                    <th>TimeOfDeparture</th>
-                                    <th>Time of Return	</th>
-                                    <th>Purpose</th>
-                                    <th>No Of Hours</th>
+                                    <th>Start Time</th>
+                                    <th>End Time</th>
+                                    <th>Task</th>
+                                    <th>Comments</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {locator.map((data, index) => {
+                                {pendingDashboard.map((data, index) => {
                                     return (
-                                        <tr className="text-dark" key={index}>
+                                        <tr key={index}>
+                                            <td>{data.id}</td>
                                             <td>{data.date}</td>
-                                            <td>{data.destination}</td>
-                                            <td>{data.timeOfDeparture}</td>
-                                            <td>{data.timeOfReturn}</td>
-                                            <td>{data.purpose}</td>
-                                            <td>{data.hourDiff}</td>
+                                            <td>{data.startTime}</td>
+                                            <td>{data.endTime}</td>
+                                            <td>{data.task}</td>
+                                            <td>{data.comments}</td>
+                                            {/* <td>{data.status}</td> */}
                                             <td>{
                                                 <b>{data.statusID === 0 ? 'Manager Pending' :
                                                     data.statusID === 1 ? 'Manager approved' :
@@ -65,153 +130,74 @@ const Locatordashboard = () => {
                                 }
                             </tbody>
                         </table>
-                    </div>
-                </div>,
-        },
-        {
-            label: 'APPROVED',
-            content:
-                <div className="container-fluid mt-4">
-                    <div className="row">
-                        <table className='table  table-striped mt-3 text-center' id={Styles.table} >
+                    )}
+
+                    {approved && (
+                        <table className='table  table-striped mt-3' >
                             <thead>
-                                <tr id={Styles.tr}>
+                                <tr>
+                                    <th>Control Number</th>
                                     <th>Date</th>
-                                    <th>Destination</th>
-                                    <th>TimeOfDeparture</th>
-                                    <th>Time of Return	</th>
-                                    <th>Purpose</th>
-                                    <th>No Of Hours</th>
+                                    <th>Start Time</th>
+                                    <th>End Time</th>
+                                    <th>Task</th>
+                                    <th>Comments</th>
                                     <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {Approvedlocatorrequests.map((data, index) => {
+                                {approvedDashboard.map((data, index) => {
                                     return (
                                         <tr className="text-dark" key={index}>
+                                            <td>{data.id}</td>
                                             <td>{data.date}</td>
-                                            <td>{data.destination}</td>
-                                            <td>{data.timeOfDeparture}</td>
-                                            <td>{data.timeOfReturn}</td>
-                                            <td>{data.purpose}</td>
-                                            <td>{data.hourDiff}</td>
-                                            <td>{data.statusID}</td>
+                                            <td>{data.startTime}</td>
+                                            <td>{data.endTime}</td>
+                                            <td>{data.task}</td>
+                                            <td>{data.comments}</td>
+                                            <td>{data.status}</td>
                                         </tr>
                                     )
                                 })
                                 }
                             </tbody>
                         </table>
-                    </div>
-                </div>,
-        },
-        {
-            label: 'REJECTED',
-            content:
-                <div className="container-fluid mt-4">
-                    <div className="row">
-                        <table className='table  table-striped mt-3 text-center' id={Styles.table} >
+                    )}
+
+                    {rejected && (
+                        <table className='table  table-striped mt-3 ' >
                             <thead>
-                                <tr id={Styles.tr}>
+                                <tr>
+                                    <th>Control Number</th>
                                     <th>Date</th>
-                                    <th>Destination</th>
-                                    <th>TimeOfDeparture</th>
-                                    <th>Time of Return	</th>
-                                    <th>Purpose</th>
-                                    <th>No Of Hours</th>
+                                    <th>Start Time</th>
+                                    <th>End Time</th>
+                                    <th>Task</th>
+                                    <th>Comments</th>
                                     <th>Status</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {RejectedlocatorRequests.map((data, index) => {
+                                {rejecteddDashboard.map((data, index) => {
                                     return (
                                         <tr className="text-dark" key={index}>
+                                            <td>{data.id}</td>
                                             <td>{data.date}</td>
-                                            <td>{data.destination}</td>
-                                            <td>{data.timeOfDeparture}</td>
-                                            <td>{data.timeOfReturn}</td>
-                                            <td>{data.purpose}</td>
-                                            <td>{data.hourDiff}</td>
-                                            <td>{data.statusID}</td>
+                                            <td>{data.startTime}</td>
+                                            <td>{data.endTime}</td>
+                                            <td>{data.task}</td>
+                                            <td>{data.comments}</td>
+                                            <td>{data.status}</td>
                                         </tr>
                                     )
                                 })
                                 }
                             </tbody>
                         </table>
-                    </div>
-                </div>,
-        }
-    ]
-    const [activeTabIndex, setActiveTabIndex] = useState(0);
-
-    const tabsRef = useRef([]);
-
-    useEffect(() => {
-        function setTabPosition() {
-            const currentTab = tabsRef.current[activeTabIndex];
-        }
-
-        setTabPosition();
-        window.addEventListener('resize', setTabPosition);
-
-        return () => window.removeEventListener('resize', setTabPosition);
-    }, [activeTabIndex]);
-    return (
-        <Layout>
-            <div className='row mt-3'>
-                <div className='col-lg-3 text-end'>
-                    <Link className='Heading active' href="/Requests/Locatorrequest">My OBASIS Details</Link>
-                </div>
-                {/* <div className='col-lg-3'>
-                    <Link className='Heading active' href="/Requests/Myteamlocator">Company OBASIS Details</Link>
-                </div> */}
-            </div> <br />
-            <div className='card p-3 border-0 shadow-lg rounded-3 mt-4'>
-                <div className='row'>
-                    <div className='col-lg-1'>
-                        <p>Filter By</p>
-                    </div>
-
-                    <div className='col-lg-3'>
-                        <p>From Date</p>
-                        <input type="date" className='form-control' />
-                    </div>
-
-                    <div className='col-lg-3'>
-                        <p>To Date</p>
-                        <input type="date" className='form-control' />
-                    </div>
-
-                    <div className='col-lg-4'><br /><p></p>
-                        <input type="text" className='form-control' placeholder="Search For date ,or Status" />
-                    </div>
-                </div>
-            </div><br />
-            <div className="row">
-                <div className="col-lg-9">
-                    <div className={Styles.flex}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        {tabsData.map((tab, idx) => {
-                            return (
-                                <button key={idx} ref={(el) => (tabsRef.current[idx] = el)} className={Styles.btn} onClick={() => setActiveTabIndex(idx)} >
-                                    {tab.label}
-                                </button>
-                            );
-                        })}
-                    </div>
-                </div>
-                <div className="col-lg-3">
-                    <Link href="/Requests/Locatorrequest/new"><button className="submit-button">New Requests </button></Link>
-
-                </div>
-                <div className="py-4">
-                    {tabsData[activeTabIndex].content}
+                    )}
                 </div>
             </div>
         </Layout>
-
-    );
+    )
 }
 export default Locatordashboard;
-
-// onClick={clearData.bind(this)}

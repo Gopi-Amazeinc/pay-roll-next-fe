@@ -1,38 +1,29 @@
 import React, { useEffect, useState } from 'react';
 import { useForm } from "react-hook-form";
 import Link from 'next/link';
-import axios from 'axios';
 import Layout from '../../../components/layout/layout';
 import Styles from '../../../styles/groupMasterForm.module.css'
 import Swal from 'sweetalert2'
+import { apiService } from "@/services/api.service";
+import { useRouter } from "next/router";
 function GroupMasterForm({ editData }) {
-    const [actionType, setActionType] = useState("insert");
     const { register, handleSubmit, reset, formState } = useForm();
     const { errors } = formState;
-    let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+    const [actionType, setActionType] = useState("insert");
+    const router = useRouter();
 
-    async function onSubmit(data) {
+    const onSubmit = async (data) => {
         if (actionType == "insert") {
-            await axios.post(hostURL + "Master/InsertGroupMaster", data);   //naveen.th@amazeinc.in, Insert API for group master, to add new data
-            Swal.fire('Added Successfully')
-            location.href = "/Masters/GroupMaster";
+            await apiService.commonPostCall("Master/InsertGroupMaster", data);
+            Swal.fire("Data Inserted successfully");
+            router.push("/Masters/GroupMaster");
+        } else {
+            await apiService.commonPostCall("Master/UpdateGroupMaster", data);
+            Swal.fire("Data Updated successfully");
+            router.push("/Masters/GroupMaster");
         }
-        else {
-            await axios.post(hostURL + "Master/UpdateGroupMaster", data);  //naveen.th@amazeinc.in, Update API for group master, to update existing data
-            Swal.fire('Updated Successfully')
-            sessionStorage.removeItem("groupMasterID");
-            location.href = "/Masters/GroupMaster";
-        }
-    }
-    useEffect(() => {
+    };
 
-        if (editData == "") {
-            clearForm();
-        }
-        else {
-            clearForm(editData);
-        }
-    }, []);
 
     function clearForm(existingData = null) {
         let etty = {
@@ -41,8 +32,25 @@ function GroupMasterForm({ editData }) {
             "Description": existingData ? existingData.description : "",
         }
         reset(etty);
-        setActionType(existingData ? "update" : 'insert');
+        setActionType(existingData ? "update" : "insert");
     }
+
+
+    useEffect(() => {
+        const { id } = editData || {};
+        if (id) {
+            // This API is used to fetch the data from BarangayMaster ByID table
+            getGroupMasterByID(id);
+        } else {
+            clearForm();
+        }
+    }, []);
+    const getGroupMasterByID = async (id) => {
+        const res = await apiService.commonGetCall(
+            "Master/GetGroupMasterByID?ID=" + id
+        );
+        clearForm(res.data[0]);
+    };
 
     const customStyles = {
         content: {
@@ -122,15 +130,15 @@ function GroupMasterForm({ editData }) {
                                     Close
                                 </button></Link>
                             </div>
-                        
+
                             <div className='col-lg-2'>
                                 {actionType == "insert" && (
-                                    <button type="submit" className="AddButton" >
+                                    <button type="submit" className="AddButton">
                                         Save
                                     </button>
                                 )}
                                 {actionType == "update" && (
-                                    <button type="submit" className="AddButton" >
+                                    <button type="submit" className="AddButton">
                                         Update
                                     </button>
                                 )}

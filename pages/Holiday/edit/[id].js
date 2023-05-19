@@ -1,30 +1,27 @@
-import React from 'react';
-import { useRouter } from 'next/router'
-import Holidayform from '../holidayform';
+import React from 'react'
+import { useForm } from 'react-hook-form';
+// import Layout from '../../../../components/layout/layout'
+import Layout from '@/components/layout/layout'
 import axios from 'axios';
+import Swal from 'sweetalert2';
+import Link from 'next/link';
+import { useState, useEffect } from 'react';
+import { useRouter } from "next/router";
+import Holidayform from "@/pages/Holiday/holidayform";
 
 
-const Id = ({ data }) => {
-    console.log(data)
-    // const router = useRouter()
-    // const { id } = router.query
+function HolidayID() {
+ const router = useRouter();
+  const { id } = router.query;
 
-  
-    return (
-        <div>
-            <Holidayform editData={data}></Holidayform>
-        </div>
-    );
+return(
+    <>
+    <Holidayform editData={{ id }} />;
+
+    </>
+);
+
+    
 }
 
-export default Id;
-
-
-export async function getServerSideProps(context) {
-    console.log(context);
-    const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-    let response = await axios.get(hostURL + "HR/GetHolidaysByID?id=" + context.params.id);
-    const data = response.data[0];
-    console.log(response)
-    return { props: { data } }
-}
+export default HolidayID;

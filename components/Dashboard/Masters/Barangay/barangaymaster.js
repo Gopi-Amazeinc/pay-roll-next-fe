@@ -1,19 +1,15 @@
 import Link from "next/link";
 import { useEffect, useState } from "react";
-
-import { AiOutlinePlusCircle } from "react-icons/ai";
-
-import axios from "axios";
+import { apiService } from "@/services/api.service";
 import Swal from "sweetalert2";
+import { BiFilterAlt } from "react-icons/bi";
+import { AiOutlinePlus } from "react-icons/ai";
+import ReactPaginate from "react-paginate";
 
 export default function BarangayMasterDash() {
-  const [barangaymaster, setbarangaymaster] = useState([]);
-
-  const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-
+  const [barangaymaster, setbarangaymaster] = useState([])
   const getbarangaymaster = async () => {
-    // This API is used to fetch the data from Barangay Master table
-    let res = await axios.get(hostURL + "Master/GetBarangayMaster");
+    let res = await apiService.commonGetCall("Master/GetBarangayMaster");
     setbarangaymaster(res.data);
   };
   useEffect(() => {
@@ -22,9 +18,8 @@ export default function BarangayMasterDash() {
 
   const handleDelete = async (id) => {
     try {
-      // This API is used to delete the BarangayMaster data based on ID
-      let res = await axios.get(
-        hostURL + `Master/DeleteBarangayMaster?id=${id}`
+      let res = await apiService.commonGetCall(
+        `Master/DeleteBarangayMaster?id=${id}`
       );
       console.log(res.data);
       Swal.fire("Data deleted successfully");
@@ -34,45 +29,52 @@ export default function BarangayMasterDash() {
       Swal.fire("failed to  delete data");
     }
   };
+  const [keyword, setKeyword] = useState("");
+
+  const PER_PAGE = 2;
+  const [currentPage, setCurrentPage] = useState(0);
+  function handlePageClick({ selected: selectedPage }) {
+    setCurrentPage(selectedPage)
+  }
+  const offset = currentPage * PER_PAGE;
+  const pageCount = Math.ceil(barangaymaster.length / PER_PAGE);
+
 
   return (
     <div className="container">
-      <h5 className="Heading">Barangay Master</h5>
-      <div className="card shadow p-3 rounded-3 mt-4 mx-0">
+      <p className="Heading">Barangay Master</p>
+      <div className="card p-3 rounded-3 shadow border-0">
         <div className="row">
-          <div className="col-lg-1">
-            <p>Filter By</p>
+          <div className="col-1">
+            <p> <BiFilterAlt /> Filter By</p>
           </div>
-          <div className="col-lg-4">
+          <div className="col-5">
             <input
               type="text"
               placeholder="Search"
               className="form-control"
-            />
+              onChange={e => setKeyword(e.target.value)}
+            ></input>
           </div>
         </div>
       </div>
 
       <div className="row mt-3">
-        <div className="col-lg-10">
-          <p className="Heading fs-6 mt-2">
-            SHOWING <span></span>RESULTS
-          </p>
-        </div>
-        <div className="col-lg-2">
+        <p className="col-2 result-heading">Showing {barangaymaster.length} Results</p>
+        <div className="col-8"></div>
+        <div className="col-2">
           <Link href="/Masters/BarangayMaster/new">
             <button className=" AddButton">
-              {" "}
-              ADD NEW{" "}
-            </button>{" "}
+              <AiOutlinePlus />    Add New
+            </button>
           </Link>
         </div>
-        <div className="col-lg-1"></div>
       </div>
-      <div>
-        <table className="table table-striped mt-3">
+
+      <div className="mt-3">
+        <table className="table table-striped">
           <thead>
-            <tr className="bg-info text-white ">
+            <tr >
               <th>Country Name</th>
               <th>Province Name</th>
               <th>City Name</th>
@@ -81,34 +83,68 @@ export default function BarangayMasterDash() {
             </tr>
           </thead>
           <tbody>
-            {barangaymaster.map((data, index) => {
-              return (
-                <tr className="text-dark" key={index}>
-                  <td>{data.countryname}</td>
-                  <td>{data.statename}</td>
-                  <td>{data.cityname}</td>
-                  <td>{data.name}</td>
-                  <td>
-                    <Link href={`/Masters/BarangayMaster/Edit/${data.id}`}>
-                      <button
-                        className="edit-btn"
-                      >
-                        Edit
-                      </button>
-                    </Link>
-                    &nbsp;
-                    <button
-                      onClick={() => handleDelete(data.id)}
-                      className="edit-btn"
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              );
-            })}
+            {Array.isArray(barangaymaster) &&
+              barangaymaster.length > 0 && (
+                <>
+                  {barangaymaster
+                    .filter(data => {
+                      if ((data.countryname.toLowerCase().includes(keyword.toLowerCase())) || (data.name.toLowerCase().includes(keyword))) {
+                        return data;
+                      }
+                    })
+                    .slice(offset, offset + PER_PAGE)
+                    .map((data, index) => {
+                      return (
+                        <tr key={index}>
+                          <td>{data.countryname}</td>
+                          <td>{data.statename}</td>
+                          <td>{data.cityname}</td>
+                          <td>{data.name}</td>
+                          <td>
+                            <Link href={`/Masters/BarangayMaster/Edit/${data.id}`}>
+                              <button
+                                className="edit-btn"
+                              >
+                                Edit
+                              </button>
+                            </Link>
+                            &nbsp;&nbsp;
+                            <button
+                              onClick={() => handleDelete(data.id)}
+                              className="edit-btn"
+                            >
+                              Delete
+                            </button>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                </>
+              )}
           </tbody>
         </table>
+      </div>
+
+      <div className="mb-4 mt-4 text-center">
+        <ReactPaginate
+          previousLabel={"Previous"}
+          nextLabel={"Next"}
+          breakLabel={"..."}
+          pageCount={pageCount}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={3}
+          onPageChange={handlePageClick}
+          containerClassName={"pagination  justify-content-center"}
+          pageClassName={"page-item "}
+          pageLinkClassName={"page-link"}
+          previousClassName={"page-item"}
+          previousLinkClassName={"page-link"}
+          nextClassName={"page-item"}
+          nextLinkClassName={"page-link"}
+          breakClassName={"page-item"}
+          breakLinkClassName={"page-link"}
+          activeClassName={"active primary"}
+        />
       </div>
     </div>
   );

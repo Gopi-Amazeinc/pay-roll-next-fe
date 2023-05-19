@@ -1,20 +1,14 @@
+import LeaveTypeForm from '../new'
+import { useRouter } from 'next/router'
 
-import LeaveType from '../new';
-import axios from 'axios';
+function LeaveType() {
 
-const LeaveTypeEdit = ({ data }) => {
-    console.log(data)
+    const router = useRouter()
+    const { id } = router.query
+
     return (
-        <LeaveType editData={data}></LeaveType>
+        <LeaveTypeForm editData={{ id }} />
     )
-
 }
-export default LeaveTypeEdit;
 
-export async function getServerSideProps(context) {
-    console.log(context);
-    const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-    let response = await axios.get(hostURL + "Master/GetLeaveTypeByID?ID=" + context.params.id);
-    const data = response.data[0];
-    return { props: { data } }
-}
+export default LeaveType;

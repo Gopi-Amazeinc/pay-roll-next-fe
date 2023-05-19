@@ -22,6 +22,19 @@ function StaffDashbaord() {
   const clearData = () => {
     sessionStorage.setItem("id", "");
   };
+  const enableDisableStaff = async (data) => {
+    let entity = {
+      StaffID: data.employeID,
+      AttendanceEnable: !data.attendanceEnable,
+    };
+    await axios.post(hostURL + "Payroll/UpdateAttendanceEnableDisable", entity);
+    if (etty.AttendanceEnable == true) {
+      Swal.fire("Attendance enabled");
+    } else {
+      Swal.fire("Attendance disabled");
+    }
+    getData();
+  };
   const handleDelete = async (id) => {
     try {
       let res = await axios.get(
@@ -134,17 +147,27 @@ function StaffDashbaord() {
                   <td>{data.joiningDate}</td>
                   <td>{data.manager}</td>
                   <td>
-                    {/* <Link href={`/Masters/BarangayMaster/Edit/${data.id}`}> */}
-                      <button
+                    <span onClick={() => enableDisableStaff(data)}>
+                      {data.attendanceEnable ? (
+                        <button
                         onClick={getData.bind(this, data)}
                         className="enableDisableBtn"
                       >
                         Disable
-                      </button>
-                    {/* </Link> */}
-                    
+                      </button>  
+                      ) : (
+                        <button
+                        onClick={getData.bind(this, data)}
+                        className="enableDisableBtn"
+                      >
+                        Enable
+                      </button>  
+                      )}
+
+                    </span>
+                                        
                   </td>
-                  <td>
+                  <td >
                       <BiEdit/>
                   </td>
                 </tr>

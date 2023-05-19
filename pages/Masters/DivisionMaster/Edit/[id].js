@@ -1,20 +1,19 @@
-
-import DivDivisionMaster from '../new';
+import React, { useEffect, useState } from 'react'
+import { useForm } from 'react-hook-form';
+import Layout from '../../../../components/layout/layout'
 import axios from 'axios';
+import DivDivisionMaster from '../new';
+import { useRouter } from 'next/router'
 
-const DivisionMasterEdit = ({ data }) => {
-    console.log(data)
+
+function DivDivisionMasterEdit() {
+    const router = useRouter()
+    const { id } = router.query
+
     return (
-        <DivDivisionMaster editData={data}></DivDivisionMaster>
+        <DivDivisionMaster editData={{ id }} />
     )
-
 }
-export default DivisionMasterEdit;
 
-export async function getServerSideProps(context) {
-    console.log(context);
-    const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-    let response = await axios.get(hostURL + "Master/GetDivisionMasterByID?ID=" + context.params.id);
-    const data = response.data[0];
-    return { props: { data } }
-}
+export default DivDivisionMasterEdit;
+
