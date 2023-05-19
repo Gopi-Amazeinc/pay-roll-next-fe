@@ -41,15 +41,20 @@ export default function PayperiodSettingsDash() {
     return (
 
         <div className='container'>
-            <h3 className=' mt-3 Heading'>Pay Period Settings</h3>
-            <div className='card p-3 border-0 shadow-lg rounded-3 mt-4'>
-                <div className='row'>
-                    <div className='col-lg-1'>
-                        <p>Filter By</p>
-                    </div>
+            <h3 className='Heading'>Pay Period Settings</h3>
+            <br />
+            <div className='row'>
+                <div className='col-lg-12'>
+                    <div className='card p-3 rounded-3'>
+                        <div className='row'>
+                            <div className='col-lg-1'>
+                                <p>Filter By</p>
+                            </div>
 
-                    <div className='col-lg-4'>
-                        <input type="text" className='form-control' placeholder='Search...' />
+                            <div className='col-lg-4'>
+                                <input type="text" className='form-control' placeholder='Search...' />
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -215,7 +215,7 @@ function LeaveListDashboard() {
                                     </div>
                                 </div>
                                 <div className="col-lg-4 ">
-                                    <br /><br /><br /><br /><br /><br /><br /><br />x
+                                    <br /><br /><br /><br /><br /><br /><br /><br />
                                 </div>
                             </div>
                         </div>
