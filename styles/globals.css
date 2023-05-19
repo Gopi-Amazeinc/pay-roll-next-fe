@@ -33,7 +33,7 @@
   margin: 5px !important;
 }
 
-.staffSubmitBtn{
+.staffSubmitBtn {
   box-sizing: border-box;
   width: 111px;
   height: 39px;
@@ -45,7 +45,8 @@
   text-transform: capitalize;
   font-size: 16px;
 }
-.staffEditBtn{
+
+.staffEditBtn {
   display: flex;
   justify-content: center;
   width: 61px;
@@ -56,7 +57,8 @@
   border-radius: 5px solid #3247d5;
   border: 2px solid #3247d5;
 }
-.staffDeleteBtn{
+
+.staffDeleteBtn {
   display: flex;
   justify-content: center;
   width: 61px;
@@ -67,6 +69,7 @@
   border-radius: 5px solid red;
   border: 2px solid red;
 }
+
 .editDeleteBtnTable {
   border-radius: 5px;
   border: none;
@@ -138,10 +141,10 @@
 
 .Heading {
   color: #3247d5;
-  font-size: 24px ;
+  font-size: 22px;
   text-transform: capitalize;
   text-decoration: none;
-  font-weight: bold;
+  font-weight: 600;
   margin-top: 1.5%;
 }
 
@@ -338,7 +341,7 @@
 }
 
 
-.button-disabled{
+.button-disabled {
   background-color: #7e8194;
   color: #fff;
   border-radius: 5px;
@@ -350,7 +353,7 @@
   width: auto;
   font-size: 16px;
   font-weight: 500;
-  cursor:no-drop !important;
+  cursor: no-drop !important;
   text-transform: none;
   overflow: visible;
   margin: 0;
@@ -459,7 +462,7 @@ tr:nth-child(even) {
   background-color: #ffffff;
 }
 
-tr:nth-child(odd) > td:not(:first-child),
+tr:nth-child(odd)>td:not(:first-child),
 tr:nth-child(odd) td:first-child {
   background-color: #ffffff;
 }

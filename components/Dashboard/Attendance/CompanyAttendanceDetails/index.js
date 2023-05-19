@@ -152,7 +152,7 @@ const CompanyAttendanceDetails = () => {
                             <input type="text" className='form-control' placeholder='Search' />
                         </div>
 
-                        <div className='col-lg-3'>
+                        <div className='col-lg-2'>
 
                             <button className='button'>Upload</button><br /><p></p>
 
@@ -176,7 +176,7 @@ const CompanyAttendanceDetails = () => {
                             <th>Sign in Type</th>
                             <th>Expected in Time</th>
                             <th>Punch in Time</th>
-                            <th >Punch in Location/IP Address</th>
+                            <th >Punch in Location</th>
                             <th>Punched in From</th>
                             <th>Sign in Type</th>
                             <th>Expected Out Time</th>
@@ -185,25 +185,24 @@ const CompanyAttendanceDetails = () => {
                     <tbody>
                         {Array.isArray(CompanyAttendence) && CompanyAttendence.length > 0 && (
                             <>
-                                {
-                                    CompanyAttendence.map((data) => {
-                                        return (
-                                            <tr key={data.id}>
-                                                <td>{data.date}</td>
-                                                <td>{data.staffName}</td>
-                                                <td>{data.position}</td>
-                                                <td>{data.department}</td>
-                                                <td>{data.signInType}</td>
-                                                <td>{data.expectedInTime}</td>
-                                                <td>{data.punchInTime}</td>
-                                                <td>{data.punchinip}</td>
-                                                <td>{data.punchedInForm}</td>
-                                                <td>{data.signInType}</td>
-                                                <td>{data.expectedOutTime}</td>
+                                {CompanyAttendence.map((data) => {
+                                    return (
+                                        <tr key={data.id}>
+                                            <td>{data.date}</td>
+                                            <td>{data.staffName}</td>
+                                            <td>{data.position}</td>
+                                            <td>{data.department}</td>
+                                            <td>{data.signInType}</td>
+                                            <td>{data.expectedInTime}</td>
+                                            <td>{data.punchInTime}</td>
+                                            <td>{data.punchinip}</td>
+                                            <td>{data.punchedInForm}</td>
+                                            <td>{data.signInType}</td>
+                                            <td>{data.expectedOutTime}</td>
 
-                                            </tr>
-                                        )
-                                    })
+                                        </tr>
+                                    )
+                                })
                                 }
                             </>
                         )}

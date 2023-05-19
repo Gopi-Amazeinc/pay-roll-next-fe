@@ -12,7 +12,7 @@ const BankAdviceList = () => {
 
     useEffect(() => {
         async function getEmployeeSalary() {
-        
+
             // This API is used to Fetch the Employee salary  
             let res = await apiService.commonGetCall("Payroll/GetEmployeeSalary");
             setDashboardData(res.data);
@@ -42,135 +42,92 @@ const BankAdviceList = () => {
         setIsOpen(false);
     }
     return (
-        <div>
-            <div className='container-fluid'>
-                <div className='row'>
-                    <div className='col-lg-4'></div>
-                    <div className='col-lg-8'>
-                        <div className="container-fluid mt-2">
-                            <div className="row shadow-lg p-2 rounded-4 p-3">
-                                <h3 style={{ color: "red" }}>In this component API wants to be bind..!</h3>
-                                <label >Normal Payroll - Bank Advice List</label>
-                                <hr></hr>
-                                <div className="row">
-                                    <div className="col-lg-2">
-                                        <label>Year :</label>
-                                    </div>
-                                    <div className="col-lg-3">
-                                        <select class="form-select" aria-label="Default select example">
-                                            <option selected>Select Year</option>
-                                            <option value="2020">2020</option>
-                                            <option value="2021">2021</option>
-                                            <option value="2022">2022</option>
-                                            <option value="2023">2023</option>
-                                        </select>
-                                    </div>
+        <div className='container-fluid'>
+            <br />
+            <div className='row'>
+                <div className='col-lg-2'>
+                    <button className='EditDelteBTN'>NORMAL PAYROLL</button>
+                </div>
+                <div className='col-lg-10'></div>
+            </div>
+            <br />
+            <div className='row'>
+                <div className='col-lg-3'></div>
+                <div className='col-lg-6'>
+                    <div className='row'>
+                        <div className='card p-3'>
+                            <div className='row'>
+                                <label className='Heading'>BANK ADVICE LIST</label>
+                                <hr />
+                            </div>
+                            <div className='row'>
+
+                                <div className='col-lg-2'>
+                                    <span>Year:</span>
                                 </div>
-                                <br></br>
-                                <br></br>
-                                <br></br>
-                                <div className="row">
-                                    <div className="col-lg-2">
-                                        <label>Month :</label>
-                                    </div>
-                                    <div className="col-lg-3">
-                                        <select class="form-select" aria-label="Default select example">
-                                            <option selected>Select Month</option>
-                                            <option>January</option>
-                                            <option>February</option>
-                                            <option>March</option>
-                                            <option>April </option>
-                                            <option>May</option>
-                                            <option>June</option>
-                                            <option>July</option>
-                                            <option>August</option>
-                                            <option>September</option>
-                                            <option>October</option>
-                                            <option>November</option>
-                                            <option>December</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <br></br>
-                                <br></br>
-                                <br></br>
-                                <div className="row">
-                                    <div className="col-lg-2">
-                                        <label>Pay Period :</label>
-                                    </div>
-                                    <div className="col-lg-3">
-                                        <select class="form-select" aria-label="Default select example">
-                                            <option selected>Select Pay Period</option>
-                                            <option>1</option>
-                                            <option>2</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <br></br>
-                                <br></br>
-                                <br></br>
-                                <div className="row">
-                                    <div className="col-lg-4"></div>
-                                    <div className="col-lg-4">
-                                        <button className="btn" onClick={openModal}>Generate </button>
-                                    </div>
-                                    <div className="col-lg-4"></div>
+
+                                <div className='col-lg-5'>
+                                    <select className='form-select'>
+                                        <option value="0" disabled>Select Year</option>
+                                        <option>2023</option>
+                                        <option>2022</option>
+                                        <option>2021</option>
+                                        <option>2020</option>
+                                    </select>
                                 </div>
                             </div>
-                            <Modal isOpen={modalIsOpen} style={customStyles}>
-                                <div className="row">
-                                    <div className="col-lg-6">
-                                        <h6 style={{ color: '#3247d5', fontWeight: '500' }}> Bank Advice List</h6>
-                                    </div>
-                                    {/* <hr></hr> */}
+                            <br />
+                            <div className='row'>
+                                <div className='col-lg-2'>
+                                    <span>Month:</span>
                                 </div>
-                                <div className='row '>
-                                    <div className='col-lg-12'>
-                                        <table className='table table-bordered mt-4 text-center table-striped '>
-                                            <thead>
-                                                <tr>
-                                                    {/* <th>Gross Salary</th>
-                    <th>Address</th>
-                    <th>Staff Name</th> */}
-                                                    <th>
-                                                        <td>
-                                                            companycode
-                                                        </td>
-                                                    </th>
-                                                </tr>
-                                            </thead>
-                                            <tbody >
-                                                {
-                                                    dashboard.map((bank, index) => {
-                                                        return (
-                                                            <tr className="text-dark" key={index}>
-                                                                <td>D{{ bank, companyCode }}{{ bank, payrollCutOFFDATE }}0{{ bank, batchfilenumber }}3{{ bank, bankAccountNumber }}{{ bank, bankfilenetpay }}{{ bank, hashNumber }}</td>
-                                                            </tr>
-                                                        )
-                                                    })
-                                                }
-                                                <tr>
-                                                    <td>
 
-                                                    </td>
-
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                        <div className="row" style={{ textAlign: "center" }}>
-                                            <div className="col-lg-12">
-                                                <button type='button' className="btn" onClick={closeModal}>Close</button>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <div className='col-lg-5'>
+                                    <select className='form-select'>
+                                        <option value="0" disabled>Select Year</option>
+                                        <option>2023</option>
+                                        <option>2022</option>
+                                        <option>2021</option>
+                                        <option>2020</option>
+                                    </select>
                                 </div>
-                            </Modal>
+                            </div>
+                            <br />
+                            <div className='row'>
+                                <div className='col-lg-2'>
+                                    <span>Pay Period:</span>
+                                </div>
+
+                                <div className='col-lg-5'>
+                                    <select className='form-select'>
+                                        <option value="0" disabled>Select Year</option>
+                                        <option>2023</option>
+                                        <option>2022</option>
+                                        <option>2021</option>
+                                        <option>2020</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <br />
+                            <div className='row'>
+                                <div className='col-lg-2'></div>
+                                {/* <div className='col-lg-3'></div> */}
+
+                                <div className='col-lg-5'>
+                                    <button className='EditDelteBTN'>GENERATE</button>
+                                </div>
+                                <div className='col-lg-4'></div>
+                            </div>
+                            <br />
+
                         </div>
                     </div>
+
                 </div>
+                <div className='col-lg-3'></div>
             </div>
 
-        </div>
+        </div >
     )
 }
 
