@@ -1,3 +1,18 @@
+.button{
+    font-size: 12px;
+    font-weight: 600;
+    color: #3247d5;
+    text-align: center;
+    cursor: pointer;
+    transition: color .25s ease-in-out;
+    border: 2px solid #3247d5;
+}
+
+
+
+
+
+
 .reports{
     color: blue;
 }

@@ -79,7 +79,7 @@ const ApplyloansDashboard = () => {
     }
     return (
         <>
-            <div className="container">
+            <div className="container-fluid">
                 <h4 className="Heading">Apply Loans </h4>
                 <div className='card p-4 border-0 shadow-lg mt-4'>
                     <div className="row">
