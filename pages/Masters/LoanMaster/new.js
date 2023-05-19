@@ -34,71 +34,73 @@ function LoanMasterForm() {
 
   return (
     <Layout>
-      <div>
-        <p></p>
-        <h4 className='Heading mb-4'>Loan Type</h4>
-        <form onSubmit={handleSubmit(onSubmit)} >
-          <div className={Styles.card}>
-            <div className="row">
-              <div className="col-md-2">
-                <label className="fw-bold" style={customStyles.inputLabel}>
-                  Loan Type<span style={{ color: "red" }}>*</span>
-                </label><p></p>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Loan Type"
-                  {...register("Type", { required: true })}
-                ></input>
-                {errors.Type && (
-                  <span style={customStyles.errorMsg}>
-                    Please Loan Type
-                  </span>
-                )}
-              </div>
+      <div className='container-fluid'>
+        <p className='Heading'>Loan Type</p>
+        <div className='row'>
+          <div className='col-lg-12'>
+            <div className='card border-0 p-3 rounded-3'>
+              <form onSubmit={handleSubmit(onSubmit)} >
+                <div className="row">
+                  <div className="col-lg-2">
+                    <label className="fw-bold">
+                      Loan Type<span style={{ color: "red" }}>*</span>
+                    </label>
+                    <input
+                      type="text"
+                      className="form-control"
+                      placeholder="Loan Type"
+                      {...register("Type", { required: true })}
+                    ></input>
+                    {errors.Type && (
+                      <span style={customStyles.errorMsg}>
+                        Please Loan Type
+                      </span>
+                    )}
+                  </div>
 
-              <div className="col-md-4">
-                <label className="fw-bold" style={customStyles.inputLabel}>
-                  Description<span style={{ color: "red" }}>*</span>
-                </label><p></p>
-                <textarea
-                  className="form-control"
-                  name="Description"
-                  rows="3"
-                  type="text"
-                  {...register("Description", { required: true })}
-                  placeholder="Description"
-                />
-                {errors.Description && (
-                  <span style={customStyles.errorMsg}>
-                    Please Enter Description
-                  </span>
-                )}
-                <br />
-                <br />
-              </div>
+                  <div className="col-lg-5">
+                    <label className="fw-bold">
+                      Description<span style={{ color: "red" }}>*</span>
+                    </label>
+                    <textarea
+                      className="form-control"
+                      name="Description"
+                      rows="3"
+                      type="text"
+                      {...register("Description", { required: true })}
+                      placeholder="Description"
+                    />
+                    {errors.Description && (
+                      <span style={customStyles.errorMsg}>
+                        Please Enter Description
+                      </span>
+                    )}
 
-            </div>
-            <div className="row">
-              <div className="col-lg-8"></div>
-              <div className="col-lg-2">
-                <Link href="/Masters/LoanMaster">
-                  <button className="AddButton">
-                    Cancel
-                  </button>
-                </Link>
-              </div>
-              <div className="col-lg-2">
-                <button
-                  type="submit"
-                  className="AddButton"
-                >
-                  Save
-                </button>
-              </div>
+                  </div>
+                </div>
+                <br />
+                <div className="row">
+                  <div className="col-lg-8"></div>
+                  <div className="col-lg-2">
+                    <Link href="/Masters/LoanMaster">
+                      <button className="AddButton">
+                        Cancel
+                      </button>
+                    </Link>
+                  </div>
+                  <div className="col-lg-2">
+                    <button
+                      type="submit"
+                      className="AddButton"
+                    >
+                      Save
+                    </button>
+                  </div>
+                </div>
+              </form>
             </div>
           </div>
-        </form>
+        </div>
       </div >
     </Layout>
   )

@@ -86,22 +86,22 @@ function LeaveListDashboard() {
     const [approveddata, setApprovedData] = useState([])
     const [rejecteddata, setRejectedData] = useState([])
 
-    const getPendingData = async (startDate, endDate) => {
+    const getPendingData = async () => {
         debugger
         const staffID = sessionStorage.getItem("userID")
-        const res = await apiService.commonGetCall("Employee/GetPendingStaffLeavesByStaffID?ID=" + staffID + "&TypeID=1&Sdate=" + startDate + "&Edate=" + endDate)
+        const res = await apiService.commonGetCall("Employee/GetPendingStaffLeavesByStaffID?ID=" + staffID + "&TypeID=1&Sdate=" + Sdate + "&Edate=" + Edate)
         setPendingData(res.data);
         console.log(res.data);
     }
-    const getApprovedData = async (startDate, endDate) => {
+    const getApprovedData = async () => {
         const staffID = sessionStorage.getItem("userID")
-        const res = await apiService.commonGetCall("Employee/GetApprovedStaffLeavesByStaffID?ID=" + staffID + "&TypeID=1&Sdate=" + startDate + "&Edate=" + endDate)
+        const res = await apiService.commonGetCall("Employee/GetApprovedStaffLeavesByStaffID?ID=" + staffID + "&TypeID=1&Sdate=" + Sdate + "&Edate=" + Edate)
         setApprovedData(res.data);
         console.log(res.data);
     }
-    const getRejectedData = async (startDate, endDate) => {
+    const getRejectedData = async () => {
         const staffID = sessionStorage.getItem("userID")
-        const res = await apiService.commonGetCall("Employee/GetRejectedStaffLeavesByStaffID?ID=" + staffID + "&TypeID=1&Sdate=" + startDate + "&Edate=" + endDate)
+        const res = await apiService.commonGetCall("Employee/GetRejectedStaffLeavesByStaffID?ID=" + staffID + "&TypeID=1&Sdate=" + Sdate + "&Edate=" + Edate)
         setRejectedData(res.data);
         console.log(res.data);
     }
@@ -171,37 +171,41 @@ function LeaveListDashboard() {
                                     <Link href="/Requests/hrleaverequest" className="Heading mx-5" ><u>All Staff Leave Details</u></Link>
                                 )
                             }
+                            <h4 className="Heading">Leave Request </h4>
                         </div>
                     </div>
                     <br />
                     <div className="row">
                         <div className="col-lg-4">
-                            <div className="card p-3 border-0 shadow-lg rounded-3 mt-4">
+                            <div className="card p-3 border-0">
                                 <div className="row">
                                     <div className="col-lg-6">
                                         <p>START DATE:</p>
-                                        <input id="date" name="date" type="date" {...register("StartDate")} placeholder="Duration" className="form-control " onChange={() => handleStartDate()} />
+                                        <input id="date" name="date" type="date" placeholder="Duration" className="form-control " />
                                     </div>
                                     <div className="col-lg-6">
                                         <p>END DATE:</p>
-                                        <input id="date" name="date" type="date" placeholder="Duration" {...register("EndDate")} onChange={() => handleEndDate()} className="form-control " />
+                                        <input id="date" name="date" type="date" placeholder="Duration" className="form-control " />
                                     </div>
-
-                                    <div className="col-lg-12 searchtxt mt-4"><br /><input type="search" placeholder="Search for date , Leave Type or Status" className="form-control " /></div>
+                                    <br /> <br /><br /> <br />
+                                    <div className="col-lg-12 searchtxt ">
+                                        <br /><input type="search" placeholder="Search for date , Leave Type or Status" className="form-control " />
+                                    </div>
+                                    <br /><br />
                                 </div>
                             </div>
-                            <br /><br />
+
                         </div>
-                        <div className="col-lg-8">
-                            <div className="card p-3 border-0 shadow-lg rounded-3 mt-4">
-                                <div className="row" style={{ marginBottom: "3px" }}>
+                        {/* <div className="col-lg-8">
+                            <div className="card p-3 border-0 rounded-3">
+                                <div className="row">
                                     <div className="col-lg-4 ">
-                                        <div className="card shadow p-1">
+                                        <div className="card p-1">
                                             <p className="para"><b className="number"> </b> Sick Leave </p>
                                         </div>
                                     </div>
                                     <div className='col-lg-4'>
-                                        <div className="card shadow p-1">
+                                        <div className="card p-1">
                                             <p className="para"><b className="number"></b> Vacation Leave</p>
 
                                         </div>
@@ -211,13 +215,13 @@ function LeaveListDashboard() {
                                     </div>
                                 </div>
                             </div>
-                        </div>
-
+                        </div> */}
                     </div>
+                    <br /><br />
                     <div className="row">
-                        <div className="col-md-4">
-                            <div className='row mt-3'>
-                                <div className='col-lg-4 mx-5'>
+                        <div className="col-lg-4">
+                            <div className='row'>
+                                <div className='col-lg-6'>
                                     <div className='btn-group'>
                                         <button onClick={toggleCalender} className="toggleButton">Calender</button>
                                         <button onClick={toggleListView} className={`toggleButton ${listview ? "focus" : ""}`}>List View</button>
@@ -227,8 +231,9 @@ function LeaveListDashboard() {
                             </div>
                             <br />
                         </div>
-                        <div className="col-md-4"></div>
-                        <div className="col-md-4">
+                        <div className="col-lg-4"></div>
+                        <div className="col-lg-1"></div>
+                        <div className="col-lg-1">
                             <Link href="/Requests/Applyleave/new"><button className="submit-button" tabIndex="0"> Apply Leave</button>
                             </Link>
                         </div>

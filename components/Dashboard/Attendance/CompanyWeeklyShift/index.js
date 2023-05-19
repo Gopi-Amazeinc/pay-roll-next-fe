@@ -17,7 +17,7 @@ const Index = () => {
                 </div>
                 <div className='col-lg-3' style={{ marginLeft: "-10%" }}>
                     <br />
-                    <Link href="/Attendance/MyTeamWeeklyShift" className={Styles.mainheader}> My Team Weekly Shift</Link>
+                    <Link href="/Attendance/MyTeamWeeklyShift" className={Styles.mainheader}> Company Shift Details</Link>
                 </div>
             </div>
             <div className='card shadow-lg p-4 rounded-3 mt-4'>

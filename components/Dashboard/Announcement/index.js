@@ -106,7 +106,6 @@ const AnnoucementDash = () => {
                     <td>{data.reason}</td>
                     <td>{data.description}</td>
                     <td>{data.venue} </td>
-                    <td></td>
                   </tr>
                 );
               })}
@@ -135,7 +134,6 @@ const AnnoucementDash = () => {
                     <td>{data.reason}</td>
                     <td>{data.description}</td>
                     <td>{data.venue} </td>
-                    <td></td>
                   </tr>
                 );
               })}

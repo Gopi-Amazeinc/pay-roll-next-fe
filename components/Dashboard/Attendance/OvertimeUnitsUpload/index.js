@@ -5,6 +5,8 @@ import React, { useState } from 'react'
 import { useRef } from 'react';
 import { DownloadTableExcel } from 'react-export-table-to-excel';
 import { Modal, ModalBody, ModalFooter } from 'reactstrap';
+import Styles from "@/styles/shiftdetails.module.css";
+
 
 const MyTeamOverTimeDetail = () => {
 
@@ -14,31 +16,27 @@ const MyTeamOverTimeDetail = () => {
   return (
 
     <div>
-      <div className="col-md-12">
+      <div className="col-lg-12">
         <div className="row">
-          <h4>Yet to bind</h4>
-          <div className="col-md-12">
-            <ul>
-            </ul>
-          </div>
+          <h6 className="mt-2">Yet to bind</h6>
         </div>
         <br></br>
-        <div className='card shadow-lg p-4 rounded-3 mt-1'>
-          {/* <div className={overtime.filtercard}> */}
-          <div className="row">
-            <div className="col-md-1"> Filter By </div>
-            <div className="col-md-2">
-              <p>Pay Date </p>
-              <input type="date" onKeyDown={() => false} placeholder="Duration" id="sdate" name="sdate" className="form-control "></input>
-            </div>
-            <div className="col-md-4">
-              <p></p><br></br>
-              <input id="term" name="term" type="search" placeholder="Search for staff.. " className="form-control "></input>
-            </div>
-            <div className="col-md-3"><br></br><p></p>
-              <button color="primary" className='submit-button' type="button" onClick={() => setModalOpen(!modalOpen)} >
-                Upload OVERTIME
-              </button>
+        <div className={Styles.filter}>
+          <div className="card p-3  border-0  rounded-3">
+            <div className="row">
+              <div className="col-lg-1">
+                <p className={Styles.filterdate} >Filter By</p>
+              </div>
+
+              <div className="col-lg-4">
+                <br />
+                <input id="term" name="term" type="search" placeholder="Search for staff.. " className="form-control "></input>
+              </div>
+              <div className="col-lg-2"><br />
+                <button color="primary" className='button' type="button" onClick={() => setModalOpen(!modalOpen)} >
+                  Upload Overtime
+                </button>
+              </div>
               <Modal toggle={() => setModalOpen(!modalOpen)} isOpen={modalOpen}>
                 <div className=" modal-header">
                   <h5 className=" modal-title" >
@@ -65,58 +63,60 @@ const MyTeamOverTimeDetail = () => {
                         </ModalFooter>
                       </div>
                     </div>
-                    <div className='col-lg-6'>
-                      <div>
-                        <DownloadTableExcel
-                          filename="users table"
-                          sheet="users"
-                          currentTableRef={tableRef.current}>
-                          <button type="button" className="button">Export To Excel </button>
-                        </DownloadTableExcel>
-                      </div>
-                    </div>
+
                   </div>
                 </ModalBody>
               </Modal>
-            </div>
-          </div>
-          {/* </div> */}
-        </div>
-        <br></br>
-        <div className="row">
-          <div className="col-lg-10">
-          </div>
-          <div className="col-lg-2"> <DownloadTableExcel
-            filename="UploadLoanTemplate"
-            sheet="users"
-            currentTableRef={tableRef.current}
-          >
-            <button className='button'>Export to Excel</button>
-          </DownloadTableExcel>
 
-          </div>
-        </div>
-        <br></br>
-        <div className="row">
-          <div className="col-md-5">
-          </div>
-          <div className="col-md-5">
-          </div>
-          <div className="col-md-2">
-          </div>
-        </div>
-        <br></br>
-        <div className="row">
-          <div className="row">
-          </div>
-          <br></br>
-          <div>
-            <div><br></br><br></br>
+
+              < div className="col-lg-2">
+                <br />
+                <DownloadTableExcel
+                  filename="UploadLoanTemplate"
+                  sheet="users"
+                  currentTableRef={tableRef.current}
+                >
+                  <button className='button'>Export to Excel</button>
+                </DownloadTableExcel>
+
+              </div>
             </div>
           </div>
-          <div className="col-md-1">
+        </div>
+        <br />
+        <div className="text-primary fs-6 fw-bold">
+          <h6>Showing Results</h6>
+        </div>
+        <div classname="row">
+          <div className="table-responsive">
+            <table
+              className="table table-striped  "
+              style={{ marginLeft: "0px", width: "100%" }}
+              ref={tableRef}
+            >
+              <thead className={"bg-info text-white "}>
+                <tr style={{ whiteSpace: "nowrap" }}>
+                  <th>Employee ID</th>
+                  <th>Employee Name</th>
+                  <th>Pay Date </th>
+                  <th>Component Name</th>
+                  <th>No of Hours </th>
+                </tr>
+              </thead>
+              <tbody>
+
+              </tbody>
+            </table>
           </div>
         </div>
+
+
+
+
+
+
+
+
       </div>
     </div>
   )

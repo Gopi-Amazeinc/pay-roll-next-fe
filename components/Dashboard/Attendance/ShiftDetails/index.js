@@ -3,7 +3,7 @@ import React, { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import axios from "axios";
 import { apiService } from "@/services/api.service";
-import Styles from "@/styles/shiftDetails.module.css";
+import Styles from "@/styles/shiftdetails.module.css";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { DownloadTableExcel } from "react-export-table-to-excel";
 
@@ -157,6 +157,11 @@ const Shiftdetails = () => {
               <Link href="/Attendance/MyTeamWeeklyShift" className={Styles.mainheader}> My Team Weekly Shift</Link>
             </div>
           }
+          {roleid != 2 ||
+            <div className='col-lg-3 mt-4' style={{ marginLeft: "-10%" }}>
+              <Link href="/Attendance/CompanyShiftDetails" className={Styles.mainheader}> Company Weekly Shift</Link>
+            </div>
+          }
         </div>
         {/* <div className="row">
                 <div className="col-lg-3">
@@ -191,7 +196,7 @@ const Shiftdetails = () => {
               <div className="col-lg-2">
                 <br />
                 <Link href="/Attendance/StaffShiftForm/new" className={Styles.adddetail}>
-                  <button className="button" style={{ fontSize: "15px",marginTop:"7px" }}><IoIosAddCircleOutline size={18} color={"white"} />  ADD SHIFT DETAILS</button>
+                  <button className="button" style={{ fontSize: "15px", marginTop: "7px" }}><IoIosAddCircleOutline size={18} color={"white"} />  ADD SHIFT DETAILS</button>
                 </Link>
               </div>
               <div className="col-lg-2">
@@ -200,7 +205,7 @@ const Shiftdetails = () => {
                   filename="users table"
                   sheet="users"
                   currentTableRef={tableRef.current}
-                > <button className="button" style={{marginTop:"7px"}} > DOWNLOAD</button></DownloadTableExcel>
+                > <button className="button" style={{ marginTop: "7px" }} > DOWNLOAD</button></DownloadTableExcel>
 
               </div>
             </div>
@@ -328,7 +333,7 @@ const Shiftdetails = () => {
       )} */}
 
         <div className="row mt-3">
-          <table className="table table-striped mt-3"     style={{ marginLeft: "10px", width: "97%" }} ref={tableRef}>
+          <table className="table table-striped mt-3" style={{ marginLeft: "10px", width: "97%" }} ref={tableRef}>
             <thead>
               <tr className="bg-info text-white">
                 <th>START DATE</th>

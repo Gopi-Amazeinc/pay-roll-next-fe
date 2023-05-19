@@ -40,11 +40,12 @@ const Holidaydashboard = () => {
 
   return (
     <div>
+      <div className="container-fluid">
       <br></br> <p id={Styles.title}>Holiday Dashboard</p>
-      <div className="container-fluid mt-4">
+     
         <div
-          className="shadow-lg p-3 mb-5 bg-white rounded"
-          style={{ marginRight: "10px" }}
+          className="  card p-3 mb-5 bg-white rounded"
+          
         >
           <div className="col-lg-1">
             <b>
@@ -66,17 +67,16 @@ const Holidaydashboard = () => {
             />
           </div>
         </div>
-        <div className="row mt-4">
-          <div className="col-lg-10"></div>
-          <div className="col-lg-2">
+        <div className="row mt-2">
+          <div className="col-lg-8"></div>
+          <div className="col-lg-4">
             <Link href="/Holiday/holidayform">
               <button
-                className="btn btn-primary btn-sm shadow-lg"
+                className="btn btn-primary btn-sm shadow-lg" style={{marginLeft:"49%"}}
                 id={Styles.addNew}
                 onClick={clearData.bind(this)}
               >
-                {" "}
-                ADD new
+                addd new
               </button>
               {/* // onClick={() => setModalOpen(!modalOpen)}>   */}
               {/* <AiOutlinePlusCircle /> */}
@@ -85,7 +85,8 @@ const Holidaydashboard = () => {
         </div>
         <br />
         <div className="row">
-          <table className={Styles.commonTable}>
+          <div className="col-lg-12">
+          <table className="table table-striped table-hover mt-2">
             <thead>
               <tr>
                 <th>Holiday</th>
@@ -121,7 +122,8 @@ const Holidaydashboard = () => {
             </tbody>
           </table>
         </div>
-      </div>
+        </div>
+    </div>
     </div>
   );
 };

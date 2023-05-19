@@ -48,59 +48,78 @@ function Mpf() {
     };
     return (
         <div>
-            <div>
-                <br />
-                <p className={Styles.p}>MPF Configuration</p>
-                <div className='card shadow-lg p-4 rounded-2 mt-4' id={Styles.card}>
-                    <div className='row'>
-                        <div className='col-lg-1'></div>
-                        <div className='col-lg-4'>
-                            <input type="text" placeholder='Search..' className='form-control form-control-md' />
+            <div className="container-fluid">
+
+                <label className='Heading'>MPF Configuration</label>
+                <br /><br />
+                <div className='row'>
+                    <div className='col-lg-12'>
+                        <div className='card p-3 border-0  rounded-3'>
+                            <div className='row'>
+                                <div className='col-lg-1'>
+                                    <p>Filter By</p>
+                                </div>
+
+                                <div className='col-lg-3'>
+                                    <input type="text" className='form-control' placeholder='Search...' />
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div className='row mt-3'>
-                    <div className='col-lg-10'></div>
+                <div className='row '>
+                    <div className='col-lg-10'>
+
+                    </div>
+
                     <div className='col-lg-2'>
-                        <Link href="/Settings/Mpf/new" className={Styles.addLink} > <button className={Styles.addButton} onClick={clearData.bind(this)} > ADD NEW</button></Link>
+                        <br />
+                        <Link href="/Settings/Mpf/new" className={Styles.addLink} > <button className='AddButton' onClick={clearData.bind(this)} > ADD NEW</button></Link>
+
                     </div>
                 </div>
-                <table className={'table  table-striped mt-3 text-center ' + Styles.table}>
-                    <thead>
-                        <tr className='bg-info text-white '>
-                            <th>Taxable income low limit</th>
-                            <th>Taxable income high limit</th>
-                            <th>MPF_EE value</th>
-                            <th>MPF_ER value</th>
-                            <th>MPF_Ec value</th>
-                            <th>Year</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            mpfDetails.map((data, index) => {
-                                return (
-                                    <tr className="text-dark" key={index}>
-                                        <td>{data.taxiableincomelowlimit}</td>
-                                        <td>{data.taxiableincomehighlimit}</td>
-                                        <td>{data.mpF_EEvalue}</td>
-                                        <td>{data.mpF_ERvalue}</td>
-                                        <td>{data.mpF_Ecvalue}</td>
-                                        <td>{data.year}</td>
-                                        <td>
-                                            <Link href={`/Settings/Mpf/Edit/${data.id}`} style={{ marginRight: "10px" }}>
-                                                <button className={Styles.actionButton} onClick={getData.bind(this, data)}>Edit</button>
-                                            </Link>
-                                            <button className={Styles.actionButton} onClick={() => handleDelete(data.id)}>Delete</button>
-                                        </td>
+                <div className='row'>
+                    <div className='col-lg-12'>
+                        < div className='table-responsive'>
+                            <table className='table mt-4 table-striped text-center ' >
+                                <thead className='bg-info text-white '>
+                                    <tr style={{ whiteSpace: "nowrap" }}>
+                                        <th>Taxable income low limit</th>
+                                        <th>Taxable income high limit</th>
+                                        <th>MPF_EE value</th>
+                                        <th>MPF_ER value</th>
+                                        <th>MPF_Ec value</th>
+                                        <th>Year</th>
+                                        <th>Action</th>
                                     </tr>
-                                )
-                            })
-                        }
+                                </thead>
+                                <tbody>
+                                    {
+                                        mpfDetails.map((data, index) => {
+                                            return (
+                                                <tr className="text-dark" key={index}>
+                                                    <td>{data.taxiableincomelowlimit}</td>
+                                                    <td>{data.taxiableincomehighlimit}</td>
+                                                    <td>{data.mpF_EEvalue}</td>
+                                                    <td>{data.mpF_ERvalue}</td>
+                                                    <td>{data.mpF_Ecvalue}</td>
+                                                    <td>{data.year}</td>
+                                                    <td>
+                                                        <Link href={`/Settings/Mpf/Edit/${data.id}`} style={{ marginRight: "10px" }}>
+                                                            <button className='edit-btn' onClick={getData.bind(this, data)}>Edit</button>
+                                                        </Link>
+                                                        <button className='edit-btn' onClick={() => handleDelete(data.id)}>Delete</button>
+                                                    </td>
+                                                </tr>
+                                            )
+                                        })
+                                    }
 
-                    </tbody>
-                </table>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     )

@@ -83,131 +83,128 @@ const BarangayMasterForm = ({ editData }) => {
   };
   return (
     <Layout>
-      <div className="container">
+      <div className="container-fluid">
+        <p className="Heading">Barangay Details</p>
         <div className="row">
-          <div className="col-lg-5">
-            <h3 className="Heading">Barangay Details</h3>
+          <div className="col-lg-12">
+            <div className="card p-3 rounded-3 border-0">
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <div className="row">
+                  <div className="col-lg-3">
+                    <label className="fw-bold" >
+                      Country Name<span style={{ color: "red" }}>*</span>
+                    </label>
+                    
+                    <select
+                      className={Barangay.selecter}
+                      {...register("CountryID", { required: true })}
+                    >
+                      <option value="" className={Barangay.options}>
+                        Select Country
+                      </option>
+                      {countrydata.map((data) => {
+                        return (
+                          <option value={data.id} key={data.id}>
+                            {data.short}
+                          </option>
+                        );
+                      })}
+                    </select>
+                    {errors.CountryID && (
+                      <p style={{ color: "red" }} className="error">
+                        Please select a country
+                      </p>
+                    )}
+                  </div>
+                  <div className="col-lg-3">
+                    <label className="fw-bold">
+                      Province<span style={{ color: "red" }}>*</span>
+                    </label>
+                    
+                    <select
+                      className={Barangay.selecter}
+                      {...register("ProvinceID", { required: true })}
+                    >
+                      <option value="">Select State</option>
+                      {provincedata.map((data) => {
+                        return (
+                          <option value={data.id} key={data.id}>
+                            {data.short}
+                          </option>
+                        );
+                      })}
+                    </select>
+                    {errors.ProvinceID && (
+                      <p style={{ color: "red" }} className="error">
+                        Please select a Province
+                      </p>
+                    )}
+                  </div>
+                  <div className="col-lg-3">
+                    <label className="fw-bold">
+                      City<span style={{ color: "red" }}>*</span>
+                    </label>
+                    
+                    <select
+                      className={Barangay.selecter}
+                      {...register("CityID", { required: true })}
+                    >
+                      <option value="">Select City</option>
+                      {citydata.map((data) => {
+                        return (
+                          <option value={data.id} key={data.id}>
+                            {data.short}
+                          </option>
+                        );
+                      })}
+                    </select>
+                    {errors.CityID && (
+                      <p style={{ color: "red" }} className="error">
+                        Please select a City
+                      </p>
+                    )}
+                  </div>
+                  <div className="col-lg-3">
+                    <label className="fw-bold">
+                      Barangay<span style={{ color: "red" }}>*</span>
+                    </label>
+                    
+                    <input
+                      type="text"
+                      className={Barangay.selecter}
+                      {...register("Name", { required: true })}
+                    />
+                    {errors.Name && (
+                      <p style={{ color: "red" }} className="error">
+                        Please Enter a Barangay
+                      </p>
+                    )}
+                  </div>
+                </div>
+                <br/>
+                <div className="row">
+                  <div className="col-lg-8"></div>
+                  <div className="col-lg-2">
+                    <Link href="/Masters/BarangayMaster">
+                      <button className="AddButton">CANCEL</button>
+                    </Link>
+                  </div>
+                  <div className="col-lg-2">
+                    {actionType == "insert" && (
+                      <button type="submit" className="AddButton">
+                        Save
+                      </button>
+                    )}
+                    {actionType == "update" && (
+                      <button type="submit" className="AddButton">
+                        Update
+                      </button>
+                    )}
+                  </div>
+                </div>
+              </form>
+            </div>
           </div>
-          <div className="col-lg-3"></div>
-          <div className="col-lg-2"></div>
-        </div>
-        <br />
-        <div className={Barangay.card}>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="row">
-              <div className="col-lg-3">
-                <label className={Barangay.labels}>
-                  Country Name<span style={{ color: "red" }}>*</span>
-                </label>
-                <br />
-                <select
-                  className={Barangay.selecter}
-                  {...register("CountryID", { required: true })}
-                >
-                  <option value="" className={Barangay.options}>
-                    Select Country
-                  </option>
-                  {countrydata.map((data) => {
-                    return (
-                      <option value={data.id} key={data.id}>
-                        {data.short}
-                      </option>
-                    );
-                  })}
-                </select>
-                {errors.CountryID && (
-                  <p style={{ color: "red" }} className="error">
-                    Please select a country
-                  </p>
-                )}
-              </div>
-              <div className="col-lg-3">
-                <label className={Barangay.labels}>
-                  Province<span style={{ color: "red" }}>*</span>
-                </label>
-                <br />
-                <select
-                  className={Barangay.selecter}
-                  {...register("ProvinceID", { required: true })}
-                >
-                  <option value="">Select State</option>
-                  {provincedata.map((data) => {
-                    return (
-                      <option value={data.id} key={data.id}>
-                        {data.short}
-                      </option>
-                    );
-                  })}
-                </select>
-                {errors.ProvinceID && (
-                  <p style={{ color: "red" }} className="error">
-                    Please select a Province
-                  </p>
-                )}
-              </div>
-              <div className="col-lg-3">
-                <label className={Barangay.labels}>
-                  City<span style={{ color: "red" }}>*</span>
-                </label>
-                <br />
-                <select
-                  className={Barangay.selecter}
-                  {...register("CityID", { required: true })}
-                >
-                  <option value="">Select City</option>
-                  {citydata.map((data) => {
-                    return (
-                      <option value={data.id} key={data.id}>
-                        {data.short}
-                      </option>
-                    );
-                  })}
-                </select>
-                {errors.CityID && (
-                  <p style={{ color: "red" }} className="error">
-                    Please select a City
-                  </p>
-                )}
-              </div>
-              <div className="col-lg-3">
-                <label className={Barangay.labels}>
-                  Barangay<span style={{ color: "red" }}>*</span>
-                </label>
-                <br />
-                <input
-                  type="text"
-                  className={Barangay.selecter}
-                  {...register("Name", { required: true })}
-                />
-                {errors.Name && (
-                  <p style={{ color: "red" }} className="error">
-                    Please Enter a Barangay
-                  </p>
-                )}
-              </div>
-            </div>
-            <br />
-            <div className="row">
-              <div className="col-lg-8"></div>
-              <div className="col-lg-2">
-                <Link href="/Masters/BarangayMaster">
-                  <button className="AddButton">CANCEL</button>
-                </Link>
-              </div>
-              <div className="col-lg-2">
-                {actionType == "insert" && (
-                  <button type="submit" className="AddButton">
-                    Save
-                  </button>
-                )}
-                {actionType == "update" && (
-                  <button type="submit" className="AddButton">
-                    Update
-                  </button>
-                )}
-              </div>
-            </div>
-          </form>
         </div>
       </div>
     </Layout>

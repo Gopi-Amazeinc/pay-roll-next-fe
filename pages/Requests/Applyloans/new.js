@@ -47,12 +47,12 @@ const Applyloans = () => {
     return (
         <Layout>
 
-            <h4 className="text-primary mx-2">Apply Loan</h4>
+            <h4 className="Heading">Apply Loan</h4><br />
             <form onSubmit={handleSubmit(onSubmit)}>
-                <div className='card shadow-lg p-3'>
+                <div className='card p-3 border-0'>
                     <div className='row'>
                         <div className='col-lg-2'>
-                            <p className={styles.p}>Loan Type <span style={{ color: "red" }}>*</span></p>
+                            <label style={{fontWeight:"bold"}}>Loan Type <span style={{ color: "red" }}>*</span></label>
                             <select className='form-select form-select-sm' {...register('loanType', {
                                 required: "loanType is required", pattern: { value: '^[A-Za-z0-9 ]+$', message: "Please enter a valid Position Name" }
                             })} >
@@ -67,7 +67,7 @@ const Applyloans = () => {
                             {errors.loanType && <p className="error-message" style={{ color: "red" }}>{errors.loanType.message}</p>}
                         </div>
                         <div className='col-lg-2'>
-                            <p className={styles.p}>Loan Amount<span style={{ color: "red" }}>*</span></p>
+                            <label style={{fontWeight:"bold"}}>Loan Amount<span style={{ color: "red" }}>*</span></label>
                             <input type='text' placeholder='Loan Amount' {...register('loanAmount', {
                                 required: "Loan amount  is required", pattern: {
                                     value: '^[A-Za-z0-9 ]+$',
@@ -77,7 +77,7 @@ const Applyloans = () => {
                             {errors.loanAmount && <p className="error-message" style={{ color: "red" }}>{errors.loanAmount.message}</p>}
                         </div>
                         <div className='col-lg-2'>
-                            <p className={styles.p}>Tenure <span style={{ color: "red" }}>*</span></p>
+                            <label style={{fontWeight:"bold"}}>Tenure <span style={{ color: "red" }}>*</span></label>
                             <input type='text' placeholder='Tenure' {...register('Tenure', {
                                 required: "Tenure is required", pattern: {
                                     value: '^[A-Za-z0-9 ]+$',
@@ -87,7 +87,7 @@ const Applyloans = () => {
                             {errors.Tenure && <p className="error-message" style={{ color: "red" }}>{errors.Tenure.message}</p>}
                         </div>
                         <div className='col-lg-4'>
-                            <p className={styles.p}>Comments<span style={{ color: "red" }}>*</span></p>
+                            <label style={{fontWeight:"bold"}}>Comments<span style={{ color: "red" }}>*</span></label>
                             <textarea rows={3} className='form-control' {...register('Comments', {
                                 required: "Comments is required", pattern: {
                                     value: '^[A-Za-z0-9 ]+$',
