@@ -1,5 +1,5 @@
 import Layout from '@/components/layout/layout.js';
-import payslipstyle from "../../../styles/payslip.module.css"
+import payslipstyle from "../../../pages/Reports/Payslip/payslip.module.css"
 import { useEffect, useRef, useState } from 'react';
 import React from 'react';
 export default function PayslipReport() {
@@ -82,7 +82,32 @@ export default function PayslipReport() {
 
     return (
         <Layout>
-            <div className="row">
+            <div>
+                <div className='container-fluid'>
+                    <h3 className="Heading">Payslip Report</h3>
+                    
+                    <br></br>
+                    <div className='row'>
+                        <div className='col-lg-2'>
+                            <button className='button'>
+                                Normal Payroll
+                            </button>
+                        </div>
+                    </div>
+
+                    <div className='row'>
+                        <table>
+                            
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+            {/* <div className="row">
                 <div className="col-lg-12">
                     <h4 className={payslipstyle.reports}>Payslip Report</h4>
                 </div>
@@ -214,7 +239,7 @@ export default function PayslipReport() {
                         <p>HDMF_EE</p>
                         <p>PHIL_EE </p>
                     </div>
-                </div>)}
+                </div>)} */}
         </Layout>
     );
 }

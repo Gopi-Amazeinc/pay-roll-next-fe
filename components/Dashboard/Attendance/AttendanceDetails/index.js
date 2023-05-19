@@ -150,10 +150,10 @@ const AttendenceDetails = () => {
           <div className="card p-3  border-0 shadow-lg rounded-3 mt-4">
             <div className="row">
               <div className="col-lg-1">
-                <p >Filter By</p>
+                <p className={Styles.filterdate} >Filter By</p>
               </div>
               <div className="col-lg-3">
-                <p >Start Date</p>
+                <p className={Styles.filterdate} >Start Date</p>
                 <input
                   type="date"
                   className="form-control"
@@ -163,7 +163,7 @@ const AttendenceDetails = () => {
               </div>
 
               <div className="col-lg-3">
-                <p >End Date</p>
+                <p className={Styles.filterdate} >End Date</p>
                 <input
                   type="date"
                   className="form-control"
@@ -180,7 +180,7 @@ const AttendenceDetails = () => {
                   sheet="users"
                   currentTableRef={tableRef.current}>
                   <button className="button" id="AddButton">
-                    Download
+                    DOWNLOAD
                   </button>
                 </DownloadTableExcel>
               </div>
