@@ -151,7 +151,7 @@ const InitialPayrollForm = () => {
                                 <br />
                                 <p></p>
                                 <Button
-                                    style={{ background: "#3247d5" }}
+                                    style={{ background: "#3247d5", border: "none" }}
                                     type="button"
                                     className='form-control  '
                                     id="collapseExample"

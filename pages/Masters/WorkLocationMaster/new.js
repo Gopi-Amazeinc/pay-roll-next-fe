@@ -75,51 +75,47 @@ function WorkLocationMasterForm({ editData }) {
   };
   return (
     <Layout>
-      <div>
+      <div className="container-fluid">
         <p className="Heading">Work Location Master</p>
-        <div className="container mt-4">
-          <div className="row shadow p-2 rounded-4 ">
-            <div className="row ">
-              <div className="col-lg-4" >
-                <label id={Styles.label}>Short Name<span id={Styles.asterisk}>* </span></label>
-              </div>
-              <div className="col-lg-4" >
-                <label id={Styles.label}>Description<span id={Styles.asterisk}>* </span></label>
-              </div>
-            </div>
-            <form onSubmit={handleSubmit(onSubmit)}>
-              <div className="row ">
-                <div className="col-lg-4">
-                  <input name="Short" className="form-control" type="text" {...register("Short", { required: true })} placeholder="Short Name" />
-                  <div>{errors.Short && <span style={customStyles.errorMsg}>Please enter short name</span>}</div>
+        <div className="row">
+          <div className="col-lg-12">
+            <div className="card rounded-3 p-3 border-0">
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <div className="row ">
+                  <div className="col-lg-2">
+                    <label className="fw-bold">Short Name<span id={Styles.asterisk}>* </span></label>
+                    <input name="Short" className="form-control" type="text" {...register("Short", { required: true })} placeholder="Short Name" />
+                    <div>{errors.Short && <span style={customStyles.errorMsg}>Please enter short name</span>}</div>
 
+                  </div>
+                  <div className="col-lg-5">
+                    <label className="fw-bold">Description<span id={Styles.asterisk}>* </span></label>
+                    <textarea name="Description" className="form-control" {...register("Description", { required: true })} placeholder="Description" />
+                    <div>{errors.Description && <span style={customStyles.errorMsg} >Please enter description</span>}</div>
+                  </div>
                 </div>
-                <div className="col-lg-4">
-                  <textarea name="Description" className="form-control" {...register("Description", { required: true })} placeholder="Description" />
-                  <div>{errors.Description && <span style={customStyles.errorMsg} >Please enter description</span>}</div>
+                <br></br>
+                <div className="row">
+                  <div className="col-lg-8"></div>
+                  <div className="col-lg-2">
+                    <Link href='/Masters/WorkLocationMaster'>
+                      <button type='button' className='AddButton' >Close</button></Link>
+                  </div>
+                  <div className="col-lg-2">
+                    {actionType == "insert" && (
+                      <button type="submit" className="AddButton">
+                        Save
+                      </button>
+                    )}
+                    {actionType == "update" && (
+                      <button type="submit" className="AddButton">
+                        Update
+                      </button>
+                    )}
+                  </div>
                 </div>
-              </div>
-              <br></br>
-              <div className="row mx-0">
-                <div className="col-lg-8"></div>
-                <div className="col-lg-2">
-                  <Link href='/Masters/WorkLocationMaster'>
-                    <button type='button' className='btn common-edit edit-btn' id={Styles.btn}>Close</button></Link>
-                </div>
-                <div className="col-lg-2">
-                  {actionType == "insert" && (
-                    <button type="submit" className="AddButton">
-                      Save
-                    </button>
-                  )}
-                  {actionType == "update" && (
-                    <button type="submit" className="AddButton">
-                      Update
-                    </button>
-                  )}
-                </div>
-              </div>
-            </form>
+              </form>
+            </div>
           </div>
         </div>
       </div>

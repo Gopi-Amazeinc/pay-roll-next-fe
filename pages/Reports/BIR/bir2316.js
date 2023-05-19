@@ -8,29 +8,50 @@ const Bir2316 = () => {
         setState(true)
     }
 
-    const customStyle={
-        header:{
-            fontSize:'22px',
-            fontWeight: '500',
-            display: 'flex',
-            justifyContent:'center',
-            color: 'blue'
-        },
-        center:{
-            display: 'flex',
-            justifyContent:'center',
-        },
-        card:{
-            paddingLeft: '2px',
-            paddingRight: '2px',
-            borderRadius: '5px'
-        },
-        tableHeader:{
-            backgroundColor: '#02cfff',
-            color: 'white',
-
-        }
-    }
+    const customStyle = {
+      header: {
+        fontSize: "22px",
+        fontWeight: "500",
+        display: "flex",
+        justifyContent: "center",
+        color: "blue",
+      },
+      center: {
+        display: "flex",
+        justifyContent: "center",
+      },
+      card: {
+        paddingLeft: "2px",
+        paddingRight: "2px",
+        borderRadius: "5px",
+      },
+      tableHeader: {
+        backgroundColor: "#02cfff",
+        color: "white",
+      },
+      printBtn: {
+        textTransform: "uppercase",
+        textShadow: "none",
+        backgroundColor: "#3247d5",
+        color: "#fff",
+        borderRadius: "5px",
+        padding: "5px",
+        width: "55%",
+        float: "right",
+        border: 'none'
+      },
+      convertBtn:{
+        textTransform: "uppercase",
+        textShadow: "none",
+        backgroundColor: "#3247d5",
+        color: "#fff",
+        borderRadius: "5px",
+        padding: "5px",
+        width: "70%",
+        float: "right",
+        border: 'none'
+      }
+    };
 	
     return (
         <Layout>
@@ -124,19 +145,19 @@ const Bir2316 = () => {
                 <div className='row mt-2'>
                     <div className='col-lg-4'></div>
                     <div className='col-lg-4'></div>
-                    <div className='col-lg-2'>
-                        <button onClick={toggleState} className='EditDelteBTN'>Print</button>
+                    <div className='col-lg-4'>
+                        <button onClick={toggleState} style={customStyle.printBtn}>Print</button>
                     </div>
-                    <div className='col-lg-2'></div>
+                    
                 </div>
 
                 {
                     generateState && (
                         <div className='row mt-4'>
                             <div className='col-lg-4'></div>
-                            <div className='col-lg-4'></div>
-                            <div className='col-lg-4'>
-                                <button className='EditDelteBTN'>Convert to pdf</button>
+                            <div className='col-lg-2'></div>
+                            <div className='col-lg-6'>
+                                <button style={customStyle.printBtn}>Convert to pdf</button>
                             </div>
                         </div>
                     )
