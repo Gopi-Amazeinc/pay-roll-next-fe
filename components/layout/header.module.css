@@ -1,8 +1,9 @@
 .header {
   background-color: #3247d5;
-  height: 8vh;
+  height: 10vh;
   padding: 0px;
-
+  padding-left: 0px;
+  padding-right: 0px;
 }
 
 .dropdownmenu {

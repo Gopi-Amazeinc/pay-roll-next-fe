@@ -52,9 +52,9 @@ const Index = ({ children }) => {
         <Head>
           <title>Pay Roll</title>
         </Head>
-        <div className="container-fluid">
+        <div className="container-fluid" style={{ paddingRight: '0px', paddingLeft: '0px', overflow: 'hidden' }}>
           <div className="row" style={{ overflowX: "hidden" }}>
-            <div className="col-lg-12" style={{ height: "9vh" }}>
+            <div className="col-lg-12" style={{ height: "10vh" }}>
               <Header makelogout={logout}></Header>
             </div>
           </div>
@@ -74,13 +74,11 @@ const Index = ({ children }) => {
                 background: "#e5f3f5",
               }}
             >
-              <>
               {/* <Loader/> */}
-                <main>
-                  {children}
-                  <br></br>
-                </main>
-              </>
+              <main>
+                {children}
+                <br></br>
+              </main>
             </div>
           </div>
           <Footer></Footer>

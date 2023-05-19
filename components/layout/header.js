@@ -56,8 +56,8 @@ const Header = ({ makelogout }) => {
     .toUpperCase();
 
   return (
-    <div className={HeaderStyles.header}>
-      <div className="row" style={{ background: "#3247d5" }}>
+    <div className={"container-fluid " + HeaderStyles.header}>
+      <div className="row">
         <div className="col-lg-2 mt-1">
           <Image
             className="img-fluid "
