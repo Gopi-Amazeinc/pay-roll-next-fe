@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 import { useRouter } from 'next/router';
 import { apiService } from "@/services/api.service";
 
-const Compensationtimeoutform =()=> {
+const Compensationtimeoutform = () => {
     const router = useRouter();
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -34,7 +34,7 @@ const Compensationtimeoutform =()=> {
             "Actuval_StartTime": existingData ? existingData.Actuval_StartTime : "",
             "Actuval_EndTime": existingData ? existingData.Actuval_EndTime : "",
             "Comments": existingData ? existingData.Comments : "",
-            "Status":'Manager Pending',
+            "Status": 'Manager Pending',
         }
         reset(etty)
         setActionType(existingData ? "update" : "insert")
@@ -48,39 +48,39 @@ const Compensationtimeoutform =()=> {
 
     return (
         <Layout>
-            <div className='container'>
-                <h3 className='text-primary fs-5 mt-3 fw-bold'>Add Compensation</h3>
+            <div className='container-fluid'>
+                <label className='Heading'>Add Compensation</label><br /><br />
                 <div className='card p-3 border-0 shadow-lg '>
                     <form onSubmit={handleSubmit(onSubmit)}>
                         <div className='row'>
                             <div className='col-lg-3'>
-                                <p>Date Request <i className='text-danger'>*</i></p>
-                                <input type='date' className='form-control' {...register('Date_Request', { required: true })} />
-                                {errors.Date_Request && (<p className='text-danger mt-2'>Select Valid Date</p>)}
+                                <label style={{ fontWeight: "bold" }}>Date Request <i className='text-danger'>*</i></label>
+                                <input type='date' className='form-control' {...register('Date_Request', { required: "Select Valid Date" })} />
+                                {errors.Date_Request && <p className="error-message" style={{ color: "red" }}>{errors.Date_Request.message}</p>}
                             </div>
                             <div className='col-lg-3'>
-                                <p>Start Time <i className='text-danger'>*</i></p>
-                                <input type='time' className='form-control' {...register('Actuval_StartTime', { required: true })} />
-                                {errors.Actuval_StartTime && (<p className='text-danger mt-2'>Select Valid Start Time</p>)}
+                                <label style={{ fontWeight: "bold" }}>Start Time <i className='text-danger'>*</i></label>
+                                <input type='time' className='form-control' {...register('Actuval_StartTime', { required: "Select Valid Start Time" })} />
+                                {errors.Actuval_StartTime && <p className="error-message" style={{ color: "red" }}>{errors.Actuval_StartTime.message}</p>}
                             </div>
                             <div className='col-lg-3'>
-                                <p>End Time <i className='text-danger'>*</i></p>
-                                <input type='time' className='form-control' {...register('Actuval_EndTime', { required: true })} />
-                                {errors.Actuval_EndTime && (<p className='text-danger mt-2'>Select Valid End Time</p>)}
+                                <label style={{ fontWeight: "bold" }}>End Time <i className='text-danger'>*</i></label>
+                                <input type='time' className='form-control' {...register('Actuval_EndTime', { required: "Select Valid End Time" })} />
+                                {errors.Actuval_EndTime && <p className="error-message" style={{ color: "red" }}>{errors.Actuval_EndTime.message}</p>}
                             </div>
                             <div className='col-lg-3'>
-                                <p>Comments <i className='text-danger'>*</i></p>
-                                <textarea rows={6} className='form-control' {...register('Comments', { required: true })}></textarea>
-                                {errors.Comments && (<p className='text-danger mt-2'>Please Enter Comments</p>)}
+                                <label style={{ fontWeight: "bold" }}>Comments <i className='text-danger'>*</i></label>
+                                <textarea rows={6} className='form-control' {...register('Comments', { required: "Please Enter Comments" })}></textarea>
+                                {errors.Comments && <p className="error-message" style={{ color: "red" }}>{errors.Comments.message}</p>}
                             </div>
-                        </div>
-                        <div className='row mt-5'>
+                        </div><br /><br />
+                        <div className='row'>
                             <div className='col-lg-8'></div>
                             <div className='col-lg-2'>
-                                <Link href="/Requests/Compensationtimeout"><button className='submit-button'>Cancel</button></Link>
+                                <Link href="/Requests/Compensationtimeout"><button className='submit-button'>CANCEL</button></Link>
                             </div>
                             <div className='col-lg-2'>
-                                <button type='submit' className=' submit-button'>Submit</button>
+                                <button type='submit' className=' submit-button'>SUBMIT</button>
                             </div>
                         </div>
                     </form>

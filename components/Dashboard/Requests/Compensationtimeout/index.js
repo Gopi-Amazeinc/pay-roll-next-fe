@@ -193,268 +193,297 @@ const Compensationtimeout = () => {
 
     return (
 
-        <div className='container'>
-            <h3 className='Heading'>Compensation Time Out</h3>
-            <div className='card p-3 border-0 shadow-lg rounded-3 mt-4'>
-                <div className='row p-3'>
-                    <div className='col-lg-1'>
-                        <p>Filter By</p>
-                    </div>
-
-                    <div className='col-lg-5'>
-                        <input type="text" className='form-control' placeholder='Search...' />
-                    </div>
-                    {
-                        sessionStorage.getItem("roleID") != "3" && (
-                            <div className='col-lg-6'>
-                                <Link href="/Requests/Compensationtimeout/new"><button className='submit-button'>Add Compensation Time Out</button></Link>
+        <div className='container-fluid'>
+            <div className='row'>
+                <div className='col-lg-12'>
+                    <p className='Heading'>Compensation Time Out</p>
+                    <div className='card p-3 border-0 rounded-3'>
+                        <div className='row p-3'>
+                            <div className='col-lg-1'>
+                                <p>Filter By</p>
                             </div>
-                        )
-                    }
-                </div>
-            </div>
 
-            <div className='row mt-3'>
-                <div className='col-lg-4'>
-                    <div className='btn-group'>
-                        <button onClick={togglePending} className='toggleButton' >Pending</button>
-                        <button onClick={toggleApproved} className='toggleButton'  >Approved</button>
-                        <button onClick={toggleRejected} className='toggleButton' >Rejected</button>
-                    </div>
-                </div>
-            </div>
-
-            <Modal isOpen={isOpen} style={customStyles}>
-                <div className='container'>
-                    <div className='row card-header'>
-                        <div className='col-lg-8 mt-3'>
-                            <h4>Rejecting Request</h4>
-                        </div>
-                        <div className='col-lg-3'></div>
-                        <div className='col-lg-1 mt-3 mb-3'>
-                            <button onClick={() => ModalIsOpen(false)} className='btn-primary'><AiOutlineClose /></button>
+                            <div className='col-lg-3'>
+                                <input type="text" className='form-control' placeholder='Search...' />
+                            </div>
+                            {
+                                sessionStorage.getItem("roleID") != "3" && (
+                                    <div className='col-lg-4' style={{whiteSpace:"nowrap"}}>
+                                        <Link href="/Requests/Compensationtimeout/new"><button className='EditDelteBTN'>Add Compensation Time Out</button></Link>
+                                    </div>
+                                )
+                            }
                         </div>
                     </div>
-                    <div className='row mt-3'>
-                        <div className='col-lg-12'>
-                            <textarea rows={4} className='form-control'></textarea>
-                        </div>
-                    </div>
+                    <br /><br />
                     <div className='row'>
-                        <div className='col-lg-8'></div>
-                        <div className='col-lg-2 mb-3'>
-                            <button type='submit' className=' edit-btn mt-5'>Cancel</button>
-                        </div>
-                        <div className='col-lg-2 mb-3'>
-                            <button onClick={reject} type='submit' className='edit-btn mt-5'>Reject </button>
+                        <div className='col-lg-4'>
+                            <div className='btn-group'>
+                                <button onClick={togglePending} className={`toggleButton ${pending ? "focus" : ""}`} >Pending</button>
+                                <button onClick={toggleApproved} className={`toggleButton ${approved ? "focus" : ""}`}  >Approved</button>
+                                <button onClick={toggleRejected} className={`toggleButton ${rejected ? "focus" : ""}`} >Rejected</button>
+                            </div>
                         </div>
                     </div>
+                    <br /><br />
+
+                    <Modal isOpen={isOpen} style={customStyles}>
+                        <div className='container'>
+                            <div className='row card-header'>
+                                <div className='col-lg-8 mt-3'>
+                                    <h4>Rejecting Request</h4>
+                                </div>
+                                <div className='col-lg-3'></div>
+                                <div className='col-lg-1 mt-3 mb-3'>
+                                    <button onClick={() => ModalIsOpen(false)} className='btn-primary'><AiOutlineClose /></button>
+                                </div>
+                            </div>
+                            <div className='row mt-3'>
+                                <div className='col-lg-12'>
+                                    <textarea rows={4} className='form-control'></textarea>
+                                </div>
+                            </div>
+                            <div className='row'>
+                                <div className='col-lg-8'></div>
+                                <div className='col-lg-2 mb-3'>
+                                    <button type='submit' className=' edit-btn mt-5'>Cancel</button>
+                                </div>
+                                <div className='col-lg-2 mb-3'>
+                                    <button onClick={reject} type='submit' className='edit-btn mt-5'>Reject </button>
+                                </div>
+                            </div>
+                        </div>
+                    </Modal>
+                    <div className='row'>
+                        <div className='Heading'>
+                            {/* <h6>Showing Results</h6> */}
+                        </div>
+                        {
+                            pending && sessionStorage.getItem("roleID") != "3" && (
+                                <div className='row'>
+                                    <div className='col-lg-12'>
+                                        <table className='table table-hover'>
+                                            <thead className='bg-info text-white'>
+                                                <tr>
+                                                    <th>Date</th>
+                                                    <th>Start Time</th>
+                                                    <th>End Time</th>
+                                                    <th>Comments</th>
+                                                    <th>Status</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                                {
+                                                    pendingDashboard.map((data) => {
+                                                        return (
+                                                            <tr key={data.id}>
+                                                                <td>{data.date}</td>
+                                                                <td>{data.actuval_StartTime}</td>
+                                                                <td>{data.actuval_EndTime}</td>
+                                                                <td>{data.comments}</td>
+                                                                <td>{data.status}</td>
+                                                                <td>
+                                                                    <button onClick={Delete.bind(this, data.id)} className='edit-btn'>Cancel</button>
+                                                                </td>
+                                                            </tr>
+                                                        )
+                                                    })
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            )
+                        }
+
+                        {
+
+                            managertogglePending && sessionStorage.getItem("roleID") == "3" && (
+                                <div className='row'>
+                                    <div className='col-lg-12'>
+                                        <table className='table table-hover'>
+                                            <thead className='bg-info text-white'>
+                                                <tr>
+                                                    <th>Employee Name</th>
+                                                    <th>Date</th>
+                                                    <th>Start Time</th>
+                                                    <th>End Time</th>
+                                                    <th colSpan={2}>Action</th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                                {
+                                                    compensation.map((data) => {
+                                                        return (
+                                                            <tr key={data.id}>
+                                                                <td>{data.staffname}</td>
+                                                                <td>{data.date}</td>
+                                                                <td>{data.actuval_StartTime}</td>
+                                                                <td>{data.actuval_EndTime}</td>
+                                                                <td>
+                                                                    <button onClick={approve.bind(this, data.id)} className='edit-btn'>Approve</button>
+                                                                    <button onClick={openModal(sessionStorage.setItem("id", data.id))} className='edit-btn'>Reject</button>
+                                                                </td>
+                                                            </tr>
+                                                        )
+                                                    })
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            )
+                        }
+
+                        {
+                            approved && sessionStorage.getItem("roleID") != "3" && (
+                                <div className='row'>
+                                    <div className='col-lg-12'>
+                                        <table className='table table-hover'>
+                                            <thead className='bg-info text-white'>
+                                                <tr>
+                                                    <th>Date</th>
+                                                    <th>Start Time</th>
+                                                    <th>End Time</th>
+                                                    <th>Comments</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                                {
+                                                    approvedDashboard.map((data) => {
+                                                        return (
+                                                            <tr key={data.id}>
+                                                                <td>{data.date}</td>
+                                                                <td>{data.actuval_StartTime}</td>
+                                                                <td>{data.actuval_EndTime}</td>
+                                                                <td>{data.comments}</td>
+                                                                <td>{data.status}</td>
+                                                            </tr>
+                                                        )
+                                                    })
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            )
+                        }
+
+                        {
+
+                            managerToggleapproved && sessionStorage.getItem("roleID") == "3" && (
+                                <div className='row'>
+                                    <div className='col-lg-12'>
+                                        <table className='table table-hover'>
+                                            <thead className='bg-info text-white'>
+                                                <tr>
+                                                    <th>Employee Name</th>
+                                                    <th>Date</th>
+                                                    <th>Start Time</th>
+                                                    <th>End Time</th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                                {
+                                                    managerApproved.map((data) => {
+                                                        return (
+                                                            <tr key={data.id}>
+                                                                <td>{data.staffname}</td>
+                                                                <td>{data.date}</td>
+                                                                <td>{data.actuval_StartTime}</td>
+                                                                <td>{data.actuval_EndTime}</td>
+                                                            </tr>
+                                                        )
+                                                    })
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            )
+                        }
+
+                        {
+                            rejected && sessionStorage.getItem("roleID") != "3" && (
+                                <div className='row'>
+                                    <div className='col-lg-12'>
+                                        <table className='table table-hover'>
+                                            <thead className='bg-info text-white'>
+                                                <tr>
+                                                    <th>Date</th>
+                                                    <th>Start Time</th>
+                                                    <th>End Time</th>
+                                                    <th>Reason</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                                {
+                                                    rejecteddDashboard.map((data) => {
+                                                        return (
+                                                            <tr key={data.id}>
+                                                                <td>{data.date}</td>
+                                                                <td>{data.actuval_StartTime}</td>
+                                                                <td>{data.actuval_EndTime}</td>
+                                                                <td>{data.comments}</td>
+                                                                <td>{data.status}</td>
+                                                            </tr>
+                                                        )
+                                                    })
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            )
+                        }
+
+                        {
+
+                            managertogglerejected && sessionStorage.getItem("roleID") == "3" && (
+                                <div className='row'>
+                                    <div className='col-lg-12'>
+                                        <table className='table table-hover'>
+                                            <thead className='bg-info text-white'>
+                                                <tr>
+                                                    <th>Employee Name</th>
+                                                    <th>Date</th>
+                                                    <th>Start Time</th>
+                                                    <th>End Time</th>
+                                                </tr>
+                                            </thead>
+
+                                            <tbody>
+                                                {
+                                                    managerRejected.map((data) => {
+                                                        return (
+                                                            <tr key={data.id}>
+                                                                <td>{data.staffname}</td>
+                                                                <td>{data.date}</td>
+                                                                <td>{data.actuval_StartTime}</td>
+                                                                <td>{data.actuval_EndTime}</td>
+                                                            </tr>
+                                                        )
+                                                    })
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            )
+                        }
+                    </div>
                 </div>
-            </Modal>
-
-            <div className='row mt-3'>
-                <div className='Heading'>
-                    <h6>Showing Results</h6>
-                </div>
-                {
-                    pending && sessionStorage.getItem("roleID") != "3" && (
-                        <table className='table table-hover'>
-                            <thead className='bg-info text-white'>
-                                <tr>
-                                    <th>Date</th>
-                                    <th>Start Time</th>
-                                    <th>End Time</th>
-                                    <th>Comments</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                {
-                                    pendingDashboard.map((data) => {
-                                        return (
-                                            <tr key={data.id}>
-                                                <td>{data.date}</td>
-                                                <td>{data.actuval_StartTime}</td>
-                                                <td>{data.actuval_EndTime}</td>
-                                                <td>{data.comments}</td>
-                                                <td>{data.status}</td>
-                                                <td>
-                                                    <button onClick={Delete.bind(this, data.id)} className='edit-btn'>Cancel</button>
-                                                </td>
-                                            </tr>
-                                        )
-                                    })
-                                }
-                            </tbody>
-                        </table>
-                    )
-                }
-
-                {
-
-                    managertogglePending && sessionStorage.getItem("roleID") == "3" && (
-                        <table className='table table-hover'>
-                            <thead className='bg-info text-white'>
-                                <tr>
-                                    <th>Employee Name</th>
-                                    <th>Date</th>
-                                    <th>Start Time</th>
-                                    <th>End Time</th>
-                                    <th colSpan={2}>Action</th>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                {
-                                    compensation.map((data) => {
-                                        return (
-                                            <tr key={data.id}>
-                                                <td>{data.staffname}</td>
-                                                <td>{data.date}</td>
-                                                <td>{data.actuval_StartTime}</td>
-                                                <td>{data.actuval_EndTime}</td>
-                                                <td>
-                                                    <button onClick={approve.bind(this, data.id)} className='edit-btn'>Approve</button>
-                                                    <button onClick={openModal(sessionStorage.setItem("id", data.id))} className='edit-btn'>Reject</button>
-                                                </td>
-                                            </tr>
-                                        )
-                                    })
-                                }
-                            </tbody>
-                        </table>
-                    )
-                }
-
-                {
-                    approved && sessionStorage.getItem("roleID") != "3" && (
-                        <table className='table table-hover'>
-                            <thead className='bg-info text-white'>
-                                <tr>
-                                    <th>Date</th>
-                                    <th>Start Time</th>
-                                    <th>End Time</th>
-                                    <th>Comments</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                {
-                                    approvedDashboard.map((data) => {
-                                        return (
-                                            <tr key={data.id}>
-                                                <td>{data.date}</td>
-                                                <td>{data.actuval_StartTime}</td>
-                                                <td>{data.actuval_EndTime}</td>
-                                                <td>{data.comments}</td>
-                                                <td>{data.status}</td>
-                                            </tr>
-                                        )
-                                    })
-                                }
-                            </tbody>
-                        </table>
-                    )
-                }
-
-                {
-
-                    managerToggleapproved && sessionStorage.getItem("roleID") == "3" && (
-                        <table className='table table-hover'>
-                            <thead className='bg-info text-white'>
-                                <tr>
-                                    <th>Employee Name</th>
-                                    <th>Date</th>
-                                    <th>Start Time</th>
-                                    <th>End Time</th>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                {
-                                    managerApproved.map((data) => {
-                                        return (
-                                            <tr key={data.id}>
-                                                <td>{data.staffname}</td>
-                                                <td>{data.date}</td>
-                                                <td>{data.actuval_StartTime}</td>
-                                                <td>{data.actuval_EndTime}</td>
-                                            </tr>
-                                        )
-                                    })
-                                }
-                            </tbody>
-                        </table>
-                    )
-                }
-
-                {
-                    rejected && sessionStorage.getItem("roleID") != "3" && (
-                        <table className='table table-hover'>
-                            <thead className='bg-info text-white'>
-                                <tr>
-                                    <th>Date</th>
-                                    <th>Start Time</th>
-                                    <th>End Time</th>
-                                    <th>Reason</th>
-                                    <th>Status</th>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                {
-                                    rejecteddDashboard.map((data) => {
-                                        return (
-                                            <tr key={data.id}>
-                                                <td>{data.date}</td>
-                                                <td>{data.actuval_StartTime}</td>
-                                                <td>{data.actuval_EndTime}</td>
-                                                <td>{data.comments}</td>
-                                                <td>{data.status}</td>
-                                            </tr>
-                                        )
-                                    })
-                                }
-                            </tbody>
-                        </table>
-                    )
-                }
-
-                {
-
-                    managertogglerejected && sessionStorage.getItem("roleID") == "3" && (
-                        <table className='table table-hover'>
-                            <thead className='bg-info text-white'>
-                                <tr>
-                                    <th>Employee Name</th>
-                                    <th>Date</th>
-                                    <th>Start Time</th>
-                                    <th>End Time</th>
-                                </tr>
-                            </thead>
-
-                            <tbody>
-                                {
-                                    managerRejected.map((data) => {
-                                        return (
-                                            <tr key={data.id}>
-                                                <td>{data.staffname}</td>
-                                                <td>{data.date}</td>
-                                                <td>{data.actuval_StartTime}</td>
-                                                <td>{data.actuval_EndTime}</td>
-                                            </tr>
-                                        )
-                                    })
-                                }
-                            </tbody>
-                        </table>
-                    )
-                }
             </div>
         </div>
+
 
     )
 }

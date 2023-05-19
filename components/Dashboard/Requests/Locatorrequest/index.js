@@ -57,18 +57,18 @@ const Locatordashboard = () => {
                 <p className="Heading">My OBASIS Details</p>
                 <div className="card p-3 rounded-3 shadow border-0 ">
                     <div className="row">
-                        <div className="col-1">
+                        <div className="col-lg-1">
                             <p> Filter By</p>
                         </div>
-                        <div className="col-2">
+                        <div className="col-lg-2">
                             <label>From Date</label>
                             <input type="date" className="form-control" />
                         </div>
-                        <div className="col-2">
+                        <div className="col-lg-2">
                             <label>To Date</label>
                             <input type="date" className="form-control" />
                         </div>
-                        <div className="col-5">
+                        <div className="col-lg-3">
                             <br />
                             <input
                                 type="text"
@@ -123,7 +123,7 @@ const Locatordashboard = () => {
                                                         data.statusID === 2 ? 'Manager Rejected' : ' '}</b>
                                             }
                                             </td> */}
-                                            <td><button className="editDeleteBtnTable">Cancel</button></td>
+                                            <td><button className="edit-btn">Cancel</button></td>
                                         </tr>
                                     )
                                 })
