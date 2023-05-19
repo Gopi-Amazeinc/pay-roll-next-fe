@@ -116,13 +116,13 @@ const Locatordashboard = () => {
                                             <td>{data.endTime}</td>
                                             <td>{data.task}</td>
                                             <td>{data.comments}</td>
-                                            {/* <td>{data.status}</td> */}
-                                            <td>{
+                                            <td>{data.approveStatus}</td>
+                                            {/* <td>{
                                                 <b>{data.statusID === 0 ? 'Manager Pending' :
                                                     data.statusID === 1 ? 'Manager approved' :
                                                         data.statusID === 2 ? 'Manager Rejected' : ' '}</b>
                                             }
-                                            </td>
+                                            </td> */}
                                             <td><button className="editDeleteBtnTable">Cancel</button></td>
                                         </tr>
                                     )
@@ -155,7 +155,7 @@ const Locatordashboard = () => {
                                             <td>{data.endTime}</td>
                                             <td>{data.task}</td>
                                             <td>{data.comments}</td>
-                                            <td>{data.status}</td>
+                                            <td>{data.approveStatus}</td>
                                         </tr>
                                     )
                                 })
@@ -187,7 +187,7 @@ const Locatordashboard = () => {
                                             <td>{data.endTime}</td>
                                             <td>{data.task}</td>
                                             <td>{data.comments}</td>
-                                            <td>{data.status}</td>
+                                            <td>{data.approveStatus}</td>
                                         </tr>
                                     )
                                 })
