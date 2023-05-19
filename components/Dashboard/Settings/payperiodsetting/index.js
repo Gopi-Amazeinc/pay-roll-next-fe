@@ -51,7 +51,7 @@ export default function PayperiodSettingsDash() {
                                 <p>Filter By</p>
                             </div>
 
-                            <div className='col-lg-4'>
+                            <div className='col-lg-3'>
                                 <input type="text" className='form-control' placeholder='Search...' />
                             </div>
                         </div>
@@ -63,10 +63,10 @@ export default function PayperiodSettingsDash() {
 
                 </div>
                 
-                <div className='col-lg-1  text-end'>
+                <div className='col-lg-2'>
                     <br />
-                    <Link href="/Settings/payperiodsetting/new" > <button className='AddButton' onClick={clearData.bind(this)}>Add New</button> </Link>
-                </div><div className='col-lg-1'></div>
+                    <Link href="/Settings/payperiodsetting/new" > <button className='AddButton' >Add New</button> </Link>
+                </div>
             </div>
             < div className='table-responsive'>
                 <table className='table mt-4 table-striped text-center ' >
@@ -96,9 +96,9 @@ export default function PayperiodSettingsDash() {
                                     <td>{data.payrollRunType}</td>
                                     <td>{data.comments}</td>
                                     <td> <Link href={`/Settings/payperiodsetting/Edit/${data.id}`}>
-                                        <button className='upload mb-2' >Edit</button>
+                                        <button className='edit-btn mb-2' >Edit</button>
                                     </Link>
-                                        <button className='upload ' onClick={() => handleDelete(data.id)}>Delete</button>
+                                        <button className='edit-btn ' onClick={() => handleDelete(data.id)}>Delete</button>
 
 
 
