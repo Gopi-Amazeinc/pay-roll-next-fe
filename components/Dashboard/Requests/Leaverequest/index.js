@@ -212,10 +212,53 @@ function LeaveListDashboard() {
                                     <div className="card shadow p-1">
                                         <p className="para"><b className="number"></b> Vacation Leave</p>
 
+<<<<<<< HEAD
+            </div>
+            <div className="row">
+                <div className="col-md-4">
+                    <div className='row mt-3'>
+                        <div className='col-lg-4 mx-5'>
+                            <div className='btn-group'>
+                                <button OnClick={toggleCalender} className={'btn ' + leave.btn}>Calender</button>
+                                <button OnClick={toggleListView} className={'btn ' + leave.btn}>List View</button>
+
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                </div>
+                <div className="col-md-4"></div>
+                <div className="col-md-4">
+                    <Link href="/Requests/Applyleave/new"><button className="submit-button m" tabindex="0"> Apply Leave</button>
+                    </Link>
+                </div>
+            </div>
+            <br />
+
+            <div className='container'>
+                {
+                    calender && (
+                        <div className='row'>
+                            <div className='card shadow'>
+                                <div style={styles.container}>
+                                    <BigCalendar
+                                        selectable
+                                        localizer={localizer}
+                                        events={events}
+                                        defaultView={Views.DAY}
+                                        views={[Views.DAY, Views.WEEK, Views.MONTH]}
+                                        steps={60}
+                                        defaultDate={new Date(2018, 0, 29)}
+                                        resources={resourceMap}
+                                        resourceIdAccessor="resourceId"
+                                        resourceTitleAccessor="resourceTitle"
+                                    />
+=======
                                     </div>
                                 </div>
                                 <div className="col-lg-4 ">
                                     <br /><br /><br /><br /><br /><br /><br /><br />
+>>>>>>> fb1142ab1c98bec40a3f57d9d2b3a5e3b784328c
                                 </div>
                             </div>
                         </div>
