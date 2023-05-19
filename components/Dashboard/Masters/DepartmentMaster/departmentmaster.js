@@ -65,12 +65,12 @@ const DepartmentMasterDashboard = () => {
         <Layout>
             <div className="container">
                 <p className="Heading">Department Master</p>
-                <div className="card p-3 rounded-3 shadow border-0">
+                <div className="card p-3 rounded-3 border-0">
                     <div className="row">
-                        <div className="col-1">
+                        <div className="col-lg-1">
                             <p> <BiFilterAlt /> Filter By</p>
                         </div>
-                        <div className="col-5">
+                        <div className="col-lg-3">
                             <input
                                 type="text"
                                 placeholder="Search"
@@ -80,11 +80,11 @@ const DepartmentMasterDashboard = () => {
                         </div>
                     </div>
                 </div>
-
-                <div className="row mt-3">
-                    <p className="col-2 result-heading">Showing {Department.length} Results</p>
-                    <div className="col-8"></div>
-                    <div className="col-2">
+                <br />
+                <div className="row">
+                    <p className="col-lg-2 result-heading">Showing {Department.length} Results</p>
+                    <div className="col-lg-8"></div>
+                    <div className="col-lg-2">
                         <Link href="/Masters/DepartmentMaster/new">
                             <button className=" AddButton">
                                 <AiOutlinePlus />    Add New
@@ -92,77 +92,84 @@ const DepartmentMasterDashboard = () => {
                         </Link>
                     </div>
                 </div>
-
-                <div className="mt-3">
-                    <table className="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>Department Name</th>
-                                <th>Department Description</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {Array.isArray(Department) &&
-                                Department.length > 0 && (
-                                    <>
-                                        {Department
-                                            .filter(data => {
-                                                if ((data.department_name.toLowerCase().includes(keyword.toLowerCase())) || (data.department_Desc.toLowerCase().includes(keyword))) {
-                                                    return data;
-                                                }
-                                            })
-                                            .slice(offset, offset + PER_PAGE)
-                                            .map((data, index) => {
-                                                return (
-                                                    <tr key={index}>
-                                                        <td>{data.department_name}</td>
-                                                        <td>{data.department_Desc}</td>
-                                                        <td>
-                                                            <Link href={`/Masters/DepartmentMaster/Edit/${data.id}`}>
+                <br />
+                <div className="row">
+                    <div className="col-lg-12">
+                        <table className="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Department Name</th>
+                                    <th>Department Description</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {Array.isArray(Department) &&
+                                    Department.length > 0 && (
+                                        <>
+                                            {Department
+                                                .filter(data => {
+                                                    if ((data.department_name.toLowerCase().includes(keyword.toLowerCase())) || (data.department_Desc.toLowerCase().includes(keyword))) {
+                                                        return data;
+                                                    }
+                                                })
+                                                .slice(offset, offset + PER_PAGE)
+                                                .map((data, index) => {
+                                                    return (
+                                                        <tr key={index}>
+                                                            <td>{data.department_name}</td>
+                                                            <td>{data.department_Desc}</td>
+                                                            <td>
+                                                                <Link href={`/Masters/DepartmentMaster/Edit/${data.id}`}>
+                                                                    <button
+                                                                        className="edit-btn"
+                                                                    >
+                                                                        Edit
+                                                                    </button>
+                                                                </Link>
+                                                                &nbsp;&nbsp;
                                                                 <button
+                                                                    onClick={() => handleDelete(data.id)}
                                                                     className="edit-btn"
                                                                 >
-                                                                    Edit
+                                                                    Delete
                                                                 </button>
-                                                            </Link>
-                                                            &nbsp;&nbsp;
-                                                            <button
-                                                                onClick={() => handleDelete(data.id)}
-                                                                className="edit-btn"
-                                                            >
-                                                                Delete
-                                                            </button>
-                                                        </td>
-                                                    </tr>
-                                                );
-                                            })}
-                                    </>
-                                )}
-                        </tbody>
-                    </table>
+                                                            </td>
+                                                        </tr>
+                                                    );
+                                                })}
+                                        </>
+                                    )}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
 
-                <div className="mb-4 mt-4 text-center">
-                    <ReactPaginate
-                        previousLabel={"Previous"}
-                        nextLabel={"Next"}
-                        breakLabel={"..."}
-                        pageCount={pageCount}
-                        marginPagesDisplayed={2}
-                        pageRangeDisplayed={3}
-                        onPageChange={handlePageClick}
-                        containerClassName={"pagination  justify-content-center"}
-                        pageClassName={"page-item "}
-                        pageLinkClassName={"page-link"}
-                        previousClassName={"page-item"}
-                        previousLinkClassName={"page-link"}
-                        nextClassName={"page-item"}
-                        nextLinkClassName={"page-link"}
-                        breakClassName={"page-item"}
-                        breakLinkClassName={"page-link"}
-                        activeClassName={"active primary"}
-                    />
+                <div className="row">
+                    {/* <div className="col-lg-3"></div> */}
+                    <div className="col-lg-4"></div>
+                    <div className="col-lg-4">
+                        <ReactPaginate
+                            previousLabel={"Previous"}
+                            nextLabel={"Next"}
+                            breakLabel={"..."}
+                            pageCount={pageCount}
+                            marginPagesDisplayed={2}
+                            pageRangeDisplayed={3}
+                            onPageChange={handlePageClick}
+                            containerClassName={"pagination  justify-content-center"}
+                            pageClassName={"page-item "}
+                            pageLinkClassName={"page-link"}
+                            previousClassName={"page-item"}
+                            previousLinkClassName={"page-link"}
+                            nextClassName={"page-item"}
+                            nextLinkClassName={"page-link"}
+                            breakClassName={"page-item"}
+                            breakLinkClassName={"page-link"}
+                            activeClassName={"active primary"}
+                        />
+                    </div>
+                    <div className="col-lg-4"></div>
                 </div>
             </div>
         </Layout>
