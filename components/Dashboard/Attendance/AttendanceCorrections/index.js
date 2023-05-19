@@ -104,74 +104,74 @@ const Attendancecorrectiondashboard = () => {
     return `${year}-${month}-${day}`;
   };
 
-  // const getPendingManager = async (SDate, EDate) => {
-  //   const res = await apiService.commonGetCall(
-  //     "Payroll/GetPendingAttendanceCorrectionBySupervisor?userID=" +
-  //     userID +
-  //     "&SDate=" +
-  //     SDate +
-  //     "&EDate=" +
-  //     EDate
-  //   );
-  //   // const res = await axios.get( hostURL + "Payroll/GetPendingAttendanceCorrectionBySupervisor?userID=" + userID +"&SDate=" + SDate +"&EDate=" +EDate);
-  //   setManagerPendingData(res.data);
-  // };
+  const getPendingManager = async (SDate, EDate) => {
+    const res = await apiService.commonGetCall(
+      "Payroll/GetPendingAttendanceCorrectionBySupervisor?userID=" +
+      userID +
+      "&SDate=" +
+      SDate +
+      "&EDate=" +
+      EDate
+    );
+    // const res = await axios.get( hostURL + "Payroll/GetPendingAttendanceCorrectionBySupervisor?userID=" + userID +"&SDate=" + SDate +"&EDate=" +EDate);
+    setManagerPendingData(res.data);
+  };
 
-  // const getApprovedManager = async (SDate, EDate) => {
-  //   const res = await apiService.commonGetCall(
-  //     "Payroll/GetApprovedAttendanceCorrectionBySupervisor?userID=" +
-  //     userID +
-  //     "&SDate=" +
-  //     SDate +
-  //     "&EDate=" +
-  //     EDate
-  //   );
-  //   // const res = await axios.get( hostURL + "Payroll/GetApprovedAttendanceCorrectionBySupervisor?userID=" + userID +  "&SDate=" +  SDate +  "&EDate=" +EDate );
-  //   setManagerApprovedData(res.data);
-  // };
+  const getApprovedManager = async (SDate, EDate) => {
+    const res = await apiService.commonGetCall(
+      "Payroll/GetApprovedAttendanceCorrectionBySupervisor?userID=" +
+      userID +
+      "&SDate=" +
+      SDate +
+      "&EDate=" +
+      EDate
+    );
+    // const res = await axios.get( hostURL + "Payroll/GetApprovedAttendanceCorrectionBySupervisor?userID=" + userID +  "&SDate=" +  SDate +  "&EDate=" +EDate );
+    setManagerApprovedData(res.data);
+  };
 
-  // const getRejectedManager = async (SDate, EDate) => {
-  //   const res = await apiService.commonGetCall(
-  //     "Payroll/GetApprovedAttendanceCorrectionBySupervisor?userID=" +
-  //     userID +
-  //     "&SDate=" +
-  //     SDate +
-  //     "&EDate=" +
-  //     EDate
-  //   );
-  //   //  const res = await axios.get( hostURL + "Payroll/GetApprovedAttendanceCorrectionBySupervisor?userID=" +  userID + "&SDate=" + SDate + "&EDate=" + EDate);
-  //   setManagerRejectedData(res.data);
-  // };
+  const getRejectedManager = async (SDate, EDate) => {
+    const res = await apiService.commonGetCall(
+      "Payroll/GetApprovedAttendanceCorrectionBySupervisor?userID=" +
+      userID +
+      "&SDate=" +
+      SDate +
+      "&EDate=" +
+      EDate
+    );
+    //  const res = await axios.get( hostURL + "Payroll/GetApprovedAttendanceCorrectionBySupervisor?userID=" +  userID + "&SDate=" + SDate + "&EDate=" + EDate);
+    setManagerRejectedData(res.data);
+  };
 
-  // const approveAttedanceCorrection = async (data) => {
-  //   Swal.fire({
-  //     title: "Confirm To Approve?",
-  //     text: "You won't be able to revert this!",
-  //     icon: "warning",
-  //     showCancelButton: true,
-  //     confirmButtonColor: "#3085d6",
-  //     cancelButtonColor: "#d33",
-  //     confirmButtonText: "Yes, Approve it!",
-  //   }).then(async (result) => {
-  //     if (result.isConfirmed) {
-  //       await apiService.commonGetCall(
-  //         "Payroll/ApproveAttedanceCoorection?id=" +
-  //         data.id +
-  //         "&UserID=" +
-  //         data.staffID +
-  //         "&SigninDate=" +
-  //         SDate +
-  //         "&SignoutDate=" +
-  //         EDate
-  //       );
-  //       Swal.fire({
-  //         icon: "success",
-  //         titleText: "Approved Successfully",
-  //       });
-  //       getPendingManager(SDate, EDate);
-  //     }
-  //   });
-  // };
+  const approveAttedanceCorrection = async (data) => {
+    Swal.fire({
+      title: "Confirm To Approve?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, Approve it!",
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        await apiService.commonGetCall(
+          "Payroll/ApproveAttedanceCoorection?id=" +
+          data.id +
+          "&UserID=" +
+          data.staffID +
+          "&SigninDate=" +
+          SDate +
+          "&SignoutDate=" +
+          EDate
+        );
+        Swal.fire({
+          icon: "success",
+          titleText: "Approved Successfully",
+        });
+        getPendingManager(SDate, EDate);
+      }
+    });
+  };
 
   const getPendingData = async (SDate, EDate) => {
     const res = await apiService.commonGetCall(
@@ -252,7 +252,7 @@ const Attendancecorrectiondashboard = () => {
         </div>
         {roleID == 3 && (
           <>
-            <div className="col-lg-3" style={{ marginLeft: "-60px" }}>
+            <div className="col-lg-3" style={{ display: "flex", marginLeft: "-38px" }}>
               <Link
                 className={Styles.mainheader}
                 href="/Attendance/MyTeamAttendanceCorrection"
@@ -284,7 +284,7 @@ const Attendancecorrectiondashboard = () => {
           </div>
 
           <div className="col-lg-4">
-          {(roleID == 3 || roleID == 5) && (
+            {(roleID == 3 || roleID == 5) && (
               <div className="row">
                 <div className="col-lg-8">
                   <Link href="/Attendance/AttendanceCorrections/attendancecorrectionform">

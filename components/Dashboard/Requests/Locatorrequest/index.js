@@ -53,22 +53,22 @@ const Locatordashboard = () => {
 
     return (
         <Layout>
-            <div className="container-fluid">
+            <div className="container">
                 <p className="Heading">My OBASIS Details</p>
                 <div className="card p-3 rounded-3 shadow border-0 ">
                     <div className="row">
-                        <div className="col-lg-1">
+                        <div className="col-1">
                             <p> Filter By</p>
                         </div>
-                        <div className="col-lg-2">
+                        <div className="col-2">
                             <label>From Date</label>
                             <input type="date" className="form-control" />
                         </div>
-                        <div className="col-lg-2">
+                        <div className="col-2">
                             <label>To Date</label>
                             <input type="date" className="form-control" />
                         </div>
-                        <div className="col-lg-5">
+                        <div className="col-5">
                             <br />
                             <input
                                 type="text"
@@ -80,123 +80,121 @@ const Locatordashboard = () => {
                 </div>
 
                 <div className="row mt-5">
-                    <div className="col-lg-4">
+                    <div className="col-4">
                         <button onClick={togglePending} className={`toggleButton ${pending ? "focus" : ""}`}>Pending</button>
                         <button onClick={toggleApproved} className={`toggleButton ${approved ? "focus" : ""}`}>Approved</button>
                         <button onClick={toggleRejected} className={`toggleButton ${rejected ? "focus" : ""}`}>Rejected</button>
                     </div>
-                    <div className="col-lg-6"></div>
-                    <div className="col-lg-2">
+                    <div className="col-6"></div>
+                    <div className="col-2">
                         <Link href="/Requests/Locatorrequest/new"><button className="submit-button">New Requests </button></Link>
                     </div>
                 </div>
 
-                <div className="row">
-                    <div className="col-lg-12">
-                        {pending && (
-                            <table className='table  table-striped mt-3' >
-                                <thead>
-                                    <tr>
-                                        <th>Control Number</th>
-                                        <th>Date</th>
-                                        <th>Start Time</th>
-                                        <th>End Time</th>
-                                        <th>Task</th>
-                                        <th>Comments</th>
-                                        <th>Status</th>
-                                        <th>Action</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {pendingDashboard.map((data, index) => {
-                                        return (
-                                            <tr key={index}>
-                                                <td>{data.id}</td>
-                                                <td>{data.date}</td>
-                                                <td>{data.startTime}</td>
-                                                <td>{data.endTime}</td>
-                                                <td>{data.task}</td>
-                                                <td>{data.comments}</td>
-                                                {/* <td>{data.status}</td> */}
-                                                <td>{
-                                                    <b>{data.statusID === 0 ? 'Manager Pending' :
-                                                        data.statusID === 1 ? 'Manager approved' :
-                                                            data.statusID === 2 ? 'Manager Rejected' : ' '}</b>
-                                                }
-                                                </td>
-                                                <td><button className="editDeleteBtnTable">Cancel</button></td>
-                                            </tr>
-                                        )
-                                    })
-                                    }
-                                </tbody>
-                            </table>
-                        )}
+                <div>
+                    {pending && (
+                        <table className='table  table-striped mt-3' >
+                            <thead>
+                                <tr>
+                                    <th>Control Number</th>
+                                    <th>Date</th>
+                                    <th>Start Time</th>
+                                    <th>End Time</th>
+                                    <th>Task</th>
+                                    <th>Comments</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {pendingDashboard.map((data, index) => {
+                                    return (
+                                        <tr key={index}>
+                                            <td>{data.id}</td>
+                                            <td>{data.date}</td>
+                                            <td>{data.startTime}</td>
+                                            <td>{data.endTime}</td>
+                                            <td>{data.task}</td>
+                                            <td>{data.comments}</td>
+                                            <td>{data.approveStatus}</td>
+                                            {/* <td>{
+                                                <b>{data.statusID === 0 ? 'Manager Pending' :
+                                                    data.statusID === 1 ? 'Manager approved' :
+                                                        data.statusID === 2 ? 'Manager Rejected' : ' '}</b>
+                                            }
+                                            </td> */}
+                                            <td><button className="editDeleteBtnTable">Cancel</button></td>
+                                        </tr>
+                                    )
+                                })
+                                }
+                            </tbody>
+                        </table>
+                    )}
 
-                        {approved && (
-                            <table className='table  table-striped mt-3' >
-                                <thead>
-                                    <tr>
-                                        <th>Control Number</th>
-                                        <th>Date</th>
-                                        <th>Start Time</th>
-                                        <th>End Time</th>
-                                        <th>Task</th>
-                                        <th>Comments</th>
-                                        <th>Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {approvedDashboard.map((data, index) => {
-                                        return (
-                                            <tr className="text-dark" key={index}>
-                                                <td>{data.id}</td>
-                                                <td>{data.date}</td>
-                                                <td>{data.startTime}</td>
-                                                <td>{data.endTime}</td>
-                                                <td>{data.task}</td>
-                                                <td>{data.comments}</td>
-                                                <td>{data.status}</td>
-                                            </tr>
-                                        )
-                                    })
-                                    }
-                                </tbody>
-                            </table>
-                        )}
+                    {approved && (
+                        <table className='table  table-striped mt-3' >
+                            <thead>
+                                <tr>
+                                    <th>Control Number</th>
+                                    <th>Date</th>
+                                    <th>Start Time</th>
+                                    <th>End Time</th>
+                                    <th>Task</th>
+                                    <th>Comments</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {approvedDashboard.map((data, index) => {
+                                    return (
+                                        <tr className="text-dark" key={index}>
+                                            <td>{data.id}</td>
+                                            <td>{data.date}</td>
+                                            <td>{data.startTime}</td>
+                                            <td>{data.endTime}</td>
+                                            <td>{data.task}</td>
+                                            <td>{data.comments}</td>
+                                            <td>{data.approveStatus}</td>
+                                        </tr>
+                                    )
+                                })
+                                }
+                            </tbody>
+                        </table>
+                    )}
 
-                        {rejected && (
-                            <table className='table  table-striped mt-3 ' >
-                                <thead>
-                                    <tr>
-                                        <th>Control Number</th>
-                                        <th>Date</th>
-                                        <th>Start Time</th>
-                                        <th>End Time</th>
-                                        <th>Task</th>
-                                        <th>Comments</th>
-                                        <th>Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {rejecteddDashboard.map((data, index) => {
-                                        return (
-                                            <tr className="text-dark" key={index}>
-                                                <td>{data.id}</td>
-                                                <td>{data.date}</td>
-                                                <td>{data.startTime}</td>
-                                                <td>{data.endTime}</td>
-                                                <td>{data.task}</td>
-                                                <td>{data.comments}</td>
-                                                <td>{data.status}</td>
-                                            </tr>
-                                        )
-                                    })
-                                    }
-                                </tbody>
-                            </table>
-                        )}
-                    </div>
+                    {rejected && (
+                        <table className='table  table-striped mt-3 ' >
+                            <thead>
+                                <tr>
+                                    <th>Control Number</th>
+                                    <th>Date</th>
+                                    <th>Start Time</th>
+                                    <th>End Time</th>
+                                    <th>Task</th>
+                                    <th>Comments</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {rejecteddDashboard.map((data, index) => {
+                                    return (
+                                        <tr className="text-dark" key={index}>
+                                            <td>{data.id}</td>
+                                            <td>{data.date}</td>
+                                            <td>{data.startTime}</td>
+                                            <td>{data.endTime}</td>
+                                            <td>{data.task}</td>
+                                            <td>{data.comments}</td>
+                                            <td>{data.approveStatus}</td>
+                                        </tr>
+                                    )
+                                })
+                                }
+                            </tbody>
+                        </table>
+                    )}
                 </div>
             </div>
         </Layout>
