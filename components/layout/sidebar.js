@@ -1314,7 +1314,7 @@ const Sidebar = ({ children, applyPageName }) => {
                         Salary Increase PDF
                       </button>
                     </Link>
-                    <Link href="/Reports/LeaveReport">
+                    <Link href="/Reports/LeaveReport/leavereport">
                       <button
                         className={getSubStyle(50454)}
                         onClick={updateActiveMenu.bind(this, {
