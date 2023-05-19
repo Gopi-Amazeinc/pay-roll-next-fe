@@ -5,7 +5,7 @@ import Layout from '../../../components/layout/layout';
 import Swal from "sweetalert2";
 import { apiService } from "@/services/api.service";
 import { useRouter } from "next/router";
-import React,{useState,useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 
 function LeaveTypeForm({ editData }) {
     const { register, handleSubmit, reset, formState } = useForm();
@@ -64,27 +64,19 @@ function LeaveTypeForm({ editData }) {
 
     return (
         <Layout>
-            <div className='container'>
-                <div className={leaveform.row}>
-                    <div className="col-md-12">
-                        <div className="row">
-                            <div className="col-lg-2">
-
-                                <h3 className="Heading">
-                                    Leave Details
-                                </h3><p></p>
-                            </div>
-                            <div className="col-lg-8"></div>
-                            <div className="col-lg-2"></div>
-                        </div>
-                        <br />
-                        <form onSubmit={handleSubmit(onSubmit)}>
-                            <div className={leaveform.card}>
+            <div className='container-fluid'>
+                <p className="Heading">
+                    Leave Details
+                </p>
+                <div className="row">
+                    <div className="col-lg-12">
+                        <div className='card p-3 border-0 rounded-3'>
+                            <form onSubmit={handleSubmit(onSubmit)}>
                                 <div className="row">
-                                    <div className="col-md-2">
-                                        <label className="fw-bold" style={customStyles.inputLabel}>
+                                    <div className="col-lg-2">
+                                        <label className="fw-bold">
                                             Leave Type<span style={{ color: "red" }}>*</span>
-                                        </label><p></p>
+                                        </label>
                                         <input
                                             type="text"
                                             className="form-control"
@@ -97,12 +89,10 @@ function LeaveTypeForm({ editData }) {
                                             </span>
                                         )}
                                     </div>
-
-
-                                    <div className="col-md-4">
-                                        <label className="fw-bold" style={customStyles.inputLabel}>
+                                    <div className="col-lg-5">
+                                        <label className="fw-bold">
                                             Leave Description<span style={{ color: "red" }}>*</span>
-                                        </label><p></p>
+                                        </label>
                                         <textarea
                                             className="form-control"
                                             name="Description"
@@ -118,7 +108,6 @@ function LeaveTypeForm({ editData }) {
                                         )}
                                     </div>
                                 </div>
-                                <br />
                                 <br />
                                 <div className="row">
                                     <div className="col-lg-8"></div>
@@ -142,8 +131,8 @@ function LeaveTypeForm({ editData }) {
                                         )}
                                     </div>
                                 </div>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>

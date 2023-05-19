@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 import { apiService } from "@/services/api.service";
 import { useRouter } from "next/router";
 
-function CountryMasterForm({editData}) {
+function CountryMasterForm({ editData }) {
     const { register, handleSubmit, reset, formState } = useForm();
     const { errors } = formState;
     const router = useRouter();
@@ -67,60 +67,55 @@ function CountryMasterForm({editData}) {
             fontWeight: '500',
             color: 'red'
         },
-        inputLabel: {
+        inputp: {
             fontSize: '16px'
         }
     };
     return (
         <Layout>
-            <div>
-                <br></br>
+            <div className="container-fluid">
                 <p className="Heading">Country Master Details</p>
-                <div className="container mt-2">
-                    <div className="row shadow p-2 rounded-3 ">
-                        <div className="row ">
-                            <div className="col-lg-4" >
-                                <label id={Styles.label}>Country<span id={Styles.asterisk}>* </span></label>
-                            </div>
-                            <div className="col-lg-4" >
-                                <label id={Styles.label}>Country Description<span id={Styles.asterisk}>* </span></label>
-                            </div>
-                        </div>
-                        <form onSubmit={handleSubmit(onSubmit)}>
-                            <div className="row ">
-                                <div className="col-lg-4">
-                                    <input name="Country" type="text" {...register("Short", { required: true })}
-                                        placeholder="Country Name" className="form-control"
-                                    />
-                                    <div>{errors.Short && <span style={customStyles.errorMsg}>Please enter country name</span>}</div>
+                <div className="row">
+                    <div className="col-lg-12">
+                        <div className="card p-3 rounded-3 border-0">
+                            <form onSubmit={handleSubmit(onSubmit)}>
+                                <div className="row ">
+                                    <div className="col-lg-2">
+                                        <label className="fw-bold">Country<span id={Styles.asterisk}>* </span></label>
+                                        <input name="Country" type="text" {...register("Short", { required: true })}
+                                            placeholder="Country Name" className="form-control"
+                                        />
+                                        <div>{errors.Short && <span style={customStyles.errorMsg}>Please enter country name</span>}</div>
+                                    </div>
+                                    <div className="col-lg-5">
+                                        <label className="fw-bold">Country Description<span id={Styles.asterisk}>* </span></label>
+                                        <textarea name="Description" className="form-control" {...register("Description", { required: true })} placeholder="Description" />
+                                        <div>{errors.Description && <span style={customStyles.errorMsg} >Please enter description</span>}</div>
+                                    </div>
                                 </div>
-                                <div className="col-lg-4">
-                                    <textarea name="Description" className="form-control" {...register("Description", { required: true })} placeholder="Description" />
-                                    <div>{errors.Description && <span style={customStyles.errorMsg} >Please enter description</span>}</div>
-                                </div>
-                            </div>
-                            <br></br>
-                            <div className="row mx-0">
-                                <div className="col-lg-8"></div>
-                                <div className="col-lg-2">
-                                    <Link href='/Masters/CountryMaster'>
-                                        <button type='button' className='btn common-edit' id={Styles.btn}>Close</button></Link>
-                                </div>
-                                <div className="col-lg-2">
-                                    {actionType == "insert" && (
-                                        <button type="submit" className="AddButton">
-                                            Save
-                                        </button>
-                                    )}
-                                    {actionType == "update" && (
-                                        <button type="submit" className="AddButton">
-                                            Update
-                                        </button>
-                                    )}
+                                <br />
+                                <div className="row">
+                                    <div className="col-lg-8"></div>
+                                    <div className="col-lg-2">
+                                        <Link href='/Masters/CountryMaster'>
+                                            <button type='button' className='AddButton'>Close</button></Link>
+                                    </div>
+                                    <div className="col-lg-2">
+                                        {actionType == "insert" && (
+                                            <button type="submit" className="AddButton">
+                                                Save
+                                            </button>
+                                        )}
+                                        {actionType == "update" && (
+                                            <button type="submit" className="AddButton">
+                                                Update
+                                            </button>
+                                        )}
 
+                                    </div>
                                 </div>
-                            </div>
-                        </form>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>

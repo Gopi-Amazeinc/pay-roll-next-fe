@@ -3,7 +3,7 @@ import React, { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import axios from "axios";
 import { apiService } from "@/services/api.service";
-import Styles from "@/styles/attendancedetails.module.css";
+import Styles from "@/styles/shiftdetails.module.css";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { DownloadTableExcel } from "react-export-table-to-excel";
 
@@ -121,7 +121,7 @@ const Shiftdetails = () => {
   //   getrejectedshiftDetails();
   // }, []);
 
- // const togglePending = () => {
+  // const togglePending = () => {
   //   setPending(true);
   //   setRejected(false);
   //   setApproved(false);
@@ -144,20 +144,21 @@ const Shiftdetails = () => {
 
   return (
     <>
-      <div className="row mt-3"  >
-        <div className="col-lg-3 " style={{ marginLeft: "15px" }}>
-          <Link href="/Attendance/shiftdetails" className={Styles.mainheader}>
-            {" "}
-            My Weekly Shift
-          </Link>
-        </div>
-        {roleid != 3 ||
-          <div className='col-lg-3' style={{ marginLeft: "-120px" }}>
-            <Link href="/Attendance/MyTeamWeeklyShift" className={Styles.mainheader}> My Team Weekly Shift</Link>
+      <div classname="cotainer-fluid">
+        <div className="row"  >
+          <div className="col-lg-3 mt-4 " >
+            <Link href="/Attendance/shiftdetails" className={Styles.mainheader}>
+              {" "}
+              My Weekly Shift
+            </Link>
           </div>
-        }
-      </div>
-      {/* <div className="row">
+          {roleid != 3 ||
+            <div className='col-lg-3 mt-4' style={{ marginLeft: "-10%" }}>
+              <Link href="/Attendance/MyTeamWeeklyShift" className={Styles.mainheader}> My Team Weekly Shift</Link>
+            </div>
+          }
+        </div>
+        {/* <div className="row">
                 <div className="col-lg-3">
                     <Link href="/Attendence/shiftdetails"> <h3></h3></Link>
 
@@ -167,41 +168,45 @@ const Shiftdetails = () => {
                     <Link href="/Attendence/MyTeamWeeklyShift"> <h3> My Team Weekly Shift</h3></Link>
                 </div>
             </div> */}
+        <div className={Styles.filter}>
+          <div className="card p-3  border-0 shadow-lg rounded-3 mt-4">
+            <div className="row">
+              <div className="col-lg-3">
+                <p className={Styles.filterdate}>
+                  START DATE <span style={{ color: "red" }}>*</span>
+                </p>
+                <input type="date" className="form-control form-control-sm m-o"
+                  value={startDate}
+                  onChange={(e) => getStartDate(e.target.value)} />
+              </div>
+              <div className="col-lg-3">
+                <p className={Styles.filterdate}>
+                  END DATE <span style={{ color: "red" }}>*</span>
+                </p>
+                <input type="date" className="form-control form-control-sm"
+                  value={endDate || ""}
+                  onChange={(e) => getEndDate(e.target.value)} />
+              </div>
 
-      <div className="card shadow-lg p-4 rounded-3 mt-4 text-start">
-        <div className="row">
-          <div className="col-lg-3">
-            <p> <b>
-              START DATE <span>*</span></b>
-            </p>
-            <input type="date" className="form-control form-control-sm m-o"
-              value={startDate}
-              onChange={(e) => getStartDate(e.target.value)} />
-          </div>
-          <div className="col-lg-3">
-            <p><b>
-              END DATE <span>*</span></b>
-            </p>
-            <input type="date" className="form-control form-control-sm"
-              value={endDate || ""}
-              onChange={(e) => getEndDate(e.target.value)} />
-          </div>
-          <div className="col-lg-3 mt-4">
-            <Link href="/Attendance/StaffShiftForm/new">
-              <button className="button"><IoIosAddCircleOutline size={24} color={"white"} />  ADD SHIFT DETAILS</button>
-            </Link>
-          </div>
-          <div className="col-lg-2 mt-4">
-            <DownloadTableExcel
-              filename="users table"
-              sheet="users"
-              currentTableRef={tableRef.current}
-            > <button className="button"> Download</button></DownloadTableExcel>
+              <div className="col-lg-2">
+                <br />
+                <Link href="/Attendance/StaffShiftForm/new" className={Styles.adddetail}>
+                  <button className="button" style={{ fontSize: "15px",marginTop:"7px" }}><IoIosAddCircleOutline size={18} color={"white"} />  ADD SHIFT DETAILS</button>
+                </Link>
+              </div>
+              <div className="col-lg-2">
+                <br />
+                <DownloadTableExcel
+                  filename="users table"
+                  sheet="users"
+                  currentTableRef={tableRef.current}
+                > <button className="button" style={{marginTop:"7px"}} > DOWNLOAD</button></DownloadTableExcel>
 
+              </div>
+            </div>
           </div>
         </div>
-      </div>
-      {/* 
+        {/* 
       <div className="row mt-3">
         <div className="col-lg-4">
           <div className="btn-group">
@@ -227,7 +232,7 @@ const Shiftdetails = () => {
           </div>
         </div>
       </div> */}
-      {/* {pending && roleID == "5" && (
+        {/* {pending && roleID == "5" && (
         <table className="table table-striped mt-3" style={{ marginLeft: "22px", width: "98%" }} ref={tableRef}>
           <thead>
             <tr className="bg-info text-white">
@@ -322,37 +327,38 @@ const Shiftdetails = () => {
         </table>
       )} */}
 
-      <div className="row mt-3">
-        <table className="table table-striped mt-3" style={{ marginLeft: "22px", width: "98%" }} ref={tableRef}>
-          <thead>
-            <tr className="bg-info text-white">
-              <th>START DATE</th>
-              <th>END DATE</th>
-              <th>SHIFT NAME</th>
-              <th>START TIME</th>
-              <th>END TIME</th>
-              <th>Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            {Array.isArray(shiftDetails) && shiftDetails.length > 0 && (
-              <>
-                {shiftDetails.map((data) => {
-                  return (
-                    <tr key={data.id}>
-                      <td>{data.shiftDate}</td>
-                      <td>{data.endDate}</td>
-                      <td>{data.shiftName}</td>
-                      <td>{data.startTime}</td>
-                      <td>{data.endTime}</td>
-                      <td>{data.status}</td>
-                    </tr>
-                  );
-                })}
-              </>
-            )}
-          </tbody>
-        </table>
+        <div className="row mt-3">
+          <table className="table table-striped mt-3"     style={{ marginLeft: "10px", width: "97%" }} ref={tableRef}>
+            <thead>
+              <tr className="bg-info text-white">
+                <th>START DATE</th>
+                <th>END DATE</th>
+                <th>SHIFT NAME</th>
+                <th>START TIME</th>
+                <th>END TIME</th>
+                <th>Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              {Array.isArray(shiftDetails) && shiftDetails.length > 0 && (
+                <>
+                  {shiftDetails.map((data) => {
+                    return (
+                      <tr key={data.id}>
+                        <td>{data.shiftDate}</td>
+                        <td>{data.endDate}</td>
+                        <td>{data.shiftName}</td>
+                        <td>{data.startTime}</td>
+                        <td>{data.endTime}</td>
+                        <td>{data.status}</td>
+                      </tr>
+                    );
+                  })}
+                </>
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
     </>
   );

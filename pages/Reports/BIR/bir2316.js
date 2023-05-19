@@ -7,65 +7,100 @@ const Bir2316 = () => {
     const toggleState = () => {
         setState(true)
     }
+
+    const customStyle = {
+      header: {
+        fontSize: "22px",
+        fontWeight: "500",
+        display: "flex",
+        justifyContent: "center",
+        color: "blue",
+      },
+      center: {
+        display: "flex",
+        justifyContent: "center",
+      },
+      card: {
+        paddingLeft: "2px",
+        paddingRight: "2px",
+        borderRadius: "5px",
+      },
+      tableHeader: {
+        backgroundColor: "#02cfff",
+        color: "white",
+      },
+      printBtn: {
+        textTransform: "uppercase",
+        textShadow: "none",
+        backgroundColor: "#3247d5",
+        color: "#fff",
+        borderRadius: "5px",
+        padding: "5px",
+        width: "55%",
+        float: "right",
+        border: 'none'
+      },
+      convertBtn:{
+        textTransform: "uppercase",
+        textShadow: "none",
+        backgroundColor: "#3247d5",
+        color: "#fff",
+        borderRadius: "5px",
+        padding: "5px",
+        width: "70%",
+        float: "right",
+        border: 'none'
+      }
+    };
+	
     return (
         <Layout>
             <div className='container'>
-                <div className='card border-0 shadow rounded-3 mt-3'>
-                    <div className='row'>
-                        <div className='col-lg-4'></div>
-                        <div className='col-lg-4'>
-                            <p className='header-style'>1604-CF</p>
-                        </div>
-                        <div className='col-lg-4'></div>
-                    </div>
+                <div className='card rounded-3 mt-3 mb-2'>
+                    <br></br>
+                    <p style={customStyle.header} className=''>2316</p>
                     <hr />
 
-                    <div className='row'>
-                        <div className='col-lg-3'></div>
+                    <div className='row' style={customStyle.center}>
+                       
                         <div className='col-lg-3'>
                             <p className='fw-bold fs-6'>Year</p>
                         </div>
                         <div className='col-lg-2'>
                             <select className='form-select'>
-                                <option value="">select Year</option>
-                                <option>2020</option>
-                                <option>2021</option>
+                                <option value="">Select year</option>
+                                <option>2023</option>
                                 <option>2022</option>
+                                <option>2021</option>
+                                <option>2020</option>
                             </select>
                         </div>
-                        <div className='col-lg-3'></div>
+                        
                     </div>
 
 
-                    <div className='row mt-3'>
-                        <div className='col-lg-3'></div>
-                        <div className='col-lg-3'>
-                            <p className='fw-bold fs-6'>Amended Return?</p>
+                    <div className='row mt-3' style={customStyle.center}>
+                    <div className='col-lg-3'>
+                            <p className='fw-bold fs-6'>Signatory Person</p>
                         </div>
                         <div className='col-lg-2'>
-                            <div className='form-check form-check-inline'>
-                                <label className='form-check-label'>Yes</label>
-                                <input className='form-check-input' type='radio' name='Amended Return' />
-                            </div>
-
-                            <div className='form-check form-check-inline'>
-                                <label className='form-check-label'>No</label>
-                                <input className='form-check-input' type='radio' name='Amended Return' />
-                            </div>
+                            <select className='form-select'>
+                                <option value="">Select</option>
+                                <option>HR</option>
+                            </select>
                         </div>
-                        <div className='col-lg-3'></div>
                     </div>
 
 
-                    <div className='row mt-3'>
-                        <div className='col-lg-3'></div>
+                    <div className='row mt-3 mb-3' style={customStyle.center}>
+                       
                         <div className='col-lg-3'>
                             <p className='fw-bold fs-6'>Search</p>
                         </div>
                         <div className='col-lg-2'>
                             <input className='form-control' placeholder='Search' />
                         </div>
-                        <div className='col-lg-3'></div>
+                       
                     </div>
 
 
@@ -74,12 +109,12 @@ const Bir2316 = () => {
 
                 <table className='table table-striped table-bordered mt-4'>
 
-                    <thead className='bg-info text-white'>
+                    <thead className='md-info text-white'>
                         <tr>
                             <th colSpan={6}>ALPHALIST OF EMPLOYEES</th>
                         </tr>
-                        <tr>
-                            <th>Select</th>
+                        <tr style={customStyle.tableHeader}>
+                            <th >Select</th>
                             <th>Employee ID</th>
                             <th>Name</th>
                             <th>Employee Status</th>
@@ -110,19 +145,19 @@ const Bir2316 = () => {
                 <div className='row mt-2'>
                     <div className='col-lg-4'></div>
                     <div className='col-lg-4'></div>
-                    <div className='col-lg-2'>
-                        <button onClick={toggleState} className='EditDelteBTN'>print</button>
+                    <div className='col-lg-4'>
+                        <button onClick={toggleState} style={customStyle.printBtn}>Print</button>
                     </div>
-                    <div className='col-lg-2'></div>
+                    
                 </div>
 
                 {
                     generateState && (
                         <div className='row mt-4'>
                             <div className='col-lg-4'></div>
-                            <div className='col-lg-4'></div>
-                            <div className='col-lg-4'>
-                                <button className='EditDelteBTN'>convert to pdf</button>
+                            <div className='col-lg-2'></div>
+                            <div className='col-lg-6'>
+                                <button style={customStyle.printBtn}>Convert to pdf</button>
                             </div>
                         </div>
                     )

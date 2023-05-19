@@ -155,9 +155,9 @@
   font-weight: bold;
 }
 
-.Heading:active {
+/* .Heading:active {
   border-bottom: 2px solid #3247d5;
-}
+} */
 
 .Dropzone {
   display: flex;
