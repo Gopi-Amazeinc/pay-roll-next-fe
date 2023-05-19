@@ -44,7 +44,7 @@ const InitialPayroll = () => {
         </div>
         <div className="row">
           <div className="col-lg-12">
-            <table className="table">
+            <table className="table text-center">
               <thead>
                 <tr className="bg-info text-white">
                   <th>Year</th>
