@@ -212,7 +212,7 @@ const Index = () => {
                     <h4 className='Heading'>My OvertimeDetails</h4>
                 </div>
             </div>
-            <div className='card p-3 border-0 shadow-lg rounded-3 mt-4'>
+            <div className='card p-3 border-0  rounded-3 mt-4'>
                 <div className='row'>
                     <div className='col-lg-3 text-dark fs-6 fw-bolder'>
                         <p>Select Dates</p>
