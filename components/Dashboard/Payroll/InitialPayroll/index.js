@@ -10,7 +10,7 @@ const InitialPayroll = () => {
   const getInitialPayroll = async () => {
     const { data } = await apiService.commonGetCall(
       "Payroll/GetPreliminarySalary"
-    ); 
+    );
     setInitialPayroll(data);
   };
   useEffect(() => {
@@ -42,52 +42,54 @@ const InitialPayroll = () => {
         <p className="Heading">Executed Initial Payroll Runs</p>
       </div>
       <div className="row">
-        <table className="table shadow-lg table-md ">
-          <thead>
-            <tr className="bg-info text-white">
-              <th>Year</th>
-              <th>Month</th>
-              <th>Period</th>
-              <th>Payroll Run Type </th>
-              <th>Description </th>
-              <th>Execution Date</th>
-            </tr>
-          </thead>
-          <tbody>
-            {intialPayroll.slice(offset, offset + PER_PAGE).map((data) => {
-              return (
-                <tr key={data.id}>
-                  <td>{data.endyear}</td>
-                  <td>{data.month}</td>
-                  <td>{data.payrolltype}</td>
-                  <td>{data.ded_type}</td>
-                  <td>{data.componentName}</td>
-                  <td>{data.endDate}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-        <div className="mb-4 mt-4 text-center">
-          <ReactPaginate
-            previousLabel={"Previous"}
-            nextLabel={"Next"}
-            breakLabel={"..."}
-            pageCount={pageCount}
-            marginPagesDisplayed={2}
-            pageRangeDisplayed={3}
-            onPageChange={handlePageClick}
-            containerClassName={"pagination  justify-content-center"}
-            pageClassName={"page-item "}
-            pageLinkClassName={"page-link"}
-            previousClassName={"page-item"}
-            previousLinkClassName={"page-link"}
-            nextClassName={"page-item"}
-            nextLinkClassName={"page-link"}
-            breakClassName={"page-item"}
-            breakLinkClassName={"page-link"}
-            activeClassName={"active primary"}
-          />
+        <div className="col-lg-12">
+          <table className="table ">
+            <thead>
+              <tr className="bg-info text-white">
+                <th>Year</th>
+                <th>Month</th>
+                <th>Period</th>
+                <th>Payroll Run Type </th>
+                <th>Description </th>
+                <th>Execution Date</th>
+              </tr>
+            </thead>
+            <tbody>
+              {intialPayroll.slice(offset, offset + PER_PAGE).map((data) => {
+                return (
+                  <tr key={data.id}>
+                    <td>{data.endyear}</td>
+                    <td>{data.month}</td>
+                    <td>{data.payrolltype}</td>
+                    <td>{data.ded_type}</td>
+                    <td>{data.componentName}</td>
+                    <td>{data.endDateFormated}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+          <div className="mb-4 mt-4 text-center">
+            <ReactPaginate
+              previousLabel={"Previous"}
+              nextLabel={"Next"}
+              breakLabel={"..."}
+              pageCount={pageCount}
+              marginPagesDisplayed={2}
+              pageRangeDisplayed={3}
+              onPageChange={handlePageClick}
+              containerClassName={"pagination  justify-content-center"}
+              pageClassName={"page-item "}
+              pageLinkClassName={"page-link"}
+              previousClassName={"page-item"}
+              previousLinkClassName={"page-link"}
+              nextClassName={"page-item"}
+              nextLinkClassName={"page-link"}
+              breakClassName={"page-item"}
+              breakLinkClassName={"page-link"}
+              activeClassName={"active primary"}
+            />
+          </div>
         </div>
       </div>
     </>
