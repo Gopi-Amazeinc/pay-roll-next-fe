@@ -1241,14 +1241,72 @@ const Sidebar = ({ children, applyPageName }) => {
               </Link>
             </>
           )}
-          {userRole == 4 && (
+          {userRole == 5 && (
+            <>
+              <hr></hr>
+              <Link href="/Announcement" className={styles.sidemenulink}>
+                <button
+                  className={getStyle(701)}
+                  onClick={updateActiveMenu.bind(this, {
+                    id: 701,
+                    name: "Announcement",
+                  })}
+                >
+                  <HiOutlineTicket style={customStyles.icons} />
+                  Announcement
+                </button>
+              </Link>
+            </>
+          )}
+          {userRole == 4 || userRole == 5 && (
             <div>
               <hr></hr>
               <button className={styles.sidemenu} onClick={togleReportsMeanu}>
                 <TbReportSearch style={customStyles.icons} />
                 Reports
               </button>
-              {displayReports && (
+              {userRole == 5 && displayReports && (
+                <>
+               <Link href="/Reports/Payslip">
+                    <button
+                      className={getSubStyle(5041)}
+                      onClick={updateActiveMenu.bind(this, {
+                        id: 5041,
+                        name: "Payslip",
+                      })}
+                    >
+                      <TbReport style={customStyles.icons} />
+                      Payslip
+                    </button>
+                  </Link>
+
+                  <Link href="/Reports/BIR/bir2316">
+                    <button
+                      className={getSubStyle(5042)}
+                      onClick={updateActiveMenu.bind(this, {
+                        id: 5042,
+                        name: "BIR2316",
+                      })}
+                    >
+                      <TbReport style={customStyles.icons} />
+                      BIR 2316
+                    </button>
+                  </Link>
+                  <Link href="/Reports/Salary/salaryIncreasePdf">
+                    <button
+                      className={getSubStyle(5043)}
+                      onClick={updateActiveMenu.bind(this, {
+                        id: 5043,
+                        name: "Salary Increase PDF",
+                      })}
+                    >
+                      <TbReport style={customStyles.icons} />
+                     Salary Increase PDF
+                    </button>
+                  </Link>
+                </>
+              )}
+              {userRole == 4 && displayReports && (
                 <div>
                   <button
                     className={styles.subsidemenu}
