@@ -1292,9 +1292,9 @@ const Sidebar = ({ children, applyPageName }) => {
 
                     <Link href="/Reports/BIR/bir2316">
                       <button
-                        className={getSubStyle(50451)}
+                        className={getSubStyle(50452)}
                         onClick={updateActiveMenu.bind(this, {
-                          id: 50451,
+                          id: 50452,
                           name: "BIR2316",
                         })}
                       >
@@ -1304,9 +1304,9 @@ const Sidebar = ({ children, applyPageName }) => {
                     </Link>
                     <Link href="/Reports/Salary/salaryIncreasePdf">
                       <button
-                        className={getSubStyle(50451)}
+                        className={getSubStyle(50453)}
                         onClick={updateActiveMenu.bind(this, {
-                          id: 50451,
+                          id: 50453,
                           name: "Salary Increase PDF",
                         })}
                       >
@@ -1316,9 +1316,9 @@ const Sidebar = ({ children, applyPageName }) => {
                     </Link>
                     <Link href="/Reports/LeaveReport">
                       <button
-                        className={getSubofSubStyle(50451)}
+                        className={getSubStyle(50454)}
                         onClick={updateActiveMenu.bind(this, {
-                          id: 50451,
+                          id: 50454,
                           name: "LeaveReport",
                         })}
                       >
