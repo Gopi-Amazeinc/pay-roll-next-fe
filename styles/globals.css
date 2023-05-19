@@ -141,10 +141,10 @@
 
 .Heading {
   color: #3247d5;
-  font-size: 24px;
+  font-size: 22px;
   text-transform: capitalize;
   text-decoration: none;
-  font-weight: bold;
+  font-weight: 600;
   margin-top: 1.5%;
 }
 
