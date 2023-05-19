@@ -148,7 +148,7 @@ function StaffDashbaord() {
                   <td>{data.manager}</td>
                   <td>
                     <span onClick={() => enableDisableStaff(data)}>
-                      {data.AttendanceEnable ? (
+                      {data.attendanceEnable ? (
                         <button
                         onClick={getData.bind(this, data)}
                         className="enableDisableBtn"
@@ -167,7 +167,7 @@ function StaffDashbaord() {
                     </span>
                                         
                   </td>
-                  <td>
+                  <td >
                       <BiEdit/>
                   </td>
                 </tr>
