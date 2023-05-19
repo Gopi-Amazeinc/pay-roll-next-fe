@@ -5,17 +5,18 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { apiService } from "@/services/api.service";
-
+import { useRouter } from "next/router";
 // import Astyle from 'styles//Requests//applyleave.module.css';
 import { BsArrowLeftSquare } from "react-icons/bs";
 import DropZone from "@/pages/SharedComponent/dropzone";
 import { useForm } from "react-hook-form";
 
 const ApplyLeave = () => {
-  const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
   const { register, handleSubmit, reset, formState } = useForm();
+  const { errors } = formState;
   const [leavetype, setLeaveType] = useState([]);
   const [userID, setUserId] = useState();
+  const router = useRouter();
   const getDropdowndata = async () => {
     const res = await apiService.commonGetCall("Master/GetLeaveType");
     setLeaveType(res.data);
@@ -27,20 +28,18 @@ const ApplyLeave = () => {
   }, []);
 
   async function onSubmit(data) {
-    let StaffID=sessionStorage.getItem("userID");
-    try {
-      debugger;
-      await apiService.commonPostCall("HR/InsertStaffLeaves", data,StaffID);
-      Swal.fire({
-        icon: "success",
-        text: "Leave request was inserted successfully...!",
-      });
-      sessionStorage.setItem("Sdate",data.SDateOfLeave);
-      sessionStorage.setItem("Edate",data.EDateOfLeave);
-      console.log(data);
-    } catch (error) {
-      Swal.fire("Data not inserted");
-    }
+    let StaffID = sessionStorage.getItem("userID");
+    let formData = { ...data, StaffID }
+    debugger;
+    await apiService.commonPostCall("HR/InsertStaffLeaves", formData);
+    Swal.fire({
+      icon: "success",
+      text: "Leave request was inserted successfully...!",
+    });
+    sessionStorage.setItem("Sdate", data.SDateOfLeave);
+    sessionStorage.setItem("Edate", data.EDateOfLeave);
+    console.log(data);
+    location.href("/Requests/Leaverequest");
   }
   return (
     <Layout>
@@ -63,7 +62,7 @@ const ApplyLeave = () => {
                 id="Department"
                 name="Department"
                 className="form-select"
-                {...register("LeaveType", { required: true })}
+                {...register("LeaveType", { required: "This field is required" })}
               >
                 <option value="" disabled="">
                   Select Leave Type
@@ -76,6 +75,7 @@ const ApplyLeave = () => {
                   );
                 })}
               </select>
+              {errors.LeaveType && <p className="error-message" style={{ color: "red" }}>{errors.LeaveType.message}</p>}
             </div>
             <div className="col-lg-2">
               <label htmlFor="">
@@ -85,9 +85,10 @@ const ApplyLeave = () => {
                 cols="20"
                 rows="1"
                 className="form-control"
-                {...register("LeaveReason", { required: true })}
+                {...register("LeaveReason", { required: "This field is required" })}
                 placeholder="Leave Reason"
               ></textarea>
+              {errors.LeaveType && <p className="error-message" style={{ color: "red" }}>{errors.LeaveType.message}</p>}
             </div>
             <div className="col-lg-2">
               <label htmlFor="">
@@ -96,8 +97,9 @@ const ApplyLeave = () => {
               <input
                 type="date"
                 className="form-control"
-                {...register("SDateOfLeave", { required: true })}
+                {...register("SDateOfLeave", { required: "This field is required" })}
               />
+              {errors.SDateOfLeave && <p className="error-message" style={{ color: "red" }}>{errors.SDateOfLeave.message}</p>}
             </div>
             <div className="col-lg-2">
               <label htmlFor="">
@@ -106,8 +108,9 @@ const ApplyLeave = () => {
               <input
                 type="date"
                 className="form-control"
-                {...register("EDateOfLeave", { required: true })}
+                {...register("EDateOfLeave", { required: "This field is required" })}
               />
+              {errors.EDateOfLeave && <p className="error-message" style={{ color: "red" }}>{errors.EDateOfLeave.message}</p>}
             </div>
             {/* <div className="col-lg-2">
               <label>Staff ID</label>
@@ -130,6 +133,7 @@ const ApplyLeave = () => {
                 className="form-control"
                 {...register("MedicalUrl")}
               />
+              {/* {errors.MedicalUrl && <p className="error-message" style={{ color: "red" }}>{errors.MedicalUrl.message}</p>} */}
             </div>
             <div className="col-lg-2"></div>
           </div>
@@ -137,7 +141,7 @@ const ApplyLeave = () => {
             <div className="col-lg-8"></div>
             <div className="col-lg-2">
               <Link href="/Requests/Leaverequest">
-                <button type="submit" className="submit-button">
+                <button className="submit-button">
                   CANCEL
                 </button>
               </Link>

@@ -50,50 +50,42 @@ const OverTimeDetails = () => {
 
 
   async function insertDetails(data) {
-    try {
-      console.log(data);
-      debugger;
-      let details = {
-        "StaffID": sessionStorage.getItem("userID"),
-        "Date": sessionStorage.getItem("Date"),
-        "StartTime": sessionStorage.getItem("Date") + " " + watch("StartTime"),
-        "EndTime": sessionStorage.getItem("Date") + " " + watch("EndTime"),
-        "NightOT": dashboardData[0].nightOt == null ? 0 : dashboardData[0].nightOt,
-        "Comments": watch("comments"),
-        // "Attachment": watch("Attachment"),
-        // "noofhours ":dashboardData[0].noofhours == null ? 0 : dashboardData[0].noofhours,
-        "NSD_REGULAR": dashboardData[0].nsD_REGULAR == null ? 0 : dashboardData[0].nsD_REGULAR,
-        "ExccessNormalOt": dashboardData[0].exccessNormalOt == null ? 0 : dashboardData[0].exccessNormalOt,
-        "ExccessNightOt": dashboardData[0].exccessNightOt == null ? 0 : dashboardData[0].exccessNightOt,
-        "RestNightOt": dashboardData[0].restNightOt == null ? 0 : dashboardData[0].restNightOt,
-        "RestNormalOT": dashboardData[0].restNormalOT == null ? 0 : dashboardData[0].restNormalOT,
-        "ExccessRestNormalOt": dashboardData[0].exccessRestNormalOt == null ? 0 : dashboardData[0].exccessRestNormalOt,
-        "RestExccessNightOt": dashboardData[0].restExccessNightOt == null ? 0 : dashboardData[0].restExccessNightOt,
-        "LegalNightOt": dashboardData[0].legalNightOt == null ? 0 : dashboardData[0].legalNightOt,
-        "LegalNormalOT": dashboardData[0].legalNormalOT == null ? 0 : dashboardData[0].legalNormalOT,
-        "LegalExccessNormalOt": dashboardData[0].legalExccessNormalOt == null ? 0 : dashboardData[0].legalExccessNormalOt,
-        "LegalExccessNightOt": dashboardData[0].legalExccessNightOt == null ? 0 : dashboardData[0].legalExccessNightOt,
-        "SpecialNightOt": dashboardData[0].specialNightOt == null ? 0 : dashboardData[0].specialNightOt,
-        "SpecialNormalOT": dashboardData[0].specialNormalOT == null ? 0 : dashboardData[0].specialNormalOT,
-        "SpecialExccessNormalOt": dashboardData[0].specialExccessNormalOt == null ? 0 : dashboardData[0].specialExccessNormalOt,
-        "SpecialExccessNightOt": dashboardData[0].specialExccessNightOt == null ? 0 : dashboardData[0].specialExccessNightOt,
-        "SpecialRestNightOt": dashboardData[0].specialRestNightOt == null ? 0 : dashboardData[0].specialRestNightOt,
-        "SpecialRestNormalOT": dashboardData[0].specialRestNormalOT == null ? 0 : dashboardData[0].specialRestNormalOT,
-        "SpecialRestExccessNormalOt": dashboardData[0].specialRestExccessNormalOt == null ? 0 : dashboardData[0].specialRestExccessNormalOt,
-        "SpecialRestExccessNightOt": dashboardData[0].specialRestExccessNightOt == null ? 0 : dashboardData[0].specialRestExccessNightOt,
-        "LegalRestNightOt": dashboardData[0].legalRestNightOt == null ? 0 : dashboardData[0].legalRestNightOt,
-        "LegalRestNormalOT": dashboardData[0].legalRestNormalOT == null ? 0 : dashboardData[0].legalRestNormalOT,
-        "LegalExccessRestNormalOt": dashboardData[0].legalExccessRestNormalOt == null ? 0 : dashboardData[0].legalExccessRestNormalOt,
-        "LegalExccessRestNightOt": dashboardData[0].legalExccessRestNightOt == null ? 0 : dashboardData[0].legalExccessRestNightOt
-      }
-      await apiService.commonPostCall("HR/InsertStaffOverTimeDetails", details);
-      Swal.fire('Data Inserted successfully');
-      router.push("/Requests/OverTimeDetails");
-      console.log("Inserted data:", details);
+    console.log(data);
+    debugger;
+    let details = {
+      "StaffID": sessionStorage.getItem("userID"),
+      "Date": sessionStorage.getItem("Date"),
+      "StartTime": sessionStorage.getItem("Date") + " " + watch("StartTime"),
+      "EndTime": sessionStorage.getItem("Date") + " " + watch("EndTime"),
+      "NightOT": dashboardData[0].nightOt == null ? 0 : dashboardData[0].nightOt,
+      "Comments": watch("comments"),
+      "NSD_REGULAR": dashboardData[0].nsD_REGULAR == null ? 0 : dashboardData[0].nsD_REGULAR,
+      "ExccessNormalOt": dashboardData[0].exccessNormalOt == null ? 0 : dashboardData[0].exccessNormalOt,
+      "ExccessNightOt": dashboardData[0].exccessNightOt == null ? 0 : dashboardData[0].exccessNightOt,
+      "RestNightOt": dashboardData[0].restNightOt == null ? 0 : dashboardData[0].restNightOt,
+      "RestNormalOT": dashboardData[0].restNormalOT == null ? 0 : dashboardData[0].restNormalOT,
+      "ExccessRestNormalOt": dashboardData[0].exccessRestNormalOt == null ? 0 : dashboardData[0].exccessRestNormalOt,
+      "RestExccessNightOt": dashboardData[0].restExccessNightOt == null ? 0 : dashboardData[0].restExccessNightOt,
+      "LegalNightOt": dashboardData[0].legalNightOt == null ? 0 : dashboardData[0].legalNightOt,
+      "LegalNormalOT": dashboardData[0].legalNormalOT == null ? 0 : dashboardData[0].legalNormalOT,
+      "LegalExccessNormalOt": dashboardData[0].legalExccessNormalOt == null ? 0 : dashboardData[0].legalExccessNormalOt,
+      "LegalExccessNightOt": dashboardData[0].legalExccessNightOt == null ? 0 : dashboardData[0].legalExccessNightOt,
+      "SpecialNightOt": dashboardData[0].specialNightOt == null ? 0 : dashboardData[0].specialNightOt,
+      "SpecialNormalOT": dashboardData[0].specialNormalOT == null ? 0 : dashboardData[0].specialNormalOT,
+      "SpecialExccessNormalOt": dashboardData[0].specialExccessNormalOt == null ? 0 : dashboardData[0].specialExccessNormalOt,
+      "SpecialExccessNightOt": dashboardData[0].specialExccessNightOt == null ? 0 : dashboardData[0].specialExccessNightOt,
+      "SpecialRestNightOt": dashboardData[0].specialRestNightOt == null ? 0 : dashboardData[0].specialRestNightOt,
+      "SpecialRestNormalOT": dashboardData[0].specialRestNormalOT == null ? 0 : dashboardData[0].specialRestNormalOT,
+      "SpecialRestExccessNormalOt": dashboardData[0].specialRestExccessNormalOt == null ? 0 : dashboardData[0].specialRestExccessNormalOt,
+      "SpecialRestExccessNightOt": dashboardData[0].specialRestExccessNightOt == null ? 0 : dashboardData[0].specialRestExccessNightOt,
+      "LegalRestNightOt": dashboardData[0].legalRestNightOt == null ? 0 : dashboardData[0].legalRestNightOt,
+      "LegalRestNormalOT": dashboardData[0].legalRestNormalOT == null ? 0 : dashboardData[0].legalRestNormalOT,
+      "LegalExccessRestNormalOt": dashboardData[0].legalExccessRestNormalOt == null ? 0 : dashboardData[0].legalExccessRestNormalOt,
+      "LegalExccessRestNightOt": dashboardData[0].legalExccessRestNightOt == null ? 0 : dashboardData[0].legalExccessRestNightOt
     }
-    catch {
-      Swal.fire("Insert is not working");
-    }
+    await apiService.commonPostCall("HR/InsertStaffOverTimeDetails", details);
+    Swal.fire('Data Inserted successfully');
+    console.log("Inserted data:", details);
   }
   return (
     <Layout>
@@ -109,7 +101,6 @@ const OverTimeDetails = () => {
               <div className='col-lg-2'>
                 <p>Actual Start Time<span style={{ color: "red" }}>*</span></p>
               </div>
-              {/* <div className='col-lg-2'></div> */}
               <div className='col-lg-2'>
                 <p>Actual End Time<span style={{ color: "red" }}>*</span></p>
               </div>
@@ -159,7 +150,7 @@ const OverTimeDetails = () => {
                 </Link>
               </div>
               <div className='col-lg-2'>
-                <button className={Styles.addButton}>Submit</button>
+                <button type='submit' className={Styles.addButton}>Submit</button>
               </div>
             </div>
           </form>

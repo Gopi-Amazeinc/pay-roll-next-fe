@@ -47,9 +47,9 @@ function GroupMaster() {
 
     return (
         <Layout>
-            <div className="container">
+            <div className="container-fluid">
                 <p className="Heading">Group Master</p>
-                <div className="card p-3 rounded-3 shadow border-0">
+                <div className="card p-3 rounded-3 border-0">
                     <div className="row">
                         <div className="col-1">
                             <p> <BiFilterAlt /> Filter By</p>
