@@ -86,6 +86,7 @@ const AttendenceDetails = () => {
     return getDateBySelectedDate(selectedDate);
   };
   const getDateBySelectedDate = (endDatesss) => {
+    debugger;
     return getAttendenceByID(startDate, endDatesss);
   };
 
