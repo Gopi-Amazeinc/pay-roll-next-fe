@@ -86,10 +86,11 @@ const InitialPayrollDetails = () => {
         }
     };
     return (
-        <div>
-            <h6>Delete operation is not happening</h6>
-            <h3 className='text-primary fs-5 mt-3 Heading'>Initial Payroll Details</h3>
-            <div className='card p-3 border-0 shadow-lg rounded-3 mt-4'>
+        <div className='container-fluid'>
+
+            <p className=' Heading'>Initial Payroll Details</p>
+            <br />
+            <div className='card p-4 '>
                 <div className='row'>
                     <div className='col-lg-1'>
                         <p>Filter By</p>
@@ -127,7 +128,7 @@ const InitialPayrollDetails = () => {
             <div className='row '>
                 <div className='col-lg-4'> </div>
                 <div className='col-lg-5'>
-                    <h4 className='Heading' >Employees in selected Period</h4>
+                    <p className='Heading' >Employees in selected Period</p>
                 </div>
                 <div className='col-lg-3'>
                     <button type='button' className='EditDelteBTN' onClick={() => handleDelete.bind(this)}>Delete</button>

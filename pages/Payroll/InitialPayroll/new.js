@@ -118,12 +118,13 @@ const InitialPayrollForm = () => {
     }
     return (
         <Layout>
-            <div>
 
+            <div className='container-fluid'>
                 <h3 className='Heading'>Initial Payroll</h3>
                 <br />
-                <div className="card ">
+                <div className="card p-3 " style={{ paddingLeft: "10px" }}>
                     <form>
+
                         <div className="row">
                             <div className="col-lg-3">
                                 <p>Select Paycode </p>
@@ -152,7 +153,7 @@ const InitialPayrollForm = () => {
                                 <Button
                                     style={{ background: "#3247d5" }}
                                     type="button"
-                                    className='form-control fw-bold'
+                                    className='form-control  '
                                     id="collapseExample"
                                     onClick={() => {
                                         setCollapseOpen(!collapseOpen),
@@ -279,6 +280,7 @@ const InitialPayrollForm = () => {
                         </table> </Collapse>
 
                 </div>
+
                 </div>
             </div>
         </Layout >
