@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 // import { Button, Modal, ModalBody, ModalFooter } from "reactstrap";
 // import overtime from '../../styles/myteamovertimedetails.module.css'
 // import Layout from '../../Components/layout.js';
@@ -6,13 +6,27 @@ import { useRef } from 'react';
 import { DownloadTableExcel } from 'react-export-table-to-excel';
 import { Modal, ModalBody, ModalFooter } from 'reactstrap';
 import Styles from "@/styles/shiftdetails.module.css";
+import OvertimeUnitsUpload from '@/pages/Attendance/OverTimeUnitsUpload';
+import { apiService } from "@/services/api.service";
+
 
 
 const MyTeamOverTimeDetail = () => {
 
-
+  const [overtimeUnitsUpload, SetovertimeUnitsUpload] = useState([]);
   const tableRef = useRef(null);
   const [modalOpen, setModalOpen] = useState(false);
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  const getData = async () => {
+    let res = await apiService.commonGetCall("Master/GetLoanMaster");
+    SetovertimeUnitsUpload(res.data);
+  };
+
+
   return (
 
     <div>
@@ -90,11 +104,7 @@ const MyTeamOverTimeDetail = () => {
         < br />
         <div classname="row">
           <div className="table-responsive">
-            <table
-              className="table table-striped  "
-              style={{ marginLeft: "0px", width: "100%" }}
-              ref={tableRef}
-            >
+            <table className="table table-striped  "  style={{ marginLeft: "0px", width: "100%" }}ref={tableRef} >
               <thead className={"bg-info text-white "}>
                 <tr style={{ whiteSpace: "nowrap" }}>
                   <th>Employee ID</th>
@@ -105,7 +115,22 @@ const MyTeamOverTimeDetail = () => {
                 </tr>
               </thead>
               <tbody>
-
+                {Array.isArray(overtimeUnitsUpload) && overtimeUnitsUpload.length > 0 && (
+                  <>
+                    {overtimeUnitsUpload.map((data) => {
+                      return (
+                        <tr key={data.id}>
+                          <td>{data.payrollComponentType}</td>
+                          <td>{data.employeeName}</td>
+                          <td>{data.payDtae}</td>
+                          <td>{data.componentName}</td>
+                          <td>{data.endTime}</td>
+                          <td>{data.noofHours}</td>
+                        </tr>
+                      );
+                    })}
+                  </>
+                )}
               </tbody>
             </table>
           </div>
