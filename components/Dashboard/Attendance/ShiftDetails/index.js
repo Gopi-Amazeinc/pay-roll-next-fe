@@ -191,7 +191,7 @@ const Shiftdetails = () => {
                   currentTableRef={tableRef.current}
                 > <button className="button" style={{ marginTop: "7px" }} > DOWNLOAD</button></DownloadTableExcel>
               </div>
-              <div className="col-lg-2">
+              <div className="col-lg-3">
                 <br />
                 <Link href="/Attendance/StaffShiftForm/new" className={Styles.adddetail}>
                   <button className="button" style={{ fontSize: "15px", marginTop: "7px" }}><IoIosAddCircleOutline size={18} color={"white"} />  ADD SHIFT DETAILS</button>
