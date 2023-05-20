@@ -22,124 +22,130 @@ const PhilhealthForm = ({ editData }) => {
 
     return (
         <Layout>
-            <div>
-                <br />
-                <p className={Styles.p}>Phihealth Configuration Form</p>
-                <form onSubmit={handleSubmit(onSubmit)}>
-                    <div id={Styles.card} className="card shadow-lg p-3">
-                        <div className="row">
-                            <div className="col-lg-3">
-                                <label>
-                                    Taxable income low limit <span className={Styles.span} >*</span>
-                                </label>
-                                <input
-                                    name="lowLimit"
-                                    type="text"
-                                    className={`form-control mt-2`}
-                                    {...register("Taxiableincomelowlimit", {
-                                        required: "Please add a Tax Name",
-                                        pattern: {
-                                            value: /^[A-Za-z0-9]+$/,
-                                            message: "Please enter a valid Tax Name",
-                                        },
-                                    })}
-                                />
-                                <div className="invalid-feedback">
-                                    {errors.lowLimit?.message}
+            <div className='container-fluid'>
+
+                <label className='Heading'>Phihealth Configuration Form</label>
+                <br /><br />
+                <div className='row'>
+                    <div className='col-lg-12'>
+                        <div className='card p-3 border-0  rounded-3'>
+                            <form onSubmit={handleSubmit(onSubmit)}>
+
+                                <div className="row">
+                                    <div className="col-lg-3">
+                                        <label className='fw-bold'>
+                                            Taxable income low limit <span className={Styles.span} >*</span>
+                                        </label>
+                                        <input
+                                            name="lowLimit"
+                                            type="text"
+                                            className='form-control'
+                                            {...register("Taxiableincomelowlimit", {
+                                                required: "Please add a Tax Name",
+                                                pattern: {
+                                                    value: /^[A-Za-z0-9]+$/,
+                                                    message: "Please enter a valid Tax Name",
+                                                },
+                                            })}
+                                        />
+                                        <div className="invalid-feedback">
+                                            {errors.lowLimit?.message}
+                                        </div>
+                                        <br/>
+                                    </div>
+                                    <div className="col-lg-3">
+                                        <label className='fw-bold'>
+                                            Taxable income high limit <span className={Styles.span}>*</span>
+                                        </label>
+                                        <input
+                                            name="highLimit"
+                                            type="text"
+                                            className='form-control'
+                                            {...register("Taxiableincomehighlimit", {
+                                                required: "Please add a Tax Name",
+                                                pattern: {
+                                                    value: /^[A-Za-z0-9]+$/,
+                                                    message: "Please enter a valid Tax Name",
+                                                },
+                                            })}
+                                        />
+                                        <div className="invalid-feedback">
+                                            {errors.highLimit?.message}
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-2">
+                                        <label className='fw-bold'>
+                                            Phihealth value <span className={Styles.span}>*</span>
+                                        </label>
+                                        <input
+                                            name="Philhealth"
+                                            type="text"
+                                            className='form-control'
+                                            {...register("Phihealthvalue", {
+                                                required: "Please add a Phihealth value",
+                                                pattern: {
+                                                    value: /^[A-Za-z0-9]+$/,
+                                                    message: "Please enter a valid Phihealth value",
+                                                },
+                                            })}
+                                        />
+                                        <div className="invalid-feedback">
+                                            {errors.Philhealth?.message}
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-2">
+                                        <label className='fw-bold'>
+                                            Year<span className={Styles.span}>*</span>
+                                        </label>
+                                        <select
+                                            className="form-select"
+                                            {...register("Year", {
+                                                required: "Please add a year",
+                                                pattern: {
+                                                    value: /^[A-Za-z0-9]+$/,
+                                                    message: "Please enter a valid year",
+                                                },
+                                            })}
+                                        >
+                                            <option>2023</option>
+                                            <option>2023</option>
+                                            <option>2024</option>
+                                            <option>2025</option>
+                                            <option>2026</option>
+                                            <option>2027</option>
+                                            <option>2028</option>
+                                        </select>
+                                    </div>
                                 </div>
-                            </div>
-                            <div className="col-lg-3">
-                                <label>
-                                    Taxable income high limit <span className={Styles.span}>*</span>
-                                </label>
-                                <input
-                                    name="highLimit"
-                                    type="text"
-                                    className={`form-control mt-2 `}
-                                    {...register("Taxiableincomehighlimit", {
-                                        required: "Please add a Tax Name",
-                                        pattern: {
-                                            value: /^[A-Za-z0-9]+$/,
-                                            message: "Please enter a valid Tax Name",
-                                        },
-                                    })}
-                                />
-                                <div className="invalid-feedback">
-                                    {errors.highLimit?.message}
+                                <br />
+                                <div className="row ">
+                                    <div className="col-lg-8"></div>
+                                    <div className="col-lg-2">
+                                        <Link href="/Settings/Philhealth">
+                                            <button className='AddButton' >Cancel</button>
+                                        </Link>
+                                        {/* <button id={Styles.Save}>Save</button> */}
+                                    </div>
+                                    <div className="col-lg-2">
+
+                                        <button
+                                            type="submit"
+
+                                            className='AddButton'
+                                        >
+                                            Save
+                                        </button>
+
+
+
+                                    </div>
+
                                 </div>
-                            </div>
-                            <div className="col-lg-2">
-                                <label>
-                                    Phihealth value <span className={Styles.span}>*</span>
-                                </label>
-                                <input
-                                    name="Philhealth"
-                                    type="text"
-                                    className={`form-control mt-2 `}
-                                    {...register("Phihealthvalue", {
-                                        required: "Please add a Phihealth value",
-                                        pattern: {
-                                            value: /^[A-Za-z0-9]+$/,
-                                            message: "Please enter a valid Phihealth value",
-                                        },
-                                    })}
-                                />
-                                <div className="invalid-feedback">
-                                    {errors.Philhealth?.message}
-                                </div>
-                            </div>
-                            <div className="col-lg-2">
-                                <label>
-                                    Year<span className={Styles.span}>*</span>
-                                </label>
-                                <select
-                                    className="form-select"
-                                    {...register("Year", {
-                                        required: "Please add a year",
-                                        pattern: {
-                                            value: /^[A-Za-z0-9]+$/,
-                                            message: "Please enter a valid year",
-                                        },
-                                    })}
-                                >
-                                    <option>2023</option>
-                                    <option>2023</option>
-                                    <option>2024</option>
-                                    <option>2025</option>
-                                    <option>2026</option>
-                                    <option>2027</option>
-                                    <option>2028</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="col-lg-10"></div>
-                            <div className="col-lg-1">
-                                <Link href="/Settings/Philhealth">
-                                    <button className={Styles.Cancel} >Cancel</button>
-                                </Link>
-                                {/* <button id={Styles.Save}>Save</button> */}
-                            </div>
-                            <div className="col-lg-1">
 
-                                <button
-                                    type="submit"
-
-                                    className={Styles.Save}
-                                >
-                                    Save
-                                </button>
-
-
-
-                            </div>
-                            <div className="col-lg-2 ">
-                                {/* <button id='AddButton' className='btn btn-primary'>Submit</button>
-                 */}
-                            </div>
+                            </form>
                         </div>
                     </div>
-                </form>
+                </div>
             </div>
         </Layout>
     )

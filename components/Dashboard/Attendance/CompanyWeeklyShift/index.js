@@ -17,7 +17,7 @@ const Index = () => {
                 </div>
                 <div className='col-lg-3' style={{ marginLeft: "-10%" }}>
                     <br />
-                    <Link href="/Attendance/MyTeamWeeklyShift" className={Styles.mainheader}> My Team Weekly Shift</Link>
+                    <Link href="/Attendance/MyTeamWeeklyShift" className={Styles.mainheader}> Company Shift Details</Link>
                 </div>
             </div>
             <div className='card shadow-lg p-4 rounded-3 mt-4'>
@@ -37,16 +37,16 @@ const Index = () => {
                     <div className="col-lg-2">
                         <input type="text" className='form-control' style={{ marginTop: "35px" }} placeholder='Serach For Band' />
                         {/* <Link href="/Attendance/StaffShiftForm/new" ><button className='button'>Add Shift Details</button></Link> */}
-                    </div>  
+                    </div>
                     <div className="col-lg-1"></div>
                     <div className="col-lg-2">
-                      <button className='button' style={{marginTop:"30px",float:"right",marginRight:"0px"}}>Export To excel</button>
-                    </div>  
+                        <button className='button' style={{ marginTop: "30px", float: "right", marginRight: "0px" }}>Export To excel</button>
+                    </div>
                 </div>
             </div>
 
             <div className='row mt-3'>
-                <table className='table table-striped mt-3' style={{marginLeft:"10px",width:"98%"}}  >
+                <table className='table table-striped mt-3' style={{ marginLeft: "10px", width: "98%" }}  >
                     <thead>
                         <tr className='bg-info text-white'>
                             <th> EMPLOYEE NAME</th>

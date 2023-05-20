@@ -55,35 +55,16 @@ const PositionMasterDetails = ({ editData }) => {
     return (
         <Layout>
             <div>
-                <div className="container">
-                    <div className={Styles.rowcss}>
-                        <div className="col-md-12">
-                            <div className="row">
-                                <div className="col-lg-3">
-                                    <h3 className="Heading">Postion Master Deatils</h3>
-                                </div>
-                                <div className="col-lg-8">
-                                </div>
-                                <div className="col-lg-1">
-                                </div>
-                            </div>
-
-
-                            <div className={Styles.cardcss}>
-
-                                <div className="row leavereq ">
-                                    <div className="col-md-2">
-                                        <label >Position Name<span className="text-danger">*</span></label>
-                                    </div>
-                                    <div className="col-md-4">
-                                        <label > Description<span className="text-danger">*</span>
-                                        </label>
-                                    </div>
-                                </div>
+                <div className="container-fluid">
+                    <p className="Heading">Position Master Deatils</p>
+                    <div className="row">
+                        <div className="col-lg-12">
+                            <div className="card rounded-3 border-0 p-3">
                                 <form onSubmit={handleSubmit(onSubmit)}>
-                                    <div className="row leavereq">
-                                        <div className="col-md-2">
-                                            <input type="text" className="form-control form-control-md"{...register('Short', {
+                                    <div className="row ">
+                                        <div className="col-lg-2">
+                                            <label className='fw-bold'>Position Name<span className="text-danger">*</span></label>
+                                            <input type="text" className="form-control"{...register('Short', {
 
                                                 required: "Please add a Position Name", pattern: {
 
@@ -98,7 +79,8 @@ const PositionMasterDetails = ({ editData }) => {
                                             {errors.Short && <p className="error-message" style={{ color: "red" }}>{errors.Short.message}</p>}
 
                                         </div>
-                                        <div className="col-md-4">
+                                        <div className="col-lg-5">
+                                            <label className='fw-bold'> Description<span className="text-danger">*</span></label>
                                             <input name="Description"   {...register("Description", { required: true })} rows="3" type="text" placeholder='Description' className={`form-control `} />
                                             {
                                                 errors.Description && <p className='text-danger'>Description is Required</p>
@@ -129,10 +111,8 @@ const PositionMasterDetails = ({ editData }) => {
                                 </form>
                             </div>
                         </div>
-
                     </div>
                 </div>
-
             </div>
         </Layout>
     )

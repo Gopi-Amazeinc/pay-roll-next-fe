@@ -90,7 +90,6 @@ const Index = () => {
         console.log("Rejected", res.data);
     }
     const getManagerPendingDetails = async () => {
-        // debugger;
         const res = await apiService.commonGetCall("Payroll/GetPendingOverTimeDetailsByManagerID?ManagerID=" + userID)
         setManagerPendingData(res.data)
         console.log("Manager Pending", res.data);
@@ -169,18 +168,18 @@ const Index = () => {
         var endTime = sessionStorage.getItem("EndTime");
         setManagerTogglePending(true);
         setPending(true)
-        // if (roleID == 5) {
+        if (roleID == 5) {
             getPendingDetails();
             getApprovedDetails();
             getRejectedDetails();
             getModalData(startTime, endTime, date, userID);
-        // }
-        // else if (roleID == 3) {
+        }
+        else if (roleID == 3) {
             getManagerPendingDetails(userID);
             getManagerApprovedData(userID);
             getManagerRejectedData(userID);
             getModalData(startTime, endTime, date, userID);
-        // }
+        }
 
     }, [])
     const Delete = (id) => {
@@ -207,13 +206,13 @@ const Index = () => {
 
 
     return (
-        <div className='container'>
+        <div className='container-fluid'>
             <div className='row'>
-                <div className='col-lg-3 mt-3 text-primary fs-6 fw-bold'>
+                <div className='col-lg-3'>
                     <h4 className='Heading'>My OvertimeDetails</h4>
                 </div>
-            </div>
-            <div className='card p-3 border-0 shadow-lg rounded-3 mt-4'>
+            </div><br />
+            <div className='card p-3 border-0 rounded-3'>
                 <div className='row'>
                     <div className='col-lg-3 text-dark fs-6 fw-bolder'>
                         <p>Select Dates</p>
@@ -226,23 +225,22 @@ const Index = () => {
                     <div className='col-lg-4'>
                         <input type="date" className='form-control' />
                     </div>
-                    <div className='col-lg-4 mb-4'>
+                    <div className='col-lg-4'>
                         <Link href="/Requests/OverTimeDetails/new">
                             <button className={loan.addButton}>Apply Overtime</button>
                         </Link>
-                    </div>
-                    <br />
+                    </div><br /><br /><br />
                 </div>
             </div>
-            <div className="row mt-3">
+            {/* <div className="row">
                 <div className="col-lg-9"></div>
                 <div className="col-lg-3">
 
                 </div>
-            </div>
-            <div className="row mt-2">
-                <div className="col-lg-12 dashbutton bttn">
-                    <div className='col-lg-4 mx-2'><br />
+            </div> */}
+            <div className="row">
+                <div className="col-lg-12">
+                    <div className='col-lg-4'><br />
                         <div className='btn-group'>
                             <button onClick={togglePending} className={`toggleButton ${pending ? "focus" : ""}`}> Pending</button>
                             <button onClick={toggleApproved} className={`toggleButton ${approved ? "focus" : ""}`}>Approved</button>
@@ -254,212 +252,238 @@ const Index = () => {
             </div>
             {
                 managertogglePending && sessionStorage.getItem("roleID") == 3 && (
-                    <table className='table table-hover'>
-                        <thead className='bg-info text-white'>
-                            <tr>
-                                <th>Date Request</th>
-                                <th>Start Time</th>
-                                <th>End Time</th>
-                                <th>OT Details</th>
-                                <th>Purpose</th>
-                                <th>Status</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
+                    <div className='row'>
+                        <div className='col-lg-12'>
+                            <table className='table table-hover'>
+                                <thead className='bg-info text-white'>
+                                    <tr>
+                                        <th>Date Request</th>
+                                        <th>Start Time</th>
+                                        <th>End Time</th>
+                                        <th>OT Details</th>
+                                        <th>Purpose</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
 
-                        <tbody>
-                            {
-                                managerPending.map((data) => {
-                                    return (
-                                        <tr key={data.id}>
-                                            <td>{data.date}</td>
-                                            <td>{data.startTime}</td>
-                                            <td>{data.endTime}</td>
-                                            <td>
-                                                <button className='edit-btn' onClick={openEditModal} >Details</button>
-                                            </td>
-                                            <td>{data.comments}</td>
-                                            <td>{data.status}</td>
-                                            <td>
-                                                <button onClick={approve.bind(this, data.id)} className='edit-btn'>Approve</button>
-                                                <button onClick={() => openModal(sessionStorage.setItem("id", data.id))} className='edit-btn'>Reject</button>
-                                            </td>
-                                        </tr>
-                                    )
-                                })
-                            }
-                        </tbody>
-                    </table>
+                                <tbody>
+                                    {
+                                        managerPending.map((data) => {
+                                            return (
+                                                <tr key={data.id}>
+                                                    <td>{data.date}</td>
+                                                    <td>{data.startTime}</td>
+                                                    <td>{data.endTime}</td>
+                                                    <td>
+                                                        <button className='edit-btn' onClick={openEditModal} >Details</button>
+                                                    </td>
+                                                    <td>{data.comments}</td>
+                                                    <td>{data.status}</td>
+                                                    <td>
+                                                        <button onClick={approve.bind(this, data.id)} className='edit-btn'>Approve</button>
+                                                        <button onClick={() => openModal(sessionStorage.setItem("id", data.id))} className='edit-btn'>Reject</button>
+                                                    </td>
+                                                </tr>
+                                            )
+                                        })
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 )
             }
 
 
             {
                 managerToggleapproved && sessionStorage.getItem("roleID") == 3 && (
-                    <table className='table table-hover'>
-                        <thead className='bg-info text-white'>
-                            <tr>
-                                <th>Date Request</th>
-                                <th>Start Time</th>
-                                <th>End Time</th>
-                                {/* <th>Purpose</th> */}
-                                <th>Status</th>
-                                {/* <th>Actions</th> */}
-                            </tr>
-                        </thead>
+                    <div className='row'>
+                        <div className='col-lg-12'>
+                            <table className='table table-hover'>
+                                <thead className='bg-info text-white'>
+                                    <tr>
+                                        <th>Date Request</th>
+                                        <th>Start Time</th>
+                                        <th>End Time</th>
+                                        {/* <th>Purpose</th> */}
+                                        <th>Status</th>
+                                        {/* <th>Actions</th> */}
+                                    </tr>
+                                </thead>
 
-                        <tbody>
-                            {
-                                managerApproved.map((data) => {
-                                    return (
-                                        <tr key={data.id}>
-                                            <td>{data.date}</td>
-                                            <td>{data.startTime}</td>
-                                            <td>{data.endTime}</td>
-                                            {/* <td>{data.comments}</td> */}
-                                            <td>{data.status}</td>
-                                        </tr>
-                                    )
-                                })
-                            }
-                        </tbody>
-                    </table>
+                                <tbody>
+                                    {
+                                        managerApproved.map((data) => {
+                                            return (
+                                                <tr key={data.id}>
+                                                    <td>{data.date}</td>
+                                                    <td>{data.startTime}</td>
+                                                    <td>{data.endTime}</td>
+                                                    {/* <td>{data.comments}</td> */}
+                                                    <td>{data.status}</td>
+                                                </tr>
+                                            )
+                                        })
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
                 )
             }
 
 
             {
                 managertogglerejected && sessionStorage.getItem("roleID") == 3 && (
-                    <table className='table table-hover'>
-                        <thead className='bg-info text-white'>
-                            <tr>
-                                <th>Date Request</th>
-                                <th>Start Time</th>
-                                <th>End Time</th>
-                                {/* <th>OT Details</th> */}
-                                {/* <th>Purpose</th> */}
-                                <th>Status</th>
-                                {/* <th>Actions</th> */}
-                            </tr>
-                        </thead>
+                    <div className="row">
+                        <div className='col-lg-12'>
+                            <table className='table table-hover'>
+                                <thead className='bg-info text-white'>
+                                    <tr>
+                                        <th>Date Request</th>
+                                        <th>Start Time</th>
+                                        <th>End Time</th>
+                                        {/* <th>OT Details</th> */}
+                                        {/* <th>Purpose</th> */}
+                                        <th>Status</th>
+                                        {/* <th>Actions</th> */}
+                                    </tr>
+                                </thead>
 
-                        <tbody>
-                            {
-                                managerRejected.map((data) => {
-                                    return (
-                                        <tr key={data.id}>
-                                            <td>{data.date}</td>
-                                            <td>{data.startTime}</td>
-                                            <td>{data.endTime}</td>
-                                            {/* <td>{data.comments}</td> */}
-                                            <td>{data.status}</td>
-                                        </tr>
-                                    )
-                                })
-                            }
-                        </tbody>
-                    </table>
+                                <tbody>
+                                    {
+                                        managerRejected.map((data) => {
+                                            return (
+                                                <tr key={data.id}>
+                                                    <td>{data.date}</td>
+                                                    <td>{data.startTime}</td>
+                                                    <td>{data.endTime}</td>
+                                                    {/* <td>{data.comments}</td> */}
+                                                    <td>{data.status}</td>
+                                                </tr>
+                                            )
+                                        })
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
                 )
             }
             {
                 pending && sessionStorage.getItem("roleID") == 5 && (
-                    <table className='table table-hover'>
-                        <thead className='bg-info text-white'>
-                            <tr>
-                                <th>Date Request</th>
-                                <th>Start Time</th>
-                                <th>End Time</th>
-                                <th>OT Details</th>
-                                <th>Purpose</th>
-                                <th>Status</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
+                    <div className='row'>
+                        <div className='col-lg-12'>
+                            <table className='table table-hover'>
+                                <thead className='bg-info text-white'>
+                                    <tr>
+                                        <th>Date Request</th>
+                                        <th>Start Time</th>
+                                        <th>End Time</th>
+                                        <th>OT Details</th>
+                                        <th>Purpose</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
 
-                        <tbody>
-                            {
-                                newDashboard.map((data) => {
-                                    return (
-                                        <tr key={data.id}>
-                                            <td>{data.date}</td>
-                                            <td>{data.startTime}</td>
-                                            <td>{data.endTime}</td>
-                                            <td>
-                                                <button className='edit-btn' onClick={openEditModal}>Details</button>
-                                            </td>
-                                            <td>{data.comments}</td>
-                                            <td>{data.status}</td>
-                                            <td>
-                                                <button onClick={Delete.bind(this, data.id)} className='edit-btn'>Cancel</button>
-                                            </td>
-                                        </tr>
-                                    )
-                                })
-                            }
-                        </tbody>
-                    </table>
+                                <tbody>
+                                    {
+                                        newDashboard.map((data) => {
+                                            return (
+                                                <tr key={data.id}>
+                                                    <td>{data.date}</td>
+                                                    <td>{data.startTime}</td>
+                                                    <td>{data.endTime}</td>
+                                                    <td>
+                                                        <button className='edit-btn' onClick={openEditModal}>Details</button>
+                                                    </td>
+                                                    <td>{data.comments}</td>
+                                                    <td>{data.status}</td>
+                                                    <td>
+                                                        <button onClick={Delete.bind(this, data.id)} className='edit-btn'>Cancel</button>
+                                                    </td>
+                                                </tr>
+                                            )
+                                        })
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 )
             }
             {
                 approved && sessionStorage.getItem("roleID") == 5 && (
-                    <table className='table table-hover'>
-                        <thead className='bg-info text-white'>
-                            <tr>
-                                <th>Date Request</th>
-                                <th>Start Time</th>
-                                <th>End Time</th>
-                                {/* <th>OT Details</th> */}
-                                <th>Status</th>
-                            </tr>
-                        </thead>
+                    <div className='row'>
+                        <div className='col-lg-12'>
+                            <table className='table table-hover'>
+                                <thead className='bg-info text-white'>
+                                    <tr>
+                                        <th>Date Request</th>
+                                        <th>Start Time</th>
+                                        <th>End Time</th>
+                                        {/* <th>OT Details</th> */}
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
 
-                        <tbody>
-                            {
-                                newApproved.map((data) => {
-                                    return (
-                                        <tr key={data.id}>
-                                            <td>{data.date}</td>
-                                            <td>{data.startTime}</td>
-                                            <td>{data.endTime}</td>
-                                            {/* <td>{data.comments}</td> */}
-                                            <td>{data.status}</td>
-                                        </tr>
-                                    )
-                                })
-                            }
-                        </tbody>
-                    </table>
+                                <tbody>
+                                    {
+                                        newApproved.map((data) => {
+                                            return (
+                                                <tr key={data.id}>
+                                                    <td>{data.date}</td>
+                                                    <td>{data.startTime}</td>
+                                                    <td>{data.endTime}</td>
+                                                    {/* <td>{data.comments}</td> */}
+                                                    <td>{data.status}</td>
+                                                </tr>
+                                            )
+                                        })
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 )
             }
             {
                 rejected && sessionStorage.getItem("roleID") == 5 && (
-                    <table className='table table-hover'>
-                        <thead className='bg-info text-white'>
-                            <tr>
-                                <th>Date Request</th>
-                                <th>Start Time</th>
-                                <th>End Time</th>
-                                <th>Status</th>
-                                {/* <th>Actions</th> */}
-                            </tr>
-                        </thead>
+                    <div className='row'>
+                        <div className='col-lg-12'>
+                            <table className='table table-hover'>
+                                <thead className='bg-info text-white'>
+                                    <tr>
+                                        <th>Date Request</th>
+                                        <th>Start Time</th>
+                                        <th>End Time</th>
+                                        <th>Status</th>
+                                        {/* <th>Actions</th> */}
+                                    </tr>
+                                </thead>
 
-                        <tbody>
-                            {
-                                newRejected.map((data) => {
-                                    return (
-                                        <tr key={data.id}>
-                                            <td>{data.date}</td>
-                                            <td>{data.startTime}</td>
-                                            <td>{data.endTime}</td>
-                                            {/* <td>{data.comments}</td> */}
-                                            <td>{data.status}</td>
-                                        </tr>
-                                    )
-                                })
-                            }
-                        </tbody>
-                    </table>
+                                <tbody>
+                                    {
+                                        newRejected.map((data) => {
+                                            return (
+                                                <tr key={data.id}>
+                                                    <td>{data.date}</td>
+                                                    <td>{data.startTime}</td>
+                                                    <td>{data.endTime}</td>
+                                                    {/* <td>{data.comments}</td> */}
+                                                    <td>{data.status}</td>
+                                                </tr>
+                                            )
+                                        })
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 )
             }
             <Modal ariaHideApp={false} isOpen={modalOpen} style={customStyles} contentLabel="Example Modal">
@@ -467,22 +491,16 @@ const Index = () => {
                     <div className='col-lg-6'>
                         <div className=" modal-header">
                             <h5 className=" modal-title" id="exampleModalLabel">
-                                Overtime Detail
+                                Overtime Details
                             </h5>
                         </div>
                     </div>
                     <div className='col-lg-5'></div>
                     <div className='col-lg-1'>
-                        <button
-                            aria-label="Close"
-                            type="button"
-                            className={Styles.close}
-                            onClick={closeModal}
-                        >X
-                        </button>
+                        <button aria-label="Close" type="button" className={Styles.close} onClick={closeModal} >X</button>
                     </div>
-                </div>
-                <div className='row mt-4'>
+                </div><br />
+                <div className='row'>
                     <div className='col-lg-12'>
                         <table className="table table-hover">
                             <thead>
@@ -510,25 +528,25 @@ const Index = () => {
             <Modal ariaHideApp={false} isOpen={isOpen} style={customStyles}>
                 <div className='container'>
                     <div className='row card-header'>
-                        <div className='col-lg-8 mt-3'>
+                        <div className='col-lg-8'>
                             <h4>Rejecting Request</h4>
                         </div>
                         <div className='col-lg-3'></div>
-                        <div className='col-lg-1 mt-3 mb-3'>
-                            <button onClick={() => ModalIsOpen(false)}>X</button>
+                        <div className='col-lg-1'>
+                            <button aria-label="Close" type="button" className={Styles.close} onClick={() => ModalIsOpen(false)}>X</button>
                         </div>
-                    </div>
-                    <div className='row mt-3'>
+                    </div><br />
+                    <div className='row'>
                         <div className='col-lg-12'>
-                            <textarea rows={4} {...register("Reason")} className='form-control'></textarea>
+                            <textarea rows={4} {...register("Reason")} className='form-control' placeholder='Write the reason here..'></textarea>
                         </div>
                     </div>
                     <div className='row'>
                         <div className='col-lg-8'></div>
-                        <div className='col-lg-2 mb-3'>
+                        <div className='col-lg-2'>
                             <button type='submit' className='edit-btn mt-5' onClick={() => ModalIsOpen(false)}>Cancel</button>
                         </div>
-                        <div className='col-lg-2 mb-3'>
+                        <div className='col-lg-2'>
                             <button onClick={reject} type='submit' className='edit-btn mt-5'>Reject </button>
                         </div>
                     </div>

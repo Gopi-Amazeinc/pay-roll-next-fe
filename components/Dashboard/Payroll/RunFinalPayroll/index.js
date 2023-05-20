@@ -102,79 +102,82 @@ const RunFinalPayroll = () => {
             <br></br>
             <br></br>
             <br></br>
-            <div className="row card card1">
-                <form>
-                    <div className="row">
-                        <div className="col-lg-3">
-                            <p>Select Paycode </p>
-                            <div className="dropdown">
-                                <select id="PayCode" name="PayCode" className="form-select form-select-sm" {...register("PayCode", { required: true })}>
-                                    <option value="" disabled="">
-                                        Select Paycode </option>
-                                    {
-                                        paycode.map((data, index) => {
-                                            return (
-                                                <option value={data.payCode} key={data.id}>{data.payCode}</option>
-                                            )
-                                        })
-                                    }
-                                </select>
+            <div className='card p-4'>
+                <div className="row ">
+                    <form>
+                        <div className="row">
+                            <div className="col-lg-3">
+                                <p>Select Paycode </p>
+                                <div className="dropdown">
+                                    <select id="PayCode" name="PayCode" className="form-select form-select-sm" {...register("PayCode", { required: true })}>
+                                        <option value="" disabled="">
+                                            Select Paycode </option>
+                                        {
+                                            paycode.map((data, index) => {
+                                                return (
+                                                    <option value={data.payCode} key={data.id}>{data.payCode}</option>
+                                                )
+                                            })
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            {/* <div className='col-lg-1'></div> */}
+                            <div className="col-lg-2 mt-3">
+                                <br />
+                                <button
+                                    type="button"
+                                    className='EditDelteBTN fw-bold'
+                                    onClick={() => {
+                                        setCollapseOpen(!collapseOpen);
+                                        handleButtonClick();
+                                    }}
+                                >
+                                    FETCH EMPLOYEES
+                                </button>
+                            </div>
+                            <div className="col-lg-2">
+                                <p >Search <br ></br></p>
+                                <input placeholder="Search" type="text" className="form-control form-control-sm"></input>
+                            </div>
+                            <div className="col-lg-2">
+                                <p >Select Position </p>
+                                <div className="dropdown">
+                                    <select id="Year" name="Year" className="form-control form-control-sm ">
+                                        {/* <br ></br> */}
+                                        <option value="Select" style={{ color: "#0C275A" }} disabled="">Select Position
+                                        </option>
+                                        {
+                                            position.map((data, index) => {
+                                                return (
+                                                    <option value={data.id} key={data.id}>{data.short}</option>
+                                                )
+                                            })
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div className="col-lg-2">
+                                <p >Select Department </p>
+                                <div className="dropdown">
+                                    <select id="Year" name="Year" className="form-select form-select-sm ">
+                                        {/* <br ></br> */}
+                                        <option value="Select" style={{ color: " #0C275A" }} disabled="">Select Department
+                                        </option>
+                                        {
+                                            department.map((data, index) => {
+                                                return (
+                                                    <option value={data.id} key={data.id}>{data.department_name}</option>
+                                                )
+                                            })
+                                        }
+                                    </select>
+                                </div>
+                                <br />
                             </div>
                         </div>
-                        {/* <div className='col-lg-1'></div> */}
-                        <div className="col-lg-2 mt-3">
-                            <br />
-                            <button
-                                type="button"
-                                className='EditDelteBTN fw-bold'
-                                onClick={() => {
-                                    setCollapseOpen(!collapseOpen);
-                                    handleButtonClick();
-                                }}
-                            >
-                                FETCH EMPLOYEES
-                            </button>
-                        </div>
-                        <div className="col-lg-2">
-                            <p >Search <br ></br></p>
-                            <input placeholder="Search" type="text" className="form-control form-control-sm"></input>
-                        </div>
-                        <div className="col-lg-2">
-                            <p >Select Position </p>
-                            <div className="dropdown">
-                                <select id="Year" name="Year" className="form-control form-control-sm ">
-                                    {/* <br ></br> */}
-                                    <option value="Select" style={{ color: "#0C275A" }} disabled="">Select Position
-                                    </option>
-                                    {
-                                        position.map((data, index) => {
-                                            return (
-                                                <option value={data.id} key={data.id}>{data.short}</option>
-                                            )
-                                        })
-                                    }
-                                </select>
-                            </div>
-                        </div>
-                        <div className="col-lg-2">
-                            <p >Select Department </p>
-                            <div className="dropdown">
-                                <select id="Year" name="Year" className="form-select form-select-sm ">
-                                    {/* <br ></br> */}
-                                    <option value="Select" style={{ color: " #0C275A" }} disabled="">Select Department
-                                    </option>
-                                    {
-                                        department.map((data, index) => {
-                                            return (
-                                                <option value={data.id} key={data.id}>{data.department_name}</option>
-                                            )
-                                        })
-                                    }
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-                </form>
+                    </form>
+                </div>
             </div>
             <div class="row">
                 <div className="col-lg-2">

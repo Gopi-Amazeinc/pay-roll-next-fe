@@ -47,62 +47,69 @@ const SemiMonthlyTax = () => {
     }, [])
     return (
         <div>
-            <div className='container'>
-                <h3 className='Heading mt-3'>Semi Monthly Tax</h3>
+            <div className='container-fluid'>
+                <label className='Heading'>Semi Monthly Tax</label>
+                <br /><br />
+                <div className='row'><div className="col-lg-12">
+                    <div className='card p-3 border-0 rounded-3 '>
+                        <div className='row'>
+                            <div className='col-lg-1'>
+                                <p>Filter By</p>
+                            </div>
 
-                <div className='card p-3 border-0 shadow-lg rounded-3 mt-4'>
-                    <div className='row'>
-                        <div className='col-lg-1'>
-                            <p>Filter By</p>
-                        </div>
-
-                        <div className='col-lg-4'>
-                            <input type="text" className='form-control' placeholder='Search...' />
+                            <div className='col-lg-3'>
+                                <input type="text" className='form-control' placeholder='Search...' />
+                            </div>
                         </div>
                     </div>
                 </div>
-
+                </div>
                 <div className='row'>
                     <div className='col-lg-10'></div>
-                    <div className='col-lg-2 mt-2 text-end'>
-                        <Link href="/Settings/SemiMonthlyTax/new" onClick={removeItem} className='btn text-white' style={{ backgroundColor: "#3247d5" }}>Add New</Link>
+                    <div className='col-lg-2'>
+                        <br/>
+                        <Link href="/Settings/SemiMonthlyTax/new"><button onClick={removeItem} className='AddButton'>Add New</button></Link>
                     </div>
-
-                    <table className='table table-hover mt-2 '>
-                        <thead className='bg-info text-white '>
-                            <tr>
-                                <th>Tax low level limit</th>
-                                <th>Tax high level limit</th>
-                                <th>slab</th>
-                                <th>Percentage</th>
-                                <th>Tax excess amount</th>
-                                <th>Tax deduction amount</th>
-                                <th>Year</th>
-                                <th>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {
-                                dashboard.map((data) => {
-                                    return (
-                                        <tr key={data.id}>
-                                            <td>{data.taxlowlevellimit}</td>
-                                            <td>{data.taxhighlevellimit}</td>
-                                            <td>{data.slab}</td>
-                                            <td>{data.percentage}</td>
-                                            <td>{data.taxexcessamount}</td>
-                                            <td>{data.taxdeductionamount}</td>
-                                            <td>{data.year}</td>
-                                            <td>
-                                                <Link href={`/Settings/SemiMonthlyTax/Edit/${data.id}`}> <button type='submit' className='edit-btn text-white ' style={{ backgroundColor: "#3247d5" }}>Edit</button></Link>
-                                                &nbsp;<button onClick={deleteAnnualtax.bind(this, data.id)} type='submit' className='edit-btn text-white ' style={{ backgroundColor: "#3247d5" }}>Delete</button>
-                                            </td>
-                                        </tr>
-                                    )
-                                })
-                            }
-                        </tbody>
-                    </table>
+                </div>
+                <br/>
+                <div className='row'>
+                    <div className='col-lg-12'>
+                        <table className='table table-hover mt-2 '>
+                            <thead className='bg-info text-white '>
+                                <tr>
+                                    <th>Tax low level limit</th>
+                                    <th>Tax high level limit</th>
+                                    <th>slab</th>
+                                    <th>Percentage</th>
+                                    <th>Tax excess amount</th>
+                                    <th>Tax deduction amount</th>
+                                    <th>Year</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {
+                                    dashboard.map((data) => {
+                                        return (
+                                            <tr key={data.id}>
+                                                <td>{data.taxlowlevellimit}</td>
+                                                <td>{data.taxhighlevellimit}</td>
+                                                <td>{data.slab}</td>
+                                                <td>{data.percentage}</td>
+                                                <td>{data.taxexcessamount}</td>
+                                                <td>{data.taxdeductionamount}</td>
+                                                <td>{data.year}</td>
+                                                <td>
+                                                    <Link href={`/Settings/SemiMonthlyTax/Edit/${data.id}`}> <button type='submit' className='edit-btn'>Edit</button></Link>
+                                                    &nbsp;<button onClick={deleteAnnualtax.bind(this, data.id)} type='submit' className='edit-btn'>Delete</button>
+                                                </td>
+                                            </tr>
+                                        )
+                                    })
+                                }
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>

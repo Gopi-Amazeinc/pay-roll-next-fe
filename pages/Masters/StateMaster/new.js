@@ -6,8 +6,8 @@ import Link from "next/link";
 import Swal from "sweetalert2";
 import { apiService } from "@/services/api.service";
 import { useRouter } from "next/router";
-function StateMasterForm({editData}) {
-  
+function StateMasterForm({ editData }) {
+
   const [country, setCountryData] = useState([]);
   const { register, handleSubmit, reset, formState } = useForm();
   const { errors } = formState;
@@ -84,102 +84,105 @@ function StateMasterForm({editData}) {
   };
   return (
     <Layout>
-      <div>
-        <h3 className="Heading fs-5 mt-3">Province Details</h3>
-        <div className="card p-3 border-0 shadow rounded-3 mt-4 mx-0">
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="row">
-              <div className="col-lg-3">
-                <p>
-                  Country<i className="text-danger">*</i>
-                </p>
-                <select
-                  className="form-control"
-                  {...register("CountryID", { required: true })}
-                >
-                  <option value="">Select Country</option>
-                  {country.map((data) => {
-                    return (
-                      <option value={data.id} key={data.id}>
-                        {data.short}
-                      </option>
-                    );
-                  })}
-                </select>
-                {errors.CountryID && (
-                  <span style={customStyles.errorMsg}>
-                    Please select country
-                  </span>
-                )}
-              </div>
+      <div className="container-fluid">
+        <p className="Heading">Province Details</p>
+        <div className="row">
+          <div className="col-lg-12">
+            <div className="card p-3 border-0 rounded-3">
+              <form onSubmit={handleSubmit(onSubmit)}>
+                <div className="row">
+                  <div className="col-lg-3">
+                    <label className="fw-bold">
+                      Country<i className="text-danger">*</i>
+                    </label>
+                    <select
+                      className="form-control"
+                      {...register("CountryID", { required: true })}
+                    >
+                      <option value="">Select Country</option>
+                      {country.map((data) => {
+                        return (
+                          <option value={data.id} key={data.id}>
+                            {data.short}
+                          </option>
+                        );
+                      })}
+                    </select>
+                    {errors.CountryID && (
+                      <span style={customStyles.errorMsg}>
+                        Please select country
+                      </span>
+                    )}
+                  </div>
 
-              <div className="col-lg-3">
-                <p>
-                  Province<i className="text-danger">*</i>
-                </p>
-                <input
-                  name="Short"
-                  className="form-control"
-                  type="text"
-                  {...register("Short", { required: true })}
-                  placeholder="Province"
-                />
-                <div>
-                  {errors.Short && (
-                    <span style={customStyles.errorMsg}>
-                      Please enter province name
-                    </span>
-                  )}
-                </div>
-              </div>
+                  <div className="col-lg-3">
+                    <label className="fw-bold">
+                      Province<i className="text-danger">*</i>
+                    </label>
+                    <input
+                      name="Short"
+                      className="form-control"
+                      type="text"
+                      {...register("Short", { required: true })}
+                      placeholder="Province"
+                    />
+                    <div>
+                      {errors.Short && (
+                        <span style={customStyles.errorMsg}>
+                          Please enter province name
+                        </span>
+                      )}
+                    </div>
+                  </div>
 
-              <div className="col-lg-4">
-                <p>
-                  Description<i className="text-danger">*</i>
-                </p>
-                <textarea
-                  name="Description"
-                  className="form-control"
-                  {...register("Description", { required: true })}
-                  placeholder="Description"
-                />
-                <div>
-                  {errors.Description && (
-                    <span style={customStyles.errorMsg}>
-                      Please enter description
-                    </span>
-                  )}
+                  <div className="col-lg-4">
+                    <label className="fw-bold">
+                      Description<i className="text-danger">*</i>
+                    </label>
+                    <textarea
+                      name="Description"
+                      className="form-control"
+                      {...register("Description", { required: true })}
+                      placeholder="Description"
+                    />
+                    <div>
+                      {errors.Description && (
+                        <span style={customStyles.errorMsg}>
+                          Please enter description
+                        </span>
+                      )}
+                    </div>
+                  </div>
                 </div>
-              </div>
+                <br></br>
+                <div className="row">
+                  <div className="col-lg-8"></div>
+                  <div className="col-lg-2">
+                    <Link href="/Masters/StateMaster">
+                      <button
+                        type="button"
+                        className="AddButton"
+                      >
+                        Close
+                      </button>
+                    </Link>
+                  </div>
+                  <div className="col-lg-2">
+                    {actionType == "insert" && (
+                      <button type="submit" className="AddButton">
+                        Save
+                      </button>
+                    )}
+                    {actionType == "update" && (
+                      <button type="submit" className="AddButton">
+                        Update
+                      </button>
+                    )}
+                  </div>
+                </div>
+              </form>
             </div>
-            <br></br>
-            <div className="row mx-0">
-              <div className="col-lg-8"></div>
-              <div className="col-lg-2">
-                <Link href="/Masters/StateMaster">
-                  <button
-                    type="button"
-                    className="btn common-edit"
-                    id={Styles.btn}
-                  >
-                    Close
-                  </button>
-                </Link>
-              </div>
-              <div className="col-lg-2">
-                {actionType == "insert" && (
-                  <button type="submit" className="AddButton">
-                    Save
-                  </button>
-                )}
-                {actionType == "update" && (
-                  <button type="submit" className="AddButton">
-                    Update
-                  </button>
-                )}
-              </div>
-            </div>
-          </form>
+          </div>
         </div>
       </div>
     </Layout>

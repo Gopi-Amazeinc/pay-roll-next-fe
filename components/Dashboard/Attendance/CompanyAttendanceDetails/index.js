@@ -152,7 +152,7 @@ const CompanyAttendanceDetails = () => {
                             <input type="text" className='form-control' placeholder='Search' />
                         </div>
 
-                        <div className='col-lg-3'>
+                        <div className='col-lg-2'>
 
                             <button className='button'>Upload</button><br /><p></p>
 
@@ -170,40 +170,45 @@ const CompanyAttendanceDetails = () => {
                     <thead className='bg-info text-white '>
                         <tr style={{ whiteSpace: 'nowrap' }}>
                             <th >Date</th>
-                            <th>Staff Name</th>
-                            <th>Position</th>
-                            <th>Department</th>
-                            <th>Sign in Type</th>
-                            <th>Expected in Time</th>
-                            <th>Punch in Time</th>
-                            <th >Punch in Location/IP Address</th>
-                            <th>Punched in From</th>
-                            <th>Sign in Type</th>
-                            <th>Expected Out Time</th>
+                            <th>Staff </th>
+                            <th>Day Type	</th>
+
+                            <th>Expected In Time	</th>
+                            <th>Expected Out Time	</th>
+                            <th>Punch In Time</th>
+
+                            <th>Punch Out Time	</th>
+                            <th>Work Hours(HH:MM)	</th>
+                            <th>Overtime</th>
+
+                            <th>UnderTime</th>
+                            <th>Late</th>
                         </tr>
                     </thead>
                     <tbody>
                         {Array.isArray(CompanyAttendence) && CompanyAttendence.length > 0 && (
                             <>
-                                {
-                                    CompanyAttendence.map((data) => {
-                                        return (
-                                            <tr key={data.id}>
-                                                <td>{data.date}</td>
-                                                <td>{data.staffName}</td>
-                                                <td>{data.position}</td>
-                                                <td>{data.department}</td>
-                                                <td>{data.signInType}</td>
-                                                <td>{data.expectedInTime}</td>
-                                                <td>{data.punchInTime}</td>
-                                                <td>{data.punchinip}</td>
-                                                <td>{data.punchedInForm}</td>
-                                                <td>{data.signInType}</td>
-                                                <td>{data.expectedOutTime}</td>
+                                {CompanyAttendence.map((data) => {
+                                    return (
+                                        <tr key={data.id}>
+                                            <td>{data.date}</td>
+                                            <td>{data.staffname}</td>
+                                            <td>{data.position}</td>
 
-                                            </tr>
-                                        )
-                                    })
+                                            <td>{data.expectedIn}</td>
+                                            <td>{data.expectedOut}</td>
+                                            <td>{data.expectedIn}</td>
+
+                                            <td>{data.expectedOut}</td>
+                                            <td>{data.punchedInForm}</td>
+                                            <td>{data.overtime}</td>
+
+                                            <td>{data.expectedOutTime}</td>
+                                            <td>{data.late}</td>
+
+                                        </tr>
+                                    )
+                                })
                                 }
                             </>
                         )}

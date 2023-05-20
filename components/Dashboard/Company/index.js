@@ -6,56 +6,56 @@ import Swal from "sweetalert2";
 import Link from "next/link.js";
 
 const Companydashboard = () => {
-  const [Company, setCompany] = useState([]);
+    const [Company, setCompany] = useState([]);
 
-  const getCompanyAddressDetails = async () => {
-    let res = await apiService.commonGetCall(
-      "Payroll/GetCompanyAddressDetails"
-    );
-    setCompany(res.data);
-  };
+    const getCompanyAddressDetails = async () => {
+        let res = await apiService.commonGetCall(
+            "Payroll/GetCompanyAddressDetails"
+        );
+        setCompany(res.data);
+    };
 
-  useEffect(() => {
-    getCompanyAddressDetails();
-  }, [1]);
-  const deleteComany = async (id) => {
-    try {
-      let res = await apiService.commonGetCall(`Payroll/DeleteCompany_AddressDetails?id=${id}`);
-      console.log(res.data);
-      Swal.fire("Data deleted successfully");
-      getCompanyAddressDetails();
-    } catch (error) {
-      console.error(error);
-      Swal.fire("failed to  delete data");
-    }
-  };
+    useEffect(() => {
+        getCompanyAddressDetails();
+    }, [1]);
+    const deleteComany = async (id) => {
+        try {
+            let res = await apiService.commonGetCall(
+                `Payroll/DeleteCompany_AddressDetails?id=${id}`
+            );
+            console.log(res.data);
+            Swal.fire("Data deleted successfully");
+            getCompanyAddressDetails();
+        } catch (error) {
+            console.error(error);
+            Swal.fire("failed to  delete data");
+        }
+    };
 
+    return (
+        <div className="container-fluid">
+            <br></br>
+            <div class="shadow-lg p-3 mb-1 bg-body rounded">
 
-
-    return(
-   <div>
-            <div className="container">
-               
-                <br />
                 <div className="row">
-                    <div className="col-md-10">
-                        <p className="text-primary fs-6 mt-3 fw-bold">
-                            SHOWING <span></span>RESULTS
+                    <div className="col-lg-4">
+                        <p className="text-primary fs-6 mt-2 fw-bold">
+                            Company  <span></span>Dashboard
                         </p>
                     </div>
-                    <div className="col-md-4">
-                       <Link href="/Company/companyform">
-                       <button className={company.button}>ADD NEW</button>
-                       </Link>
+                    <div className="col-lg-4"></div>
+                    <div className="col-lg-4" >
+                        <Link href="/Company/companyform">
+                            <button className={company.button} style={{ marginLeft: "100px" }}>ADD NEW</button>
+                        </Link>
                     </div>
                 </div>
-                <br />
+                {/* <div className="row"></div> */}
             </div>
-            <br />
             <div className="alignForm"></div>
             <div className="row">
                 <div className="col-md-12">
-                    <table  className="table table-striped table-hover mt-4">
+                    <table className="table table-striped table-hover mt-4">
                         <thead className="bg-info text-white ">
                             <tr>
                                 <th>Company Logo</th>
@@ -65,12 +65,12 @@ const Companydashboard = () => {
                                 <th>Address</th>
                                 <th>Email</th>
                                 <th>Phone No.</th>
-                                <th style={{ paddingLeft:"47px"}}>Actions</th>
+                                <th style={{ paddingLeft: "47px" }}>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
-                            { Company.map((data,index)=>{
-                                return(
+                            {Company.map((data, index) => {
+                                return (
                                     <tr key={index}>
                                         <td>{data.company_Logo}</td>
                                         <td>{data.company_Name}</td>
@@ -80,24 +80,26 @@ const Companydashboard = () => {
                                         <td>{data.email}</td>
                                         <td>{data.phone}</td>
                                         <td>
-                                        <Link href={`/Company/${data.id}`}>
+                                            <Link href={`/Company/${data.id}`}>
                                                 <button className="btn btn-primary">Edit</button>
                                             </Link>
                                             &nbsp;
-
-                                            <button className="btn btn-primary" onClick={() => deleteComany(data.id)}>Delete</button>
+                                            <button
+                                                className="btn btn-primary"
+                                                onClick={() => deleteComany(data.id)}
+                                            >
+                                                Delete
+                                            </button>
                                         </td>
                                     </tr>
-                                )
-                            })
-
-                            }
+                                );
+                            })}
                         </tbody>
                     </table>
                 </div>
             </div>
-   </div>
+        </div>
     );
-}
+};
 
 export default Companydashboard;

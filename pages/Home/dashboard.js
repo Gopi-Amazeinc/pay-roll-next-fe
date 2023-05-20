@@ -53,6 +53,8 @@ const Dashboard = () => {
   const [localIPAddress, setLocalIPAddress] = useState("");
   const [submitted, setSubmitted] = useState(false);
 
+  const [staffData,setstaffData] = useState();
+
   useEffect(() => {
     const Loginname = sessionStorage.getItem("userName");
     setUserName(Loginname);
@@ -78,8 +80,9 @@ const Dashboard = () => {
     var todayDate = new Date().toISOString().slice(0, 10);
     debugger;
     if (userID) {
-      apiService.commonGetCall("HR/GetAttendance").then((staffData) => {
-        const staffDetails = staffData.data.filter(
+      const staffDetails = apiService.commonGetCall("HR/GetAttendance");
+      setstaffData(staffDetails)
+      staffData.data.filter(
           (x) => x.filterdate == todayDate && x.userID == userID
         );
         if (staffDetails.length && staffDetails[0].signinDate != null) {
@@ -97,7 +100,7 @@ const Dashboard = () => {
         // const currentTime = new Date();
         // setPunchintime(currentTime.toLocaleTimeString());
         // setSubmitted(true);
-      });
+      // });
     }
   }, [userID]);
 

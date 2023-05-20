@@ -4,6 +4,7 @@ import axios from 'axios';
 import Link from 'next/link';
 import { apiService } from "@/services/api.service";
 import { useRouter } from "next/navigation";
+import { useForm } from "react-hook-form";
 
 import {
     Calendar as BigCalendar,
@@ -18,8 +19,7 @@ moment.locale("en-GB");
 const localizer = momentLocalizer(moment);
 
 function LeaveListDashboard() {
-
-    const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+    const { register, handleSubmit, reset, formState } = useForm();
     // var date = new Date();
     let Sdate = sessionStorage.getItem("Sdate")
     // var edate = new Date();
@@ -72,6 +72,14 @@ function LeaveListDashboard() {
     //     getApprovedData(Sdate, Edate);
     //     getRejectedData(Sdate, Edate);
     // }
+
+    function handleEndDate() {
+        var startDate = watch("StartDate");
+        var endDate = watch("EndDate");
+        getPendingData(startDate, endDate);
+        getApprovedData(startDate, endDate);
+        getRejectedData(startDate, endDate);
+    }
 
 
     const [pendingdata, setPendingData] = useState([])
@@ -153,106 +161,103 @@ function LeaveListDashboard() {
     };
 
     return (
-        <div className="container">
-
-            <div className="col-md-12">
-                <div className="row">
-                    <div className="col-md-7">
-                        {/* <h5>Api is not Working for Approval Reject and Pending</h5> */}
-                        {
-                            sessionStorage.getItem("roleID") == 2 && (
-                                <Link href="/Requests/hrleaverequest" className="Heading mx-5" ><u>All Staff Leave Details</u></Link>
-                            )
-                        }
-                        {/* <Link className="Heading" href="/Requests/leavelistdashboard"><u> My Leave Details</u></Link> */}
-
-
-
-
-                    </div>
-                    {/* <div className="col-md-4"><a className="leavecol">Leave Balance</a></div> */}
-                </div>
-                <br />
-
-                <div className="row">
-                    <div className="col-lg-4">
-                        <div className="card p-3 border-0 shadow-lg rounded-3 mt-4">
-                            <div className="row">
-                                <div className="col-lg-6">
-                                    <p>START DATE:</p>
-                                    <input id="date" name="date" type="date" placeholder="Duration" className="form-control " />
-                                </div>
-                                <div className="col-lg-6">
-                                    <p>END DATE:</p>
-                                    <input id="date" name="date" type="date" placeholder="Duration" onKeyDown={() => handleEndDate()} className="form-control " />
-                                </div>
-
-                                <div className="col-lg-12 searchtxt mt-4"><br /><input type="search" placeholder="Search for date , Leave Type or Status" className="form-control " /></div>
-                            </div>
+        <div className="container-fluid">
+            <div claasName="row">
+                <div className="col-md-12">
+                    <div className="row">
+                        <div className="col-md-7">
+                            {
+                                sessionStorage.getItem("roleID") == 2 && (
+                                    <Link href="/Requests/hrleaverequest" className="Heading mx-5" ><u>All Staff Leave Details</u></Link>
+                                )
+                            }
+                            <h4 className="Heading">Leave Request </h4>
                         </div>
-                        <br /><br />
                     </div>
-                    <div className="col-lg-8">
-                        <div className="card p-3 border-0 shadow-lg rounded-3 mt-4">
-                            <div className="row" style={{ marginBottom: "3px" }}>
-                                <div className="col-lg-4 ">
-                                    <div className="card shadow p-1">
-                                        <p className="para"><b className="number"> </b> Sick Leave </p>
+                    <br />
+                    <div className="row">
+                        <div className="col-lg-4">
+                            <div className="card p-3 border-0">
+                                <div className="row">
+                                    <div className="col-lg-6">
+                                        <p>START DATE:</p>
+                                        <input id="date" name="date" type="date" placeholder="Duration" className="form-control " />
+                                    </div>
+                                    <div className="col-lg-6">
+                                        <p>END DATE:</p>
+                                        <input id="date" name="date" type="date" placeholder="Duration" className="form-control " />
+                                    </div>
+                                    <br /> <br /><br /> <br />
+                                    <div className="col-lg-12 searchtxt ">
+                                        <br /><input type="search" placeholder="Search for date , Leave Type or Status" className="form-control " />
+                                    </div>
+                                    <br /><br />
+                                </div>
+                            </div>
+
+                        </div>
+                        {/* <div className="col-lg-8">
+                            <div className="card p-3 border-0 rounded-3">
+                                <div className="row">
+                                    <div className="col-lg-4 ">
+                                        <div className="card p-1">
+                                            <p className="para"><b className="number"> </b> Sick Leave </p>
+                                        </div>
+                                    </div>
+                                    <div className='col-lg-4'>
+                                        <div className="card p-1">
+                                            <p className="para"><b className="number"></b> Vacation Leave</p>
+
+                                        </div>
+                                    </div>
+                                    <div className="col-lg-4 ">
+                                        <br /><br /><br /><br /><br /><br /><br /><br />
                                     </div>
                                 </div>
-                                <div className='col-lg-4'>
-                                    <div className="card shadow p-1">
-                                        <p className="para"><b className="number"></b> Vacation Leave</p>
+                            </div>
+                        </div> */}
+                    </div>
+                    <br /><br />
+                    <div className="row">
+                        <div className="col-lg-4">
+                            <div className='row'>
+                                <div className='col-lg-6'>
+                                    <div className='btn-group'>
+                                        <button onClick={toggleCalender} className="toggleButton">Calender</button>
+                                        <button onClick={toggleListView} className={`toggleButton ${listview ? "focus" : ""}`}>List View</button>
 
                                     </div>
                                 </div>
-                                <div className="col-lg-4 ">
-                                    <br /><br /><br /><br /><br /><br /><br /><br />
-                                </div>
                             </div>
+                            <br />
+                        </div>
+                        <div className="col-lg-4"></div>
+                        <div className="col-lg-1"></div>
+                        <div className="col-lg-1">
+                            <Link href="/Requests/Applyleave/new"><button className="submit-button" tabIndex="0"> Apply Leave</button>
+                            </Link>
                         </div>
                     </div>
-
-                </div>
-                <div className="row">
-                    <div className="col-md-4">
-                        <div className='row mt-3'>
-                            <div className='col-lg-4 mx-5'>
-                                <div className='btn-group'>
-                                    <button onClick={toggleCalender} className="toggleButton">Calender</button>
-                                    <button onClick={toggleListView} className={`toggleButton ${listview ? "focus" : ""}`}>List View</button>
-
-                                </div>
-                            </div>
-                        </div>
-                        <br />
-                    </div>
-                    <div className="col-md-4"></div>
-                    <div className="col-md-4">
-                        <Link href="/Requests/Applyleave/new"><button className="submit-button m" tabIndex="0"> Apply Leave</button>
-                        </Link>
-                    </div>
-                </div>
-                <br />
-
-                <div className='container'>
+                    <br />
                     {
                         calender && (
                             <div className='row'>
-                                <div className='card shadow'>
-                                    <div style={styles.container}>
-                                        <BigCalendar
-                                            selectable
-                                            localizer={localizer}
-                                            events={events}
-                                            defaultView={Views.DAY}
-                                            views={[Views.DAY, Views.WEEK, Views.MONTH]}
-                                            steps={60}
-                                            defaultDate={new Date(2018, 0, 29)}
-                                            resources={resourceMap}
-                                            resourceIdAccessor="resourceId"
-                                            resourceTitleAccessor="resourceTitle"
-                                        />
+                                <div className="col-lg-12">
+                                    <div className='card shadow'>
+                                        <div style={styles.container}>
+                                            <BigCalendar
+                                                selectable
+                                                localizer={localizer}
+                                                events={events}
+                                                defaultView={Views.DAY}
+                                                views={[Views.DAY, Views.WEEK, Views.MONTH]}
+                                                steps={60}
+                                                defaultDate={new Date(2018, 0, 29)}
+                                                resources={resourceMap}
+                                                resourceIdAccessor="resourceId"
+                                                resourceTitleAccessor="resourceTitle"
+                                            />
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -261,7 +266,6 @@ function LeaveListDashboard() {
                     }
                     {
                         listview && (
-
                             <div className='row mt-3'>
                                 <div className='col-lg-4'>
                                     <div className='btn-group'>
@@ -276,89 +280,94 @@ function LeaveListDashboard() {
 
                         )
                     }
-                    <div className='container'>
-                        {pending && (
-
-                            <table className='table table-hover mt-4'>
-                                <thead className='bg-info text-white'>
-                                    <tr>
-                                        <th>From Date</th>
-                                        <th>To Date</th>
-                                        <th>Leave Reason</th>
-                                        <th>Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {
-                                        pendingdata.map((data) => {
-                                            return (
-                                                <tr key={data.id}>
-                                                    <td>{data.sDateOfLeave}</td>
-                                                    <td>{data.eDateOfLeave}</td>
-                                                    <td>{data.leaveReason}</td>
-                                                    <td>{data.status}</td>
-                                                </tr>
-                                            );
-                                        })}
-                                </tbody>
-                            </table>
-                        )}
-
-                        {approved && (
-                            <table className='table table-hover mt-4'>
-                                <thead className='bg-info text-white'>
-                                    <tr>
-                                        <th>From Date</th>
-                                        <th>To Date</th>
-                                        <th>Leave Reason</th>
-                                        <th>Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {
-                                        approveddata.map((data) => {
-                                            return (
-                                                <tr key={data.id}>
-                                                    <td>{data.sDateOfLeave}</td>
-                                                    <td>{data.eDateOfLeave}</td>
-                                                    <td>{data.leaveReason}</td>
-                                                    <td>{data.status}</td>
-                                                </tr>
-                                            );
-                                        })}
-                                </tbody>
-                            </table>
-                        )}
-
-                        {rejected && (
-                            <table className='table table-hover mt-4'>
-                                <thead className='bg-info text-white'>
-                                    <tr>
-                                        <th>From Date</th>
-                                        <th>To Date</th>
-                                        <th>Leave Reason</th>
-                                        <th>Status</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {
-                                        rejecteddata.map((data) => {
-                                            return (
-                                                <tr key={data.id}>
-                                                    <td>{data.sDateOfLeave}</td>
-                                                    <td>{data.eDateOfLeave}</td>
-                                                    <td>{data.leaveReason}</td>
-                                                    <td>{data.status}</td>
-                                                </tr>
-                                            );
-                                        })}
-                                </tbody>
-                            </table>
-                        )}
+                    <div className="row">
+                        <div className="col-lg-12">
+                            {pending && (
+                                <table className='table table-hover mt-4'>
+                                    <thead className='bg-info text-white'>
+                                        <tr>
+                                            <th>From Date</th>
+                                            <th>To Date</th>
+                                            <th>Leave Reason</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {
+                                            pendingdata.map((data) => {
+                                                return (
+                                                    <tr key={data.id}>
+                                                        <td>{data.sDateOfLeave}</td>
+                                                        <td>{data.eDateOfLeave}</td>
+                                                        <td>{data.leaveReason}</td>
+                                                        <td>{data.status}</td>
+                                                    </tr>
+                                                );
+                                            })}
+                                    </tbody>
+                                </table>
+                            )}
+                        </div>
+                        <div className="row">
+                            <div className="col-lg-12">
+                                {approved && (
+                                    <table className='table table-hover mt-4'>
+                                        <thead className='bg-info text-white'>
+                                            <tr>
+                                                <th>From Date</th>
+                                                <th>To Date</th>
+                                                <th>Leave Reason</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {
+                                                approveddata.map((data) => {
+                                                    return (
+                                                        <tr key={data.id}>
+                                                            <td>{data.sDateOfLeave}</td>
+                                                            <td>{data.eDateOfLeave}</td>
+                                                            <td>{data.leaveReason}</td>
+                                                            <td>{data.status}</td>
+                                                        </tr>
+                                                    );
+                                                })}
+                                        </tbody>
+                                    </table>
+                                )}
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col-lg-12">
+                                {rejected && (
+                                    <table className='table table-hover mt-4'>
+                                        <thead className='bg-info text-white'>
+                                            <tr>
+                                                <th>From Date</th>
+                                                <th>To Date</th>
+                                                <th>Leave Reason</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {
+                                                rejecteddata.map((data) => {
+                                                    return (
+                                                        <tr key={data.id}>
+                                                            <td>{data.sDateOfLeave}</td>
+                                                            <td>{data.eDateOfLeave}</td>
+                                                            <td>{data.leaveReason}</td>
+                                                            <td>{data.status}</td>
+                                                        </tr>
+                                                    );
+                                                })}
+                                        </tbody>
+                                    </table>
+                                )}
+                            </div>
+                        </div>
                     </div>
                 </div>
-
-
             </div>
         </div>
 

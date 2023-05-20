@@ -87,10 +87,10 @@ const FinalPayrollDetails = () => {
         }
     };
     return (
-        <div>
-            <h6 >Delete operation issue</h6>
-            <h3 className=' mt-3 Heading'>Finalization   Payroll Details</h3>
-            <div className='card p-3 border-0 shadow-lg rounded-3 mt-4'>
+        <div className='container-fluid'>
+            <h3 className=' Heading'>Finalization   Payroll Details</h3>
+            <br />
+            <div className='card p-3 '>
                 <div className='row'>
                     <div className='col-lg-1'>
                         <p>Filter By</p>
@@ -124,7 +124,7 @@ const FinalPayrollDetails = () => {
                         </DownloadTableExcel>
                     </div>
                 </div>
-            </div><br /><br />
+            </div><br />
             <div className='row'>
                 <div className='col-lg-10'></div>
                 <div className='col-lg-2'>Total Amount:</div>
@@ -133,7 +133,7 @@ const FinalPayrollDetails = () => {
             <br />
             <div className='row'>
                 <div className='col-lg-9'></div>
-                <div className='col-lg-3'>
+                <div className='col-lg-2'>
 
                     <button type='button' className='EditDelteBTN fw-bold' onClick={() => handleDelete.bind(this)}>Delete</button>
 
@@ -148,7 +148,8 @@ const FinalPayrollDetails = () => {
 
                 <div className='col-lg-12'>
                     <span>Select All <input type="checkbox" checked={selectedRows.length === preliminarySalary.length} onChange={e => handleRowSelect(e, 'all')} /></span>
-                    <table style={{ whiteSpace: "nowrap" }} className='table table-sm mt-4 text-center '>
+                    <br />
+                    <table style={{ whiteSpace: "nowrap" }} className='table text-center '>
                         <thead>
                             <tr className='tr' >
                                 <th className='text-white'>Select</th>

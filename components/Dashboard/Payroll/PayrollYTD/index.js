@@ -133,138 +133,145 @@ const Employmentjobhistory = () => {
         getPayroll();
     }, [])
     return (
-        <div>
-            <h4 className='Heading  m-3'>Payroll YTD Upload</h4>
-            <div className='container'>
-                <div className='row shadow-lg rounded-3 mt-5 p-3'>
+        <div className='container-fluid'>
+            <p className='Heading '>Payroll YTD Upload</p>
+            <br />
+            <div className='card p-4'>
+                <div className='row '>
                     <div className='col-lg-1 '>
                         <p>Filter By</p>
                     </div>
-                    <div className='col-lg-6'>
+                    <div className='col-lg-4'>
                         <input type='text' className='form-control' placeholder='Search for Staff ,Date of Joining or Role' />
                     </div>
                 </div>
+            </div>
+            <br />
+            <div className='row  '>
+                <div className='col-lg-3'>
+                    <p className='text-primary fw-bold'>Showing {dashboard.length} Results</p>
+                </div>
+                <div className='col-lg-4'></div>
+                <div className='col-lg-2'>
+                    <button type='submit' onClick={handleModalOpen} className={Styles.button} >Payroll YTD</button>
+                </div>
+                <div className='col-lg-2' >
+                    <button type='submit' onClick={payrollHistory} className={Styles.button}>Payroll History</button>
+                </div>
+                <div className='col-lg-1'></div>
+            </div>
 
-                <div className='row mt-5 '>
-                    <div className='col-lg-3'>
-                        <p className='text-primary fw-bold'>Showing {dashboard.length} Results</p>
+
+            {/* <div className='col-lg-5'></div> */}
+
+            <Modal isOpen={ModalIsOpen} style={customStyles}>
+                <div className='container'>
+                    <div className='row card-header'>
+                        <div className='col-lg-8 mt-3'>
+                            <h4>Upload Payroll YTD</h4>
+                        </div>
+                        <div className='col-lg-3'></div>
+                        <div className='col-lg-1 mt-3 mb-3'>
+                            <button onClick={() => setModalIsOpen(false)} className='btn-primary'><AiOutlineClose /></button>
+                        </div>
                     </div>
-
-                    <div className='col-lg-5'></div>
-
-                    <Modal isOpen={ModalIsOpen} style={customStyles}>
-                        <div className='container'>
-                            <div className='row card-header'>
-                                <div className='col-lg-8 mt-3'>
-                                    <h4>Upload Payroll YTD</h4>
-                                </div>
-                                <div className='col-lg-3'></div>
-                                <div className='col-lg-1 mt-3 mb-3'>
-                                    <button onClick={() => setModalIsOpen(false)} className='btn-primary'><AiOutlineClose /></button>
-                                </div>
-                            </div>
-                            <hr />
-                            <div className='row mt-3'>
-                                <div className='col-lg-6'>
-                                    <input
-                                        className='form-control'
-                                        type="file"
-                                        accept=".xlsx"
-                                        onChange={(e) => {
-                                            const file = e.target.files[0];
-                                            readExcel(file);
-                                        }}
-                                    />
-                                </div>
-                            </div>
-                            <div className='col-lg-4 mb-3'>
-                                <button type='submit' onClick={addPayrollYTD} className='submit-button  mt-4'>Upload Payroll YTD</button>
-                            </div>
+                    <hr />
+                    <div className='row mt-3'>
+                        <div className='col-lg-6'>
+                            <input
+                                className='form-control'
+                                type="file"
+                                accept=".xlsx"
+                                onChange={(e) => {
+                                    const file = e.target.files[0];
+                                    readExcel(file);
+                                }}
+                            />
                         </div>
-                    </Modal>
-
-                    <Modal isOpen={PayrollHistory} style={customStyles}>
-                        <div className='container'>
-                            <div className='row card-header'>
-                                <div className='col-lg-8 mt-3'>
-                                    <h5>Upload Payroll History</h5>
-
-                                </div>
-                                <div className='col-lg-3'></div>
-                                <div className='col-lg-1 mt-3 mb-3'>
-                                    <button onClick={() => setPayrollHistory(false)} className='btn-primary'><AiOutlineClose /></button>
-                                </div>
-                            </div>
-                            <hr />
-                            <div className='row mt-3'>
-                                <div className='col-lg-6'>
-                                    <input
-                                        className='form-control'
-                                        type="file"
-                                        accept=".xlsx"
-                                        onChange={(e) => {
-                                            const file = e.target.files[0];
-                                            readExcel(file);
-                                        }}
-                                    />
-                                </div>
-                            </div>
-                            <div className='col-lg-4 mb-3'>
-                                <button type='submit' onClick={payrollHistorymodal} className='submit-button  mt-4'>Upload Payroll History</button>
-                            </div>
-                        </div>
-                    </Modal>
-
-
-                    <Modal isOpen={PayrollYTD} style={payrollYTDStyle} onRequestClose={() => setPayrollYTD(false)}>
-
-                        <div className='container' >
-                            <div className='row'>
-                                <table className='table table-hover'>
-                                    <thead className='bg-info text-white'>
-                                        <tr>
-                                            <th>Employee ID</th>
-                                            <th>Employee Name</th>
-                                            <th>Net Taxable YTD</th>
-                                            <th>Taxable YTD</th>
-                                            <th>Taxable Bonus YTD</th>
-                                            <th>Non Taxable Bonus YTD</th>
-                                        </tr>
-                                    </thead>
-
-                                    <tbody>
-                                        {
-                                            YTDlist.map((YTD) => {
-                                                return (
-                                                    <tr key={YTD.id}>
-                                                        <td>{YTD.employeID}</td>
-                                                        <td>{YTD.firstAndLastName}</td>
-                                                        <td>{YTD.nettaxableYTD}</td>
-                                                        <td>{YTD.taxYTD}</td>
-                                                        <td>{YTD.taxableBonusYTD}</td>
-                                                        <td>{YTD.nonTaxableBonusYTD}</td>
-                                                    </tr>
-                                                )
-                                            })
-                                        }
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-
-                    </Modal>
-
-                    <div className='col-lg-2'>
-                        <button type='submit' onClick={handleModalOpen} className={Styles.button}>Payroll YTD</button>
                     </div>
-                    <div className='col-lg-2'>
-                        <button type='submit' onClick={payrollHistory} className={Styles.button}>Payroll History</button>
+                    <div className='col-lg-4 mb-3'>
+                        <button type='submit' onClick={addPayrollYTD} className='submit-button  mt-4'>Upload Payroll YTD</button>
+                    </div>
+                </div>
+            </Modal>
+
+            <Modal isOpen={PayrollHistory} style={customStyles}>
+                <div className='container'>
+                    <div className='row card-header'>
+                        <div className='col-lg-8 mt-3'>
+                            <h5>Upload Payroll History</h5>
+
+                        </div>
+                        <div className='col-lg-3'></div>
+                        <div className='col-lg-1 mt-3 mb-3'>
+                            <button onClick={() => setPayrollHistory(false)} className='btn-primary'><AiOutlineClose /></button>
+                        </div>
+                    </div>
+                    <hr />
+                    <div className='row mt-3'>
+                        <div className='col-lg-6'>
+                            <input
+                                className='form-control'
+                                type="file"
+                                accept=".xlsx"
+                                onChange={(e) => {
+                                    const file = e.target.files[0];
+                                    readExcel(file);
+                                }}
+                            />
+                        </div>
+                    </div>
+                    <div className='col-lg-4 mb-3'>
+                        <button type='submit' onClick={payrollHistorymodal} className='submit-button  mt-4'>Upload Payroll History</button>
+                    </div>
+                </div>
+            </Modal>
+
+
+            <Modal isOpen={PayrollYTD} style={payrollYTDStyle} onRequestClose={() => setPayrollYTD(false)}>
+
+                <div className='container' >
+                    <div className='row'>
+                        <table className='table text-center'>
+                            <thead className='bg-info text-white'>
+                                <tr>
+                                    <th>Employee ID</th>
+                                    <th>Employee Name</th>
+                                    <th>Net Taxable YTD</th>
+                                    <th>Taxable YTD</th>
+                                    <th>Taxable Bonus YTD</th>
+                                    <th>Non Taxable Bonus YTD</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                {
+                                    YTDlist.map((YTD) => {
+                                        return (
+                                            <tr key={YTD.id}>
+                                                <td>{YTD.employeID}</td>
+                                                <td>{YTD.firstAndLastName}</td>
+                                                <td>{YTD.nettaxableYTD}</td>
+                                                <td>{YTD.taxYTD}</td>
+                                                <td>{YTD.taxableBonusYTD}</td>
+                                                <td>{YTD.nonTaxableBonusYTD}</td>
+                                            </tr>
+                                        )
+                                    })
+                                }
+                            </tbody>
+                        </table>
                     </div>
                 </div>
 
-                <div className='row mt-5'>
-                    <table className='table table-hover'>
-                        <thead className='bg-info text-white '>
+            </Modal>
+
+            <br />
+
+            <div className='row'>
+                <div className='col-lg-12'>
+                    <table className='table'>
+                        <thead >
                             <tr>
                                 <th>Employee ID</th>
                                 <th>Employee Name</th>
