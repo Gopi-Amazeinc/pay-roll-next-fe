@@ -1,26 +1,62 @@
 import React, { useEffect, useState } from 'react'
 import Layout from '@/components/layout/layout'
 import { useForm } from 'react-hook-form';
-import axios from 'axios';
+import { apiService } from "@/services/api.service";
 import Swal from 'sweetalert2';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 
-const SemiMonthlyTaxForm = ({ }) => {
-
+const SemiMonthlyTaxForm = ({  editData}) => {
+    const router = useRouter();
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
+    const [actionType, setActionType] = useState("insert");
 
-    let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-
-
-    const onSubmit = async (data) => {
-        await axios.post(hostURL + "HR/InsertTaxconfigarationsemimonth", data) // Inserting new data [Shashank]
-        location.href = "/Settings/SemiMonthlyTax";
-        Swal.fire({
-            icon: 'success',
-            title: 'Added Successfully',
-        })
-
+    function clearForm(existingData = null) {
+        let semitax = {
+            "ID": existingData ? existingData.id : "",
+            "Taxlowlevellimit": existingData ? existingData.taxlowlevellimit : "",
+            "Taxhighlevellimit": existingData ? existingData.taxhighlevellimit : "",
+            "slab": existingData ? existingData.slab : "",
+            "Percentage": existingData ? existingData.percentage : "",
+            "Taxexcessamount": existingData ? existingData.taxexcessamount : "",
+            "Taxdeductionamount": existingData ? existingData.taxdeductionamount : "",
+            "Year": existingData ? existingData.year : "",
+        }
+        reset(semitax)
+        setActionType(existingData ? "update" : "insert");
     }
+    useEffect(() => {
+        const { id } = editData || {};
+        if (id) {
+           
+            getData(id);
+        } else {
+            clearForm();
+        }
+    }, []);
+    const getData = async (id) => {
+        const res = await apiService.commonGetCall(
+            "HR/GetTaxconfigarationsemimonthByID?ID=" + id
+        );
+        clearForm(res.data[0]);
+    };
+    const onSubmit = async (data) => {
+        if (actionType == "insert") {
+            await apiService.commonPostCall("HR/InsertTaxconfigarationsemimonth", data) // inserting new division master data [Shashank]
+            router.push( '/Settings/SemiMonthlyTax');
+            Swal.fire({
+                icon: 'success',
+                title: 'Added Successfully',
+            })
+        } else {
+            await apiService.commonPostCall("HR/UpdateTaxconfigarationsemimonth", data); // this is for updating or Modifiying the data using  Update Api call
+            Swal.fire('Updated successfully')
+            router.push('/Settings/SemiMonthlyTax');
+        }
+    };
+
+
+ 
 
 
     return (
@@ -56,19 +92,19 @@ const SemiMonthlyTaxForm = ({ }) => {
                                     <div className='col-lg-2 '>
                                         <label className='fw-bold'>Percentage <i className='text-danger'>*</i></label>
                                         <input {...register("Percentage", { required: true })} type="text" placeholder='Percentage' className='form-control' />
-                                        {errors.percentage && <p className='text-danger'>Enter Percentage</p>}
+                                        {errors.Percentage && <p className='text-danger'>Enter Percentage</p>}
                                     </div>
 
                                     <div className='col-lg-2 '>
                                         <label className='fw-bold'>Tax excess amount <i className='text-danger'>*</i></label>
                                         <input {...register("Taxexcessamount", { required: true })} type="text" placeholder='Tax excess amount' className='form-control' />
-                                        {errors.excess && <p className='text-danger'>Enter Excess Amount</p>}
+                                        {errors.Taxexcessamount && <p className='text-danger'>Enter Excess Amount</p>}
                                     </div>
 
                                     <div className='col-lg-2 '>
                                         <label className='fw-bold'>Tax deduction amount <i className='text-danger'>*</i></label>
                                         <input {...register("Taxdeductionamount", { required: true })} type="text" placeholder='Tax deduction amount' className='form-control' />
-                                        {errors.deduction && <p className='text-danger'>Enter Deduction Amount</p>}
+                                        {errors.Taxdeductionamount && <p className='text-danger'>Enter Deduction Amount</p>}
                                     </div>
 
                                     <div className='col-lg-2 '>
@@ -92,13 +128,21 @@ const SemiMonthlyTaxForm = ({ }) => {
                                     <div className='col-lg-8'></div>
                                     <div className='col-lg-2 text-end'>
 
-                                        <button type='submit' className=' AddButton'>Save</button>
-
+                                     <Link href="/Settings/SemiMonthlyTax"> <button type='submit' className=' AddButton'>Cancel</button>
+</Link>
                                     </div>
-                                    <div className='col-lg-2 '>
-                                        <Link href='/Settings/SemiMonthlyTax'><button className=' AddButton'>Cancel</button></Link>
+                                    <div className='col-lg-2'>
+                                        {
+                                            actionType == "insert" && (
+                                                <button type='submit' className="AddButton" >Save</button>
+                                            )
+                                        }
+                                        {
+                                            actionType == "update" && (
+                                                <button type='submit' className="AddButton" >Update</button>
+                                            )
+                                        }
                                     </div>
-
                                 </div>
                             </form>
                         </div>

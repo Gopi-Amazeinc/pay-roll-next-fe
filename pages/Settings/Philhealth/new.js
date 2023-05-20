@@ -1,25 +1,80 @@
 import React from 'react'
 import { useForm } from "react-hook-form";
 import { useEffect, useState } from "react";
-import axios from "axios";
+import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Styles from '../../../styles/philhealthadd.module.css'
 import Swal from 'sweetalert2';
 import Layout from '@/components/layout/layout'
+import { apiService } from "@/services/api.service";
 
 const PhilhealthForm = ({ editData }) => {
-    const { register, handleSubmit, watch, reset, formState: { errors }, } = useForm();
+    const { register, handleSubmit, watch, reset, formState } = useForm();
+    const [actionType, setActionType] = useState("insert");
+    const { errors } = formState;
+    const router = useRouter();
 
-    async function onSubmit(data) {
-        let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-        try {
-            await axios.post(hostURL + "HR/InsertPhihealthconfogaration", data);
-        } catch (error) { }
-        Swal.fire("Added succesfullly");
-        location.href = '/Settings/Philhealth';
+    function clearForm(PhillhealthData = null) {
+        debugger;
+        let details = {
+          ID: PhillhealthData ? PhillhealthData.id : "",
+          Taxiableincomelowlimit: PhillhealthData
+            ? PhillhealthData.taxiableincomelowlimit
+            : "",
+          Taxiableincomehighlimit: PhillhealthData
+            ? PhillhealthData.taxiableincomehighlimit
+            : "",
+          Phihealthvalue: PhillhealthData ? PhillhealthData.phihealthvalue : "",
+          Year: PhillhealthData ? PhillhealthData.year : "",
+        };
+        reset(details);
+        setActionType(PhillhealthData ? "update" : "insert");
+      }
+      useEffect(() => {
+        const { id } = editData || {};
+        if (id) {
+            // This API is used to fetch the data from BarangayMaster ByID table
+            getData(id);
+        } else {
+            clearForm();
+        }
+    }, []);
 
-    }
+    const getData = async (id) => {
+        const res = await apiService.commonGetCall(
+            "HR/GetPhihealthconfogarationByID?ID=" + id
+        );
+        clearForm(res.data[0]);
+    };
+    
+    const onSubmit = async (data) => {
+        if (actionType == "insert") {
+            await apiService.commonPostCall("HR/InsertPhihealthconfogaration", data) // inserting new division master data [Shashank]
+            router.push('/Settings/Philhealth');
+            Swal.fire({
+                icon: 'success',
+                title: 'Added Successfully',
+            })
+        } else {
+            await apiService.commonPostCall("HR/UpdatePhihealthconfogaration", data); // this is for updating or Modifiying the data using  Update Api call
+            Swal.fire('Updated successfully')
+            router.push('/Settings/Philhealth');
+        }
+    };
 
+    const customStyles = {
+        errorMsg: {
+            fontSize: "12px",
+            fontWeight: "500",
+            color: "red",
+        },
+        inputLabel: {
+            fontSize: "16px",
+        },
+    };
+
+
+ 
     return (
         <Layout>
             <div className='container-fluid'>
@@ -41,16 +96,18 @@ const PhilhealthForm = ({ editData }) => {
                                             type="text"
                                             className='form-control'
                                             {...register("Taxiableincomelowlimit", {
-                                                required: "Please add a Tax Name",
+                                                required: true,
                                                 pattern: {
                                                     value: /^[A-Za-z0-9]+$/,
                                                     message: "Please enter a valid Tax Name",
                                                 },
                                             })}
                                         />
-                                        <div className="invalid-feedback">
-                                            {errors.lowLimit?.message}
-                                        </div>
+                                         {errors.Taxiableincomelowlimit && (
+                                            <span  style={customStyles.errorMsg}>
+                                                Please enter a limit
+                                            </span>
+                                        )}
                                         <br/>
                                     </div>
                                     <div className="col-lg-3">
@@ -62,16 +119,18 @@ const PhilhealthForm = ({ editData }) => {
                                             type="text"
                                             className='form-control'
                                             {...register("Taxiableincomehighlimit", {
-                                                required: "Please add a Tax Name",
+                                                required: true,
                                                 pattern: {
                                                     value: /^[A-Za-z0-9]+$/,
-                                                    message: "Please enter a valid Tax Name",
+                                                    message: "Please enter a limit",
                                                 },
                                             })}
                                         />
-                                        <div className="invalid-feedback">
-                                            {errors.highLimit?.message}
-                                        </div>
+                                           {errors.Taxiableincomehighlimit && (
+                                            <span  style={customStyles.errorMsg}>
+                                                Please enter a valid Tax Name
+                                            </span>
+                                        )}
                                     </div>
                                     <div className="col-lg-2">
                                         <label className='fw-bold'>
@@ -82,16 +141,18 @@ const PhilhealthForm = ({ editData }) => {
                                             type="text"
                                             className='form-control'
                                             {...register("Phihealthvalue", {
-                                                required: "Please add a Phihealth value",
+                                                required: true,
                                                 pattern: {
                                                     value: /^[A-Za-z0-9]+$/,
                                                     message: "Please enter a valid Phihealth value",
                                                 },
                                             })}
                                         />
-                                        <div className="invalid-feedback">
-                                            {errors.Philhealth?.message}
-                                        </div>
+                                          {errors.Taxiableincomelowlimit && (
+                                            <span  style={customStyles.errorMsg}>
+                                                Please enter a valid Phihealth value
+                                            </span>
+                                        )}
                                     </div>
                                     <div className="col-lg-2">
                                         <label className='fw-bold'>
@@ -107,6 +168,7 @@ const PhilhealthForm = ({ editData }) => {
                                                 },
                                             })}
                                         >
+                                            <option value=''>Select Year</option>
                                             <option>2023</option>
                                             <option>2023</option>
                                             <option>2024</option>
@@ -115,6 +177,11 @@ const PhilhealthForm = ({ editData }) => {
                                             <option>2027</option>
                                             <option>2028</option>
                                         </select>
+                                        {errors.Year && (
+                                            <span  style={customStyles.errorMsg}>
+                                                Please enter Year
+                                            </span>
+                                        )}
                                     </div>
                                 </div>
                                 <br />
@@ -126,18 +193,17 @@ const PhilhealthForm = ({ editData }) => {
                                         </Link>
                                         {/* <button id={Styles.Save}>Save</button> */}
                                     </div>
-                                    <div className="col-lg-2">
-
-                                        <button
-                                            type="submit"
-
-                                            className='AddButton'
-                                        >
-                                            Save
-                                        </button>
-
-
-
+                                    <div className='col-lg-2'>
+                                        {
+                                            actionType == "insert" && (
+                                                <button type='submit' className="AddButton" >Save</button>
+                                            )
+                                        }
+                                        {
+                                            actionType == "update" && (
+                                                <button type='submit' className="AddButton" >Update</button>
+                                            )
+                                        }
                                     </div>
 
                                 </div>

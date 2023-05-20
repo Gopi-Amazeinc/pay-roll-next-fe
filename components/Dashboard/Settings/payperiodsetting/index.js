@@ -2,7 +2,7 @@ import React from 'react'
 import Link from 'next/link'
 import Styles from '../../../../styles/payperiodsetting.module.css'
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import { apiService } from "@/services/api.service";
 import Swal from 'sweetalert2';
 
 
@@ -11,9 +11,10 @@ export default function PayperiodSettingsDash() {
     const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
 
     const [payperiodSettingsDashboard, setpayperiodSettingsDashboard] = useState([]);
+    const [keyword, setKeyword] = useState("");
 
     const getpayperiodSettingsDashboard = async () => {
-        let res = await axios.get(hostURL + "Payroll/GetPayPeriodSetting");
+        let res = await apiService.commonGetCall("Payroll/GetPayPeriodSetting");
         setpayperiodSettingsDashboard(res.data);
     }
 
@@ -32,7 +33,7 @@ export default function PayperiodSettingsDash() {
     }
 
     const handleDelete = async (id) => {
-        let res = await axios.get(hostURL + `Payroll/DeletePayPeriodSetting?id=${id}`);
+        let res = await apiService.commonGetCall(`Payroll/DeletePayPeriodSetting?id=${id}`);
         console.log(res.data);
         Swal.fire('Data deleted successfully')
         getpayperiodSettingsDashboard();
@@ -52,7 +53,7 @@ export default function PayperiodSettingsDash() {
                             </div>
 
                             <div className='col-lg-3'>
-                                <input type="text" className='form-control' placeholder='Search...' />
+                                <input type="text" className='form-control' placeholder='Search...' onChange={e => setKeyword(e.target.value)} />
                             </div>
                         </div>
                     </div>
@@ -85,7 +86,11 @@ export default function PayperiodSettingsDash() {
                             </tr>
                         </thead>
                         <tbody>
-                            {payperiodSettingsDashboard.map((data, index) => {
+                            {payperiodSettingsDashboard.filter(data => {
+                                if ((data.payCode.toLowerCase().includes(keyword.toLowerCase())) || (data.payPeriod.toLowerCase().includes(keyword))) {
+                                    return data;
+                                }
+                            }).map((data, index) => {
                                 return (
                                     <tr className="text-dark" key={index}>
                                         <td>{data.payCode}</td>

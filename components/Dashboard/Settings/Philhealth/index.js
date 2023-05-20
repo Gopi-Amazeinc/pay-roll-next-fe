@@ -1,7 +1,7 @@
 import React from 'react'
 import Link from 'next/link'
 import { useEffect, useState } from "react";
-import axios from 'axios'
+import { apiService } from "@/services/api.service";
 import Styles from '../../../../styles/philhealth.module.css'
 import Swal from 'sweetalert2';
 
@@ -12,7 +12,7 @@ function Philhealth() {
 
     const getPhilhealthDash = async () => {
         let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-        let res = await axios.get(hostURL + "HR/GetPhihealthconfogaration");
+        let res = await apiService.commonGetCall("HR/GetPhihealthconfogaration");
         setPhilhealthDash(res.data);
     };
 
@@ -36,9 +36,9 @@ function Philhealth() {
     async function DeletePhillhealth(id) {
         debugger;
         try {
-            let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-            const res = await axios.get(
-                hostURL + `HR/DeletePhihealthconfogaration?id=${id}`
+            // let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+            const res = await apiService.commonGetCall(
+                 `HR/DeletePhihealthconfogaration?id=${id}`
             );
             console.log(res.data);
             Swal.fire("Deleted succesfullly");

@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from 'next/link';
-import axios from "axios";
+import { apiService } from "@/services/api.service";
 import Swal from "sweetalert2";
 import { useEffect, useState } from 'react';
 import Styles from '../../../../styles/sss.module.css'
@@ -11,7 +11,7 @@ function SSS() {
 
     useEffect(() => {
         getData();
-    }, [1]);
+    }, []);
 
     const getDataByID = (data) => {
         sessionStorage.setItem("id", data.id);
@@ -23,7 +23,7 @@ function SSS() {
 
     //   Written By:-Gopi  => This API call will load the sss configuration
     const getData = async () => {
-        let res = await axios.get(hostURL + "HR/GetSSSconfogaration");
+        let res = await apiService.commonGetCall("HR/GetSSSconfogaration");
         SetSssData(res.data);
     }
 
@@ -41,7 +41,8 @@ function SSS() {
             confirmButtonText: "Yes",
         }).then(async (result) => {
             if (result.isConfirmed) {
-                await axios.get(hostURL + "HR/DeleteSSSconfogaration?ID=" + id)
+                let res =  apiService.commonGetCall("HR/DeleteSSSconfogaration?ID=" + id)
+                console.log(res.data);
                 Swal.fire("SSS Deleted successfully.");
                 getData();
             }
