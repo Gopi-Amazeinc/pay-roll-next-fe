@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import {useRef} from "react";
 import Image from "next/image";
 import dashboard from "./dashboard.module.css";
 import leaveIcon from "@/public/Images/leaveIcon.png";
@@ -21,9 +22,12 @@ const GaugeChart = dynamic(() => import("react-gauge-chart"), { ssr: false });
 
 import Swal from "sweetalert2";
 
+
+
 const Dashboard = () => {
   const count = 1;
-
+  const staffDetailsRef = useRef(null);
+ 
   var time = new Date().toLocaleString("en-US", {
     hour: "numeric",
     minute: "numeric",
@@ -73,25 +77,24 @@ const Dashboard = () => {
 
     getLocalIPAddress();
   }, [1]);
-
   useEffect(() => {
     var todayDate = new Date().toISOString().slice(0, 10);
     debugger;
     if (userID) {
       apiService.commonGetCall("HR/GetAttendance").then((staffData) => {
-        const staffDetails = staffData.data.filter(
+        staffDetailsRef.current = staffData.data.filter(
           (x) => x.filterdate == todayDate && x.userID == userID
         );
-        if (staffDetails.length && staffDetails[0].signinDate != null) {
+        if (staffDetailsRef.current.length && staffDetailsRef.current[0].signinDate != null) {
           setPunchedIn(true);
-          setWorkTypeID(staffDetails[0].signInTypeID);
-          setStartTime(staffDetails[0].startTime);
+          setWorkTypeID(staffDetailsRef.current[0].signInTypeID);
+          setStartTime(staffDetailsRef.current[0].startTime);
         }
 
-        if (staffDetails.length && staffDetails[0].signoutDate != null) {
+        if (staffDetailsRef.current.length && staffDetailsRef.current[0].signoutDate != null) {
           setPunchedOut(true);
-          setWorkTypeID(staffDetails[0].signOutTypeID);
-          setEndTime(staffDetails[0].endTime);
+          setWorkTypeID(staffDetailsRef.current[0].signOutTypeID);
+          setEndTime(staffDetailsRef.current[0].endTime);
         }
 
         // const currentTime = new Date();
@@ -173,7 +176,7 @@ const Dashboard = () => {
     ) {
       Swal.fire("Please Fill Work Type");
     }
-    else if (WorkTypeID != staffDetails[0].signInTypeID ) {
+    else if (WorkTypeID !=  staffDetailsRef.current[0].signInTypeID ) {
       
       Swal.fire("please select correct work Type to Punchout!")
     }
@@ -211,7 +214,8 @@ const Dashboard = () => {
     }
     setModalOpen(!modalOpen);
   };
-
+  const staffDetails = staffDetailsRef.current;
+  
   return (
     <Layout>
       {/* <input

@@ -161,7 +161,11 @@ const InitialPayrollDetails = () => {
                         </thead>
                         <tbody >
                             {
-                                preliminarySalary.slice(offset, offset + PER_PAGE).map((data, index) => {
+                                preliminarySalary.filter(data => {
+                                    if ((data.staffID.toString().includes(keyword)) || (data.name.toLowerCase().includes(keyword.toLowerCase()))) {
+                                        return data;
+                                    }
+                                }).slice(offset, offset + PER_PAGE).map((data, index) => {
                                     return (
                                         <tr className="text-dark" key={index}>
                                             <td>
