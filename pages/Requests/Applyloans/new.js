@@ -6,11 +6,14 @@ import axios from "axios"
 import styles from "../../../styles/applyloans.module.css"
 import Swal from "sweetalert2";
 import { apiService } from "@/services/api.service";
+import { useRouter } from "next/router";
 
 const Applyloans = () => {
     const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
     const { register, formState, watch, handleSubmit } = useForm();
     const { errors } = formState;
+    const router = useRouter();
+
     const onSubmit = async (data) => {
         debugger
         let ddd = [
@@ -25,10 +28,10 @@ const Applyloans = () => {
                 "Attachment": "",
             }
         ];
-        
-            await apiService.commonPostCall('Payroll/InsertEmployeeLoans', ddd);
-            Swal.fire("Added succefully!")
-            window.location.href = "/Requests/Applyloans";
+
+        await apiService.commonPostCall('Payroll/InsertEmployeeLoans', ddd);
+        Swal.fire("Added succefully!")
+        router.push("/Requests/Applyloans");
     }
 
     // function clearForm(ApplyLoansdata = null) {
@@ -52,7 +55,7 @@ const Applyloans = () => {
                 <div className='card p-3 border-0'>
                     <div className='row'>
                         <div className='col-lg-2'>
-                            <label style={{fontWeight:"bold"}}>Loan Type <span style={{ color: "red" }}>*</span></label>
+                            <label style={{ fontWeight: "bold" }}>Loan Type <span style={{ color: "red" }}>*</span></label>
                             <select className='form-select form-select-sm' {...register('loanType', {
                                 required: "loanType is required", pattern: { value: '^[A-Za-z0-9 ]+$', message: "Please enter a valid Position Name" }
                             })} >
@@ -67,7 +70,7 @@ const Applyloans = () => {
                             {errors.loanType && <p className="error-message" style={{ color: "red" }}>{errors.loanType.message}</p>}
                         </div>
                         <div className='col-lg-2'>
-                            <label style={{fontWeight:"bold"}}>Loan Amount<span style={{ color: "red" }}>*</span></label>
+                            <label style={{ fontWeight: "bold" }}>Loan Amount<span style={{ color: "red" }}>*</span></label>
                             <input type='text' placeholder='Loan Amount' {...register('loanAmount', {
                                 required: "Loan amount  is required", pattern: {
                                     value: '^[A-Za-z0-9 ]+$',
@@ -77,7 +80,7 @@ const Applyloans = () => {
                             {errors.loanAmount && <p className="error-message" style={{ color: "red" }}>{errors.loanAmount.message}</p>}
                         </div>
                         <div className='col-lg-2'>
-                            <label style={{fontWeight:"bold"}}>Tenure <span style={{ color: "red" }}>*</span></label>
+                            <label style={{ fontWeight: "bold" }}>Tenure <span style={{ color: "red" }}>*</span></label>
                             <input type='text' placeholder='Tenure' {...register('Tenure', {
                                 required: "Tenure is required", pattern: {
                                     value: '^[A-Za-z0-9 ]+$',
@@ -87,7 +90,7 @@ const Applyloans = () => {
                             {errors.Tenure && <p className="error-message" style={{ color: "red" }}>{errors.Tenure.message}</p>}
                         </div>
                         <div className='col-lg-4'>
-                            <label style={{fontWeight:"bold"}}>Comments<span style={{ color: "red" }}>*</span></label>
+                            <label style={{ fontWeight: "bold" }}>Comments<span style={{ color: "red" }}>*</span></label>
                             <textarea rows={3} className='form-control' {...register('Comments', {
                                 required: "Comments is required", pattern: {
                                     value: '^[A-Za-z0-9 ]+$',

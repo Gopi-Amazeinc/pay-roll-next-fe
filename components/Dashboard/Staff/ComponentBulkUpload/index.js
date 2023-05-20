@@ -39,7 +39,7 @@ const Index = () => {
       <br />
       <h4>ComponentMaster,upload, disable/enable APIs pending </h4>
       <h5 className="Heading">Upload Payroll Component</h5>
-      <div className="card shadow-lg p-4 rounded-3 mt-4">
+      <div className="card p-4 border-0 rounded-3 mt-4">
         <div className="row">
           <div className="col-lg-1">
             <p>Filter By:</p>
@@ -82,9 +82,9 @@ const Index = () => {
           </div>
         </div>
       </div>
-
+        <br></br>
       <div>
-        <table className="table table-striped mt-3">
+        <table className="table table-striped">
           <thead>
             <tr className="bg-info text-white ">
               <th>Employee ID</th>

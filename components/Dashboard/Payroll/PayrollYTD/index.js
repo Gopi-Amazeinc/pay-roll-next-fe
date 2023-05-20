@@ -134,14 +134,14 @@ const Employmentjobhistory = () => {
     }, [])
     return (
         <div className='container-fluid'>
-            <p className='Heading  '>Payroll YTD Upload</p>
+            <p className='Heading '>Payroll YTD Upload</p>
             <br />
             <div className='card p-4'>
                 <div className='row '>
                     <div className='col-lg-1 '>
                         <p>Filter By</p>
                     </div>
-                    <div className='col-lg-6'>
+                    <div className='col-lg-4'>
                         <input type='text' className='form-control' placeholder='Search for Staff ,Date of Joining or Role' />
                     </div>
                 </div>
@@ -266,47 +266,49 @@ const Employmentjobhistory = () => {
 
             </Modal>
 
+            <br />
 
+            <div className='row'>
+                <div className='col-lg-12'>
+                    <table className='table'>
+                        <thead >
+                            <tr>
+                                <th>Employee ID</th>
+                                <th>Employee Name</th>
+                                <th>Department</th>
+                                <th>Position</th>
+                                <th>Email</th>
+                                <th>Date Of Joining</th>
+                                <th>Manager</th>
+                                <th colSpan={2} className='text-center'>Actions</th>
+                            </tr>
+                        </thead>
 
-            <div className='row mt-5'>
-                <table className='table table-hover'>
-                    <thead className='bg-info text-white '>
-                        <tr>
-                            <th>Employee ID</th>
-                            <th>Employee Name</th>
-                            <th>Department</th>
-                            <th>Position</th>
-                            <th>Email</th>
-                            <th>Date Of Joining</th>
-                            <th>Manager</th>
-                            <th colSpan={2} className='text-center'>Actions</th>
-                        </tr>
-                    </thead>
-
-                    <tbody>
-                        {
-                            dashboard.map((data) => {
-                                return (
-                                    <tr key={data.id}>
-                                        <td>{data.employeID}</td>
-                                        <td>{data.name}</td>
-                                        <td>{data.department}</td>
-                                        <td></td>
-                                        <td>{data.emailID}</td>
-                                        <td>{data.joiningDate}</td>
-                                        <td></td>
-                                        <td>
-                                            <button onClick={handlePayrollYTD.bind(this, data)} className={Styles.upload}>Payroll History</button>
-                                        </td>
-                                        <td>
-                                            <button onClick={handlePayrollYTD.bind(this, data)} className={Styles.upload}>PayrollYTD</button>
-                                        </td>
-                                    </tr>
-                                )
-                            })
-                        }
-                    </tbody>
-                </table>
+                        <tbody>
+                            {
+                                dashboard.map((data) => {
+                                    return (
+                                        <tr key={data.id}>
+                                            <td>{data.employeID}</td>
+                                            <td>{data.name}</td>
+                                            <td>{data.department}</td>
+                                            <td></td>
+                                            <td>{data.emailID}</td>
+                                            <td>{data.joiningDate}</td>
+                                            <td></td>
+                                            <td>
+                                                <button onClick={handlePayrollYTD.bind(this, data)} className={Styles.upload}>Payroll History</button>
+                                            </td>
+                                            <td>
+                                                <button onClick={handlePayrollYTD.bind(this, data)} className={Styles.upload}>PayrollYTD</button>
+                                            </td>
+                                        </tr>
+                                    )
+                                })
+                            }
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div >
     )

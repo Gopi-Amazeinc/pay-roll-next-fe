@@ -15,6 +15,8 @@ const RunFinalPayroll = () => {
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
     const [runPayrollDashboard, setRunPayrollDashboardData] = useState("");
+    const [keyword, setKeyword] = useState("");
+
 
 
     useEffect(() => {
@@ -223,7 +225,11 @@ const RunFinalPayroll = () => {
                         </thead>
                         <tbody >
                             {
-                                dashboard.map((data, index) => {
+                                dashboard.filter(data => {
+                                    if ((data.employeID.toString().includes(keyword)) || (data.name.toLowerCase().includes(keyword.toLowerCase()))) {
+                                        return data;
+                                    }
+                                }).map((data, index) => {
                                     return (
                                         <tr className="text-dark" key={index}>
                                             <td ><input type='checkbox' onClick={handleRunpayrolldata} onChange={handlePayrollData.bind(this, data)} /></td>

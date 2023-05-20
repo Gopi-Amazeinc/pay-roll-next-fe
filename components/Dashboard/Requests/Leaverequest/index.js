@@ -17,14 +17,8 @@ import leave from "../../../../pages/Requests/Compensationtimeout/compensation.m
 moment.locale("en-GB");
 //momentLocalizer(moment);
 const localizer = momentLocalizer(moment);
-
 function LeaveListDashboard() {
     const { register, handleSubmit, reset, formState } = useForm();
-    // var date = new Date();
-    let Sdate = sessionStorage.getItem("Sdate")
-    // var edate = new Date();
-    let Edate = sessionStorage.getItem("Edate")
-
     const [pending, setPending] = useState(false)
     const [approved, setApproved] = useState(false)
     const [rejected, setRejected] = useState(false)
@@ -63,53 +57,64 @@ function LeaveListDashboard() {
 
     }
 
-    // const dateFormat = () => {
-    //     var StartDate = new Date();
-    //     let Sdate = StartDate.toISOString().slice(0, 10);
-    //     var EndDate = new Date();
-    //     let Edate = EndDate.toISOString().slice(0, 10);
-    //     getPendingData(Sdate, Edate);
-    //     getApprovedData(Sdate, Edate);
-    //     getRejectedData(Sdate, Edate);
-    // }
+    const [startDate, setStartDate] = useState("");
+    const [endDate, setEndDate] = useState("");
 
-    function handleEndDate() {
-        var startDate = watch("StartDate");
-        var endDate = watch("EndDate");
-        getPendingData(startDate, endDate);
-        getApprovedData(startDate, endDate);
-        getRejectedData(startDate, endDate);
-    }
+    const getStartDate = (selectedDate) => {
+        setStartDate(selectedDate);
+        setEndDate("");
+        sessionStorage.setItem("StartDate", startDate);
 
+    };
+
+    const getEndDate = (selectedDate) => {
+        setEndDate(selectedDate);
+        sessionStorage.setItem("EndDate", endDate);
+        return getDateBySelectedDate(selectedDate);
+    };
+    const getDateBySelectedDate = (endDatesss) => {
+        debugger;
+        return getPendingData(startDate, endDatesss);
+    };
 
     const [pendingdata, setPendingData] = useState([])
     const [approveddata, setApprovedData] = useState([])
     const [rejecteddata, setRejectedData] = useState([])
+    const [roleID, setRoleID] = useState();
+    const [userID, setUserID] = useState();
+    const [keyword, setKeyword] = useState("");
 
-    const getPendingData = async () => {
-        debugger
-        const staffID = sessionStorage.getItem("userID")
-        const res = await apiService.commonGetCall("Employee/GetPendingStaffLeavesByStaffID?ID=" + staffID + "&TypeID=1&Sdate=" + Sdate + "&Edate=" + Edate)
+    const getPendingData = async (StartingDate, EndDate) => {
+        debugger;
+        const res = await apiService.commonGetCall("Employee/GetPendingStaffLeavesByStaffID?ID=" + userID + "&TypeID=1&Sdate=" + StartingDate + "&Edate=" + EndDate)
         setPendingData(res.data);
         console.log(res.data);
     }
-    const getApprovedData = async () => {
-        const staffID = sessionStorage.getItem("userID")
-        const res = await apiService.commonGetCall("Employee/GetApprovedStaffLeavesByStaffID?ID=" + staffID + "&TypeID=1&Sdate=" + Sdate + "&Edate=" + Edate)
+    const getApprovedData = async (StartingDate, EndDate) => {
+        debugger;
+        const res = await apiService.commonGetCall("Employee/GetApprovedStaffLeavesByStaffID?ID=" + userID + "&TypeID=1&Sdate=" + StartingDate + "&Edate=" + EndDate)
         setApprovedData(res.data);
         console.log(res.data);
     }
-    const getRejectedData = async () => {
-        const staffID = sessionStorage.getItem("userID")
-        const res = await apiService.commonGetCall("Employee/GetRejectedStaffLeavesByStaffID?ID=" + staffID + "&TypeID=1&Sdate=" + Sdate + "&Edate=" + Edate)
+    const getRejectedData = async (StartingDate, EndDate) => {
+        debugger;
+        const res = await apiService.commonGetCall("Employee/GetRejectedStaffLeavesByStaffID?ID=" + userID + "&TypeID=1&Sdate=" + StartingDate + "&Edate=" + EndDate)
         setRejectedData(res.data);
         console.log(res.data);
     }
     useEffect(() => {
-        getPendingData();
-        getApprovedData();
-        getRejectedData();
-        setListView(true)
+        const usrID = sessionStorage.getItem("userID");
+        setUserID(usrID);
+        const userRoleID = sessionStorage.getItem("roleID");
+        setRoleID(userRoleID);
+        var StartingDate = sessionStorage.getItem("StartDate");
+        var EndDate = sessionStorage.getItem("StartDate");
+        getDateBySelectedDate();
+        getPendingData(userID, StartingDate, EndDate);
+        getApprovedData(userID, StartingDate, EndDate);
+        getRejectedData(userID, StartingDate, EndDate);
+        setListView(true);
+        setCalender(true)
         setPending(true);
     }, [])
 
@@ -171,7 +176,7 @@ function LeaveListDashboard() {
                                     <Link href="/Requests/hrleaverequest" className="Heading mx-5" ><u>All Staff Leave Details</u></Link>
                                 )
                             }
-                            <h4 className="Heading">Leave Request </h4>
+                            <label className="Heading">Leave Request </label>
                         </div>
                     </div>
                     <br />
@@ -181,59 +186,49 @@ function LeaveListDashboard() {
                                 <div className="row">
                                     <div className="col-lg-6">
                                         <p>START DATE:</p>
-                                        <input id="date" name="date" type="date" placeholder="Duration" className="form-control " />
+                                        <input id="date" name="date" type="date" placeholder="Duration" className="form-control " value={startDate} onChange={(e) => getStartDate(e.target.value)} />
                                     </div>
                                     <div className="col-lg-6">
                                         <p>END DATE:</p>
-                                        <input id="date" name="date" type="date" placeholder="Duration" className="form-control " />
+                                        <input id="date" name="date" type="date" placeholder="Duration" className="form-control " value={endDate || ""} onChange={(e) => getEndDate(e.target.value)} />
                                     </div>
                                     <br /> <br /><br /> <br />
                                     <div className="col-lg-12 searchtxt ">
-                                        <br /><input type="search" placeholder="Search for date , Leave Type or Status" className="form-control " />
+                                        <br /><input type="search" placeholder="Search for date or Status" className="form-control " onChange={e => setKeyword(e.target.value)} />
                                     </div>
                                     <br /><br />
                                 </div>
                             </div>
 
-                        </div>
-                        {/* <div className="col-lg-8">
-                            <div className="card p-3 border-0 rounded-3">
-                                <div className="row">
-                                    <div className="col-lg-4 ">
-                                        <div className="card p-1">
-                                            <p className="para"><b className="number"> </b> Sick Leave </p>
-                                        </div>
-                                    </div>
-                                    <div className='col-lg-4'>
-                                        <div className="card p-1">
-                                            <p className="para"><b className="number"></b> Vacation Leave</p>
-
-                                        </div>
-                                    </div>
-                                    <div className="col-lg-4 ">
-                                        <br /><br /><br /><br /><br /><br /><br /><br />
-                                    </div>
-                                </div>
-                            </div>
-                        </div> */}
+                        </div>               
                     </div>
                     <br /><br />
                     <div className="row">
                         <div className="col-lg-4">
                             <div className='row'>
                                 <div className='col-lg-6'>
-                                    <div className='btn-group'>
-                                        <button onClick={toggleCalender} className="toggleButton">Calender</button>
-                                        <button onClick={toggleListView} className={`toggleButton ${listview ? "focus" : ""}`}>List View</button>
+                                    {
+                                        listview && (
+                                            <>
+                                                <div className="row"></div>
+                                                <div className="col-lg-12">
+                                                    <div className='btn-group'>
+                                                        <button onClick={toggleCalender} className={`toggleButton ${calender ? "focus" : ""}`}>Calender</button>
+                                                        <button onClick={toggleListView} className={`toggleButton ${listview ? "focus" : ""}`}>List View</button>
 
-                                    </div>
+                                                    </div>
+                                                </div>
+                                            </>
+                                        )
+                                    }
+
                                 </div>
                             </div>
                             <br />
                         </div>
                         <div className="col-lg-4"></div>
                         <div className="col-lg-1"></div>
-                        <div className="col-lg-1">
+                        <div className="col-lg-3">
                             <Link href="/Requests/Applyleave/new"><button className="submit-button" tabIndex="0"> Apply Leave</button>
                             </Link>
                         </div>
@@ -294,7 +289,11 @@ function LeaveListDashboard() {
                                     </thead>
                                     <tbody>
                                         {
-                                            pendingdata.map((data) => {
+                                            pendingdata.filter(data => {
+                                                if ((data.sDateOfLeave.toLowerCase().includes(keyword.toLowerCase())) || (data.eDateOfLeave.toLowerCase().includes(keyword)) || (data.status.toLowerCase().includes(keyword))) {
+                                                    return data;
+                                                }
+                                            }).map((data) => {
                                                 return (
                                                     <tr key={data.id}>
                                                         <td>{data.sDateOfLeave}</td>
