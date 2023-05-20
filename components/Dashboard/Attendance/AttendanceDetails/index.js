@@ -2,13 +2,14 @@ import Link from "next/link";
 import React from "react";
 import { apiService } from "@/services/api.service";
 import { useEffect, useState } from "react";
-import { useRef } from 'react';
+import { useRef } from "react";
 import Styles from "@/styles/attendancedetails.module.css";
 import ReactPaginate from "react-paginate";
-import { DownloadTableExcel } from 'react-export-table-to-excel';
-
+import { DownloadTableExcel } from "react-export-table-to-excel";
+import { useRouter } from "next/router";
 
 const AttendenceDetails = () => {
+  const router = useRouter();
   const tableRef = useRef(null);
   const [Attendence, setAttendence] = useState([]);
 
@@ -26,21 +27,18 @@ const AttendenceDetails = () => {
   }, []);
 
   useEffect(() => {
-    if (userID) {
-      const resu = getCurrentMonthDates();
-      if (resu) {
-        getAttendenceByID(resu.setStartDate, resu.setEndDate);
+    // router.onRouteChange(({ route }) => {
+    //   if (route === '/Attendance/AttendanceDetails') {
+    // if (router.route === "/Attendance/AttendanceDetails") {
+      if (userID) {
+        const resu = getCurrentMonthDates();
+        if (resu) {
+          getAttendenceByID(resu.setStartDate, resu.setEndDate);
+        }
       }
-    }
+      return;
+    // }
   }, [userID]);
-
-  const PER_PAGE = 5;
-  const [currentPage, setCurrentPage] = useState(0);
-  function handlePageClick({ selected: selectedPage }) {
-    setCurrentPage(selectedPage)
-  }
-  const offset = currentPage * PER_PAGE;
-  const pageCount = Math.ceil(Attendence.length / PER_PAGE);
 
 
   const getCurrentMonthDates = () => {
@@ -99,15 +97,24 @@ const AttendenceDetails = () => {
     if (userID) {
       const res = await apiService.commonGetCall(
         "HR/GetAttendanceByEmployeeID?userID=" +
-        userID +
-        "&SDate=" +
-        SDate +
-        "&EDate=" +
-        EDate
+          userID +
+          "&SDate=" +
+          SDate +
+          "&EDate=" +
+          EDate
       );
       setAttendence(res.data);
     }
   };
+
+  const PER_PAGE = 5;
+  const [currentPage, setCurrentPage] = useState(0);
+  const handlePageClick=({ selected: selectedPage })=> {
+    setCurrentPage(selectedPage);
+  }
+  const offset = currentPage * PER_PAGE;
+  const pageCount = Math.ceil(Attendence.length / PER_PAGE);
+
   return (
     <div className="container-fluid">
       <div className="row mt-3">
@@ -130,16 +137,17 @@ const AttendenceDetails = () => {
               </Link>
             </>
           )}
-          {roleID == 2 || roleID == 4 && (
-            <>
-              <Link
-                className={Styles.mainheader}
-                href="/Attendance/CompanyAttendanceDetails"
-              >
-                Company Attendance Details
-              </Link>
-            </>
-          )}
+          {roleID == 2 ||
+            (roleID == 4 && (
+              <>
+                <Link
+                  className={Styles.mainheader}
+                  href="/Attendance/CompanyAttendanceDetails"
+                >
+                  Company Attendance Details
+                </Link>
+              </>
+            ))}
         </div>
       </div>
       <div className="row">
@@ -150,10 +158,10 @@ const AttendenceDetails = () => {
             <div className="card p-3  border-0  rounded-3">
               <div className="row">
                 <div className="col-lg-1">
-                  <p className={Styles.filterdate} >Filter By</p>
+                  <p className={Styles.filterdate}>Filter By</p>
                 </div>
                 <div className="col-lg-3">
-                  <p className={Styles.filterdate} >Start Date</p>
+                  <p className={Styles.filterdate}>Start Date</p>
                   <input
                     type="date"
                     className="form-control"
@@ -163,7 +171,7 @@ const AttendenceDetails = () => {
                 </div>
 
                 <div className="col-lg-3">
-                  <p className={Styles.filterdate} >End Date</p>
+                  <p className={Styles.filterdate}>End Date</p>
                   <input
                     type="date"
                     className="form-control"
@@ -178,7 +186,8 @@ const AttendenceDetails = () => {
                   <DownloadTableExcel
                     filename="users table"
                     sheet="users"
-                    currentTableRef={tableRef.current}>
+                    currentTableRef={tableRef.current}
+                  >
                     <button className="button" id="AddButton">
                       DOWNLOAD
                     </button>
@@ -221,30 +230,30 @@ const AttendenceDetails = () => {
                 {Array.isArray(Attendence) && Attendence.length > 0 && (
                   <>
                     {Attendence
-                      .slice(offset, offset + PER_PAGE)
-                      .map((data) => {
-                        return (
-                          <tr className="" key={data.id}  >
-                            <td>{data.signinDate}</td>
-                            <td>{data.signInType}</td>
-                            <td>{data.signInWorkType}</td>
-                            <td>{data.expectedIn}</td>
-                            <td>{data.expectedOut}</td>
-                            <td>{data.stime}</td>
-                            <td>{data.etime}</td>
-                            <td>{data.hr}</td>
-                            <td>{data.ot}</td>
-                            <td>{data.undertime}</td>
-                            <td>{data.latepunchin}</td>
-                            {/* <td>{data.hr1}</td>
+                    .slice(offset, offset + PER_PAGE)
+                    .map((data,index) => {
+                      return (
+                        <tr className="" key={index}>
+                          <td>{data.signinDate}</td>
+                          <td>{data.signInType}</td>
+                          <td>{data.signInWorkType}</td>
+                          <td>{data.expectedIn}</td>
+                          <td>{data.expectedOut}</td>
+                          <td>{data.stime}</td>
+                          <td>{data.etime}</td>
+                          <td>{data.hr}</td>
+                          <td>{data.ot}</td>
+                          <td>{data.undertime}</td>
+                          <td>{data.latepunchin}</td>
+                          {/* <td>{data.hr1}</td>
                     <td>{data.underTime}</td>
                     <td>{data.late}</td> */}
-                            {/* <td>
+                          {/* <td>
                           <button className='edit-btn'>Cancel</button>
                         </td> */}
-                          </tr>
-                        );
-                      })}
+                        </tr>
+                      );
+                    })}
                   </>
                 )}
               </tbody>
@@ -278,7 +287,7 @@ const AttendenceDetails = () => {
           </div>
         </div>
       </div>
-    </div >
+    </div>
   );
 };
 
