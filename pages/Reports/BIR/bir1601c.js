@@ -1,78 +1,111 @@
-import Layout from '../../../components/layout/layout';
-import React, { useState } from 'react'
-import Styles from '../../../styles/bir1601c.module.css'
+import Layout from "../../../components/layout/layout";
+import React, { useState } from "react";
+import Styles from "../../../styles/bir1601c.module.css";
 
 const Bir1601c = () => {
-    const [toggle, setToggle] = useState(false)
-    const getToggle = () => {
-        setToggle(!toggle)
-    }
-    return (
-        <Layout>
-            <div className='card shadow-lg p-4'>
-                <p className={Styles.p}>1601-C</p>
-                <hr></hr>
-                <div className='row'>
-                    <div className='col-lg-3'></div>
-                    <div className='col-lg-3'>
-                        <label>Select Start Month & Year</label></div>
-                    <div className='col-lg-2'>
-                        <select className='form-select form-select-sm'>
-                            <option value="" disabled>select</option>
-                            <option>January</option>
-                            <option>February</option>
-                            <option>March</option>
-                        </select>
-                    </div>
-                    <div className='col-lg-2'>
-                        <select className='form-select form-select-sm'>
-                            <option value="">select Year</option>
-                            <option>2020</option>
-                            <option>2021</option>
-                            <option>2022</option>
-                        </select>
-                    </div>
-                </div>
-                <br />
-                <div className='row'>
-                    <div className='col-lg-3'></div>
-                    <div className='col-lg-2'>
-                        <label>Signatory Person </label>
-                    </div>
-                    <div className='col-lg-1'></div>
-                    <div className='col-lg-2'>
-                        <select className='form-select form-select-sm'>
-                            <option value="">Select</option>
-                            <option>HR</option>
-                        </select>
-                    </div>
-                </div>
-                <br />
-                <div className='row'>
-                    <div className='col-lg-4'></div>
-                    <div className='col-lg-4'>
-                        <button className={Styles.Btn} onClick={getToggle}>Generate</button>
+    let [tableState, setState] = useState(false);
 
-                    </div>
-                </div>
+    const toggleTable = () => {
+      setState(!tableState);
+    };
+   const customStyles = {
+      center: {
+        display: "flex",
+        justifyContent: "center",
+      },
+    };
+  return (
+    <Layout>
+    <div>
+      <br />
+      <div className="container-fluid ">
+        <br />
+        <br />
+        <br />
+        <div className="card shadow p-3">
+          <div className="row">
+            <h4 className="text-center text-primary">1601-C</h4>
+            <hr />
+
+            <div className="row" style={customStyles.center}>
+              <div className="col-lg-2">
+                <label>Select Start Month & Year</label>
+              </div>
+              <div className="col-lg-2">
+                <select
+                  class="form-select form-select-sm"
+                  aria-label=".form-select-sm example"
+                >
+                  <option selected>Select Month</option>
+                  <option value="1">January</option>
+                  <option value="2">February</option>
+                  <option value="3">March</option>
+                  <option value="3">April</option>
+                  <option value="1">May</option>
+                  <option value="2">June</option>
+                  <option value="3">July</option>
+                  <option value="3">August</option>
+                  <option value="1">September</option>
+                  <option value="2">October</option>
+                  <option value="3">November</option>
+                  <option value="3">December</option>
+                </select>
+              </div>
+              <div className="col-lg-2">
+                <select
+                  class="form-select form-select-sm"
+                  aria-label=".form-select-sm example"
+                >
+                  <option selected>Select Year</option>
+                  <option value="1">2025</option>
+                  <option value="2">2024</option>
+                  <option value="3">2023</option>
+                  <option value="1">2022</option>
+                  <option value="2">2021</option>
+                  <option value="3">2020</option>
+                </select>
+              </div>
+            </div>
+            <br></br>
+
+            <div className="row mt-4" style={customStyles.center}>
+              <div className="col-lg-2">
+                <label>Signatory Person</label>
+              </div>
+              <div className="col-lg-2">
+                <select className="form-select form-select-sm">
+                  <option select>Select</option>
+                  <option>Admin</option>
+                  <option>HR</option>
+                  <option>Finance</option>
+                </select>
+              </div>
+              <div className="col-lg-2"></div>
             </div>
             <br />
-            {
-                toggle && (
-                    <>
+            <div className="row mt-4" style={customStyles.center}>
+              <div className="col-lg-4">
+                <button onClick={toggleTable} className="EditDelteBTN">
+                  Generate
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        {tableState && (
+        <div className="row mt-4">
+          <div className="col-lg-4"></div>
+          <div className="col-lg-4"></div>
+          <div className="col-lg-4">
+            <button className="EditDelteBTN">export to excel</button>
+          </div>
+        </div>
+      )}
+      </div>
+     
+    </div>
+  </Layout>
+  );
+};
 
-                        <div className='row'>
-                            <div className='col-lg-8'></div>
-                            <div className='col-lg-4'>
-                                <button className={Styles.Btn}>CONVERT TO PDF</button>
-
-                            </div>
-                        </div>
-                    </>
-                )
-            }
-        </Layout>
-    )
-}
-
-export default Bir1601c
+export default Bir1601c;

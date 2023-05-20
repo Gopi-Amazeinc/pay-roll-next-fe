@@ -20,6 +20,7 @@ const InitialPayrollDetails = () => {
             setSelectedRows(selectedRows.includes(id) ? selectedRows.filter(rowId => rowId !== id) : [...selectedRows, id]);
         }
     };
+    const [keyword, setKeyword] = useState("");
 
     const getData = async () => {
         let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
@@ -106,7 +107,7 @@ const InitialPayrollDetails = () => {
                         <input type='date' className='form-control' />
                     </div>
                     <div className='col-lg-3'>
-                        <input type="text" className='form-control' placeholder='Search...' />
+                        <input type="text" className='form-control' placeholder='Search...' onChange={e => { setKeyword(e.target.value) }} />
                     </div>
                     <div className='col-lg-2'>
                         <select id="Department" name="Department" className='form-select'>
@@ -162,7 +163,7 @@ const InitialPayrollDetails = () => {
                         <tbody >
                             {
                                 preliminarySalary.filter(data => {
-                                    if ((data.staffID.toString().includes(keyword)) || (data.name.toLowerCase().includes(keyword.toLowerCase()))) {
+                                    if ((data.staffID.toString().includes(keyword)) || (data.componentValue.toString().includes(keyword.toString()))) {
                                         return data;
                                     }
                                 }).slice(offset, offset + PER_PAGE).map((data, index) => {
