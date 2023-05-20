@@ -195,17 +195,18 @@ const Shiftdetails = () => {
 
               <div className="col-lg-2">
                 <br />
-                <Link href="/Attendance/StaffShiftForm/new" className={Styles.adddetail}>
-                  <button className="button" style={{ fontSize: "15px", marginTop: "7px" }}><IoIosAddCircleOutline size={18} color={"white"} />  ADD SHIFT DETAILS</button>
-                </Link>
-              </div>
-              <div className="col-lg-2">
-                <br />
                 <DownloadTableExcel
                   filename="users table"
                   sheet="users"
                   currentTableRef={tableRef.current}
                 > <button className="button" style={{ marginTop: "7px" }} > DOWNLOAD</button></DownloadTableExcel>
+              </div>
+              <div className="col-lg-2">
+                <br />
+                <Link href="/Attendance/StaffShiftForm/new" className={Styles.adddetail}>
+                  <button className="button" style={{ fontSize: "15px", marginTop: "7px" }}><IoIosAddCircleOutline size={18} color={"white"} />  ADD SHIFT DETAILS</button>
+                </Link>
+
 
               </div>
             </div>
