@@ -214,7 +214,7 @@ export default function EducationDetails() {
   return (
     <div>
       <div className="container-fluid">
-        <div className="card">
+        <div className="card p-3">
           <form onSubmit={handleSubmit(onSubmit)}>
             <div className="row">
               <div className="col-12">

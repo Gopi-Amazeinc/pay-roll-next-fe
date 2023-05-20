@@ -61,22 +61,22 @@ export default function AttendanceCorrectionform() {
                     <form onSubmit={handleSubmit(onSubmit)} >
                         <div className='row'>
                             <div className='col-lg-3'>
-                                <p>Select Date <i className='text-danger'>*</i></p>
+                                <label><b> Select Date</b><i className='text-danger'>*</i></label>
                                 <input type='date' className='form-control' {...register('SDate', { required: true })} />
                                 {errors.SDate && (<p className='text-danger mt-2'>Select Valid Date</p>)}
                             </div>
                             <div className='col-lg-3'>
-                                <p>Start Time <i className='text-danger'>*</i></p>
+                                <label><b> Start Time</b> <i className='text-danger'>*</i></label>
                                 <input type='time' className='form-control' {...register('StartTime', { required: true })} />
                                 {errors.StartTime && (<p className='text-danger mt-2'>Select Valid Start Time</p>)}
                             </div>
                             <div className='col-lg-3'>
-                                <p>End Time <i className='text-danger'>*</i></p>
+                                <label><b> End Time</b> <i className='text-danger'>*</i></label>
                                 <input type='time' className='form-control' {...register('EndTime', { required: true })} />
                                 {errors.EndTime && (<p className='text-danger mt-2'>Select Valid End Time</p>)}
                             </div>
                             <div className='col-lg-3'>
-                                <p>Comments <i className='text-danger'>*</i></p>
+                                <label> <b>Comments </b><i className='text-danger'>*</i></label>
                                 <textarea rows={6} className='form-control' {...register('Comment', { required: true })}></textarea>
                                 {errors.Comment && (<p className='text-danger mt-2'>Please Enter Comments</p>)}
                             </div>

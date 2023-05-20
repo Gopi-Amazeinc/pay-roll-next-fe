@@ -39,7 +39,7 @@ function LeaveTypeDashboard() {
 
     const [keyword, setKeyword] = useState("");
 
-    const PER_PAGE = 2;
+    const PER_PAGE = 5;
     const [currentPage, setCurrentPage] = useState(0);
     function handlePageClick({ selected: selectedPage }) {
         setCurrentPage(selectedPage)

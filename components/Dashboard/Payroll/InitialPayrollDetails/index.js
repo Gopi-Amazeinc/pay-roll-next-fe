@@ -5,7 +5,7 @@ import axios from 'axios'
 import ReactPaginate from "react-paginate";
 import Link from 'next/link'
 import { DownloadTableExcel } from 'react-export-table-to-excel';
-
+import { IoIosClose } from 'react-icons/io'
 
 const InitialPayrollDetails = () => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -161,7 +161,11 @@ const InitialPayrollDetails = () => {
                         </thead>
                         <tbody >
                             {
-                                preliminarySalary.slice(offset, offset + PER_PAGE).map((data, index) => {
+                                preliminarySalary.filter(data => {
+                                    if ((data.staffID.toString().includes(keyword)) || (data.name.toLowerCase().includes(keyword.toLowerCase()))) {
+                                        return data;
+                                    }
+                                }).slice(offset, offset + PER_PAGE).map((data, index) => {
                                     return (
                                         <tr className="text-dark" key={index}>
                                             <td>
@@ -192,7 +196,7 @@ const InitialPayrollDetails = () => {
                             </div>
                             <div className='col-lg-4'></div>
                             <div className='col-lg-2'>
-                                <button className='btn btn-primary' onClick={closeModal}>Close</button>
+                                <button className='btn btn-primary' onClick={closeModal}><IoIosClose /></button>
                             </div>
                         </div>
                         <hr></hr>
