@@ -68,7 +68,7 @@ const InitialPayrollForm = () => {
         // This API is used to fetch the dashboard data based on StartDate,EndDate
         const sss = await axios.get(
           hostURL +
-            `Payroll/Get_Employees_For_Payroll?startdate=${startDate}&enddate=${endDate}`
+          `Payroll/Get_Employees_For_Payroll?startdate=${startDate}&enddate=${endDate}`
         );
         setDashboardData(sss.data);
       }
@@ -104,7 +104,7 @@ const InitialPayrollForm = () => {
         // This API is used to fetch the dashboard data based on EmployeeID,LOPdays,StartDate,EndDate
         const response = await axios.get(
           hostURL +
-            `Payroll/Get_PreliminaryReport?EmployeeID=${employeID}&startdate=${res}&Enddate=${rres}`
+          `Payroll/Get_PreliminaryReport?EmployeeID=${employeID}&startdate=${res}&Enddate=${rres}`
         );
         setRunPayrollDashboardData(response.data);
         console.log(response.data);
@@ -298,13 +298,13 @@ const InitialPayrollForm = () => {
                           <div className="col-lg-12">
                             <tr className="text-dark" key={data.id}>
                               <td>
-                                  <input
-                                    type="checkbox"
-                                    onClick={handleRunpayrollClick}
-                                    onChange={() =>
-                                      handlePreliminaryData(data.id)
-                                    }
-                                  />
+                                <input
+                                  type="checkbox"
+                                  onClick={handleRunpayrollClick}
+                                  onChange={() =>
+                                    handlePreliminaryData(data.id)
+                                  }
+                                />
                               </td>
                               <td>{data.employeID}</td>
                               <td>{data.name}</td>

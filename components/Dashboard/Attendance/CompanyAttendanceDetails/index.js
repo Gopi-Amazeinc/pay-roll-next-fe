@@ -170,16 +170,19 @@ const CompanyAttendanceDetails = () => {
                     <thead className='bg-info text-white '>
                         <tr style={{ whiteSpace: 'nowrap' }}>
                             <th >Date</th>
-                            <th>Staff Name</th>
-                            <th>Position</th>
-                            <th>Department</th>
-                            <th>Sign in Type</th>
-                            <th>Expected in Time</th>
-                            <th>Punch in Time</th>
-                            <th >Punch in Location</th>
-                            <th>Punched in From</th>
-                            <th>Sign in Type</th>
-                            <th>Expected Out Time</th>
+                            <th>Staff </th>
+                            <th>Day Type	</th>
+
+                            <th>Expected In Time	</th>
+                            <th>Expected Out Time	</th>
+                            <th>Punch In Time</th>
+
+                            <th>Punch Out Time	</th>
+                            <th>Work Hours(HH:MM)	</th>
+                            <th>Overtime</th>
+
+                            <th>UnderTime</th>
+                            <th>Late</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -189,16 +192,19 @@ const CompanyAttendanceDetails = () => {
                                     return (
                                         <tr key={data.id}>
                                             <td>{data.date}</td>
-                                            <td>{data.staffName}</td>
+                                            <td>{data.staffname}</td>
                                             <td>{data.position}</td>
-                                            <td>{data.department}</td>
-                                            <td>{data.signInType}</td>
-                                            <td>{data.expectedInTime}</td>
-                                            <td>{data.punchInTime}</td>
-                                            <td>{data.punchinip}</td>
+
+                                            <td>{data.expectedIn}</td>
+                                            <td>{data.expectedOut}</td>
+                                            <td>{data.expectedIn}</td>
+
+                                            <td>{data.expectedOut}</td>
                                             <td>{data.punchedInForm}</td>
-                                            <td>{data.signInType}</td>
+                                            <td>{data.overtime}</td>
+
                                             <td>{data.expectedOutTime}</td>
+                                            <td>{data.late}</td>
 
                                         </tr>
                                     )
