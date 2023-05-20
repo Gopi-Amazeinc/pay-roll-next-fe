@@ -30,6 +30,7 @@ const Attendancecorrectiondashboard = () => {
   const [endDate, setEndDate] = useState("");
 
   const [keyword, setKeyword] = useState("");
+  const [count,setcount] = useState(0);
 
   const togglePending = () => {
     setPending(true);
@@ -113,6 +114,7 @@ const Attendancecorrectiondashboard = () => {
       "&EDate=" +
       EDate
     );
+    setcount(res.data.length);
     // const res = await axios.get( hostURL + "Payroll/GetPendingAttendanceCorrectionBySupervisor?userID=" + userID +"&SDate=" + SDate +"&EDate=" +EDate);
     setManagerPendingData(res.data);
   };
@@ -126,6 +128,7 @@ const Attendancecorrectiondashboard = () => {
       "&EDate=" +
       EDate
     );
+    setcount(res.data.length);
     // const res = await axios.get( hostURL + "Payroll/GetApprovedAttendanceCorrectionBySupervisor?userID=" + userID +  "&SDate=" +  SDate +  "&EDate=" +EDate );
     setManagerApprovedData(res.data);
   };
@@ -139,6 +142,7 @@ const Attendancecorrectiondashboard = () => {
       "&EDate=" +
       EDate
     );
+    setcount(res.data.length);
     //  const res = await axios.get( hostURL + "Payroll/GetApprovedAttendanceCorrectionBySupervisor?userID=" +  userID + "&SDate=" + SDate + "&EDate=" + EDate);
     setManagerRejectedData(res.data);
   };
@@ -174,6 +178,7 @@ const Attendancecorrectiondashboard = () => {
   };
 
   const getPendingData = async (SDate, EDate) => {
+    debugger;
     const res = await apiService.commonGetCall(
       "Payroll/GetPendingAttendanceCorrectionByStaffID?userID=" +
       userID +
@@ -182,6 +187,7 @@ const Attendancecorrectiondashboard = () => {
       "&EDate=" +
       EDate
     );
+    setcount(res.data.length);
     // const res = await axios.get( hostURL +  "Payroll/GetPendingAttendanceCorrectionByStaffID?userID=" + staffID + "&SDate=" + SDate + "&EDate=" + EDate);
     console.log(res, "pending");
     setpendingDashboardData(res.data);
@@ -196,6 +202,7 @@ const Attendancecorrectiondashboard = () => {
       "&EDate=" +
       EDate
     );
+    setcount(res.data.length);
     // const res = await axios.get( hostURL +"Payroll/GetApprovedAttendanceCorrectionByStaffID?userID=" + staffID +"&SDate=" + SDate + "&EDate=" + EDate  );
     console.log(res, "approved");
     setapprovedDashboardData(res.data);
@@ -210,6 +217,7 @@ const Attendancecorrectiondashboard = () => {
       "&EDate=" +
       EDate
     );
+    setcount(res.data.length);
     //  const res = await axios.get(hostURL + "Payroll/GetRejectedAttendanceCorrectionByStaffID?userID=" +staffID + "&SDate=" + SDate + "&EDate=" + EDate );
     console.log(res, "rejected");
     setrejectedDashboardData(res.data);
@@ -345,7 +353,7 @@ const Attendancecorrectiondashboard = () => {
 
       <div className="row mt-3">
         <div className="col-lg-2 text-primary fs-6 fw-bold">
-          <h6>Showing Results</h6>
+          <h6>Showing {count} Results</h6>
         </div>
 
         {pending && roleID != "2" && (
