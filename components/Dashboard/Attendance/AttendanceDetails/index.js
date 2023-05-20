@@ -120,6 +120,7 @@ const AttendenceDetails = () => {
               My Attendance Details
             </Link>
           </div>
+
           {roleID == 3 && (
             <>
               <div className="col-lg-3">
@@ -132,7 +133,7 @@ const AttendenceDetails = () => {
               </div>
             </>
           )}
-          {roleID == 2 && (
+          {roleID == 2 || roleID == 4 && (
             <>
               <div className="col-lg-3" style={{ marginLeft: "-60px" }}>
                 <Link
@@ -147,7 +148,7 @@ const AttendenceDetails = () => {
         </div>
         <div className={Styles.filter}>
           {/* <form onSubmit={handleSubmit}> */}
-          <br/>
+          <br />
           <div className="card p-3  border-0  rounded-3">
             <div className="row">
               <div className="col-lg-1">
