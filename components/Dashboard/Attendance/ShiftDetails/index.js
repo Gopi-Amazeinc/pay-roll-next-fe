@@ -143,7 +143,7 @@ const Shiftdetails = () => {
   // };
 
   return (
-    <div classname="container-fluid">
+    <div className="container-fluid">
       <div className="row">
         <div className="col-lg-3">
           <br/>
