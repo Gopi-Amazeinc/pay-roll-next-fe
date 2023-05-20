@@ -143,55 +143,43 @@ const Shiftdetails = () => {
   // };
 
   return (
-    <>
-      <div classname="cotainer-fluid">
-        <div className="row"  >
-          <div className="col-lg-3 mt-4 " >
-            <Link href="/Attendance/shiftdetails" className={Styles.mainheader}>
-              {" "}
-              My Weekly Shift
-            </Link>
-          </div>
+    <div classname="container-fluid">
+      <div className="row">
+        <div className="col-lg-3">
+          <Link href="/Attendance/shiftdetails" className={Styles.mainheader}>
+            My Weekly Shift
+          </Link>
+        </div>
+        <div className="col-lg-3">
           {roleid != 3 ||
-            <div className='col-lg-3 mt-4' style={{ marginLeft: "-10%" }}>
-              <Link href="/Attendance/MyTeamWeeklyShift" className={Styles.mainheader}> My Team Weekly Shift</Link>
-            </div>
+            <Link href="/Attendance/MyTeamWeeklyShift" className={Styles.mainheader}> My Team Weekly Shift</Link>
           }
           {roleid != 2 ||
-            <div className='col-lg-3 mt-4' style={{ marginLeft: "-10%" }}>
-              <Link href="/Attendance/CompanyShiftDetails" className={Styles.mainheader}> Company Weekly Shift</Link>
-            </div>
+            <Link href="/Attendance/CompanyShiftDetails" className={Styles.mainheader}> Company Weekly Shift</Link>
           }
         </div>
-        {/* <div className="row">
+      </div>
+      <div className="row">
+        <div className="col-lg-12">
+          <div className={Styles.filter}>
+            <div className="card p-3  border-0 shadow-lg rounded-3 mt-4">
+              <div className="row">
                 <div className="col-lg-3">
-                    <Link href="/Attendence/shiftdetails"> <h3></h3></Link>
-
+                  <p className={Styles.filterdate}>
+                    START DATE <span style={{ color: "red" }}>*</span>
+                  </p>
+                  <input type="date" className="form-control form-control-sm m-o"
+                    value={startDate}
+                    onChange={(e) => getStartDate(e.target.value)} />
                 </div>
                 <div className="col-lg-3">
-
-                    <Link href="/Attendence/MyTeamWeeklyShift"> <h3> My Team Weekly Shift</h3></Link>
+                  <p className={Styles.filterdate}>
+                    END DATE <span style={{ color: "red" }}>*</span>
+                  </p>
+                  <input type="date" className="form-control form-control-sm"
+                    value={endDate || ""}
+                    onChange={(e) => getEndDate(e.target.value)} />
                 </div>
-            </div> */}
-        <div className={Styles.filter}>
-          <div className="card p-3  border-0 shadow-lg rounded-3 mt-4">
-            <div className="row">
-              <div className="col-lg-3">
-                <p className={Styles.filterdate}>
-                  START DATE <span style={{ color: "red" }}>*</span>
-                </p>
-                <input type="date" className="form-control form-control-sm m-o"
-                  value={startDate}
-                  onChange={(e) => getStartDate(e.target.value)} />
-              </div>
-              <div className="col-lg-3">
-                <p className={Styles.filterdate}>
-                  END DATE <span style={{ color: "red" }}>*</span>
-                </p>
-                <input type="date" className="form-control form-control-sm"
-                  value={endDate || ""}
-                  onChange={(e) => getEndDate(e.target.value)} />
-              </div>
 
               <div className="col-lg-2">
                 <br />
@@ -208,133 +196,15 @@ const Shiftdetails = () => {
                 </Link>
 
 
+                </div>
               </div>
             </div>
           </div>
         </div>
-        {/* 
+      </div>
       <div className="row mt-3">
-        <div className="col-lg-4">
-          <div className="btn-group">
-            <button
-              onClick={togglePending}
-              className={`toggleButton ${pending ? "focus" : ""}`}
-            >
-              Pending
-            </button>
-            <button
-              onClick={toggleApproved}
-              className={`toggleButton ${approved ? "focus" : ""}`}
-            >
-              Approved
-            </button>
-            <button
-              onClick={toggleRejected}
-              className={`toggleButton ${rejected ? "focus" : ""}`}
-            >
-              Rejected
-            </button>
-
-          </div>
-        </div>
-      </div> */}
-        {/* {pending && roleID == "5" && (
-        <table className="table table-striped mt-3" style={{ marginLeft: "22px", width: "98%" }} ref={tableRef}>
-          <thead>
-            <tr className="bg-info text-white">
-              <th>START DATE</th>
-              <th>END DATE</th>
-              <th>SHIFT NAME</th>
-              <th>START TIME</th>
-              <th>END TIME</th>
-            </tr>
-          </thead>
-          <tbody>
-            {Array.isArray(shiftDetails) && shiftDetails.length > 0 && (
-              <>
-                {shiftDetails.map((data) => {
-                  return (
-                    <tr key={data.id}>
-                      <td>{data.shiftDate}</td>
-                      <td>{data.endDate}</td>
-                      <td>{data.shiftName}</td>
-                      <td>{data.startTime}</td>
-                      <td>{data.endTime}</td>
-                    </tr>
-                  );
-                })}
-              </>
-            )}
-          </tbody>
-        </table>
-      )}
-
-      {approved && roleID == "5" && (
-        <table className="table table-striped mt-3" style={{ marginLeft: "22px", width: "98%" }} ref={tableRef}>
-          <thead>
-            <tr className="bg-info text-white">
-              <th>START DATE</th>
-              <th>END DATE</th>
-              <th>SHIFT NAME</th>
-              <th>START TIME</th>
-              <th>END TIME</th>
-            </tr>
-          </thead>
-          <tbody>
-            {Array.isArray(approvedshiftDetails) && approvedshiftDetails.length > 0 && (
-              <>
-                {approvedshiftDetails.map((data) => {
-                  return (
-                    <tr key={data.id}>
-                      <td>{data.shiftDate}</td>
-                      <td>{data.endDate}</td>
-                      <td>{data.shiftName}</td>
-                      <td>{data.startTime}</td>
-                      <td>{data.endTime}</td>
-                    </tr>
-                  );
-                })}
-              </>
-            )}
-          </tbody>
-        </table>
-      )}
-
-
-
-      {rejected && roleID == "5" && (
-        <table className="table table-striped mt-3" style={{ marginLeft: "22px", width: "98%" }} ref={tableRef}>
-          <thead>
-            <tr className="bg-info text-white">
-              <th>START DATE</th>
-              <th>END DATE</th>
-              <th>SHIFT NAME</th>
-              <th>START TIME</th>
-              <th>END TIME</th>
-            </tr>
-          </thead>
-          <tbody>
-            {Array.isArray(rejectedshiftDetails) && rejectedshiftDetails.length > 0 && (
-              <>
-                {rejectedshiftDetails.map((data) => {
-                  return (
-                    <tr key={data.id}>
-                      <td>{data.shiftDate}</td>
-                      <td>{data.endDate}</td>
-                      <td>{data.shiftName}</td>
-                      <td>{data.startTime}</td>
-                      <td>{data.endTime}</td>
-                    </tr>
-                  );
-                })}
-              </>
-            )}
-          </tbody>
-        </table>
-      )} */}
-
-        <div className="row mt-3">
-          <table className="table table-striped mt-3" style={{ marginLeft: "10px", width: "97%" }} ref={tableRef}>
+        <div className="col-lg-12">
+          <table className="table" style={{ width: "99%" }} ref={tableRef}>
             <thead>
               <tr className="bg-info text-white">
                 <th>START DATE</th>
@@ -366,7 +236,7 @@ const Shiftdetails = () => {
           </table>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 

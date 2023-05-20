@@ -85,8 +85,9 @@ const MyTeamOverTimeDetail = () => {
         </div>
         <br />
         <div className="text-primary fs-6 fw-bold">
-          <h6>Showing Results</h6>
+          <h6 style={{ color: "#3247d5" }} >Showing Results</h6>
         </div>
+        < br />
         <div classname="row">
           <div className="table-responsive">
             <table
