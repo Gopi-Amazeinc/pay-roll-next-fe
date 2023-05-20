@@ -15,6 +15,36 @@ const Companydashboard = () => {
         setCompany(res.data);
     };
 
+
+    // const [workpolicy, setworkpolicy] = useState([]);
+
+    // const getCompanyAddressDetails = async () => {
+    //     let res = await apiService.commonGetCall(
+    //         "Payroll/GetCompanyAddressDetails"
+    //     );
+    //     setCompany(res.data);
+    // };
+
+
+    // const [Company, setCompany] = useState([]);
+
+    // const getCompanyAddressDetails = async () => {
+    //     let res = await apiService.commonGetCall(
+    //         "Payroll/GetCompanyAddressDetails"
+    //     );
+    //     setCompany(res.data);
+    // };
+
+
+    // const [Company, setCompany] = useState([]);
+
+    // const getCompanyAddressDetails = async () => {
+    //     let res = await apiService.commonGetCall(
+    //         "Payroll/GetCompanyAddressDetails"
+    //     );
+    //     setCompany(res.data);
+    // };
+
     useEffect(() => {
         getCompanyAddressDetails();
     }, [1]);
