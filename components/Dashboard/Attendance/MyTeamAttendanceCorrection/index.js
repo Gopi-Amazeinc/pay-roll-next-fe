@@ -277,7 +277,7 @@ const MyTeamAttendancecorrectiondashboard = () => {
 
             <div className="row mt-3">
                 <div className="col-lg-2 text-primary fs-6 fw-bold">
-                    <h6>Showing {count} Results</h6>
+                    <h6 style={{ color: "#3247d5" }}>Showing {count} Results</h6>
                 </div>
 
                 {/* {pending && roleID != "2" && (
