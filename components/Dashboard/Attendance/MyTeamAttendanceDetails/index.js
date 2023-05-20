@@ -132,11 +132,11 @@ const MyTeamAttendence = () => {
         <div className="card p-3 border-0 shadow-lg rounded-3 mt-4">
           <div className="row">
             <div className="col-lg-1">
-              <p>Filter By</p>
+              <p className={Styles.filterdate}>Filter By</p>
             </div>
 
             <div className="col-lg-2">
-              <p>Start Date</p>
+              <p className={Styles.filterdate}>Start Date</p>
               <input
                 type="date"
                 className="form-control"
@@ -146,7 +146,7 @@ const MyTeamAttendence = () => {
             </div>
 
             <div className="col-lg-2">
-              <p>End Date</p>
+              <p className={Styles.filterdate}>End Date</p>
               <input type="date" className="form-control"
                value={endDate || ""}
                onChange={(e) => getEndDate(e.target.value)}
@@ -154,7 +154,7 @@ const MyTeamAttendence = () => {
             </div>
 
             <div className="col-lg-2">
-              <p>
+              <p className={Styles.filterdate}>
                 Staff<i className="text-danger">*</i>
               </p>
               <select className="form-select">
@@ -163,7 +163,7 @@ const MyTeamAttendence = () => {
             </div>
 
             <div className="col-lg-2">
-              <p>
+              <p className={Styles.filterdate}>
                 Search<i className="text-danger">*</i>
               </p>
               <input

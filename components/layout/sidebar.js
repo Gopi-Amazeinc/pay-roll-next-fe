@@ -280,11 +280,8 @@ const Sidebar = ({ children, applyPageName }) => {
   };
   return (
     <div className="container-fluid" style={{ paddingRight: "0px", paddingLeft: "0px" }}>
-      <div className="row" style={{ height: "90vh", overflow: "auto"}}>
-        <div
-          className="col-lg-12 mb-4"
-          style={{ paddingRight: "0px", paddingLeft: "0px" }}
-        >
+      <div className="row" style={{ height: "90vh", overflow: "auto" }}>
+        <div className="col-lg-12 mb-4">
           <Link href="/Home/dashboard" className={styles.sidemenulink}>
             <button
               className={getStyle(1)}
@@ -1267,8 +1264,7 @@ const Sidebar = ({ children, applyPageName }) => {
               </Link>
             </>
           )}
-          {userRole == 4 ||
-            (userRole == 5 && (
+          {(userRole == 4 || userRole == 5 )  && (
               <div>
                 <hr></hr>
                 <button className={styles.sidemenu} onClick={togleReportsMeanu}>
@@ -1780,7 +1776,7 @@ const Sidebar = ({ children, applyPageName }) => {
                   </div>
                 )}
               </div>
-            ))}
+            )}
 
           <hr></hr>
           <Link href="" className={styles.sidemenulink}>

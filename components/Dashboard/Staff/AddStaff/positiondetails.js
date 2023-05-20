@@ -179,7 +179,7 @@ function PositionDetails() {
         <div style={customStyles}>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className='container-fluid'>
-                    <div className='card'>
+                    <div className='card p-3'>
                         <div className='row'>
                             <div className='col-12'>
                                 <h6>Position Details</h6>
@@ -299,7 +299,7 @@ function PositionDetails() {
                         </div>
                     </div><br></br>
 
-                    <div className='card'>
+                    <div className='card p-3'>
                         <div className='row'>
                             <div className='col-12'>
                                 <h6>Organization Hierarchy</h6>
@@ -459,7 +459,7 @@ function PositionDetails() {
                         </div>
                     </div><br></br>
 
-                    <div className='card'>
+                    <div className='card p-3'>
                         <div className='row'>
                             <div className='col-12'>
                                 <h6>Work Location</h6>
@@ -568,7 +568,7 @@ function PositionDetails() {
                             </div>
                         </div>
                     </div><br></br>
-                    <div className='card'>
+                    <div className='card p-3'>
                         <div className='row'>
                             <div className='col-12'>
                                 <h6>Employment Details</h6>
