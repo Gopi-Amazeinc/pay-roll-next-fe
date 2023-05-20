@@ -23,19 +23,20 @@ const FinalPayrollDetails = () => {
         setDepartment(res.data);
     }
     const [selectedRows, setSelectedRows] = useState([]);
-    const handleRowSelect = (event, id) => {
-        if (id === 'all') {
-            setSelectedRows(event.target.checked ? preliminarySalary.map(data => data.id) : []);
-        } else {
-            setSelectedRows(selectedRows.includes(id) ? selectedRows.filter(rowId => rowId !== id) : [...selectedRows, id]);
-        }
-    };
+    // const handleRowSelect = (event, id) => {
+    //     if (id === 'all') {
+    //         setSelectedRows(event.target.checked ? preliminarySalary.map(data => data.id) : []);
+    //     } else {
+    //         setSelectedRows(selectedRows.includes(id) ? selectedRows.filter(rowId => rowId !== id) : [...selectedRows, id]);
+    //     }
+    // };
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
         getData();
     }, []);
     const handleData = (data) => {
+        let res = paycode.filter((x) => x.payCode == watch("PayCode"))[0].endDateFormated;
         // let res = preliminarySalary.filter(data.staffID);
         // res = preliminarySalary.filter(data.endDate);
         // console.log(Object.values(res.data));
@@ -169,7 +170,7 @@ const FinalPayrollDetails = () => {
                                     return (
                                         <tr className="text-dark" key={index}>
                                             <td>
-                                                <input type="checkbox" checked={selectedRows.includes(data.id)} onChange={handleData.bind(this, data)} />
+                                                <input type="checkbox"  onChange={handleData.bind(this, data)} />
                                             </td>
                                             <td>{data.employeID}</td>
                                             <td>{data.staffID}</td>
