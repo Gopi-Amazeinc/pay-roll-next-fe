@@ -53,7 +53,7 @@ function StaffDashbaord() {
     <div>
       <div className="container">
       <h5 className="Heading">Staff Dashboard</h5>
-        <div className="card p-3 border-0 shadow-lg rounded-3 mt-4">
+        <div className="card p-3 border-0 mt-4">
           <div className="row">
             <div className="col-lg-1">
               <p>Filter By</p>

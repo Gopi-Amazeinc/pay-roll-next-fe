@@ -169,7 +169,7 @@ function EmployeeProfile() {
     <div>
       <div className="container">
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="card mt-4 shadow-lg border-0">
+          <div className="card p-3 mt-4 ">
             <div className="row">
               <h6>My Information</h6>
               <hr></hr>
@@ -426,7 +426,7 @@ function EmployeeProfile() {
             </div>
           </div>
 
-          <div className="card mt-4 shadow-lg border-0">
+          <div className="card p-3 mt-4 ">
             
             <div className="row">
             <h6>Ethnicity Information</h6>
@@ -525,7 +525,7 @@ function EmployeeProfile() {
             </div>
           </div>
 
-          <div className="card mt-4 shadow-lg border-0">
+          <div className="card p-3 mt-4">
             <div className="row">
             <h6>Health Information</h6>
             <hr></hr>
@@ -589,7 +589,7 @@ function EmployeeProfile() {
             </div>
           </div>
 
-          <div className="card mt-4 shadow-lg border-0">
+          <div className="card p-3 mt-4">
             
             <div className="row">
             <h6>BMS Details</h6>
