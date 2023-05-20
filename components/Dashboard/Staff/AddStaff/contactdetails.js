@@ -142,7 +142,7 @@ export default function ContactDetails() {
         <div style={customStyles}>
             <form onSubmit={handleSubmit(onSubmit)} >
                 <div className='container-fluid'>
-                    <div className='card'>
+                    <div className='card p-3'>
                         <div className='row'>
                             <div className='col-12'>
                                 
@@ -247,7 +247,7 @@ export default function ContactDetails() {
                     </div><br></br>
 
 
-                    <div className='card'>
+                    <div className='card p-3'>
                         <div className='row'>
                             <div className='col-12'>
                             <h6>Employee Address 2</h6>
@@ -352,7 +352,7 @@ export default function ContactDetails() {
                         </div>
                     </div><br></br>
 
-                    <div className='card'>
+                    <div className='card p-3'>
                         <div className='row'>
                             <div className='col-12'>
                                 <h6>Emergency Contact 1</h6>
@@ -422,7 +422,7 @@ export default function ContactDetails() {
                     </div><br></br>
 
 
-                    <div className='card'>
+                    <div className='card p-3'>
                         <div className='row'>
                             <div className='col-12'>
                             <h6>Emergency Contact 2</h6>

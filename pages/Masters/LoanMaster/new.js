@@ -1,10 +1,10 @@
 import React from 'react'
-import Styles from '../../../styles/LoanMasterForm.module.css'
 import { useForm } from 'react-hook-form';
 import Link from 'next/link';
 import Layout from '@/components/layout/layout.js';
 import axios from "axios";
 import Swal from "sweetalert2";
+import { useRouter } from 'next/router';
 
 function LoanMasterForm() {
 
@@ -12,11 +12,12 @@ function LoanMasterForm() {
   // form validation rules
   const { register, handleSubmit, reset, formState } = useForm();
   const { errors } = formState;
+  const router = useRouter();
 
   const onSubmit = async (data) => {
     await axios.post(hostURL + "Master/InsertLoanMaster", data);
     Swal.fire("LoanMaster Inserted !");
-    location.href = "/Masters/LoanMaster";
+    router.push("/Masters/LoanMaster")
   };
 
   const customStyles = {

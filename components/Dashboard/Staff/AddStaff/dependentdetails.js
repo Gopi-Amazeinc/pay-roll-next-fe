@@ -169,7 +169,7 @@ export default function DependentDetails() {
       <div style={customStyles}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="container-fluid">
-            <div className="card">
+            <div className="card p-3">
               <div className="row">
                 <div className="col-12">
                   <h6>Dependent Details</h6>

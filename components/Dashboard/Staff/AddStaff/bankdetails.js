@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import Swal from "sweetalert2";
+import Styles from "../../../../styles/addStaff.module.css"
 
 export default function BankDetails() {
   const {
@@ -143,7 +144,7 @@ export default function BankDetails() {
     <div style={customStyles}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="container-fluid">
-          <div className="card">
+          <div className="card p-3">
             <div className="row">
               <div className="col-12">
               <h6>Bank Details</h6>
