@@ -28,7 +28,7 @@ const MyTeamAttendancecorrectiondashboard = () => {
 
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
-    const [count,setcount] = useState(0);
+    const [count, setcount] = useState(0);
     const [keyword, setKeyword] = useState("");
 
     const togglePending = () => {
@@ -63,19 +63,12 @@ const MyTeamAttendancecorrectiondashboard = () => {
         if (userID) {
             const resu = getCurrentMonthDates();
             if (resu) {
-                if (roleID == 3) {
-                    debugger;
-                    getPendingManager(resu.setStartDate, resu.setEndDate);
-                    getApprovedManager(resu.setStartDate, resu.setEndDate);
-                    getRejectedManager(resu.setStartDate, resu.setEndDate);
-                } else {
-                    getPendingData(resu.setStartDate, resu.setEndDate);
-                    getApprovedData(resu.setStartDate, resu.setEndDate);
-                    getRejectedData(resu.setStartDate, resu.setEndDate);
-                }
+                getPendingManager(resu.setStartDate, resu.setEndDate);
+                getApprovedManager(resu.setStartDate, resu.setEndDate);
+                getRejectedManager(resu.setStartDate, resu.setEndDate);
             }
         }
-    }, [roleID]);
+    }, [userID]);
 
     const getCurrentMonthDates = () => {
         let newDate = new Date();
@@ -174,48 +167,6 @@ const MyTeamAttendancecorrectiondashboard = () => {
             }
         });
     };
-
-    // const getPendingData = async (SDate, EDate) => {
-    //     const res = await apiService.commonGetCall(
-    //         "Payroll/GetPendingAttendanceCorrectionByStaffID?userID=" +
-    //         userID +
-    //         "&SDate=" +
-    //         SDate +
-    //         "&EDate=" +
-    //         EDate
-    //     );
-    //     // const res = await axios.get( hostURL +  "Payroll/GetPendingAttendanceCorrectionByStaffID?userID=" + staffID + "&SDate=" + SDate + "&EDate=" + EDate);
-    //     console.log(res, "pending");
-    //     setpendingDashboardData(res.data);
-    // };
-
-    // const getApprovedData = async (SDate, EDate) => {
-    //     const res = await apiService.commonGetCall(
-    //         "Payroll/GetApprovedAttendanceCorrectionByStaffID?userID=" +
-    //         userID +
-    //         "&SDate=" +
-    //         SDate +
-    //         "&EDate=" +
-    //         EDate
-    //     );
-    //     // const res = await axios.get( hostURL +"Payroll/GetApprovedAttendanceCorrectionByStaffID?userID=" + staffID +"&SDate=" + SDate + "&EDate=" + EDate  );
-    //     console.log(res, "approved");
-    //     setapprovedDashboardData(res.data);
-    // };
-
-    // const getRejectedData = async (SDate, EDate) => {
-    //     const res = await apiService.commonGetCall(
-    //         "Payroll/GetRejectedAttendanceCorrectionByStaffID?userID=" +
-    //         userID +
-    //         "&SDate=" +
-    //         SDate +
-    //         "&EDate=" +
-    //         EDate
-    //     );
-    //     //  const res = await axios.get(hostURL + "Payroll/GetRejectedAttendanceCorrectionByStaffID?userID=" +staffID + "&SDate=" + SDate + "&EDate=" + EDate );
-    //     console.log(res, "rejected");
-    //     setrejectedDashboardData(res.data);
-    // };
 
     const deleteAttendanceCorrection = (id) => {
         Swal.fire({
@@ -326,7 +277,7 @@ const MyTeamAttendancecorrectiondashboard = () => {
 
             <div className="row mt-3">
                 <div className="col-lg-2 text-primary fs-6 fw-bold">
-                <h6>Showing {count} Results</h6>
+                    <h6 style={{ color: "#3247d5" }}>Showing {count} Results</h6>
                 </div>
 
                 {/* {pending && roleID != "2" && (

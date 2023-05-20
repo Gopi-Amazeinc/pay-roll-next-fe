@@ -67,19 +67,12 @@ const Attendancecorrectiondashboard = () => {
     if (userID) {
       const resu = getCurrentMonthDates();
       if (resu) {
-        if (roleID == 3) {
-          debugger;
-          getPendingManager(resu.setStartDate, resu.setEndDate);
-          getApprovedManager(resu.setStartDate, resu.setEndDate);
-          getRejectedManager(resu.setStartDate, resu.setEndDate);
-        } else {
-          getPendingData(resu.setStartDate, resu.setEndDate);
-          getApprovedData(resu.setStartDate, resu.setEndDate);
-          getRejectedData(resu.setStartDate, resu.setEndDate);
-        }
+        getPendingData(resu.setStartDate, resu.setEndDate);
+        getApprovedData(resu.setStartDate, resu.setEndDate);
+        getRejectedData(resu.setStartDate, resu.setEndDate);
       }
     }
-  }, [roleID]);
+  }, [userID]);
 
   const getCurrentMonthDates = () => {
     let newDate = new Date();
@@ -106,48 +99,6 @@ const Attendancecorrectiondashboard = () => {
     const month = (datetoformat.getMonth() + 1).toString().padStart(2, "0");
     const year = datetoformat.getFullYear().toString();
     return `${year}-${month}-${day}`;
-  };
-
-  const getPendingManager = async (SDate, EDate) => {
-    const res = await apiService.commonGetCall(
-      "Payroll/GetPendingAttendanceCorrectionBySupervisor?userID=" +
-      userID +
-      "&SDate=" +
-      SDate +
-      "&EDate=" +
-      EDate
-    );
-    setpendingcount(res.data.length);
-    // const res = await axios.get( hostURL + "Payroll/GetPendingAttendanceCorrectionBySupervisor?userID=" + userID +"&SDate=" + SDate +"&EDate=" +EDate);
-    setManagerPendingData(res.data);
-  };
-
-  const getApprovedManager = async (SDate, EDate) => {
-    const res = await apiService.commonGetCall(
-      "Payroll/GetApprovedAttendanceCorrectionBySupervisor?userID=" +
-      userID +
-      "&SDate=" +
-      SDate +
-      "&EDate=" +
-      EDate
-    );
-    setapprovedcount(res.data.length);
-    // const res = await axios.get( hostURL + "Payroll/GetApprovedAttendanceCorrectionBySupervisor?userID=" + userID +  "&SDate=" +  SDate +  "&EDate=" +EDate );
-    setManagerApprovedData(res.data);
-  };
-
-  const getRejectedManager = async (SDate, EDate) => {
-    const res = await apiService.commonGetCall(
-      "Payroll/GetApprovedAttendanceCorrectionBySupervisor?userID=" +
-      userID +
-      "&SDate=" +
-      SDate +
-      "&EDate=" +
-      EDate
-    );
-    setrejectcount(res.data.length);
-    //  const res = await axios.get( hostURL + "Payroll/GetApprovedAttendanceCorrectionBySupervisor?userID=" +  userID + "&SDate=" + SDate + "&EDate=" + EDate);
-    setManagerRejectedData(res.data);
   };
 
   const approveAttedanceCorrection = async (data) => {
@@ -357,11 +308,12 @@ const Attendancecorrectiondashboard = () => {
           {pending && (
             <>
               <div className="col-lg-2 text-primary fs-6 fw-bold">
-                <h6>Showing {pendingcount} Results</h6>
+          
+                <h6 style={{ color: "#3247d5" }}>Showing {pendingcount} Results</h6>
               </div>
 
 
-              <table className="table table-hover"
+              <table className="table"
                 ref={tableRef}>
                 <thead className="bg-info text-white">
                   <tr>
@@ -384,9 +336,9 @@ const Attendancecorrectiondashboard = () => {
                               return data;
                             }
                           })
-                          .map((data) => {
+                          .map((data,index) => {
                             return (
-                              <tr key={data.id}>
+                              <tr key={index}>
                                 <td>{data.date}</td>
                                 <td>{data.startTime}</td>
                                 <td>{data.endTime}</td>
@@ -413,7 +365,7 @@ const Attendancecorrectiondashboard = () => {
             </>
           )}
 
-          {pending && roleID == "2" && (
+          {/* {pending && roleID == "2" && (
             <>
               <div className="col-lg-2 text-primary fs-6 fw-bold">
                 <h6>Showing {pendingcount} Results</h6>
@@ -459,9 +411,9 @@ const Attendancecorrectiondashboard = () => {
                 </tbody>
               </table>
             </>
-          )}
+          )} */}
 
-          {approved && roleID != "2" && (
+          {/* {approved && roleID != "2" && (
             <>
               <div className="col-lg-2 text-primary fs-6 fw-bold">
                 <h6>Showing {approvedcount} Results</h6>
@@ -497,12 +449,12 @@ const Attendancecorrectiondashboard = () => {
                 </tbody>
               </table>
             </>
-          )}
+          )} */}
 
-          {approved && roleID == "2" && (
+          {approved && (
             <>
               <div className="col-lg-2 text-primary fs-6 fw-bold">
-                <h6>Showing {approvedcount} Results</h6>
+                <h6 style={{ color: "#3247d5" }}>Showing {approvedcount} Results</h6>
               </div>
               <table className="table table-hover" ref={tableRef}>
                 <thead className="bg-info text-white">
@@ -535,7 +487,7 @@ const Attendancecorrectiondashboard = () => {
             </>
           )}
 
-          {rejected && roleID != "2" && (
+          {/* {rejected && roleID != "2" && (
             <>
               <div className="col-lg-2 text-primary fs-6 fw-bold">
                 <h6>Showing {rejectcount} Results</h6>
@@ -571,12 +523,12 @@ const Attendancecorrectiondashboard = () => {
                 </tbody>
               </table>
             </>
-          )}
+          )} */}
 
-          {rejected && roleID == "2" && (
+          {rejected && (
             <>
               <div className="col-lg-2 text-primary fs-6 fw-bold">
-                <h6>Showing {rejectcount} Results</h6>
+                <h6 style={{ color: "#3247d5" }}>Showing {rejectcount} Results</h6>
               </div>
               <table className="table table-hover" ref={tableRef}>
                 <thead className="bg-info text-white">
