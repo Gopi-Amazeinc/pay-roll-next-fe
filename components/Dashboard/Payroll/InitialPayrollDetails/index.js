@@ -5,7 +5,7 @@ import axios from 'axios'
 import ReactPaginate from "react-paginate";
 import Link from 'next/link'
 import { DownloadTableExcel } from 'react-export-table-to-excel';
-
+import { IoIosClose } from 'react-icons/io'
 
 const InitialPayrollDetails = () => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -20,6 +20,7 @@ const InitialPayrollDetails = () => {
             setSelectedRows(selectedRows.includes(id) ? selectedRows.filter(rowId => rowId !== id) : [...selectedRows, id]);
         }
     };
+    const [keyword, setKeyword] = useState("");
 
     const getData = async () => {
         let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
@@ -106,7 +107,7 @@ const InitialPayrollDetails = () => {
                         <input type='date' className='form-control' />
                     </div>
                     <div className='col-lg-3'>
-                        <input type="text" className='form-control' placeholder='Search...' />
+                        <input type="text" className='form-control' placeholder='Search...' onChange={e => { setKeyword(e.target.value) }} />
                     </div>
                     <div className='col-lg-2'>
                         <select id="Department" name="Department" className='form-select'>
@@ -161,7 +162,11 @@ const InitialPayrollDetails = () => {
                         </thead>
                         <tbody >
                             {
-                                preliminarySalary.slice(offset, offset + PER_PAGE).map((data, index) => {
+                                preliminarySalary.filter(data => {
+                                    if ((data.staffID.toString().includes(keyword)) || (data.componentValue.toString().includes(keyword.toString()))) {
+                                        return data;
+                                    }
+                                }).slice(offset, offset + PER_PAGE).map((data, index) => {
                                     return (
                                         <tr className="text-dark" key={index}>
                                             <td>
@@ -192,7 +197,7 @@ const InitialPayrollDetails = () => {
                             </div>
                             <div className='col-lg-4'></div>
                             <div className='col-lg-2'>
-                                <button className='btn btn-primary' onClick={closeModal}>Close</button>
+                                <button className='btn btn-primary' onClick={closeModal}><IoIosClose /></button>
                             </div>
                         </div>
                         <hr></hr>

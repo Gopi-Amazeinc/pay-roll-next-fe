@@ -69,38 +69,33 @@ const AddStaffSalaryForm = ({ editData }) => {
  
     return (
        <Layout>
-          <div className="col-lg-10" >
              <br />
              <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="container">
                    <div className="row">
-                      <div className="col-md-12">
-                         <div className="row">
-                            <div className="col-lg-8">
-                               <h3 className="Heading">Salary Details</h3>
-                            </div>
-                            <div className="col-lg-1"></div>
-                            <div className="col-lg-2"></div>
-                         </div>
+                      <div className="col-lg-12">
+                         
+                           <h3 className="Heading">Salary Details</h3>
                          <br />
-                         <div className="card shadow-lg p-4">
-                            <div className="row leavereq">
-                               <div className="col-md-2"><label>Staff</label></div>
-                               <div className="col-md-3">
+
+                         <div className="card p-3">
+                            <div className="row">
+                               <div className="col-lg-2"><label>Staff</label></div>
+                               <div className="col-lg-3">
                                   <p>Basic Salary.</p>
                                </div>
-                               <div className="col-md-3">
+                               <div className="col-lg-3">
                                   <p>Effective Date</p>
                                </div>
-                               <div className="col-md-2">
+                               <div className="col-lg-2">
                                   <p>Working Days In Month</p>
                                </div>
-                               <div className="col-md-2">
+                               <div className="col-lg-2">
                                   <p>Working Hours In Day</p>
                                </div>
                             </div>
-                            <div className="row leavereq">
-                               <div className="col-md-2">
+                            <div className="row">
+                               <div className="col-lg-2">
                                   <div className="dropdown">
                                      <select id="Staff" name="Staff" className="form-control" {...register("Staff", { required: true })}>
                                         <option value="" disabled="">
@@ -115,16 +110,16 @@ const AddStaffSalaryForm = ({ editData }) => {
                                      </select>
                                   </div>
                                </div>
-                               <div className="col-md-3"><input {...register('BaseSal')} type="number" id="BaseSal" name="BaseSal" placeholder="Basic Salary" className="form-control " /></div>
-                               <div className="col-md-3"><input {...register('effectivedate')} type="date" id="effectivedate" name="effectivedate" placeholder="New Salary" className="form-control " /></div>
-                               <div className="col-md-2"><input {...register('daysinmonth')} type="number" id="daysinmonth" name="daysinmonth" placeholder="Working Days In Month" className="form-control " /></div>
-                               <div className="col-md-2"><input {...register('hoursinday')} type="number" id="hoursinday" name="hoursinday" placeholder="Working Hours In Day" className="form-control " /></div>
+                               <div className="col-lg-3"><input {...register('BaseSal')} type="number" id="BaseSal" name="BaseSal" placeholder="Basic Salary" className="form-control " /></div>
+                               <div className="col-lg-3"><input {...register('effectivedate')} type="date" id="effectivedate" name="effectivedate" placeholder="New Salary" className="form-control " /></div>
+                               <div className="col-lg-2"><input {...register('daysinmonth')} type="number" id="daysinmonth" name="daysinmonth" placeholder="Working Days In Month" className="form-control " /></div>
+                               <div className="col-lg-2"><input {...register('hoursinday')} type="number" id="hoursinday" name="hoursinday" placeholder="Working Hours In Day" className="form-control " /></div>
                             </div>
                             <div className="row mt-3">
                                <div className='col-lg-8'></div>
                                <div className="col-lg-2">
  
-                                     <button type="submit" className="btn btn-primary AddButton">
+                                     <button type="submit" className="AddButton">
  
                                         Save
  
@@ -133,7 +128,7 @@ const AddStaffSalaryForm = ({ editData }) => {
                                </div>
  
                                <div className='col-lg-2'>
-                                  <Link href="/Staff/StaffSalary"><button className="btn btn-primary AddButton">Cancel</button></Link>
+                                  <Link href="/Staff/StaffSalary"><button className="AddButton">Cancel</button></Link>
                                </div>
  
                             </div>
@@ -144,7 +139,6 @@ const AddStaffSalaryForm = ({ editData }) => {
  
                 <br />
              </form>
-          </div>
        </Layout>
     )
  }

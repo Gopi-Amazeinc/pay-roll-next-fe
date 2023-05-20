@@ -26,35 +26,35 @@ const Compensationtimeout = () => {
     const [compensation, getComponsation] = useState([])
     const [managerApproved, getManagerApproved] = useState([])
     const [managerRejected, getManagerRejected] = useState([])
-    const [isOpen, ModalIsOpen] = useState(false)
+    const [isOpen, ModalIsOpen] = useState(false);
+    const [keyword, setKeyword] = useState("");
 
     const openModal = () => {
         ModalIsOpen(true)
     }
 
 
-    const togglePending = (e) => {
-        e.preventDefault();
+    const togglePending = () => {
+        setPending(true);
         setApproved(false)
         setRejected(false)
         setManagerTogglePending(true)
         setManagerToggleApproved(false)
         setManagerToggleRejected(false)
+        console.log("pending manager login")
     }
 
-    const toggleApproved = (e) => {
-        e.preventDefault();
+    const toggleApproved = () => {
         setApproved(true)
         setPending(false)
         setRejected(false)
         setManagerTogglePending(false);
         setManagerToggleApproved(true);
         setManagerToggleRejected(false);
-        console.log("pending manager login")
+
     }
 
-    const toggleRejected = (e) => {
-        e.preventDefault();
+    const toggleRejected = () => {
         setRejected(true)
         setApproved(false)
         setPending(false)
@@ -132,6 +132,7 @@ const Compensationtimeout = () => {
                 })
                 getPendingData();
             }
+
         }
         )
     }
@@ -188,6 +189,7 @@ const Compensationtimeout = () => {
         getRejectedData();
         getManagerApprovedData();
         getManagerRejectedData();
+        setPending(true);
         console.log("working useEffect")
     }, [1])
 
@@ -200,15 +202,15 @@ const Compensationtimeout = () => {
                     <div className='card p-3 border-0 rounded-3'>
                         <div className='row p-3'>
                             <div className='col-lg-1'>
-                                <p>Filter By</p>
+                                <label style={{fontWeight:"bold"}}>Filter By</label>
                             </div>
 
                             <div className='col-lg-3'>
-                                <input type="text" className='form-control' placeholder='Search...' />
+                                <input type="text" className='form-control' placeholder='Search for Date or Status...' onChange={e => setKeyword(e.target.value)} />
                             </div>
                             {
                                 sessionStorage.getItem("roleID") != "3" && (
-                                    <div className='col-lg-4' style={{whiteSpace:"nowrap"}}>
+                                    <div className='col-lg-4' style={{ whiteSpace: "nowrap" }}>
                                         <Link href="/Requests/Compensationtimeout/new"><button className='EditDelteBTN'>Add Compensation Time Out</button></Link>
                                     </div>
                                 )
@@ -276,7 +278,11 @@ const Compensationtimeout = () => {
 
                                             <tbody>
                                                 {
-                                                    pendingDashboard.map((data) => {
+                                                    pendingDashboard.filter(data => {
+                                                        if ((data.date.toLowerCase().includes(keyword.toLowerCase())) || (data.status.toLowerCase().includes(keyword))) {
+                                                            return data;
+                                                        }
+                                                    }).map((data) => {
                                                         return (
                                                             <tr key={data.id}>
                                                                 <td>{data.date}</td>
@@ -316,7 +322,11 @@ const Compensationtimeout = () => {
 
                                             <tbody>
                                                 {
-                                                    compensation.map((data) => {
+                                                    compensation.filter(data => {
+                                                        if ((data.date.toLowerCase().includes(keyword.toLowerCase())) || (data.status.toLowerCase().includes(keyword))) {
+                                                            return data;
+                                                        }
+                                                    }).map((data) => {
                                                         return (
                                                             <tr key={data.id}>
                                                                 <td>{data.staffname}</td>
@@ -355,7 +365,11 @@ const Compensationtimeout = () => {
 
                                             <tbody>
                                                 {
-                                                    approvedDashboard.map((data) => {
+                                                    approvedDashboard.filter(data => {
+                                                        if ((data.date.toLowerCase().includes(keyword.toLowerCase())) || (data.status.toLowerCase().includes(keyword))) {
+                                                            return data;
+                                                        }
+                                                    }).map((data) => {
                                                         return (
                                                             <tr key={data.id}>
                                                                 <td>{data.date}</td>
@@ -391,7 +405,11 @@ const Compensationtimeout = () => {
 
                                             <tbody>
                                                 {
-                                                    managerApproved.map((data) => {
+                                                    managerApproved.filter(data => {
+                                                        if ((data.date.toLowerCase().includes(keyword.toLowerCase())) || (data.status.toLowerCase().includes(keyword))) {
+                                                            return data;
+                                                        }
+                                                    }).map((data) => {
                                                         return (
                                                             <tr key={data.id}>
                                                                 <td>{data.staffname}</td>
@@ -426,7 +444,11 @@ const Compensationtimeout = () => {
 
                                             <tbody>
                                                 {
-                                                    rejecteddDashboard.map((data) => {
+                                                    rejecteddDashboard.filter(data => {
+                                                        if ((data.date.toLowerCase().includes(keyword.toLowerCase())) || (data.status.toLowerCase().includes(keyword))) {
+                                                            return data;
+                                                        }
+                                                    }).map((data) => {
                                                         return (
                                                             <tr key={data.id}>
                                                                 <td>{data.date}</td>
@@ -462,7 +484,11 @@ const Compensationtimeout = () => {
 
                                             <tbody>
                                                 {
-                                                    managerRejected.map((data) => {
+                                                    managerRejected.filter(data => {
+                                                        if ((data.date.toLowerCase().includes(keyword.toLowerCase())) || (data.status.toLowerCase().includes(keyword))) {
+                                                            return data;
+                                                        }
+                                                    }).map((data) => {
                                                         return (
                                                             <tr key={data.id}>
                                                                 <td>{data.staffname}</td>
