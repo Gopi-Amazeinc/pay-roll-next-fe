@@ -12,22 +12,22 @@ const Locatorrequest = () => {
     const router = useRouter();
     const { errors } = formState;
 
-    const [userID, setUserIDData] = useState("")
+    const [userID, setUserID] = useState()
 
     useEffect(() => {
-        let res = sessionStorage.getItem("userID");
-        setUserIDData(res)
+        const usrID = sessionStorage.getItem("userID");
+        setUserID(usrID);
 
     }, []);
 
     async function onSubmit(data) {
         debugger;
         try {
-            const formData = { ...data, StaffID: userID };
-            console.log("form data", formData);
-            await apiService.commonPostCall("Payroll/InsertLocatorTable", formData);
+            const formData = { ...data, userID };
+            // console.log("form data", formData);
+            await apiService.commonPostCall("Payroll/InsertLocatorTable",formData);
             Swal.fire('Data Inserted successfully')
-            console.log("Inserted data", data);
+            console.log("Inserted data", formData);
             router.push("/Requests/Locatorrequest")
         } catch (error) {
             Swal.fire("Insert is not working");
