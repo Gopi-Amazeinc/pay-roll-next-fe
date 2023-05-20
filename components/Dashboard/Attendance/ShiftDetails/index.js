@@ -146,11 +146,13 @@ const Shiftdetails = () => {
     <div classname="container-fluid">
       <div className="row">
         <div className="col-lg-3">
+          <br/>
           <Link href="/Attendance/shiftdetails" className={Styles.mainheader}>
             My Weekly Shift
           </Link>
         </div>
         <div className="col-lg-3">
+        <br/>
           {roleid != 3 ||
             <Link href="/Attendance/MyTeamWeeklyShift" className={Styles.mainheader}> My Team Weekly Shift</Link>
           }
