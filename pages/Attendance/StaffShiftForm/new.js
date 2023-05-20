@@ -59,7 +59,7 @@ const New = () => {
                     <h3 className='Heading'>Add Shift Details</h3>
                 </div>
                 <form onSubmit={handleSubmit(onSubmit)}>
-                    <div className="card shadow-lg mt-3" >
+                    <div className="card shadow-lg mt-3" style={{ padding: "15px" }}>
                         <div className="row">
 
 

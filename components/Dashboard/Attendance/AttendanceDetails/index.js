@@ -155,7 +155,7 @@ const AttendenceDetails = () => {
                 <p className={Styles.filterdate} >Filter By</p>
               </div>
               <div className="col-lg-3">
-                <p className={Styles.filterdate} >Start Date</p>
+                <p className={Styles.filterdate}> Start Date</p>
                 <input
                   type="date"
                   className="form-control"

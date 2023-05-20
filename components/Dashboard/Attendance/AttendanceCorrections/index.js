@@ -349,7 +349,7 @@ const Attendancecorrectiondashboard = () => {
         </div>
 
         {pending && roleID != "2" && (
-          <table className="table table-hover"
+          <table className="table table-hover" style={{marginRight:"10px",width:"99%"}}
             ref={tableRef}>
             <thead className="bg-info text-white">
               <tr>
