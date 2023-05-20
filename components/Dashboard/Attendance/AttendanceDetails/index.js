@@ -130,7 +130,7 @@ const AttendenceDetails = () => {
               </Link>
             </>
           )}
-          {roleID == 2 && (
+          {roleID == 2 || roleID == 4 && (
             <>
               <Link
                 className={Styles.mainheader}

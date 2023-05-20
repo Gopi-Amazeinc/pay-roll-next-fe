@@ -281,7 +281,7 @@ const Attendancecorrectiondashboard = () => {
           </div>
 
           <div className="col-lg-4">
-            {(roleID == 3 || roleID == 5) && (
+            {(roleID == 3 || roleID == 5 || roleID == 4) && (
               <div className="row">
                 <div className="col-lg-8">
                   <Link href="/Attendance/AttendanceCorrections/attendancecorrectionform">
