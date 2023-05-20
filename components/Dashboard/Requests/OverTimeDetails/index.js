@@ -26,6 +26,7 @@ const Index = () => {
     const [isOpen, ModalIsOpen] = useState(false)
     const [roleID, setRoleID] = useState();
     const [userID, setUserID] = useState()
+
     const togglePending = () => {
         setPending(true)
         setApproved(false)
@@ -73,7 +74,17 @@ const Index = () => {
             height: '30%'
         }
     }
-
+    const [startDate, setStartDate] = useState("");
+    const [endDate, setEndDate] = useState("");
+    const getStartDate = (selectedDate) => {
+        setStartDate(selectedDate);
+        setEndDate("");
+    };
+    const getEndDate = (selectedDate) => {
+        setEndDate(selectedDate);
+        // return getDateBySelectedDate(selectedDate);
+    };
+    
     const getPendingDetails = async () => {
         const res = await apiService.commonGetCall("Payroll/GetPendingStaffOverTimeDetails")
         setNewDashboardData(res.data);
@@ -220,10 +231,10 @@ const Index = () => {
                 </div>
                 <div className='row'>
                     <div className='col-lg-4'>
-                        <input type="date" className='form-control' />
+                        <input type="date" className='form-control' value={startDate} onChange={(e) => getStartDate(e.target.value)} />
                     </div>
                     <div className='col-lg-4'>
-                        <input type="date" className='form-control' />
+                        <input type="date" className='form-control' value={endDate || ""} onChange={(e) => getEndDate(e.target.value)} />
                     </div>
                     <div className='col-lg-4'>
                         <Link href="/Requests/OverTimeDetails/new">
@@ -232,12 +243,7 @@ const Index = () => {
                     </div><br /><br /><br />
                 </div>
             </div>
-            {/* <div className="row">
-                <div className="col-lg-9"></div>
-                <div className="col-lg-3">
 
-                </div>
-            </div> */}
             <div className="row">
                 <div className="col-lg-12">
                     <div className='col-lg-4'><br />

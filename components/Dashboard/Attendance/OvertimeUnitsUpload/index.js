@@ -207,7 +207,7 @@ const MyTeamOverTimeDetail = () => {
                     type="button"
                     onClick={() => setModalOpen(!modalOpen)}
                   >
-                    <span aria-hidden={true}>×</span>
+                    <span>X</span>
                   </button>
                 </div>
                 <ModalBody >
@@ -247,24 +247,24 @@ const MyTeamOverTimeDetail = () => {
         </div>
         <br />
         <div className="row">
-          <div className="table-responsive">
-            <table
-              className="table table-striped  "
-              style={{ marginLeft: "0px", width: "100%" }}
-              ref={tableRef}
-            >
-              <thead className={"bg-info text-white "}>
-                <tr style={{ whiteSpace: "nowrap" }}>
-                  <th>Employee ID</th>
-                  <th>Employee Name</th>
-                  <th>Pay Date </th>
-                  <th>Component Name</th>
-                  <th>No of Hours </th>
-                </tr>
-              </thead>
-              <tbody>
-                {Array.isArray(overtimeUnitsUpload) &&
-                  overtimeUnitsUpload.length > 0 && (
+          <div className="col-lg-12">
+            <div className="table-responsive">
+              <table
+                className="table table-striped  "
+                style={{ marginLeft: "0px", width: "99%" }}
+                ref={tableRef}
+              >
+                <thead className={"bg-info text-white "}>
+                  <tr style={{ whiteSpace: "nowrap" }}>
+                    <th>Employee ID</th>
+                    <th>Employee Name</th>
+                    <th>Pay Date </th>
+                    <th>Component Name</th>
+                    <th>No of Hours </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {Array.isArray(overtimeUnitsUpload) && overtimeUnitsUpload.length > 0 && (
                     <>
                       {overtimeUnitsUpload.map((data) => {
                         return (
@@ -274,16 +274,25 @@ const MyTeamOverTimeDetail = () => {
                             <td>{data.payDtae}</td>
                             <td>{data.componentName}</td>
                             <td>{data.endTime}</td>
-                            <td>{data.noofHours}</td>
+
                           </tr>
                         );
                       })}
                     </>
                   )}
-              </tbody>
-            </table>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
+
+
+
+
+
+
+
+
       </div>
     </div>
   );

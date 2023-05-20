@@ -90,10 +90,9 @@ const OverTimeDetails = () => {
   return (
     <Layout>
       <div className='container-fluid'>
-        <p className='Heading'>Add Actual Time</p>
         <div className='row'>
           <div className='col-lg-12'>
-
+            <p className='Heading'>Add Actual Time</p>
             <div className="card p-3 border-0">
               <div>
                 <form onSubmit={handleSubmit(insertDetails)}>
@@ -124,6 +123,9 @@ const OverTimeDetails = () => {
                       <input type="time" className='form-control' id='EndTime' name='time' min="00:00" max="23:59" step="1" {...register('EndTime', { required: "This field is required" })} />
                       {errors.EndTime && <label className="error-message" style={{ color: "red" }}>{errors.EndTime.message}</label>}
                     </div>
+                    {/* <div className='col-lg-2'>
+                      <button  onClick={getDetails}>Click</button>
+                    </div> */}
 
                   </div><br />
                   <div className='row'>

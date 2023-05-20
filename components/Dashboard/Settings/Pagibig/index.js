@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
-import axios from 'axios';
+import { apiService } from "@/services/api.service";
 import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2'
 import { useEffect, useState } from 'react';
@@ -22,7 +22,7 @@ const Pagibig = () => {
     }
 
     const getpagibigconfigaration = async () => {
-        let res = await axios.get(hostURL + "HR/GetPagibigconfogaration");
+        let res = await apiService.commonGetCall("HR/GetPagibigconfogaration");
         setpagibigconfigaration(res.data);
     }
 
@@ -32,7 +32,7 @@ const Pagibig = () => {
 
     const handleDelete = async (id) => {
         try {
-            let res = await axios.get(hostURL + `HR/DeletePagibigconfogaration?id=${id}`);
+            let res = await apiService.commonGetCall(`HR/DeletePagibigconfogaration?id=${id}`);
             console.log(res.data);
             Swal.fire('Data deleted successfully')
             getpagibigconfigaration();

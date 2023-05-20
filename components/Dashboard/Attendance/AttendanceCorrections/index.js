@@ -308,7 +308,8 @@ const Attendancecorrectiondashboard = () => {
           {pending && (
             <>
               <div className="col-lg-2 text-primary fs-6 fw-bold">
-                <h6>Showing {pendingcount} Results</h6>
+          
+                <h6 style={{ color: "#3247d5" }}>Showing {pendingcount} Results</h6>
               </div>
 
 
@@ -453,7 +454,7 @@ const Attendancecorrectiondashboard = () => {
           {approved && (
             <>
               <div className="col-lg-2 text-primary fs-6 fw-bold">
-                <h6>Showing {approvedcount} Results</h6>
+                <h6 style={{ color: "#3247d5" }}>Showing {approvedcount} Results</h6>
               </div>
               <table className="table table-hover" ref={tableRef}>
                 <thead className="bg-info text-white">
@@ -527,7 +528,7 @@ const Attendancecorrectiondashboard = () => {
           {rejected && (
             <>
               <div className="col-lg-2 text-primary fs-6 fw-bold">
-                <h6>Showing {rejectcount} Results</h6>
+                <h6 style={{ color: "#3247d5" }}>Showing {rejectcount} Results</h6>
               </div>
               <table className="table table-hover" ref={tableRef}>
                 <thead className="bg-info text-white">

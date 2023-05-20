@@ -25,12 +25,12 @@ export default function AttendanceCorrectionform() {
     async function onSubmit(data) {
         // const formData = { ...data, Attendance: Attendance };
         // console.log("form data", formData);
-        debugger
+
         await apiService.commonPostCall("Payroll/InsertAttendanceCorrection", data);
         // await axios.post(hostURL + "Payroll/InsertAttendanceCorrection", data);
         Swal.fire('Data Inserted successfully');
         location.href = "/Attendance/AttendanceCorrections";
-        console.log("Inserted data:", data);
+
     }
 
 
@@ -56,7 +56,7 @@ export default function AttendanceCorrectionform() {
     return (
         <Layout>
             <div className='container'>
-                <h3 className='text-primary fs-5 mt-3 fw-bold'>Add Attendance Correction</h3>
+                <h3 className=' fs-5 mt-3 fw-bold'  style={{ color: "#3247d5" }}>Add Attendance Correction</h3>
                 <div className='card p-3 border-0 shadow-lg '>
                     <form onSubmit={handleSubmit(onSubmit)} >
                         <div className='row'>

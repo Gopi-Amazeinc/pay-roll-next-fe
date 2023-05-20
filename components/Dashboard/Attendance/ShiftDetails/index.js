@@ -27,6 +27,7 @@ const Shiftdetails = () => {
 
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const [count, setcount] = useState(0);
 
   let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
   let staffID;
@@ -95,6 +96,8 @@ const Shiftdetails = () => {
     const res = await apiService.commonGetCall("HR/GetStaffShiftDetailsByband?staffID=" + userid);
     console.log(res);
     setShiftDetails(res.data);
+    setcount(res.data.length);
+    
     // https://103.12.1.103/PayrollDemoAPI/Master/GetStaffShiftDetails
   };
 
@@ -191,7 +194,7 @@ const Shiftdetails = () => {
                   currentTableRef={tableRef.current}
                 > <button className="button" style={{ marginTop: "7px" }} > DOWNLOAD</button></DownloadTableExcel>
               </div>
-              <div className="col-lg-2">
+              <div className="col-lg-3">
                 <br />
                 <Link href="/Attendance/StaffShiftForm/new" className={Styles.adddetail}>
                   <button className="button" style={{ fontSize: "15px", marginTop: "7px" }}><IoIosAddCircleOutline size={18} color={"white"} />  ADD SHIFT DETAILS</button>
@@ -206,6 +209,7 @@ const Shiftdetails = () => {
       </div>
       <div className="row mt-3">
         <div className="col-lg-12">
+        <h6 style={{ color: "#3247d5" }}>Showing {count} Results</h6>
           <table className="table" style={{ width: "99%" }} ref={tableRef}>
             <thead>
               <tr className="bg-info text-white">

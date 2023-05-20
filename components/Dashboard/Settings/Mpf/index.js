@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import axios from "axios";
+import { apiService } from "@/services/api.service";
 import Swal from 'sweetalert2';
 import Styles from '../../../../styles/mpf.module.css'
 
@@ -10,7 +10,7 @@ function Mpf() {
     const getMpfdetails = async () => {
         let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
         // This API is used to fetch the data from MPFConfogaration table
-        const res = await axios.get(hostURL + "HR/GetMPFconfogaration");
+        let res = await apiService.commonGetCall( "HR/GetMPFconfogaration");
         setMpfDetails(res.data);
     }
 
@@ -30,7 +30,7 @@ function Mpf() {
         try {
             let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
             // This API is used to delete the dashboard data based on ID
-            const res = await axios.get(hostURL + `HR/DeleteMPFconfogaration?ID=${id}`);
+            let res = await apiService.commonGetCall(`HR/DeleteMPFconfogaration?ID=${id}`);
             Swal.fire({
                 icon: "success",
                 title: "Hurray..",
