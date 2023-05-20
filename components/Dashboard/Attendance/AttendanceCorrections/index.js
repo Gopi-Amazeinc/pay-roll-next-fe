@@ -240,7 +240,7 @@ const Attendancecorrectiondashboard = () => {
   };
 
   return (
-    <div className="container">
+    <div className="container-fluid">
       <div className="row mt-3">
         <div className="col-lg-3" style={{ float: "left" }}>
           <Link
@@ -250,25 +250,22 @@ const Attendancecorrectiondashboard = () => {
             Attendance Correction
           </Link>
         </div>
-        {roleID == 3 && (
-          <>
-            <div className="col-lg-3" style={{ display: "flex", marginLeft: "-38px" }}>
+        <div className="col-lg-3">
+          {roleID == 3 && (
+            <>
               <Link
                 className={Styles.mainheader}
                 href="/Attendance/MyTeamAttendanceCorrection"
               >
                 My Team Attendance Correction
               </Link>
-            </div>
-          </>
-        )}
+            </>
+          )}
+        </div>
       </div>
 
       <br />
-      <div
-        className="card p-3 border-0 rounded-3 "
-        style={{ marginLeft: "-8px" }}
-      >
+      <div className="card p-3 border-0 rounded-3">
         <div className="row p-3">
           <div className="col-lg-1">
             <p>Filter By</p>
@@ -344,122 +341,154 @@ const Attendancecorrectiondashboard = () => {
       </div>
 
       <div className="row mt-3">
-        <div className="col-lg-2 text-primary fs-6 fw-bold">
-          <h6>Showing Results</h6>
-        </div>
+        <div className="col-lg-12">
+          <div className="col-lg-2 text-primary fs-6 fw-bold">
+            <h6>Showing Results</h6>
+          </div>
 
-        {pending && roleID != "2" && (
-          <table className="table table-hover" style={{marginRight:"10px",width:"99%"}}
-            ref={tableRef}>
-            <thead className="bg-info text-white">
-              <tr>
-                <th>Date</th>
-                <th>Start Time</th>
-                <th>End Time</th>
-                <th>Comments</th>
-                <th>Status</th>
-                <th>Action</th>
-              </tr>
-            </thead>
+          {pending && roleID != "2" && (
+            <table className="table table-hover"
+              ref={tableRef}>
+              <thead className="bg-info text-white">
+                <tr>
+                  <th>Date</th>
+                  <th>Start Time</th>
+                  <th>End Time</th>
+                  <th>Comments</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
 
-            <tbody>
-              {Array.isArray(pendingDashboardData) &&
-                pendingDashboardData.length > 0 && (
+              <tbody>
+                {Array.isArray(pendingDashboardData) &&
+                  pendingDashboardData.length > 0 && (
+                    <>
+                      {pendingDashboardData
+                        .filter(data => {
+                          if ((data.startTime.toLowerCase().includes(keyword)) || (data.date.toLowerCase().includes(keyword)) || (data.endTime.toLowerCase().includes(keyword))) {
+                            return data;
+                          }
+                        })
+                        .map((data) => {
+                          return (
+                            <tr key={data.id}>
+                              <td>{data.date}</td>
+                              <td>{data.startTime}</td>
+                              <td>{data.endTime}</td>
+                              <td>{data.comments}</td>
+                              <td>{data.status}</td>
+                              <td>
+                                <button
+                                  onClick={deleteAttendanceCorrection.bind(
+                                    this,
+                                    data.id
+                                  )}
+                                  className="edit-btn"
+                                >
+                                  Cancel
+                                </button>
+                              </td>
+                            </tr>
+                          );
+                        })}
+                    </>
+                  )}
+              </tbody>
+            </table>
+          )}
+
+          {pending && roleID == "2" && (
+            <table className="table table-hover" ref={tableRef}>
+              <thead className="bg-info text-white">
+                <tr>
+                  <th>Employee Name</th>
+                  <th>Date</th>
+                  <th>Start Time</th>
+                  <th>End Time</th>
+                  <th colSpan={2}>Action</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {Array.isArray(managerPending) && managerPending.length > 0 && (
                   <>
-                    {pendingDashboardData
-                      .filter(data => {
-                        if ((data.startTime.toLowerCase().includes(keyword)) || (data.date.toLowerCase().includes(keyword)) || (data.endTime.toLowerCase().includes(keyword))) {
-                          return data;
-                        }
-                      })
-                      .map((data) => {
+                    {managerPending.map((data) => {
+                      return (
+                        <tr key={data.id}>
+                          <td>{data.staffname}</td>
+                          <td>{data.date}</td>
+                          <td>{data.startTime}</td>
+                          <td>{data.endTime}</td>
+                          <td>
+                            <button
+                              onClick={approveAttedanceCorrection.bind(
+                                this,
+                                data
+                              )}
+                              className="edit-btn"
+                            >
+                              Accept
+                            </button>
+                            <button className="edit-btn">Reject</button>
+                          </td>
+                        </tr>
+                      );
+                    })}
+                  </>
+                )}
+              </tbody>
+            </table>
+          )}
+
+          {approved && roleID != "2" && (
+            <table className="table table-hover" ref={tableRef}>
+              <thead className="bg-info text-white">
+                <tr>
+                  <th>Date</th>
+                  <th>Start Time</th>
+                  <th>End Time</th>
+                  <th>Comments</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {Array.isArray(approvedDashboardData) &&
+                  approvedDashboardData.length > 0 && (
+                    <>
+                      {approvedDashboardData.map((data) => {
                         return (
                           <tr key={data.id}>
                             <td>{data.date}</td>
                             <td>{data.startTime}</td>
                             <td>{data.endTime}</td>
-                            <td>{data.comments}</td>
+                            <td>{data.Comments}</td>
                             <td>{data.status}</td>
-                            <td>
-                              <button
-                                onClick={deleteAttendanceCorrection.bind(
-                                  this,
-                                  data.id
-                                )}
-                                className="edit-btn"
-                              >
-                                Cancel
-                              </button>
-                            </td>
                           </tr>
                         );
                       })}
-                  </>
-                )}
-            </tbody>
-          </table>
-        )}
+                    </>
+                  )}
+              </tbody>
+            </table>
+          )}
 
-        {pending && roleID == "2" && (
-          <table className="table table-hover" ref={tableRef}>
-            <thead className="bg-info text-white">
-              <tr>
-                <th>Employee Name</th>
-                <th>Date</th>
-                <th>Start Time</th>
-                <th>End Time</th>
-                <th colSpan={2}>Action</th>
-              </tr>
-            </thead>
+          {approved && roleID == "2" && (
+            <table className="table table-hover" ref={tableRef}>
+              <thead className="bg-info text-white">
+                <tr>
+                  <th>Employee Name</th>
+                  <th>Date</th>
+                  <th>Start Time</th>
+                  <th>End Time</th>
+                </tr>
+              </thead>
 
-            <tbody>
-              {Array.isArray(managerPending) && managerPending.length > 0 && (
-                <>
-                  {managerPending.map((data) => {
-                    return (
-                      <tr key={data.id}>
-                        <td>{data.staffname}</td>
-                        <td>{data.date}</td>
-                        <td>{data.startTime}</td>
-                        <td>{data.endTime}</td>
-                        <td>
-                          <button
-                            onClick={approveAttedanceCorrection.bind(
-                              this,
-                              data
-                            )}
-                            className="edit-btn"
-                          >
-                            Accept
-                          </button>
-                          <button className="edit-btn">Reject</button>
-                        </td>
-                      </tr>
-                    );
-                  })}
-                </>
-              )}
-            </tbody>
-          </table>
-        )}
-
-        {approved && roleID != "2" && (
-          <table className="table table-hover" ref={tableRef}>
-            <thead className="bg-info text-white">
-              <tr>
-                <th>Date</th>
-                <th>Start Time</th>
-                <th>End Time</th>
-                <th>Comments</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {Array.isArray(approvedDashboardData) &&
-                approvedDashboardData.length > 0 && (
+              <tbody>
+                {Array.isArray(managerApproved) && managerApproved.length > 0 && (
                   <>
-                    {approvedDashboardData.map((data) => {
+                    {managerApproved.map((data) => {
                       return (
                         <tr key={data.id}>
                           <td>{data.date}</td>
@@ -472,58 +501,58 @@ const Attendancecorrectiondashboard = () => {
                     })}
                   </>
                 )}
-            </tbody>
-          </table>
-        )}
+              </tbody>
+            </table>
+          )}
 
-        {approved && roleID == "2" && (
-          <table className="table table-hover" ref={tableRef}>
-            <thead className="bg-info text-white">
-              <tr>
-                <th>Employee Name</th>
-                <th>Date</th>
-                <th>Start Time</th>
-                <th>End Time</th>
-              </tr>
-            </thead>
+          {rejected && roleID != "2" && (
+            <table className="table table-hover" ref={tableRef}>
+              <thead className="bg-info text-white">
+                <tr>
+                  <th>Date</th>
+                  <th>Start Time</th>
+                  <th>End Time</th>
+                  <th>Reason</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
 
-            <tbody>
-              {Array.isArray(managerApproved) && managerApproved.length > 0 && (
-                <>
-                  {managerApproved.map((data) => {
-                    return (
-                      <tr key={data.id}>
-                        <td>{data.date}</td>
-                        <td>{data.startTime}</td>
-                        <td>{data.endTime}</td>
-                        <td>{data.Comments}</td>
-                        <td>{data.status}</td>
-                      </tr>
-                    );
-                  })}
-                </>
-              )}
-            </tbody>
-          </table>
-        )}
+              <tbody>
+                {Array.isArray(rejectedDashboardData) &&
+                  rejectedDashboardData.length > 0 && (
+                    <>
+                      {rejectedDashboardData.map((data) => {
+                        return (
+                          <tr key={data.id}>
+                            <td>{data.date}</td>
+                            <td>{data.startTime}</td>
+                            <td>{data.endTime}</td>
+                            <td>{data.Comments}</td>
+                            <td>{data.status}</td>
+                          </tr>
+                        );
+                      })}
+                    </>
+                  )}
+              </tbody>
+            </table>
+          )}
 
-        {rejected && roleID != "2" && (
-          <table className="table table-hover" ref={tableRef}>
-            <thead className="bg-info text-white">
-              <tr>
-                <th>Date</th>
-                <th>Start Time</th>
-                <th>End Time</th>
-                <th>Reason</th>
-                <th>Status</th>
-              </tr>
-            </thead>
+          {rejected && roleID == "2" && (
+            <table className="table table-hover" ref={tableRef}>
+              <thead className="bg-info text-white">
+                <tr>
+                  <th>Employee Name</th>
+                  <th>Date</th>
+                  <th>Start Time</th>
+                  <th>End Time</th>
+                </tr>
+              </thead>
 
-            <tbody>
-              {Array.isArray(rejectedDashboardData) &&
-                rejectedDashboardData.length > 0 && (
+              <tbody>
+                {Array.isArray(managerRejected) && managerRejected.length > 0 && (
                   <>
-                    {rejectedDashboardData.map((data) => {
+                    {managerRejected.map((data) => {
                       return (
                         <tr key={data.id}>
                           <td>{data.date}</td>
@@ -536,40 +565,10 @@ const Attendancecorrectiondashboard = () => {
                     })}
                   </>
                 )}
-            </tbody>
-          </table>
-        )}
-
-        {rejected && roleID == "2" && (
-          <table className="table table-hover" ref={tableRef}>
-            <thead className="bg-info text-white">
-              <tr>
-                <th>Employee Name</th>
-                <th>Date</th>
-                <th>Start Time</th>
-                <th>End Time</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {Array.isArray(managerRejected) && managerRejected.length > 0 && (
-                <>
-                  {managerRejected.map((data) => {
-                    return (
-                      <tr key={data.id}>
-                        <td>{data.date}</td>
-                        <td>{data.startTime}</td>
-                        <td>{data.endTime}</td>
-                        <td>{data.Comments}</td>
-                        <td>{data.status}</td>
-                      </tr>
-                    );
-                  })}
-                </>
-              )}
-            </tbody>
-          </table>
-        )}
+              </tbody>
+            </table>
+          )}
+        </div>
       </div>
     </div>
   );

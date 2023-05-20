@@ -280,11 +280,8 @@ const Sidebar = ({ children, applyPageName }) => {
   };
   return (
     <div className="container-fluid" style={{ paddingRight: "0px", paddingLeft: "0px" }}>
-      <div className="row" style={{ height: "90vh", overflow: "auto"}}>
-        <div
-          className="col-lg-12 mb-4"
-          style={{ paddingRight: "0px", paddingLeft: "0px" }}
-        >
+      <div className="row" style={{ height: "90vh", overflow: "auto" }}>
+        <div className="col-lg-12 mb-4">
           <Link href="/Home/dashboard" className={styles.sidemenulink}>
             <button
               className={getStyle(1)}
