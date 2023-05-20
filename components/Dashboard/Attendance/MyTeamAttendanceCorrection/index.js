@@ -28,7 +28,7 @@ const MyTeamAttendancecorrectiondashboard = () => {
 
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
-
+    const [count,setcount] = useState(0);
     const [keyword, setKeyword] = useState("");
 
     const togglePending = () => {
@@ -326,7 +326,7 @@ const MyTeamAttendancecorrectiondashboard = () => {
 
             <div className="row mt-3">
                 <div className="col-lg-2 text-primary fs-6 fw-bold">
-                    <h6>Showing Results</h6>
+                <h6>Showing {count} Results</h6>
                 </div>
 
                 {/* {pending && roleID != "2" && (
