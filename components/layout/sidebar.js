@@ -1264,8 +1264,7 @@ const Sidebar = ({ children, applyPageName }) => {
               </Link>
             </>
           )}
-          {userRole == 4 ||
-            (userRole == 5 && (
+          {(userRole == 4 || userRole == 5 )  && (
               <div>
                 <hr></hr>
                 <button className={styles.sidemenu} onClick={togleReportsMeanu}>
@@ -1777,7 +1776,7 @@ const Sidebar = ({ children, applyPageName }) => {
                   </div>
                 )}
               </div>
-            ))}
+            )}
 
           <hr></hr>
           <Link href="" className={styles.sidemenulink}>
