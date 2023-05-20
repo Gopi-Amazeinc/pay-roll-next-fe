@@ -1722,12 +1722,12 @@ const Sidebar = ({ children, applyPageName }) => {
                             ER-2
                           </button>
                         </Link>
-                        <Link href="/Reports/PhilHealth/RF-1PDF">
+                        <Link href="/Reports/PhilHealth/RF1PDF">
                           <button
                             className={getSubofSubStyle(353)}
                             onClick={updateActiveMenu.bind(this, {
                               id: 353,
-                              name: " RF-1PDF",
+                              name: "RF-1PDF",
                             })}
                           >
                             <TbReportAnalytics style={customStyles.icons} />
@@ -1737,7 +1737,7 @@ const Sidebar = ({ children, applyPageName }) => {
                       </div>
                     )}
 
-                    <Link href="/Reports/PayrollSummary/payrollsummary">
+                    <Link href="/Reports/PayrollSummary">
                       <button
                         className={getSubStyle(502)}
                         onClick={updateActiveMenu.bind(this, {

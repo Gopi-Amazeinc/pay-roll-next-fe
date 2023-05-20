@@ -1,45 +1,54 @@
 import React from 'react'
 import Styles from "../../../styles/payrollsummary.module.css";
 import table from "/styles/table.module.css";
-
+import axios from 'axios';
 import Layout from '@/components/layout/layout.js';
 import { useEffect, useState } from 'react';
 
 function Payrollsummary() {
-
+    let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
     const [payrollsummary, setpayrollsummary] = useState(false);
-
     const handleRunpayrollClick = () => {
         setpayrollsummary(!payrollsummary);
     }
 
     const [payrollsummarydetail, setpayrollsummarydetail] = useState(false);
-
     const handleRunpayrolldetailClick = () => {
         setpayrollsummarydetail(!payrollsummarydetail);
     }
 
+    const [salary, setSalary] = useState([]);
+    const [presentYear, setPresentYear] = useState();
+    const [presentMonth, setPresentMonth] = useState();
+
+    useEffect(() => {
+        debugger
+        let currentDate = new Date();
+        let year=currentDate.getFullYear();
+        let month = currentDate.getMonth() + 1
+        setPresentYear(year)
+        setPresentMonth(month)
+        console.log(month,year)
+        getData()
+    }, [1]);
+
+     const getData = async () =>{
+        let res = await axios.get(hostURL + `Payroll/GetEmployeeFinalSalaryByMonth?Year=${presentYear}&Month=${presentMonth}`);
+        setSalary(res.data);
+
+    }
 
     return (
         <Layout>
-            <div>
+            <div className='container'>
                 <br></br>
                 <p id={Styles.title}>Payroll Summary Report</p>
                 <div className="container-fluid mt-4">
                     <div className="row mt-4">
                         <div className="col-lg-8">
-                            {/* <p id={Styles.p}>SHOWING 1 RESULTS</p> */}
                         </div>
                         <div className="col-lg-2"></div>
                         <div className="col-lg-2">
-                            {/* <Link href="/SupportTickets/supporttickets"><button
-                className="btn btn-primary btn-sm  shadow-lg"
-                // id={Styles.addNew} onClick={ClearData.bind(this)}
-              >
-                // {" "}
-                // <AiOutlinePlusCircle />
-                // Add
-              </button></Link> */}
                         </div>
                     </div>
                     <br></br>
@@ -54,7 +63,24 @@ function Payrollsummary() {
                                     <th>Payroll Run Type</th>
                                     <th>Description</th>
                                 </tr>
-                                <tr>
+                                {salary.map((data,index)=>{
+                                    return (
+                                      <tr className="text-dark" key={index}>
+                                        <td>
+                                          <input
+                                            type="checkbox"
+                                            onClick={handleRunpayrollClick}
+                                          />
+                                        </td>
+                                        <td>{data.employeID}</td>
+                                        <td>{data.name}</td>
+                                        <td>{data.department_name}</td>
+                                        <td>{data.level}</td>
+                                        <td>{data.gender}</td>
+                                      </tr>
+                                    );
+                                })}
+                                {/* <tr>
                                     <td><input type="checkbox" onClick={handleRunpayrollClick} /></td>
                                     <td>2022</td>
                                     <td>09</td>
@@ -71,7 +97,7 @@ function Payrollsummary() {
                                     <td>Normal</td>
                                     <td>PayRollFor</td>
 
-                                </tr>
+                                </tr> */}
                             </thead>
                         </table>
                     </div>

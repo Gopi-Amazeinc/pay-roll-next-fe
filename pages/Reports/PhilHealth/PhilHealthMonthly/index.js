@@ -10,27 +10,35 @@ function RFreport() {
     const toggleTable = () => {
         setState(!tableState)
     }
-
+    const customStyles={
+        center: {
+            display: "flex",
+            justifyContent: "center",
+        }
+    }
     return (
         <Layout>
             <div >
                 <br />
                 <div className="container-fluid ">
-                    <div className="col-12">
-                        <div className="row">
-                            <h2>PhilHealth Monthly Contribution</h2>
-
-                        </div>
-
-                        <br /><br /><br />
+                       
+                        <br />
+                        <br />
+                        <br />
                         <div className="card shadow p-3">
                             <div className="row">
-
-                                <div className="col-lg-7 mx-4">
-                                    <h5 className="leavereq">Select Start Month and  Year </h5>
-                                    <div className="row">
-                                        <div className="col-lg-5">
-                                            <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+                                <h4 className="text-center text-primary">PhilHealth Monthly Contribution</h4>
+                                <hr />
+                              
+                                    <div className="row" style={customStyles.center}>
+                                        <div className="col-lg-2">
+                                            <label>Select Start Month & Year</label>
+                                        </div>
+                                        <div className="col-lg-2">
+                                            <select
+                                                class="form-select form-select-sm"
+                                                aria-label=".form-select-sm example"
+                                            >
                                                 <option selected>Select Month</option>
                                                 <option value="1">January</option>
                                                 <option value="2">February</option>
@@ -46,8 +54,11 @@ function RFreport() {
                                                 <option value="3">December</option>
                                             </select>
                                         </div>
-                                        <div className="col-lg-5">
-                                            <select class="form-select form-select-sm" aria-label=".form-select-sm example">
+                                        <div className="col-lg-2">
+                                            <select
+                                                class="form-select form-select-sm"
+                                                aria-label=".form-select-sm example"
+                                            >
                                                 <option selected>Select Year</option>
                                                 <option value="1">2025</option>
                                                 <option value="2">2024</option>
@@ -58,27 +69,19 @@ function RFreport() {
                                             </select>
                                         </div>
                                     </div>
-                                </div>
-                                <div className="col-lg-1"></div>
-                                <div className="col-lg-4">
+                                    <br></br>
 
-                                    <button onClick={toggleTable} className='edit-btn'>fetch</button>
-
-                                </div>
+                                    
+                                    <div className="row mt-4" style={customStyles.center}>
+                                       
+                                        <div className="col-lg-4">
+                                            <button onClick={toggleTable} className='EditDelteBTN'>Generate</button>
+                                        </div>
+                                    </div>
+                              
                             </div>
-                            <br />
-                            <div className='row mt-3'>
-                                <div className='col-lg-4 mx-4'>
-
-                                </div>
-                            </div>
-
-
-
                         </div>
-                    </div>
-                </div>
-                {
+                        {
                     tableState && (
                         <div className='row mt-4'>
                             <div className='col-lg-4'></div>
@@ -104,6 +107,8 @@ function RFreport() {
                         </div>
                     )
                 }
+                </div>
+                
             </div>
         </Layout>
     )

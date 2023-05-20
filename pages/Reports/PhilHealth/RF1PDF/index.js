@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Layout from "@/components/layout/layout.js";
 
-const SSSMonthlyReport = () => {
+function RF1PDF() {
   let [tableState, setState] = useState(false);
 
   const toggleTable = () => {
     setState(!tableState);
   };
+
   const customStyles = {
     center: {
       display: "flex",
@@ -16,18 +17,19 @@ const SSSMonthlyReport = () => {
   return (
     <Layout>
       <div>
+        <br />
         <div className="container-fluid ">
-          <br />
           <br />
           <br />
           <br />
           <div className="card shadow p-3">
             <div className="row">
-              <h4 className="text-center text-primary">SSS MONTHLY REPORT</h4>
+              <h4 className="text-center text-primary">RF-1PDF</h4>
               <hr />
-              <div className="row mt-2" style={customStyles.center}>
+
+              <div className="row" style={customStyles.center}>
                 <div className="col-lg-2">
-                  <label>Select Date Coverage:</label>
+                  <label>Select Start Month & Year</label>
                 </div>
                 <div className="col-lg-2">
                   <select
@@ -66,11 +68,25 @@ const SSSMonthlyReport = () => {
               </div>
               <br></br>
 
+              <div className="row mt-4" style={customStyles.center}>
+                <div className="col-lg-2">
+                  <label>Signatory Person</label>
+                </div>
+                <div className="col-lg-2">
+                  <select className="form-select form-select-sm">
+                    <option select>Select</option>
+                    <option>Admin</option>
+                    <option>HR</option>
+                    <option>Finance</option>
+                  </select>
+                </div>
+                <div className="col-lg-2"></div>
+              </div>
               <br />
               <div className="row mt-4" style={customStyles.center}>
                 <div className="col-lg-4">
                   <button onClick={toggleTable} className="EditDelteBTN">
-                    Fetch
+                    Generate
                   </button>
                 </div>
               </div>
@@ -83,20 +99,6 @@ const SSSMonthlyReport = () => {
             <div className="col-lg-4">
               <button className="EditDelteBTN">export to excel</button>
             </div>
-
-            <table className="table table-striped mt-5">
-              <thead className="bg-info text-white">
-                <tr>
-                  <th>#</th>
-                  <th>Name of Employee</th>
-                  <th>SSS NUMBER</th>
-                  <th>Employee Contribution</th>
-                  <th>Employer Contribution</th>
-                  <th>EC Contribution</th>
-                  <th>Total</th>
-                </tr>
-              </thead>
-            </table>
           </div>
         )}
         </div>
@@ -104,6 +106,6 @@ const SSSMonthlyReport = () => {
       </div>
     </Layout>
   );
-};
+}
 
-export default SSSMonthlyReport;
+export default RF1PDF;
