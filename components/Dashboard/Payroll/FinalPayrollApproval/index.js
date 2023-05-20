@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import axios from 'axios'
+import { apiService } from '@/services/api.service';
 
 function FinalPayrollApproval() {
     const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
@@ -18,13 +19,13 @@ function FinalPayrollApproval() {
         setNormalPayroll(false)
 
     }
-    const [pendingdata, setPendingData] = useState([])
+    const [finalData, setFinalData] = useState([])
     useEffect(() => {
         getData();
     }, [])
     const getData = async () => {
-        const res = await axios.get(hostURL + "Payroll/GetEmployeeSalary")
-        setPendingData(res.data);
+        const res = await apiService.commonGetCall("Payroll/GetEmployeeFinalSalary")
+        setFinalData(res.data);
         console.log("Pending", res.data)
     }
 
@@ -132,15 +133,17 @@ function FinalPayrollApproval() {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>38242</td>
-                                <td>dummy</td>
-                                <td>CUSTOMER SERVICE</td>
-                                <td>Nov 2, 2005</td>
-                                <td>Finalization Pending</td>
-                                <td><button className='editDeleteBtnTable'>Approve</button></td>
-
-                            </tr>
+                            {
+                                finalData.map((data) => {
+                                    return (
+                                        <tr key={data.id}>
+                                            <td>{data.staffID}</td>
+                                            <td>{data.firstName}</td>
+                                            <td>{data.department_name}</td>
+                                        </tr>
+                                    )
+                                })
+                            }
                         </tbody>
                     </table>
                 )

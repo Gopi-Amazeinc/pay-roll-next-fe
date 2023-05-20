@@ -273,7 +273,7 @@ const InitialPayrollForm = () => {
             <Collapse isOpen={collapseOpen}>
               <table
                 id="downloadaplication"
-                className="table table-bordered fonttxt"
+                className="table"
                 style={{ height: "300px" }}
               >
                 <thead className="bg-info text-white ">
