@@ -102,7 +102,7 @@ const MyTeamOverTimeDetail = () => {
           <h6 style={{ color: "#3247d5" }} >Showing Results</h6>
         </div>
         < br />
-        <div classname="row">
+        <div className="row">
           <div className="table-responsive">
             <table className="table table-striped  "  style={{ marginLeft: "0px", width: "100%" }}ref={tableRef} >
               <thead className={"bg-info text-white "}>
