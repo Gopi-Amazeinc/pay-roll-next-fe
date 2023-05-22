@@ -99,7 +99,7 @@ const MyTeamAttendancecorrectiondashboard = () => {
 
     const getPendingManager = async (SDate, EDate) => {
         const res = await apiService.commonGetCall(
-            "Payroll/GetPendingAttendanceCorrectionBySupervisor?userID=" +
+            "Payroll/GetPendingAttendanceCorrectionBySupervisor?Supervisor=" +
             userID +
             "&SDate=" +
             SDate +
@@ -112,7 +112,7 @@ const MyTeamAttendancecorrectiondashboard = () => {
 
     const getApprovedManager = async (SDate, EDate) => {
         const res = await apiService.commonGetCall(
-            "Payroll/GetApprovedAttendanceCorrectionBySupervisor?userID=" +
+            "Payroll/GetApprovedAttendanceCorrectionBySupervisor?Supervisor=" +
             userID +
             "&SDate=" +
             SDate +
@@ -125,7 +125,7 @@ const MyTeamAttendancecorrectiondashboard = () => {
 
     const getRejectedManager = async (SDate, EDate) => {
         const res = await apiService.commonGetCall(
-            "Payroll/GetRejectedAttendanceCorrectionBySupervisor?userID=" +
+            "Payroll/GetRejectedAttendanceCorrectionBySupervisor?Supervisor=" +
             userID +
             "&SDate=" +
             SDate +

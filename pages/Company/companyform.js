@@ -319,7 +319,20 @@ function MyForm1({ data }) {
           <div className="row">
             <div className="col-lg-2">
               <label className={styles.p}>E-Signatory</label>
-              <input type="text" className="form-control"   {...register('E_Signatory', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
+              <div style={{border:'2px dashed black'}}> 
+                      <div {...getRootProps()}>
+                        <input {...getInputProps()} />
+                        {isDragActive ? (
+                          <p>Drop the files here ...</p>
+                        ) : (
+                          <p>
+                            Drag 'n' drop some files here, or click to select
+                            files
+                          </p>
+                        )}
+                      </div>
+                    </div>  
+              {/* <input type="text" className="form-control"   {...register('E_Signatory', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} /> */}
             </div>
           </div>
           <div className="row">

@@ -257,7 +257,7 @@ const Compensationtimeout = () => {
                             <div className='row'>
                                 <div className='col-lg-8'></div>
                                 <div className='col-lg-2 mb-3'>
-                                    <button type='submit' className=' edit-btn mt-5'>CANCEL</button>
+                                    <button type='submit' className=' edit-btn mt-5'>Cancel</button>
                                 </div>
                                 <div className='col-lg-2 mb-3'>
                                     <button onClick={reject} type='submit' className='edit-btn mt-5'>Reject </button>
@@ -296,7 +296,7 @@ const Compensationtimeout = () => {
                                                             <td>{data.comments}</td>
                                                             <td>{data.status}</td>
                                                             <td>
-                                                                <button onClick={Delete.bind(this, data.id)} className='edit-btn'>CANCEL</button>
+                                                                <button onClick={Delete.bind(this, data.id)} className='edit-btn'>Cancel</button>
                                                             </td>
                                                         </tr>
                                                     )

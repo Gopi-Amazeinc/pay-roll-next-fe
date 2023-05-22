@@ -104,7 +104,7 @@ const ApplyloansDashboard = () => {
                             <div className="col-lg-6"></div>
                             <div className="col-lg-2">
                                 <Link href="/Requests/Applyloans/new">
-                                    <button className="AddButton">ADD NEW</button>
+                                    <button className="AddButton">Add New</button>
                                 </Link>
                             </div>
                         </div>
@@ -185,7 +185,7 @@ const ApplyloansDashboard = () => {
                                                                     <td>{data.status}</td>
 
                                                                     <td>
-                                                                        <button className="edit-btn" onClick={() => DeleteApplyLoans(data.id)} >CANCEL</button>
+                                                                        <button className="edit-btn" onClick={() => DeleteApplyLoans(data.id)} >Cancel</button>
                                                                     </td>
                                                                 </tr>
                                                             )
