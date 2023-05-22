@@ -2,11 +2,11 @@ import React from 'react'
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react';
 import Swal from 'sweetalert2';
-import loan from "../../../../pages/Requests/Applyloans/applyloans.module.css"
 import Modal from 'react-modal';
 import Styles from "@../../../pages/OT/Ot.module.css"
 import { apiService } from "@/services/api.service";
 import { useForm } from 'react-hook-form';
+import ReactPaginate from "react-paginate";
 const Index = () => {
     const { register, handleSubmit, watch, formState } = useForm();
     const [pending, setPending] = useState(false)
@@ -74,6 +74,7 @@ const Index = () => {
             height: '30%'
         }
     }
+
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
     const getStartDate = (selectedDate) => {
@@ -84,7 +85,30 @@ const Index = () => {
         setEndDate(selectedDate);
         // return getDateBySelectedDate(selectedDate);
     };
-    
+    const getCurrentMonthDates = () => {
+        let newDate = new Date();
+        let firstDayOfMonth = new Date(newDate.getFullYear(), newDate.getMonth());
+        let fromDate = formateDate(firstDayOfMonth);
+        const year = newDate.getFullYear();
+        const month = newDate.getMonth() + 1;
+        const lastDay = new Date(year, month, 0).getDate();
+        const toDate = `${year}-${month.toString().padStart(2, "0")}-${lastDay
+            .toString()
+            .padStart(2, "0")}`;
+        setStartDate(fromDate);
+        setEndDate(toDate);
+        return {
+            setStartDate: fromDate,
+            setEndDate: toDate,
+        };
+    };
+
+    const formateDate = (datetoformat) => {
+        const day = datetoformat.getDate().toString().padStart(2, "0");
+        const month = (datetoformat.getMonth() + 1).toString().padStart(2, "0");
+        const year = datetoformat.getFullYear().toString();
+        return `${year}-${month}-${day}`;
+    };
     const getPendingDetails = async () => {
         const res = await apiService.commonGetCall("Payroll/GetPendingStaffOverTimeDetails")
         setNewDashboardData(res.data);
@@ -167,6 +191,13 @@ const Index = () => {
             }
         })
     }
+    const PER_PAGE = 5;
+    const [currentPage, setCurrentPage] = useState(0);
+    const handlePageClick = ({ selected: selectedPage }) => {
+        setCurrentPage(selectedPage);
+    };
+    const offset = currentPage * PER_PAGE;
+    const pageCount = Math.ceil(newDashboard.length / PER_PAGE);
 
     useEffect(() => {
         debugger;
@@ -191,8 +222,18 @@ const Index = () => {
             getManagerRejectedData(userID);
             getModalData(startTime, endTime, date, userID);
         }
+        if (userID) {
+            const resu = getCurrentMonthDates();
+            if (resu) {
+                getManagerPendingDetails(resu.setStartDate, resu.setEndDate);
+                getManagerApprovedData(resu.setStartDate, resu.setEndDate);
+                getManagerRejectedData(resu.setStartDate, resu.setEndDate);
+                getModalData(startTime, endTime, date, userID);
+            }
+        }
+        return;
 
-    }, [])
+    }, [userID])
     const Delete = (id) => {
         Swal.fire({
             title: 'Are You Sure To Cancel?',
@@ -236,9 +277,10 @@ const Index = () => {
                     <div className='col-lg-4'>
                         <input type="date" className='form-control' value={endDate || ""} onChange={(e) => getEndDate(e.target.value)} />
                     </div>
-                    <div className='col-lg-4'>
+                    <div className='col-lg-1'></div>
+                    <div className='col-lg-3'>
                         <Link href="/Requests/OverTimeDetails/new">
-                            <button className={loan.addButton}>Apply Overtime</button>
+                            <button className="AddButton">Apply Overtime</button>
                         </Link>
                     </div><br /><br /><br />
                 </div>
@@ -256,10 +298,10 @@ const Index = () => {
                     <br />
                 </div>
             </div>
-            {
-                managertogglePending && sessionStorage.getItem("roleID") == 3 && (
-                    <div className='row'>
-                        <div className='col-lg-12'>
+            <div className='row'>
+                <div className='col-lg-12'>
+                    {
+                        managertogglePending && sessionStorage.getItem("roleID") == 3 && (
                             <table className='table table-hover'>
                                 <thead className='bg-info text-white'>
                                     <tr>
@@ -275,7 +317,7 @@ const Index = () => {
 
                                 <tbody>
                                     {
-                                        managerPending.map((data) => {
+                                        managerPending.slice(offset, offset + PER_PAGE).map((data) => {
                                             return (
                                                 <tr key={data.id}>
                                                     <td>{data.date}</td>
@@ -296,16 +338,12 @@ const Index = () => {
                                     }
                                 </tbody>
                             </table>
-                        </div>
-                    </div>
-                )
-            }
+                        )
+                    }
 
 
-            {
-                managerToggleapproved && sessionStorage.getItem("roleID") == 3 && (
-                    <div className='row'>
-                        <div className='col-lg-12'>
+                    {
+                        managerToggleapproved && sessionStorage.getItem("roleID") == 3 && (
                             <table className='table table-hover'>
                                 <thead className='bg-info text-white'>
                                     <tr>
@@ -320,7 +358,7 @@ const Index = () => {
 
                                 <tbody>
                                     {
-                                        managerApproved.map((data) => {
+                                        managerApproved.slice(offset, offset + PER_PAGE).map((data) => {
                                             return (
                                                 <tr key={data.id}>
                                                     <td>{data.date}</td>
@@ -334,17 +372,12 @@ const Index = () => {
                                     }
                                 </tbody>
                             </table>
-                        </div>
-                    </div>
-
-                )
-            }
+                        )
+                    }
 
 
-            {
-                managertogglerejected && sessionStorage.getItem("roleID") == 3 && (
-                    <div className="row">
-                        <div className='col-lg-12'>
+                    {
+                        managertogglerejected && sessionStorage.getItem("roleID") == 3 && (
                             <table className='table table-hover'>
                                 <thead className='bg-info text-white'>
                                     <tr>
@@ -360,7 +393,7 @@ const Index = () => {
 
                                 <tbody>
                                     {
-                                        managerRejected.map((data) => {
+                                        managerRejected.slice(offset, offset + PER_PAGE).map((data) => {
                                             return (
                                                 <tr key={data.id}>
                                                     <td>{data.date}</td>
@@ -374,15 +407,10 @@ const Index = () => {
                                     }
                                 </tbody>
                             </table>
-                        </div>
-                    </div>
-
-                )
-            }
-            {
-                pending && sessionStorage.getItem("roleID") == 5 && (
-                    <div className='row'>
-                        <div className='col-lg-12'>
+                        )
+                    }
+                    {
+                        pending && sessionStorage.getItem("roleID") == 5 && (
                             <table className='table table-hover'>
                                 <thead className='bg-info text-white'>
                                     <tr>
@@ -398,7 +426,7 @@ const Index = () => {
 
                                 <tbody>
                                     {
-                                        newDashboard.map((data) => {
+                                        newDashboard.slice(offset, offset + PER_PAGE).map((data) => {
                                             return (
                                                 <tr key={data.id}>
                                                     <td>{data.date}</td>
@@ -410,7 +438,7 @@ const Index = () => {
                                                     <td>{data.comments}</td>
                                                     <td>{data.status}</td>
                                                     <td>
-                                                        <button onClick={Delete.bind(this, data.id)} className='edit-btn'>Cancel</button>
+                                                        <button onClick={Delete.bind(this, data.id)} className='edit-btn'>CANCEL</button>
                                                     </td>
                                                 </tr>
                                             )
@@ -418,14 +446,10 @@ const Index = () => {
                                     }
                                 </tbody>
                             </table>
-                        </div>
-                    </div>
-                )
-            }
-            {
-                approved && sessionStorage.getItem("roleID") == 5 && (
-                    <div className='row'>
-                        <div className='col-lg-12'>
+                        )
+                    }
+                    {
+                        approved && sessionStorage.getItem("roleID") == 5 && (
                             <table className='table table-hover'>
                                 <thead className='bg-info text-white'>
                                     <tr>
@@ -439,7 +463,7 @@ const Index = () => {
 
                                 <tbody>
                                     {
-                                        newApproved.map((data) => {
+                                        newApproved.slice(offset, offset + PER_PAGE).map((data) => {
                                             return (
                                                 <tr key={data.id}>
                                                     <td>{data.date}</td>
@@ -453,14 +477,11 @@ const Index = () => {
                                     }
                                 </tbody>
                             </table>
-                        </div>
-                    </div>
-                )
-            }
-            {
-                rejected && sessionStorage.getItem("roleID") == 5 && (
-                    <div className='row'>
-                        <div className='col-lg-12'>
+                        )
+                    }
+                    {
+                        rejected && sessionStorage.getItem("roleID") == 5 && (
+
                             <table className='table table-hover'>
                                 <thead className='bg-info text-white'>
                                     <tr>
@@ -474,7 +495,7 @@ const Index = () => {
 
                                 <tbody>
                                     {
-                                        newRejected.map((data) => {
+                                        newRejected.slice(offset, offset + PER_PAGE).map((data) => {
                                             return (
                                                 <tr key={data.id}>
                                                     <td>{data.date}</td>
@@ -488,76 +509,96 @@ const Index = () => {
                                     }
                                 </tbody>
                             </table>
+
+                        )
+                    }
+                    <Modal ariaHideApp={false} isOpen={modalOpen} style={customStyles} contentLabel="Example Modal">
+                        <div className='row'>
+                            <div className='col-lg-6'>
+                                <div className=" modal-header">
+                                    <h5 className=" modal-title" id="exampleModalLabel">
+                                        Overtime Details
+                                    </h5>
+                                </div>
+                            </div>
+                            <div className='col-lg-5'></div>
+                            <div className='col-lg-1'>
+                                <button aria-label="Close" type="button" className={Styles.close} onClick={closeModal} >X</button>
+                            </div>
+                        </div><br />
+                        <div className='row'>
+                            <div className='col-lg-12'>
+                                <table className="table table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Normal OT</th>
+                                            <th>Night OT</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {
+                                            modalData.map((data, index) => {
+                                                return (
+                                                    <tr key={index}>
+                                                        <td>{data.normalOT}</td>
+                                                        <td>{data.nightOt}</td>
+                                                    </tr>
+                                                )
+                                            })
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
-                    </div>
-                )
-            }
-            <Modal ariaHideApp={false} isOpen={modalOpen} style={customStyles} contentLabel="Example Modal">
-                <div className='row'>
-                    <div className='col-lg-6'>
-                        <div className=" modal-header">
-                            <h5 className=" modal-title" id="exampleModalLabel">
-                                Overtime Details
-                            </h5>
+                    </Modal>
+                    <Modal ariaHideApp={false} isOpen={isOpen} style={customStyles}>
+                        <div className='container'>
+                            <div className='row card-header'>
+                                <div className='col-lg-8'>
+                                    <h4>Rejecting Request</h4>
+                                </div>
+                                <div className='col-lg-3'></div>
+                                <div className='col-lg-1'>
+                                    <button aria-label="Close" type="button" className={Styles.close} onClick={() => ModalIsOpen(false)}>X</button>
+                                </div>
+                            </div><br />
+                            <div className='row'>
+                                <div className='col-lg-12'>
+                                    <textarea rows={4} {...register("Reason")} className='form-control' placeholder='Write the reason here..'></textarea>
+                                </div>
+                            </div>
+                            <div className='row'>
+                                <div className='col-lg-8'></div>
+                                <div className='col-lg-2'>
+                                    <button type='submit' className='edit-btn mt-5' onClick={() => ModalIsOpen(false)}>CANCEL</button>
+                                </div>
+                                <div className='col-lg-2'>
+                                    <button onClick={reject} type='submit' className='edit-btn mt-5'>Reject </button>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div className='col-lg-5'></div>
-                    <div className='col-lg-1'>
-                        <button aria-label="Close" type="button" className={Styles.close} onClick={closeModal} >X</button>
-                    </div>
-                </div><br />
-                <div className='row'>
-                    <div className='col-lg-12'>
-                        <table className="table table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Normal OT</th>
-                                    <th>Night OT</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {
-                                    modalData.map((data, index) => {
-                                        return (
-                                            <tr key={index}>
-                                                <td>{data.normalOT}</td>
-                                                <td>{data.nightOt}</td>
-                                            </tr>
-                                        )
-                                    })
-                                }
-                            </tbody>
-                        </table>
-                    </div>
+                    </Modal>
                 </div>
-            </Modal>
-            <Modal ariaHideApp={false} isOpen={isOpen} style={customStyles}>
-                <div className='container'>
-                    <div className='row card-header'>
-                        <div className='col-lg-8'>
-                            <h4>Rejecting Request</h4>
-                        </div>
-                        <div className='col-lg-3'></div>
-                        <div className='col-lg-1'>
-                            <button aria-label="Close" type="button" className={Styles.close} onClick={() => ModalIsOpen(false)}>X</button>
-                        </div>
-                    </div><br />
-                    <div className='row'>
-                        <div className='col-lg-12'>
-                            <textarea rows={4} {...register("Reason")} className='form-control' placeholder='Write the reason here..'></textarea>
-                        </div>
-                    </div>
-                    <div className='row'>
-                        <div className='col-lg-8'></div>
-                        <div className='col-lg-2'>
-                            <button type='submit' className='edit-btn mt-5' onClick={() => ModalIsOpen(false)}>Cancel</button>
-                        </div>
-                        <div className='col-lg-2'>
-                            <button onClick={reject} type='submit' className='edit-btn mt-5'>Reject </button>
-                        </div>
-                    </div>
-                </div>
-            </Modal>
+            </div>
+            <ReactPaginate
+                previousLabel={"Previous"}
+                nextLabel={"Next"}
+                breakLabel={"..."}
+                pageCount={pageCount}
+                marginPagesDisplayed={2}
+                pageRangeDisplayed={3}
+                onPageChange={handlePageClick}
+                containerClassName={"pagination  justify-content-center"}
+                pageClassName={"page-item "}
+                pageLinkClassName={"page-link"}
+                previousClassName={"page-item"}
+                previousLinkClassName={"page-link"}
+                nextClassName={"page-item"}
+                nextLinkClassName={"page-link"}
+                breakClassName={"page-item"}
+                breakLinkClassName={"page-link"}
+                activeClassName={"active primary"}
+            />
         </div >
     )
 }

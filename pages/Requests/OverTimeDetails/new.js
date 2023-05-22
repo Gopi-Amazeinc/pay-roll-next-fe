@@ -86,6 +86,7 @@ const OverTimeDetails = () => {
     await apiService.commonPostCall("HR/InsertStaffOverTimeDetails", details);
     Swal.fire('Data Inserted successfully');
     console.log("Inserted data:", details);
+    router.push("/Requests/OverTimeDetails");
   }
   return (
     <Layout>
