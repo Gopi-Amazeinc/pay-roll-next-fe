@@ -2,7 +2,7 @@ import Link from "next/link";
 import React from "react";
 import Router from "next/router";
 import { useEffect, useState } from "react";
-import { useRef } from "react";
+import { useRef } from 'react';
 import axios from "axios";
 import Styles from "@/styles/attendancedetails.module.css";
 import { apiService } from "@/services/api.service";
@@ -10,11 +10,15 @@ import ReactPaginate from "react-paginate";
 import { DownloadTableExcel } from "react-export-table-to-excel";
 
 const MyTeamAttendence = () => {
+  const staffDetailsRef = useRef(null);
   const tableRef = useRef(null);
   const [MyTeamAttendence, setMyTeamAttendence] = useState([]);
 
   const [userID, setUserID] = useState();
   const [roleID, setRoleID] = useState();
+
+  const [StaffData, setStaffData] = useState();
+  const [selctedStaffdata, setselctedStaffdata] = useState();
 
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
@@ -36,6 +40,18 @@ const MyTeamAttendence = () => {
     // }
     // getAttendenceByID();
   }, []);
+
+  // Gopi's Code => tried for onchnage function
+  useEffect(async () => {
+    await apiService.commonGetCall("Payrool/GetStaff").then((staffData) => {// check the URL OF THE API ONCE GIVEN
+      staffDetailsRef.current = staffData.filter((x) =>
+        x.data.id = userID
+      )
+    })
+    setStaffData(staffDetailsRef.current)
+  }, []);
+
+  // Gopi's code end's
 
   useEffect(() => {
     if (userID) {
@@ -97,15 +113,19 @@ const MyTeamAttendence = () => {
     if (userID) {
       const res = await apiService.commonGetCall(
         "HR/GetAttendanceByManagerID?Supervisor=" +
-          Supervisor +
-          "&SDate=" +
-          SDate +
-          "&EDate=" +
-          EDate
+        Supervisor +
+        "&SDate=" +
+        SDate +
+        "&EDate=" +
+        EDate
       );
       setMyTeamAttendence(res.data);
     }
   };
+
+  const handleStaffChange = (selectedStaff) => {
+    setselctedStaffdata(selectedStaff)
+  }
 
   return (
     <div>
@@ -148,8 +168,8 @@ const MyTeamAttendence = () => {
             <div className="col-lg-2">
               <p className={Styles.filterdate}>End Date</p>
               <input type="date" className="form-control"
-               value={endDate || ""}
-               onChange={(e) => getEndDate(e.target.value)}
+                value={endDate || ""}
+                onChange={(e) => getEndDate(e.target.value)}
               />
             </div>
 
@@ -157,8 +177,15 @@ const MyTeamAttendence = () => {
               <p className={Styles.filterdate}>
                 Staff<i className="text-danger">*</i>
               </p>
-              <select className="form-select">
+              <select className="form-select" onChange={(e) => handleStaffChange(e.target.value)}>
                 <option>Select Staff</option>
+                {staffDetailsRef.current.map((data, index) => {
+                  return (
+                    <option value={data.id} key={index}>
+                      {data.name}
+                    </option>
+                  );
+                })}
               </select>
             </div>
 
@@ -187,7 +214,7 @@ const MyTeamAttendence = () => {
             </div>
           </div>
         </div>
-        <br/>
+        <br />
         <table
           className="table table-hover"
           style={{ marginLeft: "0px" }}
