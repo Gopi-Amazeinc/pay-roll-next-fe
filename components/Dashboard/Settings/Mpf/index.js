@@ -74,7 +74,7 @@ function Mpf() {
 
                     <div className='col-lg-2'>
                         <br />
-                        <Link href="/Settings/Mpf/new" className={Styles.addLink} > <button className='AddButton' onClick={clearData.bind(this)} > ADD NEW</button></Link>
+                        <Link href="/Settings/Mpf/new" > <button className='AddButton' onClick={clearData.bind(this)} > ADD NEW</button></Link>
 
                     </div>
                 </div>
