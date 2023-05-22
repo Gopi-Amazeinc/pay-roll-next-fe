@@ -7,6 +7,7 @@ import Styles from "@/styles/attendancedetails.module.css";
 import ReactPaginate from "react-paginate";
 import { DownloadTableExcel } from "react-export-table-to-excel";
 import { useRouter } from "next/router";
+import Swal from "sweetalert2";
 
 const AttendenceDetails = () => {
   const router = useRouter();
@@ -27,19 +28,15 @@ const AttendenceDetails = () => {
   }, []);
 
   useEffect(() => {
-    // router.onRouteChange(({ route }) => {
-    //   if (route === '/Attendance/AttendanceDetails') {
-    // if (router.route === "/Attendance/AttendanceDetails") {
-      if (userID) {
-        const resu = getCurrentMonthDates();
-        if (resu) {
-          getAttendenceByID(resu.setStartDate, resu.setEndDate);
-        }
+    if (userID) {
+      const resu = getCurrentMonthDates();
+      if (resu) {
+        getAttendenceByID(resu.setStartDate, resu.setEndDate);
       }
-      return;
-    // }
-  }, [userID]);
+    }
+    return;
 
+  }, [userID]);
 
   const getCurrentMonthDates = () => {
     let newDate = new Date();
@@ -77,13 +74,24 @@ const AttendenceDetails = () => {
   const getStartDate = (selectedDate) => {
     setStartDate(selectedDate);
     setEndDate("");
+    // return dateValidation(selectedDate)
   };
 
   const getEndDate = (selectedDate) => {
     setEndDate(selectedDate);
-    return getDateBySelectedDate(selectedDate);
+    return dateValidation(selectedDate);
   };
-  const getDateBySelectedDate = (endDatesss) => {
+  const dateValidation = (selectedDate) => {
+    if (new Date(startDate) > new Date(selectedDate)) {
+      Swal.fire("End Date should be greater than Start Date");
+    } else {
+      setEndDate(selectedDate);
+      return getDataBySelectedDate(selectedDate);
+    }
+  };
+
+
+  const getDataBySelectedDate = (endDatesss) => {
     debugger;
     return getAttendenceByID(startDate, endDatesss);
   };
@@ -94,7 +102,8 @@ const AttendenceDetails = () => {
   // };
 
   const getAttendenceByID = async (SDate, EDate) => {
-    if (userID) {
+    debugger
+    // if (userID) {
       const res = await apiService.commonGetCall(
         "HR/GetAttendanceByEmployeeID?userID=" +
           userID +
@@ -104,14 +113,14 @@ const AttendenceDetails = () => {
           EDate
       );
       setAttendence(res.data);
-    }
+    // }
   };
 
   const PER_PAGE = 5;
   const [currentPage, setCurrentPage] = useState(0);
-  const handlePageClick=({ selected: selectedPage })=> {
+  const handlePageClick = ({ selected: selectedPage }) => {
     setCurrentPage(selectedPage);
-  }
+  };
   const offset = currentPage * PER_PAGE;
   const pageCount = Math.ceil(Attendence.length / PER_PAGE);
 
@@ -229,31 +238,31 @@ const AttendenceDetails = () => {
               <tbody>
                 {Array.isArray(Attendence) && Attendence.length > 0 && (
                   <>
-                    {Attendence
-                    .slice(offset, offset + PER_PAGE)
-                    .map((data,index) => {
-                      return (
-                        <tr className="" key={index}>
-                          <td>{data.signinDate}</td>
-                          <td>{data.signInType}</td>
-                          <td>{data.signInWorkType}</td>
-                          <td>{data.expectedIn}</td>
-                          <td>{data.expectedOut}</td>
-                          <td>{data.stime}</td>
-                          <td>{data.etime}</td>
-                          <td>{data.hr}</td>
-                          <td>{data.ot}</td>
-                          <td>{data.undertime}</td>
-                          <td>{data.latepunchin}</td>
-                          {/* <td>{data.hr1}</td>
+                    {Attendence.slice(offset, offset + PER_PAGE).map(
+                      (data, index) => {
+                        return (
+                          <tr className="" key={index}>
+                            <td>{data.signinDate}</td>
+                            <td>{data.signInType}</td>
+                            <td>{data.signInWorkType}</td>
+                            <td>{data.expectedIn}</td>
+                            <td>{data.expectedOut}</td>
+                            <td>{data.stime}</td>
+                            <td>{data.etime}</td>
+                            <td>{data.hr}</td>
+                            <td>{data.ot}</td>
+                            <td>{data.undertime}</td>
+                            <td>{data.latepunchin}</td>
+                            {/* <td>{data.hr1}</td>
                     <td>{data.underTime}</td>
                     <td>{data.late}</td> */}
-                          {/* <td>
+                            {/* <td>
                           <button className='edit-btn'>Cancel</button>
                         </td> */}
-                        </tr>
-                      );
-                    })}
+                          </tr>
+                        );
+                      }
+                    )}
                   </>
                 )}
               </tbody>
