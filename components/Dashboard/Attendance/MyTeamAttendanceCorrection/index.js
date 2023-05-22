@@ -28,7 +28,7 @@ const MyTeamAttendancecorrectiondashboard = () => {
 
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
-    const [count, setcount] = useState(0);
+    const [count, setcount] = useState("");
     const [keyword, setKeyword] = useState("");
 
     const togglePending = () => {
