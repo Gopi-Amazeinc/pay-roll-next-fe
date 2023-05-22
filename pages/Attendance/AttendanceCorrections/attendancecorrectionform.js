@@ -56,7 +56,7 @@ export default function AttendanceCorrectionform() {
     return (
         <Layout>
             <div className='container'>
-                <h3 className=' fs-5 mt-3 fw-bold'  style={{ color: "#3247d5" }}>Add Attendance Correction</h3>
+                <h3 className=' fs-5 mt-3 fw-bold' style={{ color: "#3247d5" }}>Add Attendance Correction</h3>
                 <div className='card p-3 border-0 shadow-lg '>
                     <form onSubmit={handleSubmit(onSubmit)} >
                         <div className='row'>

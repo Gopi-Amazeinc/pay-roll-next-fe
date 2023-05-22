@@ -7,7 +7,7 @@ import { apiService } from "@/services/api.service";
 import Styles from "@/styles/attendancedetails.module.css";
 import { useRouter } from "next/router";
 import { DownloadTableExcel } from 'react-export-table-to-excel';
-
+import { IoIosAddCircleOutline } from "react-icons/io";
 const Attendancecorrectiondashboard = () => {
   const tableRef = useRef(null);
 
@@ -230,7 +230,7 @@ const Attendancecorrectiondashboard = () => {
       <div className="card p-3 border-0 rounded-3">
         <div className="row p-3">
           <div className="col-lg-1">
-            <p>Filter By</p>
+            <p> <b>Filter By</b></p>
           </div>
 
           <div className="col-lg-5">
@@ -242,17 +242,17 @@ const Attendancecorrectiondashboard = () => {
             />
           </div>
 
-          <div className="col-lg-4">
+          <div className="col-lg-5">
             {(roleID == 3 || roleID == 5 || roleID == 4) && (
               <div className="row">
-                <div className="col-lg-8">
+                <div className="col-lg-7">
                   <Link href="/Attendance/AttendanceCorrections/attendancecorrectionform">
                     <button className="button">
-                      Add Attendance Correction
+                    <IoIosAddCircleOutline size={18} color={"white"} />  Add Attendance Correction
                     </button>
                   </Link>
                 </div>
-                <div className="col-lg-4">
+                <div className="col-lg-3">
                   <DownloadTableExcel
                     filename="Attendance table"
                     sheet="Attendance"
