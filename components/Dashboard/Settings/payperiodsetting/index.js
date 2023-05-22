@@ -87,7 +87,10 @@ export default function PayperiodSettingsDash() {
                         </thead>
                         <tbody>
                             {payperiodSettingsDashboard.filter(data => {
-                                if ((data.payCode.toLowerCase().includes(keyword.toLowerCase())) || (data.payPeriod.toLowerCase().includes(keyword))) {
+                                if ((data.payCode.toLowerCase().includes(keyword.toLowerCase())) || (data.payPeriod.toLowerCase().includes(keyword))||
+                                (data.payrollRunType.toLowerCase().includes(keyword.toLowerCase())) || (data.comments.toLowerCase().includes(keyword))||
+                                (data.attendanceCoverageStartdate.toString().includes(keyword.toString())) || (data.attendanceCoverageEndDate.toString().includes(keyword))||
+                                (data.payrollStartDate.toString().includes(keyword.toString())) || (data.payrollEndDate.toString().includes(keyword)) ) {
                                     return data;
                                 }
                             }).map((data, index) => {

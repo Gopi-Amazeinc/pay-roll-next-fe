@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import Modal from 'react-modal';
 import { AiOutlineClose } from 'react-icons/ai'
 import { apiService } from "@/services/api.service";
+import ReactPaginate from "react-paginate";
 import leave from "../../../../pages/Requests/Compensationtimeout/compensation.module.css"
 
 const Compensationtimeout = () => {
@@ -62,6 +63,7 @@ const Compensationtimeout = () => {
         setManagerToggleApproved(false);
         setManagerToggleRejected(true);
     }
+
 
     const customStyles = {
         content: {
@@ -181,6 +183,13 @@ const Compensationtimeout = () => {
         //     }
         // })
     }
+    const PER_PAGE = 5;
+    const [currentPage, setCurrentPage] = useState(0);
+    const handlePageClick = ({ selected: selectedPage }) => {
+        setCurrentPage(selectedPage);
+    };
+    const offset = currentPage * PER_PAGE;
+    const pageCount = Math.ceil(pendingDashboard.length / PER_PAGE);
 
     useEffect(() => {
         getPendingData()
@@ -202,7 +211,7 @@ const Compensationtimeout = () => {
                     <div className='card p-3 border-0 rounded-3'>
                         <div className='row p-3'>
                             <div className='col-lg-1'>
-                                <label style={{fontWeight:"bold"}}>Filter By</label>
+                                <label style={{ fontWeight: "bold" }}>Filter By</label>
                             </div>
 
                             <div className='col-lg-3'>
@@ -248,7 +257,7 @@ const Compensationtimeout = () => {
                             <div className='row'>
                                 <div className='col-lg-8'></div>
                                 <div className='col-lg-2 mb-3'>
-                                    <button type='submit' className=' edit-btn mt-5'>Cancel</button>
+                                    <button type='submit' className=' edit-btn mt-5'>CANCEL</button>
                                 </div>
                                 <div className='col-lg-2 mb-3'>
                                     <button onClick={reject} type='submit' className='edit-btn mt-5'>Reject </button>
@@ -279,10 +288,10 @@ const Compensationtimeout = () => {
                                             <tbody>
                                                 {
                                                     pendingDashboard.filter(data => {
-                                                        if ((data.date.toLowerCase().includes(keyword.toLowerCase())) || (data.status.toLowerCase().includes(keyword))) {
+                                                        if ((data.date.toString().includes(keyword.toLowerCase())) || (data.status.toLowerCase().includes(keyword))) {
                                                             return data;
                                                         }
-                                                    }).map((data) => {
+                                                    }).slice(offset, offset + PER_PAGE).map((data) => {
                                                         return (
                                                             <tr key={data.id}>
                                                                 <td>{data.date}</td>
@@ -291,7 +300,7 @@ const Compensationtimeout = () => {
                                                                 <td>{data.comments}</td>
                                                                 <td>{data.status}</td>
                                                                 <td>
-                                                                    <button onClick={Delete.bind(this, data.id)} className='edit-btn'>Cancel</button>
+                                                                    <button onClick={Delete.bind(this, data.id)} className='edit-btn'>CANCEL</button>
                                                                 </td>
                                                             </tr>
                                                         )
@@ -323,10 +332,10 @@ const Compensationtimeout = () => {
                                             <tbody>
                                                 {
                                                     compensation.filter(data => {
-                                                        if ((data.date.toLowerCase().includes(keyword.toLowerCase())) || (data.status.toLowerCase().includes(keyword))) {
+                                                        if ((data.date.toString().includes(keyword.toLowerCase())) || (data.status.toLowerCase().includes(keyword))) {
                                                             return data;
                                                         }
-                                                    }).map((data) => {
+                                                    }).slice(offset, offset + PER_PAGE).map((data) => {
                                                         return (
                                                             <tr key={data.id}>
                                                                 <td>{data.staffname}</td>
@@ -366,10 +375,10 @@ const Compensationtimeout = () => {
                                             <tbody>
                                                 {
                                                     approvedDashboard.filter(data => {
-                                                        if ((data.date.toLowerCase().includes(keyword.toLowerCase())) || (data.status.toLowerCase().includes(keyword))) {
+                                                        if ((data.date.toString().includes(keyword.toLowerCase())) || (data.status.toLowerCase().includes(keyword))) {
                                                             return data;
                                                         }
-                                                    }).map((data) => {
+                                                    }).slice(offset, offset + PER_PAGE).map((data) => {
                                                         return (
                                                             <tr key={data.id}>
                                                                 <td>{data.date}</td>
@@ -409,7 +418,7 @@ const Compensationtimeout = () => {
                                                         if ((data.date.toLowerCase().includes(keyword.toLowerCase())) || (data.status.toLowerCase().includes(keyword))) {
                                                             return data;
                                                         }
-                                                    }).map((data) => {
+                                                    }).slice(offset, offset + PER_PAGE).map((data) => {
                                                         return (
                                                             <tr key={data.id}>
                                                                 <td>{data.staffname}</td>
@@ -448,7 +457,7 @@ const Compensationtimeout = () => {
                                                         if ((data.date.toLowerCase().includes(keyword.toLowerCase())) || (data.status.toLowerCase().includes(keyword))) {
                                                             return data;
                                                         }
-                                                    }).map((data) => {
+                                                    }).slice(offset, offset + PER_PAGE).map((data) => {
                                                         return (
                                                             <tr key={data.id}>
                                                                 <td>{data.date}</td>
@@ -488,7 +497,7 @@ const Compensationtimeout = () => {
                                                         if ((data.date.toLowerCase().includes(keyword.toLowerCase())) || (data.status.toLowerCase().includes(keyword))) {
                                                             return data;
                                                         }
-                                                    }).map((data) => {
+                                                    }).slice(offset, offset + PER_PAGE).map((data) => {
                                                         return (
                                                             <tr key={data.id}>
                                                                 <td>{data.staffname}</td>
@@ -508,7 +517,27 @@ const Compensationtimeout = () => {
                     </div>
                 </div>
             </div>
+            <ReactPaginate
+                previousLabel={"Previous"}
+                nextLabel={"Next"}
+                breakLabel={"..."}
+                pageCount={pageCount}
+                marginPagesDisplayed={2}
+                pageRangeDisplayed={3}
+                onPageChange={handlePageClick}
+                containerClassName={"pagination  justify-content-center"}
+                pageClassName={"page-item "}
+                pageLinkClassName={"page-link"}
+                previousClassName={"page-item"}
+                previousLinkClassName={"page-link"}
+                nextClassName={"page-item"}
+                nextLinkClassName={"page-link"}
+                breakClassName={"page-item"}
+                breakLinkClassName={"page-link"}
+                activeClassName={"active primary"}
+            />
         </div>
+
 
 
     )

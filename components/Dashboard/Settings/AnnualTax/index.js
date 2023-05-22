@@ -63,7 +63,7 @@ const AnnualTax = () => {
                     <div className='col-lg-10'></div>
                     <div className='col-lg-2'>
 
-                        <Link href="/Settings/AnnualTax/new"><button onClick={clearSession} className='AddButton'  >Add New</button></Link>
+                        <Link href="/Settings/AnnualTax/new"><button className='AddButton'  >Add New</button></Link>
 
                     </div>
                 </div>
@@ -86,7 +86,16 @@ const AnnualTax = () => {
 
                         <tbody>
                             {
-                                annualTax.map((data, index) => {
+                                annualTax.filter(data => {
+                                    if ((data.taxlowlevellimit.toString().includes(keyword.toString())) || (data.taxhighlevellimit.toString().includes(keyword.toString()))||
+                                    (data.slab.toString().includes(keyword.toString()))||
+                                    (data.percentage.toString().includes(keyword.toString()))||
+                                    (data.taxexcessamount.toString().includes(keyword.toString()))||
+                                    (data.taxdeductionamount.toString().includes(keyword.toString()))||
+                                    (data.year.toString().includes(keyword.toString()))) {
+                                        return data;
+                                    }
+                                }).map((data, index) => {
                                     return (
                                         <tr key={index}>
                                             <td>{data.taxlowlevellimit}</td>

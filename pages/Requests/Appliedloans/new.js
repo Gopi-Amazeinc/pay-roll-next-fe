@@ -19,22 +19,17 @@ function Appliedloans() {
     }
     return (
         <Layout>
-
             <div className="container-fluid">
                 <div className="row">
-                    <div className="col-md-12">
+                    <div className="col-lg-12">
                         <br /><br />
                         <div className="row">
-                            <br />
-                            <h2>Yet to bind</h2>
                             <div className="col-lg-2">
-                            <Link href="/Requests/appliedloans" className="Heading1">My Loans</Link>
+                                <Link href="/Requests/appliedloans" className="Heading1">My Loans</Link>
                             </div>
-
                             <div className="col-lg-2">
-                            <Link href="/Requests/appliedloans" className="Heading1" tabIndex="0">All Staff Loans</Link>
+                                <Link href="/Requests/appliedloans" className="Heading1" tabIndex="0">All Staff Loans</Link>
                             </div>
-
                         </div>
                         <br />
                         <div className="card shadow p-4">

@@ -4,7 +4,7 @@ import Swal from 'sweetalert2'
 import Link from 'next/link'
 const SemiMonthlyTax = () => {
     let [dashboard, setDashboard] = useState([])
-    let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+    const [keyword, setKeyword] = useState("");
     const getData = async () => {
         let res = await apiService.commonGetCall("HR/GetTaxconfigarationsemimonth") //getting semiannual tax data and displaying in table [Shashank]
         console.log(res.data)
@@ -59,7 +59,7 @@ const SemiMonthlyTax = () => {
                                 </div>
 
                                 <div className='col-lg-3'>
-                                    <input type="text" className='form-control' placeholder='Search...' />
+                                    <input type="text" className='form-control' placeholder='Search...' onChange={e => setKeyword(e.target.value)}  />
                                 </div>
                             </div>
                         </div>
@@ -90,7 +90,16 @@ const SemiMonthlyTax = () => {
                             </thead>
                             <tbody>
                                 {
-                                    dashboard.map((data) => {
+                                    dashboard.filter(data => {
+                                        if ((data.taxlowlevellimit.toString().includes(keyword.toString())) || (data.taxhighlevellimit.toString().includes(keyword.toString()))||
+                                        (data.slab.toString().includes(keyword.toString()))||
+                                        (data.percentage.toString().includes(keyword.toString()))||
+                                        (data.taxexcessamount.toString().includes(keyword.toString()))||
+                                        (data.taxdeductionamount.toString().includes(keyword.toString()))||
+                                        (data.year.toString().includes(keyword.toString()))) {
+                                            return data;
+                                        }
+                                    }).map((data) => {
                                         return (
                                             <tr key={data.id}>
                                                 <td>{data.taxlowlevellimit}</td>
