@@ -4,42 +4,62 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import Link from 'next/link';
 import Styles from '../../../styles/mpfadd.module.css'
-
-function MpfForm({ }) {
+import { useEffect, useState } from 'react';
+import { apiService } from "@/services/api.service";
+import { useRouter } from 'next/router';
+function MpfForm({ editData}) {
     const { register, handleSubmit, reset, formState } = useForm();
     const { errors } = formState;
+    const [actionType, setActionType] = useState("insert");
+    const router = useRouter();
+ 
+    function clearForm(mpfData = null) {
+        let details = {
+          "ID": mpfData ? mpfData.id : "",
+          "Taxiableincomelowlimit": mpfData ? mpfData.taxiableincomelowlimit : "",
+          "Taxiableincomehighlimit": mpfData ? mpfData.taxiableincomehighlimit : "",
+          "MPF_EEvalue": mpfData ? mpfData.mpF_EEvalue : "",
+          "MPF_ERvalue": mpfData ? mpfData.mpF_ERvalue : "",
+          "MPF_Ecvalue": mpfData ? mpfData.mpF_Ecvalue : "",
+          "Year": mpfData ? mpfData.year : ""
+        }
+        reset(details);
+        setActionType(mpfData ? "update" : "insert");
+      }
+      useEffect(() => {
+        const { id } = editData || {};
+        if (id) {
+            // This API is used to fetch the data from BarangayMaster ByID table
+            getData(id);
+        } else {
+            clearForm();
+        }
+    }, []);
+
+    const getData = async (id) => {
+        const res = await apiService.commonGetCall(
+            "HR/GetMPFconfogarationByID?ID=" + id
+        );
+        clearForm(res.data[0]);
+    };
+
+    const onSubmit = async (data) => {
+        if (actionType == "insert") {
+            await apiService.commonPostCall("HR/InsertMPFconfogaration", data) // inserting new division master data [Shashank]
+            router.push('/Settings/Mpf');
+            Swal.fire({
+                icon: 'success',
+                title: 'Added Successfully',
+            })
+        } else {
+            await apiService.commonPostCall("HR/UpdateMPFconfogaration", data); // this is for updating or Modifiying the data using  Update Api call
+            Swal.fire('Updated successfully')
+            router.push( '/Settings/Mpf');
+        }
+    };
 
 
-    // useEffect(() => {
-    //     async function getMpfList() {
-    //         const id = sessionStorage.getItem("id");
-    //         if (id) {
-    //             let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-    //             // This API is used to fetch the dashboard data from MPFConfogoration table based on ID
-    //             const response = await axios.get(hostURL + "HR/GetMPFconfogarationByID?ID=" + id);
-    //             clearForm(response.data[0])
-    //         }
-    //         else {
-    //             clearForm();
-    //         }
-    //     }
-    //     getMpfList();
-    // }, [1]);
 
-
-
-    async function onSubmit(data) {
-        let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-        // This API is used to insert the data to the MPFConfogoration table
-        await axios.post(hostURL + "HR/InsertMPFconfogaration", data);
-        Swal.fire({
-            icon: "success",
-            title: "Hurray..",
-            text: "Data was inserted...!",
-        });
-        location.href = '/Settings/Mpf';
-
-    }
 
     return (
         <Layout>
@@ -81,8 +101,8 @@ function MpfForm({ }) {
                                         </div>
                                         <div className='col-lg-2'>
                                             <label className='fw-bold'>Year<span className={Styles.span}>*</span></label>
-                                            <select className="form-control" {...register("Year", { required: true })}>
-                                                <option >Select year</option>
+                                            <select className="form-control" {...register("Year", { required: "This field is required" })}>
+                                                <option value='' >Select year</option>
                                                 <option>2023</option>
                                                 <option>2024</option>
                                                 <option>2025</option>
@@ -100,10 +120,17 @@ function MpfForm({ }) {
                                             <Link href='/Settings/Mpf'><button className='AddButton'>Cancel</button></Link>
                                         </div>
                                         <div className='col-lg-2'>
-
-                                            <button type='submit' className='AddButton' >Save</button>
-
-                                        </div>
+                                        {
+                                            actionType == "insert" && (
+                                                <button type='submit' className="AddButton" >Save</button>
+                                            )
+                                        }
+                                        {
+                                            actionType == "update" && (
+                                                <button type='submit' className="AddButton" >Update</button>
+                                            )
+                                        }
+                                    </div>
                                     </div>
 
                                 

@@ -18,7 +18,7 @@ const Compensationtimeoutform = () => {
             // debugger
             await apiService.commonPostCall("/Payroll/InsertCompensationTimeOut", data)
             // router.push("/Requests/compensationtimeout")
-            location.href = "/Requests/Compensationtimeout"
+            router.push("/Requests/Compensationtimeout");
             Swal.fire({
                 icon: 'success',
                 title: 'Added Successfully',
@@ -49,41 +49,45 @@ const Compensationtimeoutform = () => {
     return (
         <Layout>
             <div className='container-fluid'>
-                <label className='Heading'>Add Compensation</label><br /><br />
-                <div className='card p-3 border-0 shadow-lg '>
-                    <form onSubmit={handleSubmit(onSubmit)}>
-                        <div className='row'>
-                            <div className='col-lg-3'>
-                                <label style={{ fontWeight: "bold" }}>Date Request <i className='text-danger'>*</i></label>
-                                <input type='date' className='form-control' {...register('Date_Request', { required: "Select Valid Date" })} />
-                                {errors.Date_Request && <p className="error-message" style={{ color: "red" }}>{errors.Date_Request.message}</p>}
-                            </div>
-                            <div className='col-lg-3'>
-                                <label style={{ fontWeight: "bold" }}>Start Time <i className='text-danger'>*</i></label>
-                                <input type='time' className='form-control' {...register('Actuval_StartTime', { required: "Select Valid Start Time" })} />
-                                {errors.Actuval_StartTime && <p className="error-message" style={{ color: "red" }}>{errors.Actuval_StartTime.message}</p>}
-                            </div>
-                            <div className='col-lg-3'>
-                                <label style={{ fontWeight: "bold" }}>End Time <i className='text-danger'>*</i></label>
-                                <input type='time' className='form-control' {...register('Actuval_EndTime', { required: "Select Valid End Time" })} />
-                                {errors.Actuval_EndTime && <p className="error-message" style={{ color: "red" }}>{errors.Actuval_EndTime.message}</p>}
-                            </div>
-                            <div className='col-lg-3'>
-                                <label style={{ fontWeight: "bold" }}>Comments <i className='text-danger'>*</i></label>
-                                <textarea rows={6} className='form-control' {...register('Comments', { required: "Please Enter Comments" })}></textarea>
-                                {errors.Comments && <p className="error-message" style={{ color: "red" }}>{errors.Comments.message}</p>}
-                            </div>
-                        </div><br /><br />
-                        <div className='row'>
-                            <div className='col-lg-8'></div>
-                            <div className='col-lg-2'>
-                                <Link href="/Requests/Compensationtimeout"><button className='submit-button'>CANCEL</button></Link>
-                            </div>
-                            <div className='col-lg-2'>
-                                <button type='submit' className=' submit-button'>SUBMIT</button>
-                            </div>
+                <div className='row'>
+                    <div className='col-lg-12'>
+                        <label className='Heading'>Add Compensation</label><br /><br />
+                        <div className='card p-3 border-0 shadow-lg '>
+                            <form onSubmit={handleSubmit(onSubmit)}>
+                                <div className='row'>
+                                    <div className='col-lg-3'>
+                                        <label style={{ fontWeight: "bold" }}>Date Request <i className='text-danger'>*</i></label>
+                                        <input type='date' className='form-control' {...register('Date_Request', { required: "Select Valid Date" })} />
+                                        {errors.Date_Request && <p className="error-message" style={{ color: "red" }}>{errors.Date_Request.message}</p>}
+                                    </div>
+                                    <div className='col-lg-3'>
+                                        <label style={{ fontWeight: "bold" }}>Start Time <i className='text-danger'>*</i></label>
+                                        <input type='time' className='form-control' {...register('Actuval_StartTime', { required: "Select Valid Start Time" })} />
+                                        {errors.Actuval_StartTime && <p className="error-message" style={{ color: "red" }}>{errors.Actuval_StartTime.message}</p>}
+                                    </div>
+                                    <div className='col-lg-3'>
+                                        <label style={{ fontWeight: "bold" }}>End Time <i className='text-danger'>*</i></label>
+                                        <input type='time' className='form-control' {...register('Actuval_EndTime', { required: "Select Valid End Time" })} />
+                                        {errors.Actuval_EndTime && <p className="error-message" style={{ color: "red" }}>{errors.Actuval_EndTime.message}</p>}
+                                    </div>
+                                    <div className='col-lg-3'>
+                                        <label style={{ fontWeight: "bold" }}>Comments <i className='text-danger'>*</i></label>
+                                        <textarea rows={6} className='form-control' {...register('Comments', { required: "Please Enter Comments" })}></textarea>
+                                        {errors.Comments && <p className="error-message" style={{ color: "red" }}>{errors.Comments.message}</p>}
+                                    </div>
+                                </div><br /><br />
+                                <div className='row'>
+                                    <div className='col-lg-8'></div>
+                                    <div className='col-lg-2'>
+                                        <Link href="/Requests/Compensationtimeout"><button className='submit-button'>CANCEL</button></Link>
+                                    </div>
+                                    <div className='col-lg-2'>
+                                        <button type='submit' className=' submit-button'>SUBMIT</button>
+                                    </div>
+                                </div>
+                            </form>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </Layout>

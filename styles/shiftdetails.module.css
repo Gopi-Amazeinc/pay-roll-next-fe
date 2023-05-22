@@ -11,7 +11,7 @@
 }
 
 .filterdate {
-    font-weight: 440;
+    font-weight: 600;
     font-size: 14px;
 }
 .mainheader{
@@ -20,3 +20,36 @@
 .adddetail{
     padding-top: 20px;
 }
+
+#UploadOvetimefButton {
+    box-sizing: border-box;
+    border: #3247d5;
+    border-radius: 5px;
+    color: #fff;
+    background: #3247d5;
+    /* box-shadow: 1px 1px 17px 1px #3247d599; */
+    font-family: "Poppins", sans-serif;
+    font-size: 15px;
+    text-transform: uppercase;
+    float: left;
+    padding: 5px 15px;
+    margin-right: 82px;
+}
+button.close{
+    background: none;
+   border: none;
+   font-size: 1.1rem;
+   font-weight: 700;
+   line-height: 1;
+   color: #000;
+   /* text-shadow: 0 1px 0 #fff; */
+ }
+
+ button.close:hover{
+   cursor: pointer;
+   background: none;
+   color: black;
+   opacity: .5;
+ }
+
+

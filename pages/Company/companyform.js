@@ -322,8 +322,8 @@ function MyForm2({ data }) {
     if (id)
     // (id != null)
     {
-      getCompanyByID(id);
-      // getWorkPolicyByID(id);
+      // getCompanyByID(id);
+      getWorkPolicyByID(id);
       // getTaxByID(id);
     }
 
@@ -336,16 +336,16 @@ function MyForm2({ data }) {
   }, []);
 
 
-  // async function getWorkPolicyByID(id) {
-  //   let res = await apiService.commonGetCall("Payroll/GetCompany_WorkPolicyByID?ID=" + id);
-  //   PolicyForm(res.data[0]);
-  // }
-
-
-  async function getCompanyByID(id) {
-    let res = await apiService.commonGetCall("Payroll/GetCompanyAddressDetailsByID?ID=" + id);
+  async function getWorkPolicyByID(id) {
+    let res = await apiService.commonGetCall("Payroll/GetCompany_WorkPolicyByID?ID=" + id);
     PolicyForm(res.data[0]);
   }
+
+
+  // async function getCompanyByID(id) {
+  //   let res = await apiService.commonGetCall("Payroll/GetCompanyAddressDetailsByID?ID=" + id);
+  //   PolicyForm(res.data[0]);
+  // }
 
 
 
@@ -372,7 +372,7 @@ function MyForm2({ data }) {
       // console.log(data.E_Signatory[0])
     }
     else {
-      await apiService.commonPostCall("Payroll/UpdateCompany_WorkPolicy", data);
+      await apiService.commonPostCall("Master/UpdateCompany_WorkPolicy", data);
       Swal.fire("Data Updated successfully");
       router.push("/Company");
     }
@@ -436,204 +436,121 @@ function MyForm2({ data }) {
 <br />
 
 
+
 function MyForm3({ data }) {
-  const router = useRouter();
-  const { register, handleSubmit, watch, reset, formState: { errors }, } = useForm();
-  const [TaxType, setTaxType] = useState("insert");
-
-
-  useEffect(() => {
-    const { id } = data || {};
-    if (id)
-    // (id != null)
-    {
-      getCompanyByID(id);
-      // getWorkPolicyByID(id);
-      // getTaxByID(id);
-    }
-
-    else {
-      // clearForm();
-      // PolicyForm();
-      TaxForm();
-    }
-
-  }, []);
-
-
-  // async function getTaxByID(id) {
-  //   let res = await apiService.commonGetCall("Payroll/GetCompany_TaxComputationByID?ID=" + id);
-  //   TaxForm(res.data[0]);
-  // }
-
-
-  async function getCompanyByID(id) {
-    let res = await apiService.commonGetCall("Payroll/GetCompanyAddressDetailsByID?ID=" + id);
-    TaxForm(res.data[0]);
-  }
-
-
-
-  async function TaxForm(TaxData = null) {
-    let details = {
-      "ID": TaxData ? TaxData.id : "",
-      "PayrollCalendar": TaxData ? TaxData.payrollCalendar : "",
-      "Non_Tax_Essential_Sealing": TaxData ? TaxData.non_Tax_Essential_Sealing : "",
-      "Deminimis_Exemption": TaxData ? TaxData.deminimis_Exemption : ""
-    };
-    reset(details);
-    setTaxType(TaxData ? "update" : "insert");
-  }
-
-
-  const taxSubmit = async (data) => {
-    if (TaxType == "insert") {
-      await apiService.commonPostCall("Payroll/InsertCompany_TaxComputation", data);
-      console.log(data);
-      Swal.fire("Data Inserted successfully");
-      router.push("/Company");
-      // console.log(JSON.stringify(data))
-      // console.log(data.Company_logoe[0])
-      // console.log(data.E_Signatory[0])
-    }
-    else {
-      await apiService.commonPostCall("Payroll/UpdateCompany_TaxComputation", data);
-      Swal.fire("Data Updated successfully");
-      router.push("/Company");
-    }
-  }
-
-
-
-  return (
-    <>
-      <div className="container-fluid">
-        <form onSubmit={handleSubmit(taxSubmit)} >
-          <div className="shadow-lg p-3 mb-3 bg-body rounded">
-            <div className="row">
-              <div className="col-lg-2">
-                <label className={styles.p}>TAX COMPUTATIONS</label>
-              </div>
-              <div className="col-lg-10"></div>
-            </div>
-            <div className="row mt-3">
-
-              <div className="col-lg-2">
-                <label className={styles.p}>Payroll Calendar</label>
-              </div>
-              <div className="col-lg-6">
-                <label className={styles.p}><input type="checkbox"  {...register('PayrollCalendar', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
-                  &nbsp;Calendar Year(From January to December)</label>
-              </div>
-              <div className="col-lg-4"></div>
-            </div>
-            <div className="row mt-2">
-              <div className="col-lg-2">
-                <label className={styles.p}>Tax Calculation:</label>
-              </div>
-              <div className="col-lg-2">
-                <label className={styles.p}><input type="radio" name="yes" />Semi Monthly</label>
-              </div>
-              <div className="col-lg-2">
-                <label className={styles.p}><input type="radio" name="yes" />Annual</label>
-              </div>
-              <div className="col-lg-6"></div>
-            </div>
-            <div className="row">
-              <div className="col-lg-4">
-                <label className={styles.p}>Non-Tax Exemption Ceiling<span style={{ color: "red" }}>*</span></label>
-                <input type="text" className="form-control" {...register('Non_Tax_Essential_Sealing]', { required: "Please add a Short Name", })}></input>
-              </div>
-              <div className="col-lg-4">
-                <label className={styles.p}>Deminimis Exemption Ceiling<span style={{ color: "red" }}>*</span></label>
-                <input type="text" className="form-control" {...register('Deminimis_Exemption', { required: "Please add a Short Name", })}></input>
-              </div>
-              <div className="col-lg-4"></div>
-            </div>
-
-          </div>
-          <div className="row">
-            <div className="col-lg-4"></div>
-            <div className="col-lg-4">
-              {
-                TaxType == "insert" && (<button type="submit" className={styles.button}>Save</button>)
-              }
-
-              {
-                TaxType == "update" && (<button type="submit" className={styles.button}>Update</button>)
-              }
-            </div>
-            <div className="col-lg-4">
-              <Link href="/Company">
-                <button className={styles.button} >Cancel</button>
-              </Link>
-            </div>
-
-          </div>
-        </form>
-      </div>
-    </>
-  )
-
-
-
-
-
-
-
-
-}
-
-
-function MyForm4({ data }) {
 
   const router = useRouter();
   const { register, handleSubmit, watch, reset, formState: { errors }, } = useForm();
   const [payroll, setPayroll] = useState("insert");
 
 
+  // useEffect(() => {
+  //   const { id } = data || {};
+  //   if (id)
+  //   // (id != null)
+  //   {
+  //     // getCompanyByID(id);
+  //     // getWorkPolicyByID(id);
+  //     // getTaxByID(id);
+  //     getPayrollByID();
+
+  //   }
+
+  //   else {
+  //     // clearForm();
+  //     // PolicyForm();
+  //     // TaxForm();
+  //     payRollForm();
+  //   }
+
+  // }, []);
+
+
+
   useEffect(() => {
-    const { id } = data || {};
-    if (id)
-    // (id != null)
-    {
-      getCompanyByID(id);
-      // getWorkPolicyByID(id);
-      // getTaxByID(id);
-      // getPayrollByID();
-
+    async function getParollByID() {
+      const id = sessionStorage.getItem("id");
+      if (id) {
+        let res = await apiService.commonGetCall("Payroll/GetCompany_PayrollComputationnewByID?ID=" + id);
+        payRollForm(res.data[0]);
+      } else {
+        payRollForm();
+      }
     }
 
-    else {
-      // clearForm();
-      // PolicyForm();
-      // TaxForm();
-      payRollForm();
-    }
-
-  }, []);
+    getParollByID();
+  }, [1]);
 
 
   // async function getPayrollByID(id) {
-  //   let res = await apiService.commonGetCall("Payroll/GetCompany_PayrollComputationByID?ID=" + id);
-  //   payRollForm(res.data[0]);
+  //   let res = await apiService.commonGetCall("Payroll/GetCompany_PayrollComputationnewByID?ID=" + id);
+  //   payRollForm(res.data[0]); 
 
   // }
+  
 
 
-  async function getCompanyByID(id) {
-    let res = await apiService.commonGetCall("Payroll/GetCompanyAddressDetailsByID?ID=" + id);
-    payRollForm(res.data[0]);
-  }
+  // async function getCompanyByID(id) {
+  //   let res = await apiService.commonGetCall("Payroll/GetCompanyAddressDetailsByID?ID=" + id);
+  //   payRollForm(res.data[0]);
+  // }
 
 
 
   async function payRollForm(PayRollData = null) {
     let details = {
       "ID": PayRollData ? PayRollData.id : "",
-      "PayrollCalendar": PayRollData ? PayRollData.payrollCalendar : "",
-      "Non_Tax_Essential_Sealing": PayRollData ? PayRollData.non_Tax_Essential_Sealing : "",
-      "Deminimis_Exemption": PayRollData ? PayRollData.deminimis_Exemption : ""
+
+      "Periods_Per_Month": PayRollData ? PayRollData.periods_Per_Month : "",
+
+      "FinalPay_Deduct_Absent": PayRollData ? PayRollData.finalPay_Deduct_Absent : "",
+
+      "FinalPay_Deduct_Late": PayRollData ? PayRollData.finalPay_Deduct_Late : "",
+
+      "Final_Pay_13th_Month": PayRollData ? PayRollData.final_Pay_13th_Month : "",
+
+      "Absent_Deduction_BasicSalary": PayRollData ? PayRollData.absent_Deduction_BasicSalary : "",
+      
+      "Absent_Deduction_Deminimis": PayRollData ? PayRollData.absent_Deduction_Deminimis : "",
+
+      "Absent_Deduction_Allowance": PayRollData ? PayRollData.absent_Deduction_Allowance : "",
+
+      "Absent_Deduction_Reimbursement": PayRollData ? PayRollData.absent_Deduction_Reimbursement : "",
+
+      "Absent_Deduction_ECOLA": PayRollData ? PayRollData.absent_Deduction_ECOLA : "",
+
+      "Absent_Deduction_Bonus": PayRollData ? PayRollData.finalPay_absent_Deduction_Bonus : "",
+
+      "Late_Deduction_Basic_Salary": PayRollData ? PayRollData.Late_Deduction_Basic_Salary : "",
+
+      "Late_Deduction_Deminimis": PayRollData ? PayRollData.late_Deduction_Deminimis : "",
+
+      "Late_Deduction_Allowance": PayRollData ? PayRollData.late_Deduction_Allowance : "",
+
+      "Late_Deduction_Reimbursement": PayRollData ? PayRollData.late_Deduction_Reimbursement : "",
+
+      "Late_Deduction_ECOLA": PayRollData ? PayRollData.late_Deduction_ECOLA : "",
+
+      "Late_Deduction_Bonus": PayRollData ? PayRollData.late_Deduction_Bonus : "",
+
+      "Sss_ded": PayRollData ? PayRollData.sss_ded : "",
+
+      "Pagibig_ded": PayRollData ? PayRollData.pagibig_ded : "",
+
+      "Philhealth_ded": PayRollData ? PayRollData.philhealth_ded : "",
+
+      "Mpf_ded": PayRollData ? PayRollData.mpf_ded : "",
+
+      "Attedance_config_bit": PayRollData ? PayRollData.attedance_config_bit : "",
+
+      "ComputationSalaryt": PayRollData ? PayRollData.computationSalary : "",
+
+      "ComputationBasicAdjustment": PayRollData ? PayRollData.computationBasicAdjustment : "",
+
+      "ComputationDeminimis": PayRollData ? PayRollData.computationDeminimis : "",
+
+  
+
     };
     reset(details);
     setPayroll(PayRollData ? "update" : "insert");
@@ -642,7 +559,7 @@ function MyForm4({ data }) {
 
   const payRollSubmmit = async (data) => {
     if (payroll == "insert") {
-      await apiService.commonPostCall("Payroll/InsertCompany_PayrollComputation", data);
+      await apiService.commonPostCall("Payroll/InsertCompany_PayrollComputationnew", data);
       console.log(data);
       Swal.fire("Data Inserted successfully");
       router.push("/Company");
@@ -651,7 +568,7 @@ function MyForm4({ data }) {
       // console.log(data.E_Signatory[0])
     }
     else {
-      await apiService.commonPostCall("Payroll/UpdateCompany_PayrollComputation", data);
+      await apiService.commonPostCall("Payroll/UpdateCompanyPayrollComputationnew", data);
       Swal.fire("Data Updated successfully");
       router.push("/Company");
     }
@@ -669,7 +586,7 @@ function MyForm4({ data }) {
             <div className="row">
               <div className="col-lg-2">
                 <label className={styles.p}>Periods Per Month <span style={{ color: "red" }}>*</span></label>
-                <select className="form-select" >
+                <select className="form-select" {...register('Periods_Per_Month')} >
                   <option value>Select Months</option>
                   <option value="1">One</option>
                   <option value="2">Two</option>
@@ -804,7 +721,7 @@ function MyForm4({ data }) {
               <div className="row mt-4">
                 <div className="col-lg-2"></div>
                 <div className="col-lg-4">
-                  <label className={styles.p}><input type="radio" {...register('Sss_ded')} />&nbsp;Pro-rated/Current/Full Salary</label>
+                  <label className={styles.p}><input type="radio" {...register('ComputationSalaryt')} />&nbsp;Pro-rated/Current/Full Salary</label>
                 </div>
                 <div className="col-lg-6"></div>
               </div><br />
@@ -814,10 +731,10 @@ function MyForm4({ data }) {
                   <label className={styles.p}>Optional:</label>
                 </div>
                 <div className="col-lg-2">
-                  <input type="checkbox" {...register('Sss_ded')} />
+                  <input type="checkbox" {...register('ComputationBasicAdjustment')} />
                   <label className={styles.p}>Basic</label>
                   <br />
-                  <label className={styles.p}><input type="checkbox" {...register('Sss_ded')} />Deminimis</label>
+                  <label className={styles.p}><input type="checkbox" {...register('ComputationDeminimis')} />Deminimis</label>
                 </div>
                 <div className="col-lg-7"></div>
               </div>
@@ -889,6 +806,160 @@ function MyForm4({ data }) {
 
 
 
+function MyForm4({ data }) {
+  const router = useRouter();
+  const { register, handleSubmit, watch, reset, formState: { errors }, } = useForm();
+  const [TaxType, setTaxType] = useState("insert");
+
+
+  useEffect(() => {
+    const { id } = data || {};
+    if (id)
+    // (id != null)
+    {
+      // getCompanyByID(id);
+      // getWorkPolicyByID(id);
+      getTaxByID(id);
+    }
+
+    else {
+      // clearForm();
+      // PolicyForm();
+      TaxForm();
+    }
+
+  }, []);
+
+
+  async function getTaxByID(id) {
+    let res = await apiService.commonGetCall("Payroll/GetCompany_TaxComputationByID?ID=" + id);
+    TaxForm(res.data[0]);
+  }
+
+
+  // async function getCompanyByID(id) {
+  //   let res = await apiService.commonGetCall("Payroll/GetCompanyAddressDetailsByID?ID=" + id);
+  //   TaxForm(res.data[0]);
+  // }
+
+
+
+  async function TaxForm(TaxData = null) {
+    let details = {
+      "ID": TaxData ? TaxData.id : "",
+      "PayrollCalendar": TaxData ? TaxData.payrollCalendar : "",
+      "Non_Tax_Essential_Sealing": TaxData ? TaxData.non_Tax_Essential_Sealing : "",
+      "Deminimis_Exemption": TaxData ? TaxData.deminimis_Exemption : ""
+    };
+    reset(details);
+    setTaxType(TaxData ? "update" : "insert");
+  }
+
+
+  const taxSubmit = async (data) => {
+    if (TaxType == "insert") {
+      await apiService.commonPostCall("Payroll/InsertCompany_TaxComputation", data);
+      console.log(data);
+      Swal.fire("Data Inserted successfully");
+      router.push("/Company");
+      // console.log(JSON.stringify(data))
+      // console.log(data.Company_logoe[0])
+      // console.log(data.E_Signatory[0])
+    }
+    else {
+      await apiService.commonPostCall("Payroll/UpdateCompany_TaxComputation", data);
+      Swal.fire("Data Updated successfully");
+      router.push("/Company");
+    }
+  }
+
+
+
+  return (
+    <>
+      <div className="container-fluid">
+        <form onSubmit={handleSubmit(taxSubmit)} >
+          <div className="shadow-lg p-3 mb-3 bg-body rounded">
+            <div className="row">
+              <div className="col-lg-2">
+                <label className={styles.p}>TAX COMPUTATIONS</label>
+              </div>
+              <div className="col-lg-10"></div>
+            </div>
+            <div className="row mt-3">
+
+              <div className="col-lg-2">
+                <label className={styles.p}>Payroll Calendar</label>
+              </div>
+              <div className="col-lg-6">
+                <label className={styles.p}><input type="checkbox"  {...register('PayrollCalendar', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
+                  &nbsp;Calendar Year(From January to December)</label>
+              </div>
+              <div className="col-lg-4"></div>
+            </div>
+            <div className="row mt-2">
+              <div className="col-lg-2">
+                <label className={styles.p}>Tax Calculation:</label>
+              </div>
+              <div className="col-lg-2">
+                <label className={styles.p}><input type="radio" name="yes" />Semi Monthly</label>
+              </div>
+              <div className="col-lg-2">
+                <label className={styles.p}><input type="radio" name="yes" />Annual</label>
+              </div>
+              <div className="col-lg-6"></div>
+            </div>
+            <div className="row">
+              <div className="col-lg-4">
+                <label className={styles.p}>Non-Tax Exemption Ceiling<span style={{ color: "red" }}>*</span></label>
+                <input type="text" className="form-control" {...register('Non_Tax_Essential_Sealing]', { required: "Please add a Short Name", })}></input>
+              </div>
+              <div className="col-lg-4">
+                <label className={styles.p}>Deminimis Exemption Ceiling<span style={{ color: "red" }}>*</span></label>
+                <input type="text" className="form-control" {...register('Deminimis_Exemption', { required: "Please add a Short Name", })}></input>
+              </div>
+              <div className="col-lg-4"></div>
+            </div>
+
+          </div>
+          <div className="row">
+            <div className="col-lg-4"></div>
+            <div className="col-lg-4">
+              {
+                TaxType == "insert" && (<button type="submit" className={styles.button}>Save</button>)
+              }
+
+              {
+                TaxType == "update" && (<button type="submit" className={styles.button}>Update</button>)
+              }
+            </div>
+            <div className="col-lg-4">
+              <Link href="/Company">
+                <button className={styles.button} >Cancel</button>
+              </Link>
+            </div>
+
+          </div>
+        </form>
+      </div>
+    </>
+  )
+
+
+
+
+
+
+
+
+}
+
+
+
+
+
+
+
 
 const Companyform = ({ editData }) => {
 
@@ -899,8 +970,9 @@ const Companyform = ({ editData }) => {
 
         <MyForm1 data={editData} />
         <MyForm2 data={editData} />
-        <MyForm4 data={editData} />
         <MyForm3 data={editData} />
+        <MyForm4 data={editData} />
+        
 
 
 

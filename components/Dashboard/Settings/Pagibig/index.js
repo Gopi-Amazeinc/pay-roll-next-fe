@@ -1,6 +1,6 @@
 import React from 'react'
 import Link from 'next/link'
-import axios from 'axios';
+import { apiService } from "@/services/api.service";
 import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2'
 import { useEffect, useState } from 'react';
@@ -10,7 +10,7 @@ const Pagibig = () => {
     const [pagibigconfigaration, setpagibigconfigaration] = useState([]);
     const { register, handleSubmit, reset, formState } = useForm();
     const { errors } = formState;
-
+    const [keyword, setKeyword] = useState("");
     const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
 
     const getData = (data) => {
@@ -22,7 +22,7 @@ const Pagibig = () => {
     }
 
     const getpagibigconfigaration = async () => {
-        let res = await axios.get(hostURL + "HR/GetPagibigconfogaration");
+        let res = await apiService.commonGetCall("HR/GetPagibigconfogaration");
         setpagibigconfigaration(res.data);
     }
 
@@ -32,7 +32,7 @@ const Pagibig = () => {
 
     const handleDelete = async (id) => {
         try {
-            let res = await axios.get(hostURL + `HR/DeletePagibigconfogaration?id=${id}`);
+            let res = await apiService.commonGetCall(`HR/DeletePagibigconfogaration?id=${id}`);
             console.log(res.data);
             Swal.fire('Data deleted successfully')
             getpagibigconfigaration();
@@ -58,7 +58,7 @@ const Pagibig = () => {
                                 </div>
 
                                 <div className='col-lg-3'>
-                                    <input type="text" className='form-control' placeholder='Search...' />
+                                    <input type="text" className='form-control' placeholder='Search...' onChange={e => setKeyword(e.target.value)} />
                                 </div>
                             </div>
                         </div>
@@ -88,7 +88,14 @@ const Pagibig = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {pagibigconfigaration.map((data, index) => {
+                                    {pagibigconfigaration.filter(data => {
+                                    if ((data.taxiableincomelowlimit.toString().includes(keyword.toString())) || (data.taxiableincomehighlimit.toString().includes(keyword.toString()))||
+                                    (data.pagibigvalue.toString().includes(keyword.toString()))||
+                                    
+                                    (data.year.toString().includes(keyword.toString()))) {
+                                        return data;
+                                    }
+                                }).map((data, index) => {
                                         return (
                                             <tr className="text-dark" key={index}>
                                                 <td>{data.taxiableincomelowlimit}</td>

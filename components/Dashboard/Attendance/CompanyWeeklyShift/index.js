@@ -2,12 +2,60 @@ import React from 'react';
 import Link from 'next/link';
 import { useEffect, useState } from 'react'
 import Styles from "@/styles/shiftdetails.module.css";
+import { useRef } from 'react';
+import { apiService } from "@/services/api.service";
+import { DownloadTableExcel } from "react-export-table-to-excel";
+
+
 
 const Index = () => {
-
+    const tableRef = useRef(null);
     const [myTeamshiftDetails, setmyTeamshiftDetails] = useState([])
     let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+    // const [pending, setPending] = useState(false);
+    // const [approved, setApproved] = useState(false);
+    // const [rejected, setRejected] = useState(false);
 
+    const [pendingcount, setpendingcount] = useState();
+    // const [rejectcount, setrejectcount] = useState();
+    // const [approvedcount, setapprovedcount] = useState();
+
+    const [companypendingweeklyshift, setcompanypendingweeklyshift] = useState([]);
+    // const [companyApprovedweeklyshift, setcompanyApprovedweeklyshift] = useState([]);
+    // const [companyRejectedweeklyshift, setcompanyRejectedweeklyshift] = useState([]);
+
+    const [keyword, setKeyword] = useState("");
+
+    // const togglePending = () => {
+    //     setPending(true);
+    //     setRejected(false);
+    //     setApproved(false);
+    // };
+
+    // const toggleApproved = () => {
+    //     setApproved(true);
+    //     setPending(false);
+    //     setRejected(false);
+    // };
+
+    // const toggleRejected = () => {
+    //     setRejected(true);
+    //     setApproved(false);
+    //     setPending(false);
+    // };
+
+    const getcompanyweeklyPendingData = async () => {
+        const res = await apiService.commonGetCall("HR/GetStaffShiftDetails");
+        setpendingcount(res.data.length);
+        // const res = await axios.get( hostURL +  "Payroll/GetPendingAttendanceCorrectionByStaffID?userID=" + staffID + "&SDate=" + SDate + "&EDate=" + EDate);
+        console.log(res, "pending");
+        setcompanypendingweeklyshift(res.data);
+    };
+
+
+    useEffect(() => {
+        getcompanyweeklyPendingData();
+    }, []);
     return (
         <>
             <div className='row'>
@@ -23,15 +71,15 @@ const Index = () => {
             <div className='card shadow-lg p-4 rounded-3 mt-4'>
                 <div className='row'>
                     <div className="col-lg-1">
-                        <p>Filter By</p>
+                        <p><b>Filter By</b></p>
                     </div>
 
                     <div className='col-lg-2'>
-                        <p >START DATE <span style={{ color: "red" }} >*</span></p>
+                        <p ><b> START DATE</b> <span style={{ color: "red" }} >*</span></p>
                         <input type='date' className='form-control form-control-sm' />
                     </div>
                     <div className='col-lg-2'>
-                        <p >END DATE <span style={{ color: "red" }} >*</span></p>
+                        <p ><b>END DATE </b><span style={{ color: "red" }} >*</span></p>
                         <input type='date' className='form-control form-control-sm' />
                     </div>
                     <div className="col-lg-2">
@@ -39,51 +87,100 @@ const Index = () => {
                         {/* <Link href="/Attendance/StaffShiftForm/new" ><button className='button'>Add Shift Details</button></Link> */}
                     </div>
                     <div className="col-lg-1"></div>
-                    <div className="col-lg-2">
-                        <button className='button' style={{ marginTop: "30px", float: "right", marginRight: "0px" }}>Export To excel</button>
+                    <div className="col-lg-2">   <DownloadTableExcel
+                        filename="users table"
+                        sheet="users"
+                        currentTableRef={tableRef.current}
+                    >
+                        <button className='button' style={{ marginTop: "30px", float: "right", marginRight: "0px" }}>Export To excel</button> </DownloadTableExcel>
                     </div>
                 </div>
             </div>
+            <br />
+            {/* <div className="row ">
+                <div className="col-lg-4">
+                    <div className="btn-group">
+                        <button
+                            onClick={togglePending}
+                            className={`toggleButton ${pending ? "focus" : ""}`}
+                        >
+                            Pending
+                        </button>
+                        <button
+                            onClick={toggleApproved}
+                            className={`toggleButton ${approved ? "focus" : ""}`}
+                        >
+                            Approved
+                        </button>
+                        <button
+                            onClick={toggleRejected}
+                            className={`toggleButton ${rejected ? "focus" : ""}`}
+                        >
+                            Rejected
+                        </button>
+                    </div>
+                </div>
+            </div> */}
 
-            <div className='row mt-3'>
-                <table className='table table-striped mt-3' style={{ marginLeft: "10px", width: "98%" }}  >
-                    <thead>
-                        <tr className='bg-info text-white'>
-                            <th> EMPLOYEE NAME</th>
-                            <th>START DATE</th>
-                            <th>END DATE</th>
-                            <th>SHIFT NAME</th>
-                            <th>START TIME</th>
-                            <th>END TIME</th>
-                            <th> Status</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {
-                            myTeamshiftDetails.map((data) => {
-                                return (
-                                    <tr key={data.id}>
-                                        <td>{data.Band}</td>
-                                        <td>{data.shiftDate}</td>
-                                        <td>{data.endDate}</td>
-                                        <td>{data.shiftName}</td>
-                                        <td>{data.startTime}</td>
-                                        <td>{data.endTime}</td>
-                                        <td>{data.endTime}</td>
-                                        <td>
-                                            <button >Approve</button>
-                                            <button>Reject</button>
 
-                                        </td>
-                                    </tr>
-                                )
-                            })
-                        }
-                    </tbody>
-                </table>
+            <div className="row mt-3">
+                <div className="col-lg-12">
+                    <table className="table"
+                        ref={tableRef}>
+                        <thead className="bg-info text-white">
+                            <tr>
+                                <th>EMPLOYEID</th>
+                                <th>EMPLOYEE NAME</th>
+                                <th>START DATE</th>
+                                <th>END DATE</th>
+                                <th>SHIFT NAME</th>
+                                <th>START TIME</th>
+                                <th>END TIME</th>
+                                <th>REST DAYS</th>
+                                <th>Status	</th>
+                                {/* <th>Action	</th> */}
+                            </tr>
+                        </thead>
 
+                        <tbody>
+                            {Array.isArray(companypendingweeklyshift) &&
+                                companypendingweeklyshift.length > 0 && (
+                                    <>
+                                        {companypendingweeklyshift
+                                            .filter(data => {
+                                                if ((data.startTime.toLowerCase().includes(keyword)) || (data.date.toLowerCase().includes(keyword)) || (data.endTime.toLowerCase().includes(keyword))) {
+                                                    return data;
+                                                }
+                                            })
+                                            .map((data, index) => {
+                                                return (
+                                                    <tr key={index}>
+                                                        <td>{data.staffID}</td>
+                                                        <td>{data.employeeName}</td>
+                                                        <td>{data.shiftdate}</td>
+                                                        <td>{data.endDate}</td>
+                                                        <td>{data.shiftName}</td>
+                                                        <td>{data.startTime1}</td>
+                                                        <td>{data.endTime1}</td>
+                                                        <td>{data.restDays}</td>
+                                                        <td>{data.status}</td>
+                                                        {/* <td>
+                                                            <button className="edit-btn" >
+                                                                Approve
+                                                            </button>&nbsp;
+                                                            <button className="edit-btn">Reject</button>
+                                                        </td> */}
+                                                    </tr>
+                                                );
+                                            })}
+                                    </>
+                                )}
+                        </tbody>
+                    </table>
+                </div>
             </div>
+
+
         </>
 
     );

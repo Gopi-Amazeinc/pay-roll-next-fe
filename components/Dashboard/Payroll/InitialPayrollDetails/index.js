@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import Modal from 'react-modal';
 import Swal from 'sweetalert2';
 import axios from 'axios'
@@ -20,6 +20,9 @@ const InitialPayrollDetails = () => {
             setSelectedRows(selectedRows.includes(id) ? selectedRows.filter(rowId => rowId !== id) : [...selectedRows, id]);
         }
     };
+    const [keyword, setKeyword] = useState("");
+    const tableRef = useRef(null);
+
 
     const getData = async () => {
         let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
@@ -106,7 +109,7 @@ const InitialPayrollDetails = () => {
                         <input type='date' className='form-control' />
                     </div>
                     <div className='col-lg-3'>
-                        <input type="text" className='form-control' placeholder='Search...' />
+                        <input type="text" className='form-control' placeholder='Search...' onChange={e => { setKeyword(e.target.value) }} />
                     </div>
                     <div className='col-lg-2'>
                         <select id="Department" name="Department" className='form-select'>
@@ -125,7 +128,7 @@ const InitialPayrollDetails = () => {
                         <DownloadTableExcel
                             filename="users table"
                             sheet="users"
-                        // currentTableRef={tableRef.current}
+                            currentTableRef={tableRef.current}
                         >
                             <button type="button" className="form-control CancelBTN">Export To Excel </button>
                         </DownloadTableExcel>
@@ -145,7 +148,7 @@ const InitialPayrollDetails = () => {
                 <div className='col-lg-12'>
                     <span>Select All <input type="checkbox" checked={selectedRows.length === preliminarySalary.length} onChange={e => handleRowSelect(e, 'all')} /></span>
                     <br />
-                    <table className='table'>
+                    <table className='table' ref={tableRef}>
                         <thead>
                             <tr className='text-white' style={{ whiteSpace: 'nowrap' }}>
                                 <th>Select</th>
@@ -161,7 +164,11 @@ const InitialPayrollDetails = () => {
                         </thead>
                         <tbody >
                             {
-                                preliminarySalary.slice(offset, offset + PER_PAGE).map((data, index) => {
+                                preliminarySalary.filter(data => {
+                                    if ((data.staffID.toString().includes(keyword)) || (data.componentValue.toString().includes(keyword.toString()))) {
+                                        return data;
+                                    }
+                                }).slice(offset, offset + PER_PAGE).map((data, index) => {
                                     return (
                                         <tr className="text-dark" key={index}>
                                             <td>

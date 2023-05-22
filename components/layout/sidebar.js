@@ -280,11 +280,8 @@ const Sidebar = ({ children, applyPageName }) => {
   };
   return (
     <div className="container-fluid" style={{ paddingRight: "0px", paddingLeft: "0px" }}>
-      <div className="row" style={{ height: "90vh", overflow: "auto"}}>
-        <div
-          className="col-lg-12 mb-4"
-          style={{ paddingRight: "0px", paddingLeft: "0px" }}
-        >
+      <div className="row" style={{ height: "90vh", overflow: "auto" }}>
+        <div className="col-lg-12 mb-4">
           <Link href="/Home/dashboard" className={styles.sidemenulink}>
             <button
               className={getStyle(1)}
@@ -1267,8 +1264,7 @@ const Sidebar = ({ children, applyPageName }) => {
               </Link>
             </>
           )}
-          {userRole == 4 ||
-            (userRole == 5 && (
+          {(userRole == 4 || userRole == 5 )  && (
               <div>
                 <hr></hr>
                 <button className={styles.sidemenu} onClick={togleReportsMeanu}>
@@ -1726,12 +1722,12 @@ const Sidebar = ({ children, applyPageName }) => {
                             ER-2
                           </button>
                         </Link>
-                        <Link href="/Reports/PhilHealth/RF-1PDF">
+                        <Link href="/Reports/PhilHealth/RF1PDF">
                           <button
                             className={getSubofSubStyle(353)}
                             onClick={updateActiveMenu.bind(this, {
                               id: 353,
-                              name: " RF-1PDF",
+                              name: "RF-1PDF",
                             })}
                           >
                             <TbReportAnalytics style={customStyles.icons} />
@@ -1741,7 +1737,7 @@ const Sidebar = ({ children, applyPageName }) => {
                       </div>
                     )}
 
-                    <Link href="/Reports/PayrollSummary/payrollsummary">
+                    <Link href="/Reports/PayrollSummary">
                       <button
                         className={getSubStyle(502)}
                         onClick={updateActiveMenu.bind(this, {
@@ -1780,7 +1776,7 @@ const Sidebar = ({ children, applyPageName }) => {
                   </div>
                 )}
               </div>
-            ))}
+            )}
 
           <hr></hr>
           <Link href="" className={styles.sidemenulink}>

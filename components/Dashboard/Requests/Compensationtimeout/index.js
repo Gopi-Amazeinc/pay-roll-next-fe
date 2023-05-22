@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import Modal from 'react-modal';
 import { AiOutlineClose } from 'react-icons/ai'
 import { apiService } from "@/services/api.service";
+import ReactPaginate from "react-paginate";
 import leave from "../../../../pages/Requests/Compensationtimeout/compensation.module.css"
 
 const Compensationtimeout = () => {
@@ -26,35 +27,35 @@ const Compensationtimeout = () => {
     const [compensation, getComponsation] = useState([])
     const [managerApproved, getManagerApproved] = useState([])
     const [managerRejected, getManagerRejected] = useState([])
-    const [isOpen, ModalIsOpen] = useState(false)
+    const [isOpen, ModalIsOpen] = useState(false);
+    const [keyword, setKeyword] = useState("");
 
     const openModal = () => {
         ModalIsOpen(true)
     }
 
 
-    const togglePending = (e) => {
-        e.preventDefault();
+    const togglePending = () => {
+        setPending(true);
         setApproved(false)
         setRejected(false)
         setManagerTogglePending(true)
         setManagerToggleApproved(false)
         setManagerToggleRejected(false)
+        console.log("pending manager login")
     }
 
-    const toggleApproved = (e) => {
-        e.preventDefault();
+    const toggleApproved = () => {
         setApproved(true)
         setPending(false)
         setRejected(false)
         setManagerTogglePending(false);
         setManagerToggleApproved(true);
         setManagerToggleRejected(false);
-        console.log("pending manager login")
+
     }
 
-    const toggleRejected = (e) => {
-        e.preventDefault();
+    const toggleRejected = () => {
         setRejected(true)
         setApproved(false)
         setPending(false)
@@ -62,6 +63,7 @@ const Compensationtimeout = () => {
         setManagerToggleApproved(false);
         setManagerToggleRejected(true);
     }
+
 
     const customStyles = {
         content: {
@@ -132,6 +134,7 @@ const Compensationtimeout = () => {
                 })
                 getPendingData();
             }
+
         }
         )
     }
@@ -180,6 +183,13 @@ const Compensationtimeout = () => {
         //     }
         // })
     }
+    const PER_PAGE = 5;
+    const [currentPage, setCurrentPage] = useState(0);
+    const handlePageClick = ({ selected: selectedPage }) => {
+        setCurrentPage(selectedPage);
+    };
+    const offset = currentPage * PER_PAGE;
+    const pageCount = Math.ceil(pendingDashboard.length / PER_PAGE);
 
     useEffect(() => {
         getPendingData()
@@ -188,6 +198,7 @@ const Compensationtimeout = () => {
         getRejectedData();
         getManagerApprovedData();
         getManagerRejectedData();
+        setPending(true);
         console.log("working useEffect")
     }, [1])
 
@@ -200,15 +211,15 @@ const Compensationtimeout = () => {
                     <div className='card p-3 border-0 rounded-3'>
                         <div className='row p-3'>
                             <div className='col-lg-1'>
-                                <p>Filter By</p>
+                                <label style={{ fontWeight: "bold" }}>Filter By</label>
                             </div>
 
                             <div className='col-lg-3'>
-                                <input type="text" className='form-control' placeholder='Search...' />
+                                <input type="text" className='form-control' placeholder='Search for Date or Status...' onChange={e => setKeyword(e.target.value)} />
                             </div>
                             {
                                 sessionStorage.getItem("roleID") != "3" && (
-                                    <div className='col-lg-4' style={{whiteSpace:"nowrap"}}>
+                                    <div className='col-lg-4' style={{ whiteSpace: "nowrap" }}>
                                         <Link href="/Requests/Compensationtimeout/new"><button className='EditDelteBTN'>Add Compensation Time Out</button></Link>
                                     </div>
                                 )
@@ -246,7 +257,7 @@ const Compensationtimeout = () => {
                             <div className='row'>
                                 <div className='col-lg-8'></div>
                                 <div className='col-lg-2 mb-3'>
-                                    <button type='submit' className=' edit-btn mt-5'>Cancel</button>
+                                    <button type='submit' className=' edit-btn mt-5'>CANCEL</button>
                                 </div>
                                 <div className='col-lg-2 mb-3'>
                                     <button onClick={reject} type='submit' className='edit-btn mt-5'>Reject </button>
@@ -276,7 +287,11 @@ const Compensationtimeout = () => {
 
                                             <tbody>
                                                 {
-                                                    pendingDashboard.map((data) => {
+                                                    pendingDashboard.filter(data => {
+                                                        if ((data.date.toString().includes(keyword.toLowerCase())) || (data.status.toLowerCase().includes(keyword))) {
+                                                            return data;
+                                                        }
+                                                    }).slice(offset, offset + PER_PAGE).map((data) => {
                                                         return (
                                                             <tr key={data.id}>
                                                                 <td>{data.date}</td>
@@ -285,7 +300,7 @@ const Compensationtimeout = () => {
                                                                 <td>{data.comments}</td>
                                                                 <td>{data.status}</td>
                                                                 <td>
-                                                                    <button onClick={Delete.bind(this, data.id)} className='edit-btn'>Cancel</button>
+                                                                    <button onClick={Delete.bind(this, data.id)} className='edit-btn'>CANCEL</button>
                                                                 </td>
                                                             </tr>
                                                         )
@@ -316,7 +331,11 @@ const Compensationtimeout = () => {
 
                                             <tbody>
                                                 {
-                                                    compensation.map((data) => {
+                                                    compensation.filter(data => {
+                                                        if ((data.date.toString().includes(keyword.toLowerCase())) || (data.status.toLowerCase().includes(keyword))) {
+                                                            return data;
+                                                        }
+                                                    }).slice(offset, offset + PER_PAGE).map((data) => {
                                                         return (
                                                             <tr key={data.id}>
                                                                 <td>{data.staffname}</td>
@@ -355,7 +374,11 @@ const Compensationtimeout = () => {
 
                                             <tbody>
                                                 {
-                                                    approvedDashboard.map((data) => {
+                                                    approvedDashboard.filter(data => {
+                                                        if ((data.date.toString().includes(keyword.toLowerCase())) || (data.status.toLowerCase().includes(keyword))) {
+                                                            return data;
+                                                        }
+                                                    }).slice(offset, offset + PER_PAGE).map((data) => {
                                                         return (
                                                             <tr key={data.id}>
                                                                 <td>{data.date}</td>
@@ -391,7 +414,11 @@ const Compensationtimeout = () => {
 
                                             <tbody>
                                                 {
-                                                    managerApproved.map((data) => {
+                                                    managerApproved.filter(data => {
+                                                        if ((data.date.toLowerCase().includes(keyword.toLowerCase())) || (data.status.toLowerCase().includes(keyword))) {
+                                                            return data;
+                                                        }
+                                                    }).slice(offset, offset + PER_PAGE).map((data) => {
                                                         return (
                                                             <tr key={data.id}>
                                                                 <td>{data.staffname}</td>
@@ -426,7 +453,11 @@ const Compensationtimeout = () => {
 
                                             <tbody>
                                                 {
-                                                    rejecteddDashboard.map((data) => {
+                                                    rejecteddDashboard.filter(data => {
+                                                        if ((data.date.toLowerCase().includes(keyword.toLowerCase())) || (data.status.toLowerCase().includes(keyword))) {
+                                                            return data;
+                                                        }
+                                                    }).slice(offset, offset + PER_PAGE).map((data) => {
                                                         return (
                                                             <tr key={data.id}>
                                                                 <td>{data.date}</td>
@@ -462,7 +493,11 @@ const Compensationtimeout = () => {
 
                                             <tbody>
                                                 {
-                                                    managerRejected.map((data) => {
+                                                    managerRejected.filter(data => {
+                                                        if ((data.date.toLowerCase().includes(keyword.toLowerCase())) || (data.status.toLowerCase().includes(keyword))) {
+                                                            return data;
+                                                        }
+                                                    }).slice(offset, offset + PER_PAGE).map((data) => {
                                                         return (
                                                             <tr key={data.id}>
                                                                 <td>{data.staffname}</td>
@@ -482,7 +517,27 @@ const Compensationtimeout = () => {
                     </div>
                 </div>
             </div>
+            <ReactPaginate
+                previousLabel={"Previous"}
+                nextLabel={"Next"}
+                breakLabel={"..."}
+                pageCount={pageCount}
+                marginPagesDisplayed={2}
+                pageRangeDisplayed={3}
+                onPageChange={handlePageClick}
+                containerClassName={"pagination  justify-content-center"}
+                pageClassName={"page-item "}
+                pageLinkClassName={"page-link"}
+                previousClassName={"page-item"}
+                previousLinkClassName={"page-link"}
+                nextClassName={"page-item"}
+                nextLinkClassName={"page-link"}
+                breakClassName={"page-item"}
+                breakLinkClassName={"page-link"}
+                activeClassName={"active primary"}
+            />
         </div>
+
 
 
     )

@@ -1,17 +1,17 @@
 import React from 'react'
 import Link from 'next/link';
-import axios from "axios";
+import { apiService } from "@/services/api.service";
 import Swal from "sweetalert2";
 import { useEffect, useState } from 'react';
 import Styles from '../../../../styles/sss.module.css'
 
 function SSS() {
-    let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+    const [keyword, setKeyword] = useState("");
     const [sssData, SetSssData] = useState([]);
 
     useEffect(() => {
         getData();
-    }, [1]);
+    }, []);
 
     const getDataByID = (data) => {
         sessionStorage.setItem("id", data.id);
@@ -23,7 +23,7 @@ function SSS() {
 
     //   Written By:-Gopi  => This API call will load the sss configuration
     const getData = async () => {
-        let res = await axios.get(hostURL + "HR/GetSSSconfogaration");
+        let res = await apiService.commonGetCall("HR/GetSSSconfogaration");
         SetSssData(res.data);
     }
 
@@ -41,7 +41,8 @@ function SSS() {
             confirmButtonText: "Yes",
         }).then(async (result) => {
             if (result.isConfirmed) {
-                await axios.get(hostURL + "HR/DeleteSSSconfogaration?ID=" + id)
+                let res =  apiService.commonGetCall("HR/DeleteSSSconfogaration?ID=" + id)
+                console.log(res.data);
                 Swal.fire("SSS Deleted successfully.");
                 getData();
             }
@@ -61,7 +62,7 @@ function SSS() {
                             </div>
 
                             <div className='col-lg-3'>
-                                <input type="text" className='form-control' placeholder='Search...' />
+                                <input type="text" className='form-control' placeholder='Search...'onChange={e => setKeyword(e.target.value)} />
                             </div>
                         </div>
                     </div>
@@ -96,7 +97,15 @@ function SSS() {
                                 </tr>
                             </thead>
                             <tbody>
-                                {sssData.map((data, index) => {
+                                {sssData.filter(data => {
+                                    if ((data.taxiableincomelowlimit.toString().includes(keyword.toString())) || (data.taxiableincomehighlimit.toString().includes(keyword.toString()))||
+                                    (data.ssS_EEvalue.toString().includes(keyword.toString()))||
+                                    (data.ssS_ERvalue.toString().includes(keyword.toString()))||
+                                    (data.ssS_Ecvalue.toString().includes(keyword.toString()))||
+                                    (data.year.toString().includes(keyword.toString()))) {
+                                        return data;
+                                    }
+                                }).map((data, index) => {
                                     return (
                                         <tr className="text-dark" key={index}>
                                             <td>{data.taxiableincomelowlimit}</td>
