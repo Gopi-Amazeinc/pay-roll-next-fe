@@ -6,7 +6,6 @@ import Swal from "sweetalert2";
 import { apiService } from "@/services/api.service";
 const ApplyloansDashboard = () => {
     const [newrequest, setNewRequest] = useState(false)
-    // eslint-disable-next-line react-hooks/rules-of-hooks
     const [approved, setApproved] = useState(false)
     const [Applyloans, setApplyLoans] = useState([]);
     const [newApproved, setnewApprovedData] = useState([]);
@@ -14,13 +13,11 @@ const ApplyloansDashboard = () => {
     const toggleNewRequest = () => {
         setNewRequest(true)
         setApproved(false)
-
     }
 
     const toggleApproved = () => {
         setApproved(true)
         setNewRequest(false)
-
     }
     const getApplyLoans = async () => {
         let res = await apiService.commonGetCall("Payroll/GetEmployeeLoans"); //This Api is useed for Get the Dashborad data band Master
@@ -66,13 +63,7 @@ const ApplyloansDashboard = () => {
                     apiService.commonGetCall(`Payroll/DeleteEmployeeLoans?id=${id}`);  // this is for deleting the data for dashborad using delete api call         
                 }
                 getApplyLoans();
-            });
-            // const res = await axios.get(
-            //   hostURL + `Master/DeleteBrandMaster?id=${id}`
-            // );
-            // console.log(res.data);
-            // alert("Data Deleted Sucessfully");
-            // getBrandMaster();
+            })
         } catch (error) {
             console.error(error);
             alert("Failed to delete data");
@@ -96,40 +87,24 @@ const ApplyloansDashboard = () => {
                             </div>
                         </div><br /><br />
                         <div className="row">
-                            {/* <div className="col-lg-12"> */}
                             <div className='col-lg-4'>
                                 <div className='btn-group'>
                                     <button onClick={toggleNewRequest} className={`toggleButton ${newrequest ? "focus" : ""}`}>New Request</button>
                                     <button onClick={toggleApproved} className={`toggleButton ${approved ? "focus" : ""}`}>Approved</button>
                                 </div>
                             </div>
-                            <div className="col-lg-5"></div>
-                            <div className="col-lg-3">
+                            <div className="col-lg-6"></div>
+                            <div className="col-lg-2">
                                 <Link href="/Requests/Applyloans/new">
-                                    <button className={loan.addButton}>ADD NEW</button>
+                                    <button className="AddButton">ADD NEW</button>
                                 </Link>
                             </div>
-                            {/* </div> */}
                         </div>
-                        {/* <div className='row'>
-                    <div className='col-lg-2 text-primary fs-6 fw-bold'>
-                        <h6>Showing Results</h6>
-                    </div>
-                </div> */}
-                        {/* <div className="row">
-                    <div className="col-lg-9"></div>
-                    <div className="col-lg-3">
-                        <Link href="/Requests/Applyloans/new">
-                            <button className={loan.addButton}>Add New</button>
-                        </Link>
-                    </div>
-                </div> */}
                         <br /><br />
-
-                        {
-                            newrequest && (
-                                <div className="row">
-                                    <div className="col-lg-12">
+                        <div className="row">
+                            <div className="col-lg-12">
+                                {
+                                    newrequest && (
                                         <div className="table-responsive">
                                             <table className='table table-hover' style={{ whiteSpace: "nowrap" }}>
                                                 <thead className='bg-info text-white'>
@@ -151,7 +126,7 @@ const ApplyloansDashboard = () => {
                                                 <tbody>
                                                     {
                                                         Applyloans.filter(data => {
-                                                            if ((data.dateFormated.toLowerCase().includes(keyword.toLowerCase())) || (data.loanType.toLowerCase().includes(keyword))) {
+                                                            if ((data.dateFormated.toString().includes(keyword.toLowerCase())) || (data.loanType.toLowerCase().includes(keyword))) {
                                                                 return data;
                                                             }
                                                         }).map((data) => {
@@ -202,7 +177,7 @@ const ApplyloansDashboard = () => {
                                                                     <td>{data.status}</td>
 
                                                                     <td>
-                                                                        <button className="edit-btn" onClick={() => DeleteApplyLoans(data.id)} >Delete</button>
+                                                                        <button className="edit-btn" onClick={() => DeleteApplyLoans(data.id)} >CANCEL</button>
                                                                     </td>
                                                                 </tr>
                                                             )
@@ -211,14 +186,10 @@ const ApplyloansDashboard = () => {
                                                 </tbody>
                                             </table>
                                         </div>
-                                    </div>
-                                </div>
-                            )
-                        }
-                        {
-                            approved && (
-                                <div className="row">
-                                    <div className="col-lg-12">
+                                    )
+                                }
+                                {
+                                    approved && (
                                         <div className="table-responsive">
                                             <table className='table table-hover' style={{ whiteSpace: "nowrap" }}>
                                                 <thead className='bg-info text-white'>
@@ -242,7 +213,7 @@ const ApplyloansDashboard = () => {
                                                 <tbody>
                                                     {
                                                         newApproved.filter(data => {
-                                                            if ((data.modifiedDate.toLowerCase().includes(keyword.toLowerCase())) || (data.loanType.toLowerCase().includes(keyword))) {
+                                                            if ((data.modifiedDate.toString().includes(keyword.toLowerCase())) || (data.loanType.toLowerCase().includes(keyword))) {
                                                                 return data;
                                                             }
                                                         }).map((data) => {
@@ -292,11 +263,6 @@ const ApplyloansDashboard = () => {
                                                                     <td>{data.financeComments}</td>
                                                                     <td>{data.payrollComments}</td>
                                                                     <td>{data.status}</td>
-                                                                    {/* <td>{data.comments}</td>
-                                            <td>{data.status}</td>
-                                            <td>
-                                                <button onClick={Delete.bind(this, data.id)} className='edit-btn'>Cancel</button>
-                                            </td> */}
                                                                 </tr>
                                                             )
                                                         })
@@ -304,13 +270,12 @@ const ApplyloansDashboard = () => {
                                                 </tbody>
                                             </table>
                                         </div>
-                                    </div>
-                                </div>
-                            )
-                        }
+                                    )
+                                }
+                            </div>
+                        </div>
                     </div>
                 </div>
-
             </div >
         </>
 
