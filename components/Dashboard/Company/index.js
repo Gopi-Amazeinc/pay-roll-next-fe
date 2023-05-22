@@ -47,8 +47,10 @@ const Companydashboard = () => {
     };
 
 
+    const getData = (data) => {
+        sessionStorage.setItem("id", data.id);
+      }
 
- 
 
 
 
@@ -272,7 +274,7 @@ const Companydashboard = () => {
                                         
                                         <td>
                                             <Link href={`/Company/${data.id}`}>
-                                                <button  className="edit-btn">Edit</button>
+                                                <button  className="edit-btn" onClick={getData.bind(this, data)}>Edit</button>
                                             </Link>
                                             &nbsp;
                                             <button
