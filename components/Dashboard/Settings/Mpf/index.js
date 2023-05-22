@@ -6,7 +6,7 @@ import Styles from '../../../../styles/mpf.module.css'
 
 function Mpf() {
     const [mpfDetails, setMpfDetails] = useState([]);
-
+    const [keyword, setKeyword] = useState("");
     const getMpfdetails = async () => {
         let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
         // This API is used to fetch the data from MPFConfogaration table
@@ -61,7 +61,7 @@ function Mpf() {
                                 </div>
 
                                 <div className='col-lg-3'>
-                                    <input type="text" className='form-control' placeholder='Search...' />
+                                    <input type="text" className='form-control' placeholder='Search...'onChange={e => setKeyword(e.target.value)} />
                                 </div>
                             </div>
                         </div>
@@ -95,7 +95,16 @@ function Mpf() {
                                 </thead>
                                 <tbody>
                                     {
-                                        mpfDetails.map((data, index) => {
+                                        mpfDetails.filter(data => {
+                                            if ((data.taxiableincomelowlimit.toString().includes(keyword.toString())) || (data.taxiableincomehighlimit.toString().includes(keyword.toString()))||
+                                            (data.mpF_EEvalue.toString().includes(keyword.toString()))||
+                                            (data.mpF_ERvalue.toString().includes(keyword.toString()))||
+                                            (data.mpF_Ecvalue.toString().includes(keyword.toString()))||
+                                            
+                                            (data.year.toString().includes(keyword.toString()))) {
+                                                return data;
+                                            }
+                                        }).map((data, index) => {
                                             return (
                                                 <tr className="text-dark" key={index}>
                                                     <td>{data.taxiableincomelowlimit}</td>

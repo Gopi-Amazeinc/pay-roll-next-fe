@@ -6,7 +6,7 @@ import Styles from '../../../../styles/philhealth.module.css'
 import Swal from 'sweetalert2';
 
 function Philhealth() {
-
+    const [keyword, setKeyword] = useState("");
     const [PhilhealthDash, setPhilhealthDash] = useState([]);
 
 
@@ -64,7 +64,7 @@ function Philhealth() {
                                 </div>
 
                                 <div className='col-lg-3'>
-                                    <input type="text" className='form-control' placeholder='Search...' />
+                                    <input type="text" className='form-control' placeholder='Search...' onChange={e => setKeyword(e.target.value)}/>
                                 </div>
                             </div>
                         </div>
@@ -93,7 +93,14 @@ function Philhealth() {
                             </thead>
                             <tbody>
                                 {
-                                    PhilhealthDash.map((data) => {
+                                    PhilhealthDash.filter(data => {
+                                        if ((data.taxiableincomelowlimit.toString().includes(keyword.toString())) || (data.taxiableincomehighlimit.toString().includes(keyword.toString()))||
+                                        (data.phihealthvalue.toString().includes(keyword.toString()))||
+                                        
+                                        (data.year.toString().includes(keyword.toString()))) {
+                                            return data;
+                                        }
+                                    }).map((data) => {
                                         return (
                                             <tr key={data.id}>
                                                 <td>{data.taxiableincomelowlimit}</td>

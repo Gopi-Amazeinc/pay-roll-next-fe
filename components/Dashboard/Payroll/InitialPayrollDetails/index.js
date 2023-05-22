@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import Modal from 'react-modal';
 import Swal from 'sweetalert2';
 import axios from 'axios'
@@ -21,6 +21,8 @@ const InitialPayrollDetails = () => {
         }
     };
     const [keyword, setKeyword] = useState("");
+    const tableRef = useRef(null);
+
 
     const getData = async () => {
         let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
@@ -126,7 +128,7 @@ const InitialPayrollDetails = () => {
                         <DownloadTableExcel
                             filename="users table"
                             sheet="users"
-                        // currentTableRef={tableRef.current}
+                            currentTableRef={tableRef.current}
                         >
                             <button type="button" className="form-control CancelBTN">Export To Excel </button>
                         </DownloadTableExcel>
@@ -146,7 +148,7 @@ const InitialPayrollDetails = () => {
                 <div className='col-lg-12'>
                     <span>Select All <input type="checkbox" checked={selectedRows.length === preliminarySalary.length} onChange={e => handleRowSelect(e, 'all')} /></span>
                     <br />
-                    <table className='table'>
+                    <table className='table' ref={tableRef}>
                         <thead>
                             <tr className='text-white' style={{ whiteSpace: 'nowrap' }}>
                                 <th>Select</th>
