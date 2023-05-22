@@ -128,12 +128,8 @@ const AttendenceDetails = () => {
     <div className="container-fluid">
       <div className="row mt-3">
         <div className="col-lg-3">
-          <Link
-            className={Styles.mainheader}
-            href="/Attendance/AttendanceDetails"
-          >
-            My Attendance Details
-          </Link>
+          <div className={Styles.mainheader} onClick={() => router.push("/Attendance/AttendanceDetails")}> My Attendance Details</div>
+          <div className="line-border"></div>
         </div>
         <div className="col-lg-3">
           {roleID == 3 && (
