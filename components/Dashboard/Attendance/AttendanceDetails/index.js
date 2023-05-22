@@ -128,7 +128,7 @@ const AttendenceDetails = () => {
     <div className="container-fluid">
       <div className="row mt-3">
         <div className="col-lg-3">
-          <div className={Styles.mainheader} onClick={() => router.push("/Attendance/AttendanceDetails")}> My Attendance Details</div>
+          <div className={Styles.mainheader} style={{maxContent: "100%"}}  onClick={() => router.push("/Attendance/AttendanceDetails")}> My Attendance Details</div>
           <div className="line-border"></div>
         </div>
         <div className="col-lg-3">
@@ -236,7 +236,7 @@ const AttendenceDetails = () => {
                     {Attendence.slice(offset, offset + PER_PAGE).map(
                       (data, index) => {
                         return (
-                          <tr className="" key={index}>
+                          <tr key={index}>
                             <td>{data.signinDate}</td>
                             <td>{data.signInType}</td>
                             <td>{data.signInWorkType}</td>
