@@ -125,7 +125,7 @@ const MyTeamAttendancecorrectiondashboard = () => {
 
     const getRejectedManager = async (SDate, EDate) => {
         const res = await apiService.commonGetCall(
-            "Payroll/GetApprovedAttendanceCorrectionBySupervisor?userID=" +
+            "Payroll/GetRejectedAttendanceCorrectionBySupervisor?userID=" +
             userID +
             "&SDate=" +
             SDate +
