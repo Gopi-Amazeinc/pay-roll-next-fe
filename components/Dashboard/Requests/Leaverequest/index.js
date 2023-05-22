@@ -48,13 +48,11 @@ function LeaveListDashboard() {
         setApproved(false)
         setPending(false)
         setRejected(false)
-
     }
 
     const toggleListView = () => {
         setListView(true)
         setCalender(false)
-
     }
 
     const [startDate, setStartDate] = useState("");
@@ -102,21 +100,53 @@ function LeaveListDashboard() {
         setRejectedData(res.data);
         console.log(res.data);
     }
+    const getCurrentMonthDates = () => {
+        let newDate = new Date();
+        let firstDayOfMonth = new Date(newDate.getFullYear(), newDate.getMonth());
+        let fromDate = formateDate(firstDayOfMonth);
+        const year = newDate.getFullYear();
+        const month = newDate.getMonth() + 1;
+        const lastDay = new Date(year, month, 0).getDate();
+        const toDate = `${year}-${month.toString().padStart(2, "0")}-${lastDay
+            .toString()
+            .padStart(2, "0")}`;
+        setStartDate(fromDate);
+        setEndDate(toDate);
+        return {
+            setStartDate: fromDate,
+            setEndDate: toDate,
+        };
+    };
+
+    const formateDate = (datetoformat) => {
+        const day = datetoformat.getDate().toString().padStart(2, "0");
+        const month = (datetoformat.getMonth() + 1).toString().padStart(2, "0");
+        const year = datetoformat.getFullYear().toString();
+        return `${year}-${month}-${day}`;
+    };
     useEffect(() => {
         const usrID = sessionStorage.getItem("userID");
         setUserID(usrID);
         const userRoleID = sessionStorage.getItem("roleID");
         setRoleID(userRoleID);
-        var StartingDate = sessionStorage.getItem("StartDate");
-        var EndDate = sessionStorage.getItem("StartDate");
-        getDateBySelectedDate();
-        getPendingData(userID, StartingDate, EndDate);
-        getApprovedData(userID, StartingDate, EndDate);
-        getRejectedData(userID, StartingDate, EndDate);
+        // var StartingDate = sessionStorage.getItem("StartDate");
+        // var EndDate = sessionStorage.getItem("StartDate");
+        // getDateBySelectedDate();
+        // getPendingData(userID, StartingDate, EndDate);
+        // getApprovedData(userID, StartingDate, EndDate);
+        // getRejectedData(userID, StartingDate, EndDate);
         setListView(true);
-        setCalender(true)
         setPending(true);
-    }, [])
+        if (userID) {
+            const resu = getCurrentMonthDates();
+            if (resu) {
+                getPendingData(resu.setStartDate, resu.setEndDate);
+                getApprovedData(resu.setStartDate, resu.setEndDate);
+                getRejectedData(resu.setStartDate, resu.setEndDate);
+            }
+        }
+        return;
+    }, [userID])
 
     const events = [
         // {
@@ -200,81 +230,72 @@ function LeaveListDashboard() {
                                 </div>
                             </div>
 
-                        </div>               
+                        </div>
                     </div>
                     <br /><br />
                     <div className="row">
                         <div className="col-lg-4">
                             <div className='row'>
                                 <div className='col-lg-6'>
-                                    {
-                                        listview && (
-                                            <>
-                                                <div className="row"></div>
-                                                <div className="col-lg-12">
-                                                    <div className='btn-group'>
-                                                        <button onClick={toggleCalender} className={`toggleButton ${calender ? "focus" : ""}`}>Calender</button>
-                                                        <button onClick={toggleListView} className={`toggleButton ${listview ? "focus" : ""}`}>List View</button>
-
-                                                    </div>
-                                                </div>
-                                            </>
-                                        )
-                                    }
-
+                                    <div className='btn-group'>
+                                        <button onClick={toggleCalender} className={`toggleButton ${calender ? "focus" : ""}`}>Calender</button>
+                                        <button onClick={toggleListView} className={`toggleButton ${listview ? "focus" : ""}`}>List View</button>
+                                    </div>
                                 </div>
                             </div>
                             <br />
                         </div>
                         <div className="col-lg-4"></div>
-                        <div className="col-lg-1"></div>
-                        <div className="col-lg-3">
-                            <Link href="/Requests/Applyleave/new"><button className="submit-button" tabIndex="0"> Apply Leave</button>
+                        <div className="col-lg-2"></div>
+                        <div className="col-lg-2">
+                            <Link href="/Requests/Applyleave/new"><button className="AddButton" tabIndex="0"> Apply Leave</button>
                             </Link>
                         </div>
                     </div>
                     <br />
-                    {
-                        calender && (
-                            <div className='row'>
-                                <div className="col-lg-12">
-                                    <div className='card shadow'>
-                                        <div style={styles.container}>
-                                            <BigCalendar
-                                                selectable
-                                                localizer={localizer}
-                                                events={events}
-                                                defaultView={Views.DAY}
-                                                views={[Views.DAY, Views.WEEK, Views.MONTH]}
-                                                steps={60}
-                                                defaultDate={new Date(2018, 0, 29)}
-                                                resources={resourceMap}
-                                                resourceIdAccessor="resourceId"
-                                                resourceTitleAccessor="resourceTitle"
-                                            />
+                    <div className="row">
+                        <div className="col-lg-12">
+                            {
+                                calender && (
+                                    <div className='row'>
+                                        <div className="col-lg-12">
+                                            <div className='card shadow'>
+                                                <div style={styles.container}>
+                                                    <BigCalendar
+                                                        selectable
+                                                        localizer={localizer}
+                                                        events={events}
+                                                        defaultView={Views.DAY}
+                                                        views={[Views.DAY, Views.WEEK, Views.MONTH]}
+                                                        steps={60}
+                                                        defaultDate={new Date(2018, 0, 29)}
+                                                        resources={resourceMap}
+                                                        resourceIdAccessor="resourceId"
+                                                        resourceTitleAccessor="resourceTitle"
+                                                    />
+                                                </div>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
 
-                        )
-                    }
-                    {
-                        listview && (
-                            <div className='row mt-3'>
-                                <div className='col-lg-4'>
-                                    <div className='btn-group'>
-                                        <button onClick={togglePending} className={`toggleButton ${pending ? "focus" : ""}`}>Pending</button>
-                                        <button onClick={toggleApproved} className={`toggleButton ${approved ? "focus" : ""}`}>Approved</button>
-                                        <button onClick={toggleRejected} className={`toggleButton ${rejected ? "focus" : ""}`}>Rejected</button>
-                                        <br /><br />
+                                )
+                            }
+                            {
+                                listview && (
+                                    <div className='row mt-3'>
+                                        <div className='col-lg-4'>
+                                            <div className='btn-group'>
+                                                <button onClick={togglePending} className={`toggleButton ${pending ? "focus" : ""}`}>Pending</button>
+                                                <button onClick={toggleApproved} className={`toggleButton ${approved ? "focus" : ""}`}>Approved</button>
+                                                <button onClick={toggleRejected} className={`toggleButton ${rejected ? "focus" : ""}`}>Rejected</button>
+                                                <br /><br />
+                                            </div>
+                                        </div>
                                     </div>
-                                </div>
-                            </div>
-
-
-                        )
-                    }
+                                )
+                            }
+                        </div>
+                    </div>
                     <div className="row">
                         <div className="col-lg-12">
                             {pending && (
@@ -290,7 +311,7 @@ function LeaveListDashboard() {
                                     <tbody>
                                         {
                                             pendingdata.filter(data => {
-                                                if ((data.sDateOfLeave.toLowerCase().includes(keyword.toLowerCase())) || (data.eDateOfLeave.toLowerCase().includes(keyword)) || (data.status.toLowerCase().includes(keyword))) {
+                                                if ((data.sDateOfLeave.toString().includes(keyword.toLowerCase())) || (data.eDateOfLeave.toString().includes(keyword)) || (data.status.toLowerCase().includes(keyword))) {
                                                     return data;
                                                 }
                                             }).map((data) => {
@@ -306,64 +327,65 @@ function LeaveListDashboard() {
                                     </tbody>
                                 </table>
                             )}
-                        </div>
-                        <div className="row">
-                            <div className="col-lg-12">
-                                {approved && (
-                                    <table className='table table-hover mt-4'>
-                                        <thead className='bg-info text-white'>
-                                            <tr>
-                                                <th>From Date</th>
-                                                <th>To Date</th>
-                                                <th>Leave Reason</th>
-                                                <th>Status</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {
-                                                approveddata.map((data) => {
-                                                    return (
-                                                        <tr key={data.id}>
-                                                            <td>{data.sDateOfLeave}</td>
-                                                            <td>{data.eDateOfLeave}</td>
-                                                            <td>{data.leaveReason}</td>
-                                                            <td>{data.status}</td>
-                                                        </tr>
-                                                    );
-                                                })}
-                                        </tbody>
-                                    </table>
-                                )}
-                            </div>
-                        </div>
-                        <div className="row">
-                            <div className="col-lg-12">
-                                {rejected && (
-                                    <table className='table table-hover mt-4'>
-                                        <thead className='bg-info text-white'>
-                                            <tr>
-                                                <th>From Date</th>
-                                                <th>To Date</th>
-                                                <th>Leave Reason</th>
-                                                <th>Status</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {
-                                                rejecteddata.map((data) => {
-                                                    return (
-                                                        <tr key={data.id}>
-                                                            <td>{data.sDateOfLeave}</td>
-                                                            <td>{data.eDateOfLeave}</td>
-                                                            <td>{data.leaveReason}</td>
-                                                            <td>{data.status}</td>
-                                                        </tr>
-                                                    );
-                                                })}
-                                        </tbody>
-                                    </table>
-                                )}
-                            </div>
+
+                            {approved && (
+                                <table className='table table-hover mt-4'>
+                                    <thead className='bg-info text-white'>
+                                        <tr>
+                                            <th>From Date</th>
+                                            <th>To Date</th>
+                                            <th>Leave Reason</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {
+                                            approveddata.filter(data => {
+                                                if ((data.sDateOfLeave.toString().includes(keyword.toLowerCase())) || (data.eDateOfLeave.toString().includes(keyword)) || (data.status.toLowerCase().includes(keyword))) {
+                                                    return data;
+                                                }
+                                            }).map((data) => {
+                                                return (
+                                                    <tr key={data.id}>
+                                                        <td>{data.sDateOfLeave}</td>
+                                                        <td>{data.eDateOfLeave}</td>
+                                                        <td>{data.leaveReason}</td>
+                                                        <td>{data.status}</td>
+                                                    </tr>
+                                                );
+                                            })}
+                                    </tbody>
+                                </table>
+                            )}
+                            {rejected && (
+                                <table className='table table-hover mt-4'>
+                                    <thead className='bg-info text-white'>
+                                        <tr>
+                                            <th>From Date</th>
+                                            <th>To Date</th>
+                                            <th>Leave Reason</th>
+                                            <th>Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {
+                                            rejecteddata.filter(data => {
+                                                if ((data.sDateOfLeave.toString().includes(keyword.toLowerCase())) || (data.eDateOfLeave.toString().includes(keyword)) || (data.status.toLowerCase().includes(keyword))) {
+                                                    return data;
+                                                }
+                                            }).map((data) => {
+                                                return (
+                                                    <tr key={data.id}>
+                                                        <td>{data.sDateOfLeave}</td>
+                                                        <td>{data.eDateOfLeave}</td>
+                                                        <td>{data.leaveReason}</td>
+                                                        <td>{data.status}</td>
+                                                    </tr>
+                                                );
+                                            })}
+                                    </tbody>
+                                </table>
+                            )}
                         </div>
                     </div>
                 </div>

@@ -99,16 +99,14 @@ function StaffSalaryComponent() {
     getStaffSalary();
   }, [])
 
-  // }
 
     return (
       <div>
         <div className="container">
           <div>
-            <h4>
-              Filters api to be provided; Add,edit APIs throwing 500 error;{" "}
+            <h4>Add,edit APIs throwing 500 error
             </h4>
-            <h3 className="text-primary fs-5 mt-3">Salary Staff Details</h3>
+            <h3 className="Heading">Salary Staff Details</h3>
             <div className="card p-3 border-0 rounded-3 mt-4">
               <div className="row">
                 <div className="col-lg-1">

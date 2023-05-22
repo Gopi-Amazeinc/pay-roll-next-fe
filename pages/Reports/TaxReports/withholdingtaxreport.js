@@ -8,7 +8,7 @@ const Withholdingtaxreport = () => {
     }
     return (
         <Layout>
-            <h1 className='text-danger'>This component is yet to be binded</h1>
+          
             <div className='card shadow-lg p-4'>
                 <div className='row'>
                     <p className={Styles.heading}>WithHolding Tax</p>

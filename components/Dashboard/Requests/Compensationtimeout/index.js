@@ -248,7 +248,7 @@ const Compensationtimeout = () => {
                             <div className='row'>
                                 <div className='col-lg-8'></div>
                                 <div className='col-lg-2 mb-3'>
-                                    <button type='submit' className=' edit-btn mt-5'>Cancel</button>
+                                    <button type='submit' className=' edit-btn mt-5'>CANCEL</button>
                                 </div>
                                 <div className='col-lg-2 mb-3'>
                                     <button onClick={reject} type='submit' className='edit-btn mt-5'>Reject </button>
@@ -279,7 +279,7 @@ const Compensationtimeout = () => {
                                             <tbody>
                                                 {
                                                     pendingDashboard.filter(data => {
-                                                        if ((data.date.toLowerCase().includes(keyword.toLowerCase())) || (data.status.toLowerCase().includes(keyword))) {
+                                                        if ((data.date.toString().includes(keyword.toLowerCase())) || (data.status.toLowerCase().includes(keyword))) {
                                                             return data;
                                                         }
                                                     }).map((data) => {
@@ -291,7 +291,7 @@ const Compensationtimeout = () => {
                                                                 <td>{data.comments}</td>
                                                                 <td>{data.status}</td>
                                                                 <td>
-                                                                    <button onClick={Delete.bind(this, data.id)} className='edit-btn'>Cancel</button>
+                                                                    <button onClick={Delete.bind(this, data.id)} className='edit-btn'>CANCEL</button>
                                                                 </td>
                                                             </tr>
                                                         )
@@ -323,7 +323,7 @@ const Compensationtimeout = () => {
                                             <tbody>
                                                 {
                                                     compensation.filter(data => {
-                                                        if ((data.date.toLowerCase().includes(keyword.toLowerCase())) || (data.status.toLowerCase().includes(keyword))) {
+                                                        if ((data.date.toString().includes(keyword.toLowerCase())) || (data.status.toLowerCase().includes(keyword))) {
                                                             return data;
                                                         }
                                                     }).map((data) => {
@@ -366,7 +366,7 @@ const Compensationtimeout = () => {
                                             <tbody>
                                                 {
                                                     approvedDashboard.filter(data => {
-                                                        if ((data.date.toLowerCase().includes(keyword.toLowerCase())) || (data.status.toLowerCase().includes(keyword))) {
+                                                        if ((data.date.toString().includes(keyword.toLowerCase())) || (data.status.toLowerCase().includes(keyword))) {
                                                             return data;
                                                         }
                                                     }).map((data) => {
