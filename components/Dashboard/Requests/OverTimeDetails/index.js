@@ -266,20 +266,22 @@ const Index = () => {
                 </div>
             </div><br />
             <div className='card p-3 border-0 rounded-3'>
-                <div className='row'>
-                    <div className='col-lg-3 text-dark fs-6 fw-bolder'>
-                        <p>Select Dates</p>
+                {/* <div className='row'>
+                    <div className='col-lg-3 text-primary fs-6 fw-bolder'>
+                        <label>Select Dates</label>
                     </div>
-                </div>
+                </div> */}
                 <div className='row'>
                     <div className='col-lg-4'>
+                        <label style={{ fontWeight: "bold" }}>Start Date:</label>
                         <input type="date" className='form-control' value={startDate} onChange={(e) => getStartDate(e.target.value)} />
                     </div>
                     <div className='col-lg-4'>
+                        <label style={{ fontWeight: "bold" }}>End Date:</label>
                         <input type="date" className='form-control' value={endDate || ""} onChange={(e) => getEndDate(e.target.value)} />
                     </div>
                     <div className='col-lg-1'></div>
-                    <div className='col-lg-3'>
+                    <div className='col-lg-3 mt-3'>
                         <Link href="/Requests/OverTimeDetails/new">
                             <button className="AddButton">Apply Overtime</button>
                         </Link>
@@ -325,7 +327,7 @@ const Index = () => {
                                                     <td>{data.startTime}</td>
                                                     <td>{data.endTime}</td>
                                                     <td>
-                                                        <button className='edit-btn' onClick={openEditModal} >Details</button>
+                                                        <button className='edit-btn' onClick={openEditModal} >DETAILS</button>
                                                     </td>
                                                     <td>{data.comments}</td>
                                                     <td>{data.status}</td>
@@ -434,7 +436,7 @@ const Index = () => {
                                                     <td>{data.startTime}</td>
                                                     <td>{data.endTime}</td>
                                                     <td>
-                                                        <button className='edit-btn' onClick={openEditModal}>Details</button>
+                                                        <button className='edit-btn' onClick={openEditModal}>DETAILS</button>
                                                     </td>
                                                     <td>{data.comments}</td>
                                                     <td>{data.status}</td>
@@ -574,7 +576,7 @@ const Index = () => {
                                     <button type='submit' className='edit-btn mt-5' onClick={() => ModalIsOpen(false)}>CANCEL</button>
                                 </div>
                                 <div className='col-lg-2'>
-                                    <button onClick={reject} type='submit' className='edit-btn mt-5'>Reject </button>
+                                    <button onClick={reject} type='submit' className='edit-btn mt-5'>REJECT </button>
                                 </div>
                             </div>
                         </div>

@@ -97,7 +97,7 @@ const Shiftdetails = () => {
     console.log(res);
     setShiftDetails(res.data);
     setcount(res.data.length);
-    
+
     // https://103.12.1.103/PayrollDemoAPI/Master/GetStaffShiftDetails
   };
 
@@ -149,13 +149,13 @@ const Shiftdetails = () => {
     <div className="container-fluid">
       <div className="row">
         <div className="col-lg-3">
-          <br/>
+          <br />
           <Link href="/Attendance/shiftdetails" className={Styles.mainheader}>
             My Weekly Shift
           </Link>
         </div>
         <div className="col-lg-3">
-        <br/>
+          <br />
           {roleid != 3 ||
             <Link href="/Attendance/MyTeamWeeklyShift" className={Styles.mainheader}> My Team Weekly Shift</Link>
           }
@@ -171,7 +171,7 @@ const Shiftdetails = () => {
               <div className="row">
                 <div className="col-lg-3">
                   <p className={Styles.filterdate}>
-                    START DATE <span style={{ color: "red" }}>*</span>
+                  <b></b>  START DATE <span style={{ color: "red" }}>*</span>
                   </p>
                   <input type="date" className="form-control form-control-sm m-o"
                     value={startDate}
@@ -186,22 +186,23 @@ const Shiftdetails = () => {
                     onChange={(e) => getEndDate(e.target.value)} />
                 </div>
 
-              <div className="col-lg-2">
-                <br />
-                <DownloadTableExcel
-                  filename="users table"
-                  sheet="users"
-                  currentTableRef={tableRef.current}
-                > <button className="button" style={{ marginTop: "7px" }} > DOWNLOAD</button></DownloadTableExcel>
-              </div>
-              <div className="col-lg-3">
-                <br />
-                <Link href="/Attendance/StaffShiftForm/new" className={Styles.adddetail}>
-                  <button className="button" style={{ fontSize: "15px", marginTop: "7px" }}><IoIosAddCircleOutline size={18} color={"white"} />  ADD SHIFT DETAILS</button>
-                </Link>
-
-
+                <div className="col-lg-3">
+                  <br />
+                  <Link href="/Attendance/StaffShiftForm/new" className={Styles.adddetail}>
+                    <button className="button" style={{ fontSize: "15px", marginTop: "7px" }}><IoIosAddCircleOutline size={18} color={"white"} />  Add Shift Details</button>
+                  </Link>
                 </div>
+                <div className="col-lg-2">
+                  <br />
+                  <DownloadTableExcel
+                    filename="users table"
+                    sheet="users"
+                    currentTableRef={tableRef.current}
+                  > <button className="button" style={{ marginTop: "7px" }} > Download</button></DownloadTableExcel>
+                </div>
+
+
+
               </div>
             </div>
           </div>
@@ -209,7 +210,7 @@ const Shiftdetails = () => {
       </div>
       <div className="row mt-3">
         <div className="col-lg-12">
-        <h6 style={{ color: "#3247d5" }}>Showing {count} Results</h6>
+          <h6 style={{ color: "#3247d5" }}>Showing {count} Results</h6>
           <table className="table" style={{ width: "99%" }} ref={tableRef}>
             <thead>
               <tr className="bg-info text-white">

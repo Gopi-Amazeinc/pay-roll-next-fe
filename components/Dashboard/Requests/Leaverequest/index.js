@@ -199,7 +199,7 @@ function LeaveListDashboard() {
     const PER_PAGE = 5;
     const [currentPage, setCurrentPage] = useState(0);
     function handlePageClick({ selected: selectedPage }) {
-      setCurrentPage(selectedPage);
+        setCurrentPage(selectedPage);
     }
     const offset = currentPage * PER_PAGE;
     const pageCount = Math.ceil(pendingdata.length / PER_PAGE);
@@ -224,15 +224,16 @@ function LeaveListDashboard() {
                             <div className="card p-3 border-0">
                                 <div className="row">
                                     <div className="col-lg-6">
-                                        <p>START DATE:</p>
+                                        <label style={{ fontWeight: "bold" }}>Start Date:</label>
                                         <input id="date" name="date" type="date" placeholder="Duration" className="form-control " value={startDate} onChange={(e) => getStartDate(e.target.value)} />
                                     </div>
                                     <div className="col-lg-6">
-                                        <p>END DATE:</p>
+                                        <label style={{ fontWeight: "bold" }}>End Date:</label>
                                         <input id="date" name="date" type="date" placeholder="Duration" className="form-control " value={endDate || ""} onChange={(e) => getEndDate(e.target.value)} />
                                     </div>
                                     <br /> <br /><br /> <br />
                                     <div className="col-lg-12 searchtxt ">
+                                    <label style={{ fontWeight: "bold" }}>Search:</label>
                                         <br /><input type="search" placeholder="Search for date or Status" className="form-control " onChange={e => setKeyword(e.target.value)} />
                                     </div>
                                     <br /><br />
@@ -400,26 +401,26 @@ function LeaveListDashboard() {
                 </div>
             </div>
             <div className="text-center">
-        <ReactPaginate
-          previousLabel={"Previous"}
-          nextLabel={"Next"}
-          breakLabel={"..."}
-          pageCount={pageCount}
-          marginPagesDisplayed={2}
-          pageRangeDisplayed={3}
-          onPageChange={handlePageClick}
-          containerClassName={"pagination  justify-content-center"}
-          pageClassName={"page-item "}
-          pageLinkClassName={"page-link"}
-          previousClassName={"page-item"}
-          previousLinkClassName={"page-link"}
-          nextClassName={"page-item"}
-          nextLinkClassName={"page-link"}
-          breakClassName={"page-item"}
-          breakLinkClassName={"page-link"}
-          activeClassName={"active primary"}
-        />
-      </div>
+                <ReactPaginate
+                    previousLabel={"Previous"}
+                    nextLabel={"Next"}
+                    breakLabel={"..."}
+                    pageCount={pageCount}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={3}
+                    onPageChange={handlePageClick}
+                    containerClassName={"pagination  justify-content-center"}
+                    pageClassName={"page-item "}
+                    pageLinkClassName={"page-link"}
+                    previousClassName={"page-item"}
+                    previousLinkClassName={"page-link"}
+                    nextClassName={"page-item"}
+                    nextLinkClassName={"page-link"}
+                    breakClassName={"page-item"}
+                    breakLinkClassName={"page-link"}
+                    activeClassName={"active primary"}
+                />
+            </div>
         </div>
 
     )
