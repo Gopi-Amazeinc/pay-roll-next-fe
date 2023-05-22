@@ -2,80 +2,110 @@ import React, { useState } from 'react'
 import Layout from '@/components/layout/layout.js';
 
 const SSSML1Report = () => {
-    let [generateState, setState] = useState(false)
+    let [tableState, setState] = useState(false);
 
-    const toggleState = () => {
-        setState(true)
-    }
+    const toggleTable = () => {
+      setState(!tableState);
+    };
+  
+    const customStyles = {
+      center: {
+        display: "flex",
+        justifyContent: "center",
+      },
+    };
 
     return (
         <Layout>
-            <div className='container'>
-                <div className='card p-3 border-0 shadow mt-3'>
-                    <div className='row'>
-                        <div className='col-lg-4'></div>
-                        <div className='col-lg-4'>
-                            <p className='header-style'>ML-1</p>
-                        </div>
-                        <hr />
-                        <div className='col-lg-4'></div>
-                    </div>
-
-                    <div className='row'>
-                        <div className='col-lg-2'></div>
-                        <div className='col-lg-2'>
-                            <p className='text-dark fw-bold fs-5 text-end'>Select Date Coverage:</p>
-                        </div>
-
-                        <div className="col-lg-2">
-                            <select className='form-select'>
-                                <option>Select Month</option>
-                            </select>
-                        </div>
-
-                        <div className='col-lg-2'>
-                            <select className='form-select'>
-                                <option>Select Year</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div className='row mt-5'>
-                        <div className='col-lg-2'></div>
-                        <div className='col-lg-2'>
-                            <p className='text-dark fw-bold fs-5 text-end'>Signatory Person:</p>
-                        </div>
-
-                        <div className="col-lg-4">
-                            <select className='form-select'>
-                                <option>Select Person</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div className='row mt-5'>
-                        <div className='col-lg-4'></div>
-                        <div className='col-lg-4'>
-                            <button onClick={toggleState} className='EditDelteBTN'>generate</button>
-                        </div>
-                        <div className='col-lg-4'></div>
-                    </div>
-
+        <div>
+          <br />
+          <div className="container-fluid ">
+            <br />
+            <br />
+            <br />
+            <div className="card shadow p-3">
+              <div className="row">
+                <h4 className="text-center text-primary">ML-1</h4>
+                <hr />
+  
+                <div className="row" style={customStyles.center}>
+                  <div className="col-lg-2">
+                    <label>Select Start Month & Year</label>
+                  </div>
+                  <div className="col-lg-2">
+                    <select
+                      class="form-select form-select-sm"
+                      aria-label=".form-select-sm example"
+                    >
+                      <option selected>Select Month</option>
+                      <option value="1">January</option>
+                      <option value="2">February</option>
+                      <option value="3">March</option>
+                      <option value="3">April</option>
+                      <option value="1">May</option>
+                      <option value="2">June</option>
+                      <option value="3">July</option>
+                      <option value="3">August</option>
+                      <option value="1">September</option>
+                      <option value="2">October</option>
+                      <option value="3">November</option>
+                      <option value="3">December</option>
+                    </select>
+                  </div>
+                  <div className="col-lg-2">
+                    <select
+                      class="form-select form-select-sm"
+                      aria-label=".form-select-sm example"
+                    >
+                      <option selected>Select Year</option>
+                      <option value="1">2025</option>
+                      <option value="2">2024</option>
+                      <option value="3">2023</option>
+                      <option value="1">2022</option>
+                      <option value="2">2021</option>
+                      <option value="3">2020</option>
+                    </select>
+                  </div>
                 </div>
-
-                {
-                    generateState && (
-                        <div className='row mt-4'>
-                            <div className='col-lg-4'></div>
-                            <div className='col-lg-4'></div>
-                            <div className='col-lg-4'>
-                                <button className='EditDelteBTN'>export to pdf</button>
-                            </div>
-                        </div>
-                    )
-                }
+                <br></br>
+  
+                <div className="row mt-4" style={customStyles.center}>
+                  <div className="col-lg-2">
+                    <label>Signatory Person</label>
+                  </div>
+                  <div className="col-lg-2">
+                    <select className="form-select form-select-sm">
+                      <option select>Select</option>
+                      <option>Admin</option>
+                      <option>HR</option>
+                      <option>Finance</option>
+                    </select>
+                  </div>
+                  <div className="col-lg-2"></div>
+                </div>
+                <br />
+                <div className="row mt-4" style={customStyles.center}>
+                  <div className="col-lg-4">
+                    <button onClick={toggleTable} className="EditDelteBTN">
+                      Generate
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
-        </Layout >
+            {tableState && (
+            <div className="row mt-4">
+              <div className="col-lg-4"></div>
+              <div className="col-lg-4"></div>
+              <div className="col-lg-4">
+                <button className="EditDelteBTN">export to excel</button>
+              </div>
+            </div>
+          )}
+          </div>
+         
+        </div>
+      </Layout>
     )
 }
 export default SSSML1Report

@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react'
-import Modal from 'react-modal';
-import Swal from 'sweetalert2';
-import axios from 'axios'
-import Link from 'next/link'
-import { DownloadTableExcel } from 'react-export-table-to-excel';
-import Styles from '../.././../../styles/finalpayrolldetails.module.css'
+import React, { useState, useEffect } from "react";
+import Modal from "react-modal";
+import Swal from "sweetalert2";
+import Link from "next/link";
+import { DownloadTableExcel } from "react-export-table-to-excel";
+import Styles from "../.././../../styles/finalpayrolldetails.module.css";
 import { apiService } from "@/services/api.service";
 import ReactPaginate from "react-paginate";
 import { useRef } from 'react';
@@ -21,56 +20,56 @@ const FinalPayrollDetails = () => {
 
     const tableRef = useRef(null);
 
-    const getData = async () => {
-        // This API is used for fetch the Departmnent data for Dashboard and  Dropdown
-        let res = await apiService.commonGetCall("Payroll/GetPreliminarySalary");
-        setPreliminarySalary(res.data);
-        // This API is used for fetch the Departmnent data for Dropdown
-        res = await apiService.commonGetCall("Master/GetDepartmentMaster");
-        setDepartment(res.data);
-    }
-    const [selectedRows, setSelectedRows] = useState([]);
-    // const handleRowSelect = (event, id) => {
-    //     if (id === 'all') {
-    //         setSelectedRows(event.target.checked ? preliminarySalary.map(data => data.id) : []);
-    //     } else {
-    //         setSelectedRows(selectedRows.includes(id) ? selectedRows.filter(rowId => rowId !== id) : [...selectedRows, id]);
-    //     }
-    // };
+  const getData = async () => {
+    // This API is used for fetch the Departmnent data for Dashboard and  Dropdown
+    let res = await apiService.commonGetCall("Payroll/GetPreliminarySalary");
+    setPreliminarySalary(res.data);
+    // This API is used for fetch the Departmnent data for Dropdown
+    res = await apiService.commonGetCall("Master/GetDepartmentMaster");
+    setDepartment(res.data);
+  };
+  const [selectedRows, setSelectedRows] = useState([]);
+  // const handleRowSelect = (event, id) => {
+  //     if (id === 'all') {
+  //         setSelectedRows(event.target.checked ? preliminarySalary.map(data => data.id) : []);
+  //     } else {
+  //         setSelectedRows(selectedRows.includes(id) ? selectedRows.filter(rowId => rowId !== id) : [...selectedRows, id]);
+  //     }
+  // };
 
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    useEffect(() => {
-        getData();
-    }, []);
-    const handleData = (data) => {
-        let res = paycode.filter((x) => x.payCode == watch("PayCode"))[0].endDateFormated;
-        // let res = preliminarySalary.filter(data.staffID);
-        // res = preliminarySalary.filter(data.endDate);
-        // console.log(Object.values(res.data));
-        handleDelete(data.staffID, data.endDateFormated);
-    }
+  useEffect(() => {
+    getData();
+  }, []);
+  const handleData = (data) => {
+    let res = paycode.filter((x) => x.payCode == watch("PayCode"))[0]
+      .endDateFormated;
+    // let res = preliminarySalary.filter(data.staffID);
+    // res = preliminarySalary.filter(data.endDate);
+    // console.log(Object.values(res.data));
+  };
+  // TODO: DELETE FUNCTIONALITY SHOULD NOT HAPPEND
+  handleDelete(data.staffID, data.endDateFormated);
 
-    const customStyles = {
-        content: {
-            top: '50%',
-            left: '50%',
-            right: 'auto',
-            marginRight: '-50%',
-            transform: 'translate(-50%, -50%)',
-            width: '60%'
-        }
-    };
+  const customStyles = {
+    content: {
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      marginRight: "-50%",
+      transform: "translate(-50%, -50%)",
+      width: "60%",
+    },
+  };
 
-    // eslint-disable-next-line react-hooks/rules-of-hooks
-    const [modalIsOpen, setIsOpen] = useState(false);
+  const [modalIsOpen, setIsOpen] = useState(false);
 
-    function openModal() {
-        setIsOpen(true);
-    }
+  function openModal() {
+    setIsOpen(true);
+  }
 
-    function closeModal() {
-        setIsOpen(false);
-    }
+  function closeModal() {
+    setIsOpen(false);
+  }
 
     const handleDelete = async (staffID, endDateFormated) => {
         try {
@@ -273,7 +272,4 @@ const FinalPayrollDetails = () => {
             <br />
         </div>
 
-    )
-}
-
-export default FinalPayrollDetails
+export default FinalPayrollDetails;

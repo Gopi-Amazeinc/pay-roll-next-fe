@@ -1,17 +1,18 @@
 import React, { useState, useEffect } from 'react'
 import Link from 'next/link'
-import axios from 'axios'
+import { apiService } from "@/services/api.service";
 import Swal from 'sweetalert2'
 const AnnualTax = () => {
     const [annualTax, setannualTaxData] = useState([]);
-    let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+    const [payperiodSettingsDashboard, setpayperiodSettingsDashboard] = useState([]);
+    const [keyword, setKeyword] = useState("");
+
     useEffect(() => {
         getData();
     }, []);
 
     async function getData() {
-        let res = await axios.get(
-            hostURL + "HR/GetTaxconfigaration"  //naveen.th@amazeinc.in, Get API for tax configuration, to fetch data
+        let res = await apiService.commonGetCall("HR/GetTaxconfigaration"  //naveen.th@amazeinc.in, Get API for tax configuration, to fetch data
         );
         setannualTaxData(res.data);
     }
@@ -26,7 +27,7 @@ const AnnualTax = () => {
             confirmButtonText: "Yes, delete it!",
         }).then((result) => {
             if (result.isConfirmed) {
-                axios.get(hostURL + "HR/DeleteTaxconfigaration?ID=" + id); //naveen.th@amazeinc.in, Delete API for tax configuration, to delete data by ID
+                let res = apiService.commonGetCall("HR/DeleteTaxconfigaration?ID=" + id); //naveen.th@amazeinc.in, Delete API for tax configuration, to delete data by ID
                 getData()
             }
         });
@@ -52,7 +53,7 @@ const AnnualTax = () => {
                                 </div>
 
                                 <div className='col-lg-3'>
-                                    <input type="text" className='form-control' placeholder='Search...' />
+                                    <input type="text" className='form-control' placeholder='Search...' onChange={e => setKeyword(e.target.value)} />
                                 </div>
                             </div>
                         </div>
@@ -61,14 +62,14 @@ const AnnualTax = () => {
                 <div className='row'>
                     <div className='col-lg-10'></div>
                     <div className='col-lg-2'>
-                        
-                        <Link href="/Settings/AnnualTax/new"><button onClick={clearSession} className='AddButton'  >Add New</button></Link>
-                        
+
+                        <Link href="/Settings/AnnualTax/new"><button className='AddButton'  >Add New</button></Link>
+
                     </div>
                 </div>
-                <br/>
+                <br />
                 <div className='row'><div className='col-lg-12'>
-                
+
                     <table className='table table-hover '>
                         <thead className='bg-info text-white '>
                             <tr>
@@ -85,7 +86,16 @@ const AnnualTax = () => {
 
                         <tbody>
                             {
-                                annualTax.map((data, index) => {
+                                annualTax.filter(data => {
+                                    if ((data.taxlowlevellimit.toString().includes(keyword.toString())) || (data.taxhighlevellimit.toString().includes(keyword.toString()))||
+                                    (data.slab.toString().includes(keyword.toString()))||
+                                    (data.percentage.toString().includes(keyword.toString()))||
+                                    (data.taxexcessamount.toString().includes(keyword.toString()))||
+                                    (data.taxdeductionamount.toString().includes(keyword.toString()))||
+                                    (data.year.toString().includes(keyword.toString()))) {
+                                        return data;
+                                    }
+                                }).map((data, index) => {
                                     return (
                                         <tr key={index}>
                                             <td>{data.taxlowlevellimit}</td>
@@ -106,7 +116,7 @@ const AnnualTax = () => {
                                                 </Link>
                                                 &nbsp;&nbsp;&nbsp;&nbsp;
                                                 <button
-                                                    className='edit-btn' 
+                                                    className='edit-btn'
                                                     onClick={deleteAnnualTax.bind(
                                                         this,
                                                         data.id
@@ -121,7 +131,7 @@ const AnnualTax = () => {
                             }
                         </tbody>
                     </table>
-                {/* </div> */}
+                    {/* </div> */}
                 </div>
                 </div>
             </div>
