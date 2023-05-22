@@ -130,13 +130,13 @@ const ApplyLeave = () => {
                   <div className="col-lg-2">
                     <Link href="/Requests/Leaverequest">
                       <button className="submit-button">
-                        CANCEL
+                        Cancel
                       </button>
                     </Link>
                   </div>
                   <div className="col-lg-2" style={{ float: "right" }}>
                     <button type="submit" className="submit-button">
-                      SAVE
+                      Save
                     </button>
                   </div>
                 </div>
