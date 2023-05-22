@@ -7,6 +7,7 @@ import { DownloadTableExcel } from 'react-export-table-to-excel';
 import Styles from '../.././../../styles/finalpayrolldetails.module.css'
 import { apiService } from "@/services/api.service";
 import ReactPaginate from "react-paginate";
+import { useRef } from 'react';
 
 
 
@@ -18,6 +19,7 @@ const FinalPayrollDetails = () => {
     const [department, setDepartment] = useState([]);
     const [keyword, setKeyword] = useState("");
 
+    const tableRef = useRef(null);
 
     const getData = async () => {
         // This API is used for fetch the Departmnent data for Dashboard and  Dropdown
@@ -130,7 +132,7 @@ const FinalPayrollDetails = () => {
                         <DownloadTableExcel
                             filename="users table"
                             sheet="users"
-                        // currentTableRef={tableRef.current}
+                            currentTableRef={tableRef.current}
                         >
                             <button type="button" className="form-control CancelBTN">Export To Excel </button>
                         </DownloadTableExcel>
@@ -161,7 +163,7 @@ const FinalPayrollDetails = () => {
                 <div className='col-lg-12'>
                     <span>Select All <input type="checkbox" checked={selectedRows.length === preliminarySalary.length} onChange={e => handleRowSelect(e, 'all')} /></span>
                     <br />
-                    <table style={{ whiteSpace: "nowrap" }} className='table text-center '>
+                    <table style={{ whiteSpace: "nowrap" }} className='table text-center ' ref={tableRef}>
                         <thead>
                             <tr className='tr' >
                                 <th className='text-white'>Select</th>
@@ -185,7 +187,7 @@ const FinalPayrollDetails = () => {
                                     return (
                                         <tr className="text-dark" key={index}>
                                             <td>
-                                                <input type="checkbox"  onChange={handleData.bind(this, data)} />
+                                                <input type="checkbox" onChange={handleData.bind(this, data)} />
                                             </td>
                                             <td>{data.employeID}</td>
                                             <td>{data.staffID}</td>
@@ -212,7 +214,7 @@ const FinalPayrollDetails = () => {
                             </div>
                             <div className='col-lg-4'></div>
                             <div className='col-lg-2'>
-                                <button className='btn btn-primary' onClick={closeModal}>Close</button>
+                                <button aria-label="Close" type="button" className={Styles.close} onClick={closeModal} >X</button>
                             </div>
                         </div>
                         <hr></hr>
