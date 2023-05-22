@@ -2,12 +2,13 @@ import Link from "next/link";
 import React from "react";
 import Router from "next/router";
 import { useEffect, useState } from "react";
-import { useRef } from 'react';
+import { useRef } from "react";
 import axios from "axios";
 import Styles from "@/styles/attendancedetails.module.css";
 import { apiService } from "@/services/api.service";
 import ReactPaginate from "react-paginate";
 import { DownloadTableExcel } from "react-export-table-to-excel";
+import Multiselect from "multiselect-react-dropdown";
 
 const MyTeamAttendence = () => {
   const staffDetailsRef = useRef(null);
@@ -17,7 +18,7 @@ const MyTeamAttendence = () => {
   const [userID, setUserID] = useState();
   const [roleID, setRoleID] = useState();
 
-  const [StaffData, setStaffData] = useState();
+  const [StaffData, setStaffData] = useState([]);
   const [selctedStaffdata, setselctedStaffdata] = useState();
 
   const [startDate, setStartDate] = useState("");
@@ -28,36 +29,30 @@ const MyTeamAttendence = () => {
     const roleid = sessionStorage.getItem("roleID");
     setUserID(userid);
     setRoleID(roleid);
-
-    // const getAttendenceByID = async () => {
-    //     const Supervisor = 20540;
-    //     const SDate = "2000-10-10";
-    //     const EDate = "2025-11-11";
-    //     if (userid) {
-    //         const res = await apiService.commonGetCall("HR/GetAttendanceByManagerID?Supervisor=" + Supervisor + '&SDate=' + SDate + '&EDate=' + EDate);
-    //         setMyTeamAttendence(res.data);
-    //     }
-    // }
-    // getAttendenceByID();
   }, []);
 
   // Gopi's Code => tried for onchnage function
-  useEffect(async () => {
-    await apiService.commonGetCall("Payrool/GetStaff").then((staffData) => {// check the URL OF THE API ONCE GIVEN
-      staffDetailsRef.current = staffData.filter((x) =>
-        x.data.id = userID
-      )
-    })
-    setStaffData(staffDetailsRef.current)
-  }, []);
+  useEffect(() => {
+    if (userID) {
+      debugger;
+      getstaffDetails();
+    }
+  }, [userID]);
+  const getstaffDetails = async () => {
+    const staffDetails = await apiService.commonGetCall(
+      "Payroll/GetStaffBySupervisorID?Supervisor=" + userID
+    );
+    setStaffData(staffDetails.data);
+  };
 
+  // console.log(StaffData);
   // Gopi's code end's
 
   useEffect(() => {
     if (userID) {
       const resu = getCurrentMonthDates();
       if (resu) {
-        getAttendenceByID(20540, resu.setStartDate, resu.setEndDate);
+        getAttendenceByID(userID, resu.setStartDate, resu.setEndDate);
       }
     }
   }, [userID]);
@@ -113,20 +108,33 @@ const MyTeamAttendence = () => {
     if (userID) {
       const res = await apiService.commonGetCall(
         "HR/GetAttendanceByManagerID?Supervisor=" +
-        Supervisor +
-        "&SDate=" +
-        SDate +
-        "&EDate=" +
-        EDate
+          Supervisor +
+          "&SDate=" +
+          SDate +
+          "&EDate=" +
+          EDate
       );
       setMyTeamAttendence(res.data);
     }
   };
 
   const handleStaffChange = (selectedStaff) => {
-    setselctedStaffdata(selectedStaff)
-  }
+    setselctedStaffdata(selectedStaff);
+  };
 
+  // this.state = {
+  //  staffoptions : [
+  //   { id: 38243, short: "employee" },
+  // { id: 38244, short: "testemployee" }
+
+  // ]
+
+  // }
+  // const getStaffoption = () => {
+  //   staffoptions.map((data) => {
+  //     return data.short;
+  //   });
+  // };
   return (
     <div>
       <div className="container">
@@ -167,7 +175,9 @@ const MyTeamAttendence = () => {
 
             <div className="col-lg-2">
               <p className={Styles.filterdate}>End Date</p>
-              <input type="date" className="form-control"
+              <input
+                type="date"
+                className="form-control"
                 value={endDate || ""}
                 onChange={(e) => getEndDate(e.target.value)}
               />
@@ -177,12 +187,36 @@ const MyTeamAttendence = () => {
               <p className={Styles.filterdate}>
                 Staff<i className="text-danger">*</i>
               </p>
-              <select className="form-select" onChange={(e) => handleStaffChange(e.target.value)}>
+              {/* <Multiselect
+                displayValue="id"
+                // isObject={false}
+                onKeyPressFn={function noRefCheck() {}}
+                onRemove={function noRefCheck() {}}
+                onSearch={function noRefCheck() {}}
+                onSelect={(selectedOptions) => {
+                    console.log(selectedOptions);
+                    handleStaffChange(selectedOptions);
+                  }}
+                // options={[
+                //   { id: 38243, short: "employee" },
+                //   { id: 38244, short: "testemployee" },
+                // ]}
+                options= {StaffData}
+                // onChange={(selectedOptions) => {
+                //   console.log(selectedOptions);
+                // }}
+                showCheckbox
+                selectedValues={{}}
+              /> */}
+              <select
+                className="form-select"
+                onChange={(e) => handleStaffChange(e.target.value)}
+              >
                 <option>Select Staff</option>
-                {staffDetailsRef.current.map((data, index) => {
+                {StaffData.map((data, index) => {
                   return (
                     <option value={data.id} key={index}>
-                      {data.name}
+                      {data.fullname}
                     </option>
                   );
                 })}
@@ -239,9 +273,9 @@ const MyTeamAttendence = () => {
             {Array.isArray(MyTeamAttendence) && MyTeamAttendence.length > 0 && (
               <>
                 {MyTeamAttendence.slice(offset, offset + PER_PAGE).map(
-                  (data) => {
+                  (data, index) => {
                     return (
-                      <tr key={data.id}>
+                      <tr value={data.id} key={index}>
                         <td>{data.date}</td>
                         <td>{data.staffname1}</td>
                         <td>{data.position}</td>
