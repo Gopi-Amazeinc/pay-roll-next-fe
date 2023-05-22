@@ -170,7 +170,7 @@ const CompanyAttendanceDetails = () => {
                     </div>
                 </div>
 
-                <table className='table table-hover mt-2 ' ref={tableRef}>
+                <table className='table  mt-2 ' ref={tableRef}>
                     <thead className='bg-info text-white '>
                         <tr style={{ whiteSpace: 'nowrap' }}>
                             <th >Date</th>
