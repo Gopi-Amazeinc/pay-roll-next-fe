@@ -28,14 +28,14 @@
     border-radius: 6px;
     border: none;
     text-transform: uppercase;
-    font-family: Poppins;
+    /* font-family: Poppins; */
     text-shadow: none;
     letter-spacing: .5px;
     padding: 5px;
     font-size: 20px;
     font-weight: 700;
     cursor: pointer;
-    font-family: Poppins;
+    /* font-family: Poppins; */
     text-transform: none;
     overflow: visible;
     margin: 0;
