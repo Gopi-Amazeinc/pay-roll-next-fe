@@ -76,7 +76,7 @@ function SSS() {
                         <Link href="/Settings/SSS/new"><button
                             onClick={clearData.bind(this)}
                             className='AddButton'
-                        >  ADD </button></Link>
+                        >  ADD New </button></Link>
 
                     </div>
 

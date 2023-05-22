@@ -76,7 +76,7 @@ const Holidaydashboard = () => {
                 id={Styles.addNew}
                 onClick={clearData.bind(this)}
               >
-                addd new
+                add new
               </button>
               {/* // onClick={() => setModalOpen(!modalOpen)}>   */}
               {/* <AiOutlinePlusCircle /> */}
