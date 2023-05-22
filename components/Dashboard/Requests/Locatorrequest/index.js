@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import Layout from "@/components/layout/layout"
 import { apiService } from "@/services/api.service";
 import Swal from 'sweetalert2';
+import ReactPaginate from "react-paginate";
 
 const Locatordashboard = () => {
 
@@ -59,6 +60,13 @@ const Locatordashboard = () => {
         const year = datetoformat.getFullYear().toString();
         return `${year}-${month}-${day}`;
     };
+    const PER_PAGE = 5;
+    const [currentPage, setCurrentPage] = useState(0);
+    const handlePageClick = ({ selected: selectedPage }) => {
+        setCurrentPage(selectedPage);
+    };
+    const offset = currentPage * PER_PAGE;
+    const pageCount = Math.ceil(pendingDashboard.length / PER_PAGE);
     const togglePending = () => {
         setApproved(false)
         setRejected(false)
@@ -203,7 +211,7 @@ const Locatordashboard = () => {
                                                 if ((data.date.toString().includes(keyword.toLowerCase())) || (data.approveStatus.toLowerCase().includes(keyword))) {
                                                     return data;
                                                 }
-                                            }).map((data, index) => {
+                                            }).slice(offset, offset + PER_PAGE).map((data, index) => {
                                                 return (
                                                     <tr key={index}>
                                                         <td>{data.id}</td>
@@ -246,7 +254,7 @@ const Locatordashboard = () => {
                                                 if ((data.date.toString().includes(keyword.toLowerCase())) || (data.approveStatus.toLowerCase().includes(keyword))) {
                                                     return data;
                                                 }
-                                            }).map((data, index) => {
+                                            }).slice(offset, offset + PER_PAGE).map((data, index) => {
                                                 return (
                                                     <tr className="text-dark" key={index}>
                                                         <td>{data.id}</td>
@@ -282,7 +290,7 @@ const Locatordashboard = () => {
                                                 if ((data.date.toString().includes(keyword.toLowerCase())) || (data.approveStatus.toLowerCase().includes(keyword))) {
                                                     return data;
                                                 }
-                                            }).map((data, index) => {
+                                            }).slice(offset, offset + PER_PAGE).map((data, index) => {
                                                 return (
                                                     <tr className="text-dark" key={index}>
                                                         <td>{data.id}</td>
@@ -304,6 +312,25 @@ const Locatordashboard = () => {
                     </div>
                 </div>
             </div>
+            <ReactPaginate
+                previousLabel={"Previous"}
+                nextLabel={"Next"}
+                breakLabel={"..."}
+                pageCount={pageCount}
+                marginPagesDisplayed={2}
+                pageRangeDisplayed={3}
+                onPageChange={handlePageClick}
+                containerClassName={"pagination  justify-content-center"}
+                pageClassName={"page-item "}
+                pageLinkClassName={"page-link"}
+                previousClassName={"page-item"}
+                previousLinkClassName={"page-link"}
+                nextClassName={"page-item"}
+                nextLinkClassName={"page-link"}
+                breakClassName={"page-item"}
+                breakLinkClassName={"page-link"}
+                activeClassName={"active primary"}
+            />
         </Layout>
     )
 }

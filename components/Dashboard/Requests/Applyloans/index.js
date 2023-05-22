@@ -4,6 +4,7 @@ import Link from "next/link"
 import axios from "axios"
 import Swal from "sweetalert2";
 import { apiService } from "@/services/api.service";
+import ReactPaginate from "react-paginate";
 const ApplyloansDashboard = () => {
     const [newrequest, setNewRequest] = useState(false)
     const [approved, setApproved] = useState(false)
@@ -23,8 +24,15 @@ const ApplyloansDashboard = () => {
         let res = await apiService.commonGetCall("Payroll/GetEmployeeLoans"); //This Api is useed for Get the Dashborad data band Master
         setApplyLoans(res.data);
     };
+    const PER_PAGE = 5;
+    const [currentPage, setCurrentPage] = useState(0);
+    const handlePageClick = ({ selected: selectedPage }) => {
+        setCurrentPage(selectedPage);
+    };
+    const offset = currentPage * PER_PAGE;
+    const pageCount = Math.ceil(Applyloans.length / PER_PAGE);
 
-    useEffect(() => {
+    useEffect(() => {   
         setNewRequest(true)
         getApplyLoans();
     }, [1]);
@@ -129,7 +137,7 @@ const ApplyloansDashboard = () => {
                                                             if ((data.dateFormated.toString().includes(keyword.toLowerCase())) || (data.loanType.toLowerCase().includes(keyword))) {
                                                                 return data;
                                                             }
-                                                        }).map((data) => {
+                                                        }).slice(offset, offset + PER_PAGE).map((data) => {
                                                             return (
                                                                 <tr key={data.id}>
                                                                     <td>{data.dateFormated}</td>
@@ -216,7 +224,7 @@ const ApplyloansDashboard = () => {
                                                             if ((data.modifiedDate.toString().includes(keyword.toLowerCase())) || (data.loanType.toLowerCase().includes(keyword))) {
                                                                 return data;
                                                             }
-                                                        }).map((data) => {
+                                                        }).slice(offset, offset + PER_PAGE).map((data) => {
                                                             return (
                                                                 <tr key={data.id}>
                                                                     <td>{data.modifiedDate}</td>
@@ -277,6 +285,25 @@ const ApplyloansDashboard = () => {
                     </div>
                 </div>
             </div >
+            <ReactPaginate
+                previousLabel={"Previous"}
+                nextLabel={"Next"}
+                breakLabel={"..."}
+                pageCount={pageCount}
+                marginPagesDisplayed={2}
+                pageRangeDisplayed={3}
+                onPageChange={handlePageClick}
+                containerClassName={"pagination  justify-content-center"}
+                pageClassName={"page-item "}
+                pageLinkClassName={"page-link"}
+                previousClassName={"page-item"}
+                previousLinkClassName={"page-link"}
+                nextClassName={"page-item"}
+                nextLinkClassName={"page-link"}
+                breakClassName={"page-item"}
+                breakLinkClassName={"page-link"}
+                activeClassName={"active primary"}
+            />
         </>
 
     )

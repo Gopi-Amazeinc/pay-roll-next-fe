@@ -2,11 +2,11 @@ import React from 'react'
 import Link from 'next/link'
 import { useEffect, useRef, useState } from 'react';
 import Swal from 'sweetalert2';
-import loan from "../../../../pages/Requests/Applyloans/applyloans.module.css"
 import Modal from 'react-modal';
 import Styles from "@../../../pages/OT/Ot.module.css"
 import { apiService } from "@/services/api.service";
 import { useForm } from 'react-hook-form';
+import ReactPaginate from "react-paginate";
 const Index = () => {
     const { register, handleSubmit, watch, formState } = useForm();
     const [pending, setPending] = useState(false)
@@ -74,6 +74,7 @@ const Index = () => {
             height: '30%'
         }
     }
+
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
     const getStartDate = (selectedDate) => {
@@ -190,6 +191,13 @@ const Index = () => {
             }
         })
     }
+    const PER_PAGE = 5;
+    const [currentPage, setCurrentPage] = useState(0);
+    const handlePageClick = ({ selected: selectedPage }) => {
+        setCurrentPage(selectedPage);
+    };
+    const offset = currentPage * PER_PAGE;
+    const pageCount = Math.ceil(newDashboard.length / PER_PAGE);
 
     useEffect(() => {
         debugger;
@@ -309,7 +317,7 @@ const Index = () => {
 
                                 <tbody>
                                     {
-                                        managerPending.map((data) => {
+                                        managerPending.slice(offset, offset + PER_PAGE).map((data) => {
                                             return (
                                                 <tr key={data.id}>
                                                     <td>{data.date}</td>
@@ -350,7 +358,7 @@ const Index = () => {
 
                                 <tbody>
                                     {
-                                        managerApproved.map((data) => {
+                                        managerApproved.slice(offset, offset + PER_PAGE).map((data) => {
                                             return (
                                                 <tr key={data.id}>
                                                     <td>{data.date}</td>
@@ -385,7 +393,7 @@ const Index = () => {
 
                                 <tbody>
                                     {
-                                        managerRejected.map((data) => {
+                                        managerRejected.slice(offset, offset + PER_PAGE).map((data) => {
                                             return (
                                                 <tr key={data.id}>
                                                     <td>{data.date}</td>
@@ -418,7 +426,7 @@ const Index = () => {
 
                                 <tbody>
                                     {
-                                        newDashboard.map((data) => {
+                                        newDashboard.slice(offset, offset + PER_PAGE).map((data) => {
                                             return (
                                                 <tr key={data.id}>
                                                     <td>{data.date}</td>
@@ -455,7 +463,7 @@ const Index = () => {
 
                                 <tbody>
                                     {
-                                        newApproved.map((data) => {
+                                        newApproved.slice(offset, offset + PER_PAGE).map((data) => {
                                             return (
                                                 <tr key={data.id}>
                                                     <td>{data.date}</td>
@@ -487,7 +495,7 @@ const Index = () => {
 
                                 <tbody>
                                     {
-                                        newRejected.map((data) => {
+                                        newRejected.slice(offset, offset + PER_PAGE).map((data) => {
                                             return (
                                                 <tr key={data.id}>
                                                     <td>{data.date}</td>
@@ -572,7 +580,25 @@ const Index = () => {
                     </Modal>
                 </div>
             </div>
-
+            <ReactPaginate
+                previousLabel={"Previous"}
+                nextLabel={"Next"}
+                breakLabel={"..."}
+                pageCount={pageCount}
+                marginPagesDisplayed={2}
+                pageRangeDisplayed={3}
+                onPageChange={handlePageClick}
+                containerClassName={"pagination  justify-content-center"}
+                pageClassName={"page-item "}
+                pageLinkClassName={"page-link"}
+                previousClassName={"page-item"}
+                previousLinkClassName={"page-link"}
+                nextClassName={"page-item"}
+                nextLinkClassName={"page-link"}
+                breakClassName={"page-item"}
+                breakLinkClassName={"page-link"}
+                activeClassName={"active primary"}
+            />
         </div >
     )
 }
