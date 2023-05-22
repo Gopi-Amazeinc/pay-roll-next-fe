@@ -239,7 +239,7 @@ const Shiftdetails = () => {
                       <tr key={data.id}>
                         <td>{data.shiftDate}</td>
                         <td>{data.endDate}</td>
-                        <td>{data.description}</td>
+                        <td>{data.formattedShiftName}</td>
                         <td>{data.startTime}</td>
                         <td>{data.endTime}</td>
                         <td>{data.status}</td>
