@@ -211,15 +211,16 @@ const Index = () => {
         setManagerTogglePending(true);
         setPending(true)
         if (roleID == 5) {
-            getPendingDetails();
-            getApprovedDetails();
-            getRejectedDetails();
-            getModalData(startTime, endTime, date, userID);
-        }
-        else if (roleID == 3) {
             getManagerPendingDetails(userID);
             getManagerApprovedData(userID);
             getManagerRejectedData(userID);
+            getModalData(startTime, endTime, date, userID);
+
+        }
+        else {
+            getPendingDetails();
+            getApprovedDetails();
+            getRejectedDetails();
             getModalData(startTime, endTime, date, userID);
         }
         if (userID) {

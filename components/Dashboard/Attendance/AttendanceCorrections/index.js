@@ -322,7 +322,7 @@ const Attendancecorrectiondashboard = () => {
                     <th>End Time</th>
                     <th>Comments</th>
                     <th>Status</th>
-                    <th>Action</th>
+                    {/* <th>Action</th> */}
                   </tr>
                 </thead>
 
@@ -344,7 +344,7 @@ const Attendancecorrectiondashboard = () => {
                                 <td>{data.endTime}</td>
                                 <td>{data.comments}</td>
                                 <td>{data.status}</td>
-                                <td>
+                                {/* <td>
                                   <button
                                     onClick={deleteAttendanceCorrection.bind(
                                       this,
@@ -354,7 +354,7 @@ const Attendancecorrectiondashboard = () => {
                                   >
                                     Cancel
                                   </button>
-                                </td>
+                                </td> */}
                               </tr>
                             );
                           })}

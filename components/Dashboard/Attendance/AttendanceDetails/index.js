@@ -142,17 +142,16 @@ const AttendenceDetails = () => {
               </Link>
             </>
           )}
-          {roleID == 2 ||
-            (roleID == 4 && (
-              <>
-                <Link
-                  className={Styles.mainheader}
-                  href="/Attendance/CompanyAttendanceDetails"
-                >
-                  Company Attendance Details
-                </Link>
-              </>
-            ))}
+          {(roleID == 2 || roleID == 4) && (
+            <>
+              <Link
+                className={Styles.mainheader}
+                href="/Attendance/CompanyAttendanceDetails"
+              >
+                Company Attendance Details
+              </Link>
+            </>
+          )}
         </div>
       </div>
       <div className="row">

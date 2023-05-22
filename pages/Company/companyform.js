@@ -444,33 +444,50 @@ function MyForm3({ data }) {
   const [payroll, setPayroll] = useState("insert");
 
 
+  // useEffect(() => {
+  //   const { id } = data || {};
+  //   if (id)
+  //   // (id != null)
+  //   {
+  //     // getCompanyByID(id);
+  //     // getWorkPolicyByID(id);
+  //     // getTaxByID(id);
+  //     getPayrollByID();
+
+  //   }
+
+  //   else {
+  //     // clearForm();
+  //     // PolicyForm();
+  //     // TaxForm();
+  //     payRollForm();
+  //   }
+
+  // }, []);
+
+
+
   useEffect(() => {
-    const { id } = data || {};
-    if (id)
-    // (id != null)
-    {
-      // getCompanyByID(id);
-      // getWorkPolicyByID(id);
-      // getTaxByID(id);
-      getPayrollByID();
-
+    async function getParollByID() {
+      const id = sessionStorage.getItem("id");
+      if (id) {
+        let res = await apiService.commonGetCall("Payroll/GetCompany_PayrollComputationnewByID?ID=" + id);
+        payRollForm(res.data[0]);
+      } else {
+        payRollForm();
+      }
     }
 
-    else {
-      // clearForm();
-      // PolicyForm();
-      // TaxForm();
-      payRollForm();
-    }
-
-  }, []);
+    getParollByID();
+  }, [1]);
 
 
-  async function getPayrollByID(id) {
-    let res = await apiService.commonGetCall("Payroll/GetCompany_PayrollComputationnewByID?ID=" + id);
-    payRollForm(res.data[0]);
+  // async function getPayrollByID(id) {
+  //   let res = await apiService.commonGetCall("Payroll/GetCompany_PayrollComputationnewByID?ID=" + id);
+  //   payRollForm(res.data[0]); 
 
-  }
+  // }
+  
 
 
   // async function getCompanyByID(id) {
