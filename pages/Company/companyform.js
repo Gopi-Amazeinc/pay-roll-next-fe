@@ -471,6 +471,7 @@ function MyForm3({ data }) {
     payRollForm(res.data[0]);
 
   }
+  
 
 
   // async function getCompanyByID(id) {
