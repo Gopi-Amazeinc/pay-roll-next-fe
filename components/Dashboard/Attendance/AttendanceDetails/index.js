@@ -169,7 +169,7 @@ const AttendenceDetails = () => {
                   <input
                     type="date"
                     className="form-control"
-                    value={startDate}
+                    // value={startDate}
                     onChange={(e) => getStartDate(e.target.value)}
                   />
                 </div>
@@ -179,7 +179,7 @@ const AttendenceDetails = () => {
                   <input
                     type="date"
                     className="form-control"
-                    value={endDate || ""}
+                    // value={endDate || ""}
                     onChange={(e) => getEndDate(e.target.value)}
                   />
                 </div>
@@ -193,7 +193,7 @@ const AttendenceDetails = () => {
                     currentTableRef={tableRef.current}
                   >
                     <button className="button" id="AddButton">
-                      DOWNLOAD
+                      Download
                     </button>
                   </DownloadTableExcel>
                 </div>
