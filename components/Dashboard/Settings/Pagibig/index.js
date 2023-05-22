@@ -10,7 +10,7 @@ const Pagibig = () => {
     const [pagibigconfigaration, setpagibigconfigaration] = useState([]);
     const { register, handleSubmit, reset, formState } = useForm();
     const { errors } = formState;
-
+    const [keyword, setKeyword] = useState("");
     const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
 
     const getData = (data) => {
@@ -58,7 +58,7 @@ const Pagibig = () => {
                                 </div>
 
                                 <div className='col-lg-3'>
-                                    <input type="text" className='form-control' placeholder='Search...' />
+                                    <input type="text" className='form-control' placeholder='Search...' onChange={e => setKeyword(e.target.value)} />
                                 </div>
                             </div>
                         </div>
@@ -88,7 +88,14 @@ const Pagibig = () => {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {pagibigconfigaration.map((data, index) => {
+                                    {pagibigconfigaration.filter(data => {
+                                    if ((data.taxiableincomelowlimit.toString().includes(keyword.toString())) || (data.taxiableincomehighlimit.toString().includes(keyword.toString()))||
+                                    (data.pagibigvalue.toString().includes(keyword.toString()))||
+                                    
+                                    (data.year.toString().includes(keyword.toString()))) {
+                                        return data;
+                                    }
+                                }).map((data, index) => {
                                         return (
                                             <tr className="text-dark" key={index}>
                                                 <td>{data.taxiableincomelowlimit}</td>
