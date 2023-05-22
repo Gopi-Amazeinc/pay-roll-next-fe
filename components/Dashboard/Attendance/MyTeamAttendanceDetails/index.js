@@ -108,11 +108,11 @@ const MyTeamAttendence = () => {
     if (userID) {
       const res = await apiService.commonGetCall(
         "HR/GetAttendanceByManagerID?Supervisor=" +
-          Supervisor +
-          "&SDate=" +
-          SDate +
-          "&EDate=" +
-          EDate
+        Supervisor +
+        "&SDate=" +
+        SDate +
+        "&EDate=" +
+        EDate
       );
       setMyTeamAttendence(res.data);
     }
@@ -259,12 +259,15 @@ const MyTeamAttendence = () => {
               <th>Date</th>
               <th>Staff Name</th>
               <th>Shift</th>
+
               <th>Day Type </th>
               <th>Expected in Time</th>
               <th>Expected Out Time</th>
+
               <th>Punch in Time</th>
               <th>Punch Out Time </th>
               <th>Work Hours(HH:MM) </th>
+
               <th>Overtime</th>
               <th>Late</th>
             </tr>
@@ -275,18 +278,22 @@ const MyTeamAttendence = () => {
                 {MyTeamAttendence.slice(offset, offset + PER_PAGE).map(
                   (data, index) => {
                     return (
+
                       <tr value={data.id} key={index}>
                         <td>{data.date}</td>
                         <td>{data.staffname1}</td>
                         <td>{data.position}</td>
-                        <td>{data.department}</td>
-                        <td>{data.signInType}</td>
-                        <td>{data.expectedInTime}</td>
-                        <td>{data.punchInTime}</td>
-                        <td>{data.punchinip}</td>
-                        <td>{data.punchedInForm}</td>
-                        <td>{data.signInType}</td>
-                        <td>{data.expectedOutTime}</td>
+
+                        <td>{data.dayType}</td>
+                        <td>{data.etime}</td>
+                        <td>{data.expectedOut}</td>
+
+                        <td>{data.stime}</td>
+                        <td>{data.etime}</td>
+                        <td>{data.hr}</td>
+
+                        <td>{data.ot}</td>
+                        <td>{data.latepunchin}</td>
 
                         {/* <td>
                               <button className='edit-btn'>Cancel</button>
