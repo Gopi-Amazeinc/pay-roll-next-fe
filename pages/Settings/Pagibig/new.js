@@ -6,24 +6,57 @@ import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2'
 import { useEffect, useState } from 'react';
 import Layout from '@/components/layout/layout'
-
-const PagibigForm = () => {
-
-
-
-    const { register, handleSubmit, watch, reset, formState: { errors }, } = useForm();
-
-
-    async function onSubmit(data) {
-
-        await axios.post(hostURL + "HR/InsertPagibigconfogaration", data) // inserting new division master data [Shashank]
-        location.href = '/Settings/Pagibig';
-        Swal.fire({
-            icon: 'success',
-            title: 'Added Successfully',
-        })
-
+import { apiService } from "@/services/api.service";
+import { useRouter } from 'next/router';
+const PagibigForm = ({ editData }) => {
+    const [actionType, setActionType] = useState("insert");
+    const { register, handleSubmit, watch, reset, formState: { errors }, } = useForm()
+    const router = useRouter();
+    function clearForm(userData = null) {
+        let details = {
+            "ID": userData ? userData.id : "",
+            "Taxiableincomelowlimit": userData ? userData.taxiableincomelowlimit : "",
+            "Taxiableincomehighlimit": userData ? userData.taxiableincomehighlimit : "",
+            "Pagibigvalue": userData ? userData.pagibigvalue : "",
+            "Year": userData ? userData.year : "",
+        }
+        reset(details);
+        setActionType(userData ? "update" : "insert");
     }
+
+    
+
+    useEffect(() => {
+        const { id } = editData || {};
+        if (id) {
+            // This API is used to fetch the data from BarangayMaster ByID table
+            getData(id);
+        } else {
+            clearForm();
+        }
+    }, []);
+
+    const getData = async (id) => {
+        const res = await apiService.commonGetCall(
+            "HR/GetPagibigconfogarationByID?ID=" + id
+        );
+        clearForm(res.data[0]);
+    };
+
+    const onSubmit = async (data) => {
+        if (actionType == "insert") {
+            await apiService.commonPostCall("HR/InsertPagibigconfogaration", data) // inserting new division master data [Shashank]
+            router.push('/Settings/Pagibig');
+            Swal.fire({
+                icon: 'success',
+                title: 'Added Successfully',
+            })
+        } else {
+            await apiService.commonPostCall("HR/UpdatePagibigconfogaration", data); // this is for updating or Modifiying the data using  Update Api call
+            Swal.fire('Updated successfully')
+            router.push('/Settings/Pagibig');
+        }
+    };
 
 
     return (
@@ -39,23 +72,28 @@ const PagibigForm = () => {
                                 <div className="row">
                                     <div className="col-lg-3">
                                         <label className='fw-bold' >Taxable income low limit <span className={Styles.span}>*</span></label>
-                                        <input type="text" className='form-control'  {...register('Taxiableincomelowlimit', { required: true })} />
-                                   <br/>
+                                        <input type="text" className='form-control'  {...register('Taxiableincomelowlimit', { required: true})}
+                                         />
+                                         {errors.Taxiableincomelowlimit && <p className='text-danger'>Enter Low level Tax Limit</p>}
+                                        <br />
                                     </div>
 
                                     <div className="col-lg-3">
                                         <label className='fw-bold'>Taxable income high limit <span className={Styles.span}>*</span></label>
                                         <input type="text" className='form-control'   {...register('Taxiableincomehighlimit', { required: true })} />
+                                        {errors.Taxiableincomehighlimit && <p className='text-danger'>Enter High level Tax Limit</p>}
                                     </div>
 
                                     <div className="col-lg-3">
                                         <label className='fw-bold'>Pagibig value <span className={Styles.span}>*</span></label> <br />
-                                        <input type="text" className='form-control'   {...register('Pagibigvalue', { required: true })} />
+                                        <input type="text" className='form-control'   {...register('Pagibigvalue', { required: true})} />
+                                        {errors.Pagibigvalue && <p className='text-danger'>Enter Pagibig Value</p>}
                                     </div>
 
                                     <div className="col-lg-3">
                                         <label className='fw-bold'>Year<span className={Styles.span}>*</span></label>
                                         <select className='form-control'    {...register('Year', { required: true })}   >
+                                            <option value=''>Select year</option>
                                             <option>2023</option>
                                             <option>2024</option>
                                             <option>2025</option>
@@ -63,30 +101,28 @@ const PagibigForm = () => {
                                             <option>2027</option>
                                             <option>2028</option>
                                         </select>
+                                        {errors.Pagibigvalue && <p className='text-danger'>Enter Year</p>}
                                     </div>
                                 </div>
                                 <br />
                                 <div className="row ">
                                     <div className="col-lg-8"></div>
                                     <div className="col-lg-2">
-                                        <Link href="/Settings/Pagibig"><button className='AddButton' style={{ float: "right", marginLeft: "5px" }} tabIndex="0">CANCEL</button></Link>
-                                        {/* {
-                                    actionType == "insert" && (
-                                        <button type='submit' className={Styles.Save} style={{ float: "right" }}>Save</button>
-                                    )
-                                }
-                                {
-                                    actionType == "update" && (
-                                        <button type='submit' className={Styles.Save} style={{ float: "right" }}>Update</button>
-                                    )
-                                } */}
+                                        <Link href="/Settings/Pagibig"><button className='AddButton'>CANCEL</button></Link>
                                     </div>
                                     <div className='col-lg-2'>
-                                        <button type='submit' className='AddButton' style={{ float: "right" }}>Save</button>
+                                        {
+                                            actionType == "insert" && (
+                                                <button type='submit' className="AddButton" >Save</button>
+                                            )
+                                        }
+                                        {
+                                            actionType == "update" && (
+                                                <button type='submit' className="AddButton" >Update</button>
+                                            )
+                                        }
                                     </div>
                                 </div>
-
-
                             </form>
                         </div>
                     </div>

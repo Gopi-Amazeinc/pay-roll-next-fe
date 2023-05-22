@@ -27,6 +27,7 @@ const Shiftdetails = () => {
 
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
+  const [count, setcount] = useState(0);
 
   let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
   let staffID;
@@ -95,6 +96,8 @@ const Shiftdetails = () => {
     const res = await apiService.commonGetCall("HR/GetStaffShiftDetailsByband?staffID=" + userid);
     console.log(res);
     setShiftDetails(res.data);
+    setcount(res.data.length);
+    
     // https://103.12.1.103/PayrollDemoAPI/Master/GetStaffShiftDetails
   };
 
@@ -206,6 +209,7 @@ const Shiftdetails = () => {
       </div>
       <div className="row mt-3">
         <div className="col-lg-12">
+        <h6 style={{ color: "#3247d5" }}>Showing {count} Results</h6>
           <table className="table" style={{ width: "99%" }} ref={tableRef}>
             <thead>
               <tr className="bg-info text-white">

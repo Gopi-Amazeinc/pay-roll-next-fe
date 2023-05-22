@@ -1,28 +1,65 @@
 import React, { useState, useEffect } from 'react'
 import Layout from '@/components/layout/layout'
 import { useForm } from "react-hook-form";
-import axios from 'axios'
+import { apiService } from "@/services/api.service";
 import Link from "next/link";
 import Swal from 'sweetalert2';
 import Styles from '../../../styles/annualtaxform.module.css'
 
-
-const AnnualTaxForm = () => {
-
+import { useRouter } from "next/router"
+const AnnualTaxForm = ({editData}) => {
+    const router = useRouter();
 
     const { register, handleSubmit, watch, reset, formState: { errors }, } = useForm();
+    const [actionType, setActionType] = useState("insert");
 
 
-    async function onSubmit(data) {
-
-        await axios.post(hostURL + "HR/InsertTaxconfigaration", data) // inserting new division master data [Shashank]
-        location.href = "/Settings/AnnualTax";
-        Swal.fire({
-            icon: 'success',
-            title: 'Added Successfully',
-        })
-
+    function clearForm(existingData = null) {
+        let etty = {
+            "ID": existingData ? existingData.id : "",
+            "Taxlowlevellimit": existingData ? existingData.taxlowlevellimit : "",
+            "Taxhighlevellimit": existingData ? existingData.taxhighlevellimit : "",
+            "slab": existingData ? existingData.slab : "",
+            "Percentage": existingData ? existingData.percentage : "",
+            "Taxexcessamount": existingData ? existingData.taxexcessamount : "",
+            "Taxdeductionamount": existingData ? existingData.taxdeductionamount : "",
+            "Year": existingData ? existingData.year : "",
+        };
+        reset(etty);
+        setActionType(existingData ? "update" : "insert");
     }
+
+    useEffect(() => {
+        const { id } = editData || {};
+        if (id) {
+           
+            getData(id);
+        } else {
+            clearForm();
+        }
+    }, []);
+    const getData = async (id) => {
+        const res = await apiService.commonGetCall(
+            "HR/GetTaxconfigarationByID?ID=" + id
+        );
+        clearForm(res.data[0]);
+    };
+    const onSubmit = async (data) => {
+        if (actionType == "insert") {
+            await apiService.commonPostCall("HR/InsertTaxconfigaration", data) // inserting new division master data [Shashank]
+            router.push('/Settings/AnnualTax');
+            Swal.fire({
+                icon: 'success',
+                title: 'Added Successfully',
+            })
+        } else {
+            await apiService.commonPostCall("HR/UpdateTaxconfigaration", data); // this is for updating or Modifiying the data using  Update Api call
+            Swal.fire('Updated successfully')
+            router.push('/Settings/AnnualTax');
+        }
+    };
+
+   
 
     const customStyles = {
         content: {
@@ -71,7 +108,7 @@ const AnnualTaxForm = () => {
                                             {...register("Taxlowlevellimit", { required: true })}
                                             placeholder="Tax low level limit"
                                         />
-                                        <br/>
+                                        
                                         <div>
                                             {errors.Taxlowlevellimit && (
                                                 <span style={customStyles.errorMsg}>
@@ -215,8 +252,8 @@ const AnnualTaxForm = () => {
                                         <label className='fw-bold'>
                                             Year <i className="text-danger">*</i>
                                         </label>
-                                        <select className="form-select" {...register("Year", { required: true })}>
-                                            <option selected>Select Year</option>
+                                        <select className="form-select" {...register("Year", { required: "Enter Year" })}>
+                                            <option value=''>Select Year</option>
                                             <option value={2023}>2023</option>
                                             <option value={2024}>2024</option>
                                             <option value={2025}>2025</option>
@@ -224,6 +261,7 @@ const AnnualTaxForm = () => {
                                             <option value={2027}>2027</option>
                                             <option value={2028}>2028</option>
                                         </select>
+                                        {errors.Year && <p className="error-message" style={customStyles.errorMsg}>{errors.Year.message}</p>}
                                     </div>
                                 </div>
                                 <br />
@@ -253,8 +291,18 @@ const AnnualTaxForm = () => {
                                         Update
                                     </button>
                                 )} */}
-                                    </div><div className='col-lg-2'>
-                                        <button type='submit' className='AddButton'>Save</button>
+                                    </div>
+                                    <div className='col-lg-2'>
+                                        {
+                                            actionType == "insert" && (
+                                                <button type='submit' className="AddButton" >Save</button>
+                                            )
+                                        }
+                                        {
+                                            actionType == "update" && (
+                                                <button type='submit' className="AddButton" >Update</button>
+                                            )
+                                        }
                                     </div>
                                 </div>
                             </form>

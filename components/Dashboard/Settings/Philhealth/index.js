@@ -1,18 +1,18 @@
 import React from 'react'
 import Link from 'next/link'
 import { useEffect, useState } from "react";
-import axios from 'axios'
+import { apiService } from "@/services/api.service";
 import Styles from '../../../../styles/philhealth.module.css'
 import Swal from 'sweetalert2';
 
 function Philhealth() {
-
+    const [keyword, setKeyword] = useState("");
     const [PhilhealthDash, setPhilhealthDash] = useState([]);
 
 
     const getPhilhealthDash = async () => {
         let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-        let res = await axios.get(hostURL + "HR/GetPhihealthconfogaration");
+        let res = await apiService.commonGetCall("HR/GetPhihealthconfogaration");
         setPhilhealthDash(res.data);
     };
 
@@ -36,9 +36,9 @@ function Philhealth() {
     async function DeletePhillhealth(id) {
         debugger;
         try {
-            let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-            const res = await axios.get(
-                hostURL + `HR/DeletePhihealthconfogaration?id=${id}`
+            // let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+            const res = await apiService.commonGetCall(
+                 `HR/DeletePhihealthconfogaration?id=${id}`
             );
             console.log(res.data);
             Swal.fire("Deleted succesfullly");
@@ -64,7 +64,7 @@ function Philhealth() {
                                 </div>
 
                                 <div className='col-lg-3'>
-                                    <input type="text" className='form-control' placeholder='Search...' />
+                                    <input type="text" className='form-control' placeholder='Search...' onChange={e => setKeyword(e.target.value)}/>
                                 </div>
                             </div>
                         </div>
@@ -93,7 +93,14 @@ function Philhealth() {
                             </thead>
                             <tbody>
                                 {
-                                    PhilhealthDash.map((data) => {
+                                    PhilhealthDash.filter(data => {
+                                        if ((data.taxiableincomelowlimit.toString().includes(keyword.toString())) || (data.taxiableincomehighlimit.toString().includes(keyword.toString()))||
+                                        (data.phihealthvalue.toString().includes(keyword.toString()))||
+                                        
+                                        (data.year.toString().includes(keyword.toString()))) {
+                                            return data;
+                                        }
+                                    }).map((data) => {
                                         return (
                                             <tr key={data.id}>
                                                 <td>{data.taxiableincomelowlimit}</td>
