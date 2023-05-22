@@ -60,7 +60,7 @@ function Philhealth() {
                         <div className='card p-3 border-0 rounded-3 '>
                             <div className='row'>
                                 <div className='col-lg-1'>
-                                    <p>Filter By :</p>
+                                    <p>Filter By </p>
                                 </div>
 
                                 <div className='col-lg-3'>
@@ -74,7 +74,7 @@ function Philhealth() {
                     <div className='col-lg-10'></div>
                     <div className='col-lg-2'>
                         <br />
-                        <Link href="/Settings/Philhealth/new" >  <button className='AddButton' onClick={clearFormData.bind(this)}>  ADD </button></Link>
+                        <Link href="/Settings/Philhealth/new" >  <button className='AddButton' onClick={clearFormData.bind(this)}>  ADD New</button></Link>
                     </div>
 
                 </div>

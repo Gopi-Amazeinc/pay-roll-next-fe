@@ -1,7 +1,7 @@
 #SaveButton {
     box-sizing: border-box;
     border-radius: 5px;
-    font-family: Poppins;
+    /* font-family: Poppins; */
     font-style: normal;
     letter-spacing: .658333px;
     color: #fff;
@@ -23,7 +23,7 @@
 #CancelButton {
     box-sizing: border-box;
     border-radius: 5px;
-    font-family: Poppins;
+    /* font-family: Poppins; */
     font-style: normal;
     letter-spacing: .658333px;
     color: #fff;
@@ -43,7 +43,7 @@
 }
 
 #p {
-    font-family: Poppins;
+    /* font-family: Poppins; */
     font-weight: 700;
     padding-left: 5px;
     color: #3247d5;
@@ -53,7 +53,7 @@
 
 #span {
     color: red;
-    font-family: Poppins;
+    /* font-family: Poppins; */
 }
 
 #Dropzone {
