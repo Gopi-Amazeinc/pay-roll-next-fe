@@ -8,12 +8,14 @@ import Link from "next/link.js";
 
 const Companydashboard = () => {
     const [Company, setCompany] = useState([]);
+    const [countvalue, setcountvalue] = useState();
 
     const getCompanyAddressDetails = async () => {
         let res = await apiService.commonGetCall(
             "Payroll/GetCompanyAddressDetails"
         );
         setCompany(res.data);
+        setcountvalue(res.data.length)
     };
 
 
@@ -147,11 +149,14 @@ const Companydashboard = () => {
                         </p>
                     </div>
                     <div className="col-lg-4"></div>
+                    {countvalue <= 0 ? (
                     <div className="col-lg-4" >
                         <Link href="/Company/companyform">
                             <button className={company.button} style={{ marginLeft: "100px" }}>ADD NEW</button>
                         </Link>
-                    </div>
+                    </div>) : (null)
+}
+
                 </div>
                 {/* <div className="row"></div> */}
             </div>
