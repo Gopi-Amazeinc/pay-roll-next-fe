@@ -115,9 +115,13 @@ const CompanyAttendanceDetails = () => {
                         <Link className={Styles.mainheader} href="/Attendance/AttendanceDetails">My Attendence Details</Link>
                     </div>
                     <div className='col-lg-3' style={{ marginLeft: "-50px" }}>
-                        <Link className={Styles.mainheader} href="/Attendance/MyTeamAttendanceDetails">Company Attendance Details</Link>
+                        <div className={Styles.mainheader} onClick={() => router.push("/Attendance/MyTeamAttendanceDetails")} >Company Attendance Details
+                        </div>
+                        <div className="line-border"></div>
                     </div>
+
                 </div>
+
 
 
                 <div className='card p-3 border-0 shadow-lg rounded-3 mt-4'>
