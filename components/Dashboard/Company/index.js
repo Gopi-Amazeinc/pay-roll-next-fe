@@ -53,8 +53,6 @@ const Companydashboard = () => {
 
 
 
-
-
     useEffect(() => {
         getCompanyAddressDetails();
     }, [1]);
