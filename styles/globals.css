@@ -513,3 +513,10 @@ tr:nth-child(even) {
   padding: 5px 55px 5px 55px;
 }
 /* gopi endedd */
+.line-border {
+  border: 1px solid #2f87cc;
+  border-top-left-radius: 51px;
+  border-top-right-radius: 51px;
+  margin-top: 0px;
+  width:90%;
+}
