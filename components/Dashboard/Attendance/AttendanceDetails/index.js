@@ -128,12 +128,8 @@ const AttendenceDetails = () => {
     <div className="container-fluid">
       <div className="row mt-3">
         <div className="col-lg-3">
-          <Link
-            className={Styles.mainheader}
-            href="/Attendance/AttendanceDetails"
-          >
-            My Attendance Details
-          </Link>
+          <div className={Styles.mainheader} style={{maxContent: "100%"}}  onClick={() => router.push("/Attendance/AttendanceDetails")}> My Attendance Details</div>
+          <div className="line-border"></div>
         </div>
         <div className="col-lg-3">
           {roleID == 3 && (
@@ -173,7 +169,7 @@ const AttendenceDetails = () => {
                   <input
                     type="date"
                     className="form-control"
-                    value={startDate}
+                    // value={startDate}
                     onChange={(e) => getStartDate(e.target.value)}
                   />
                 </div>
@@ -183,7 +179,7 @@ const AttendenceDetails = () => {
                   <input
                     type="date"
                     className="form-control"
-                    value={endDate || ""}
+                    // value={endDate || ""}
                     onChange={(e) => getEndDate(e.target.value)}
                   />
                 </div>
@@ -197,7 +193,7 @@ const AttendenceDetails = () => {
                     currentTableRef={tableRef.current}
                   >
                     <button className="button" id="AddButton">
-                      DOWNLOAD
+                      Download
                     </button>
                   </DownloadTableExcel>
                 </div>
@@ -212,7 +208,7 @@ const AttendenceDetails = () => {
         <div className="col-lg-12">
           <div className="table-responsive">
             <table
-              className="table table-striped  "
+              className="table "
               style={{ marginLeft: "0px", width: "100%" }}
               ref={tableRef}
             >
@@ -240,7 +236,7 @@ const AttendenceDetails = () => {
                     {Attendence.slice(offset, offset + PER_PAGE).map(
                       (data, index) => {
                         return (
-                          <tr className="" key={index}>
+                          <tr key={index}>
                             <td>{data.signinDate}</td>
                             <td>{data.signInType}</td>
                             <td>{data.signInWorkType}</td>

@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import React from 'react';
 import { useEffect, useState, useRef } from 'react';
-import axios from 'axios';
+import { useRouter } from "next/router"
 import { apiService } from "@/services/api.service";
 import Styles from "@/styles/attendancedetails.module.css";
 import { DownloadTableExcel } from "react-export-table-to-excel";
@@ -13,7 +13,7 @@ const CompanyAttendanceDetails = () => {
     const [CompanyAttendence, setCompanyAttendence] = useState([]);
     const [userID, setUserID] = useState();
     const [roleID, setRoleID] = useState();
-
+    const router = useRouter();
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
 
@@ -115,9 +115,13 @@ const CompanyAttendanceDetails = () => {
                         <Link className={Styles.mainheader} href="/Attendance/AttendanceDetails">My Attendence Details</Link>
                     </div>
                     <div className='col-lg-3' style={{ marginLeft: "-50px" }}>
-                        <Link className={Styles.mainheader} href="/Attendance/MyTeamAttendanceDetails">Company Attendance Details</Link>
+                        <div className={Styles.mainheader} onClick={() => router.push("/Attendance/CompanyAttendanceDetails")} >Company Attendance Details
+                        </div>
+                        <div className="line-border"></div>
                     </div>
+
                 </div>
+
 
 
                 <div className='card p-3 border-0 shadow-lg rounded-3 mt-4'>
@@ -166,7 +170,7 @@ const CompanyAttendanceDetails = () => {
                     </div>
                 </div>
 
-                <table className='table table-hover mt-2 ' ref={tableRef}>
+                <table className='table  mt-2 ' ref={tableRef}>
                     <thead className='bg-info text-white '>
                         <tr style={{ whiteSpace: 'nowrap' }}>
                             <th >Date</th>
