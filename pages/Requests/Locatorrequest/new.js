@@ -12,7 +12,7 @@ const Locatorrequest = () => {
     const router = useRouter();
     const { errors } = formState;
 
-    const [userID, setUserID] = useState()
+    const [StaffID, setUserID] = useState()
 
     useEffect(() => {
         const usrID = sessionStorage.getItem("userID");
@@ -21,9 +21,12 @@ const Locatorrequest = () => {
     }, []);
 
     async function onSubmit(data) {
+        let entity ={
+            "Attachment" : ""
+        }
         debugger;
         try {
-            const formData = { ...data, userID };
+            const formData = { ...data, ...StaffID,...entity };
             // console.log("form data", formData);
             await apiService.commonPostCall("Payroll/InsertLocatorTable", formData);
             Swal.fire('Data Inserted successfully')
