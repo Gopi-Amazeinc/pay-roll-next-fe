@@ -6,7 +6,7 @@ import { apiService } from "@/services/api.service";
 import Styles from "@/styles/shiftdetails.module.css";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { DownloadTableExcel } from "react-export-table-to-excel";
-
+import ReactPaginate from "react-paginate";
 
 
 
@@ -32,6 +32,15 @@ const Shiftdetails = () => {
   let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
   let staffID;
   const tableRef = useRef(null);
+
+  const PER_PAGE = 10;
+  const [currentPage, setCurrentPage] = useState(0);
+  function handlePageClick({ selected: selectedPage }) {
+    setCurrentPage(selectedPage)
+  }
+  const offset = currentPage * PER_PAGE;
+  const pageCount = Math.ceil(shiftDetails.length / PER_PAGE);
+
 
 
   useEffect(() => {
@@ -171,7 +180,7 @@ const Shiftdetails = () => {
               <div className="row">
                 <div className="col-lg-3">
                   <p className={Styles.filterdate}>
-                  <b></b>  START DATE <span style={{ color: "red" }}>*</span>
+                     START DATE <span style={{ color: "red" }}>*</span>
                   </p>
                   <input type="date" className="form-control form-control-sm m-o"
                     value={startDate}
@@ -214,11 +223,11 @@ const Shiftdetails = () => {
           <table className="table" style={{ width: "99%" }} ref={tableRef}>
             <thead>
               <tr className="bg-info text-white">
-                <th>START DATE</th>
-                <th>END DATE</th>
-                <th>SHIFT NAME</th>
-                <th>START TIME</th>
-                <th>END TIME</th>
+                <th>Start Date</th>
+                <th>End Time</th>
+                <th>Shift Name</th>
+                <th>Start Time</th>
+                <th>End Time</th>
                 <th>Status</th>
               </tr>
             </thead>
@@ -230,7 +239,7 @@ const Shiftdetails = () => {
                       <tr key={data.id}>
                         <td>{data.shiftDate}</td>
                         <td>{data.endDate}</td>
-                        <td>{data.shiftName}</td>
+                        <td>{data.formattedShiftName}</td>
                         <td>{data.startTime}</td>
                         <td>{data.endTime}</td>
                         <td>{data.status}</td>
@@ -241,6 +250,27 @@ const Shiftdetails = () => {
               )}
             </tbody>
           </table>
+          <div className="mb-4 mt-4 text-center">
+            <ReactPaginate
+              previousLabel={"Previous"}
+              nextLabel={"Next"}
+              breakLabel={"..."}
+              pageCount={pageCount}
+              marginPagesDisplayed={2}
+              pageRangeDisplayed={3}
+              onPageChange={handlePageClick}
+              containerClassName={"pagination  justify-content-center"}
+              pageClassName={"page-item "}
+              pageLinkClassName={"page-link"}
+              previousClassName={"page-item"}
+              previousLinkClassName={"page-link"}
+              nextClassName={"page-item"}
+              nextLinkClassName={"page-link"}
+              breakClassName={"page-item"}
+              breakLinkClassName={"page-link"}
+              activeClassName={"active primary"}
+            />
+          </div>
         </div>
       </div>
     </div>
