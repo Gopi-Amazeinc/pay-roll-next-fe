@@ -104,15 +104,15 @@ const AttendenceDetails = () => {
   const getAttendenceByID = async (SDate, EDate) => {
     debugger
     // if (userID) {
-      const res = await apiService.commonGetCall(
-        "HR/GetAttendanceByEmployeeID?userID=" +
-          userID +
-          "&SDate=" +
-          SDate +
-          "&EDate=" +
-          EDate
-      );
-      setAttendence(res.data);
+    const res = await apiService.commonGetCall(
+      "HR/GetAttendanceByEmployeeID?userID=" +
+      userID +
+      "&SDate=" +
+      SDate +
+      "&EDate=" +
+      EDate
+    );
+    setAttendence(res.data);
     // }
   };
 
@@ -146,17 +146,16 @@ const AttendenceDetails = () => {
               </Link>
             </>
           )}
-          {roleID == 2 ||
-            (roleID == 4 && (
-              <>
-                <Link
-                  className={Styles.mainheader}
-                  href="/Attendance/CompanyAttendanceDetails"
-                >
-                  Company Attendance Details
-                </Link>
-              </>
-            ))}
+          {(roleID == 2 || roleID == 4) && (
+            <>
+              <Link
+                className={Styles.mainheader}
+                href="/Attendance/CompanyAttendanceDetails"
+              >
+                Company Attendance Details
+              </Link>
+            </>
+          )}
         </div>
       </div>
       <div className="row">
