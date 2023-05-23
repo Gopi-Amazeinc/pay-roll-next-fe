@@ -18,7 +18,7 @@
 }
 
 .p {
-  font-family: Poppins;
+  /* font-family: Poppins; */
   font-weight: 700;
   padding-left: 5px;
   color: #3247d5;
@@ -31,7 +31,7 @@
   overflow: hidden;
   width: 98%;
   margin-left: 11px;
-  font-family: Poppins;
+ 
 }
 
 .card {

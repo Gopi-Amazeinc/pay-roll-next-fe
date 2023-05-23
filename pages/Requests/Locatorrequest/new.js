@@ -26,7 +26,7 @@ const Locatorrequest = () => {
         }
         debugger;
         try {
-            const formData = { ...data, ...StaffID,...entity };
+            const formData = { ...data, StaffID,...entity };
             // console.log("form data", formData);
             await apiService.commonPostCall("Payroll/InsertLocatorTable", formData);
             Swal.fire('Data Inserted successfully')

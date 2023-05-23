@@ -19,7 +19,25 @@ const MyTeamOverTimeDetail = () => {
   const [modalOpen, setModalOpen] = useState(false);
 
   const [items, setItems] = useState([]);
-
+  const customStyles = {
+    content: {
+      top: "20%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      marginRight: "-50%",
+      transform: "translate(-50%, -50%)",
+      width: "30%",
+    },
+    errorMsg: {
+      fontSize: "12px",
+      fontWeight: "500",
+      color: "red",
+    },
+    inputLabel: {
+      fontSize: "16px",
+    },
+  };
   const openEditModal = () => {
     setModalOpen(true);
   };
@@ -32,7 +50,7 @@ const MyTeamOverTimeDetail = () => {
   }, []);
 
   const getData = async () => {
-    let res = await apiService.commonGetCall("Master/GetLoanMaster");
+    let res = await apiService.commonGetCall("Master/GetOvertimeMaster");
     SetovertimeUnitsUpload(res.data);
   };
 
@@ -60,35 +78,35 @@ const MyTeamOverTimeDetail = () => {
   };
 
   //   Written By:-Gopi  => The data in excel file is transfered to required feild to the backend API
-  const transformedLoans = async (items) => {
+  const transformedOvertimes = async (items) => {
     console.log(items);
-    const loans = await Promise.all(
+    const overtimes = await Promise.all(
       items && items.length > 0
-        ? items.map(async (loan) => {
+        ? items.map(async (overtime) => {
             const res = await apiService.commonGetCall(
-              "Payroll/GetStaffByEmployeeID?EmployeID=" + loan.EmployeeID
+              "Payroll/GetStaffByEmployeeID?EmployeID=" + overtime.EmployeeID
             );
             const staffData = res.data[0];
             return {
               StaffID: staffData.id,
-              LoanType: loan.LoanType,
-              LoanAmount: loan.LoanAmount,
-              EMIAmount: loan.SemiMonthlyAmmortization,
-              Period: loan.Period,
+              overtimeType: overtime.overtimeType,
+              overtimeAmount: overtime.overtimeAmount,
+              EMIAmount: overtime.SemiMonthlyAmmortization,
+              Period: overtime.Period,
               Category: "NA",
               Status: "Manager Approved",
               Attachment: "NA",
-              Comments: loan.Comments,
+              Comments: overtime.Comments,
             };
           })
         : []
     );
-    return loans;
+    return overtimes;
   };
 
   // TODO:  Written By:-Gopi  => The data in excel file is uploaded to the backend API
-  const uploadLoan = async () => {
-    const transformedData = await transformedLoans(items);
+  const uploadOvertime = async () => {
+    const transformedData = await transformedOvertimes(items);
     if (transformedData.length > 0) {
       await apiService.commonPostCall(
         "Payroll/InsertStaffOvetimeOTupload",
@@ -99,7 +117,7 @@ const MyTeamOverTimeDetail = () => {
       Swal.fire(" No Ovetime Uploaded!");
     }
     setModalOpen(false);
-    getEmployeeLoans();
+    getEmployeeOvertimes();
   };
 
   return (
@@ -144,7 +162,7 @@ const MyTeamOverTimeDetail = () => {
               >
                 <div className=" modal-header">
                   <h5 className=" modal-title" id="exampleModalLabel">
-                    Upload Loans
+                    Upload Overtimes
                   </h5>
                   <button
                     aria-label="Close"
@@ -185,11 +203,11 @@ const MyTeamOverTimeDetail = () => {
                       <button
                         className="mt-4"
                         id={Styles.UploadOvetimefButton}
-                        onClick={() => uploadLoan()}
+                        onClick={() => uploadOvertime()}
                         color="primary"
                         type="button"
                       >
-                        Upload Loans
+                        Upload Overtimes
                       </button>
                     </div>
                     <div className="col-lg-6"></div>
@@ -231,7 +249,7 @@ const MyTeamOverTimeDetail = () => {
               <div className="col-lg-2">
                 <br />
                 <DownloadTableExcel
-                  filename="UploadLoanTemplate"
+                  filename="UploadOvertimeTemplate"
                   sheet="users"
                   currentTableRef={tableRef.current}
                 >

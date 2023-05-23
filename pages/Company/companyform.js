@@ -7,13 +7,17 @@ import { apiService } from "@/services/api.service";
 import Swal from "sweetalert2";
 import { useRouter } from "next/router";
 import Link from "next/link";
-
+import { useCallback } from "react";
+import { useDropzone } from "react-dropzone";
+import axios from "axios";
 
 
 function MyForm1({ data }) {
 
   const { register, handleSubmit, watch, reset, formState: { errors }, } = useForm();
   const [actionType, setActionType] = useState("insert");
+  const [filePath, setFilePath] = useState();
+
 
   const router = useRouter();
 
@@ -73,7 +77,9 @@ function MyForm1({ data }) {
       // "CityID": CompanyData ? CompanyData.cityID : "",
       "Barangay": CompanyData ? CompanyData.barangay : "",
       "CompanyBankAccNo": CompanyData ? CompanyData.companyBankAccNo : "",
-      "CompanyCode": CompanyData ? CompanyData.companyCode : ""
+      "CompanyCode": CompanyData ? CompanyData.companyCode : "",
+      "AttachmentEdu": filePath,
+
     };
     // if (actionType == "insert") {
     //   await apiService.commonPostCall("/Payroll/InsertCompany_AddressDetails", details);
@@ -113,6 +119,27 @@ function MyForm1({ data }) {
     }
   }
 
+  
+  const onDrop = useCallback((acceptedFiles) => {
+    debugger;
+    console.log(acceptedFiles, "Uploaded file");
+    uploadFile(acceptedFiles);
+  }, []);
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+
+  const uploadFile = async (data) => {
+    let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+    const formData = new FormData();
+    formData.append("file_upload", data[0], data[0].name);
+    let res = await axios.post(
+      hostURL + "Payroll/ProjectAttachments",
+      formData
+    );
+    console.log(res, "File Path");
+    Swal.fire("Uploaded successfully");
+    setFilePath(res.data);
+  };
+
   return (
     <div className="container-fluid">
       <br />
@@ -125,12 +152,23 @@ function MyForm1({ data }) {
           <div className="row">
             <div className="col-lg-2">
               <label className={styles.p}>Company Logo</label>
-              <input type="text" className="form-control" {...register('Company_logoe', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
-              {/* {errors.Name && <p className="error-message" style={{ color: "red" }}>{errors.Name.message}</label>} */}
+              <div style={{border:'2px dashed black'}}> 
+                      <div {...getRootProps()}>
+                        <input {...getInputProps()} />
+                        {isDragActive ? (
+                          <p>Drop the files here ...</p>
+                        ) : (
+                          <p>
+                            Drag 'n' drop some files here, or click to select
+                            files
+                          </p>
+                        )}
+                      </div>
+                    </div>              {/* {errors.Name && <p className="error-message" style={{ color: "red" }}>{errors.Name.message}</label>} */}
             </div>
             <div className="col-lg-2">
               <label className={styles.p}>Company Name<span style={{ color: "red" }}>*</span></label>
-              <input type="text" className="form-control" {...register('Nature_Of_Business', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
+              <input type="text" className="form-control" {...register('Company_Name', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
             </div>
             <div className="col-lg-2">
               <label className={styles.p}>Nature of Business</label>
@@ -281,7 +319,20 @@ function MyForm1({ data }) {
           <div className="row">
             <div className="col-lg-2">
               <label className={styles.p}>E-Signatory</label>
-              <input type="text" className="form-control"   {...register('E_Signatory', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
+              <div style={{border:'2px dashed black'}}> 
+                      <div {...getRootProps()}>
+                        <input {...getInputProps()} />
+                        {isDragActive ? (
+                          <p>Drop the files here ...</p>
+                        ) : (
+                          <p>
+                            Drag 'n' drop some files here, or click to select
+                            files
+                          </p>
+                        )}
+                      </div>
+                    </div>  
+              {/* <input type="text" className="form-control"   {...register('E_Signatory', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} /> */}
             </div>
           </div>
           <div className="row">

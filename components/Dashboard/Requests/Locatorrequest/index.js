@@ -185,7 +185,7 @@ const Locatordashboard = () => {
                             </div>
                             <div className="col-6"></div>
                             <div className="col-2">
-                                <Link href="/Requests/Locatorrequest/new"><button className="submit-button">NEW REQUESTS </button></Link>
+                                <Link href="/Requests/Locatorrequest/new"><button className="submit-button">New Requests </button></Link>
                             </div>
                         </div>
                         <br /><br />
@@ -227,7 +227,7 @@ const Locatordashboard = () => {
                                                         data.statusID === 2 ? 'Manager Rejected' : ' '}</b>
                                             }
                                             </td> */}
-                                                        <td><button onClick={Delete.bind(this, data.id)} className="edit-btn">CANCEL</button></td>
+                                                        <td><button onClick={Delete.bind(this, data.id)} className="edit-btn">Cancel</button></td>
                                                     </tr>
                                                 )
                                             })

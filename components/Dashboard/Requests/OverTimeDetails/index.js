@@ -266,20 +266,22 @@ const Index = () => {
                 </div>
             </div><br />
             <div className='card p-3 border-0 rounded-3'>
-                <div className='row'>
-                    <div className='col-lg-3 text-dark fs-6 fw-bolder'>
-                        <p>Select Dates</p>
+                {/* <div className='row'>
+                    <div className='col-lg-3 text-primary fs-6 fw-bolder'>
+                        <label>Select Dates</label>
                     </div>
-                </div>
+                </div> */}
                 <div className='row'>
                     <div className='col-lg-4'>
+                        <label style={{ fontWeight: "bold" }}>Start Date:</label>
                         <input type="date" className='form-control' value={startDate} onChange={(e) => getStartDate(e.target.value)} />
                     </div>
                     <div className='col-lg-4'>
+                        <label style={{ fontWeight: "bold" }}>End Date:</label>
                         <input type="date" className='form-control' value={endDate || ""} onChange={(e) => getEndDate(e.target.value)} />
                     </div>
                     <div className='col-lg-1'></div>
-                    <div className='col-lg-3'>
+                    <div className='col-lg-3 mt-3'>
                         <Link href="/Requests/OverTimeDetails/new">
                             <button className="AddButton">Apply Overtime</button>
                         </Link>
@@ -439,7 +441,7 @@ const Index = () => {
                                                     <td>{data.comments}</td>
                                                     <td>{data.status}</td>
                                                     <td>
-                                                        <button onClick={Delete.bind(this, data.id)} className='edit-btn'>CANCEL</button>
+                                                        <button onClick={Delete.bind(this, data.id)} className='edit-btn'>Cancel</button>
                                                     </td>
                                                 </tr>
                                             )
@@ -571,10 +573,10 @@ const Index = () => {
                             <div className='row'>
                                 <div className='col-lg-8'></div>
                                 <div className='col-lg-2'>
-                                    <button type='submit' className='edit-btn mt-5' onClick={() => ModalIsOpen(false)}>CANCEL</button>
+                                    <button type='submit' className='edit-btn mt-5' onClick={() => ModalIsOpen(false)}>Cancel</button>
                                 </div>
                                 <div className='col-lg-2'>
-                                    <button onClick={reject} type='submit' className='edit-btn mt-5'>Reject </button>
+                                    <button onClick={reject} type='submit' className='edit-btn mt-5'>REJECT </button>
                                 </div>
                             </div>
                         </div>
