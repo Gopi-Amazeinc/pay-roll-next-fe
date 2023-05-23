@@ -585,7 +585,7 @@ const Sidebar = ({ children, applyPageName }) => {
               {displayPayroll && (
                 <>
                   <button
-                    className={styles.subsidemenu }
+                    className={styles.subsidemenu}
                     onClick={toggleIntialRunMenu}
                   >
                     <GiMoneyStack style={customStyles.icons} />
