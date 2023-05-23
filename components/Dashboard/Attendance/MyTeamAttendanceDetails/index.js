@@ -118,7 +118,7 @@ const MyTeamAttendence = () => {
         EDate
       );
       setMyTeamAttendence(res.data);
-          setcount(res.data.length);
+      setcount(res.data.length);
     }
   };
 
@@ -150,6 +150,7 @@ const MyTeamAttendence = () => {
             >
               My Attendence Details
             </Link>
+            
           </div>
           <div className="col-lg-4" style={{ marginLeft: "-30px" }}>
             <Link
@@ -157,7 +158,7 @@ const MyTeamAttendence = () => {
               href="/Attendance/MyTeamAttendanceDetails"
             >
               My Team Attendance Details
-            </Link>
+            </Link> <div className="line-border"></div>
           </div>
         </div>
 

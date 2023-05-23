@@ -83,10 +83,13 @@ const Index = () => {
                         <div className='col-lg-3'>
                             <br />
                             <Link href="/Attendance/ShiftDetails" className={Styles.mainheader}>  My Weekly Shift</Link>
+                           
                         </div>
+                       
                         <div className='col-lg-3'>
                             <br />
-                            <Link href="/Attendance/MyTeamWeeklyShift" className={Styles.mainheader}> My Team Weekly Shift</Link>
+                            <Link href="/Attendance/MyTeamWeeklyShift" className={Styles.mainheader}> My Team Weekly Shift</Link> 
+                             <div className="line-border"></div>
                         </div>
                     </div>
                     <br />

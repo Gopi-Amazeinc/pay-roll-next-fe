@@ -65,8 +65,10 @@ const Index = () => {
                 </div>
                 <div className='col-lg-3' style={{ marginLeft: "-10%" }}>
                     <br />
-                    <Link href="/Attendance/MyTeamWeeklyShift" className={Styles.mainheader}> Company Shift Details</Link>
+                    <Link href="/Attendance/MyTeamWeeklyShift" className={Styles.mainheader}> Company Weekly Shift</Link>
+                   <div className="line-border"></div>
                 </div>
+                
             </div>
             <div className='card shadow-lg p-4 rounded-3 mt-4'>
                 <div className='row'>

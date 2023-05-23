@@ -225,7 +225,9 @@ const Attendancecorrectiondashboard = () => {
           >
             Attendance Correction
           </Link>
+          <div className="line-border"></div>
         </div>
+       
         <div className="col-lg-3">
           {(roleID == 3) && (
             <>
@@ -234,7 +236,9 @@ const Attendancecorrectiondashboard = () => {
                 href="/Attendance/MyTeamAttendanceCorrection"
               >
                 My Team Attendance Correction
+
               </Link>
+              
             </>
           )}
         </div>
@@ -247,7 +251,7 @@ const Attendancecorrectiondashboard = () => {
             <p> <b>Filter By</b></p>
           </div>
 
-          <div className="col-lg-5">
+          <div className="col-lg-3">
             <input
               type="text"
               className="form-control"
