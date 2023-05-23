@@ -55,12 +55,14 @@ const AddStaffSalaryForm = ({ editData }) => {
       if (actionType == "insert") {
           await apiService.commonPostCall('Payroll/UpdateDe_minimis_Detailsforstaff', data);
           Swal.fire({ icon: "success", text: "Data Successfully added" })
-          location.href = ("/Payroll/staffsalarycomponent");
+         //  location.href = ("/Payroll/staffsalarycomponent");
+         router.push("/Payroll/staffsalarycomponent")
       } else 
       {
          await apiService.commonPostCall('Payroll/UpdateDe_minimis_Detailsforstaff', data);
          Swal.fire({ icon: "success", text: "Data updated successfully" })
-         location.href = ("/Payroll/staffsalarycomponent");
+         // location.href = ("/Payroll/staffsalarycomponent");
+         router.push("/Payroll/staffsalarycomponent")
       }
 
     }
