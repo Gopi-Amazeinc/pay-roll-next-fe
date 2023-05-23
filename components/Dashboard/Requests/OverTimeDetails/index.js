@@ -278,7 +278,12 @@ const Index = () => {
         <div className='container-fluid'>
             <div className='row'>
                 <div className='col-lg-3'>
-                    <h4 className='Heading'>My OvertimeDetails</h4>
+                    <h4 className='Heading'>My Overtime Details</h4>
+                </div>
+                <div className='col-lg-3' style={{ float: 'left' }}>
+                    <Link href="/Requests/Myteamovertimedetails">
+                        <h4 className='Heading'>My Team Overtime Details</h4>
+                    </Link>
                 </div>
             </div><br />
             <div className='card p-3 border-0 rounded-3'>

@@ -1,17 +1,19 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import Layout from "../../../components/layout/layout";
 import Styles from "../../../styles/addStaff.module.css";
-import EmployeeProfile from "../../../components/Dashboard/Staff/AddStaff/employeeprofile";
-import PositionDetails from "@/components/Dashboard/Staff/AddStaff/positiondetails";
-import ContactDetails from "@/components/Dashboard/Staff/AddStaff/contactdetails";
-import DependentDetails from "@/components/Dashboard/Staff/AddStaff/dependentdetails";
-import EmploymentHistory from "@/components/Dashboard/Staff/AddStaff/employementhistory";
-import NominationDetails from "@/components/Dashboard/Staff/AddStaff/nominationdetails";
-import EducationalAttainment from "@/components/Dashboard/Staff/AddStaff/educationalattainment";
-import BankDetails from "@/components/Dashboard/Staff/AddStaff/bankdetails";
-import IDDetails from "@/components/Dashboard/Staff/AddStaff/iddetails";
+import EmployeeProfile from "./employeeprofile";
+import PositionDetails from "@/pages/Staff/AddStaff/positiondetails";
+import ContactDetails from "@/pages/Staff/AddStaff/contactdetails";
+import DependentDetails from "@/pages/Staff/AddStaff/dependentdetails";
+import EmploymentHistory from "@/pages/Staff/AddStaff/employementhistory";
+import NominationDetails from "@/pages/Staff/AddStaff/nominationdetails";
+import EducationalAttainment from "@/pages/Staff/AddStaff/educationalattainment";
+import BankDetails from "@/pages/Staff/AddStaff/bankdetails";
+import IDDetails from "@/pages/Staff/AddStaff/iddetails";
+import { useRouter } from "next/router";
 
-const Index = () => {
+const Index = ({ editData }) => {
+  const router = useRouter();
   const [pgNo, setPgNo] = useState(1);
 
   function changePathName(data) {
@@ -24,7 +26,15 @@ const Index = () => {
       justifyContent: "space-evenly",
     },
   };
-
+  useEffect(() => {
+    debugger;
+    
+    const { id } = editData || {};
+    if (id) {
+      // console.log(id, "idddddddddddddddddddd")
+      sessionStorage.setItem("CreatedEmpID", id)
+    }
+  }, [1]);
   return (
     <Layout>
       <div className="container">
@@ -151,9 +161,9 @@ const Index = () => {
           </div>
 
           {pgNo == 1 ? (
-            <EmployeeProfile />
+            <EmployeeProfile data={editData}/>
           ) : pgNo == 2 ? (
-            <PositionDetails />
+            <PositionDetails data={editData} />
           ) : pgNo == 3 ? (
             <ContactDetails />
           ) : pgNo == 4 ? (

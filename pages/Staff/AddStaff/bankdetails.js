@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import Swal from "sweetalert2";
-import Styles from "../../../../styles/addStaff.module.css"
+import Styles from "../../../styles/addStaff.module.css"
 
 export default function BankDetails() {
   const {

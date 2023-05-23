@@ -181,7 +181,7 @@ const RunFinalPayroll = () => {
                     </form>
                 </div>
             </div>
-            <div class="row">
+            <div className="row">
                 <div className="col-lg-2">
                 </div>
                 <div className="col-lg-2">
