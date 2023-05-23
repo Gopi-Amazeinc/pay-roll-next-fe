@@ -1780,40 +1780,35 @@ const Sidebar = ({ children, applyPageName }) => {
           )}
 
           <hr></hr>
-          {
-            userRole != 1 && (
-              <div>
-                <Link href="" className={styles.sidemenulink}>
-                  <button
-                    className={getStyle(501)}
-                    onClick={updateActiveMenu.bind(this, { id: 501, name: "Help" })}
-                  >
-                    <IoMdHelpCircleOutline style={customStyles.icons} />
-                    Help
-                  </button>
-                </Link>
-                <hr></hr>
-              </div>
-            )
-          }
-          {
-            userRole != 1 && (
-              <div>
-                <Link href="/SupportTickets" className={styles.sidemenulink}>
-                  <button
-                    className={getStyle(601)}
-                    onClick={updateActiveMenu.bind(this, {
-                      id: 601,
-                      name: "Support tickets",
-                    })}
-                  >
-                    <HiOutlineTicket style={customStyles.icons} />
-                    Support tickets
-                  </button>
-                </Link>
-              </div>
-            )
-          }
+
+          <div>
+            <Link href="" className={styles.sidemenulink}>
+              <button
+                className={getStyle(501)}
+                onClick={updateActiveMenu.bind(this, { id: 501, name: "Help" })}
+              >
+                <IoMdHelpCircleOutline style={customStyles.icons} />
+                Help
+              </button>
+            </Link>
+            <hr></hr>
+          </div>
+
+          <div>
+            <Link href="/SupportTickets" className={styles.sidemenulink}>
+              <button
+                className={getStyle(601)}
+                onClick={updateActiveMenu.bind(this, {
+                  id: 601,
+                  name: "Support tickets",
+                })}
+              >
+                <HiOutlineTicket style={customStyles.icons} />
+                Support tickets
+              </button>
+            </Link>
+          </div>
+
         </div>
       </div>
     </div>
