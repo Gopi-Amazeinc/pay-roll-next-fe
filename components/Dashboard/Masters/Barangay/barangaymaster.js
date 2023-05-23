@@ -91,7 +91,8 @@ export default function BarangayMasterDash() {
                   <>
                     {barangaymaster
                       .filter(data => {
-                        if ((data.countryname.toLowerCase().includes(keyword.toLowerCase())) || (data.name.toLowerCase().includes(keyword))) {
+                        if ((data.countryname.toLowerCase().includes(keyword.toLowerCase())) || (data.name.toLowerCase().includes(keyword))||
+                        (data.statename.toLowerCase().includes(keyword.toLowerCase())) || (data.cityname.toLowerCase().includes(keyword))) {
                           return data;
                         }
                       })

@@ -72,7 +72,7 @@ const PagibigForm = ({ editData }) => {
                                 <div className="row">
                                     <div className="col-lg-3">
                                         <label className='fw-bold' >Taxable income low limit <span className={Styles.span}>*</span></label>
-                                        <input type="text" className='form-control'  {...register('Taxiableincomelowlimit', { required: true})}
+                                        <input type="text" className='form-control'placeholder='Taxiable income low limit'  {...register('Taxiableincomelowlimit', { required: true})}
                                          />
                                          {errors.Taxiableincomelowlimit && <p className='text-danger'>Enter Low level Tax Limit</p>}
                                         <br />
@@ -80,13 +80,13 @@ const PagibigForm = ({ editData }) => {
 
                                     <div className="col-lg-3">
                                         <label className='fw-bold'>Taxable income high limit <span className={Styles.span}>*</span></label>
-                                        <input type="text" className='form-control'   {...register('Taxiableincomehighlimit', { required: true })} />
+                                        <input type="text" className='form-control' placeholder='Taxiable income high limit'  {...register('Taxiableincomehighlimit', { required: true })} />
                                         {errors.Taxiableincomehighlimit && <p className='text-danger'>Enter High level Tax Limit</p>}
                                     </div>
 
                                     <div className="col-lg-3">
                                         <label className='fw-bold'>Pagibig value <span className={Styles.span}>*</span></label> <br />
-                                        <input type="text" className='form-control'   {...register('Pagibigvalue', { required: true})} />
+                                        <input type="text" className='form-control' placeholder='Pagibig value'  {...register('Pagibigvalue', { required: true})} />
                                         {errors.Pagibigvalue && <p className='text-danger'>Enter Pagibig Value</p>}
                                     </div>
 
