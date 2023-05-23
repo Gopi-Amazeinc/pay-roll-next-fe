@@ -57,13 +57,16 @@ const Index = () => {
 
     const reject = async (id) => {
         setModalOpen(!modalOpen)
-        onReject(id)
+        sessionStorage.setItem("rejectID", id)
     }
 
-    const onReject = async (id) => {
-        debugger
+    const onReject = async () => {
+        let ID = sessionStorage.getItem("rejectID")
         let Reason = watch("reason")
-        const res = await apiService.commonPostCall("Payroll/RejectStaffShiftDetails", Reason, id)
+        const res = await apiService.commonPostCall("Payroll/RejectStaffShiftDetails", Reason, ID)
+        sessionStorage.removeItem('rejectID');
+
+        setModalOpen(!modalOpen)
     }
 
     useEffect(() => {
@@ -158,7 +161,7 @@ const Index = () => {
                                                     <td>
                                                         <button onClick={approve.bind(this, data.id)} className='edit-btn'>Approve</button>
                                                         &nbsp;
-                                                        <button onClick={reject.bind(this, data.id)} className='edit-btn'>Rejected</button>
+                                                        <button onClick={reject.bind(this, data.id)} className='edit-btn'>Reject</button>
                                                     </td>
                                                 </tr>
                                             )
