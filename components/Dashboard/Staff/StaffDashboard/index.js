@@ -1,11 +1,10 @@
-import React,{useState,useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
-import {BiEdit} from "react-icons/bi";
-import Styles from "../../../../styles/addStaff.module.css"
-
+import Link from "next/link";
+import { BiEdit } from "react-icons/bi";
+import Styles from "../../../../styles/addStaff.module.css";
 
 function StaffDashbaord() {
-
   const [staff, setStaffData] = useState([]);
   const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
 
@@ -14,33 +13,33 @@ function StaffDashbaord() {
   }, []);
 
   const getStaffDetails = async () => {
-    let res = await axios.get(hostURL + "Payroll/GetAllStaffNewforstaffdashboard");
+    let res = await axios.get(
+      hostURL + "Payroll/GetAllStaffNewforstaffdashboard"
+    );
     setStaffData(res.data);
-  }
-  const getData = (data) => {
-    sessionStorage.setItem("id", data.id);
   };
+  // const getData = (data) => {
+  //   sessionStorage.setItem("id", data.id);
+  // };
   const clearData = () => {
     sessionStorage.setItem("id", "");
   };
-  const enableDisableStaff = async (data) => {
-    let entity = {
-      StaffID: data.employeID,
-      AttendanceEnable: !data.attendanceEnable,
-    };
-    await axios.post(hostURL + "Payroll/UpdateAttendanceEnableDisable", entity);
-    if (etty.AttendanceEnable == true) {
-      Swal.fire("Attendance enabled");
-    } else {
-      Swal.fire("Attendance disabled");
-    }
-    getData();
-  };
+  // const enableDisableStaff = async (data) => {
+  //   let entity = {
+  //     StaffID: data.employeID,
+  //     AttendanceEnable: !data.attendanceEnable,
+  //   };
+  //   await axios.post(hostURL + "Payroll/UpdateAttendanceEnableDisable", entity);
+  //   if (etty.AttendanceEnable == true) {
+  //     Swal.fire("Attendance enabled");
+  //   } else {
+  //     Swal.fire("Attendance disabled");
+  //   }
+  //   getData();
+  // };
   const handleDelete = async (id) => {
     try {
-      let res = await axios.get(
-        hostURL + ``
-      );
+      let res = await axios.get(hostURL + ``);
       console.log(res.data);
       Swal.fire("Data deleted successfully");
       getbarangaymaster();
@@ -50,18 +49,17 @@ function StaffDashbaord() {
     }
   };
 
-  const editStaff = async (id) => {
-    debugger
-    setidtoprofil()
-    let res = await axios.get(hostURL+ `Payroll/GetAllStaffNewforstaffdashboardByID?ID=${id}` );
-    console.log(res.data);
-    sessionStorage.setItem("CreatedEmpID", res.data)
-  }
+  // const editStaff = async (id) => {
+  //   debugger
+  //   let res = await axios.get(hostURL+ `Payroll/GetAllStaffNewforstaffdashboardByID?ID=${id}` );
+  //   console.log(res.data[0].id);
+  //   sessionStorage.setItem("CreatedEmpID", res.data[0].id)
+  // }
 
   return (
     <div>
       <div className="container">
-      <h5 className="Heading">Staff Dashboard</h5>
+        <h5 className="Heading">Staff Dashboard</h5>
         <div className="card p-3 border-0 mt-4">
           <div className="row">
             <div className="col-lg-1">
@@ -69,16 +67,22 @@ function StaffDashbaord() {
             </div>
 
             <div className="col-lg-2">
-              <select className="form-select" aria-label="Default select example">
-                <option >select Department</option>
+              <select
+                className="form-select"
+                aria-label="Default select example"
+              >
+                <option>select Department</option>
                 <option value="1">One</option>
                 <option value="2">Two</option>
                 <option value="3">Three</option>
               </select>
             </div>
             <div className="col-lg-2">
-              <select className="form-select" aria-label="Default select example">
-                <option >Select Level</option>
+              <select
+                className="form-select"
+                aria-label="Default select example"
+              >
+                <option>Select Level</option>
                 <option value="1">One</option>
                 <option value="2">Two</option>
                 <option value="3">Three</option>
@@ -86,8 +90,11 @@ function StaffDashbaord() {
             </div>
 
             <div className="col-lg-2">
-              <select className="form-select" aria-label="Default select example">
-                <option >Select Position</option>
+              <select
+                className="form-select"
+                aria-label="Default select example"
+              >
+                <option>Select Position</option>
                 <option value="1">One</option>
                 <option value="2">Two</option>
                 <option value="3">Three</option>
@@ -103,23 +110,37 @@ function StaffDashbaord() {
             </div>
 
             <div className="col-lg-2">
-              <button type="button" className="AddButton">Export Excel</button>
+              <button type="button" className="AddButton">
+                Export Excel
+              </button>
             </div>
           </div>
         </div>
         <br></br>
-          <div className="row">
-            <div className="col-lg-6">
-              {/* <p style={{marginTop:"2%"}}>Showing Result</p> */}
-            </div>
-            <div className="col-lg-2"></div>
-            <div className="col-lg-2">
-              <button  type="button" className="AddButton" style={{marginTop:"5%"}}>ADD STAFF</button>
-            </div>
-            <div className="col-lg-2">
-              <button  type="button" className="AddButton" style={{marginTop:"5%"}}>UPLOAD STAFF</button>
-            </div>
+        <div className="row">
+          <div className="col-lg-6">
+            {/* <p style={{marginTop:"2%"}}>Showing Result</p> */}
           </div>
+          <div className="col-lg-2"></div>
+          <div className="col-lg-2">
+            <button
+              type="button"
+              className="AddButton"
+              style={{ marginTop: "5%" }}
+            >
+              ADD STAFF
+            </button>
+          </div>
+          <div className="col-lg-2">
+            <button
+              type="button"
+              className="AddButton"
+              style={{ marginTop: "5%" }}
+            >
+              UPLOAD STAFF
+            </button>
+          </div>
+        </div>
 
         <div className="row mt-4">
           <div className="col-lg-12">
@@ -141,19 +162,19 @@ function StaffDashbaord() {
                   </tr>
                 </thead>
                 <tbody>
-                {staff.map((data, index) => {
-              return (
-                <tr className="text-dark" key={index}>
-                  <td>{data.employeID}</td>
-                  <td>{data.firstName}</td>
-                  <td>{data.department_name}</td>
-                  <td>{data.level}</td>
-                  <td>{data.gender}</td>
-                  <td>{data.position}</td>
-                  <td>{data.emailID}</td>
-                  <td>{data.hiredDate}</td>
-                  <td>{data.manager}</td>
-                  {/* <td>
+                  {staff.map((data, index) => {
+                    return (
+                      <tr className="text-dark" key={index}>
+                        <td>{data.employeID}</td>
+                        <td>{data.firstName}</td>
+                        <td>{data.department_name}</td>
+                        <td>{data.level}</td>
+                        <td>{data.gender}</td>
+                        <td>{data.position}</td>
+                        <td>{data.emailID}</td>
+                        <td>{data.hiredDate}</td>
+                        <td>{data.manager}</td>
+                        {/* <td>
                     <span onClick={() => enableDisableStaff(data)}>
                       {data.attendanceEnable ? (
                         <button
@@ -174,13 +195,17 @@ function StaffDashbaord() {
                     </span>
                                         
                   </td> */}
-                  <td >
+                        {/* <td >
                      <button onClick={() => editStaff(data.id)} className={Styles.editBtn}>Edit</button>
-                  </td>
-                </tr>
-              );
-            })}
-
+                  </td> */}
+                        <td>
+                          <Link href={`/Staff/AddStaff/Edit/${data.id}`}>
+                            <buttton className={Styles.editBtn}>Edit</buttton>
+                          </Link>
+                        </td>
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
             </div>
