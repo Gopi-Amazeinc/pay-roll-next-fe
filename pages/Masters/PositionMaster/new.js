@@ -83,7 +83,7 @@ const PositionMasterDetails = ({ editData }) => {
                                             <label className='fw-bold'> Description<span className="text-danger">*</span></label>
                                             <input name="Description"   {...register("Description", { required: true })} rows="3" type="text" placeholder='Description' className={`form-control `} />
                                             {
-                                                errors.Description && <p className='text-danger'>Description is Required</p>
+                                                errors.Description && <p  className="error-message" style={{ color: "red" }}>Description is Required</p>
                                             }
                                         </div>
                                     </div>

@@ -413,9 +413,9 @@ const MyTeamAttendancecorrectiondashboard = () => {
                             </div>
                             <button
                                 aria-label="Close"
-                                type="button"
+                                type="button" style={{ borderRadius: "5px", background: "none", }}
                                 onClick={() => setModalOpen(!modalOpen)}
-                            ></button>
+                            >X</button>
                         </div>
                         <form onSubmit={handleSubmit(reject)}>
                             <ModalBody>
@@ -435,10 +435,10 @@ const MyTeamAttendancecorrectiondashboard = () => {
                             <ModalFooter>
                                 <div className='row'>
                                     <div className='col-lg-6'>
-                                        <button onClick={() => setModalOpen(!modalOpen)} className='edit-btn'>Cancel</button>
+                                        <button onClick={() => setModalOpen(!modalOpen)} className='button'>Cancel</button>
                                     </div>
-                                    <div className='col-lg-5'>
-                                        <button onClick={onReject} className='edit-btn'>Reject</button>
+                                    <div className='col-lg-6'>
+                                        <button onClick={onReject} className='button'>Reject</button>
                                     </div>
                                 </div>
                             </ModalFooter>
@@ -466,7 +466,7 @@ const MyTeamAttendancecorrectiondashboard = () => {
                                         {approvedDashboardData.map((data) => {
                                             return (
                                                 <tr key={data.id}>
-                                                    <td>{data.date}</td>
+                                                    <td>{data.staffname}</td>
                                                     <td>{data.startTime}</td>
                                                     <td>{data.endTime}</td>
                                                     <td>{data.Comments}</td>
@@ -488,6 +488,7 @@ const MyTeamAttendancecorrectiondashboard = () => {
                                 <th>Date</th>
                                 <th>Start Time</th>
                                 <th>End Time</th>
+                                <th>status</th>
                             </tr>
                         </thead>
 
@@ -497,8 +498,8 @@ const MyTeamAttendancecorrectiondashboard = () => {
                                     {managerApproved.map((data) => {
                                         return (
                                             <tr key={data.id}>
-                                                <td>{data.date}</td>
-                                                <td>{data.startTime}</td>
+                                                <td>{data.staffname}</td>
+                                                <td>{data.sDate}</td>
                                                 <td>{data.endTime}</td>
                                                 <td>{data.Comments}</td>
                                                 <td>{data.status}</td>
@@ -511,7 +512,7 @@ const MyTeamAttendancecorrectiondashboard = () => {
                     </table>
                 )}
 
-                {rejected && roleID != "2" && (
+                {rejected && roleID == "3" && (
                     <table className="table table-hover" ref={tableRef}>
                         <thead className="bg-info text-white">
                             <tr>
@@ -561,7 +562,7 @@ const MyTeamAttendancecorrectiondashboard = () => {
                                     {managerRejected.map((data) => {
                                         return (
                                             <tr key={data.id}>
-                                                <td>{data.date}</td>
+                                                <td>{data.staffname}</td>
                                                 <td>{data.startTime}</td>
                                                 <td>{data.endTime}</td>
                                                 <td>{data.Comments}</td>

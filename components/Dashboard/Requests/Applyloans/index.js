@@ -32,7 +32,7 @@ const ApplyloansDashboard = () => {
     const offset = currentPage * PER_PAGE;
     const pageCount = Math.ceil(Applyloans.length / PER_PAGE);
 
-    useEffect(() => {   
+    useEffect(() => {
         setNewRequest(true)
         getApplyLoans();
     }, [1]);
@@ -88,9 +88,9 @@ const ApplyloansDashboard = () => {
                                 <div className="col-lg-1">
                                     <label style={{ fontWeight: "bold" }}>Filter By</label>
                                 </div>
-                                <div className="col-lg-4">
+                                <div className="col-lg-4 searchtxt">
                                     <label style={{ fontWeight: "bold" }}>Search</label>
-                                    <input type="text" className="form-control" placeholder="Search for Date or Loan Type.." onChange={e => setKeyword(e.target.value)} />
+                                    <input type="search" className="form-control" placeholder="Search here.." onChange={e => setKeyword(e.target.value)} />
                                 </div>
                             </div>
                         </div><br /><br />
@@ -134,7 +134,7 @@ const ApplyloansDashboard = () => {
                                                 <tbody>
                                                     {
                                                         Applyloans.filter(data => {
-                                                            if ((data.dateFormated.toString().includes(keyword.toLowerCase())) || (data.loanType.toLowerCase().includes(keyword))) {
+                                                            if ((data.dateFormated.toString().includes(keyword.toString())) || (data.loanAmount.toString().includes(keyword.toString())) || (data.loanType.toLowerCase().includes(keyword.toLowerCase())) || (data.comments.toLowerCase().includes(keyword.toLowerCase())) || (data.status.toLowerCase().includes(keyword.toLowerCase())) || (data.status.toLowerCase().includes(keyword.toLowerCase()))) {
                                                                 return data;
                                                             }
                                                         }).slice(offset, offset + PER_PAGE).map((data) => {
@@ -221,7 +221,7 @@ const ApplyloansDashboard = () => {
                                                 <tbody>
                                                     {
                                                         newApproved.filter(data => {
-                                                            if ((data.modifiedDate.toString().includes(keyword.toLowerCase())) || (data.loanType.toLowerCase().includes(keyword))) {
+                                                            if ((data.dateFormated.toString().includes(keyword.toLowerCase())) || (data.loanType.toLowerCase().includes(keyword)) || (data.comments.toLowerCase().includes(keyword.toLowerCase())) || (data.status.toLowerCase().includes(keyword.toLowerCase())) || (data.status.toLowerCase().includes(keyword.toLowerCase()))) {
                                                                 return data;
                                                             }
                                                         }).slice(offset, offset + PER_PAGE).map((data) => {

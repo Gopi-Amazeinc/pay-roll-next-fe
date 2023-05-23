@@ -215,11 +215,11 @@ const Compensationtimeout = () => {
                             </div>
 
                             <div className='col-lg-3'>
-                                <input type="text" className='form-control' placeholder='Search for Date or Status...' onChange={e => setKeyword(e.target.value)} />
+                                <input type="search" className='form-control' placeholder='Search here...' onChange={e => setKeyword(e.target.value)} />
                             </div>
                             {
                                 sessionStorage.getItem("roleID") != "3" && (
-                                    <div className='col-lg-4' style={{ whiteSpace: "nowrap" }}>
+                                    <div className='col-lg-3' style={{ whiteSpace: "nowrap" }}>
                                         <Link href="/Requests/Compensationtimeout/new"><button className='EditDelteBTN'>Add Compensation Time Out</button></Link>
                                     </div>
                                 )
@@ -284,7 +284,7 @@ const Compensationtimeout = () => {
                                         <tbody>
                                             {
                                                 pendingDashboard.filter(data => {
-                                                    if ((data.date.toString().includes(keyword.toLowerCase())) || (data.status.toLowerCase().includes(keyword))) {
+                                                    if ((data.date.toString().includes(keyword.toLowerCase())) || (data.status.toLowerCase().includes(keyword)) || (data.actuval_StartTime.toString().includes(keyword.toLowerCase())) || (data.actuval_EndTime.toString().includes(keyword.toLowerCase())) || (data.comments.toString().includes(keyword.toLowerCase()))) {
                                                         return data;
                                                     }
                                                 }).slice(offset, offset + PER_PAGE).map((data) => {

@@ -98,7 +98,9 @@ function OTRateDash() {
                                     <>
                                         {otDetails
                                             .filter(data => {
-                                                if ((data.day.toLowerCase().includes(keyword.toLowerCase())) || (data.normal.toLowerCase().includes(keyword))) {
+                                                if ((data.day.toLowerCase().includes(keyword.toLowerCase())) || (data.normal.toLowerCase().includes(keyword))||
+                                                (data.ot.toString().includes(keyword.toString())) || (data.nd.toString().includes(keyword))||
+                                                (data.ndot.toString().includes(keyword))) {
                                                     return data;
                                                 }
                                             })

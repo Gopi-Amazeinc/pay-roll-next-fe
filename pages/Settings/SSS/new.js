@@ -96,7 +96,7 @@ const SSSForm = ({ editData }) => {
                                         <input
                                             name="lowLimit"
                                             type="text"
-                                            className='form-control mt-2'
+                                            className='form-control mt-2'placeholder='Taxiable income low limit'
                                             {...register("Taxiableincomelowlimit", { required: true })}
                                         />
                                         {errors.Taxiableincomelowlimit && (
@@ -113,7 +113,7 @@ const SSSForm = ({ editData }) => {
                                         <input
                                             name="highLimit"
                                             type="text"
-                                            className='form-control'
+                                            className='form-control' placeholder='taxiable income high limit'
                                             {...register("taxiableincomehighlimit", { required: true })}
 
                                         />
@@ -130,7 +130,7 @@ const SSSForm = ({ editData }) => {
                                         <input
                                             name="Philhealth"
                                             type="text"
-                                            className='form-control '
+                                            className='form-control 'placeholder='SSS_EEvalue'
                                             {...register("SSS_EEvalue", { required: true })}
 
                                         />
@@ -147,7 +147,7 @@ const SSSForm = ({ editData }) => {
                                         <input
                                             name="Philhealth"
                                             type="text"
-                                            className='form-control'
+                                            className='form-control'placeholder='SSS_ERvalue'
                                             {...register("SSS_ERvalue", { required: true })}
 
                                         />
@@ -164,7 +164,7 @@ const SSSForm = ({ editData }) => {
                                         <input
                                             name="Philhealth"
                                             type="text"
-                                            className='form-control'
+                                            className='form-control'placeholder='SSS_Ecvalue'
                                             {...register("SSS_Ecvalue", { required: true })}
 
                                         />

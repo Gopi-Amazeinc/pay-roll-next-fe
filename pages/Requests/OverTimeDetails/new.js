@@ -107,6 +107,9 @@ const OverTimeDetails = () => {
                     <div className='col-lg-2'>
                       <label style={{ fontWeight: "bold" }}>Actual End Time<span style={{ color: "red" }}>*</span></label>
                     </div>
+                    <div className='col-lg-4'>
+                      <label style={{ fontWeight: "bold" }}>Select Date,Time for OT details<span style={{ color: "red" }}>*</span></label>
+                    </div>
                   </div>
                   <div className='row'>
                     <div className='col-lg-4'>
@@ -124,10 +127,11 @@ const OverTimeDetails = () => {
                       <input type="time" className='form-control' id='EndTime' name='time' min="00:00" max="23:59" step="1" {...register('EndTime', { required: "This field is required" })} />
                       {errors.EndTime && <label className="error-message" style={{ color: "red" }}>{errors.EndTime.message}</label>}
                     </div>
+                    {/* <div className='col-lg-1'></div> */}
                     <div className='col-lg-2'>
                       <button type='button' className={Styles.addButton} onClick={getDetails}>Click</button>
                     </div>
-
+                    <div className='col-lg-1'></div>
                   </div><br />
                   <div className='row'>
                     <div className='col-lg-4'>

@@ -6,15 +6,11 @@ import { DownloadTableExcel } from "react-export-table-to-excel";
 import Styles from "../.././../../styles/finalpayrolldetails.module.css";
 import { apiService } from "@/services/api.service";
 import ReactPaginate from "react-paginate";
-import { useRef } from 'react';
-
-
-
+import { useRef } from "react";
 
 const FinalPayrollDetails = () => {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [preliminarySalary, setPreliminarySalary] = useState([]);
-  // eslint-disable-next-line react-hooks/rules-of-hooks
+
   const [department, setDepartment] = useState([]);
   const [keyword, setKeyword] = useState("");
 
@@ -48,7 +44,6 @@ const FinalPayrollDetails = () => {
     // console.log(Object.values(res.data));
   };
 
-
   const customStyles = {
     content: {
       top: "50%",
@@ -74,7 +69,9 @@ const FinalPayrollDetails = () => {
     try {
       debugger;
       // This API is used to delete the dashboard data based on StaffID,EndDate
-      const res = await apiService.commonGetCall(`Payroll/DeletePreliminary?staffID=${staffID}&Enddate=${endDateFormated}`);
+      const res = await apiService.commonGetCall(
+        `Payroll/DeletePreliminary?staffID=${staffID}&Enddate=${endDateFormated}`
+      );
       Swal.fire({
         icon: "success",
         title: "Hurray..",
@@ -102,93 +99,126 @@ const FinalPayrollDetails = () => {
   const offset = currentPage * PER_PAGE;
   const pageCount = Math.ceil(preliminarySalary.length / PER_PAGE);
   return (
-    <div className='container-fluid'>
-      <h3 className=' Heading'>Finalization   Payroll Details</h3>
+    <div className="container-fluid">
+      <h3 className=" Heading">Finalization Payroll Details</h3>
       <br />
-      <div className='card p-3 '>
-        <div className='row'>
-          <div className='col-lg-1'>
+      <div className="card p-3 ">
+        <div className="row">
+          <div className="col-lg-1">
             <p>Filter By</p>
           </div>
-          <div className='col-lg-2'>
-            <input type='date' className='form-control' />
+          <div className="col-lg-2">
+            <input type="date" className="form-control" />
           </div>
-          <div className='col-lg-3'>
-            <input type="text" onChange={e => { setKeyword(e.target.value) }} className='form-control' placeholder='Search...' />
+          <div className="col-lg-3">
+            <input
+              type="text"
+              onChange={(e) => {
+                setKeyword(e.target.value);
+              }}
+              className="form-control"
+              placeholder="Search..."
+            />
           </div>
-          <div className='col-lg-2'>
-            <select id="Department" name="Department" className='form-select'>
+          <div className="col-lg-2">
+            <select id="Department" name="Department" className="form-select">
               <option value="" disabled="">
-                Select Department </option>
-              {
-                department.map((data, index) => {
-                  return (
-                    <option value={data.id} key={data.id}>{data.department_name}</option>
-                  )
-                })
-              }
+                Select Department{" "}
+              </option>
+              {department.map((data, index) => {
+                return (
+                  <option value={data.id} key={data.id}>
+                    {data.department_name}
+                  </option>
+                );
+              })}
             </select>
           </div>
-          <div className='col-lg-3'>
+          <div className="col-lg-3">
             <DownloadTableExcel
               filename="users table"
               sheet="users"
               currentTableRef={tableRef.current}
             >
-              <button type="button" className=" EditDelteBTN">Export To Excel </button>
+              <button type="button" className=" EditDelteBTN">
+                Export To Excel{" "}
+              </button>
             </DownloadTableExcel>
           </div>
         </div>
-      </div><br />
-      <div className='row'>
-        <div className='col-lg-10'></div>
-        <div className='col-lg-2'>Total Amount:</div>
+      </div>
+      <br />
+      <div className="row">
+        <div className="col-lg-10"></div>
+        <div className="col-lg-2">Total Amount:</div>
       </div>
       <br />
       <br />
-      <div className='row'>
-        <div className='col-lg-9'></div>
-        <div className='col-lg-2'>
-
-          <button type='button' className='EditDelteBTN fw-bold' onClick={() => handleDelete.bind(this)}>Delete</button>
-
-
+      <div className="row">
+        <div className="col-lg-9"></div>
+        <div className="col-lg-2">
+          <button
+            type="button"
+            className="EditDelteBTN fw-bold"
+            onClick={() => handleDelete.bind(this)}
+          >
+            Delete
+          </button>
         </div>
       </div>
-      <div className='row '>
-        <div className='col-lg-4'> </div>
-        <div className='col-lg-5'>
-          <h4 className='Heading' >Employees in selected Period</h4>
+      <div className="row ">
+        <div className="col-lg-4"> </div>
+        <div className="col-lg-5">
+          <h4 className="Heading">Employees in selected Period</h4>
         </div>
 
-        <div className='col-lg-12'>
-          <span>Select All <input type="checkbox" checked={selectedRows.length === preliminarySalary.length} onChange={e => handleRowSelect(e, 'all')} /></span>
+        <div className="col-lg-12">
+          <span>
+            Select All{" "}
+            <input
+              type="checkbox"
+              checked={selectedRows.length === preliminarySalary.length}
+              onChange={(e) => handleRowSelect(e, "all")}
+            />
+          </span>
           <br />
-          <table style={{ whiteSpace: "nowrap" }} className='table text-center ' ref={tableRef}>
+          <table
+            style={{ whiteSpace: "nowrap" }}
+            className="table text-center "
+            ref={tableRef}
+          >
             <thead>
-              <tr className='text-white' >
-                <th >Select</th>
+              <tr className="text-white">
+                <th>Select</th>
                 <th>Employee ID</th>
-                <th >Staff ID</th>
-                <th >Employee Name</th>
-                <th >End Date </th>
-                <th >Department</th>
-                <th >Basic Monthly Salary</th>
-                <th >Semi Monthly Salary</th>
-                <th >Action</th>
+                <th>Staff ID</th>
+                <th>Employee Name</th>
+                <th>End Date </th>
+                <th>Department</th>
+                <th>Basic Monthly Salary</th>
+                <th>Semi Monthly Salary</th>
+                <th>Action</th>
               </tr>
             </thead>
-            <tbody >
-              {
-                preliminarySalary.filter(data => {
-                  if ((data.staffID.toString().includes(keyword)) || (data.componentValue.toString().includes(keyword))) {
+            <tbody>
+              {preliminarySalary
+                .filter((data) => {
+                  if (
+                    data.staffID.toString().includes(keyword) ||
+                    data.componentValue.toString().includes(keyword)
+                  ) {
                     return data;
                   }
-                }).slice(offset, offset + PER_PAGE).map((data, index) => {
+                })
+                .slice(offset, offset + PER_PAGE)
+                .map((data, index) => {
                   return (
                     <tr className="text-dark" key={index}>
                       <td>
-                        <input type="checkbox" onChange={handleData.bind(this, data)} />
+                        <input
+                          type="checkbox"
+                          onChange={handleData.bind(this, data)}
+                        />
                       </td>
                       <td>{data.employeID}</td>
                       <td>{data.staffID}</td>
@@ -198,51 +228,60 @@ const FinalPayrollDetails = () => {
                       <td>{data.baseSal}</td>
                       <td>{data.componentValue}</td>
                       <td>
-                        <button className={Styles.actionButton} onClick={openModal}>View Component Details</button>
+                        <button
+                          className={Styles.actionButton}
+                          onClick={openModal}
+                        >
+                          View Component Details
+                        </button>
                       </td>
                     </tr>
-                  )
-                })
-              }
+                  );
+                })}
             </tbody>
           </table>
         </div>
         <Modal isOpen={modalIsOpen} style={customStyles}>
-          <div className='modalheader'>
-            <div className='row'>
+          <div className="modalheader">
+            <div className="row">
               <div className="col-lg-6">
-                <h6 style={{ fontWeight: '500' }}>Component Details</h6>
+                <h6 style={{ fontWeight: "500" }}>Component Details</h6>
               </div>
-              <div className='col-lg-4'></div>
-              <div className='col-lg-2'>
-                <button aria-label="Close" type="button" className={Styles.close} onClick={closeModal} >X</button>
+              <div className="col-lg-4"></div>
+              <div className="col-lg-2">
+                <button
+                  aria-label="Close"
+                  type="button"
+                  className={Styles.close}
+                  onClick={closeModal}
+                >
+                  X
+                </button>
               </div>
             </div>
             <hr></hr>
           </div>
-          <div className='modalbody'>
+          <div className="modalbody">
             <div className="row">
-              <div className='col-lg-12'>
-                <table className='table  table-bordered mt-4 text-center table-striped ' >
+              <div className="col-lg-12">
+                <table className="table  table-bordered mt-4 text-center table-striped ">
                   <thead>
-                    <tr >
-                      <th className='text-white'>Component Name</th>
-                      <th className='text-white'>Amount </th>
-                      <th className='text-white'>Component Type</th>
+                    <tr>
+                      <th className="text-white">Component Name</th>
+                      <th className="text-white">Amount </th>
+                      <th className="text-white">Component Type</th>
                     </tr>
                   </thead>
-                  <tbody >
-                    {
-                      preliminarySalary.map((data, index) => {
-                        return (
-                          <tr className="text-dark" key={index}>
-                            <td>{data.componentName}</td>
-                            <td>{data.componentValue}</td>
-                            <td>{data.ded_type}</td>
-                          </tr>
-                        )
-                      })
-                    }
+                  <tbody>
+                    {preliminarySalary.map((data, index) => {
+                      return (
+                        <tr className="text-dark" key={index}>
+                          <td>{data.componentName}</td>
+                          <td>{data.componentValue}</td>
+                          <td>{data.ded_type}</td>
+                        </tr>
+                      );
+                    })}
                   </tbody>
                 </table>
               </div>
@@ -273,6 +312,6 @@ const FinalPayrollDetails = () => {
       </div>
       <br />
     </div>
-  )
-}
+  );
+};
 export default FinalPayrollDetails;
