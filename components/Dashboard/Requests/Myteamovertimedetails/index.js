@@ -197,7 +197,17 @@ const Index = () => {
         <div className='container-fluid'>
             <div className='row'>
                 <div className='col-lg-12'>
-                    <h4 className='Heading'>My Team OverTime Details</h4><br />
+                    <div className='row'>
+                        <div className='col-lg-3'>
+                            <Link style={{ textDecoration: "none" }} href="/Requests/OverTimeDetails">
+                                <h4 className='Heading'>My OverTime Details</h4>
+                            </Link>
+                        </div>
+                        <div className='col-lg-3'>
+                            <h4 className='Heading'>My Team OverTime Details</h4>
+                        </div>
+                    </div>
+                    <br />
                     <div className='card p-3 border-0 rounded-3'>
                         <div className='row'>
                             <div className="col-lg-1">

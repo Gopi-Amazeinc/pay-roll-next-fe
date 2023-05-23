@@ -214,7 +214,7 @@ const Index = () => {
                     icon: "success",
                     titleText: "Approved Successfully"
                 })
-                getManagerPendingDetails();
+                getPendingData();
             }
         })
     }
@@ -249,7 +249,11 @@ const Index = () => {
                 <div className="col-lg-12">
                     <div className="row">
                         <div className="col-md-7">
-                            <label className="Heading">Leave Request </label>
+                            <Link href="/Requests/Leaverequest">
+                                <label className="Heading">My Leave Request</label>
+                            </Link>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <label className="Heading">My Team Leave Request</label>
+
                         </div>
                     </div><br />
                     <div className="row">

@@ -226,15 +226,14 @@ function LeaveListDashboard() {
                 <div className="col-md-12">
                     <div className="row">
                         <div className="col-md-7">
+                            <label className="Heading">Leave Request </label>&nbsp;&nbsp;&nbsp;&nbsp;
                             {
-                                sessionStorage.getItem("roleID") == 2 && (
-                                    <Link href="/Requests/hrleaverequest" className="Heading mx-5" ><u>All Staff Leave Details</u></Link>
+                                sessionStorage.getItem("roleID") == 3 && (
+                                    <Link href="/Requests/Myteamleaverequests">
+                                        <label className="Heading">My Team Request</label>
+                                    </Link>
                                 )
                             }
-                            <label className="Heading">Leave Request </label>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <Link href="/Requests/Myteamleaverequest">
-                                <label className="Heading">My Team Request</label>
-                            </Link>
                         </div>
                     </div>
                     <br />
