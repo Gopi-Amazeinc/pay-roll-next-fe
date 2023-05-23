@@ -30,7 +30,7 @@ const FinalPayrollDetails = () => {
   //         setSelectedRows(event.target.checked ? preliminarySalary.map(data => data.id) : []);
   //     } else {
   //         setSelectedRows(selectedRows.includes(id) ? selectedRows.filter(rowId => rowId !== id) : [...selectedRows, id]);
-  //     }
+  //     }  
   // };
 
   useEffect(() => {

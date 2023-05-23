@@ -165,7 +165,10 @@ const Locatordashboard = () => {
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-lg-12">
-                        <p className="Heading">My OBASIS Details</p>
+                        <Link style={{ borderBottom: "2px solid #2f87cc;" }} href="/Requests/Myteamobasisrequest">  <span className="Heading">My OBASIS Details</span> </Link>
+                        &nbsp;&nbsp;&nbsp;
+                        <Link style={{ textDecoration: "none" }} href="/Requests/Myteamobasisrequest">  <span className="Heading">My Team OBASIS Details</span> </Link>
+                        <br />         <br />
                         <div className="card p-3 rounded-3 shadow border-0 ">
                             <div className="row">
                                 <div className="col-lg-1">
@@ -301,7 +304,7 @@ const Locatordashboard = () => {
                                         </thead>
                                         <tbody>
                                             {rejecteddDashboard.filter(data => {
-                                                 if ((data.date.toString().includes(keyword.toString())) || (data.approveStatus.toLowerCase().includes(keyword.toLowerCase())) || (data.startTime.toString().includes(keyword.toString())) || (data.endTime.toString().includes(keyword.toString())) || (data.task.toString().includes(keyword.toString())) || (data.comments.toString().includes(keyword.toString()))) {
+                                                if ((data.date.toString().includes(keyword.toString())) || (data.approveStatus.toLowerCase().includes(keyword.toLowerCase())) || (data.startTime.toString().includes(keyword.toString())) || (data.endTime.toString().includes(keyword.toString())) || (data.task.toString().includes(keyword.toString())) || (data.comments.toString().includes(keyword.toString()))) {
                                                     return data;
                                                 }
                                             }).slice(offset, offset + PER_PAGE).map((data, index) => {

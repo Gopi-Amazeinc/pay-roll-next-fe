@@ -7,6 +7,7 @@ import axios from "axios";
 import { useForm } from "react-hook-form";
 import Layout from "@/components/layout/layout";
 import { apiService } from "@/services/api.service";
+import { useRouter } from "next/router";
 
 const InitialPayrollForm = () => {
   const [collapseOpen, setCollapseOpen] = React.useState(false);
@@ -19,6 +20,8 @@ const InitialPayrollForm = () => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [runPayrollDashboard, setRunPayrollDashboardData] = useState("");
+
+  const router = useRouter();
 
   useEffect(() => {
     async function getData() {
@@ -39,6 +42,15 @@ const InitialPayrollForm = () => {
     getData();
   }, []);
 
+  const runPayrollButton = () => {
+    router.push("/Payroll/InitialPayroll")
+    Swal.fire({
+      icon: "success",
+      title: "Initial payroll ran Successfully",
+      text: "Payroll run has been completed",
+    });
+
+  }
   function handleData(data) {
     if (watch("PayCode")) {
       let res = paycode.filter((x) => x.paycode == watch("PayCode"))[0]
@@ -250,14 +262,14 @@ const InitialPayrollForm = () => {
             <div className="col-lg-4"></div>
             <div className="col-lg-2">
               {runPayroll && (
-                <Link
-                  href="/Payroll/InitialPayroll"
-                  style={{ textDecoration: "none" }}
-                >
-                  <button className="form-control CancelBTN">
-                    Run Payroll
-                  </button>
-                </Link>
+                // <Link
+                //   href="/Payroll/InitialPayroll"
+                //   style={{ textDecoration: "none" }}
+                // >
+                <button className="form-control CancelBTN" onClick={runPayrollButton}>
+                  Run Payroll
+                </button>
+                // </Link>
               )}
             </div>
           </div>
