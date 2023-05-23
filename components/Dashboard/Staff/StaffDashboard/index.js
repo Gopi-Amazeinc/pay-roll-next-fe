@@ -1,6 +1,7 @@
 import React,{useState,useEffect} from "react";
 import axios from "axios";
-import {BiEdit} from "react-icons/bi"
+import {BiEdit} from "react-icons/bi";
+import Styles from "../../../../styles/addStaff.module.css"
 
 
 function StaffDashbaord() {
@@ -13,7 +14,7 @@ function StaffDashbaord() {
   }, []);
 
   const getStaffDetails = async () => {
-    let res = await axios.get(hostURL + "HR/GetMyDetails");
+    let res = await axios.get(hostURL + "Payroll/GetAllStaffNewforstaffdashboard");
     setStaffData(res.data);
   }
   const getData = (data) => {
@@ -48,6 +49,14 @@ function StaffDashbaord() {
       Swal.fire("Failed to delete data");
     }
   };
+
+  const editStaff = async (id) => {
+    debugger
+    setidtoprofil()
+    let res = await axios.get(hostURL+ `Payroll/GetAllStaffNewforstaffdashboardByID?ID=${id}` );
+    console.log(res.data);
+    sessionStorage.setItem("CreatedEmpID", res.data)
+  }
 
   return (
     <div>
@@ -101,7 +110,7 @@ function StaffDashbaord() {
         <br></br>
           <div className="row">
             <div className="col-lg-6">
-              <p style={{marginTop:"2%"}}>Showing Result</p>
+              {/* <p style={{marginTop:"2%"}}>Showing Result</p> */}
             </div>
             <div className="col-lg-2"></div>
             <div className="col-lg-2">
@@ -127,7 +136,7 @@ function StaffDashbaord() {
                     <th>Email</th>
                     <th>Date Of Joining</th>
                     <th>Manager</th>
-                    <th>Attendance Enable</th>
+                    {/* <th>Attendance Enable</th> */}
                     <th>Actions</th>
                   </tr>
                 </thead>
@@ -136,15 +145,15 @@ function StaffDashbaord() {
               return (
                 <tr className="text-dark" key={index}>
                   <td>{data.employeID}</td>
-                  <td>{data.name}</td>
+                  <td>{data.firstName}</td>
                   <td>{data.department_name}</td>
                   <td>{data.level}</td>
                   <td>{data.gender}</td>
-                  <td>{data.role}</td>
+                  <td>{data.position}</td>
                   <td>{data.emailID}</td>
-                  <td>{data.joiningDate}</td>
+                  <td>{data.hiredDate}</td>
                   <td>{data.manager}</td>
-                  <td>
+                  {/* <td>
                     <span onClick={() => enableDisableStaff(data)}>
                       {data.attendanceEnable ? (
                         <button
@@ -164,9 +173,9 @@ function StaffDashbaord() {
 
                     </span>
                                         
-                  </td>
+                  </td> */}
                   <td >
-                      <BiEdit/>
+                     <button onClick={() => editStaff(data.id)} className={Styles.editBtn}>Edit</button>
                   </td>
                 </tr>
               );

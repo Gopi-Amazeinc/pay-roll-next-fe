@@ -65,7 +65,7 @@ const New = () => {
 
                             <div className="col-lg-2">
                                 <label htmlFor="">Start Date</label>
-                                <input type="date" name="" id="" className='form-control' {...register("ShiftDate", { required: true })} />
+                                <input type="date" name="" id="" className='form-control'  {...register("ShiftDate", { required: true })} />
                                 {
                                     errors.startDate && <p className='text-danger'> Start Date is Required</p>
                                 }
@@ -73,7 +73,7 @@ const New = () => {
 
                             <div className="col-lg-2">
                                 <label htmlFor="">End Date</label>
-                                <input type="date" name="" id="" className='form-control'  {...register("EndDate", { required: true })} />
+                                <input type="date" name="" id="" className='form-control'   {...register("EndDate", { required: true })} />
                                 {
                                     errors.endDate && <p className='text-danger'> End Date is Required</p>
                                 }
@@ -96,12 +96,12 @@ const New = () => {
                             </div>
                             <div className="col-lg-2">
                                 <label htmlFor="">Start Time</label>
-                                <input type="text" {...register('StartTime', { required: true })} value={startTime} className='form-control' />
+                                <input type="text" {...register('StartTime', { required: true })} value={startTime} className='form-control' disabled/>
 
                             </div>
                             <div className="col-lg-2">
                                 <label htmlFor="">End Time</label>
-                                <input type="text" name='' {...register('EndTime', { required: true })} value={endTime} className='form-control' />
+                                <input type="text" name='' {...register('EndTime', { required: true })} value={endTime} className='form-control' disabled />
 
                             </div>
                         </div>

@@ -46,3 +46,17 @@
     background-clip: border-box;
     border: 0px solid rgba(0, 0, 0, 0.125);
   }
+
+
+.editBtn{
+    text-shadow: none;
+    letter-spacing: .5px;
+    border-radius: 5px;
+    border-color: #3247d5;
+    background-color: rgb(239, 244, 246);
+    color: #3247d5;
+    font-weight: 600;
+    width: 53px;
+    height: 26px;
+    border: 2px solid #3247d5;
+}

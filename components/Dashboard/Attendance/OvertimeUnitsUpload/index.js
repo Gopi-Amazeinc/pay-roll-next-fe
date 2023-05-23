@@ -83,22 +83,22 @@ const MyTeamOverTimeDetail = () => {
     const overtimes = await Promise.all(
       items && items.length > 0
         ? items.map(async (overtime) => {
-            const res = await apiService.commonGetCall(
-              "Payroll/GetStaffByEmployeeID?EmployeID=" + overtime.EmployeeID
-            );
-            const staffData = res.data[0];
-            return {
-              StaffID: staffData.id,
-              overtimeType: overtime.overtimeType,
-              overtimeAmount: overtime.overtimeAmount,
-              EMIAmount: overtime.SemiMonthlyAmmortization,
-              Period: overtime.Period,
-              Category: "NA",
-              Status: "Manager Approved",
-              Attachment: "NA",
-              Comments: overtime.Comments,
-            };
-          })
+          const res = await apiService.commonGetCall(
+            "Payroll/GetStaffByEmployeeID?EmployeID=" + overtime.EmployeeID
+          );
+          const staffData = res.data[0];
+          return {
+            StaffID: staffData.id,
+            overtimeType: overtime.overtimeType,
+            overtimeAmount: overtime.overtimeAmount,
+            EMIAmount: overtime.SemiMonthlyAmmortization,
+            Period: overtime.Period,
+            Category: "NA",
+            Status: "Manager Approved",
+            Attachment: "NA",
+            Comments: overtime.Comments,
+          };
+        })
         : []
     );
     return overtimes;
@@ -121,101 +121,99 @@ const MyTeamOverTimeDetail = () => {
   };
 
   return (
-    <div>
-      <div className="col-lg-12">
-        <div className="row">
-          <h6 className="mt-2">Yet to bind</h6>
-        </div>
-        <br></br>
-        <div className={Styles.filter}>
-          <div className="card p-3  border-0  rounded-3">
-            <div className="row">
-              <div className="col-lg-1">
-                <p className={Styles.filterdate}>Filter By</p>
-              </div>
+    <div className="container-fluid">
+      <p className="Heading">Yet to bind</p>
+      <div className="row">
+        <div className="col-lg-12">
+          <div className={Styles.filter}>
+            <div className="card p-3  border-0  rounded-3">
+              <div className="row">
+                <div className="col-lg-1">
+                  <p className={Styles.filterdate}>Filter By</p>
+                </div>
 
-              <div className="col-lg-4">
-                <br />
-                <input
-                  id="term"
-                  name="term"
-                  type="search"
-                  placeholder="Search for staff.. "
-                  className="form-control "
-                ></input>
-              </div>
-              <div className="col-lg-2">
-                <br />
-                <button
-                  color="primary"
-                  className="button"
-                  type="button"
-                  onClick={() => setModalOpen(!modalOpen)}
-                >
-                  Upload Overtime
-                </button>
-              </div>
-              <Modal
-                isOpen={modalOpen}
-                style={customStyles}
-                contentLabel="Example Modal"
-              >
-                <div className=" modal-header">
-                  <h5 className=" modal-title" id="exampleModalLabel">
-                    Upload Overtimes
-                  </h5>
+                <div className="col-lg-4">
+                  <br />
+                  <input
+                    id="term"
+                    name="term"
+                    type="search"
+                    placeholder="Search for staff.. "
+                    className="form-control "
+                  ></input>
+                </div>
+                <div className="col-lg-2">
+                  <br />
                   <button
-                    aria-label="Close"
-                    className={Styles.close}
+                    color="primary"
+                    className="button"
                     type="button"
-                    onClick={closeModal}
+                    onClick={() => setModalOpen(!modalOpen)}
                   >
-                    X{/* <i onClick={closeModal} class="mdi mdi-close"></i> */}
-                    {/* <span aria-hidden={true}>×</span> */}
+                    Upload Overtime
                   </button>
                 </div>
-                <hr></hr>
-                <div className="row">
-                  <div className="col-lg-7">
-                    <input
-                      type="file"
-                      accept=".xls,.xlsx"
-                      style={{ display: "inline-block" }}
-                      onChange={(e) => {
-                        const file = e.target.files[0];
-                        incomingfile(file);
-                      }}
-                      placeholder="Upload file"
-                    />
+                <Modal
+                  isOpen={modalOpen}
+                  style={customStyles}
+                  contentLabel="Example Modal"
+                >
+                  <div className=" modal-header">
+                    <h5 className=" modal-title" id="exampleModalLabel">
+                      Upload Overtimes
+                    </h5>
+                    <button
+                      aria-label="Close"
+                      className={Styles.close}
+                      type="button"
+                      onClick={closeModal}
+                    >
+                      X{/* <i onClick={closeModal} class="mdi mdi-close"></i> */}
+                      {/* <span aria-hidden={true}>×</span> */}
+                    </button>
                   </div>
-                  <div className="col-lg-4">
-                    <Link href="UploadOvertim Here">
-                      <span
-                        style={{ color: "navy", textDecoration: "underline" }}
-                      >
-                        UploadOvertime.XLSX
-                      </span>
-                    </Link>
-                  </div>
+                  <hr></hr>
                   <div className="row">
-                    {/* <ModalFooter> */}
-                    <div className="col-lg-6">
-                      <button
-                        className="mt-4"
-                        id={Styles.UploadOvetimefButton}
-                        onClick={() => uploadOvertime()}
-                        color="primary"
-                        type="button"
-                      >
-                        Upload Overtimes
-                      </button>
+                    <div className="col-lg-7">
+                      <input
+                        type="file"
+                        accept=".xls,.xlsx"
+                        style={{ display: "inline-block" }}
+                        onChange={(e) => {
+                          const file = e.target.files[0];
+                          incomingfile(file);
+                        }}
+                        placeholder="Upload file"
+                      />
+                    </div>
+                    <div className="col-lg-4">
+                      <Link href="UploadOvertim Here">
+                        <span
+                          style={{ color: "navy", textDecoration: "underline" }}
+                        >
+                          UploadOvertime.XLSX
+                        </span>
+                      </Link>
+                    </div>
+                    <div className="row">
+                      {/* <ModalFooter> */}
+                      <div className="col-lg-6">
+                        <button
+                          className="mt-4"
+                          id={Styles.UploadOvetimefButton}
+                          onClick={() => uploadOvertime()}
+                          color="primary"
+                          type="button"
+                        >
+                          Upload Overtimes
+                        </button>
+                      </div>
+                      <div className="col-lg-6"></div>
                     </div>
                     <div className="col-lg-6"></div>
                   </div>
-                  <div className="col-lg-6"></div>
-                </div>
-              </Modal>
-              {/* <Modal toggle={() => setModalOpen(!modalOpen)} isOpen={modalOpen}>
+                </Modal>
+                {/* <Modal toggle={() => setModalOpen(!modalOpen)} isOpen={modalOpen}>
                 <div className=" modal-header">
                   <h5 className=" modal-title" >
                     Upload Staff</h5>
@@ -246,71 +244,64 @@ const MyTeamOverTimeDetail = () => {
                 </ModalBody>
               </Modal> */}
 
-              <div className="col-lg-2">
-                <br />
-                <DownloadTableExcel
-                  filename="UploadOvertimeTemplate"
-                  sheet="users"
-                  currentTableRef={tableRef.current}
+                <div className="col-lg-2">
+                  <br />
+                  <DownloadTableExcel
+                    filename="UploadOvertimeTemplate"
+                    sheet="users"
+                    currentTableRef={tableRef.current}
+                  >
+                    <button className="button">Export to Excel</button>
+                  </DownloadTableExcel>
+                </div>
+              </div>
+            </div>
+          </div>
+          <br />
+          <div className="text-primary fs-6 fw-bold">
+            <h6 style={{ color: "#3247d5" }}>Showing Results</h6>
+          </div>
+          <br />
+          <div className="row">
+            <div className="col-lg-12">
+              <div className="table-responsive">
+                <table
+                  className="table table-striped  "
+                  style={{ marginLeft: "0px", width: "99%" }}
+                  ref={tableRef}
                 >
-                  <button className="button">Export to Excel</button>
-                </DownloadTableExcel>
+                  <thead className={"bg-info text-white "}>
+                    <tr style={{ whiteSpace: "nowrap" }}>
+                      <th>Employee ID</th>
+                      <th>Employee Name</th>
+                      <th>Pay Date </th>
+                      <th>Component Name</th>
+                      <th>No of Hours </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {Array.isArray(overtimeUnitsUpload) && overtimeUnitsUpload.length > 0 && (
+                      <>
+                        {overtimeUnitsUpload.map((data) => {
+                          return (
+                            <tr key={data.id}>
+                              <td>{data.payrollComponentType}</td>
+                              <td>{data.employeeName}</td>
+                              <td>{data.payDtae}</td>
+                              <td>{data.componentName}</td>
+                              <td>{data.endTime}</td>
+
+                            </tr>
+                          );
+                        })}
+                      </>
+                    )}
+                  </tbody>
+                </table>
               </div>
             </div>
           </div>
         </div>
-        <br />
-        <div className="text-primary fs-6 fw-bold">
-          <h6 style={{ color: "#3247d5" }}>Showing Results</h6>
-        </div>
-        <br />
-        <div className="row">
-          <div className="col-lg-12">
-            <div className="table-responsive">
-              <table
-                className="table table-striped  "
-                style={{ marginLeft: "0px", width: "99%" }}
-                ref={tableRef}
-              >
-                <thead className={"bg-info text-white "}>
-                  <tr style={{ whiteSpace: "nowrap" }}>
-                    <th>Employee ID</th>
-                    <th>Employee Name</th>
-                    <th>Pay Date </th>
-                    <th>Component Name</th>
-                    <th>No of Hours </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {Array.isArray(overtimeUnitsUpload) && overtimeUnitsUpload.length > 0 && (
-                    <>
-                      {overtimeUnitsUpload.map((data) => {
-                        return (
-                          <tr key={data.id}>
-                            <td>{data.payrollComponentType}</td>
-                            <td>{data.employeeName}</td>
-                            <td>{data.payDtae}</td>
-                            <td>{data.componentName}</td>
-                            <td>{data.endTime}</td>
-
-                          </tr>
-                        );
-                      })}
-                    </>
-                  )}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-
-
-
-
-
-
-
-
       </div>
     </div>
   );

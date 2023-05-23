@@ -105,7 +105,7 @@ export default function IDDetails() {
                 IDNumber: data.IDNumber,
                 NameOnID: data.NameOnID,
                 IDAttachment: filePath,
-                StaffID: sessionStorage.getItem('userID'),
+                StaffID:  sessionStorage.getItem('CreatedEmpID'),
                 NameOfID: data.NameOfID
             }
             await axios.post(hostURL + "Payroll/InsertID_Details", Entity);
@@ -120,7 +120,7 @@ export default function IDDetails() {
                 IDNumber: data.IDNumber,
                 NameOnID: data.NameOnID,
                 IDAttachment: "NoImage",
-                StaffID: sessionStorage.getItem('userID'),
+                StaffID:  sessionStorage.getItem('CreatedEmpID'),
                 NameOfID: data.NameOfID
             }
             await axios.post(hostURL + "Payroll/UpdateID_Details", Entity);
