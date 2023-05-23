@@ -109,7 +109,8 @@ function CityMasterDash() {
                     <>
                       {CityMaster
                         .filter(data => {
-                          if ((data.short.toLowerCase().includes(keyword.toLowerCase())) || (data.description.toLowerCase().includes(keyword))) {
+                          if ((data.short.toLowerCase().includes(keyword.toLowerCase())) || (data.description.toLowerCase().includes(keyword))||
+                          (data.country.toLowerCase().includes(keyword.toLowerCase())) || (data.state.toLowerCase().includes(keyword))) {
                             return data;
                           }
                         })

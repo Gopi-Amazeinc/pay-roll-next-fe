@@ -17,7 +17,7 @@ const InitialPayroll = () => {
     getInitialPayroll();
   }, []);
 
-  const PER_PAGE = 9;
+  const PER_PAGE = 5;
   const [currentPage, setCurrentPage] = useState(0);
   function handlePageClick({ selected: selectedPage }) {
     setCurrentPage(selectedPage);
@@ -46,7 +46,7 @@ const InitialPayroll = () => {
           <div className="col-lg-12">
             <table className="table text-center">
               <thead>
-                <tr className="bg-info text-white">
+                <tr className=" text-white">
                   <th>Year</th>
                   <th>Month</th>
                   <th>Period</th>
@@ -56,9 +56,9 @@ const InitialPayroll = () => {
                 </tr>
               </thead>
               <tbody>
-                {intialPayroll.slice(offset, offset + PER_PAGE).map((data) => {
+                {intialPayroll.slice(offset, offset + PER_PAGE).map((data, index) => {
                   return (
-                    <tr key={data.id}>
+                    <tr key={data.index}>
                       <td>{data.endyear}</td>
                       <td>{data.month}</td>
                       <td>{data.payrolltype}</td>

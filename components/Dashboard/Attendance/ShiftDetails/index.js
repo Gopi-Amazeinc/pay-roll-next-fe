@@ -7,6 +7,7 @@ import Styles from "@/styles/shiftdetails.module.css";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { DownloadTableExcel } from "react-export-table-to-excel";
 import ReactPaginate from "react-paginate";
+import Swal from "sweetalert2";
 
 
 
@@ -92,7 +93,16 @@ const Shiftdetails = () => {
 
   const getEndDate = (selectedDate) => {
     setEndDate(selectedDate);
-    return getDateBySelectedDate(selectedDate);
+    return dateValidation(selectedDate);
+  };
+
+    const dateValidation = (selectedDate) => {
+    if (new Date(startDate) > new Date(selectedDate)) {
+      Swal.fire("End Date should be greater than Start Date");
+    } else {
+      setEndDate(selectedDate);
+      return getDateBySelectedDate(selectedDate);
+    }
   };
 
   const getDateBySelectedDate = (endDatesss) => {

@@ -4,7 +4,6 @@ import axios from 'axios'
 import { apiService } from '@/services/api.service';
 import ReactPaginate from "react-paginate";
 import Swal from 'sweetalert2';
-import { SUCCESS } from 'dropzone';
 
 function FinalPayrollApproval() {
 
@@ -61,8 +60,12 @@ function FinalPayrollApproval() {
 
         <div className="container-fluid">
             <div className="row">
+                <div className="col-lg-4">
+                    <br />
+                    <span className="Heading">Excecuted Payroll Runs For Approval </span>
+
+                </div>
                 <div className="col-lg-1"></div>
-                <div className="col-lg-4"></div>
                 <div className="col-lg-4"></div>
                 <div className="col-lg-3">
                     <br /><Link style={{ textDecoration: "none" }} href="/Payroll/RunFinalPayroll"><button className='uploadButton' style={{ width: "80%" }}>New Payroll</button></Link>
@@ -71,10 +74,15 @@ function FinalPayrollApproval() {
             <br />
             <div className="row">
                 <br />
+
                 <div className="col-lg-4">
-                    <p className="Heading">Excecuted Payroll Runs For Approval </p>
+                    <p onClick={toggleApproved} className='Heading' >Final Payroll</p>
+
                 </div>
-                <div className="col-lg-5"></div>
+
+                <div className="col-lg-5">
+                    {/* <p className="Heading">Excecuted Payroll Runs For Approval </p> */}
+                </div>
                 <div className="col-lg-3">
                     <p className="Heading">Total Payroll Runs: </p>
                 </div>
@@ -84,7 +92,7 @@ function FinalPayrollApproval() {
                 <div className='col-lg-4'><br />
 
                     {/* <button onClick={toggleNewRequest} className='toggleButton' >Normal Payroll</button> */}
-                    <p onClick={toggleApproved} className='Heading' >Final Payroll</p>
+                    {/* <p onClick={toggleApproved} className='Heading' >Final Payroll</p> */}
 
                 </div><br />
             </div>

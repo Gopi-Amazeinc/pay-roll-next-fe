@@ -37,17 +37,16 @@ const RunFinalPayroll = () => {
     }, []);
 
     const handleButtonClick = async () => {
-        try {
-            debugger;
+        try {   
             if (watch("PayCode")) {
                 let res = paycode.filter(x => x.payCode == watch("PayCode"))[0].payrollStartDate;
                 let rres = paycode.filter(x => x.payCode == watch("PayCode"))[0].payrollEndDate;;
                 setStartDate(res);
                 setEndDate(rres);
-                let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
                 // This API is used to fetch the dashboard data based on StartDate,EndDate
                 const sss = await apiService.commonGetCall(`Payroll/Get_Employees_For_Payroll?startdate=${startDate}&enddate=${endDate}`);
                 setDashboardData(sss.data);
+                console.log(sss.data)
             }
         } catch (error) {
             console.error(error);
@@ -110,7 +109,7 @@ const RunFinalPayroll = () => {
                     <form>
                         <div className="row">
                             <div className="col-lg-3">
-                                <p>Select Paycode </p>
+                                <label>Select Paycode </label>
                                 <div className="dropdown">
                                     <select id="PayCode" name="PayCode" className="form-select form-select-sm" {...register("PayCode", { required: true })}>
                                         <option value="" disabled="">
@@ -126,7 +125,7 @@ const RunFinalPayroll = () => {
                                 </div>
                             </div>
                             {/* <div className='col-lg-1'></div> */}
-                            <div className="col-lg-2 mt-3">
+                            <div className="col-lg-2 ">
                                 <br />
                                 <button
                                     type="button"
@@ -140,11 +139,11 @@ const RunFinalPayroll = () => {
                                 </button>
                             </div>
                             <div className="col-lg-2">
-                                <p >Search <br ></br></p>
+                                <label >Search <br ></br></label>
                                 <input placeholder="Search" type="text" className="form-control form-control-sm"></input>
                             </div>
                             <div className="col-lg-2">
-                                <p >Select Position </p>
+                                <label >Select Position </label>
                                 <div className="dropdown">
                                     <select id="Year" name="Year" className="form-control form-control-sm ">
                                         {/* <br ></br> */}
@@ -161,7 +160,7 @@ const RunFinalPayroll = () => {
                                 </div>
                             </div>
                             <div className="col-lg-2">
-                                <p >Select Department </p>
+                                <label>Select Department </label>
                                 <div className="dropdown">
                                     <select id="Year" name="Year" className="form-select form-select-sm ">
                                         {/* <br ></br> */}
@@ -182,7 +181,7 @@ const RunFinalPayroll = () => {
                     </form>
                 </div>
             </div>
-            <div class="row">
+            <div className="row">
                 <div className="col-lg-2">
                 </div>
                 <div className="col-lg-2">

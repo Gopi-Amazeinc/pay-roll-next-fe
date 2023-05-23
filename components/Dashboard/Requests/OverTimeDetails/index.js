@@ -77,14 +77,6 @@ const Index = () => {
 
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
-    const getStartDate = (selectedDate) => {
-        setStartDate(selectedDate);
-        setEndDate("");
-    };
-    const getEndDate = (selectedDate) => {
-        setEndDate(selectedDate);
-        // return getDateBySelectedDate(selectedDate);
-    };
     const getCurrentMonthDates = () => {
         let newDate = new Date();
         let firstDayOfMonth = new Date(newDate.getFullYear(), newDate.getMonth());
@@ -108,6 +100,30 @@ const Index = () => {
         const month = (datetoformat.getMonth() + 1).toString().padStart(2, "0");
         const year = datetoformat.getFullYear().toString();
         return `${year}-${month}-${day}`;
+    };
+    const getStartDate = (selectedDate) => {
+        setStartDate(selectedDate);
+        setEndDate("");
+        // return dateValidation(selectedDate)
+    };
+
+    const getEndDate = (selectedDate) => {
+        setEndDate(selectedDate);
+        return dateValidation(selectedDate);
+    };
+    const dateValidation = (selectedDate) => {
+        if (new Date(startDate) > new Date(selectedDate)) {
+            Swal.fire("End Date should be greater than Start Date");
+        } else {
+            setEndDate(selectedDate);
+            return getManagerPendingDetails(selectedDate);
+        }
+    };
+
+
+    const getDataBySelectedDate = (endDatesss) => {
+        debugger;
+        return getPendingDetails(startDate, endDatesss);
     };
     const getPendingDetails = async () => {
         const res = await apiService.commonGetCall("Payroll/GetPendingStaffOverTimeDetails")
@@ -262,7 +278,12 @@ const Index = () => {
         <div className='container-fluid'>
             <div className='row'>
                 <div className='col-lg-3'>
-                    <h4 className='Heading'>My OvertimeDetails</h4>
+                    <h4 className='Heading'>My Overtime Details</h4>
+                </div>
+                <div className='col-lg-3' style={{ float: 'left' }}>
+                    <Link href="/Requests/Myteamovertimedetails">
+                        <h4 className='Heading'>My Team Overtime Details</h4>
+                    </Link>
                 </div>
             </div><br />
             <div className='card p-3 border-0 rounded-3'>
@@ -274,11 +295,11 @@ const Index = () => {
                 <div className='row'>
                     <div className='col-lg-4'>
                         <label style={{ fontWeight: "bold" }}>Start Date:</label>
-                        <input type="date" className='form-control' value={startDate} onChange={(e) => getStartDate(e.target.value)} />
+                        <input type="date" className='form-control' onChange={(e) => getStartDate(e.target.value)} />
                     </div>
                     <div className='col-lg-4'>
                         <label style={{ fontWeight: "bold" }}>End Date:</label>
-                        <input type="date" className='form-control' value={endDate || ""} onChange={(e) => getEndDate(e.target.value)} />
+                        <input type="date" className='form-control' onChange={(e) => getEndDate(e.target.value)} />
                     </div>
                     <div className='col-lg-1'></div>
                     <div className='col-lg-3 mt-3'>
