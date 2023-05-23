@@ -7,6 +7,9 @@ import { apiService } from "@/services/api.service";
 import Styles from "@/styles/attendancedetails.module.css";
 import { useRouter } from "next/router";
 import { DownloadTableExcel } from 'react-export-table-to-excel';
+import { IoIosAddCircleOutline } from "react-icons/io";
+import ReactPaginate from "react-paginate";
+
 
 const Attendancecorrectiondashboard = () => {
   const tableRef = useRef(null);
@@ -62,6 +65,17 @@ const Attendancecorrectiondashboard = () => {
 
     setPending(true);
   }, []);
+
+
+  
+  const PER_PAGE = 10;
+  const [currentPage, setCurrentPage] = useState(0);
+  function handlePageClick({ selected: selectedPage }) {
+    setCurrentPage(selectedPage)
+  }
+  const offset = currentPage * PER_PAGE;
+  const pageCount = Math.ceil(pendingDashboardData.length / PER_PAGE);
+
 
   useEffect(() => {
     if (userID) {
@@ -230,7 +244,7 @@ const Attendancecorrectiondashboard = () => {
       <div className="card p-3 border-0 rounded-3">
         <div className="row p-3">
           <div className="col-lg-1">
-            <p>Filter By</p>
+            <p> <b>Filter By</b></p>
           </div>
 
           <div className="col-lg-5">
@@ -242,17 +256,17 @@ const Attendancecorrectiondashboard = () => {
             />
           </div>
 
-          <div className="col-lg-4">
+          <div className="col-lg-5">
             {(roleID == 3 || roleID == 5 || roleID == 4) && (
               <div className="row">
-                <div className="col-lg-8">
+                <div className="col-lg-7">
                   <Link href="/Attendance/AttendanceCorrections/attendancecorrectionform">
                     <button className="button">
-                      Add Attendance Correction
+                    <IoIosAddCircleOutline size={18} color={"white"} />  Add Attendance Correction
                     </button>
                   </Link>
                 </div>
-                <div className="col-lg-4">
+                <div className="col-lg-3">
                   <DownloadTableExcel
                     filename="Attendance table"
                     sheet="Attendance"
@@ -322,7 +336,7 @@ const Attendancecorrectiondashboard = () => {
                     <th>End Time</th>
                     <th>Comments</th>
                     <th>Status</th>
-                    <th>Action</th>
+                    {/* <th>Action</th> */}
                   </tr>
                 </thead>
 
@@ -344,7 +358,7 @@ const Attendancecorrectiondashboard = () => {
                                 <td>{data.endTime}</td>
                                 <td>{data.comments}</td>
                                 <td>{data.status}</td>
-                                <td>
+                                {/* <td>
                                   <button
                                     onClick={deleteAttendanceCorrection.bind(
                                       this,
@@ -354,7 +368,7 @@ const Attendancecorrectiondashboard = () => {
                                   >
                                     Cancel
                                   </button>
-                                </td>
+                                </td> */}
                               </tr>
                             );
                           })}
@@ -362,6 +376,27 @@ const Attendancecorrectiondashboard = () => {
                     )}
                 </tbody>
               </table>
+              <div className="mb-4 mt-4 text-center">
+                    <ReactPaginate
+                        previousLabel={"Previous"}
+                        nextLabel={"Next"}
+                        breakLabel={"..."}
+                        pageCount={pageCount}
+                        marginPagesDisplayed={2}
+                        pageRangeDisplayed={3}
+                        onPageChange={handlePageClick}
+                        containerClassName={"pagination  justify-content-center"}
+                        pageClassName={"page-item "}
+                        pageLinkClassName={"page-link"}
+                        previousClassName={"page-item"}
+                        previousLinkClassName={"page-link"}
+                        nextClassName={"page-item"}
+                        nextLinkClassName={"page-link"}
+                        breakClassName={"page-item"}
+                        breakLinkClassName={"page-link"}
+                        activeClassName={"active primary"}
+                    />
+                </div>
             </>
           )}
 

@@ -2,12 +2,17 @@ import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
 import axios from 'axios'
 import { apiService } from '@/services/api.service';
+import ReactPaginate from "react-paginate";
+import Swal from 'sweetalert2';
+import { SUCCESS } from 'dropzone';
 
 function FinalPayrollApproval() {
-    const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+
+    const [uniquelist, setUniqueList] = useState([]);
     const [normalpayroll, setNormalPayroll] = useState(false)
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [finalpayroll, setFinalPayroll] = useState(true)
+    const [userID, setUserID] = useState()
     const toggleNewRequest = () => {
         setNormalPayroll(true)
         setFinalPayroll(false)
@@ -21,13 +26,35 @@ function FinalPayrollApproval() {
     }
     const [finalData, setFinalData] = useState([])
     useEffect(() => {
+        const usrID = sessionStorage.getItem("userID");
+        setUserID(usrID);
         getData();
+
     }, [])
     const getData = async () => {
         const res = await apiService.commonGetCall("Payroll/GetEmployeeFinalSalary")
         setFinalData(res.data);
         console.log("Pending", res.data)
     }
+
+    const approveData = async () => {
+        let Approve = 1
+
+        const res = await apiService.commonPostCall(`Payroll/ApproveFinalPayroll?StaffID`, userID, Approve)
+        Swal.fire({
+            icon: 'success',
+            text: 'Payroll has been Approved'
+
+        })
+    }
+    const PER_PAGE = 5;
+    const [currentPage, setCurrentPage] = useState(0);
+    function handlePageClick({ selected: selectedPage }) {
+        setCurrentPage(selectedPage);
+    }
+    const offset = currentPage * PER_PAGE;
+    const pageCount = Math.ceil(finalData.length / PER_PAGE);
+
 
     return (
 
@@ -38,7 +65,7 @@ function FinalPayrollApproval() {
                 <div className="col-lg-4"></div>
                 <div className="col-lg-4"></div>
                 <div className="col-lg-3">
-                    <br /><Link style={{ textDecoration: "none" }} href="/Payroll/RunFinalPayroll"><button className='newPayrollBtn' style={{ width: "80%" }}>New Payroll</button></Link>
+                    <br /><Link style={{ textDecoration: "none" }} href="/Payroll/RunFinalPayroll"><button className='uploadButton' style={{ width: "80%" }}>New Payroll</button></Link>
                 </div>
             </div>
             <br />
@@ -57,7 +84,7 @@ function FinalPayrollApproval() {
                 <div className='col-lg-4'><br />
 
                     {/* <button onClick={toggleNewRequest} className='toggleButton' >Normal Payroll</button> */}
-                    <button onClick={toggleApproved} className='toggleButton' >Final Payroll</button>
+                    <p onClick={toggleApproved} className='Heading' >Final Payroll</p>
 
                 </div><br />
             </div>
@@ -134,12 +161,30 @@ function FinalPayrollApproval() {
                         </thead>
                         <tbody>
                             {
-                                finalData.map((data) => {
+                                finalData.slice(offset, offset + PER_PAGE).map((data, index) => {
                                     return (
-                                        <tr key={data.id}>
-                                            <td>{data.staffID}</td>
-                                            <td>{data.firstName}</td>
+                                        <tr key={index}>
+                                            <td>{data.employeID}</td>
+                                            <td>{data.name}</td>
                                             <td>{data.department_name}</td>
+                                            <td>{data.hiredDate}</td>
+                                            <td>
+                                                {
+                                                    data.approve == 0 || data.approve == null && (
+                                                        <p>Finalization Pending</p>
+                                                    )
+                                                }
+                                                {
+                                                    data.approve == 1 && (
+                                                        <p>Finalization Approved</p>
+                                                    )
+                                                }
+                                            </td>
+                                            <td> {data.approve == 0 || data.approve == null && (
+                                                <button className='submit-button ' onClick={approveData}>Approve</button>
+                                            )}</td>
+
+
                                         </tr>
                                     )
                                 })
@@ -148,6 +193,29 @@ function FinalPayrollApproval() {
                     </table>
                 )
             }
+
+            <div className="text-center">
+                <ReactPaginate
+                    previousLabel={"Previous"}
+                    nextLabel={"Next"}
+                    breakLabel={"..."}
+                    pageCount={pageCount}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={3}
+                    onPageChange={handlePageClick}
+                    containerClassName={"pagination  justify-content-center"}
+                    pageClassName={"page-item "}
+                    pageLinkClassName={"page-link"}
+                    previousClassName={"page-item"}
+                    previousLinkClassName={"page-link"}
+                    nextClassName={"page-item"}
+                    nextLinkClassName={"page-link"}
+                    breakClassName={"page-item"}
+                    breakLinkClassName={"page-link"}
+                    activeClassName={"active primary"}
+                />
+            </div>
+            <br />
         </div>
 
 

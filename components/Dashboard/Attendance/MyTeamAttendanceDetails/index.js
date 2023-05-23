@@ -2,12 +2,13 @@ import Link from "next/link";
 import React from "react";
 import Router from "next/router";
 import { useEffect, useState } from "react";
-import { useRef } from 'react';
+import { useRef } from "react";
 import axios from "axios";
 import Styles from "@/styles/attendancedetails.module.css";
 import { apiService } from "@/services/api.service";
 import ReactPaginate from "react-paginate";
 import { DownloadTableExcel } from "react-export-table-to-excel";
+import Multiselect from "multiselect-react-dropdown";
 
 const MyTeamAttendence = () => {
   const staffDetailsRef = useRef(null);
@@ -17,8 +18,10 @@ const MyTeamAttendence = () => {
   const [userID, setUserID] = useState();
   const [roleID, setRoleID] = useState();
 
-  const [StaffData, setStaffData] = useState();
+  const [StaffData, setStaffData] = useState([]);
   const [selctedStaffdata, setselctedStaffdata] = useState();
+
+  const [keyword, setKeyword] = useState("");
 
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
@@ -28,36 +31,30 @@ const MyTeamAttendence = () => {
     const roleid = sessionStorage.getItem("roleID");
     setUserID(userid);
     setRoleID(roleid);
-
-    // const getAttendenceByID = async () => {
-    //     const Supervisor = 20540;
-    //     const SDate = "2000-10-10";
-    //     const EDate = "2025-11-11";
-    //     if (userid) {
-    //         const res = await apiService.commonGetCall("HR/GetAttendanceByManagerID?Supervisor=" + Supervisor + '&SDate=' + SDate + '&EDate=' + EDate);
-    //         setMyTeamAttendence(res.data);
-    //     }
-    // }
-    // getAttendenceByID();
   }, []);
 
   // Gopi's Code => tried for onchnage function
-  useEffect(async () => {
-    await apiService.commonGetCall("Payrool/GetStaff").then((staffData) => {// check the URL OF THE API ONCE GIVEN
-      staffDetailsRef.current = staffData.filter((x) =>
-        x.data.id = userID
-      )
-    })
-    setStaffData(staffDetailsRef.current)
-  }, []);
+  useEffect(() => {
+    if (userID) {
+      debugger;
+      getstaffDetails();
+    }
+  }, [userID]);
+  const getstaffDetails = async () => {
+    const staffDetails = await apiService.commonGetCall(
+      "Payroll/GetStaffBySupervisorID?Supervisor=" + userID
+    );
+    setStaffData(staffDetails.data);
+  };
 
+  // console.log(StaffData);
   // Gopi's code end's
 
   useEffect(() => {
     if (userID) {
       const resu = getCurrentMonthDates();
       if (resu) {
-        getAttendenceByID(20540, resu.setStartDate, resu.setEndDate);
+        getAttendenceByID(userID, resu.setStartDate, resu.setEndDate);
       }
     }
   }, [userID]);
@@ -124,9 +121,22 @@ const MyTeamAttendence = () => {
   };
 
   const handleStaffChange = (selectedStaff) => {
-    setselctedStaffdata(selectedStaff)
-  }
+    setselctedStaffdata(selectedStaff);
+  };
 
+  // this.state = {
+  //  staffoptions : [
+  //   { id: 38243, short: "employee" },
+  // { id: 38244, short: "testemployee" }
+
+  // ]
+
+  // }
+  // const getStaffoption = () => {
+  //   staffoptions.map((data) => {
+  //     return data.short;
+  //   });
+  // };
   return (
     <div>
       <div className="container">
@@ -160,15 +170,17 @@ const MyTeamAttendence = () => {
               <input
                 type="date"
                 className="form-control"
-                value={startDate}
+                // value={startDate}
                 onChange={(e) => getStartDate(e.target.value)}
               />
             </div>
 
             <div className="col-lg-2">
               <p className={Styles.filterdate}>End Date</p>
-              <input type="date" className="form-control"
-                value={endDate || ""}
+              <input
+                type="date"
+                className="form-control"
+                // value={endDate || ""}
                 onChange={(e) => getEndDate(e.target.value)}
               />
             </div>
@@ -177,12 +189,36 @@ const MyTeamAttendence = () => {
               <p className={Styles.filterdate}>
                 Staff<i className="text-danger">*</i>
               </p>
-              <select className="form-select" onChange={(e) => handleStaffChange(e.target.value)}>
+              {/* <Multiselect
+                displayValue="id"
+                // isObject={false}
+                onKeyPressFn={function noRefCheck() {}}
+                onRemove={function noRefCheck() {}}
+                onSearch={function noRefCheck() {}}
+                onSelect={(selectedOptions) => {
+                    console.log(selectedOptions);
+                    handleStaffChange(selectedOptions);
+                  }}
+                // options={[
+                //   { id: 38243, short: "employee" },
+                //   { id: 38244, short: "testemployee" },
+                // ]}
+                options= {StaffData}
+                // onChange={(selectedOptions) => {
+                //   console.log(selectedOptions);
+                // }}
+                showCheckbox
+                selectedValues={{}}
+              /> */}
+              <select
+                className="form-select"
+                onChange={(e) => handleStaffChange(e.target.value)}
+              >
                 <option>Select Staff</option>
-                {staffDetailsRef.current.map((data, index) => {
+                {StaffData.map((data, index) => {
                   return (
                     <option value={data.id} key={index}>
-                      {data.name}
+                      {data.fullname}
                     </option>
                   );
                 })}
@@ -197,11 +233,12 @@ const MyTeamAttendence = () => {
                 type="text"
                 className="form-control"
                 placeholder="Search"
+                onChange={(e) => setKeyword(e.target.value)}
               />
             </div>
 
             <div className="col-lg-2">
-              <button className="button">Upload</button>
+              {/* <button className="button">Upload</button> */}
               <br />
               <p></p>
               <DownloadTableExcel
@@ -225,12 +262,15 @@ const MyTeamAttendence = () => {
               <th>Date</th>
               <th>Staff Name</th>
               <th>Shift</th>
+
               <th>Day Type </th>
               <th>Expected in Time</th>
               <th>Expected Out Time</th>
+
               <th>Punch in Time</th>
               <th>Punch Out Time </th>
               <th>Work Hours(HH:MM) </th>
+
               <th>Overtime</th>
               <th>Late</th>
             </tr>
@@ -238,29 +278,40 @@ const MyTeamAttendence = () => {
           <tbody>
             {Array.isArray(MyTeamAttendence) && MyTeamAttendence.length > 0 && (
               <>
-                {MyTeamAttendence.slice(offset, offset + PER_PAGE).map(
-                  (data) => {
-                    return (
-                      <tr key={data.id}>
-                        <td>{data.date}</td>
-                        <td>{data.staffname1}</td>
-                        <td>{data.position}</td>
-                        <td>{data.department}</td>
-                        <td>{data.signInType}</td>
-                        <td>{data.expectedInTime}</td>
-                        <td>{data.punchInTime}</td>
-                        <td>{data.punchinip}</td>
-                        <td>{data.punchedInForm}</td>
-                        <td>{data.signInType}</td>
-                        <td>{data.expectedOutTime}</td>
+                {MyTeamAttendence
+                  // {MyTeamAttendence
+                  //   .filter(data => {
+                  //     if ((data.startTime.toLowerCase().includes(keyword)) || (data.date.toLowerCase().includes(keyword)) || (data.endTime.toLowerCase().includes(keyword))) {
+                  //       return data;
+                  //     }
+                  //   })
+                  .slice(offset, offset + PER_PAGE).map(
+                    (data, index) => {
+                      return (
 
-                        {/* <td>
+                        <tr value={data.id} key={index}>
+                          <td>{data.date}</td>
+                          <td>{data.staffname1}</td>
+                          <td>{data.position}</td>
+
+                          <td>{data.dayType}</td>
+                          <td>{data.etime}</td>
+                          <td>{data.expectedOut}</td>
+
+                          <td>{data.stime}</td>
+                          <td>{data.etime}</td>
+                          <td>{data.hr}</td>
+
+                          <td>{data.ot}</td>
+                          <td>{data.latepunchin}</td>
+
+                          {/* <td>
                               <button className='edit-btn'>Cancel</button>
                             </td> */}
-                      </tr>
-                    );
-                  }
-                )}
+                        </tr>
+                      );
+                    }
+                  )}
               </>
             )}
           </tbody>

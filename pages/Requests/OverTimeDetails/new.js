@@ -86,6 +86,7 @@ const OverTimeDetails = () => {
     await apiService.commonPostCall("HR/InsertStaffOverTimeDetails", details);
     Swal.fire('Data Inserted successfully');
     console.log("Inserted data:", details);
+    router.push("/Requests/OverTimeDetails");
   }
   return (
     <Layout>
@@ -123,9 +124,9 @@ const OverTimeDetails = () => {
                       <input type="time" className='form-control' id='EndTime' name='time' min="00:00" max="23:59" step="1" {...register('EndTime', { required: "This field is required" })} />
                       {errors.EndTime && <label className="error-message" style={{ color: "red" }}>{errors.EndTime.message}</label>}
                     </div>
-                    {/* <div className='col-lg-2'>
-                      <button  onClick={getDetails}>Click</button>
-                    </div> */}
+                    <div className='col-lg-2'>
+                      <button type='button' className={Styles.addButton} onClick={getDetails}>Click</button>
+                    </div>
 
                   </div><br />
                   <div className='row'>
@@ -148,14 +149,17 @@ const OverTimeDetails = () => {
                     <div className='col-lg-4'></div>
                   </div>
                   <div className='row mt-4'>
-                    <div className='col-lg-8'></div>
+                    <div className='col-lg-6'></div>
                     <div className='col-lg-2'>
                       <Link href="/Requests/OverTimeDetails">
-                        <button className={Styles.addButton} style={{ float: "right" }}>Cancel</button>
+                        <button type='button' className={Styles.addButton} style={{ float: "right" }}>Cancel</button>
                       </Link>
                     </div>
                     <div className='col-lg-2'>
                       <button type='submit' className={Styles.addButton}>Submit</button>
+                    </div>
+                    <div className='col-lg-2'>
+                      <button type='button' className={Styles.addButton} onClick={openEditModal} style={{ float: "left" }}>OT Details</button>
                     </div>
                   </div>
                 </form>
@@ -167,12 +171,12 @@ const OverTimeDetails = () => {
 
         <div className='row'>
           <div className='col-lg-8'></div>
-          <div className='col-lg-2'>
-            <button className={Styles.addButton} onClick={getDetails}>Click</button>
-          </div>
-          <div className='col-lg-2'>
-            <button className={Styles.addButton} onClick={openEditModal} style={{ float: "left" }}>OT Details</button>
-          </div>
+          {/* <div className='col-lg-2'>
+            <button type='button' className={Styles.addButton} onClick={getDetails}>Click</button>
+          </div> */}
+          {/* <div className='col-lg-2'>
+            
+          </div> */}
         </div>
         <Modal ariaHideApp={false} isOpen={modalOpen} style={customStyles} contentLabel="Example Modal">
           <div className='row'>

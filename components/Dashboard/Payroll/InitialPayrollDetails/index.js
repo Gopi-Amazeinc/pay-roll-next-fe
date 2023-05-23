@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useRef } from 'react'
 import Modal from 'react-modal';
 import Swal from 'sweetalert2';
 import axios from 'axios'
@@ -6,6 +6,7 @@ import ReactPaginate from "react-paginate";
 import Link from 'next/link'
 import { DownloadTableExcel } from 'react-export-table-to-excel';
 import { IoIosClose } from 'react-icons/io'
+import { apiService } from '@/services/api.service';
 
 const InitialPayrollDetails = () => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -21,14 +22,16 @@ const InitialPayrollDetails = () => {
         }
     };
     const [keyword, setKeyword] = useState("");
+    const tableRef = useRef(null);
+
 
     const getData = async () => {
-        let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+        // let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
         // This API is used for fetch the Departmnent data for Dashboard and  Dropdown
-        let res = await axios.get(hostURL + "Payroll/GetPreliminarySalary");
+        let res = await apiService.commonGetCall("Payroll/GetPreliminarySalary");
         setPreliminarySalary(res.data);
         // This API is used for fetch the Departmnent data for Dropdown
-        res = await axios.get(hostURL + "Master/GetDepartmentMaster");
+        res = await apiService.commonGetCall("Master/GetDepartmentMaster");
         setDepartment(res.data);
     }
 
@@ -76,7 +79,7 @@ const InitialPayrollDetails = () => {
             debugger;
             let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
             // This API is used to delete the dashboard data based on StaffID,EndDate
-            const res = await axios.get(hostURL + `Payroll/DeletePreliminary?staffID=${staffID}&Enddate=${endDateFormated}`);
+            const res = await apiService.commonGetCall(`Payroll/DeletePreliminary?staffID=${staffID}&Enddate=${endDateFormated}`);
             Swal.fire({
                 icon: "success",
                 title: "Hurray..",
@@ -126,9 +129,9 @@ const InitialPayrollDetails = () => {
                         <DownloadTableExcel
                             filename="users table"
                             sheet="users"
-                        // currentTableRef={tableRef.current}
+                            currentTableRef={tableRef.current}
                         >
-                            <button type="button" className="form-control CancelBTN">Export To Excel </button>
+                            <button type="button" className="EditDelteBTN ">Export To Excel </button>
                         </DownloadTableExcel>
                     </div>
                 </div>
@@ -146,7 +149,7 @@ const InitialPayrollDetails = () => {
                 <div className='col-lg-12'>
                     <span>Select All <input type="checkbox" checked={selectedRows.length === preliminarySalary.length} onChange={e => handleRowSelect(e, 'all')} /></span>
                     <br />
-                    <table className='table'>
+                    <table className='table' ref={tableRef}>
                         <thead>
                             <tr className='text-white' style={{ whiteSpace: 'nowrap' }}>
                                 <th>Select</th>

@@ -6,7 +6,7 @@ import { apiService } from "@/services/api.service";
 import Styles from "@/styles/shiftdetails.module.css";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { DownloadTableExcel } from "react-export-table-to-excel";
-
+import ReactPaginate from "react-paginate";
 
 
 
@@ -32,6 +32,15 @@ const Shiftdetails = () => {
   let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
   let staffID;
   const tableRef = useRef(null);
+
+  const PER_PAGE = 10;
+  const [currentPage, setCurrentPage] = useState(0);
+  function handlePageClick({ selected: selectedPage }) {
+    setCurrentPage(selectedPage)
+  }
+  const offset = currentPage * PER_PAGE;
+  const pageCount = Math.ceil(shiftDetails.length / PER_PAGE);
+
 
 
   useEffect(() => {
@@ -97,7 +106,7 @@ const Shiftdetails = () => {
     console.log(res);
     setShiftDetails(res.data);
     setcount(res.data.length);
-    
+
     // https://103.12.1.103/PayrollDemoAPI/Master/GetStaffShiftDetails
   };
 
@@ -149,13 +158,13 @@ const Shiftdetails = () => {
     <div className="container-fluid">
       <div className="row">
         <div className="col-lg-3">
-          <br/>
+          <br />
           <Link href="/Attendance/shiftdetails" className={Styles.mainheader}>
             My Weekly Shift
           </Link>
         </div>
         <div className="col-lg-3">
-        <br/>
+          <br />
           {roleid != 3 ||
             <Link href="/Attendance/MyTeamWeeklyShift" className={Styles.mainheader}> My Team Weekly Shift</Link>
           }
@@ -171,10 +180,10 @@ const Shiftdetails = () => {
               <div className="row">
                 <div className="col-lg-3">
                   <p className={Styles.filterdate}>
-                    START DATE <span style={{ color: "red" }}>*</span>
+                     START DATE <span style={{ color: "red" }}>*</span>
                   </p>
                   <input type="date" className="form-control form-control-sm m-o"
-                    value={startDate}
+                    // value={startDate}
                     onChange={(e) => getStartDate(e.target.value)} />
                 </div>
                 <div className="col-lg-3">
@@ -182,26 +191,27 @@ const Shiftdetails = () => {
                     END DATE <span style={{ color: "red" }}>*</span>
                   </p>
                   <input type="date" className="form-control form-control-sm"
-                    value={endDate || ""}
+                    // value={endDate || ""}
                     onChange={(e) => getEndDate(e.target.value)} />
                 </div>
 
-              <div className="col-lg-2">
-                <br />
-                <DownloadTableExcel
-                  filename="users table"
-                  sheet="users"
-                  currentTableRef={tableRef.current}
-                > <button className="button" style={{ marginTop: "7px" }} > DOWNLOAD</button></DownloadTableExcel>
-              </div>
-              <div className="col-lg-3">
-                <br />
-                <Link href="/Attendance/StaffShiftForm/new" className={Styles.adddetail}>
-                  <button className="button" style={{ fontSize: "15px", marginTop: "7px" }}><IoIosAddCircleOutline size={18} color={"white"} />  ADD SHIFT DETAILS</button>
-                </Link>
-
-
+                <div className="col-lg-3">
+                  <br />
+                  <Link href="/Attendance/StaffShiftForm/new" className={Styles.adddetail}>
+                    <button className="button" style={{ fontSize: "15px", marginTop: "7px" }}><IoIosAddCircleOutline size={18} color={"white"} />  Add Shift Details</button>
+                  </Link>
                 </div>
+                <div className="col-lg-2">
+                  <br />
+                  <DownloadTableExcel
+                    filename="users table"
+                    sheet="users"
+                    currentTableRef={tableRef.current}
+                  > <button className="button" style={{ marginTop: "7px" }} > Download</button></DownloadTableExcel>
+                </div>
+
+
+
               </div>
             </div>
           </div>
@@ -209,15 +219,15 @@ const Shiftdetails = () => {
       </div>
       <div className="row mt-3">
         <div className="col-lg-12">
-        <h6 style={{ color: "#3247d5" }}>Showing {count} Results</h6>
+          <h6 style={{ color: "#3247d5" }}>Showing {count} Results</h6>
           <table className="table" style={{ width: "99%" }} ref={tableRef}>
             <thead>
               <tr className="bg-info text-white">
-                <th>START DATE</th>
-                <th>END DATE</th>
-                <th>SHIFT NAME</th>
-                <th>START TIME</th>
-                <th>END TIME</th>
+                <th>Start Date</th>
+                <th>End Time</th>
+                <th>Shift Name</th>
+                <th>Start Time</th>
+                <th>End Time</th>
                 <th>Status</th>
               </tr>
             </thead>
@@ -229,7 +239,7 @@ const Shiftdetails = () => {
                       <tr key={data.id}>
                         <td>{data.shiftDate}</td>
                         <td>{data.endDate}</td>
-                        <td>{data.shiftName}</td>
+                        <td>{data.formattedShiftName}</td>
                         <td>{data.startTime}</td>
                         <td>{data.endTime}</td>
                         <td>{data.status}</td>
@@ -240,6 +250,27 @@ const Shiftdetails = () => {
               )}
             </tbody>
           </table>
+          <div className="mb-4 mt-4 text-center">
+            <ReactPaginate
+              previousLabel={"Previous"}
+              nextLabel={"Next"}
+              breakLabel={"..."}
+              pageCount={pageCount}
+              marginPagesDisplayed={2}
+              pageRangeDisplayed={3}
+              onPageChange={handlePageClick}
+              containerClassName={"pagination  justify-content-center"}
+              pageClassName={"page-item "}
+              pageLinkClassName={"page-link"}
+              previousClassName={"page-item"}
+              previousLinkClassName={"page-link"}
+              nextClassName={"page-item"}
+              nextLinkClassName={"page-link"}
+              breakClassName={"page-item"}
+              breakLinkClassName={"page-link"}
+              activeClassName={"active primary"}
+            />
+          </div>
         </div>
       </div>
     </div>

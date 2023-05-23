@@ -39,18 +39,18 @@ const ApplyLeave = () => {
     sessionStorage.setItem("Sdate", data.SDateOfLeave);
     sessionStorage.setItem("Edate", data.EDateOfLeave);
     console.log(data);
-    // location.href("/Requests/Leaverequest");
+    router.push("/Requests/Leaverequest");
   }
   return (
     <Layout>
       <div className="container-fluid">
         <div className="row">
           <div className="col-lg-12">
-          <h3  className="Heading">Leave Requests</h3>
+            <h3 className="Heading">Leave Requests</h3>
             <div className="card p-3 border-0 shadow-lg  mt-4">
               <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="row">
-                  <div className="col-lg-12">                   
+                  <div className="col-lg-12">
                   </div>
                   <div className="col-lg-2">
                     <label style={{ fontWeight: "bold" }}>
@@ -110,16 +110,6 @@ const ApplyLeave = () => {
                     />
                     {errors.EDateOfLeave && <p className="error-message" style={{ color: "red" }}>{errors.EDateOfLeave.message}</p>}
                   </div>
-                  {/* <div className="col-lg-2">
-              <label>Staff ID</label>
-              <input
-                type="text"
-                className="form-control"
-                value={userID}
-                {...register("StaffID")}
-                
-              />
-            </div> */}
                 </div>
                 <br />
                 <div className="row">
@@ -140,13 +130,13 @@ const ApplyLeave = () => {
                   <div className="col-lg-2">
                     <Link href="/Requests/Leaverequest">
                       <button className="submit-button">
-                        CANCEL
+                        Cancel
                       </button>
                     </Link>
                   </div>
                   <div className="col-lg-2" style={{ float: "right" }}>
                     <button type="submit" className="submit-button">
-                      SAVE
+                      Save
                     </button>
                   </div>
                 </div>
@@ -156,11 +146,6 @@ const ApplyLeave = () => {
           </div>
         </div>
       </div>
-      {/* <Link href="/Requests/Leaverequest">
-        <BsArrowLeftSquare /> Leave
-      </Link> */}
-
-      {/* <ApplyLeaveDashboard></ApplyLeaveDashboard> */}
     </Layout>
   );
 };
