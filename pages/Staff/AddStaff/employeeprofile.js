@@ -6,8 +6,9 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import { apiService } from "@/services/api.service";
 import { useRouter } from "next/router";
+import Layout from "../../../components/layout/layout";
 
-function EmployeeProfile({ editData }) {
+function EmployeeProfile({ data }) {
   const router = useRouter();
   const [CountrylistData, setCountrylistData] = useState([]);
   const [TitleMasterData, setTitleMaster] = useState([]);
@@ -31,8 +32,11 @@ function EmployeeProfile({ editData }) {
   useEffect(() => {
     debugger;
     getData();
-    const { id } = editData || {};
+    
+    const { id } = data || {};
     if (id) {
+      // console.log(id, "idddddddddddddddddddd")
+      // sessionStorage.setItem("CreatedEmpID", id)
      getByID(id);
     } else {
       clearForm();
@@ -41,7 +45,7 @@ function EmployeeProfile({ editData }) {
 
   const getByID = async (id)=>{
     debugger
-    const res = await apiService.commonGetCall("HR/GetMyDetailsByStaffID?id="+id);
+    const res = await apiService.commonGetCall("Payroll/GetStaffByStaffID?ID="+id);
     clearForm(res.data[0]);
    }
 
@@ -152,7 +156,7 @@ function EmployeeProfile({ editData }) {
             'PreviousBMS': data.PreviousBMS,
             'EffectivityOfPreviousBMS': data.EffectivityOfPreviousBMS
         }
-        await axios.post( "Master/UpdateBuildingStaff", Enity);
+        await axios.post( "", Enity);
     }
   }
 
@@ -160,30 +164,31 @@ function EmployeeProfile({ editData }) {
     let details ={
             "ID":staffData ? staffData.id: "",
             'Title': staffData ? staffData.title: "",
-            'FirstName': staffData ? staffData.title: "",
-            'MiddleName': staffData ? staffData.title: "",
-            'LastName': staffData ? staffData.title: "",
-            'NickName': staffData ? staffData.title: "",
-            'DateOfBirth': staffData ? staffData.title: "",
-            'PlaceOfBirth': staffData ? staffData.title: "",
-            'CountryOfBirthID': staffData ? staffData.title: "",
-            'GenderID': staffData ? staffData.title: "",
-            'MaritalStatusID': staffData ? staffData.title: "",
-            'PersonalEmail': staffData ? staffData.title: "",
-            'MothersName': staffData ? staffData.title: "",
-            'FathersName': staffData ? staffData.title: "",
-            'ReligionID': staffData ? staffData.title: "",
-            'CitizenshipID': staffData ? staffData.title: "",
-            'NationalityID': staffData ? staffData.title: "",
-            'LanguageSpokenID': staffData ? staffData.title: "",
-            'BloodTypeID': staffData ? staffData.title: "",
-            'IsPWD': staffData ? staffData.title: "",
-
-            'OriginalBMS': staffData ? staffData.title: "",
-            'EffectivityDateOfOriginalBMS': staffData ? staffData.title: "",
-            'PreviousBMS': staffData ? staffData.title: "",
-            'EffectivityOfPreviousBMS': staffData ? staffData.title: "",
+            'FirstName': staffData ? staffData.firstName: "",
+            'MiddleName': staffData ? staffData.middleName: "",
+            'LastName': staffData ? staffData.lastName: "",
+            'NickName': staffData ? staffData.nickName: "",
+            'DateOfBirth': staffData ? staffData.dateOfBirth: "",
+            'PlaceOfBirth': staffData ? staffData.placeOfBirth: "",
+            'CountryOfBirthID': staffData ? staffData.countryOfBirthID: "",
+            'GenderID': staffData ? staffData.genderID: "",
+            'MaritalStatusID': staffData ? staffData.maritalStatusID: "",
+            'PersonalEmail': staffData ? staffData.personalEmail: "",
+            'MothersName': staffData ? staffData.mothersName: "",
+            'FathersName': staffData ? staffData.fathersName: "",
+            'ReligionID': staffData ? staffData.religionID: "",
+            'CitizenshipID': staffData ? staffData.citizenshipID: "",
+            'NationalityID': staffData ? staffData.nationalityID: "",
+            'LanguageSpokenID': staffData ? staffData.languageSpokenID: "",
+            'BloodTypeID': staffData ? staffData.bloodTypeID: "",
+            'IsPWD': staffData ? staffData.isPWD: "",
+            'OriginalBMS': staffData ? staffData.originalBMS: "",
+            'EffectivityDateOfOriginalBMS': staffData ? staffData.effectivityDateOfOriginalBMS: "",
+            'PreviousBMS': staffData ? staffData.previousBMS: "",
+            'EffectivityOfPreviousBMS': staffData ? staffData.effectivityOfPreviousBMS: "",
     }
+    reset(details);
+    setActionType(staffData ? "update" : "insert");
   }
 
   const customStyles = {
