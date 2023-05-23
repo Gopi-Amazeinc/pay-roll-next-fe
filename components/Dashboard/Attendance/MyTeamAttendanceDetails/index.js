@@ -25,7 +25,7 @@ const MyTeamAttendence = () => {
 
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
-
+  const [count, setcount] = useState("");
   useEffect(() => {
     const userid = sessionStorage.getItem("userID");
     const roleid = sessionStorage.getItem("roleID");
@@ -45,6 +45,7 @@ const MyTeamAttendence = () => {
       "Payroll/GetStaffBySupervisorID?Supervisor=" + userID
     );
     setStaffData(staffDetails.data);
+    // setcount(res.data.length);
   };
 
   // console.log(StaffData);
@@ -117,6 +118,7 @@ const MyTeamAttendence = () => {
         EDate
       );
       setMyTeamAttendence(res.data);
+          setcount(res.data.length);
     }
   };
 
@@ -252,6 +254,7 @@ const MyTeamAttendence = () => {
           </div>
         </div>
         <br />
+        <h6 style={{ color: "#3247d5" }}>Showing {count} Results</h6>
         <table
           className="table table-hover"
           style={{ marginLeft: "0px" }}
