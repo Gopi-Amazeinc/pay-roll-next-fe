@@ -72,7 +72,7 @@ export default function BankDetails() {
         BankAccountNumber: data.BankAccountNumber,
         BranchName: data.BranchName,
         BranchAddress: data.BranchAddress,
-        StaffID: sessionStorage.getItem("userID"),
+        StaffID:  sessionStorage.getItem('CreatedEmpID')
       };
       await axios.post(hostURL + "Payroll/InsertBankDetails", Entity);
       Swal.fire("Saved Successfully!");
@@ -86,7 +86,7 @@ export default function BankDetails() {
         BankAccountNumber: data.BankAccountNumber,
         BranchName: data.BranchName,
         BranchAddress: data.BranchAddress,
-        StaffID: sessionStorage.getItem("userID"),
+        StaffID:  sessionStorage.getItem('CreatedEmpID')
       };
 
       await axios.post(hostURL + "Payroll/UpdateBankDetails", Entity);
@@ -105,7 +105,7 @@ export default function BankDetails() {
       BankAccountNumber: existingData ? existingData.bankAccountNumber : "",
       BranchName: existingData ? existingData.branchName : "",
       BranchAddress: existingData ? existingData.branchAddress : "",
-      StaffID: sessionStorage.getItem("userID"),
+      StaffID:  sessionStorage.getItem('CreatedEmpID')
     };
     reset(etty);
     setActionType(existingData ? "update" : "insert");

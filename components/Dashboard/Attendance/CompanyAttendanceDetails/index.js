@@ -133,14 +133,14 @@ const CompanyAttendanceDetails = () => {
                         <div className='col-lg-2'>
                             <p>Start Date</p>
                             <input type="date" className='form-control'
-                                value={startDate}
+                                // value={startDate}
                                 onChange={(e) => getStartDate(e.target.value)} />
                         </div>
 
                         <div className='col-lg-2'>
                             <p>End Date</p>
                             <input type="date" className='form-control'
-                                value={endDate || ""}
+                                // value={endDate || ""}
                                 onChange={(e) => getEndDate(e.target.value)} />
                         </div>
 

@@ -65,7 +65,6 @@ const Index = () => {
         let Reason = watch("reason")
         const res = await apiService.commonPostCall("Payroll/RejectStaffShiftDetails", Reason, ID)
         sessionStorage.removeItem('rejectID');
-
         setModalOpen(!modalOpen)
     }
 
