@@ -69,7 +69,7 @@ export default function EmploymentDetails() {
                 EmployementTypeID: data.EmployementTypeID,
                 StartDate: data.StartDate,
                 EndDate: data.EndDate,
-                StaffID: sessionStorage.getItem('userID')
+                StaffID:  sessionStorage.getItem('CreatedEmpID')
             }
 
             await axios.post(hostURL + "Payroll/InsertEmploymentDetails", Entity);
@@ -85,7 +85,7 @@ export default function EmploymentDetails() {
                 EmployementTypeID: data.EmployementTypeID,
                 StartDate: data.StartDate,
                 EndDate: data.EndDate,
-                StaffID: sessionStorage.getItem('userID')
+                StaffID:  sessionStorage.getItem('CreatedEmpID')
         }
 
         await axios.post(hostURL + "Payroll/UpdateEmploymentDetails", Entity);

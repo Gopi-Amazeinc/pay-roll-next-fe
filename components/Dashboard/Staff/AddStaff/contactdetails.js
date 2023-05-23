@@ -88,13 +88,13 @@ export default function ContactDetails() {
                 EmergencyContactAddress2: data.EmergencyContactAddress2,
                 EmergencyContactEmailID2: data.EmergencyContactEmailID2,
                 EmergencyContactLandLineNumber2: data.EmergencyContactLandLineNumber2,
-                StaffID: sessionStorage.getItem('userID')
+                StaffID:  sessionStorage.getItem('CreatedEmpID')
 
             }
             let res = await axios.post(hostURL + "Payroll/InsertMyAddressDetails", Enity);
             if (res.data && res.status == 200) {
                 //  setInsertStatus(true);
-                sessionStorage.setItem("InsertStatus", true)
+                // sessionStorage.setItem("InsertStatus", true)
                 Swal.fire("Saved Succesfully!");
             }
         }
