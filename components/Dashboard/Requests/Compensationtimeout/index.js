@@ -29,6 +29,8 @@ const Compensationtimeout = () => {
     const [managerRejected, getManagerRejected] = useState([])
     const [isOpen, ModalIsOpen] = useState(false);
     const [keyword, setKeyword] = useState("");
+    const [roleID, setRoleID] = useState();
+    const [userID, setUserID] = useState()
 
     const openModal = () => {
         ModalIsOpen(true)
@@ -78,39 +80,36 @@ const Compensationtimeout = () => {
     let staffID;
     staffID = sessionStorage.getItem("userID")
     const getPendingData = async () => {
-        staffID = sessionStorage.getItem("userID");
-        const res = await apiService.commonGetCall("Payroll/GetPendingCompensationTimeOutByStaffID?UserID=" + staffID)
+        const res = await apiService.commonGetCall("Payroll/GetPendingCompensationTimeOutByStaffID?UserID=" + userID)
         // sessionStorage.setItem("supervisorID", res.data[0].supervisor)
         getPending(res.data)
     }
 
-    const getApprovedData = async () => {
-        staffID = sessionStorage.getItem("userID");
-        const res = await apiService.commonGetCall("Payroll/GetApproveCompensationTimeOutByStaffID?UserID=" + staffID)
+    const getApprovedData = async () => {        
+        const res = await apiService.commonGetCall("Payroll/GetApproveCompensationTimeOutByStaffID?UserID=" + userID)
         getApproved(res.data, "employee approved")
     }
 
     const getRejectedData = async () => {
-        staffID = sessionStorage.getItem("userID");
-        const res = await apiService.commonGetCall("Payroll/GetRejectCompensationTimeOutByStaffID?UserID=" + staffID)
+        const res = await apiService.commonGetCall("Payroll/GetRejectCompensationTimeOutByStaffID?UserID=" + userID)
         getRejected(res.data)
     }
 
     const getManagerApprovedData = async () => {
-        const res = await apiService.commonGetCall("Payroll/GetApproveCompensationTimeOutBySupervisor?UserID=" + 20540)
+        const res = await apiService.commonGetCall("Payroll/GetApproveCompensationTimeOutBySupervisor?UserID=" + userID)
         console.log(res.data)
         getManagerApproved(res.data)
     }
 
     const getManagerRejectedData = async () => {
-        const res = await apiService.commonGetCall("Payroll/GetRejectCompensationTimeOutBySupervisor?UserID=" + 20540)
+        const res = await apiService.commonGetCall("Payroll/GetRejectCompensationTimeOutBySupervisor?UserID=" + userID)
         console.log(res.data)
         getManagerRejected(res.data)
     }
 
     const getPendingCompensation = async () => {
         staffID = sessionStorage.getItem("userID");
-        const res = await apiService.commonGetCall("Payroll/GetPendingCompensationTimeOutBySupervisor?UserID=" + 20540)
+        const res = await apiService.commonGetCall("Payroll/GetPendingCompensationTimeOutBySupervisor?UserID=" + userID)
         console.log(res.data, "manager pending")
         getComponsation(res.data)
     }
@@ -192,6 +191,10 @@ const Compensationtimeout = () => {
     const pageCount = Math.ceil(pendingDashboard.length / PER_PAGE);
 
     useEffect(() => {
+        const usrID = sessionStorage.getItem("userID");
+        setUserID(usrID);
+        const userRoleID = sessionStorage.getItem("roleID");
+        setRoleID(userRoleID);
         getPendingData()
         getPendingCompensation();
         getApprovedData();
@@ -230,7 +233,7 @@ const Compensationtimeout = () => {
                     <div className='row'>
                         <div className='col-lg-4'>
                             <div className='btn-group'>
-                                <button onClick={togglePending} className={`toggleButton ${pending ? "focus" : ""}`} >Pending</button>
+                                <button onClick={ togglePending} className={`toggleButton ${pending ? "focus" : ""}`} >Pending</button>
                                 <button onClick={toggleApproved} className={`toggleButton ${approved ? "focus" : ""}`}  >Approved</button>
                                 <button onClick={toggleRejected} className={`toggleButton ${rejected ? "focus" : ""}`} >Rejected</button>
                             </div>
