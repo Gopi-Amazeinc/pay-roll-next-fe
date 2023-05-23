@@ -86,17 +86,12 @@ const MyTeamOverTimeDetail = () => {
           const res = await apiService.commonGetCall(
             "Payroll/GetStaffByEmployeeID?EmployeID=" + overtime.EmployeeID
           );
-          const staffData = res.data[0];
+          const staffData = res.data[0] || res.data;
           return {
             StaffID: staffData.id,
-            overtimeType: overtime.overtimeType,
-            overtimeAmount: overtime.overtimeAmount,
-            EMIAmount: overtime.SemiMonthlyAmmortization,
-            Period: overtime.Period,
-            Category: "NA",
-            Status: "Manager Approved",
-            Attachment: "NA",
-            Comments: overtime.Comments,
+            OT_name:overtime.name,
+            Hours:overtime.hours,
+            PayDate:overtime.Date,
           };
         })
         : []

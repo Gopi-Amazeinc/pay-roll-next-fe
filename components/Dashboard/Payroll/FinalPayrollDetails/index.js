@@ -19,6 +19,7 @@ const FinalPayrollDetails = () => {
   const getData = async () => {
     // This API is used for fetch the Departmnent data for Dashboard and  Dropdown
     let res = await apiService.commonGetCall("Payroll/GetPreliminarySalary");
+    debugger;
     setPreliminarySalary(res.data);
     console.log(res.data.length);
     // This API is used for fetch the Departmnent data for Dropdown
@@ -28,16 +29,18 @@ const FinalPayrollDetails = () => {
   const [selectedRows, setSelectedRows] = useState([]);
   const [checkedState, setCheckedState] = useState([]);
 
+
   // const [selctedValues, setSelctedValues] = useState([]);
   // const [deleteSalary, setDeleteSalary] = useState();
 
-  // const handleRowSelect = (event, id) => {
-  //     if (id === 'all') {
-  //         setSelectedRows(event.target.checked ? preliminarySalary.map(data => data.id) : []);
-  //     } else {
-  //         setSelectedRows(selectedRows.includes(id) ? selectedRows.filter(rowId => rowId !== id) : [...selectedRows, id]);
-  //     }
-  // };
+  const handleRowSelect = (event, id) => {
+    debugger
+      if (id === 'all') {
+          setSelectedRows(event.target.checked ? preliminarySalary.map(data => data.id) : []);
+      } else {
+          setSelectedRows(selectedRows.includes(id) ? selectedRows.filter(rowId => rowId !== id) : [...selectedRows, id]);
+      }
+  };
 
   useEffect(() => {
     getData();
@@ -71,43 +74,75 @@ const FinalPayrollDetails = () => {
     setIsOpen(false);
   }
 
-  const handleOnChange = (staffid, endDateformatedd) => {
-    debugger;
-    let entity = {
-      staffid: staffid,
-      endDateformatedd: endDateformatedd,
-    };
-    setCheckedState((current) => [...current, entity]);
-  };
-  console.log(checkedState);
+  // const handleOnChange = (staffid, endDateformatedd) => {
+  //   debugger;
+  //   // setischecked(true);
+  //   if(isChecked== true) {
+  //   let entity = {
+  //     staffID: staffid,
+  //     endDateformated: endDateformatedd,
+  //   };
+  //   setCheckedState( [...checkedState, entity]);
+  // }
+  // };
 
+  // tried:gopis
+  const handleOnChange = (event) => {
+    debugger;
+    const { checked } = event.target;
+    const data = JSON.parse(event.target.value);
+    // console.log(`${value} is ${checked}`);
+    if (checked) {
+      preliminarySalary.find((x) => x.id == data.id).isChecked = true;
+      let entity = {
+        staffID: data.staffID,
+        endDateformated: data.endDateFormated,
+      };
+      setCheckedState([...checkedState, entity]);
+    } else {
+      preliminarySalary.find((x) => x.id == data.id).isChecked = false;
+      const index = checkedState.indexOf(event.target.value);
+      if (index !== -1) {
+        setCheckedState(checkedState.splice(index, 1));
+      }
+    }
+    // setIsChecked(event.target.checked);
+    console.log("checked", event.target.value);
+  };
+
+  console.log(checkedState);
   const handleDelete = async () => {
-    debugger
-    const transformedData = await deleteSalary(checkedState);
-  }
+    const deletedIDS = await deleteSalary(checkedState);
+    console.log(deletedIDS);
+    // checkedState[index].isCompleted = true;
+    Swal.fire({
+      icon: "success",
+      title: "Hurray..",
+      text: "Data Deleted Successfully...!",
+    });
+    getData();
+  };
 
   const deleteSalary = async (checkedState) => {
-    // const transformedData = await transformedData(checkedState);
     try {
       debugger;
-      // const deleteddddsalary = await Promise.all(
-      checkedState && checkedState.length > 0
-        ? checkedState.map(async (data) => {
-            const res = await apiService.commonGetCall(
-              `Payroll/DeletePreliminary?staffID=${data.staffID}&Enddate=${data.endDateFormated}`
-            );
-            const deletedData = res.data[0];
-            Swal.fire({
-              icon: "success",
-              title: "Hurray..",
-              text: "Data was Deleted...!",
-            });
-            // console.log(res.data);
-          })
-        : []
-      // );
-      // return deleteddddsalary;
-      getData();
+      // const index = checkedState.indexOf(event.target.value);
+      // if (index !== -1) {
+      //   checkedState[index].isCompleted = true;
+      //   setCheckedState(checkedState);
+      // }
+      const deleteddddsalary = await Promise.all(
+        checkedState && checkedState.length > 0
+          ? checkedState.map(async (data) => {
+              const res = await apiService.commonGetCall(
+                `Payroll/DeletePreliminary?staffID=${data.staffID}&Enddate=${data.endDateformated}`
+              );
+              const deletedData = res.data[0] || res.data;
+              // console.log(res.data);
+            })
+          : []
+      );
+      return deleteddddsalary;
 
       // This API is used to delete the dashboard data based on StaffID,EndDate
     } catch (error) {
@@ -115,7 +150,7 @@ const FinalPayrollDetails = () => {
       Swal.fire({
         icon: "error",
         title: "Oops..",
-        text: "Data was Not Deleted...!",
+        text: "Data Not Deleted...!",
       });
     }
   };
@@ -129,8 +164,6 @@ const FinalPayrollDetails = () => {
   }
   const offset = currentPage * PER_PAGE;
   const pageCount = Math.ceil(preliminarySalary.length / PER_PAGE);
-
-  
 
   return (
     <div className="container-fluid">
@@ -212,7 +245,7 @@ const FinalPayrollDetails = () => {
             <input
               type="checkbox"
               checked={selectedRows.length === preliminarySalary.length}
-              onChange={(e) => handleRowSelect(e, "all")}
+              onChange={e => handleRowSelect(e, 'all')}
             />
           </span>
           <br />
@@ -251,11 +284,12 @@ const FinalPayrollDetails = () => {
                       <td>
                         <input
                           type="checkbox"
-                          // checked={checkedState[index]}
-                          onChange={() =>
-                            handleOnChange(data.staffID, data.endDateFormated)
-                          }
-                          // onChange={handleData.bind(this, data)}
+                          checked={data.isChecked}
+                          value={JSON.stringify(data)}
+                          // onChange={() =>
+                          //   handleOnChange(data.staffID, data.endDateFormated)
+                          // }
+                          onChange={handleOnChange}
                         />
                       </td>
                       <td>{data.employeID}</td>
