@@ -109,7 +109,7 @@ const RunFinalPayroll = () => {
                     <form>
                         <div className="row">
                             <div className="col-lg-3">
-                                <p>Select Paycode </p>
+                                <label>Select Paycode </label>
                                 <div className="dropdown">
                                     <select id="PayCode" name="PayCode" className="form-select form-select-sm" {...register("PayCode", { required: true })}>
                                         <option value="" disabled="">
@@ -125,7 +125,7 @@ const RunFinalPayroll = () => {
                                 </div>
                             </div>
                             {/* <div className='col-lg-1'></div> */}
-                            <div className="col-lg-2 mt-3">
+                            <div className="col-lg-2 ">
                                 <br />
                                 <button
                                     type="button"
@@ -139,11 +139,11 @@ const RunFinalPayroll = () => {
                                 </button>
                             </div>
                             <div className="col-lg-2">
-                                <p >Search <br ></br></p>
+                                <label >Search <br ></br></label>
                                 <input placeholder="Search" type="text" className="form-control form-control-sm"></input>
                             </div>
                             <div className="col-lg-2">
-                                <p >Select Position </p>
+                                <label >Select Position </label>
                                 <div className="dropdown">
                                     <select id="Year" name="Year" className="form-control form-control-sm ">
                                         {/* <br ></br> */}
@@ -160,7 +160,7 @@ const RunFinalPayroll = () => {
                                 </div>
                             </div>
                             <div className="col-lg-2">
-                                <p >Select Department </p>
+                                <label>Select Department </label>
                                 <div className="dropdown">
                                     <select id="Year" name="Year" className="form-select form-select-sm ">
                                         {/* <br ></br> */}

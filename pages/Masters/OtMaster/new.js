@@ -66,21 +66,21 @@ function Otmaster({ editData }) {
                 <div className="row">
                   <div className="col-lg-4">
                     <label className="fw-bold"> Day<span style={{ color: "red" }}>*</span></label>
-                    <input type="text" name="day" className='form-control' {...register("Day", {
+                    <input type="text" name="day" className='form-control'placeholder="Day" {...register("Day", {
                       required: "This field is required", pattern: { value: '^[A-Za-z0-9 ]+$', message: "Please enter a valid Day" }
                     })} />
                     {errors.Day && <p className="error-message" style={{ color: "red" }}>{errors.Day.message}</p>}
                   </div>
                   <div className="col-lg-4">
                     <label className="fw-bold"> Normal<span style={{ color: "red" }}>*</span></label>
-                    <input type="text" name="normal" className='form-control' {...register("Normal", {
+                    <input type="text" name="normal" className='form-control' placeholder="Normal" {...register("Normal", {
                       required: "This field is required", pattern: { value: '^[A-Za-z0-9 ]+$', message: "Please enter valid Details" }
                     })} />
                     {errors.Normal && <p className="error-message" style={{ color: "red" }}>{errors.Normal.message}</p>}
                   </div>
                   <div className="col-lg-4">
                     <label className="fw-bold"> OT<span style={{ color: "red" }}>*</span></label>
-                    <input type="text" name="ot" className='form-control' onkeypress='return ((event.charCode >= 48 && event.charCode <= 57) || (event.charCode == 46))' {...register("OT", {
+                    <input type="text" name="ot" className='form-control' placeholder="OT" onkeypress='return ((event.charCode >= 48 && event.charCode <= 57) || (event.charCode == 46))' {...register("OT", {
                       required: "This field is required", pattern: {
                         value: '^[0-9 .]+$', message: "Please enter valid Details"
                       }
@@ -89,14 +89,14 @@ function Otmaster({ editData }) {
                   </div>
                   <div className="col-lg-4">
                     <label className="fw-bold"> ND<span style={{ color: "red" }}>*</span></label>
-                    <input type="text" name="nd" className='form-control' {...register("ND", {
+                    <input type="text" name="nd" className='form-control' placeholder="ND" {...register("ND", {
                       required: "This field is required", pattern: { value: '^[A-Za-z0-9 ]+$', message: "Please enter valid Details" }
                     })} />
                     {errors.ND && <p className="error-message" style={{ color: "red" }}>{errors.ND.message}</p>}
                   </div>
                   <div className="col-lg-4">
                     <label className="fw-bold"> NDOT<span style={{ color: "red" }}>*</span></label>
-                    <input type="text" name="ndot" className='form-control' {...register("NDOT", {
+                    <input type="text" name="ndot" className='form-control' placeholder="NDOT" {...register("NDOT", {
                       required: "This field is required", pattern: { value: '^[A-Za-z0-9 ]+$', message: "Please enter valid Details" }
                     })} />
                     {errors.NDOT && <p className="error-message" style={{ color: "red" }}>{errors.NDOT.message}</p>}

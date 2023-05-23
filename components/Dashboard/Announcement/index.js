@@ -71,18 +71,19 @@ const AnnoucementDash = () => {
 
           <br />
 
-          <div className="row">
-            <div className="col-lg-1">
-              <div className="btn-group">
-                <button onClick={toggleUpcomming} className={`toggleButton ${upcomming ? "focus" : ""}`}>
-                  UPCOMING
-                </button>
-                <button onClick={toggleCompleted} className={`toggleButton ${completed ? "focus" : ""}`}>
-                  COMPLETED
-                </button>
-              </div>
+        <div className="row">
+          <div className="col-lg-1">
+            <div className="btn-group">
+              <button onClick={toggleUpcomming} className={`toggleButton ${upcomming ? "focus" : ""}`}>
+                UPCOMING
+              </button>
+              <button onClick={toggleCompleted} className={`toggleButton ${completed ? "focus" : ""}`}>
+                COMPLETED
+              </button>
             </div>
           </div>
+        </div>
+        <br></br>
 
           <br />
           <div className='row'>

@@ -194,7 +194,7 @@ function MyForm1({ data }) {
             </div>
             <div className="col-lg-2">
               <label className={styles.p}>Email</label>
-              <input type="text" className="form-control"  {...register('Email', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
+              <input type="text" className="form-control"  {...register('Email', { required: "Please add a Short Name", pattern:"[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$", message: "Please enter a valid Short Name"  })} />
             </div>
             <div className="col-lg-2">
               <label className={styles.p}>Phone</label>

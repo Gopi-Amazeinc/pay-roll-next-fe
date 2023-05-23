@@ -183,7 +183,7 @@ const MyTeamAttendancecorrectiondashboard = () => {
                     ID: data.id,
                     UserID: data.staffID,
                     SigninDate: data.sDate,
-                    SignoutDate: data.eDate
+                    SignoutDate: data.sDate
                 }
                 await apiService.commonPostCall(
                     "Payroll/ApproveAttedanceCoorection", entity

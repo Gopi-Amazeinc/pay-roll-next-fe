@@ -89,7 +89,7 @@ export default function NominationDetails() {
                 NomineeType: data.NomineeType,
                 BeneficiaryDOB: data.BeneficiaryDOB,
                 NominationAttachment: filePath,
-                StaffID: sessionStorage.getItem('userID')
+                StaffID:  sessionStorage.getItem('CreatedEmpID')
             }
 
             await axios.post(hostURL + "Payroll/InsertNomination", Entity);
@@ -106,7 +106,7 @@ export default function NominationDetails() {
                 NomineeType: data.NomineeType,
                 BeneficiaryDOB: data.BeneficiaryDOB,
                 NominationAttachment: "No Image",
-                StaffID: sessionStorage.getItem('userID')
+                StaffID:  sessionStorage.getItem('CreatedEmpID'),
             }
             await axios.post(hostURL + "Payroll/UpdateNomination", Entity);
             Swal.fire("Updated Successfully!")
@@ -126,7 +126,7 @@ export default function NominationDetails() {
                 NomineeType: existingData ? existingData.nomineeType : "",
                 BeneficiaryDOB: existingData ? existingData.beneficiaryDOB : "",
                 NominationAttachment: existingData ? existingData.nominationAttachment : "",
-                StaffID: sessionStorage.getItem('userID')
+                StaffID:  sessionStorage.getItem('CreatedEmpID')
         }
         reset(etty);
         setActionType(existingData ? "update" : 'insert');

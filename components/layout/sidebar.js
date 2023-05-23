@@ -619,7 +619,7 @@ const Sidebar = ({ children, applyPageName }) => {
                     onClick={toggleFinalRunMenu}
                   >
                     <GiMoneyStack style={customStyles.icons} />
-                    final Run
+                    Final Run
                   </button>
                   {displayFinalRun && (
                     <>
