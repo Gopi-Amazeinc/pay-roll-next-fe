@@ -8,7 +8,7 @@ import { apiService } from "@/services/api.service";
 import ReactPaginate from "react-paginate";
 import leave from "../../../../pages/Requests/Compensationtimeout/compensation.module.css"
 
-const Compensationtimeout = () => {
+const MyTeamCompensationtimeout = () => {
 
 
     const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
@@ -77,20 +77,22 @@ const Compensationtimeout = () => {
     };
 
 
-    let staffID;
-    staffID = sessionStorage.getItem("userID")
+
     const getPendingData = async () => {
+
         const res = await apiService.commonGetCall("Payroll/GetPendingCompensationTimeOutByStaffID?UserID=" + userID)
         // sessionStorage.setItem("supervisorID", res.data[0].supervisor)
         getPending(res.data)
     }
 
-    const getApprovedData = async () => {        
+    const getApprovedData = async () => {
+
         const res = await apiService.commonGetCall("Payroll/GetApproveCompensationTimeOutByStaffID?UserID=" + userID)
         getApproved(res.data, "employee approved")
     }
 
     const getRejectedData = async () => {
+
         const res = await apiService.commonGetCall("Payroll/GetRejectCompensationTimeOutByStaffID?UserID=" + userID)
         getRejected(res.data)
     }
@@ -108,7 +110,6 @@ const Compensationtimeout = () => {
     }
 
     const getPendingCompensation = async () => {
-        staffID = sessionStorage.getItem("userID");
         const res = await apiService.commonGetCall("Payroll/GetPendingCompensationTimeOutBySupervisor?UserID=" + userID)
         console.log(res.data, "manager pending")
         getComponsation(res.data)
@@ -203,7 +204,7 @@ const Compensationtimeout = () => {
         getManagerRejectedData();
         setPending(true);
         console.log("working useEffect")
-    }, [1])
+    }, [])
 
     return (
 
@@ -221,7 +222,7 @@ const Compensationtimeout = () => {
                                 <input type="search" className='form-control' placeholder='Search here...' onChange={e => setKeyword(e.target.value)} />
                             </div>
                             {
-                                sessionStorage.getItem("roleID") != "3" && (
+                                roleID != "3" && (
                                     <div className='col-lg-3' style={{ whiteSpace: "nowrap" }}>
                                         <Link href="/Requests/Compensationtimeout/new"><button className='EditDelteBTN'>Add Compensation Time Out</button></Link>
                                     </div>
@@ -233,7 +234,7 @@ const Compensationtimeout = () => {
                     <div className='row'>
                         <div className='col-lg-4'>
                             <div className='btn-group'>
-                                <button onClick={ togglePending} className={`toggleButton ${pending ? "focus" : ""}`} >Pending</button>
+                                <button onClick={togglePending} className={`toggleButton ${pending ? "focus" : ""}`} >Pending</button>
                                 <button onClick={toggleApproved} className={`toggleButton ${approved ? "focus" : ""}`}  >Approved</button>
                                 <button onClick={toggleRejected} className={`toggleButton ${rejected ? "focus" : ""}`} >Rejected</button>
                             </div>
@@ -271,15 +272,17 @@ const Compensationtimeout = () => {
                     <div className='row'>
                         <div className='col-lg-12'>
                             {
-                                pending && sessionStorage.getItem("roleID") != "3" && (
+                                pending && roleID != "3" && (
                                     <table className='table'>
                                         <thead className='bg-info text-white'>
                                             <tr>
+                                       <th input type='checkbox'></th>
+                                                <th>Controll Number</th>
+                                                <th>Employe ID</th>
+                                                <th>Employee Name</th>
                                                 <th>Date</th>
                                                 <th>Start Time</th>
                                                 <th>End Time</th>
-                                                <th>Comments</th>
-                                                <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
                                         </thead>
@@ -312,15 +315,18 @@ const Compensationtimeout = () => {
 
                             {
 
-                                managertogglePending && sessionStorage.getItem("roleID") == "3" && (
+                                managertogglePending && roleID == "3" && (
                                     <table className='table'>
                                         <thead className='bg-info text-white'>
                                             <tr>
+                                        
+                                                <th>Controll Number</th>
+                                                <th>Employe ID</th>
                                                 <th>Employee Name</th>
                                                 <th>Date</th>
                                                 <th>Start Time</th>
                                                 <th>End Time</th>
-                                                <th colSpan={2}>Action</th>
+                                                
                                             </tr>
                                         </thead>
 
@@ -351,15 +357,20 @@ const Compensationtimeout = () => {
                             }
 
                             {
-                                approved && sessionStorage.getItem("roleID") != "3" && (
+                                approved && roleID != "3" && (
                                     <table className='table table-hover'>
                                         <thead className='bg-info text-white'>
                                             <tr>
+                                            <th>Controll Number</th>
+                                                <th>Employe ID</th>
+                                                <th>Employee Name</th>
                                                 <th>Date</th>
                                                 <th>Start Time</th>
+                                                <th>End Time</th>  <th>Date</th>
+                                                <th>Start Time</th>
                                                 <th>End Time</th>
-                                                <th>Comments</th>
-                                                <th>Status</th>
+                                                <th>Reason</th>
+                                                
                                             </tr>
                                         </thead>
 
@@ -388,7 +399,7 @@ const Compensationtimeout = () => {
 
                             {
 
-                                managerToggleapproved && sessionStorage.getItem("roleID") == "3" && (
+                                managerToggleapproved && roleID == "3" && (
                                     <table className='table table-hover'>
                                         <thead className='bg-info text-white'>
                                             <tr>
@@ -422,7 +433,7 @@ const Compensationtimeout = () => {
                             }
 
                             {
-                                rejected && sessionStorage.getItem("roleID") != "3" && (
+                                rejected && roleID != "3" && (
                                     <table className='table table-hover'>
                                         <thead className='bg-info text-white'>
                                             <tr>
@@ -458,7 +469,7 @@ const Compensationtimeout = () => {
                             }
 
                             {
-                                managertogglerejected && sessionStorage.getItem("roleID") == "3" && (
+                                managertogglerejected && roleID == "3" && (
 
                                     <table className='table table-hover'>
                                         <thead className='bg-info text-white'>
@@ -521,4 +532,4 @@ const Compensationtimeout = () => {
     )
 }
 
-export default Compensationtimeout
+export default MyTeamCompensationtimeout

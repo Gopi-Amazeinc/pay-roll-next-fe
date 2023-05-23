@@ -7,7 +7,8 @@ import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import { useDropzone } from "react-dropzone";
-
+import Modal from 'react-modal';
+import Styles from "@../../../pages/OT/Ot.module.css"
 import {
     Calendar as BigCalendar,
     momentLocalizer,
@@ -16,15 +17,39 @@ import {
 import ReactPaginate from "react-paginate";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import leave from "../../../../pages/Requests/Compensationtimeout/compensation.module.css"
 moment.locale("en-GB");
 //momentLocalizer(moment);
 const localizer = momentLocalizer(moment);
-function LeaveListDashboard() {
+const Index = () => {
     const { register, handleSubmit, reset, formState } = useForm();
     const [pending, setPending] = useState(false)
     const [approved, setApproved] = useState(false)
     const [rejected, setRejected] = useState(false)
+    const [pendingdata, setPendingData] = useState([])
+    const [approveddata, setApprovedData] = useState([])
+    const [rejecteddata, setRejectedData] = useState([])
+    const [roleID, setRoleID] = useState();
+    const [userID, setUserID] = useState();
+    const [isOpen, ModalIsOpen] = useState(false)
+    const [keyword, setKeyword] = useState("");
+    const getPendingData = async (StartingDate, EndDate) => {
+        debugger;
+        const res = await apiService.commonGetCall("Employee/GetPendingManagerLeavesByStaffID?ID=" + userID + "&TypeID=1&Sdate=" + StartingDate + "&Edate=" + EndDate)
+        setPendingData(res.data);
+        console.log(res.data);
+    }
+    const getApprovedData = async (StartingDate, EndDate) => {
+        debugger;
+        const res = await apiService.commonGetCall("Employee/GetApprovedManagerLeavesByStaffID?ID=" + userID + "&TypeID=1&Sdate=" + StartingDate + "&Edate=" + EndDate)
+        setApprovedData(res.data);
+        console.log(res.data);
+    }
+    const getRejectedData = async (StartingDate, EndDate) => {
+        debugger;
+        const res = await apiService.commonGetCall("Employee/GetRejectedManagerLeavesByStaffID?ID=" + userID + "&TypeID=1&Sdate=" + StartingDate + "&Edate=" + EndDate)
+        setRejectedData(res.data);
+        console.log(res.data);
+    }
     const togglePending = () => {
         setPending(true)
         setRejected(false)
@@ -57,7 +82,24 @@ function LeaveListDashboard() {
         setListView(true)
         setCalender(false)
     }
-
+    const openModal = () => {
+        ModalIsOpen(true)
+    }
+    const closeModal = () => {
+        setModalOpen(false)
+    }
+    const customStyles = {
+        content: {
+            top: '20%',
+            left: '50%',
+            right: 'auto',
+            bottom: 'auto',
+            marginRight: '-50%',
+            transform: 'translate(-50%, -50%)',
+            width: '50%',
+            height: '30%'
+        }
+    }
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
 
@@ -79,32 +121,6 @@ function LeaveListDashboard() {
         debugger;
         return getPendingData(startDate, endDatesss);
     };
-
-    const [pendingdata, setPendingData] = useState([])
-    const [approveddata, setApprovedData] = useState([])
-    const [rejecteddata, setRejectedData] = useState([])
-    const [roleID, setRoleID] = useState();
-    const [userID, setUserID] = useState();
-    const [keyword, setKeyword] = useState("");
-
-    const getPendingData = async (StartingDate, EndDate) => {
-        debugger;
-        const res = await apiService.commonGetCall("Employee/GetPendingStaffLeavesByStaffID?ID=" + userID + "&TypeID=1&Sdate=" + StartingDate + "&Edate=" + EndDate)
-        setPendingData(res.data);
-        console.log(res.data);
-    }
-    const getApprovedData = async (StartingDate, EndDate) => {
-        debugger;
-        const res = await apiService.commonGetCall("Employee/GetApprovedStaffLeavesByStaffID?ID=" + userID + "&TypeID=1&Sdate=" + StartingDate + "&Edate=" + EndDate)
-        setApprovedData(res.data);
-        console.log(res.data);
-    }
-    const getRejectedData = async (StartingDate, EndDate) => {
-        debugger;
-        const res = await apiService.commonGetCall("Employee/GetRejectedStaffLeavesByStaffID?ID=" + userID + "&TypeID=1&Sdate=" + StartingDate + "&Edate=" + EndDate)
-        setRejectedData(res.data);
-        console.log(res.data);
-    }
     const getCurrentMonthDates = () => {
         let newDate = new Date();
         let firstDayOfMonth = new Date(newDate.getFullYear(), newDate.getMonth());
@@ -141,6 +157,13 @@ function LeaveListDashboard() {
         debugger;
         return getPendingData(startDate, endDatesss);
     };
+    const PER_PAGE = 5;
+    const [currentPage, setCurrentPage] = useState(0);
+    function handlePageClick({ selected: selectedPage }) {
+        setCurrentPage(selectedPage);
+    }
+    const offset = currentPage * PER_PAGE;
+    const pageCount = Math.ceil(pendingdata.length / PER_PAGE);
     useEffect(() => {
         const usrID = sessionStorage.getItem("userID");
         setUserID(usrID);
@@ -165,45 +188,6 @@ function LeaveListDashboard() {
         return;
     }, [userID])
 
-    const events = [
-        // {
-        //     id: 0,
-        //     title: "Board meeting",
-        //     start: new Date(2018, 0, 29, 9, 0, 0),
-        //     end: new Date(2018, 0, 29, 13, 0, 0),
-        //     
-        // },
-        // {
-        //     id: 1,
-        //     title: "MS training",
-        //     allDay: true,
-        //     start: new Date(2018, 0, 29, 14, 0, 0),
-        //     end: new Date(2018, 0, 29, 16, 30, 0),
-        //     resourceId: 2
-        // },
-        // {
-        //     id: 2,
-        //     title: "Team lead meeting",
-        //     start: new Date(2018, 0, 29, 8, 30, 0),
-        //     end: new Date(2018, 0, 29, 12, 30, 0),
-        //     resourceId: 3
-        // },
-        // {
-        //     id: 11,
-        //     title: "Birthday Party",
-        //     start: new Date(2018, 0, 30, 7, 0, 0),
-        //     end: new Date(2018, 0, 30, 10, 30, 0),
-        //     resourceId: 4
-        // }
-    ];
-
-    const resourceMap = [
-        // { resourceId: 1, resourceTitle: "Board room" },
-        // { resourceId: 2, resourceTitle: "Training room" },
-        // { resourceId: 3, resourceTitle: "Meeting room 1" },
-        // { resourceId: 4, resourceTitle: "Meeting room 2" }
-    ];
-
     const styles = {
         container: {
             width: "80wh",
@@ -211,50 +195,84 @@ function LeaveListDashboard() {
             margin: "2em"
         }
     };
+    const events = [];
 
-    const PER_PAGE = 5;
-    const [currentPage, setCurrentPage] = useState(0);
-    function handlePageClick({ selected: selectedPage }) {
-        setCurrentPage(selectedPage);
+    const resourceMap = [];
+    const approve = (id) => {
+        Swal.fire({
+            title: 'Confirm To Approve?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Approve it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                apiService.commonPostCall("Payroll/UpdateApproveOtFromManager?id=" + id + "&Status=ManagerApproved")
+                Swal.fire({
+                    icon: "success",
+                    titleText: "Approved Successfully"
+                })
+                getPendingData();
+            }
+        })
     }
-    const offset = currentPage * PER_PAGE;
-    const pageCount = Math.ceil(pendingdata.length / PER_PAGE);
+    let id;
+    const reject = () => {
+        debugger;
+        id = sessionStorage.getItem("id")
+        let reason = watch("Reason")
+        Swal.fire({
+            title: 'Confirm To Reject?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Reject it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                apiService.commonPostCall(`Payroll/UpdateOtFromManager?id=${id}&Status=ManagerRejected&RejectedReason=${reason}`);
+                Swal.fire({
+                    icon: "success",
+                    titleText: "Rejected Successfully"
+                })
+                getManagerPendingDetails();
+            }
+        })
+    }
 
     return (
         <div className="container-fluid">
             <div claasName="row">
-                <div className="col-md-12">
+                <div className="col-lg-12">
                     <div className="row">
                         <div className="col-md-7">
-                            <label className="Heading">Leave Request </label>&nbsp;&nbsp;&nbsp;&nbsp;
-                            {
-                                sessionStorage.getItem("roleID") == 3 && (
-                                    <Link href="/Requests/Myteamleaverequests">
-                                        <label className="Heading">My Team Request</label>
-                                    </Link>
-                                )
-                            }
+                            <Link href="/Requests/Leaverequest">
+                                <label className="Heading">My Leave Request</label>
+                            </Link>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <label className="Heading">My Team Leave Request</label>
+
                         </div>
-                    </div>
-                    <br />
+                    </div><br />
                     <div className="row">
-                        <div className="col-lg-4">
+                        <div className="col-lg-12">
                             <div className="card p-3 border-0">
                                 <div className="row">
-                                    <div className="col-lg-6">
+                                    <div className="col-lg-3">
                                         <label style={{ fontWeight: "bold" }}>Start Date:</label>
                                         <input id="date" name="date" type="date" placeholder="Duration" className="form-control " onChange={(e) => getStartDate(e.target.value)} />
                                     </div>
-                                    <div className="col-lg-6">
+                                    <div className="col-lg-3">
                                         <label style={{ fontWeight: "bold" }}>End Date:</label>
                                         <input id="date" name="date" type="date" placeholder="Duration" className="form-control " onChange={(e) => getEndDate(e.target.value)} />
                                     </div>
-                                    <br /> <br /><br /> <br />
-                                    <div className="col-lg-12 searchtxt ">
+                                    <div className="col-lg-4">
                                         <label style={{ fontWeight: "bold" }}>Search:</label>
                                         <br /><input type="search" placeholder="Search here.." className="form-control " onChange={e => setKeyword(e.target.value)} />
                                     </div>
-                                    <br /><br />
+                                    <br /><br /><br />
                                 </div>
                             </div>
 
@@ -272,12 +290,6 @@ function LeaveListDashboard() {
                                 </div>
                             </div>
                             <br />
-                        </div>
-                        <div className="col-lg-4"></div>
-                        <div className="col-lg-2"></div>
-                        <div className="col-lg-2">
-                            <Link href="/Requests/Applyleave/new"><button className="AddButton" tabIndex="0"> Apply Leave</button>
-                            </Link>
                         </div>
                     </div>
                     <br />
@@ -324,6 +336,7 @@ function LeaveListDashboard() {
                             }
                         </div>
                     </div><br />
+                    <br />
                     <div className="row">
                         <div className="col-lg-12">
                             {pending && (
@@ -334,6 +347,7 @@ function LeaveListDashboard() {
                                             <th>To Date</th>
                                             <th>Leave Reason</th>
                                             <th>Status</th>
+                                            <th>Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -349,6 +363,10 @@ function LeaveListDashboard() {
                                                         <td>{data.eDateOfLeave}</td>
                                                         <td>{data.leaveReason}</td>
                                                         <td>{data.status}</td>
+                                                        <td>
+                                                            <button onClick={approve.bind(this, data.id)} className='edit-btn'>Approve</button>
+                                                            <button onClick={() => openModal(sessionStorage.setItem("id", data.id))} className='edit-btn'>Reject</button>
+                                                        </td>
                                                     </tr>
                                                 );
                                             })}
@@ -416,6 +434,33 @@ function LeaveListDashboard() {
                             )}
                         </div>
                     </div>
+                    <Modal ariaHideApp={false} isOpen={isOpen} style={customStyles}>
+                        <div className='container'>
+                            <div className='row card-header'>
+                                <div className='col-lg-8'>
+                                    <h4>Rejecting Request</h4>
+                                </div>
+                                <div className='col-lg-3'></div>
+                                <div className='col-lg-1'>
+                                    <button aria-label="Close" type="button" className={Styles.close} onClick={() => ModalIsOpen(false)}>X</button>
+                                </div>
+                            </div><br />
+                            <div className='row'>
+                                <div className='col-lg-12'>
+                                    <textarea rows={4} {...register("Reason")} className='form-control' placeholder='Write the reason here..'></textarea>
+                                </div>
+                            </div>
+                            <div className='row'>
+                                <div className='col-lg-8'></div>
+                                <div className='col-lg-2'>
+                                    <button type='submit' className='edit-btn mt-5' onClick={() => ModalIsOpen(false)}>Cancel</button>
+                                </div>
+                                <div className='col-lg-2'>
+                                    <button onClick={reject} type='submit' className='edit-btn mt-5'>REJECT </button>
+                                </div>
+                            </div>
+                        </div>
+                    </Modal>
                 </div>
             </div>
             <div className="text-center">
@@ -440,8 +485,7 @@ function LeaveListDashboard() {
                 />
             </div>
         </div>
-
     )
-}
 
-export default LeaveListDashboard
+}
+export default Index

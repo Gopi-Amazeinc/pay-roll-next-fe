@@ -20,11 +20,17 @@ const FinalPayrollDetails = () => {
     // This API is used for fetch the Departmnent data for Dashboard and  Dropdown
     let res = await apiService.commonGetCall("Payroll/GetPreliminarySalary");
     setPreliminarySalary(res.data);
+    console.log(res.data.length);
     // This API is used for fetch the Departmnent data for Dropdown
     res = await apiService.commonGetCall("Master/GetDepartmentMaster");
     setDepartment(res.data);
   };
   const [selectedRows, setSelectedRows] = useState([]);
+  const [checkedState, setCheckedState] = useState([]);
+
+  // const [selctedValues, setSelctedValues] = useState([]);
+  // const [deleteSalary, setDeleteSalary] = useState();
+
   // const handleRowSelect = (event, id) => {
   //     if (id === 'all') {
   //         setSelectedRows(event.target.checked ? preliminarySalary.map(data => data.id) : []);
@@ -65,22 +71,47 @@ const FinalPayrollDetails = () => {
     setIsOpen(false);
   }
 
-  const handleDelete = async (staffID, endDateFormated) => {
+  const handleOnChange = (staffid, endDateformatedd) => {
+    debugger;
+    let entity = {
+      staffid: staffid,
+      endDateformatedd: endDateformatedd,
+    };
+    setCheckedState((current) => [...current, entity]);
+  };
+  console.log(checkedState);
+
+  const handleDelete = async () => {
+    debugger
+    const transformedData = await deleteSalary(checkedState);
+  }
+
+  const deleteSalary = async (checkedState) => {
+    // const transformedData = await transformedData(checkedState);
     try {
       debugger;
-      // This API is used to delete the dashboard data based on StaffID,EndDate
-      const res = await apiService.commonGetCall(
-        `Payroll/DeletePreliminary?staffID=${staffID}&Enddate=${endDateFormated}`
-      );
-      Swal.fire({
-        icon: "success",
-        title: "Hurray..",
-        text: "Data was Deleted...!",
-      });
-      console.log(res.data);
+      // const deleteddddsalary = await Promise.all(
+      checkedState && checkedState.length > 0
+        ? checkedState.map(async (data) => {
+            const res = await apiService.commonGetCall(
+              `Payroll/DeletePreliminary?staffID=${data.staffID}&Enddate=${data.endDateFormated}`
+            );
+            const deletedData = res.data[0];
+            Swal.fire({
+              icon: "success",
+              title: "Hurray..",
+              text: "Data was Deleted...!",
+            });
+            // console.log(res.data);
+          })
+        : []
+      // );
+      // return deleteddddsalary;
       getData();
+
+      // This API is used to delete the dashboard data based on StaffID,EndDate
     } catch (error) {
-      console.error(error);
+      // console.error(error);
       Swal.fire({
         icon: "error",
         title: "Oops..",
@@ -98,6 +129,9 @@ const FinalPayrollDetails = () => {
   }
   const offset = currentPage * PER_PAGE;
   const pageCount = Math.ceil(preliminarySalary.length / PER_PAGE);
+
+  
+
   return (
     <div className="container-fluid">
       <h3 className=" Heading">Finalization Payroll Details</h3>
@@ -123,7 +157,7 @@ const FinalPayrollDetails = () => {
           <div className="col-lg-2">
             <select id="Department" name="Department" className="form-select">
               <option value="" disabled="">
-                Select Department{" "}
+                Select Department
               </option>
               {department.map((data, index) => {
                 return (
@@ -141,7 +175,7 @@ const FinalPayrollDetails = () => {
               currentTableRef={tableRef.current}
             >
               <button type="button" className=" EditDelteBTN">
-                Export To Excel{" "}
+                Export To Excel
               </button>
             </DownloadTableExcel>
           </div>
@@ -160,7 +194,7 @@ const FinalPayrollDetails = () => {
           <button
             type="button"
             className="EditDelteBTN fw-bold"
-            onClick={() => handleDelete.bind(this)}
+            onClick={() => handleDelete()}
           >
             Delete
           </button>
@@ -174,7 +208,7 @@ const FinalPayrollDetails = () => {
 
         <div className="col-lg-12">
           <span>
-            Select All{" "}
+            Select All
             <input
               type="checkbox"
               checked={selectedRows.length === preliminarySalary.length}
@@ -217,7 +251,11 @@ const FinalPayrollDetails = () => {
                       <td>
                         <input
                           type="checkbox"
-                          onChange={handleData.bind(this, data)}
+                          // checked={checkedState[index]}
+                          onChange={() =>
+                            handleOnChange(data.staffID, data.endDateFormated)
+                          }
+                          // onChange={handleData.bind(this, data)}
                         />
                       </td>
                       <td>{data.employeID}</td>
