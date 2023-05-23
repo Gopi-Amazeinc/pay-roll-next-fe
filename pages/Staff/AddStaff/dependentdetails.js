@@ -127,7 +127,7 @@ export default function DependentDetails() {
             RelationshipID: existingData ? existingData.relationshipID : "",
             Gender:  existingData ? existingData.gender : "",
             DateOfBirth: existingData ? existingData.dateOfBirth : "",
-            StaffID: sessionStorage.getItem('userID'),
+            StaffID: sessionStorage.getItem('CreatedEmpID'),
             DependentAttachment: "No Image",
         }
         reset(etty);

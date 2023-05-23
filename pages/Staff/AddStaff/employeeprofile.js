@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 import { apiService } from "@/services/api.service";
 import { useRouter } from "next/router";
 
-function EmployeeProfile({ editData }) {
+function EmployeeProfile({ data }) {
   const router = useRouter();
   const [CountrylistData, setCountrylistData] = useState([]);
   const [TitleMasterData, setTitleMaster] = useState([]);
@@ -29,57 +29,71 @@ function EmployeeProfile({ editData }) {
   const [actionType, setActionType] = useState("insert");
 
   useEffect(() => {
-    debugger;
-    getData();
-    const { id } = editData || {};
-    if (id) {
-     getByID(id);
-    } else {
-      clearForm();
-    }
+    makecalls();
   }, [1]);
 
-  const getByID = async (id)=>{
-    debugger
-    const res = await apiService.commonGetCall("HR/GetMyDetailsByStaffID?id="+id);
+  function makecalls() {
+    const { id } = data || {};
+    if (id) {
+      getByID(id);
+    } else {
+      clearForm();
+      getData();
+    }
+  }
+
+  const getByID = async (id) => {
+    debugger;
+    await getData();
+    const res = await apiService.commonGetCall(
+      "Payroll/GetStaffByStaffID?ID=" + id
+    );
     clearForm(res.data[0]);
-   }
+  };
 
   const getData = async () => {
-    let GetTitleMaster = await apiService.commonGetCall("Master/GetTitleMaster");
+    let GetTitleMaster = await apiService.commonGetCall(
+      "Master/GetTitleMaster"
+    );
     setTitleMaster(GetTitleMaster.data);
 
-    let GetCountryType = await apiService.commonGetCall( "Master/GetCountryType");
+    let GetCountryType = await apiService.commonGetCall(
+      "Master/GetCountryType"
+    );
     setCountrylistData(GetCountryType.data);
 
-    let GetMaritalStatus = await apiService.commonGetCall( "Master/GetMaritalStatus");
+    let GetMaritalStatus = await apiService.commonGetCall(
+      "Master/GetMaritalStatus"
+    );
     setMaritalStatusData(GetMaritalStatus.data);
 
-    let GetGenderMaster = await apiService.commonGetCall( "Master/GetGenderMaster");
+    let GetGenderMaster = await apiService.commonGetCall(
+      "Master/GetGenderMaster"
+    );
     setGenderMasterData(GetGenderMaster.data);
 
     let GetReligionMaster = await apiService.commonGetCall(
-       "Master/GetReligionMaster"
+      "Master/GetReligionMaster"
     );
     setReligionMasterData(GetReligionMaster.data);
 
     let GetCitizenshipMaster = await apiService.commonGetCall(
-       "Master/GetCitizenshipMaster"
+      "Master/GetCitizenshipMaster"
     );
     setCitizenshipMasterData(GetCitizenshipMaster.data);
 
     let GetNationalityMaster = await apiService.commonGetCall(
-       "Master/GetNationalityMaster"
+      "Master/GetNationalityMaster"
     );
     setNationalityMasterData(GetNationalityMaster.data);
 
     let GetLanguageSpokenMaster = await apiService.commonGetCall(
-       "Master/GetLanguageSpokenMaster"
+      "Master/GetLanguageSpokenMaster"
     );
     setLanguageSpokenMasterData(GetLanguageSpokenMaster.data);
 
     let GetBloodTypeMaster = await apiService.commonGetCall(
-       "Master/GetBloodTypeMaster"
+      "Master/GetBloodTypeMaster"
     );
     setBloodTypeMasterData(GetBloodTypeMaster.data);
   };
@@ -87,10 +101,9 @@ function EmployeeProfile({ editData }) {
   async function onSubmit(data) {
     debugger;
     console.log(data);
-    let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
 
     if (actionType == "insert") {
-      let Enity = {
+      let Entity = {
         Title: data.Title,
         FirstName: data.FirstName,
         MiddleName: data.MiddleName,
@@ -115,75 +128,79 @@ function EmployeeProfile({ editData }) {
         PreviousBMS: data.PreviousBMS,
         EffectivityOfPreviousBMS: data.EffectivityOfPreviousBMS,
       };
-      let res = await apiService.commonPostCall( "Payroll/InsertStaff", Enity);
+      let res = await apiService.commonPostCall("Payroll/InsertStaff", Entity);
       if (res.data && res.status == 200) {
-        sessionStorage.setItem("CreatedEmpID", res.data );
+        console.log(res.data, "idddddddddddddddddddddddddd");
+        sessionStorage.setItem("CreatedEmpID", res.data);
         Swal.fire("Added successfully!!");
       }
+    } else {
+      let Entity = {
+        ID: data.ID,
+        Title: data.Title,
+        FirstName: data.FirstName,
+        MiddleName: data.MiddleName,
+        LastName: data.LastName,
+        NickName: data.NickName,
+        DateOfBirth: data.DateOfBirth,
+        PlaceOfBirth: data.PlaceOfBirth,
+        CountryOfBirthID: data.CountryOfBirthID,
+        GenderID: data.GenderID,
+        MaritalStatusID: data.MaritalStatusID,
+        PersonalEmail: data.PersonalEmail,
+        MothersName: data.MothersName,
+        FathersName: data.FathersName,
+        ReligionID: data.ReligionID,
+        CitizenshipID: data.CitizenshipID,
+        NationalityID: data.NationalityID,
+        LanguageSpokenID: data.LanguageSpokenID,
 
-      console.log(res);
-    }
-    else {
-        let Enity = {
-            "ID": data.ID,
-            'Title': data.Title,
-            'FirstName': data.FirstName,
-            'MiddleName': data.MiddleName,
-            'LastName': data.LastName,
-            'NickName': data.NickName,
-            'DateOfBirth': data.DateOfBirth,
-            'PlaceOfBirth': data.PlaceOfBirth,
-            'CountryOfBirthID': data.CountryOfBirthID,
-            'GenderID': data.GenderID,
-            'MaritalStatusID': data.MaritalStatusID,
-            'PersonalEmail': data.PersonalEmail,
-            'MothersName': data.MothersName,
-            'FathersName': data.FathersName,
-            'ReligionID': data.ReligionID,
-            'CitizenshipID': data.CitizenshipID,
-            'NationalityID': data.NationalityID,
-            'LanguageSpokenID': data.LanguageSpokenID,
+        BloodTypeID: data.BloodTypeID,
+        IsPWD: data.IsPWD,
 
-            'BloodTypeID': data.BloodTypeID,
-            'IsPWD': data.IsPWD,
-
-            'OriginalBMS': data.OriginalBMS,
-            'EffectivityDateOfOriginalBMS': data.EffectivityDateOfOriginalBMS,
-            'PreviousBMS': data.PreviousBMS,
-            'EffectivityOfPreviousBMS': data.EffectivityOfPreviousBMS
-        }
-        await axios.post( "Master/UpdateBuildingStaff", Enity);
+        OriginalBMS: data.OriginalBMS,
+        EffectivityDateOfOriginalBMS: data.EffectivityDateOfOriginalBMS,
+        PreviousBMS: data.PreviousBMS,
+        EffectivityOfPreviousBMS: data.EffectivityOfPreviousBMS,
+      };
+      await apiService.commonPostCall("Payroll/UpdateStaff", Entity);
+      Swal.fire("Updated successfully!!");
     }
   }
 
-  async function clearForm(staffData = null){
-    let details ={
-            "ID":staffData ? staffData.id: "",
-            'Title': staffData ? staffData.title: "",
-            'FirstName': staffData ? staffData.title: "",
-            'MiddleName': staffData ? staffData.title: "",
-            'LastName': staffData ? staffData.title: "",
-            'NickName': staffData ? staffData.title: "",
-            'DateOfBirth': staffData ? staffData.title: "",
-            'PlaceOfBirth': staffData ? staffData.title: "",
-            'CountryOfBirthID': staffData ? staffData.title: "",
-            'GenderID': staffData ? staffData.title: "",
-            'MaritalStatusID': staffData ? staffData.title: "",
-            'PersonalEmail': staffData ? staffData.title: "",
-            'MothersName': staffData ? staffData.title: "",
-            'FathersName': staffData ? staffData.title: "",
-            'ReligionID': staffData ? staffData.title: "",
-            'CitizenshipID': staffData ? staffData.title: "",
-            'NationalityID': staffData ? staffData.title: "",
-            'LanguageSpokenID': staffData ? staffData.title: "",
-            'BloodTypeID': staffData ? staffData.title: "",
-            'IsPWD': staffData ? staffData.title: "",
-
-            'OriginalBMS': staffData ? staffData.title: "",
-            'EffectivityDateOfOriginalBMS': staffData ? staffData.title: "",
-            'PreviousBMS': staffData ? staffData.title: "",
-            'EffectivityOfPreviousBMS': staffData ? staffData.title: "",
-    }
+  async function clearForm(staffData = null) {
+    let details = {
+      ID: staffData ? staffData.id : "",
+      Title: staffData ? staffData.title : "",
+      FirstName: staffData ? staffData.firstName : "",
+      MiddleName: staffData ? staffData.middleName : "",
+      LastName: staffData ? staffData.lastName : "",
+      NickName: staffData ? staffData.nickName : "",
+      DateOfBirth: staffData ? staffData.dateOfBirth : "",
+      PlaceOfBirth: staffData ? staffData.placeOfBirth : "",
+      CountryOfBirthID: staffData ? staffData.countryOfBirthID : "",
+      GenderID: staffData ? staffData.genderID : "",
+      MaritalStatusID: staffData ? staffData.maritalStatusID : "",
+      PersonalEmail: staffData ? staffData.personalEmail : "",
+      MothersName: staffData ? staffData.mothersName : "",
+      FathersName: staffData ? staffData.fathersName : "",
+      ReligionID: staffData ? staffData.religionID : "",
+      CitizenshipID: staffData ? staffData.citizenshipID : "",
+      NationalityID: staffData ? staffData.nationalityID : "",
+      LanguageSpokenID: staffData ? staffData.languageSpokenID : "",
+      BloodTypeID: staffData ? staffData.bloodTypeID : "",
+      IsPWD: staffData ? staffData.isPWD : "",
+      OriginalBMS: staffData ? staffData.originalBMS : "",
+      EffectivityDateOfOriginalBMS: staffData
+        ? staffData.effectivityDateOfOriginalBMS
+        : "",
+      PreviousBMS: staffData ? staffData.previousBMS : "",
+      EffectivityOfPreviousBMS: staffData
+        ? staffData.effectivityOfPreviousBMS
+        : "",
+    };
+    reset(details);
+    setActionType(staffData ? "update" : "insert");
   }
 
   const customStyles = {
@@ -206,7 +223,6 @@ function EmployeeProfile({ editData }) {
     },
   };
 
-  
   // const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop })
   return (
     <div>
@@ -228,7 +244,11 @@ function EmployeeProfile({ editData }) {
                     >
                       <option value="">Select Title</option>
                       {TitleMasterData.map((data, index) => {
-                        return <option  key={data.id} value={data.id}>{data.short}</option>;
+                        return (
+                          <option key={data.id} value={data.id}>
+                            {data.short}
+                          </option>
+                        );
                       })}
                     </select>
                     {errors.Title && (
@@ -250,7 +270,11 @@ function EmployeeProfile({ editData }) {
                     {...register("FirstName", { required: true })}
                     className="form-control "
                   ></input>
-                  {errors.FirstName && <span style={customStyles.errorMsg}>Please enter first name</span>}
+                  {errors.FirstName && (
+                    <span style={customStyles.errorMsg}>
+                      Please enter first name
+                    </span>
+                  )}
                 </div>
               </div>
               <div className="col-lg-3">
@@ -264,7 +288,11 @@ function EmployeeProfile({ editData }) {
                     {...register("MiddleName", { required: true })}
                     className="form-control "
                   ></input>
-                  {errors.MiddleName && <span style={customStyles.errorMsg}>Please enter middle name</span>}
+                  {errors.MiddleName && (
+                    <span style={customStyles.errorMsg}>
+                      Please enter middle name
+                    </span>
+                  )}
                 </div>
               </div>
               <div className="col-lg-3">
@@ -299,7 +327,12 @@ function EmployeeProfile({ editData }) {
                     {...register("NickName", { required: true })}
                     className="form-control "
                   ></input>
-                  {errors.NickName && <span style={customStyles.errorMsg}> Please enter nick name</span>}
+                  {errors.NickName && (
+                    <span style={customStyles.errorMsg}>
+                      {" "}
+                      Please enter nick name
+                    </span>
+                  )}
                 </div>
               </div>
               <div className="col-lg-3">
@@ -332,7 +365,10 @@ function EmployeeProfile({ editData }) {
                     className="form-control "
                   ></input>
                   {errors.PlaceOfBirth && (
-                    <span style={customStyles.errorMsg}> Please enter place of birth</span>
+                    <span style={customStyles.errorMsg}>
+                      {" "}
+                      Please enter place of birth
+                    </span>
                   )}
                 </div>
               </div>
@@ -344,15 +380,22 @@ function EmployeeProfile({ editData }) {
                   <div>
                     <select
                       className="form-select "
-                      {...register("Country_Of_Birth", { required: true })}
+                      {...register("CountryOfBirthID", { required: true })}
                     >
                       <option value="">Select Country Of Birth</option>
                       {CountrylistData.map((data, index) => {
-                        return <option  key={data.id} value={data.id}>{data.short}</option>;
+                        return (
+                          <option key={data.id} value={data.id}>
+                            {data.short}
+                          </option>
+                        );
                       })}
                     </select>
                     {errors.Country_Of_Birth && (
-                      <span style={customStyles.errorMsg}> Please select country of birth</span>
+                      <span style={customStyles.errorMsg}>
+                        {" "}
+                        Please select country of birth
+                      </span>
                     )}
                   </div>
                 }
@@ -372,7 +415,11 @@ function EmployeeProfile({ editData }) {
                     >
                       <option value="">Select Gender</option>
                       {GenderMasterData.map((data, index) => {
-                        return <option  key={data.id} value={data.id}>{data.short}</option>;
+                        return (
+                          <option key={data.id} value={data.id}>
+                            {data.short}
+                          </option>
+                        );
                       })}
                     </select>
                     {errors.GenderID && (
@@ -395,7 +442,11 @@ function EmployeeProfile({ editData }) {
                     >
                       <option value="">Select Marital Status</option>
                       {MaritalStatusData.map((data, index) => {
-                        return <option   key={data.id} value={data.id}>{data.short}</option>;
+                        return (
+                          <option key={data.id} value={data.id}>
+                            {data.short}
+                          </option>
+                        );
                       })}
                     </select>
                     {errors.MaritalStatusID && (
@@ -470,10 +521,9 @@ function EmployeeProfile({ editData }) {
           </div>
 
           <div className="card p-3 mt-4 ">
-            
             <div className="row">
-            <h6>Ethnicity Information</h6>
-            <hr />
+              <h6>Ethnicity Information</h6>
+              <hr />
               <div className="col-lg-3">
                 <p>
                   Religion<span style={customStyles.span}>*</span>
@@ -485,7 +535,11 @@ function EmployeeProfile({ editData }) {
                   >
                     <option value="">Select Religion</option>
                     {ReligionMasterData.map((data, index) => {
-                      return <option   key={data.id} value={data.id}>{data.short}</option>;
+                      return (
+                        <option key={data.id} value={data.id}>
+                          {data.short}
+                        </option>
+                      );
                     })}
                   </select>
                   {errors.ReligionID && (
@@ -508,7 +562,11 @@ function EmployeeProfile({ editData }) {
                     >
                       <option value="">Select Citizenship</option>
                       {CitizenshipMasterData.map((data, index) => {
-                        return <option  key={data.id} value={data.id}>{data.short}</option>;
+                        return (
+                          <option key={data.id} value={data.id}>
+                            {data.short}
+                          </option>
+                        );
                       })}
                     </select>
                     {errors.CitizenshipID && (
@@ -531,7 +589,11 @@ function EmployeeProfile({ editData }) {
                     >
                       <option value="">Select Nationality</option>
                       {NationalityMasterData.map((data, index) => {
-                        return <option key={data.id}  value={data.id}>{data.short}</option>;
+                        return (
+                          <option key={data.id} value={data.id}>
+                            {data.short}
+                          </option>
+                        );
                       })}
                     </select>
                     {errors.NationalityID && (
@@ -554,7 +616,11 @@ function EmployeeProfile({ editData }) {
                     >
                       <option value="">Select Language Spoken</option>
                       {LanguageSpokenMasterData.map((data, index) => {
-                        return <option  key={data.id} value={data.id}>{data.short}</option>;
+                        return (
+                          <option key={data.id} value={data.id}>
+                            {data.short}
+                          </option>
+                        );
                       })}
                     </select>
                     {errors.LanguageSpokenID && (
@@ -570,8 +636,8 @@ function EmployeeProfile({ editData }) {
 
           <div className="card p-3 mt-4">
             <div className="row">
-            <h6>Health Information</h6>
-            <hr></hr>
+              <h6>Health Information</h6>
+              <hr></hr>
               <div className="col-lg-3">
                 <p>
                   Blood Type<span style={customStyles.span}>*</span>
@@ -584,7 +650,11 @@ function EmployeeProfile({ editData }) {
                     >
                       <option value="">Select Blood Type</option>
                       {BloodTypeMasterData.map((data, index) => {
-                        return <option  key={data.id} value={data.id}>{data.short}</option>;
+                        return (
+                          <option key={data.id} value={data.id}>
+                            {data.short}
+                          </option>
+                        );
                       })}
                     </select>
                     {errors.BloodTypeID && (
@@ -615,16 +685,14 @@ function EmployeeProfile({ editData }) {
                       {...register("IsPWD", { required: true })}
                     />
                     No
-                    
                     <div>
-                    {errors.IsPWD && (
-                      <span style={customStyles.errorMsg}>
-                        Please select PWD
-                      </span>
-                    )}
+                      {errors.IsPWD && (
+                        <span style={customStyles.errorMsg}>
+                          Please select PWD
+                        </span>
+                      )}
                     </div>
                   </div>
-                  
                 }
               </div>
               <div className="col-lg-3"></div>
@@ -633,10 +701,9 @@ function EmployeeProfile({ editData }) {
           </div>
 
           <div className="card p-3 mt-4">
-            
             <div className="row">
-            <h6>BMS Details</h6>
-            <hr />
+              <h6>BMS Details</h6>
+              <hr />
               <div className="col-lg-3">
                 <p>
                   Original BMS<span style={customStyles.span}>*</span>
@@ -717,12 +784,16 @@ function EmployeeProfile({ editData }) {
               </div>
             </div>
             <br></br>
-            
           </div>
 
           <div className="d-flex justify-content-center w-100 mt-4 mb-2 pr-2">
-                        <button className='staffSubmitBtn'>Submit</button>
-                    </div>
+            {actionType == "insert" && (
+              <button className="staffSubmitBtn">Submit</button>
+            )}
+            {actionType == "update" && (
+              <button className="staffSubmitBtn">Update</button>
+            )}
+          </div>
         </form>
       </div>
     </div>

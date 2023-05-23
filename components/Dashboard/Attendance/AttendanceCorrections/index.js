@@ -67,7 +67,7 @@ const Attendancecorrectiondashboard = () => {
   }, []);
 
 
-  
+
   const PER_PAGE = 10;
   const [currentPage, setCurrentPage] = useState(0);
   function handlePageClick({ selected: selectedPage }) {
@@ -115,35 +115,35 @@ const Attendancecorrectiondashboard = () => {
     return `${year}-${month}-${day}`;
   };
 
-  const approveAttedanceCorrection = async (data) => {
-    Swal.fire({
-      title: "Confirm To Approve?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, Approve it!",
-    }).then(async (result) => {
-      if (result.isConfirmed) {
-        await apiService.commonGetCall(
-          "Payroll/ApproveAttedanceCoorection?id=" +
-          data.id +
-          "&UserID=" +
-          data.staffID +
-          "&SigninDate=" +
-          SDate +
-          "&SignoutDate=" +
-          EDate
-        );
-        Swal.fire({
-          icon: "success",
-          titleText: "Approved Successfully",
-        });
-        getPendingManager(SDate, EDate);
-      }
-    });
-  };
+  // const approveAttedanceCorrection = async (data) => {
+  //   Swal.fire({
+  //     title: "Confirm To Approve?",
+  //     text: "You won't be able to revert this!",
+  //     icon: "warning",
+  //     showCancelButton: true,
+  //     confirmButtonColor: "#3085d6",
+  //     cancelButtonColor: "#d33",
+  //     confirmButtonText: "Yes, Approve it!",
+  //   }).then(async (result) => {
+  //     if (result.isConfirmed) {
+  //       await apiService.commonGetCall(
+  //         "Payroll/ApproveAttedanceCoorection?id=" +
+  //         data.id +
+  //         "&UserID=" +
+  //         data.staffID +
+  //         "&SigninDate=" +
+  //         SDate +
+  //         "&SignoutDate=" +
+  //         EDate
+  //       );
+  //       Swal.fire({
+  //         icon: "success",
+  //         titleText: "Approved Successfully",
+  //       });
+  //       getPendingManager(SDate, EDate);
+  //     }
+  //   });
+  // };
 
   const getPendingData = async (SDate, EDate) => {
     debugger;
@@ -225,16 +225,20 @@ const Attendancecorrectiondashboard = () => {
           >
             Attendance Correction
           </Link>
+          <div className="line-border"></div>
         </div>
+       
         <div className="col-lg-3">
-          {roleID == 3 && (
+          {(roleID == 3) && (
             <>
               <Link
                 className={Styles.mainheader}
                 href="/Attendance/MyTeamAttendanceCorrection"
               >
                 My Team Attendance Correction
+
               </Link>
+              
             </>
           )}
         </div>
@@ -247,7 +251,7 @@ const Attendancecorrectiondashboard = () => {
             <p> <b>Filter By</b></p>
           </div>
 
-          <div className="col-lg-5">
+          <div className="col-lg-3">
             <input
               type="text"
               className="form-control"
@@ -257,12 +261,12 @@ const Attendancecorrectiondashboard = () => {
           </div>
 
           <div className="col-lg-5">
-            {(roleID == 3 || roleID == 5 || roleID == 4) && (
+            {(roleID == 3 || roleID == 5 || roleID == 2) && (
               <div className="row">
                 <div className="col-lg-7">
                   <Link href="/Attendance/AttendanceCorrections/attendancecorrectionform">
                     <button className="button">
-                    <IoIosAddCircleOutline size={18} color={"white"} />  Add Attendance Correction
+                      <IoIosAddCircleOutline size={18} color={"white"} />  Add Attendance Correction
                     </button>
                   </Link>
                 </div>
@@ -319,10 +323,11 @@ const Attendancecorrectiondashboard = () => {
       <div className="row mt-3">
         <div className="col-lg-12">
 
-          {pending && (
+          {pending && roleID != "4" && (
+
             <>
               <div className="col-lg-2 text-primary fs-6 fw-bold">
-          
+
                 <h6 style={{ color: "#3247d5" }}>Showing {pendingcount} Results</h6>
               </div>
 
@@ -350,7 +355,7 @@ const Attendancecorrectiondashboard = () => {
                               return data;
                             }
                           })
-                          .map((data,index) => {
+                          .map((data, index) => {
                             return (
                               <tr key={index}>
                                 <td>{data.date}</td>
@@ -377,26 +382,26 @@ const Attendancecorrectiondashboard = () => {
                 </tbody>
               </table>
               <div className="mb-4 mt-4 text-center">
-                    <ReactPaginate
-                        previousLabel={"Previous"}
-                        nextLabel={"Next"}
-                        breakLabel={"..."}
-                        pageCount={pageCount}
-                        marginPagesDisplayed={2}
-                        pageRangeDisplayed={3}
-                        onPageChange={handlePageClick}
-                        containerClassName={"pagination  justify-content-center"}
-                        pageClassName={"page-item "}
-                        pageLinkClassName={"page-link"}
-                        previousClassName={"page-item"}
-                        previousLinkClassName={"page-link"}
-                        nextClassName={"page-item"}
-                        nextLinkClassName={"page-link"}
-                        breakClassName={"page-item"}
-                        breakLinkClassName={"page-link"}
-                        activeClassName={"active primary"}
-                    />
-                </div>
+                <ReactPaginate
+                  previousLabel={"Previous"}
+                  nextLabel={"Next"}
+                  breakLabel={"..."}
+                  pageCount={pageCount}
+                  marginPagesDisplayed={2}
+                  pageRangeDisplayed={3}
+                  onPageChange={handlePageClick}
+                  containerClassName={"pagination  justify-content-center"}
+                  pageClassName={"page-item "}
+                  pageLinkClassName={"page-link"}
+                  previousClassName={"page-item"}
+                  previousLinkClassName={"page-link"}
+                  nextClassName={"page-item"}
+                  nextLinkClassName={"page-link"}
+                  breakClassName={"page-item"}
+                  breakLinkClassName={"page-link"}
+                  activeClassName={"active primary"}
+                />
+              </div>
             </>
           )}
 
@@ -486,7 +491,7 @@ const Attendancecorrectiondashboard = () => {
             </>
           )} */}
 
-          {approved && (
+          {approved && roleID != "4" && (
             <>
               <div className="col-lg-2 text-primary fs-6 fw-bold">
                 <h6 style={{ color: "#3247d5" }}>Showing {approvedcount} Results</h6>
@@ -522,7 +527,7 @@ const Attendancecorrectiondashboard = () => {
             </>
           )}
 
-          {/* {rejected && roleID != "2" && (
+          {rejected && roleID != "4" && (
             <>
               <div className="col-lg-2 text-primary fs-6 fw-bold">
                 <h6>Showing {rejectcount} Results</h6>
@@ -558,9 +563,9 @@ const Attendancecorrectiondashboard = () => {
                 </tbody>
               </table>
             </>
-          )} */}
+          )}
 
-          {rejected && (
+          {/* {rejected && (
             <>
               <div className="col-lg-2 text-primary fs-6 fw-bold">
                 <h6 style={{ color: "#3247d5" }}>Showing {rejectcount} Results</h6>
@@ -594,7 +599,7 @@ const Attendancecorrectiondashboard = () => {
                 </tbody>
               </table>
             </>
-          )}
+          )} */}
         </div>
       </div>
     </div>
