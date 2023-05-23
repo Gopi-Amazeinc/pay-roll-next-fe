@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2'
 import { useEffect, useState } from 'react';
 import Styles from '../../../../styles/pagibig.module.css'
+import { BiFilterAlt } from "react-icons/bi";
 
 const Pagibig = () => {
     const [pagibigconfigaration, setpagibigconfigaration] = useState([]);
@@ -53,9 +54,10 @@ const Pagibig = () => {
                     <div className='col-lg-12'>
                         <div className='card p-3 border-0  rounded-3'>
                             <div className='row'>
-                                <div className='col-lg-1'>
-                                    <p>Filter By</p>
+                                <div className="col-lg-1">
+                                    <p> <BiFilterAlt /> Filter By</p>
                                 </div>
+                              
 
                                 <div className='col-lg-3'>
                                     <input type="text" className='form-control' placeholder='Search...' onChange={e => setKeyword(e.target.value)} />
@@ -89,13 +91,13 @@ const Pagibig = () => {
                                 </thead>
                                 <tbody>
                                     {pagibigconfigaration.filter(data => {
-                                    if ((data.taxiableincomelowlimit.toString().includes(keyword.toString())) || (data.taxiableincomehighlimit.toString().includes(keyword.toString()))||
-                                    (data.pagibigvalue.toString().includes(keyword.toString()))||
-                                    
-                                    (data.year.toString().includes(keyword.toString()))) {
-                                        return data;
-                                    }
-                                }).map((data, index) => {
+                                        if ((data.taxiableincomelowlimit.toString().includes(keyword.toString())) || (data.taxiableincomehighlimit.toString().includes(keyword.toString())) ||
+                                            (data.pagibigvalue.toString().includes(keyword.toString())) ||
+
+                                            (data.year.toString().includes(keyword.toString()))) {
+                                            return data;
+                                        }
+                                    }).map((data, index) => {
                                         return (
                                             <tr className="text-dark" key={index}>
                                                 <td>{data.taxiableincomelowlimit}</td>

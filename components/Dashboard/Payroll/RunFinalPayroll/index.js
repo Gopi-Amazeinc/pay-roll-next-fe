@@ -37,17 +37,16 @@ const RunFinalPayroll = () => {
     }, []);
 
     const handleButtonClick = async () => {
-        try {
-            debugger;
+        try {   
             if (watch("PayCode")) {
                 let res = paycode.filter(x => x.payCode == watch("PayCode"))[0].payrollStartDate;
                 let rres = paycode.filter(x => x.payCode == watch("PayCode"))[0].payrollEndDate;;
                 setStartDate(res);
                 setEndDate(rres);
-                let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
                 // This API is used to fetch the dashboard data based on StartDate,EndDate
                 const sss = await apiService.commonGetCall(`Payroll/Get_Employees_For_Payroll?startdate=${startDate}&enddate=${endDate}`);
                 setDashboardData(sss.data);
+                console.log(sss.data)
             }
         } catch (error) {
             console.error(error);
@@ -182,7 +181,7 @@ const RunFinalPayroll = () => {
                     </form>
                 </div>
             </div>
-            <div class="row">
+            <div className="row">
                 <div className="col-lg-2">
                 </div>
                 <div className="col-lg-2">

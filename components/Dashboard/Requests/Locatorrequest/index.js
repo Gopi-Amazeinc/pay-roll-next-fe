@@ -30,7 +30,8 @@ const Locatordashboard = () => {
     const getEndDate = (selectedDate) => {
         setEndDate(selectedDate);
         sessionStorage.setItem("EndDate", endDate);
-        return getDateBySelectedDate(selectedDate);
+        return dateValidation(selectedDate);
+        // return getDateBySelectedDate(selectedDate);
     };
     const getDateBySelectedDate = (endDatesss) => {
         debugger;
@@ -144,6 +145,19 @@ const Locatordashboard = () => {
         return;
     }, [userID])
 
+    const dateValidation = (selectedDate) => {
+        if (new Date(startDate) > new Date(selectedDate)) {
+            Swal.fire("End Date should be greater than Start Date");
+        } else {
+            setEndDate(selectedDate);
+            return getDataBySelectedDate(selectedDate);
+        }
+    };
+    const getDataBySelectedDate = (endDatesss) => {
+        debugger;
+        return getPendingData(startDate, endDatesss);
+    };
+
 
 
     return (
@@ -159,17 +173,17 @@ const Locatordashboard = () => {
                                 </div>
                                 <div className="col-lg-2">
                                     <label style={{ fontWeight: "bold" }}>From Date</label>
-                                    <input type="date" className="form-control" value={startDate} onChange={(e) => getStartDate(e.target.value)} />
+                                    <input type="date" className="form-control" onChange={(e) => getStartDate(e.target.value)} />
                                 </div>
                                 <div className="col-lg-2">
                                     <label style={{ fontWeight: "bold" }}>To Date</label>
-                                    <input type="date" className="form-control" value={endDate || ""} onChange={(e) => getEndDate(e.target.value)} />
+                                    <input type="date" className="form-control" onChange={(e) => getEndDate(e.target.value)} />
                                 </div>
-                                <div className="col-lg-3">
+                                <div className="col-lg-3 searchtxt">
                                     <br />
                                     <input
-                                        type="text"
-                                        placeholder="Search for Date or Status"
+                                        type="search"
+                                        placeholder="Search here.."
                                         className="form-control"
                                         onChange={e => setKeyword(e.target.value)}
                                     ></input>
@@ -208,7 +222,7 @@ const Locatordashboard = () => {
                                         </thead>
                                         <tbody>
                                             {pendingDashboard.filter(data => {
-                                                if ((data.date.toString().includes(keyword.toLowerCase())) || (data.approveStatus.toLowerCase().includes(keyword))) {
+                                                if ((data.date.toString().includes(keyword.toString())) || (data.approveStatus.toLowerCase().includes(keyword.toLowerCase())) || (data.startTime.toString().includes(keyword.toString())) || (data.endTime.toString().includes(keyword.toString())) || (data.task.toString().includes(keyword.toString())) || (data.comments.toString().includes(keyword.toString()))) {
                                                     return data;
                                                 }
                                             }).slice(offset, offset + PER_PAGE).map((data, index) => {
@@ -251,7 +265,7 @@ const Locatordashboard = () => {
                                         </thead>
                                         <tbody>
                                             {approvedDashboard.filter(data => {
-                                                if ((data.date.toString().includes(keyword.toLowerCase())) || (data.approveStatus.toLowerCase().includes(keyword))) {
+                                                if ((data.date.toString().includes(keyword.toString())) || (data.approveStatus.toLowerCase().includes(keyword.toLowerCase())) || (data.startTime.toString().includes(keyword.toString())) || (data.endTime.toString().includes(keyword.toString())) || (data.task.toString().includes(keyword.toString())) || (data.comments.toString().includes(keyword.toString()))) {
                                                     return data;
                                                 }
                                             }).slice(offset, offset + PER_PAGE).map((data, index) => {
@@ -287,7 +301,7 @@ const Locatordashboard = () => {
                                         </thead>
                                         <tbody>
                                             {rejecteddDashboard.filter(data => {
-                                                if ((data.date.toString().includes(keyword.toLowerCase())) || (data.approveStatus.toLowerCase().includes(keyword))) {
+                                                 if ((data.date.toString().includes(keyword.toString())) || (data.approveStatus.toLowerCase().includes(keyword.toLowerCase())) || (data.startTime.toString().includes(keyword.toString())) || (data.endTime.toString().includes(keyword.toString())) || (data.task.toString().includes(keyword.toString())) || (data.comments.toString().includes(keyword.toString()))) {
                                                     return data;
                                                 }
                                             }).slice(offset, offset + PER_PAGE).map((data, index) => {

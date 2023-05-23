@@ -39,91 +39,82 @@ const Holidaydashboard = () => {
   };
 
   return (
-    <div>
-      <div className="container-fluid">
-      <br></br> <p id={Styles.title}>Holiday Dashboard</p>
-     
-        <div
-          className="  card p-3 mb-5 bg-white rounded"
-          
-        >
-          <div className="col-lg-1">
-            <b>
-              <p className="mt-2 text-center">
-                <></>
-                {/* <BiFilterAlt />  */}
-                Filter by:
-              </p>
-            </b>
+    <div className="container-fluid">
+      <p className="Heading">Holiday Dashboard</p>
+      <div className="row">
+        <div className="col-lg-12">
+          <div className="  card p-3 rounded-3 border-0">
+            <div className="row">
+              <div className="col-lg-1">
+                <p>
+                  Filter by:
+                </p>
+              </div>
+              <div className="col-lg-3">
+                <input
+                  type="search"
+                  className=" form-control"
+                  placeholder="Search "
+                />
+              </div>
+            </div>
           </div>
-
-          <div className="col-lg-5">
-            {/* <h6>Pay Date</h6> */}
-            {/* <ReactDatePicker   className=" mt-2 form-control"></ReactDatePicker> */}
-            <input
-              type="search"
-              className=" mt-2 form-control"
-              placeholder="Search "
-            />
+          <br/>
+          <div className="row">
+            <div className="col-lg-8"></div>
+            <div className="col-lg-2"></div>
+            <div className="col-lg-2">
+              <Link href="/Holiday/holidayform">
+                <button
+                  className="AddButton"
+                >
+                  Add New
+                </button>
+              </Link>
+            </div>
           </div>
-        </div>
-        <div className="row mt-2">
-          <div className="col-lg-8"></div>
-          <div className="col-lg-4">
-            <Link href="/Holiday/holidayform">
-              <button
-                className="btn btn-primary btn-sm shadow-lg" style={{marginLeft:"49%"}}
-                id={Styles.addNew}
-                onClick={clearData.bind(this)}
-              >
-                add new
-              </button>
-              {/* // onClick={() => setModalOpen(!modalOpen)}>   */}
-              {/* <AiOutlinePlusCircle /> */}
-            </Link>
-          </div>
-        </div>
-        <br />
-        <div className="row">
-          <div className="col-lg-12">
-          <table className="table table-striped table-hover mt-2">
-            <thead>
-              <tr>
-                <th>Holiday</th>
-                <th>Holiday Description</th>
-                <th>Holiday Date</th>
-                <th>Attachment</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {Holiday.map((data, index) => {
-                return (
-                  <tr key={index}>
-                    <td>{data.holiday}</td>
-                    <td>{data.holidayDescription}</td>
-                    <td>{data.holidayDate}</td>
-                    <td>{data.attachment}</td>
-                    <td>
-                      <Link href={`/Holiday/edit/${data.id}`}>
-                        <button className="editDeleteBtnTable">Edit</button>
-                      </Link>
-                      &nbsp;
-                      <button
-                        className="editDeleteBtnTable"
-                        onClick={() => handleDelete(data.id)}
-                      >
-                        Delete
-                      </button>
-                    </td>
+          <br />
+          <div className="row">
+            <div className="col-lg-12">
+              <table >
+                <thead>
+                  <tr>
+                    <th>Holiday</th>
+                    <th>Holiday Description</th>
+                    <th>Holiday Date</th>
+                    <th>Attachment</th>
+                    <th>Actions</th>
                   </tr>
-                );
-              })}
-            </tbody>
-          </table>
+                </thead>
+                <tbody>
+                  {Holiday.map((data, index) => {
+                    return (
+                      <tr key={index}>
+                        <td>{data.holiday}</td>
+                        <td>{data.holidayDescription}</td>
+                        <td>{data.holidayDate}</td>
+                        <td>{data.attachment}</td>
+                        <td>
+                          <Link href={`/Holiday/edit/${data.id}`}>
+                            <button className="edit-btn">Edit</button>
+                          </Link>
+                          &nbsp;
+                          <button
+                            className="edit-btn"
+                            onClick={() => handleDelete(data.id)}
+                          >
+                            Delete
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
-        </div>
-    </div>
+      </div>
     </div>
   );
 };

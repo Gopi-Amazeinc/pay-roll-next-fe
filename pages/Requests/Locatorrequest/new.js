@@ -6,13 +6,15 @@ import Swal from "sweetalert2";
 import { useRouter } from "next/router";
 import styles from '@/../../styles/Locatorrequest.module.css'
 import { apiService } from "@/services/api.service";
-
+import { useCallback } from "react";
+import { useDropzone } from "react-dropzone";
 const Locatorrequest = () => {
     const { register, handleSubmit, reset, formState } = useForm();
     const router = useRouter();
     const { errors } = formState;
 
     const [StaffID, setUserID] = useState()
+    const [filePath, setFilePath] = useState();
 
     useEffect(() => {
         const usrID = sessionStorage.getItem("userID");
@@ -21,12 +23,12 @@ const Locatorrequest = () => {
     }, []);
 
     async function onSubmit(data) {
-        let entity ={
-            "Attachment" : ""
+        let entity = {
+            "Attachment": ""
         }
         debugger;
         try {
-            const formData = { ...data, StaffID,...entity };
+            const formData = { ...data, StaffID, ...entity };
             // console.log("form data", formData);
             await apiService.commonPostCall("Payroll/InsertLocatorTable", formData);
             Swal.fire('Data Inserted successfully')
@@ -37,6 +39,24 @@ const Locatorrequest = () => {
         }
 
     }
+    const onDrop = useCallback((acceptedFiles) => {
+        debugger;
+        console.log(acceptedFiles, "Uploaded file");
+        uploadFile(acceptedFiles);
+    }, []);
+    const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+
+    const uploadFile = async (data) => {
+        let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+        const formData = new FormData();
+        formData.append("file_upload", data[0], data[0].name);
+        let res = await apiService.commonPostCall("Payroll/ProjectAttachments",
+            formData
+        );
+        console.log(res, "File Path");
+        Swal.fire("Uploaded successfully");
+        setFilePath(res.data);
+    };
     return (
         <Layout>
             <div className="row">
@@ -74,17 +94,28 @@ const Locatorrequest = () => {
                         <div className="row">
                             <div className="col-lg-3">
                                 <label htmlFor="" className={styles.p}> Attachment</label>
-                                <input type="file" className="form-control" {...register('Attachment')} />
+                                <div style={{ border: '2px dashed blue', height: "100px" }}>
+                                    <div {...getRootProps()}>
+                                        <input {...getInputProps()} />
+                                        {isDragActive ? (
+                                            <p>Drop the files here ...</p>
+                                        ) : (
+                                            <p style={{ marginTop: "30px", textAlign: "center" }}>
+                                                Drop the files here ...
+                                            </p>
+                                        )}
+                                    </div>
+                                </div>
                             </div>
                         </div>
                         <br />
                         <div className="row">
                             <div className="col-lg-8"></div>
                             <div className="col-lg-2">
-                                <Link href="/Requests/Locatorrequest"><button className='submit-button'>CANCEL</button></Link> &nbsp;
+                                <Link href="/Requests/Locatorrequest"><button className='submit-button'>Cancel</button></Link> &nbsp;
                             </div>
                             <div className="col-lg-2" style={{ float: "right" }}>
-                                <button className='submit-button'>SAVE</button>
+                                <button className='submit-button'>Save</button>
                             </div>
                         </div>
                     </form>

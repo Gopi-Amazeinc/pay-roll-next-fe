@@ -3,14 +3,14 @@ import Link from "next/link";
 import { apiService } from "@/services/api.service";
 import Swal from 'sweetalert2';
 import Styles from '../../../../styles/mpf.module.css'
-
+import { BiFilterAlt } from "react-icons/bi";
 function Mpf() {
     const [mpfDetails, setMpfDetails] = useState([]);
     const [keyword, setKeyword] = useState("");
     const getMpfdetails = async () => {
         let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
         // This API is used to fetch the data from MPFConfogaration table
-        let res = await apiService.commonGetCall( "HR/GetMPFconfogaration");
+        let res = await apiService.commonGetCall("HR/GetMPFconfogaration");
         setMpfDetails(res.data);
     }
 
@@ -56,12 +56,13 @@ function Mpf() {
                     <div className='col-lg-12'>
                         <div className='card p-3 border-0  rounded-3'>
                             <div className='row'>
-                                <div className='col-lg-1'>
-                                    <p>Filter By</p>
+                                <div className="col-lg-1">
+                                    <p> <BiFilterAlt /> Filter By</p>
                                 </div>
+                              
 
                                 <div className='col-lg-3'>
-                                    <input type="text" className='form-control' placeholder='Search...'onChange={e => setKeyword(e.target.value)} />
+                                    <input type="text" className='form-control' placeholder='Search...' onChange={e => setKeyword(e.target.value)} />
                                 </div>
                             </div>
                         </div>
@@ -96,12 +97,12 @@ function Mpf() {
                                 <tbody>
                                     {
                                         mpfDetails.filter(data => {
-                                            if ((data.taxiableincomelowlimit.toString().includes(keyword.toString())) || (data.taxiableincomehighlimit.toString().includes(keyword.toString()))||
-                                            (data.mpF_EEvalue.toString().includes(keyword.toString()))||
-                                            (data.mpF_ERvalue.toString().includes(keyword.toString()))||
-                                            (data.mpF_Ecvalue.toString().includes(keyword.toString()))||
-                                            
-                                            (data.year.toString().includes(keyword.toString()))) {
+                                            if ((data.taxiableincomelowlimit.toString().includes(keyword.toString())) || (data.taxiableincomehighlimit.toString().includes(keyword.toString())) ||
+                                                (data.mpF_EEvalue.toString().includes(keyword.toString())) ||
+                                                (data.mpF_ERvalue.toString().includes(keyword.toString())) ||
+                                                (data.mpF_Ecvalue.toString().includes(keyword.toString())) ||
+
+                                                (data.year.toString().includes(keyword.toString()))) {
                                                 return data;
                                             }
                                         }).map((data, index) => {

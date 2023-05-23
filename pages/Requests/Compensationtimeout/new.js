@@ -79,10 +79,10 @@ const Compensationtimeoutform = () => {
                                 <div className='row'>
                                     <div className='col-lg-8'></div>
                                     <div className='col-lg-2'>
-                                        <Link href="/Requests/Compensationtimeout"><button className='submit-button'>CANCEL</button></Link>
+                                        <Link href="/Requests/Compensationtimeout"><button className='submit-button'>Cancel</button></Link>
                                     </div>
                                     <div className='col-lg-2'>
-                                        <button type='submit' className=' submit-button'>SUBMIT</button>
+                                        <button type='submit' className=' submit-button'>Submit</button>
                                     </div>
                                 </div>
                             </form>
