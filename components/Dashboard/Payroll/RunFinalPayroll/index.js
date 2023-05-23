@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
+import { apiService } from '@/services/api.service';
 const RunFinalPayroll = () => {
     const [collapseOpen, setCollapseOpen] = React.useState(false);
     const [paycode, setPayCode] = useState([]);
@@ -21,15 +22,15 @@ const RunFinalPayroll = () => {
 
     useEffect(() => {
         async function getData() {
-            let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+            // let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
             // This API is used for fetch the Payperiod data for Dropdown
-            let res = await axios.get(hostURL + "HR/GetPayPeriodSetting");
+            let res = await apiService.commonGetCall("HR/GetPayPeriodSetting");
             setPayCode(res.data);
             // This API is used for fetch the Roletype data for Dropdown
-            res = await axios.get(hostURL + "Master/GetRoleType");
+            res = await apiService.commonGetCall("Master/GetRoleType");
             setPosition(res.data);
             // This API is used for fetch the departmentMaster data for Dropdown
-            res = await axios.get(hostURL + "Master/GetDepartmentMaster");
+            res = await apiService.commonGetCall("Master/GetDepartmentMaster");
             setDepartment(res.data);
         }
         getData()
@@ -45,7 +46,7 @@ const RunFinalPayroll = () => {
                 setEndDate(rres);
                 let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
                 // This API is used to fetch the dashboard data based on StartDate,EndDate
-                const sss = await axios.get(hostURL + `Payroll/Get_Employees_For_Payroll?startdate=${startDate}&enddate=${endDate}`);
+                const sss = await apiService.commonGetCall(`Payroll/Get_Employees_For_Payroll?startdate=${startDate}&enddate=${endDate}`);
                 setDashboardData(sss.data);
             }
         } catch (error) {
@@ -78,7 +79,7 @@ const RunFinalPayroll = () => {
                 setEndDate(rres);
                 let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
                 // This API is used to fetch the dashboard data based on EmployeeID,LOPdays,StartDate,EndDate
-                const response = await axios.get(hostURL + `Payroll/Get_PreliminaryReport?EmployeeID=${employeID}&startdate=${res}&Enddate=${rres}`);
+                const response = await apiService.commonGetCall(`Payroll/Get_PreliminaryReport?EmployeeID=${employeID}&startdate=${res}&Enddate=${rres}`);
                 setRunPayrollDashboardData(response.data);
                 console.log(response.data);
                 Swal.fire('Final Payroll Ran Successfully!');
