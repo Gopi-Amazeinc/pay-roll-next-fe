@@ -433,21 +433,27 @@ const Sidebar = ({ children, applyPageName }) => {
                         </button>
                       </Link>
                     )}
-                    <Link
-                      href="/Attendance/AttendanceCorrections"
-                      className={styles.sidemenulink}
-                    >
-                      <button
-                        className={getSubStyle(43)}
-                        onClick={updateActiveMenu.bind(this, {
-                          id: 43,
-                          name: "Attendance Correction",
-                        })}
-                      >
-                        <BiCalendarExclamation style={customStyles.icons} />
-                        Attendance Correction
-                      </button>
-                    </Link>
+                    {
+                      userRole != 4 && (
+                        <>
+                          <Link
+                            href="/Attendance/AttendanceCorrections"
+                            className={styles.sidemenulink}
+                          >
+                            <button
+                              className={getSubStyle(43)}
+                              onClick={updateActiveMenu.bind(this, {
+                                id: 43,
+                                name: "Attendance Correction",
+                              })}
+                            >
+                              <BiCalendarExclamation style={customStyles.icons} />
+                              Attendance Correction
+                            </button>
+                          </Link>
+                        </>
+                      )
+                    }
                     <Link
                       href="/Attendance/ShiftDetails"
                       className={styles.sidemenulink}
@@ -468,7 +474,7 @@ const Sidebar = ({ children, applyPageName }) => {
               </>
             )
           }
-          {userRole != 4 || userRole != 1 && (
+          {userRole != 4 && userRole != 1 && userRole != 2 && (
             <>
               <hr></hr>
               <button className={styles.sidemenu} onClick={togglerequestsMenu}>
@@ -1780,40 +1786,35 @@ const Sidebar = ({ children, applyPageName }) => {
           )}
 
           <hr></hr>
-          {
-            userRole != 1 && (
-              <div>
-                <Link href="" className={styles.sidemenulink}>
-                  <button
-                    className={getStyle(501)}
-                    onClick={updateActiveMenu.bind(this, { id: 501, name: "Help" })}
-                  >
-                    <IoMdHelpCircleOutline style={customStyles.icons} />
-                    Help
-                  </button>
-                </Link>
-                <hr></hr>
-              </div>
-            )
-          }
-          {
-            userRole != 1 && (
-              <div>
-                <Link href="/SupportTickets" className={styles.sidemenulink}>
-                  <button
-                    className={getStyle(601)}
-                    onClick={updateActiveMenu.bind(this, {
-                      id: 601,
-                      name: "Support tickets",
-                    })}
-                  >
-                    <HiOutlineTicket style={customStyles.icons} />
-                    Support tickets
-                  </button>
-                </Link>
-              </div>
-            )
-          }
+
+          <div>
+            <Link href="" className={styles.sidemenulink}>
+              <button
+                className={getStyle(501)}
+                onClick={updateActiveMenu.bind(this, { id: 501, name: "Help" })}
+              >
+                <IoMdHelpCircleOutline style={customStyles.icons} />
+                Help
+              </button>
+            </Link>
+            <hr></hr>
+          </div>
+
+          <div>
+            <Link href="/SupportTickets" className={styles.sidemenulink}>
+              <button
+                className={getStyle(601)}
+                onClick={updateActiveMenu.bind(this, {
+                  id: 601,
+                  name: "Support tickets",
+                })}
+              >
+                <HiOutlineTicket style={customStyles.icons} />
+                Support tickets
+              </button>
+            </Link>
+          </div>
+
         </div>
       </div>
     </div>
