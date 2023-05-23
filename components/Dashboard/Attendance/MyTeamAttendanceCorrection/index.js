@@ -7,6 +7,9 @@ import { apiService } from "@/services/api.service";
 import Styles from "@/styles/attendancedetails.module.css";
 import { useRouter } from "next/router";
 import { DownloadTableExcel } from 'react-export-table-to-excel';
+import { Modal, ModalBody, ModalFooter } from "reactstrap";
+import { useForm } from 'react-hook-form';
+
 
 const MyTeamAttendancecorrectiondashboard = () => {
     const tableRef = useRef(null);
@@ -25,11 +28,16 @@ const MyTeamAttendancecorrectiondashboard = () => {
     const [managerPending, setManagerPendingData] = useState([]);
     const [managerApproved, setManagerApprovedData] = useState([]);
     const [managerRejected, setManagerRejectedData] = useState([]);
+    const { register, handleSubmit, reset, watch, formState: { errors } } = useForm();
 
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
     const [count, setcount] = useState("");
     const [keyword, setKeyword] = useState("");
+
+    const [modalOpen, setModalOpen] = useState(false);
+
+    const [RejectedID, setRejectedID] = useState();
 
     const togglePending = () => {
         setPending(true);
@@ -137,8 +145,30 @@ const MyTeamAttendancecorrectiondashboard = () => {
     };
 
 
+    const reject = async (data) => {
+        debugger
+        setRejectedID(data.id);
+        setModalOpen(!modalOpen)
+    }
+
+    const onReject = async () => {
+        debugger
+        // const rID = RejectedID;
+        let reason = watch("comments")
+        let entity = {
+            ID: RejectedID,
+            Comments: reason
+        }
+        const res = await apiService.commonPostCall("Payroll/RejectAttedanceCoorection", entity)
+        setModalOpen(!modalOpen)
+        getPendingManager(startDate, endDate);
+    }
+
+
+
 
     const approveAttedanceCorrection = async (data) => {
+        debugger
         Swal.fire({
             title: "Confirm To Approve?",
             text: "You won't be able to revert this!",
@@ -149,15 +179,14 @@ const MyTeamAttendancecorrectiondashboard = () => {
             confirmButtonText: "Yes, Approve it!",
         }).then(async (result) => {
             if (result.isConfirmed) {
+                let entity = {
+                    ID: data.id,
+                    UserID: data.staffID,
+                    SigninDate: data.sDate,
+                    SignoutDate: data.eDate
+                }
                 await apiService.commonPostCall(
-                    "Payroll/ApproveAttedanceCoorection?id=" +
-                    data.id +
-                    "&UserID=" +
-                    data.staffID +
-                    "&SigninDate=" +
-                    startDate +
-                    "&SignoutDate=" +
-                    endDate
+                    "Payroll/ApproveAttedanceCoorection", entity
                 );
                 Swal.fire({
                     icon: "success",
@@ -168,29 +197,31 @@ const MyTeamAttendancecorrectiondashboard = () => {
         });
     };
 
-    const deleteAttendanceCorrection = (id) => {
-        Swal.fire({
-            title: "Are You Sure To Cancel?",
-            text: "You won't be able to revert this!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, Cancel it!",
-        }).then(async (result) => {
-            if (result.isConfirmed) {
-                await apiService.commonGetCall(
-                    "Payroll/DeleteAttendanceCorrection?id=" + id
-                );
-                //  axios.get(hostURL + "Payroll/DeleteAttendanceCorrection?id=" + id);
-                Swal.fire({
-                    icon: "success",
-                    titleText: "Cancelled Successfully",
-                });
-            }
-            getPendingData();
-        });
-    };
+
+
+    // const deleteAttendanceCorrection = (id) => {
+    //     Swal.fire({
+    //         title: "Are You Sure To Cancel?",
+    //         text: "You won't be able to revert this!",
+    //         icon: "warning",
+    //         showCancelButton: true,
+    //         confirmButtonColor: "#3085d6",
+    //         cancelButtonColor: "#d33",
+    //         confirmButtonText: "Yes, Cancel it!",
+    //     }).then(async (result) => {
+    //         if (result.isConfirmed) {
+    //             await apiService.commonGetCall(
+    //                 "Payroll/DeleteAttendanceCorrection?id=" + id
+    //             );
+    //             //  axios.get(hostURL + "Payroll/DeleteAttendanceCorrection?id=" + id);
+    //             Swal.fire({
+    //                 icon: "success",
+    //                 titleText: "Cancelled Successfully",
+    //             });
+    //         }
+    //         getPendingData();
+    //     });
+    // };
 
     return (
         <div className="container">
@@ -359,15 +390,12 @@ const MyTeamAttendancecorrectiondashboard = () => {
                                                 <td>{data.endTime}</td>
                                                 <td>
                                                     <button
-                                                        onClick={approveAttedanceCorrection.bind(
-                                                            this,
-                                                            data
-                                                        )}
+                                                        onClick={() => approveAttedanceCorrection(data)}
                                                         className="edit-btn"
                                                     >
                                                         Accept
                                                     </button>&nbsp;
-                                                    <button className="edit-btn">Reject</button>
+                                                    <button onClick={() => reject(data)} className="edit-btn">Reject</button>
                                                 </td>
                                             </tr>
                                         );
@@ -377,6 +405,47 @@ const MyTeamAttendancecorrectiondashboard = () => {
                         </tbody>
                     </table>
                 )}
+                <div className='row'>
+                    <Modal isOpen={modalOpen} >
+                        <div className='modal-header'>
+                            <div className='modal-title'>
+                                <p className='Heading'>Rejecting Request</p>
+                            </div>
+                            <button
+                                aria-label="Close"
+                                type="button"
+                                onClick={() => setModalOpen(!modalOpen)}
+                            ></button>
+                        </div>
+                        <form onSubmit={handleSubmit(reject)}>
+                            <ModalBody>
+                                <div className='row'>
+                                    <div className='col-lg-12'>
+                                        <label>Reason *</label>
+                                        <textarea placeholder='Reason'{...register("comments", { required: true })} className='form-control'></textarea>
+                                        {errors.reason && (
+                                            <p className="text-danger">
+                                                Please enter Valid Reason
+                                            </p>
+                                        )}
+                                    </div>
+                                </div>
+
+                            </ModalBody>
+                            <ModalFooter>
+                                <div className='row'>
+                                    <div className='col-lg-6'>
+                                        <button onClick={() => setModalOpen(!modalOpen)} className='edit-btn'>Cancel</button>
+                                    </div>
+                                    <div className='col-lg-5'>
+                                        <button onClick={onReject} className='edit-btn'>Reject</button>
+                                    </div>
+                                </div>
+                            </ModalFooter>
+                        </form>
+                    </Modal>
+                </div>
+
 
                 {approved && roleID != "3" && (
                     <table className="table table-hover" ref={tableRef}>
