@@ -94,7 +94,7 @@ const FinalPayrollDetails = () => {
 
   // // TODO: DELETE FUNCTIONALITY SHOULD NOT HAPPEND
   // handleDelete(data.staffID, data.endDateFormated);
-  const PER_PAGE = 9;
+  const PER_PAGE = 5;
   const [currentPage, setCurrentPage] = useState(0);
   function handlePageClick({ selected: selectedPage }) {
     setCurrentPage(selectedPage);
