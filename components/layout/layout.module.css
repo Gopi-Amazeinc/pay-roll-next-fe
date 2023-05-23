@@ -1,4 +1,4 @@
-.sidemenu{
+.sidemenu {
     background-color: white;
     color: #6c757d !important;
     width: 100%;
@@ -9,7 +9,7 @@
     font-weight: 500;
 }
 
-.subsidemenu{
+.subsidemenu {
     background-color: white;
     color: #6c757d !important;
     width: 100%;
@@ -32,7 +32,7 @@
     font-weight: 500;
 }
 
-.sidesubmenu{
+.sidesubmenu {
     background-color: white;
     color: #6c757d !important;
     width: 100%;
@@ -42,39 +42,41 @@
     font-size: 15px;
     font-weight: 500;
 }
-.sidesubmenuactive{
-    background-color:white;
+
+.sidesubmenuactive {
+    background-color: white;
     color: #3a4be9 !important;
     width: 100%;
-    padding: 5% 5% 5% 15%;
+    padding: 5% 5% 5% 10%;
     border: none;
     text-align: left;
     font-size: 15px;
     font-weight: 500;
 }
 
-.sidesubofsubmenuactive{
-    background-color:white;
+.sidesubofsubmenuactive {
+    background-color: white;
     color: #3a4be9 !important;
     width: 100%;
-    padding: 3% 3% 3% 16%;
+    padding: 5% 5% 5% 20%;
     border: none;
-    text-align: right;
+    text-align: left;
     font-size: 15px;
     font-weight: 500;
 }
-.sidesubofsubmenu{
+
+.sidesubofsubmenu {
     background-color: white;
     color: #6c757d !important;
     width: 100%;
-    padding: 5% 5% 5% 16%;
+    padding: 5% 5% 5% 12%;
     border: none;
     text-align: left;
     font-size: 15px;
     font-weight: 500;
 }
 
-.sidemenulink{
+.sidemenulink {
     color: white;
     text-decoration: none;
 }

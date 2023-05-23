@@ -165,7 +165,7 @@ const Index = ({ editData }) => {
           ) : pgNo == 2 ? (
             <PositionDetails data={editData} />
           ) : pgNo == 3 ? (
-            <ContactDetails />
+            <ContactDetails data={editData}  />
           ) : pgNo == 4 ? (
             <DependentDetails />
           ) : pgNo == 5 ? (
@@ -180,7 +180,7 @@ const Index = ({ editData }) => {
             <IDDetails />
           )}
           <br></br>
-          <center style={{ display: "flex", justifyContent: "end" }}>
+          <center style={{ display: "flex", justifyContent: "end", marginRight: "1%" }}>
             {pgNo > 1 && (
               <button
                 className="btn btn-primary"

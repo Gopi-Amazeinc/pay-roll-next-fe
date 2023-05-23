@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { apiService } from "@/services/api.service";
 
 function PositionDetails({ data }) {
   const [rolelistData, setRolelistData] = useState([]);
@@ -116,8 +117,8 @@ function PositionDetails({ data }) {
         // sessionStorage.setItem("InsertStatus", true);
         Swal.fire("Saved successfully!");
       }
-    }else {
-        let Entity ={
+    } else {
+      let Entity = {
         ID: data.ID,
         EmployeeCode: data.EmployeeCode,
         BandID: data.BandID,
@@ -144,27 +145,34 @@ function PositionDetails({ data }) {
         ConfirmationDueDate: data.ConfirmationDueDate,
         ProbationStartDate: data.ProbationStartDate,
         ProbationEndDate: data.ProbationEndDate,
-        StaffID: sessionStorage.getItem("CreatedEmpID")
-        }
-        await axios.post(hostURL + "", Entity);
+        StaffID: sessionStorage.getItem("CreatedEmpID"),
+      };
+      await axios.post(hostURL + "", Entity);
     }
   }
 
   useEffect(() => {
     debugger;
-    getData();
+    makecalls();
+   
+  }, [1]);
+  function makecalls() {
     const { id } = data || {};
     if (id) {
       getByID(id);
     } else {
       clearForm();
+      getData();
     }
-  }, [1]);
- const getByID = async (id)=>{
-    debugger
-    const res = await apiService.commonGetCall("Payroll/GetPositionDetailsByID?ID="+id);
+  }
+  const getByID = async (id) => {
+    debugger;
+    await getData();
+    const res = await apiService.commonGetCall(
+      "Payroll/GetPositionDetailsByID?ID=" + id
+    );
     clearForm(res.data[0]);
-   }
+  };
 
   async function getData() {
     debugger;
@@ -209,36 +217,36 @@ function PositionDetails({ data }) {
     setworklocationlisttData(res14.data);
   }
 
-  async function clearForm(data = null){
-    let details={
-        ID: data ? data.id: "",
-        EmployeeCode: data ? data.employeeCode: "",
-        BandID: data ? data.bandID: "",
-        PositionID: data ? data.positionID: "",
-        Level: data ? data.level: "",
-        DesignationID: data ? data.designationID: "",
-        PositionLogin: data ? data.positionLogin: "",
-        Entity: data ? data.entity: "",
-        GroupID: data ? data.groupID: "",
-        DivisionID: data ? data.divisionID: "",
-        DepartmentID: data ? data.departmentID: "",
-        SectionID: data ? data.sectionID: "",
-        ManagerID: data ? data.managerID: "",
-        NextLevelManagerID: data ? data.nextLevelManagerID: "",
-        SAPVendorNo: data ? data.sAPVendorNo: "",
-        WorkArrangement: data ? data.workArrangement: "",
-        WorksiteCountryID: data ? data.worksiteCountryID: "",
-        WorksiteProvinceID: data ? data.worksiteProvinceID: "",
-        WorksiteCityID: data ? data.worksiteCityID: "",
-        WorksiteLocationID: data ? data.worksiteLocationID: "",
-        EmployementTypeID: data ? data.employementTypeID: "",
-        EmploymentStatus: data ? data.employmentStatus: "",
-        HiredDate: data ? data.hiredDate: "",
-        ConfirmationDueDate: data ? data.confirmationDueDate: "",
-        ProbationStartDate: data ? data.probationStartDate: "",
-        ProbationEndDate: data ? data.probationEndDate: "",
-        StaffID: sessionStorage.getItem("CreatedEmpID")
-    }
+  async function clearForm(data = null) {
+    let details = {
+      ID: data ? data.id : "",
+      EmployeeCode: data ? data.employeeCode : "",
+      BandID: data ? data.bandID : "",
+      PositionID: data ? data.positionID : "",
+      Level: data ? data.level : "",
+      DesignationID: data ? data.designationID : "",
+      PositionLogin: data ? data.positionLogin : "",
+      Entity: data ? data.entity : "",
+      GroupID: data ? data.groupID : "",
+      DivisionID: data ? data.divisionID : "",
+      DepartmentID: data ? data.departmentID : "",
+      SectionID: data ? data.sectionID : "",
+      ManagerID: data ? data.managerID : "",
+      NextLevelManagerID: data ? data.nextLevelManagerID : "",
+      SAPVendorNo: data ? data.sAPVendorNo : "",
+      WorkArrangement: data ? data.workArrangement : "",
+      WorksiteCountryID: data ? data.worksiteCountryID : "",
+      WorksiteProvinceID: data ? data.worksiteProvinceID : "",
+      WorksiteCityID: data ? data.worksiteCityID : "",
+      WorksiteLocationID: data ? data.worksiteLocationID : "",
+      EmployementTypeID: data ? data.employementTypeID : "",
+      EmploymentStatus: data ? data.employmentStatus : "",
+      HiredDate: data ? data.hiredDate : "",
+      ConfirmationDueDate: data ? data.confirmationDueDate : "",
+      ProbationStartDate: data ? data.probationStartDate : "",
+      ProbationEndDate: data ? data.probationEndDate : "",
+      StaffID: sessionStorage.getItem("CreatedEmpID"),
+    };
     reset(details);
     setActionType(data ? "update" : "insert");
   }
@@ -1009,7 +1017,12 @@ function PositionDetails({ data }) {
           <br></br>
 
           <div className="d-flex justify-content-center w-100 mt-2 mb-2 pr-2">
-            <button className="staffSubmitBtn">Submit</button>
+            {actionType == "insert" && (
+              <button className="staffSubmitBtn">Submit</button>
+            )}
+            {actionType == "update" && (
+              <button className="staffSubmitBtn">Update</button>
+            )}
           </div>
         </div>
       </form>

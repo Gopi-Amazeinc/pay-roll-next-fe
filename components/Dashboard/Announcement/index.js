@@ -1,9 +1,10 @@
 import React from 'react';
 import { useState, useEffect } from "react";
 import { apiService } from "@/services/api.service";
+import Link from 'next/link';
 
 const AnnoucementDash = () => {
-  const [upcomming, setupcomming] = useState(false);
+  const [upcomming, setupcomming] = useState(true);
   const [completed, setcompleted] = useState(false);
 
   const [upcommingdashboard, setupcommingdashboard] = useState([]);
@@ -71,19 +72,29 @@ const AnnoucementDash = () => {
 
           <br />
 
-        <div className="row">
-          <div className="col-lg-1">
-            <div className="btn-group">
-              <button onClick={toggleUpcomming} className={`toggleButton ${upcomming ? "focus" : ""}`}>
-                UPCOMING
-              </button>
-              <button onClick={toggleCompleted} className={`toggleButton ${completed ? "focus" : ""}`}>
-                COMPLETED
-              </button>
+          <div className="row">
+            <div className="col-lg-1">
+              <div className="btn-group">
+                <button onClick={toggleUpcomming} className={`toggleButton ${upcomming ? "focus" : ""}`}>
+                  UPCOMING
+                </button>
+                <button onClick={toggleCompleted} className={`toggleButton ${completed ? "focus" : ""}`}>
+                  COMPLETED
+                </button>
+              </div>
+            </div>
+            <div className='col-lg-9'></div>
+            <div className="col-lg-2">
+              <Link href="/Announcement/announcementform">
+                <button
+                  className="AddButton"
+                >
+                  Add New
+                </button>
+              </Link>
             </div>
           </div>
-        </div>
-        <br></br>
+          <br></br>
 
           <br />
           <div className='row'>
