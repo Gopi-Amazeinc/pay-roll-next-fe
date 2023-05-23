@@ -77,14 +77,6 @@ const Index = () => {
 
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
-    const getStartDate = (selectedDate) => {
-        setStartDate(selectedDate);
-        setEndDate("");
-    };
-    const getEndDate = (selectedDate) => {
-        setEndDate(selectedDate);
-        // return getDateBySelectedDate(selectedDate);
-    };
     const getCurrentMonthDates = () => {
         let newDate = new Date();
         let firstDayOfMonth = new Date(newDate.getFullYear(), newDate.getMonth());
@@ -108,6 +100,30 @@ const Index = () => {
         const month = (datetoformat.getMonth() + 1).toString().padStart(2, "0");
         const year = datetoformat.getFullYear().toString();
         return `${year}-${month}-${day}`;
+    };
+    const getStartDate = (selectedDate) => {
+        setStartDate(selectedDate);
+        setEndDate("");
+        // return dateValidation(selectedDate)
+    };
+
+    const getEndDate = (selectedDate) => {
+        setEndDate(selectedDate);
+        return dateValidation(selectedDate);
+    };
+    const dateValidation = (selectedDate) => {
+        if (new Date(startDate) > new Date(selectedDate)) {
+            Swal.fire("End Date should be greater than Start Date");
+        } else {
+            setEndDate(selectedDate);
+            return getManagerPendingDetails(selectedDate);
+        }
+    };
+
+
+    const getDataBySelectedDate = (endDatesss) => {
+        debugger;
+        return getPendingDetails(startDate, endDatesss);
     };
     const getPendingDetails = async () => {
         const res = await apiService.commonGetCall("Payroll/GetPendingStaffOverTimeDetails")
@@ -274,11 +290,11 @@ const Index = () => {
                 <div className='row'>
                     <div className='col-lg-4'>
                         <label style={{ fontWeight: "bold" }}>Start Date:</label>
-                        <input type="date" className='form-control' value={startDate} onChange={(e) => getStartDate(e.target.value)} />
+                        <input type="date" className='form-control' onChange={(e) => getStartDate(e.target.value)} />
                     </div>
                     <div className='col-lg-4'>
                         <label style={{ fontWeight: "bold" }}>End Date:</label>
-                        <input type="date" className='form-control' value={endDate || ""} onChange={(e) => getEndDate(e.target.value)} />
+                        <input type="date" className='form-control' onChange={(e) => getEndDate(e.target.value)} />
                     </div>
                     <div className='col-lg-1'></div>
                     <div className='col-lg-3 mt-3'>
@@ -327,7 +343,7 @@ const Index = () => {
                                                     <td>{data.startTime}</td>
                                                     <td>{data.endTime}</td>
                                                     <td>
-                                                        <button className='edit-btn' onClick={openEditModal} >DETAILS</button>
+                                                        <button className='edit-btn' onClick={openEditModal} >Details</button>
                                                     </td>
                                                     <td>{data.comments}</td>
                                                     <td>{data.status}</td>
@@ -436,12 +452,12 @@ const Index = () => {
                                                     <td>{data.startTime}</td>
                                                     <td>{data.endTime}</td>
                                                     <td>
-                                                        <button className='edit-btn' onClick={openEditModal}>DETAILS</button>
+                                                        <button className='edit-btn' onClick={openEditModal}>Details</button>
                                                     </td>
                                                     <td>{data.comments}</td>
                                                     <td>{data.status}</td>
                                                     <td>
-                                                        <button onClick={Delete.bind(this, data.id)} className='edit-btn'>CANCEL</button>
+                                                        <button onClick={Delete.bind(this, data.id)} className='edit-btn'>Cancel</button>
                                                     </td>
                                                 </tr>
                                             )
@@ -573,7 +589,7 @@ const Index = () => {
                             <div className='row'>
                                 <div className='col-lg-8'></div>
                                 <div className='col-lg-2'>
-                                    <button type='submit' className='edit-btn mt-5' onClick={() => ModalIsOpen(false)}>CANCEL</button>
+                                    <button type='submit' className='edit-btn mt-5' onClick={() => ModalIsOpen(false)}>Cancel</button>
                                 </div>
                                 <div className='col-lg-2'>
                                     <button onClick={reject} type='submit' className='edit-btn mt-5'>REJECT </button>

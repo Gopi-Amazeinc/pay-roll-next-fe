@@ -21,6 +21,8 @@ const MyTeamAttendence = () => {
   const [StaffData, setStaffData] = useState([]);
   const [selctedStaffdata, setselctedStaffdata] = useState();
 
+  const [keyword, setKeyword] = useState("");
+
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
 
@@ -168,7 +170,7 @@ const MyTeamAttendence = () => {
               <input
                 type="date"
                 className="form-control"
-                value={startDate}
+                // value={startDate}
                 onChange={(e) => getStartDate(e.target.value)}
               />
             </div>
@@ -178,7 +180,7 @@ const MyTeamAttendence = () => {
               <input
                 type="date"
                 className="form-control"
-                value={endDate || ""}
+                // value={endDate || ""}
                 onChange={(e) => getEndDate(e.target.value)}
               />
             </div>
@@ -231,11 +233,12 @@ const MyTeamAttendence = () => {
                 type="text"
                 className="form-control"
                 placeholder="Search"
+                onChange={(e) => setKeyword(e.target.value)}
               />
             </div>
 
             <div className="col-lg-2">
-              <button className="button">Upload</button>
+              {/* <button className="button">Upload</button> */}
               <br />
               <p></p>
               <DownloadTableExcel
@@ -275,33 +278,40 @@ const MyTeamAttendence = () => {
           <tbody>
             {Array.isArray(MyTeamAttendence) && MyTeamAttendence.length > 0 && (
               <>
-                {MyTeamAttendence.slice(offset, offset + PER_PAGE).map(
-                  (data, index) => {
-                    return (
+                {MyTeamAttendence
+                  // {MyTeamAttendence
+                  //   .filter(data => {
+                  //     if ((data.startTime.toLowerCase().includes(keyword)) || (data.date.toLowerCase().includes(keyword)) || (data.endTime.toLowerCase().includes(keyword))) {
+                  //       return data;
+                  //     }
+                  //   })
+                  .slice(offset, offset + PER_PAGE).map(
+                    (data, index) => {
+                      return (
 
-                      <tr value={data.id} key={index}>
-                        <td>{data.date}</td>
-                        <td>{data.staffname1}</td>
-                        <td>{data.position}</td>
+                        <tr value={data.id} key={index}>
+                          <td>{data.date}</td>
+                          <td>{data.staffname1}</td>
+                          <td>{data.position}</td>
 
-                        <td>{data.dayType}</td>
-                        <td>{data.etime}</td>
-                        <td>{data.expectedOut}</td>
+                          <td>{data.dayType}</td>
+                          <td>{data.etime}</td>
+                          <td>{data.expectedOut}</td>
 
-                        <td>{data.stime}</td>
-                        <td>{data.etime}</td>
-                        <td>{data.hr}</td>
+                          <td>{data.stime}</td>
+                          <td>{data.etime}</td>
+                          <td>{data.hr}</td>
 
-                        <td>{data.ot}</td>
-                        <td>{data.latepunchin}</td>
+                          <td>{data.ot}</td>
+                          <td>{data.latepunchin}</td>
 
-                        {/* <td>
+                          {/* <td>
                               <button className='edit-btn'>Cancel</button>
                             </td> */}
-                      </tr>
-                    );
-                  }
-                )}
+                        </tr>
+                      );
+                    }
+                  )}
               </>
             )}
           </tbody>

@@ -9,11 +9,14 @@ import Link from "next/link.js";
 const Companydashboard = () => {
     const [Company, setCompany] = useState([]);
 
+    const [countvalue, setcountvalue] = useState();
+
     const getCompanyAddressDetails = async () => {
         let res = await apiService.commonGetCall(
             "Payroll/GetCompanyAddressDetails"
         );
         setCompany(res.data);
+        setcountvalue(res.data.length)
     };
 
 
@@ -24,16 +27,18 @@ const Companydashboard = () => {
             "Payroll/GetCompany_TaxComputation"
         );
         setTax(res.data);
+        setcountvalue(res.data.length)
     };
 
 
     const [policy, setPolicy] = useState([]);
 
-    const getWorkPolicy= async () => {
+    const getWorkPolicy = async () => {
         let res = await apiService.commonGetCall(
             "Payroll/GetCompany_WorkPolicy"
         );
         setPolicy(res.data);
+        setcountvalue(res.data.length)
     };
 
 
@@ -44,12 +49,13 @@ const Companydashboard = () => {
             "Payroll/GetCompany_PayrollComputationnew"
         );
         setPayRoll(res.data);
+        setcountvalue(res.data.length)
     };
 
 
     const getData = (data) => {
         sessionStorage.setItem("id", data.id);
-      }
+    }
 
 
 
@@ -75,9 +81,9 @@ const Companydashboard = () => {
 
 
 
-    useEffect(()=>{
+    useEffect(() => {
         getWorkPolicy();
-    },[1]);
+    }, [1]);
 
 
     const deletePolicy = async (id) => {
@@ -94,9 +100,9 @@ const Companydashboard = () => {
         }
     };
 
-    useEffect(()=>{
+    useEffect(() => {
         getPayrollComputation();
-    },[1]);
+    }, [1]);
 
 
     const deletePayroll = async (id) => {
@@ -114,9 +120,9 @@ const Companydashboard = () => {
     };
 
 
-    useEffect(()=>{
+    useEffect(() => {
         getTax();
-    },[1]);
+    }, [1]);
 
 
 
@@ -147,11 +153,14 @@ const Companydashboard = () => {
                         </p>
                     </div>
                     <div className="col-lg-4"></div>
-                    <div className="col-lg-4" >
-                        <Link href="/Company/companyform">
-                            <button className={company.button} style={{ marginLeft: "100px" }}>ADD NEW</button>
-                        </Link>
-                    </div>
+                    {countvalue <= 0 ? (
+                        <div className="col-lg-4" >
+                            <Link href="/Company/companyform">
+                                <button className={company.button} style={{ marginLeft: "100px" }}>ADD NEW</button>
+                            </Link>
+                        </div>) : (null)
+                    }
+
                 </div>
                 {/* <div className="row"></div> */}
             </div>
@@ -205,100 +214,109 @@ const Companydashboard = () => {
 
 
 
-            <div className="row">
-                <div className="col-lg-12">
-                <p className="text-primary fs-6 mt-2 fw-bold">
-                            Company  <span></span>WorkPolicy
-                        </p>
-                <table className="table table-striped table-hover mt-4">
-                        <thead className="bg-info text-white ">
-                            <tr>
-                                <th>Work_Days_Per_Year</th>
-                                <th>Work_Months_Per_Year</th>
-                                <th>DailyRate</th>
-                                <th style={{ paddingLeft: "47px" }}>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {policy.map((data, index) => {
-                                return (
-                                    <tr key={index}>
-                                        <td>{data.work_Days_Per_Year}</td>
-                                        <td>{data.work_Months_Per_Year}</td>
-                                        <td>{data.dailyRate}</td>
-                                        <td>
-                                            <Link href={`/Company/${data.id}`}>
-                                                <button className="edit-btn">Edit</button>
-                                            </Link>
-                                            &nbsp;
-                                            <button
-                                                className="edit-btn"
-                                                onClick={() => deletePolicy(data.id)}
-                                            >
-                                                Delete
-                                            </button>
-                                        </td>
+            {
+                countvalue <= 0 ? (
+                    <div className="row">
+                        <div className="col-lg-12">
+                            <p className="text-primary fs-6 mt-2 fw-bold">
+                                Company  <span></span>WorkPolicy
+                            </p>
+                            <table className="table table-striped table-hover mt-4">
+                                <thead className="bg-info text-white ">
+                                    <tr>
+                                        <th>Work_Days_Per_Year</th>
+                                        <th>Work_Months_Per_Year</th>
+                                        <th>DailyRate</th>
+                                        <th style={{ paddingLeft: "47px" }}>Actions</th>
                                     </tr>
-                                );
-                            })}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+                                </thead>
+                                <tbody>
+                                    {policy.map((data, index) => {
+                                        return (
+                                            <tr key={index}>
+                                                <td>{data.work_Days_Per_Year}</td>
+                                                <td>{data.work_Months_Per_Year}</td>
+                                                <td>{data.dailyRate}</td>
+                                                <td>
+                                                    <Link href={`/Company/${data.id}`}>
+                                                        <button className="edit-btn">Edit</button>
+                                                    </Link>
+                                                    &nbsp;
+                                                    <button
+                                                        className="edit-btn"
+                                                        onClick={() => deletePolicy(data.id)}
+                                                    >
+                                                        Delete
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        );
+                                    })}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>) : (null)
+            }
 
 
 
 
-            <div className="row">
-                <div className="col-lg-12">
-                <p className="text-primary fs-6 mt-2 fw-bold">
-                Company  <span></span>PayrollComputation
-                        </p>
-                <table className="table table-striped table-hover mt-4">
-                        <thead className="bg-info text-white ">
-                            <tr>
-                                <th>Periods_Per_Month</th>
-                                <th>Work_Months_Per_Year</th>
-                                
-                                <th style={{ paddingLeft: "47px" }}>Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {payRoll.map((data, index) => {
-                                return (
-                                    <tr key={index}>
-                                        <td>{data.periods_Per_Month}</td>
-                                        <td>{12}</td>
-                                        
-                                        <td>
-                                            <Link href={`/Company/${data.id}`}>
-                                                <button  className="edit-btn" onClick={getData.bind(this, data)}>Edit</button>
-                                            </Link>
-                                            &nbsp;
-                                            <button
-                                                className="edit-btn"
-                                                onClick={() => deletePayroll(data.id)}
-                                            >
-                                                Delete
-                                            </button>
-                                        </td>
+            {
+                countvalue <= 0 ? (
+                    <div className="row">
+                        <div className="col-lg-12">
+                            <p className="text-primary fs-6 mt-2 fw-bold">
+                                Company  <span></span>PayrollComputation
+                            </p>
+                            <table className="table table-striped table-hover mt-4">
+                                <thead className="bg-info text-white ">
+                                    <tr>
+                                        <th>Periods_Per_Month</th>
+                                        <th>Work_Months_Per_Year</th>
+
+                                        <th style={{ paddingLeft: "47px" }}>Actions</th>
                                     </tr>
-                                );
-                            })}
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+                                </thead>
+                                <tbody>
+                                    {payRoll.map((data, index) => {
+                                        return (
+                                            <tr key={index}>
+                                                <td>{data.periods_Per_Month}</td>
+                                                <td>{12}</td>
+
+                                                <td>
+                                                    <Link href={`/Company/${data.id}`}>
+                                                        <button className="edit-btn" onClick={getData.bind(this, data)}>Edit</button>
+                                                    </Link>
+                                                    &nbsp;
+                                                    <button
+                                                        className="edit-btn"
+                                                        onClick={() => deletePayroll(data.id)}
+                                                    >
+                                                        Delete
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        );
+                                    })}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>) : (null)
+
+            }
 
 
 
 
-            <div className="row">
+            {
+                countvalue <=0 ?(
+             <div className="row">
                 <div className="col-lg-12">
-                <p className="text-primary fs-6 mt-2 fw-bold">
-                Company  <span></span>TaxComputation
-                        </p>
-                <table className="table table-striped table-hover mt-4">
+                    <p className="text-primary fs-6 mt-2 fw-bold">
+                        Company  <span></span>TaxComputation
+                    </p>
+                    <table className="table table-striped table-hover mt-4">
                         <thead className="bg-info text-white ">
                             <tr>
                                 <th>Non_Tax_Essential_Sealing</th>
@@ -332,11 +350,13 @@ const Companydashboard = () => {
                         </tbody>
                     </table>
                 </div>
-            </div>
+            </div>):(null)
+}
 
 
 
         </div>
+                        
     );
 };
 

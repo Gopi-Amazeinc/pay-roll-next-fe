@@ -215,11 +215,11 @@ const Compensationtimeout = () => {
                             </div>
 
                             <div className='col-lg-3'>
-                                <input type="text" className='form-control' placeholder='Search for Date or Status...' onChange={e => setKeyword(e.target.value)} />
+                                <input type="search" className='form-control' placeholder='Search here...' onChange={e => setKeyword(e.target.value)} />
                             </div>
                             {
                                 sessionStorage.getItem("roleID") != "3" && (
-                                    <div className='col-lg-4' style={{ whiteSpace: "nowrap" }}>
+                                    <div className='col-lg-3' style={{ whiteSpace: "nowrap" }}>
                                         <Link href="/Requests/Compensationtimeout/new"><button className='EditDelteBTN'>Add Compensation Time Out</button></Link>
                                     </div>
                                 )
@@ -257,7 +257,7 @@ const Compensationtimeout = () => {
                             <div className='row'>
                                 <div className='col-lg-8'></div>
                                 <div className='col-lg-2 mb-3'>
-                                    <button type='submit' className=' edit-btn mt-5'>CANCEL</button>
+                                    <button type='submit' className=' edit-btn mt-5'>Cancel</button>
                                 </div>
                                 <div className='col-lg-2 mb-3'>
                                     <button onClick={reject} type='submit' className='edit-btn mt-5'>Reject </button>
@@ -284,7 +284,7 @@ const Compensationtimeout = () => {
                                         <tbody>
                                             {
                                                 pendingDashboard.filter(data => {
-                                                    if ((data.date.toString().includes(keyword.toLowerCase())) || (data.status.toLowerCase().includes(keyword))) {
+                                                    if ((data.date.toString().includes(keyword.toLowerCase())) || (data.status.toLowerCase().includes(keyword)) || (data.actuval_StartTime.toString().includes(keyword.toLowerCase())) || (data.actuval_EndTime.toString().includes(keyword.toLowerCase())) || (data.comments.toString().includes(keyword.toLowerCase()))) {
                                                         return data;
                                                     }
                                                 }).slice(offset, offset + PER_PAGE).map((data) => {
@@ -296,7 +296,7 @@ const Compensationtimeout = () => {
                                                             <td>{data.comments}</td>
                                                             <td>{data.status}</td>
                                                             <td>
-                                                                <button onClick={Delete.bind(this, data.id)} className='edit-btn'>CANCEL</button>
+                                                                <button onClick={Delete.bind(this, data.id)} className='edit-btn'>Cancel</button>
                                                             </td>
                                                         </tr>
                                                     )

@@ -10,6 +10,8 @@ import { useRouter } from "next/router";
 import { BsArrowLeftSquare } from "react-icons/bs";
 import DropZone from "@/pages/SharedComponent/dropzone";
 import { useForm } from "react-hook-form";
+import { useDropzone } from "react-dropzone";
+import { useCallback } from "react";
 
 const ApplyLeave = () => {
   const { register, handleSubmit, reset, formState } = useForm();
@@ -17,6 +19,7 @@ const ApplyLeave = () => {
   const [leavetype, setLeaveType] = useState([]);
   const [userID, setUserId] = useState();
   const router = useRouter();
+  const [filePath, setFilePath] = useState();
   const getDropdowndata = async () => {
     const res = await apiService.commonGetCall("Master/GetLeaveType");
     setLeaveType(res.data);
@@ -41,6 +44,25 @@ const ApplyLeave = () => {
     console.log(data);
     router.push("/Requests/Leaverequest");
   }
+  const onDrop = useCallback((acceptedFiles) => {
+    debugger;
+    console.log(acceptedFiles, "Uploaded file");
+    uploadFile(acceptedFiles);
+  }, []);
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+
+  const uploadFile = async (data) => {
+    let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+    const formData = new FormData();
+    formData.append("file_upload", data[0], data[0].name);
+    let res = await axios.post(
+      hostURL + "Payroll/ProjectAttachments",
+      formData
+    );
+    console.log(res, "File Path");
+    Swal.fire("Uploaded successfully");
+    setFilePath(res.data);
+  };
   return (
     <Layout>
       <div className="container-fluid">
@@ -116,11 +138,18 @@ const ApplyLeave = () => {
                   <div className="col-lg-3">
                     <label style={{ fontWeight: "bold" }}>Attachment</label>
                     {/* <DropZone {...register("MedicalUrl", { required: true })} /> */}
-                    <input
-                      type="file"
-                      className="form-control"
-                      {...register("MedicalUrl")}
-                    />
+                    <div style={{ border: '2px dashed blue', height: "100px"}}>
+                      <div {...getRootProps()}>
+                        <input {...getInputProps()} />
+                        {isDragActive ? (
+                          <p>Drop the files here ...</p>
+                        ) : (
+                          <p style={{marginTop:"30px",textAlign:"center"}}>
+                            Drop the files here ..
+                          </p>
+                        )}
+                      </div>
+                    </div>
                     {/* {errors.MedicalUrl && <p className="error-message" style={{ color: "red" }}>{errors.MedicalUrl.message}</p>} */}
                   </div>
                   <div className="col-lg-2"></div>
@@ -130,13 +159,13 @@ const ApplyLeave = () => {
                   <div className="col-lg-2">
                     <Link href="/Requests/Leaverequest">
                       <button className="submit-button">
-                        CANCEL
+                        Cancel
                       </button>
                     </Link>
                   </div>
                   <div className="col-lg-2" style={{ float: "right" }}>
                     <button type="submit" className="submit-button">
-                      SAVE
+                      Save
                     </button>
                   </div>
                 </div>

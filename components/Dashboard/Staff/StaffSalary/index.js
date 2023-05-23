@@ -1,12 +1,13 @@
 import axios from 'axios'
 import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
-
+import { useRouter } from "next/router";
 import Modal from 'react-modal';
 import Swal from 'sweetalert2';
 import { AiOutlineClose } from 'react-icons/ai'
 
 function StaffSalaryComponent() {
+  const router = useRouter();
   let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
   const [items, setItems] = useState([]);
   const [ModalIsOpen, setModalIsOpen] = useState(false);
@@ -53,7 +54,7 @@ function StaffSalaryComponent() {
             icon: "success",
             text: "Uploaded Successfully"
           })
-          location.href = "/Payroll/employmentjobhistory"
+          router.push("/Payroll/employmentjobhistory");
         }
       }
 

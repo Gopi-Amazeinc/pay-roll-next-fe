@@ -8,6 +8,9 @@ import Styles from "@/styles/attendancedetails.module.css";
 import { useRouter } from "next/router";
 import { DownloadTableExcel } from 'react-export-table-to-excel';
 import { IoIosAddCircleOutline } from "react-icons/io";
+import ReactPaginate from "react-paginate";
+
+
 const Attendancecorrectiondashboard = () => {
   const tableRef = useRef(null);
 
@@ -62,6 +65,17 @@ const Attendancecorrectiondashboard = () => {
 
     setPending(true);
   }, []);
+
+
+  
+  const PER_PAGE = 10;
+  const [currentPage, setCurrentPage] = useState(0);
+  function handlePageClick({ selected: selectedPage }) {
+    setCurrentPage(selectedPage)
+  }
+  const offset = currentPage * PER_PAGE;
+  const pageCount = Math.ceil(pendingDashboardData.length / PER_PAGE);
+
 
   useEffect(() => {
     if (userID) {
@@ -362,6 +376,27 @@ const Attendancecorrectiondashboard = () => {
                     )}
                 </tbody>
               </table>
+              <div className="mb-4 mt-4 text-center">
+                    <ReactPaginate
+                        previousLabel={"Previous"}
+                        nextLabel={"Next"}
+                        breakLabel={"..."}
+                        pageCount={pageCount}
+                        marginPagesDisplayed={2}
+                        pageRangeDisplayed={3}
+                        onPageChange={handlePageClick}
+                        containerClassName={"pagination  justify-content-center"}
+                        pageClassName={"page-item "}
+                        pageLinkClassName={"page-link"}
+                        previousClassName={"page-item"}
+                        previousLinkClassName={"page-link"}
+                        nextClassName={"page-item"}
+                        nextLinkClassName={"page-link"}
+                        breakClassName={"page-item"}
+                        breakLinkClassName={"page-link"}
+                        activeClassName={"active primary"}
+                    />
+                </div>
             </>
           )}
 

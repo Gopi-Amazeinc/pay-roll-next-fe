@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 import { apiService } from "@/services/api.service";
 import { useRouter } from "next/router";
 
-function EmployeeProfile() {
+function EmployeeProfile({ editData }) {
   const router = useRouter();
   const [CountrylistData, setCountrylistData] = useState([]);
   const [TitleMasterData, setTitleMaster] = useState([]);
@@ -31,7 +31,19 @@ function EmployeeProfile() {
   useEffect(() => {
     debugger;
     getData();
+    const { id } = editData || {};
+    if (id) {
+     getByID(id);
+    } else {
+      clearForm();
+    }
   }, [1]);
+
+  const getByID = async (id)=>{
+    debugger
+    const res = await apiService.commonGetCall("HR/GetMyDetailsByStaffID?id="+id);
+    clearForm(res.data[0]);
+   }
 
   const getData = async () => {
     let GetTitleMaster = await apiService.commonGetCall("Master/GetTitleMaster");
@@ -105,42 +117,73 @@ function EmployeeProfile() {
       };
       let res = await apiService.commonPostCall( "Payroll/InsertStaff", Enity);
       if (res.data && res.status == 200) {
+        sessionStorage.setItem("CreatedEmpID", res.data );
         Swal.fire("Added successfully!!");
       }
 
       console.log(res);
     }
-    // else {
-    //     let Enity = {
-    //         "ID": data.ID,
-    //         'Title': data.Title,
-    //         'FirstName': data.FirstName,
-    //         'MiddleName': data.MiddleName,
-    //         'LastName': data.LastName,
-    //         'NickName': data.NickName,
-    //         'DateOfBirth': data.DateOfBirth,
-    //         'PlaceOfBirth': data.PlaceOfBirth,
-    //         'CountryOfBirthID': data.CountryOfBirthID,
-    //         'GenderID': data.GenderID,
-    //         'MaritalStatusID': data.MaritalStatusID,
-    //         'PersonalEmail': data.PersonalEmail,
-    //         'MothersName': data.MothersName,
-    //         'FathersName': data.FathersName,
-    //         'ReligionID': data.ReligionID,
-    //         'CitizenshipID': data.CitizenshipID,
-    //         'NationalityID': data.NationalityID,
-    //         'LanguageSpokenID': data.LanguageSpokenID,
+    else {
+        let Enity = {
+            "ID": data.ID,
+            'Title': data.Title,
+            'FirstName': data.FirstName,
+            'MiddleName': data.MiddleName,
+            'LastName': data.LastName,
+            'NickName': data.NickName,
+            'DateOfBirth': data.DateOfBirth,
+            'PlaceOfBirth': data.PlaceOfBirth,
+            'CountryOfBirthID': data.CountryOfBirthID,
+            'GenderID': data.GenderID,
+            'MaritalStatusID': data.MaritalStatusID,
+            'PersonalEmail': data.PersonalEmail,
+            'MothersName': data.MothersName,
+            'FathersName': data.FathersName,
+            'ReligionID': data.ReligionID,
+            'CitizenshipID': data.CitizenshipID,
+            'NationalityID': data.NationalityID,
+            'LanguageSpokenID': data.LanguageSpokenID,
 
-    //         'BloodTypeID': data.BloodTypeID,
-    //         'IsPWD': data.IsPWD,
+            'BloodTypeID': data.BloodTypeID,
+            'IsPWD': data.IsPWD,
 
-    //         'OriginalBMS': data.OriginalBMS,
-    //         'EffectivityDateOfOriginalBMS': data.EffectivityDateOfOriginalBMS,
-    //         'PreviousBMS': data.PreviousBMS,
-    //         'EffectivityOfPreviousBMS': data.EffectivityOfPreviousBMS
-    //     }
-    //     await axios.post( "Master/UpdateBuildingStaff", Enity);
-    // }
+            'OriginalBMS': data.OriginalBMS,
+            'EffectivityDateOfOriginalBMS': data.EffectivityDateOfOriginalBMS,
+            'PreviousBMS': data.PreviousBMS,
+            'EffectivityOfPreviousBMS': data.EffectivityOfPreviousBMS
+        }
+        await axios.post( "Master/UpdateBuildingStaff", Enity);
+    }
+  }
+
+  async function clearForm(staffData = null){
+    let details ={
+            "ID":staffData ? staffData.id: "",
+            'Title': staffData ? staffData.title: "",
+            'FirstName': staffData ? staffData.title: "",
+            'MiddleName': staffData ? staffData.title: "",
+            'LastName': staffData ? staffData.title: "",
+            'NickName': staffData ? staffData.title: "",
+            'DateOfBirth': staffData ? staffData.title: "",
+            'PlaceOfBirth': staffData ? staffData.title: "",
+            'CountryOfBirthID': staffData ? staffData.title: "",
+            'GenderID': staffData ? staffData.title: "",
+            'MaritalStatusID': staffData ? staffData.title: "",
+            'PersonalEmail': staffData ? staffData.title: "",
+            'MothersName': staffData ? staffData.title: "",
+            'FathersName': staffData ? staffData.title: "",
+            'ReligionID': staffData ? staffData.title: "",
+            'CitizenshipID': staffData ? staffData.title: "",
+            'NationalityID': staffData ? staffData.title: "",
+            'LanguageSpokenID': staffData ? staffData.title: "",
+            'BloodTypeID': staffData ? staffData.title: "",
+            'IsPWD': staffData ? staffData.title: "",
+
+            'OriginalBMS': staffData ? staffData.title: "",
+            'EffectivityDateOfOriginalBMS': staffData ? staffData.title: "",
+            'PreviousBMS': staffData ? staffData.title: "",
+            'EffectivityOfPreviousBMS': staffData ? staffData.title: "",
+    }
   }
 
   const customStyles = {
@@ -169,7 +212,7 @@ function EmployeeProfile() {
     <div>
       <div className="container">
         <form onSubmit={handleSubmit(onSubmit)}>
-          <div className="card p-3 mt-4 ">
+          <div className="card p-3">
             <div className="row">
               <h6>My Information</h6>
               <hr></hr>
@@ -420,7 +463,7 @@ function EmployeeProfile() {
                   )}
                 </div>
               </div>
-              <div className="col-lg-3"><h5>dropzone goes here</h5></div>
+              {/* <div className="col-lg-3"><h5>dropzone goes here</h5></div> */}
               <div className="col-lg-3"></div>
               <div className="col-lg-3"></div>
             </div>
@@ -564,7 +607,7 @@ function EmployeeProfile() {
                       name="IsPWD"
                       {...register("IsPWD", { required: true })}
                     />
-                    Yes
+                    Yes &nbsp;
                     <input
                       type="radio"
                       value="false"
