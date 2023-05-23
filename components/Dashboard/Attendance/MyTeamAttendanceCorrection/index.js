@@ -7,6 +7,9 @@ import { apiService } from "@/services/api.service";
 import Styles from "@/styles/attendancedetails.module.css";
 import { useRouter } from "next/router";
 import { DownloadTableExcel } from 'react-export-table-to-excel';
+import { Modal, ModalBody, ModalFooter } from "reactstrap";
+import { useForm } from 'react-hook-form';
+
 
 const MyTeamAttendancecorrectiondashboard = () => {
     const tableRef = useRef(null);
@@ -25,11 +28,20 @@ const MyTeamAttendancecorrectiondashboard = () => {
     const [managerPending, setManagerPendingData] = useState([]);
     const [managerApproved, setManagerApprovedData] = useState([]);
     const [managerRejected, setManagerRejectedData] = useState([]);
+    const { register, handleSubmit, reset, watch, formState: { errors } } = useForm();
 
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
     const [count, setcount] = useState("");
     const [keyword, setKeyword] = useState("");
+
+    const [pendingcount, setpendingcount] = useState();
+    const [rejectcount, setrejectcount] = useState();
+    const [approvedcount, setapprovedcount] = useState();
+
+    const [modalOpen, setModalOpen] = useState(false);
+
+    const [RejectedID, setRejectedID] = useState();
 
     const togglePending = () => {
         setPending(true);
@@ -108,6 +120,7 @@ const MyTeamAttendancecorrectiondashboard = () => {
         );
         // const res = await axios.get( hostURL + "Payroll/GetPendingAttendanceCorrectionBySupervisor?userID=" + userID +"&SDate=" + SDate +"&EDate=" +EDate);
         setManagerPendingData(res.data);
+        setpendingcount(res.data.length);
     };
 
     const getApprovedManager = async (SDate, EDate) => {
@@ -121,6 +134,7 @@ const MyTeamAttendancecorrectiondashboard = () => {
         );
         // const res = await axios.get( hostURL + "Payroll/GetApprovedAttendanceCorrectionBySupervisor?userID=" + userID +  "&SDate=" +  SDate +  "&EDate=" +EDate );
         setManagerApprovedData(res.data);
+        setapprovedcount(res.data.length);
     };
 
     const getRejectedManager = async (SDate, EDate) => {
@@ -134,11 +148,34 @@ const MyTeamAttendancecorrectiondashboard = () => {
         );
         //  const res = await axios.get( hostURL + "Payroll/GetApprovedAttendanceCorrectionBySupervisor?userID=" +  userID + "&SDate=" + SDate + "&EDate=" + EDate);
         setManagerRejectedData(res.data);
+        setrejectcount(res.data.length);
     };
+
+
+    const reject = async (data) => {
+        debugger
+        setRejectedID(data.id);
+        setModalOpen(!modalOpen)
+    }
+
+    const onReject = async () => {
+        debugger
+        // const rID = RejectedID;
+        let reason = watch("comments")
+        let entity = {
+            ID: RejectedID,
+            Comments: reason
+        }
+        const res = await apiService.commonPostCall("Payroll/RejectAttedanceCoorection", entity)
+        setModalOpen(!modalOpen)
+        getPendingManager(startDate, endDate);
+    }
+
 
 
 
     const approveAttedanceCorrection = async (data) => {
+        debugger
         Swal.fire({
             title: "Confirm To Approve?",
             text: "You won't be able to revert this!",
@@ -149,15 +186,14 @@ const MyTeamAttendancecorrectiondashboard = () => {
             confirmButtonText: "Yes, Approve it!",
         }).then(async (result) => {
             if (result.isConfirmed) {
+                let entity = {
+                    ID: data.id,
+                    UserID: data.staffID,
+                    SigninDate: data.sDate,
+                    SignoutDate: data.sDate
+                }
                 await apiService.commonPostCall(
-                    "Payroll/ApproveAttedanceCoorection?id=" +
-                    data.id +
-                    "&UserID=" +
-                    data.staffID +
-                    "&SigninDate=" +
-                    startDate +
-                    "&SignoutDate=" +
-                    endDate
+                    "Payroll/ApproveAttedanceCoorection", entity
                 );
                 Swal.fire({
                     icon: "success",
@@ -168,29 +204,31 @@ const MyTeamAttendancecorrectiondashboard = () => {
         });
     };
 
-    const deleteAttendanceCorrection = (id) => {
-        Swal.fire({
-            title: "Are You Sure To Cancel?",
-            text: "You won't be able to revert this!",
-            icon: "warning",
-            showCancelButton: true,
-            confirmButtonColor: "#3085d6",
-            cancelButtonColor: "#d33",
-            confirmButtonText: "Yes, Cancel it!",
-        }).then(async (result) => {
-            if (result.isConfirmed) {
-                await apiService.commonGetCall(
-                    "Payroll/DeleteAttendanceCorrection?id=" + id
-                );
-                //  axios.get(hostURL + "Payroll/DeleteAttendanceCorrection?id=" + id);
-                Swal.fire({
-                    icon: "success",
-                    titleText: "Cancelled Successfully",
-                });
-            }
-            getPendingData();
-        });
-    };
+
+
+    // const deleteAttendanceCorrection = (id) => {
+    //     Swal.fire({
+    //         title: "Are You Sure To Cancel?",
+    //         text: "You won't be able to revert this!",
+    //         icon: "warning",
+    //         showCancelButton: true,
+    //         confirmButtonColor: "#3085d6",
+    //         cancelButtonColor: "#d33",
+    //         confirmButtonText: "Yes, Cancel it!",
+    //     }).then(async (result) => {
+    //         if (result.isConfirmed) {
+    //             await apiService.commonGetCall(
+    //                 "Payroll/DeleteAttendanceCorrection?id=" + id
+    //             );
+    //             //  axios.get(hostURL + "Payroll/DeleteAttendanceCorrection?id=" + id);
+    //             Swal.fire({
+    //                 icon: "success",
+    //                 titleText: "Cancelled Successfully",
+    //             });
+    //         }
+    //         getPendingData();
+    //     });
+    // };
 
     return (
         <div className="container">
@@ -203,7 +241,7 @@ const MyTeamAttendancecorrectiondashboard = () => {
                         Attendance Correction
                     </Link>
                 </div>
-                {roleID == 3 && (
+                {(roleID == 3 || roleID == 2) && (
                     <>
                         <div className="col-lg-3" style={{ marginLeft: "-60px" }}>
                             <Link
@@ -212,7 +250,9 @@ const MyTeamAttendancecorrectiondashboard = () => {
                             >
                                 My Team Attendance Correction
                             </Link>
+                            <div className="line-border"></div>
                         </div>
+                        
                     </>
                 )}
             </div>
@@ -224,7 +264,7 @@ const MyTeamAttendancecorrectiondashboard = () => {
             >
                 <div className="row p-3">
                     <div className="col-lg-1">
-                        <p>Filter By</p>
+                        <p><b>Filter By</b> </p>
                     </div>
 
                     <div className="col-lg-4">
@@ -276,9 +316,9 @@ const MyTeamAttendancecorrectiondashboard = () => {
             </div>
 
             <div className="row mt-3">
-                <div className="col-lg-2 text-primary fs-6 fw-bold">
+                {/* <div className="col-lg-2 text-primary fs-6 fw-bold">
                     <h6 style={{ color: "#3247d5" }}>Showing {count} Results</h6>
-                </div>
+                </div> */}
 
                 {/* {pending && roleID != "2" && (
                     <table className="table table-hover"
@@ -335,133 +375,219 @@ const MyTeamAttendancecorrectiondashboard = () => {
                     </table>
                 )} */}
 
-                {pending && roleID == "3" && (
-                    <table className="table table-hover" ref={tableRef}>
-                        <thead className="bg-info text-white">
-                            <tr>
-                                <th>Employee Name</th>
-                                <th>Date</th>
-                                <th>Start Time</th>
-                                <th>End Time</th>
-                                <th colSpan={2}>Action</th>
-                            </tr>
-                        </thead>
+                {(pending && roleID == "3" )  && (
+                    <>
+                        <h6 style={{ color: "#3247d5" }}>Showing {pendingcount} Results</h6>
+                        <table className="table table-hover" ref={tableRef}>
+                            <thead className="bg-info text-white">
+                                <tr>
+                                    <th>Employee Name</th>
+                                    <th>Date</th>
+                                    <th>Start Time</th>
+                                    <th>End Time</th>
+                                    <th>Status</th>
+                                    <th colSpan={2}>Action</th>
+                                </tr>
+                            </thead>
 
-                        <tbody>
-                            {Array.isArray(managerPending) && managerPending.length > 0 && (
-                                <>
-                                    {managerPending.map((data) => {
-                                        return (
-                                            <tr key={data.id}>
-                                                <td>{data.staffname}</td>
-                                                <td>{data.attendanceDate}</td>
-                                                <td>{data.startTime}</td>
-                                                <td>{data.endTime}</td>
-                                                <td>
-                                                    <button
-                                                        onClick={approveAttedanceCorrection.bind(
-                                                            this,
-                                                            data
-                                                        )}
-                                                        className="edit-btn"
-                                                    >
-                                                        Accept
-                                                    </button>&nbsp;
-                                                    <button className="edit-btn">Reject</button>
-                                                </td>
-                                            </tr>
-                                        );
-                                    })}
-                                </>
-                            )}
-                        </tbody>
-                    </table>
-                )}
-
-                {approved && roleID != "3" && (
-                    <table className="table table-hover" ref={tableRef}>
-                        <thead className="bg-info text-white">
-                            <tr>
-                                <th>Date</th>
-                                <th>Start Time</th>
-                                <th>End Time</th>
-                                <th>Comments</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            {Array.isArray(approvedDashboardData) &&
-                                approvedDashboardData.length > 0 && (
+                            <tbody>
+                                {Array.isArray(managerPending) && managerPending.length > 0 && (
                                     <>
-                                        {approvedDashboardData.map((data) => {
+                                        {managerPending.map((data) => {
                                             return (
                                                 <tr key={data.id}>
-                                                    <td>{data.date}</td>
+                                                    <td>{data.staffname}</td>
+                                                    <td>{data.attendanceDate}</td>
                                                     <td>{data.startTime}</td>
                                                     <td>{data.endTime}</td>
-                                                    <td>{data.Comments}</td>
-                                                    <td>{data.status}</td>
+                                                    <td>{data.approved}</td>
+                                                    <td>
+                                                        <button
+                                                            onClick={() => approveAttedanceCorrection(data)}
+                                                            className="edit-btn"
+                                                        >
+                                                            Accept
+                                                        </button>&nbsp;
+                                                        <button onClick={() => reject(data)} className="edit-btn">Reject</button>
+                                                    </td>
                                                 </tr>
                                             );
                                         })}
                                     </>
                                 )}
-                        </tbody>
-                    </table>
+                            </tbody>
+                        </table>
+                    </>
                 )}
+                <div className='row'>
+                    <Modal isOpen={modalOpen} >
+                        <div className='modal-header'>
+                            <div className='modal-title'>
+                                <p className='Heading'>Rejecting Request</p>
+                            </div>
+                            <button
+                                aria-label="Close"
+                                type="button" style={{ borderRadius: "5px", background: "none", }}
+                                onClick={() => setModalOpen(!modalOpen)}
+                            >X</button>
+                        </div>
+                        <form onSubmit={handleSubmit(reject)}>
+                            <ModalBody>
+                                <div className='row'>
+                                    <div className='col-lg-12'>
+                                        <label>Reason *</label>
+                                        <textarea placeholder='Reason'{...register("comments", { required: true })} className='form-control'></textarea>
+                                        {errors.reason && (
+                                            <p className="text-danger">
+                                                Please enter Valid Reason
+                                            </p>
+                                        )}
+                                    </div>
+                                </div>
+
+                            </ModalBody>
+                            <ModalFooter>
+                                <div className='row'>
+                                    <div className='col-lg-6'>
+                                        <button onClick={() => setModalOpen(!modalOpen)} className='button'>Cancel</button>
+                                    </div>
+                                    <div className='col-lg-6'>
+                                        <button onClick={onReject} className='button'>Reject</button>
+                                    </div>
+                                </div>
+                            </ModalFooter>
+                        </form>
+                    </Modal>
+                </div>
+
+{/* 
+                {approved && roleID != "3" && (
+                    <>
+                        <h6 style={{ color: "#3247d5" }}>Showing {approvedcount} Results</h6>
+                        <table className="table table-hover" ref={tableRef}>
+                            <thead className="bg-info text-white">
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Start Time</th>
+                                    <th>End Time</th>
+                                    <th>Comments</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                {Array.isArray(approvedDashboardData) &&
+                                    approvedDashboardData.length > 0 && (
+                                        <>
+                                            {approvedDashboardData.map((data) => {
+                                                return (
+                                                    <tr key={data.id}>
+                                                        <td>{data.staffname}</td>
+                                                        <td>{data.startTime}</td>
+                                                        <td>{data.endTime}</td>
+                                                        <td>{data.Comments}</td>
+                                                        <td>{data.status}</td>
+                                                    </tr>
+                                                );
+                                            })}
+                                        </>
+                                    )}
+                            </tbody>
+                        </table>
+                    </>
+                )} */}
 
                 {approved && roleID == "3" && (
-                    <table className="table table-hover" ref={tableRef}>
-                        <thead className="bg-info text-white">
-                            <tr>
-                                <th>Employee Name</th>
-                                <th>Date</th>
-                                <th>Start Time</th>
-                                <th>End Time</th>
-                            </tr>
-                        </thead>
+                    <>
+                        <h6 style={{ color: "#3247d5" }}>Showing {approvedcount} Results</h6>
+                        <table className="table table-hover" ref={tableRef}>
+                            <thead className="bg-info text-white">
+                                <tr>
+                                    <th>Employee Name</th>
+                                    <th>Date</th>
+                                    <th>Start Time</th>
+                                    <th>End Time</th>
+                                    <th>status</th>
+                                </tr>
+                            </thead>
 
-                        <tbody>
-                            {Array.isArray(managerApproved) && managerApproved.length > 0 && (
-                                <>
-                                    {managerApproved.map((data) => {
-                                        return (
-                                            <tr key={data.id}>
-                                                <td>{data.date}</td>
-                                                <td>{data.startTime}</td>
-                                                <td>{data.endTime}</td>
-                                                <td>{data.Comments}</td>
-                                                <td>{data.status}</td>
-                                            </tr>
-                                        );
-                                    })}
-                                </>
-                            )}
-                        </tbody>
-                    </table>
-                )}
-
-                {rejected && roleID != "2" && (
-                    <table className="table table-hover" ref={tableRef}>
-                        <thead className="bg-info text-white">
-                            <tr>
-                                <th>Date</th>
-                                <th>Start Time</th>
-                                <th>End Time</th>
-                                <th>Reason</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            {Array.isArray(rejectedDashboardData) &&
-                                rejectedDashboardData.length > 0 && (
+                            <tbody>
+                                {Array.isArray(managerApproved) && managerApproved.length > 0 && (
                                     <>
-                                        {rejectedDashboardData.map((data) => {
+                                        {managerApproved.map((data) => {
                                             return (
                                                 <tr key={data.id}>
-                                                    <td>{data.date}</td>
+                                                    <td>{data.staffname}</td>
+                                                    <td>{data.sDate}</td>
+                                                    <td>{data.endTime}</td>
+                                                    <td>{data.Comments}</td>
+                                                    <td>{data.approved}</td>
+                                                </tr>
+                                            );
+                                        })}
+                                    </>
+                                )}
+                            </tbody>
+                        </table>
+                    </>
+                )}
+
+                {rejected && roleID == "3" && (
+                    <>
+                        <h6 style={{ color: "#3247d5" }}>Showing {rejectcount} Results</h6>
+                        <table className="table table-hover" ref={tableRef}>
+                            <thead className="bg-info text-white">
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Start Time</th>
+                                    <th>End Time</th>
+                                    <th>Reason</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                {Array.isArray(managerRejected) &&
+                                    managerRejected.length > 0 && (
+                                        <>
+                                            {managerRejected.map((data) => {
+                                                return (
+                                                    <tr key={data.id}>
+                                                        <td>{data.staffname}</td>
+                                                        <td>{data.startTime}</td>
+                                                        <td>{data.endTime}</td>
+                                                        <td>{data.Comments}</td>
+                                                        <td>{data.approved}</td>
+                                                    </tr>
+                                                );
+                                            })}
+                                        </>
+                                    )}
+                            </tbody>
+                        </table>
+                    </>
+                )}
+
+                {/* {rejected && roleID == "2" && (
+                    <>
+                        <h6 style={{ color: "#3247d5" }}>Showing {rejectcount} Results</h6>
+                        <table className="table table-hover" ref={tableRef}>
+                            <thead className="bg-info text-white">
+                                <tr>
+                                    <th>Employee Name</th>
+                                    <th>Date</th>
+                                    <th>Start Time</th>
+                                    <th>End Time</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                {Array.isArray(managerRejected) && managerRejected.length > 0 && (
+                                    <>
+                                        {managerRejected.map((data) => {
+                                            return (
+                                                <tr key={data.id}>
+                                                    <td>{data.staffname}</td>
                                                     <td>{data.startTime}</td>
                                                     <td>{data.endTime}</td>
                                                     <td>{data.Comments}</td>
@@ -471,40 +597,10 @@ const MyTeamAttendancecorrectiondashboard = () => {
                                         })}
                                     </>
                                 )}
-                        </tbody>
-                    </table>
-                )}
-
-                {rejected && roleID == "2" && (
-                    <table className="table table-hover" ref={tableRef}>
-                        <thead className="bg-info text-white">
-                            <tr>
-                                <th>Employee Name</th>
-                                <th>Date</th>
-                                <th>Start Time</th>
-                                <th>End Time</th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            {Array.isArray(managerRejected) && managerRejected.length > 0 && (
-                                <>
-                                    {managerRejected.map((data) => {
-                                        return (
-                                            <tr key={data.id}>
-                                                <td>{data.date}</td>
-                                                <td>{data.startTime}</td>
-                                                <td>{data.endTime}</td>
-                                                <td>{data.Comments}</td>
-                                                <td>{data.status}</td>
-                                            </tr>
-                                        );
-                                    })}
-                                </>
-                            )}
-                        </tbody>
-                    </table>
-                )}
+                            </tbody>
+                        </table>
+                    </>
+                )} */}
             </div>
         </div>
     );

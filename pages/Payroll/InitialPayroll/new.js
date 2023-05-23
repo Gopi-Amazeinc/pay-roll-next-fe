@@ -6,6 +6,8 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import Layout from "@/components/layout/layout";
+import { apiService } from "@/services/api.service";
+import { useRouter } from "next/router";
 
 const InitialPayrollForm = () => {
   const [collapseOpen, setCollapseOpen] = React.useState(false);
@@ -19,25 +21,36 @@ const InitialPayrollForm = () => {
   const [endDate, setEndDate] = useState("");
   const [runPayrollDashboard, setRunPayrollDashboardData] = useState("");
 
+  const router = useRouter();
+
   useEffect(() => {
     async function getData() {
       let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
       //gurukiran@amazeinc.in, This API is used for fetch the Paycode data for Dropdown
-      let res = await axios.get(hostURL + "HR/GetPayPeriodSetting");
+      let res = await apiService.commonGetCall("HR/GetPayPeriodSetting");
       // console.log(res.data)
       sessionStorage.setItem("StartDate", res.data[0].payrollStartDate);
       sessionStorage.setItem("EndDate", res.data[0].payrollEndDate);
       setPayCode(res.data);
       //gurukiran@amazeinc.in, This API is used for fetch the Position data for Dropdown
-      res = await axios.get(hostURL + "Master/GetRoleType");
+      res = await apiService.commonGetCall("Master/GetRoleType");
       setPosition(res.data);
       //gurukiran@amazeinc.in, This API is used for fetch the department data for Dropdown
-      res = await axios.get(hostURL + "Master/GetDepartmentMaster");
+      res = await apiService.commonGetCall("Master/GetDepartmentMaster");
       setDepartment(res.data);
     }
     getData();
   }, []);
 
+  const runPayrollButton = () => {
+    router.push("/Payroll/InitialPayroll")
+    Swal.fire({
+      icon: "success",
+      title: "Initial payroll ran Successfully",
+      text: "Payroll run has been completed",
+    });
+
+  }
   function handleData(data) {
     if (watch("PayCode")) {
       let res = paycode.filter((x) => x.paycode == watch("PayCode"))[0]
@@ -66,8 +79,8 @@ const InitialPayrollForm = () => {
         setEndDate(rres);
         let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
         // This API is used to fetch the dashboard data based on StartDate,EndDate
-        const sss = await axios.get(
-          hostURL +
+        const sss = await apiService.commonGetCall(
+
           `Payroll/Get_Employees_For_Payroll?startdate=${startDate}&enddate=${endDate}`
         );
         setDashboardData(sss.data);
@@ -102,8 +115,8 @@ const InitialPayrollForm = () => {
         setEndDate(rres);
         let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
         // This API is used to fetch the dashboard data based on EmployeeID,LOPdays,StartDate,EndDate
-        const response = await axios.get(
-          hostURL +
+        const response = await apiService.commonGetCall(
+
           `Payroll/Get_PreliminaryReport?EmployeeID=${employeID}&startdate=${res}&Enddate=${rres}`
         );
         setRunPayrollDashboardData(response.data);
@@ -131,7 +144,7 @@ const InitialPayrollForm = () => {
           <form>
             <div className="row">
               <div className="col-lg-3">
-                <p>Select Paycode </p>
+                <label>Select Paycode </label>
                 <div className="dropdown">
                   <select
                     id="PayCode"
@@ -157,9 +170,9 @@ const InitialPayrollForm = () => {
                 </div>
               </div>
               <div className="col-lg-3">
-                <p>
+                <label>
                   Search <br></br>
-                </p>
+                </label>
                 <input
                   placeholder="Search"
                   type="text"
@@ -169,7 +182,7 @@ const InitialPayrollForm = () => {
               <div className="col-lg-1"></div>
               <div className="col-lg-2 ">
                 <br />
-                <p></p>
+                <label></label>
                 <Button
                   style={{ background: "#3247d5", border: "none" }}
                   type="button"
@@ -188,7 +201,7 @@ const InitialPayrollForm = () => {
             <div className="row ">
               <br></br>
               <div className="col-lg-3">
-                <p> Position </p>
+                <label> Position </label>
                 <div className="dropdown">
                   <select
                     id="Year"
@@ -214,7 +227,7 @@ const InitialPayrollForm = () => {
                 </div>
               </div>
               <div className="col-lg-3 ">
-                <p>Department </p>
+                <label>Department </label>
                 <div className="dropdown">
                   <select
                     id="Year"
@@ -249,14 +262,14 @@ const InitialPayrollForm = () => {
             <div className="col-lg-4"></div>
             <div className="col-lg-2">
               {runPayroll && (
-                <Link
-                  href="/Payroll/InitialPayroll"
-                  style={{ textDecoration: "none" }}
-                >
-                  <button className="form-control CancelBTN">
-                    Run Payroll
-                  </button>
-                </Link>
+                // <Link
+                //   href="/Payroll/InitialPayroll"
+                //   style={{ textDecoration: "none" }}
+                // >
+                <button className="form-control CancelBTN" onClick={runPayrollButton}>
+                  Run Payroll
+                </button>
+                // </Link>
               )}
             </div>
           </div>

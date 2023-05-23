@@ -3,10 +3,11 @@ import Link from 'next/link'
 import axios from 'axios'
 import { apiService } from '@/services/api.service';
 import ReactPaginate from "react-paginate";
+import Swal from 'sweetalert2';
 
 function FinalPayrollApproval() {
 
-    const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+    const [uniquelist, setUniqueList] = useState([]);
     const [normalpayroll, setNormalPayroll] = useState(false)
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [finalpayroll, setFinalPayroll] = useState(true)
@@ -27,6 +28,7 @@ function FinalPayrollApproval() {
         const usrID = sessionStorage.getItem("userID");
         setUserID(usrID);
         getData();
+
     }, [])
     const getData = async () => {
         const res = await apiService.commonGetCall("Payroll/GetEmployeeFinalSalary")
@@ -35,9 +37,14 @@ function FinalPayrollApproval() {
     }
 
     const approveData = async () => {
-        debugger
-        const res = await apiService.commonGetCall(`Payroll/GetApproveFinalPayroll?StaffID=${userID}&Approve=${1}`)
+        let Approve = 1
 
+        const res = await apiService.commonPostCall(`Payroll/ApproveFinalPayroll?StaffID`, userID, Approve)
+        Swal.fire({
+            icon: 'success',
+            text: 'Payroll has been Approved'
+
+        })
     }
     const PER_PAGE = 5;
     const [currentPage, setCurrentPage] = useState(0);
@@ -47,25 +54,35 @@ function FinalPayrollApproval() {
     const offset = currentPage * PER_PAGE;
     const pageCount = Math.ceil(finalData.length / PER_PAGE);
 
+
     return (
 
 
         <div className="container-fluid">
             <div className="row">
+                <div className="col-lg-4">
+                    <br />
+                    <span className="Heading">Excecuted Payroll Runs For Approval </span>
+
+                </div>
                 <div className="col-lg-1"></div>
                 <div className="col-lg-4"></div>
-                <div className="col-lg-4"></div>
                 <div className="col-lg-3">
-                    <br /><Link style={{ textDecoration: "none" }} href="/Payroll/RunFinalPayroll"><button className='newPayrollBtn' style={{ width: "80%" }}>New Payroll</button></Link>
+                    <br /><Link style={{ textDecoration: "none" }} href="/Payroll/RunFinalPayroll"><button className='uploadButton' style={{ width: "80%" }}>New Payroll</button></Link>
                 </div>
             </div>
             <br />
             <div className="row">
                 <br />
+
                 <div className="col-lg-4">
-                    <p className="Heading">Excecuted Payroll Runs For Approval </p>
+                    <p onClick={toggleApproved} className='Heading' >Final Payroll</p>
+
                 </div>
-                <div className="col-lg-5"></div>
+
+                <div className="col-lg-5">
+                    {/* <p className="Heading">Excecuted Payroll Runs For Approval </p> */}
+                </div>
                 <div className="col-lg-3">
                     <p className="Heading">Total Payroll Runs: </p>
                 </div>
@@ -75,7 +92,7 @@ function FinalPayrollApproval() {
                 <div className='col-lg-4'><br />
 
                     {/* <button onClick={toggleNewRequest} className='toggleButton' >Normal Payroll</button> */}
-                    <button onClick={toggleApproved} className='toggleButton' >Final Payroll</button>
+                    {/* <p onClick={toggleApproved} className='Heading' >Final Payroll</p> */}
 
                 </div><br />
             </div>

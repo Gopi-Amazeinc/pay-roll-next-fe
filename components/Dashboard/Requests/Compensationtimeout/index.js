@@ -29,6 +29,9 @@ const Compensationtimeout = () => {
     const [managerRejected, getManagerRejected] = useState([])
     const [isOpen, ModalIsOpen] = useState(false);
     const [keyword, setKeyword] = useState("");
+    const [roleID, setRoleID] = useState();
+    const [count, setcount] = useState("");
+    const [userID, setUserID] = useState()
 
     const openModal = () => {
         ModalIsOpen(true)
@@ -78,41 +81,44 @@ const Compensationtimeout = () => {
     let staffID;
     staffID = sessionStorage.getItem("userID")
     const getPendingData = async () => {
-        staffID = sessionStorage.getItem("userID");
-        const res = await apiService.commonGetCall("Payroll/GetPendingCompensationTimeOutByStaffID?UserID=" + staffID)
+        const res = await apiService.commonGetCall("Payroll/GetPendingCompensationTimeOutByStaffID?UserID=" + userID)
         // sessionStorage.setItem("supervisorID", res.data[0].supervisor)
         getPending(res.data)
+        setcount(res.data.length);
     }
 
     const getApprovedData = async () => {
-        staffID = sessionStorage.getItem("userID");
-        const res = await apiService.commonGetCall("Payroll/GetApproveCompensationTimeOutByStaffID?UserID=" + staffID)
+        const res = await apiService.commonGetCall("Payroll/GetApproveCompensationTimeOutByStaffID?UserID=" + userID)
         getApproved(res.data, "employee approved")
+        setcount(res.data.length);
     }
 
     const getRejectedData = async () => {
-        staffID = sessionStorage.getItem("userID");
-        const res = await apiService.commonGetCall("Payroll/GetRejectCompensationTimeOutByStaffID?UserID=" + staffID)
+        const res = await apiService.commonGetCall("Payroll/GetRejectCompensationTimeOutByStaffID?UserID=" + userID)
         getRejected(res.data)
+        setcount(res.data.length);
     }
 
     const getManagerApprovedData = async () => {
-        const res = await apiService.commonGetCall("Payroll/GetApproveCompensationTimeOutBySupervisor?UserID=" + 20540)
+        const res = await apiService.commonGetCall("Payroll/GetApproveCompensationTimeOutBySupervisor?UserID=" + userID)
         console.log(res.data)
         getManagerApproved(res.data)
+        setcount(res.data.length);
     }
 
     const getManagerRejectedData = async () => {
-        const res = await apiService.commonGetCall("Payroll/GetRejectCompensationTimeOutBySupervisor?UserID=" + 20540)
+        const res = await apiService.commonGetCall("Payroll/GetRejectCompensationTimeOutBySupervisor?UserID=" + userID)
         console.log(res.data)
         getManagerRejected(res.data)
+        setcount(res.data.length);
     }
 
     const getPendingCompensation = async () => {
         staffID = sessionStorage.getItem("userID");
-        const res = await apiService.commonGetCall("Payroll/GetPendingCompensationTimeOutBySupervisor?UserID=" + 20540)
+        const res = await apiService.commonGetCall("Payroll/GetPendingCompensationTimeOutBySupervisor?UserID=" + userID)
         console.log(res.data, "manager pending")
         getComponsation(res.data)
+        setcount(res.data.length);
     }
 
     const Delete = (id) => {
@@ -192,6 +198,10 @@ const Compensationtimeout = () => {
     const pageCount = Math.ceil(pendingDashboard.length / PER_PAGE);
 
     useEffect(() => {
+        const usrID = sessionStorage.getItem("userID");
+        setUserID(usrID);
+        const userRoleID = sessionStorage.getItem("roleID");
+        setRoleID(userRoleID);
         getPendingData()
         getPendingCompensation();
         getApprovedData();
@@ -215,11 +225,11 @@ const Compensationtimeout = () => {
                             </div>
 
                             <div className='col-lg-3'>
-                                <input type="text" className='form-control' placeholder='Search for Date or Status...' onChange={e => setKeyword(e.target.value)} />
+                                <input type="search" className='form-control' placeholder='Search here...' onChange={e => setKeyword(e.target.value)} />
                             </div>
                             {
                                 sessionStorage.getItem("roleID") != "3" && (
-                                    <div className='col-lg-4' style={{ whiteSpace: "nowrap" }}>
+                                    <div className='col-lg-3' style={{ whiteSpace: "nowrap" }}>
                                         <Link href="/Requests/Compensationtimeout/new"><button className='EditDelteBTN'>Add Compensation Time Out</button></Link>
                                     </div>
                                 )
@@ -234,6 +244,7 @@ const Compensationtimeout = () => {
                                 <button onClick={toggleApproved} className={`toggleButton ${approved ? "focus" : ""}`}  >Approved</button>
                                 <button onClick={toggleRejected} className={`toggleButton ${rejected ? "focus" : ""}`} >Rejected</button>
                             </div>
+                            <h6 style={{ color: "#3247d5" }}>Showing {count} Results</h6>
                         </div>
                     </div>
                     <br /><br />
@@ -284,7 +295,7 @@ const Compensationtimeout = () => {
                                         <tbody>
                                             {
                                                 pendingDashboard.filter(data => {
-                                                    if ((data.date.toString().includes(keyword.toLowerCase())) || (data.status.toLowerCase().includes(keyword))) {
+                                                    if ((data.date.toString().includes(keyword.toLowerCase())) || (data.status.toLowerCase().includes(keyword)) || (data.actuval_StartTime.toString().includes(keyword.toLowerCase())) || (data.actuval_EndTime.toString().includes(keyword.toLowerCase())) || (data.comments.toString().includes(keyword.toLowerCase()))) {
                                                         return data;
                                                     }
                                                 }).slice(offset, offset + PER_PAGE).map((data) => {

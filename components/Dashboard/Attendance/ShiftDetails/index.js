@@ -7,6 +7,7 @@ import Styles from "@/styles/shiftdetails.module.css";
 import { IoIosAddCircleOutline } from "react-icons/io";
 import { DownloadTableExcel } from "react-export-table-to-excel";
 import ReactPaginate from "react-paginate";
+import Swal from "sweetalert2";
 
 
 
@@ -92,7 +93,16 @@ const Shiftdetails = () => {
 
   const getEndDate = (selectedDate) => {
     setEndDate(selectedDate);
-    return getDateBySelectedDate(selectedDate);
+    return dateValidation(selectedDate);
+  };
+
+  const dateValidation = (selectedDate) => {
+    if (new Date(startDate) > new Date(selectedDate)) {
+      Swal.fire("End Date should be greater than Start Date");
+    } else {
+      setEndDate(selectedDate);
+      return getDateBySelectedDate(selectedDate);
+    }
   };
 
   const getDateBySelectedDate = (endDatesss) => {
@@ -162,11 +172,13 @@ const Shiftdetails = () => {
           <Link href="/Attendance/shiftdetails" className={Styles.mainheader}>
             My Weekly Shift
           </Link>
+          <div className="line-border"></div>
         </div>
         <div className="col-lg-3">
           <br />
           {roleid != 3 ||
-            <Link href="/Attendance/MyTeamWeeklyShift" className={Styles.mainheader}> My Team Weekly Shift</Link>
+            <Link href="/Attendance/MyTeamWeeklyShift" className={Styles.mainheader}> My Team Weekly Shift
+            </Link>
           }
           {roleid != 2 ||
             <Link href="/Attendance/CompanyShiftDetails" className={Styles.mainheader}> Company Weekly Shift</Link>
@@ -180,10 +192,10 @@ const Shiftdetails = () => {
               <div className="row">
                 <div className="col-lg-3">
                   <p className={Styles.filterdate}>
-                     START DATE <span style={{ color: "red" }}>*</span>
+                    START DATE <span style={{ color: "red" }}>*</span>
                   </p>
                   <input type="date" className="form-control form-control-sm m-o"
-                    value={startDate}
+                    // value={startDate}
                     onChange={(e) => getStartDate(e.target.value)} />
                 </div>
                 <div className="col-lg-3">
@@ -191,15 +203,19 @@ const Shiftdetails = () => {
                     END DATE <span style={{ color: "red" }}>*</span>
                   </p>
                   <input type="date" className="form-control form-control-sm"
-                    value={endDate || ""}
+                    // value={endDate || ""}
                     onChange={(e) => getEndDate(e.target.value)} />
                 </div>
 
                 <div className="col-lg-3">
                   <br />
-                  <Link href="/Attendance/StaffShiftForm/new" className={Styles.adddetail}>
-                    <button className="button" style={{ fontSize: "15px", marginTop: "7px" }}><IoIosAddCircleOutline size={18} color={"white"} />  Add Shift Details</button>
-                  </Link>
+                  {
+                    sessionStorage.getItem("roleID") != 2 && (
+                      <Link href="/Attendance/StaffShiftForm/new" className={Styles.adddetail}>
+                        <button className="button" style={{ fontSize: "15px", marginTop: "7px" }}><IoIosAddCircleOutline size={18} color={"white"} />  Add Shift Details</button>
+                      </Link>
+                    )
+                  }
                 </div>
                 <div className="col-lg-2">
                   <br />

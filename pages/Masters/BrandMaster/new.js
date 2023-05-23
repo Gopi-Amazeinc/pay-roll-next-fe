@@ -76,7 +76,7 @@ function BrandMasterForm({ editData }) {
                                             placeholder="Description"
                                             {...register('Description', { required: true, })}
                                         ></textarea>
-                                        {errors.Description && <p className="text-danger" >Please enter a valid Descrption Name</p>}
+                                        {errors.Description && <p className="error-message" style={{ color: "red" }}>Please enter a valid Descrption Name</p>}
 
                                     </div>
                                 </div>

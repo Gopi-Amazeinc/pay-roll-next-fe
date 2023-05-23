@@ -16,6 +16,7 @@ const CompanyAttendanceDetails = () => {
     const router = useRouter();
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
+    const [count, setcount] = useState("");
 
 
     let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
@@ -50,11 +51,14 @@ const CompanyAttendanceDetails = () => {
 
     const PER_PAGE = 10;
     const [currentPage, setCurrentPage] = useState(0);
-    function handlePageClick({ selected: selectedPage }) {
-        setCurrentPage(selectedPage)
-    }
+
     const offset = currentPage * PER_PAGE;
+    const paginatedData = CompanyAttendence.slice(offset, offset + PER_PAGE);
     const pageCount = Math.ceil(CompanyAttendence.length / PER_PAGE);
+    // const pageCount = Math.ceil(CompanyAttendence.length / PER_PAGE);
+    const handlePageClick = ({ selected: selectedPage }) => {
+        setCurrentPage(selectedPage);
+    };
 
     const getCurrentMonthDates = () => {
         let newDate = new Date();
@@ -103,6 +107,7 @@ const CompanyAttendanceDetails = () => {
                 EDate
             );
             setCompanyAttendence(res.data);
+            setcount(res.data.length);
         }
     };
 
@@ -133,14 +138,14 @@ const CompanyAttendanceDetails = () => {
                         <div className='col-lg-2'>
                             <p>Start Date</p>
                             <input type="date" className='form-control'
-                                value={startDate}
+                                // value={startDate}
                                 onChange={(e) => getStartDate(e.target.value)} />
                         </div>
 
                         <div className='col-lg-2'>
                             <p>End Date</p>
                             <input type="date" className='form-control'
-                                value={endDate || ""}
+                                // value={endDate || ""}
                                 onChange={(e) => getEndDate(e.target.value)} />
                         </div>
 
@@ -169,55 +174,62 @@ const CompanyAttendanceDetails = () => {
                         </div>
                     </div>
                 </div>
+                <br />
+                <div className="row">
+                    <div className="col-lg-12">
 
-                <table className='table  mt-2 ' ref={tableRef}>
-                    <thead className='bg-info text-white '>
-                        <tr style={{ whiteSpace: 'nowrap' }}>
-                            <th >Date</th>
-                            <th>Staff </th>
-                            <th>Day Type	</th>
+                        <h6 style={{ color: "#3247d5" }}>Showing {count} Results</h6>
+                        <table className='table  mt-2 ' ref={tableRef}>
+                            <thead className='bg-info text-white '>
+                                <tr style={{ whiteSpace: 'nowrap' }}>
+                                    <th >Date</th>
+                                    <th>Staff </th>
+                                    <th>Day Type	</th>
 
-                            <th>Expected In Time	</th>
-                            <th>Expected Out Time	</th>
-                            <th>Punch In Time</th>
+                                    <th>Expected In Time	</th>
+                                    <th>Expected Out Time	</th>
+                                    <th>Punch In Time</th>
 
-                            <th>Punch Out Time	</th>
-                            <th>Work Hours(HH:MM)	</th>
-                            <th>Overtime</th>
+                                    <th>Punch Out Time	</th>
+                                    <th>Work Hours(HH:MM)	</th>
+                                    <th>Overtime</th>
 
-                            <th>UnderTime</th>
-                            <th>Late</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {Array.isArray(CompanyAttendence) && CompanyAttendence.length > 0 && (
-                            <>
-                                {CompanyAttendence.map((data) => {
-                                    return (
-                                        <tr key={data.id}>
-                                            <td>{data.date}</td>
-                                            <td>{data.staffname}</td>
-                                            <td>{data.position}</td>
+                                    <th>UnderTime</th>
+                                    <th>Late</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {Array.isArray(CompanyAttendence) && CompanyAttendence.length > 0 && (
+                                    <>
+                                        {CompanyAttendence.slice(offset, offset + PER_PAGE).map((data,index) => {
+                                            return (
+                                                <tr key={data.index}>
+                                                    <td>{data.date}</td>
+                                                    <td>{data.staffname}</td>
+                                                    <td>{data.position}</td>
 
-                                            <td>{data.expectedIn}</td>
-                                            <td>{data.expectedOut}</td>
-                                            <td>{data.expectedIn}</td>
+                                                    <td>{data.expectedIn}</td>
+                                                    <td>{data.expectedOut}</td>
+                                                    <td>{data.expectedIn}</td>
 
-                                            <td>{data.expectedOut}</td>
-                                            <td>{data.punchedInForm}</td>
-                                            <td>{data.overtime}</td>
+                                                    <td>{data.expectedOut}</td>
+                                                    <td>{data.punchedInForm}</td>
+                                                    <td>{data.overtime}</td>
 
-                                            <td>{data.expectedOutTime}</td>
-                                            <td>{data.late}</td>
+                                                    <td>{data.expectedOutTime}</td>
+                                                    <td>{data.late}</td>
 
-                                        </tr>
-                                    )
-                                })
-                                }
-                            </>
-                        )}
-                    </tbody>
-                </table>
+                                                </tr>
+                                            )
+                                        })
+                                        }
+                                    </>
+                                )}
+                            </tbody>
+                        </table>
+
+                    </div>
+                </div>
                 <div className="mb-4 mt-4 text-center">
                     <ReactPaginate
                         previousLabel={"Previous"}

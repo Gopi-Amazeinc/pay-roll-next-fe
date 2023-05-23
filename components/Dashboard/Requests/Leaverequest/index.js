@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { apiService } from "@/services/api.service";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
+import Swal from "sweetalert2";
+import { useDropzone } from "react-dropzone";
 
 import {
     Calendar as BigCalendar,
@@ -23,6 +25,7 @@ function LeaveListDashboard() {
     const [pending, setPending] = useState(false)
     const [approved, setApproved] = useState(false)
     const [rejected, setRejected] = useState(false)
+    const [count, setcount] = useState("");
     const togglePending = () => {
         setPending(true)
         setRejected(false)
@@ -69,7 +72,9 @@ function LeaveListDashboard() {
     const getEndDate = (selectedDate) => {
         setEndDate(selectedDate);
         sessionStorage.setItem("EndDate", endDate);
-        return getDateBySelectedDate(selectedDate);
+        return dateValidation(selectedDate);
+        // return getDateBySelectedDate(selectedDate);
+
     };
     const getDateBySelectedDate = (endDatesss) => {
         debugger;
@@ -88,18 +93,21 @@ function LeaveListDashboard() {
         const res = await apiService.commonGetCall("Employee/GetPendingStaffLeavesByStaffID?ID=" + userID + "&TypeID=1&Sdate=" + StartingDate + "&Edate=" + EndDate)
         setPendingData(res.data);
         console.log(res.data);
+        setcount(res.data.length);
     }
     const getApprovedData = async (StartingDate, EndDate) => {
         debugger;
         const res = await apiService.commonGetCall("Employee/GetApprovedStaffLeavesByStaffID?ID=" + userID + "&TypeID=1&Sdate=" + StartingDate + "&Edate=" + EndDate)
         setApprovedData(res.data);
         console.log(res.data);
+        setcount(res.data.length);
     }
     const getRejectedData = async (StartingDate, EndDate) => {
         debugger;
         const res = await apiService.commonGetCall("Employee/GetRejectedStaffLeavesByStaffID?ID=" + userID + "&TypeID=1&Sdate=" + StartingDate + "&Edate=" + EndDate)
         setRejectedData(res.data);
         console.log(res.data);
+        setcount(res.data.length);
     }
     const getCurrentMonthDates = () => {
         let newDate = new Date();
@@ -124,6 +132,18 @@ function LeaveListDashboard() {
         const month = (datetoformat.getMonth() + 1).toString().padStart(2, "0");
         const year = datetoformat.getFullYear().toString();
         return `${year}-${month}-${day}`;
+    };
+    const dateValidation = (selectedDate) => {
+        if (new Date(startDate) > new Date(selectedDate)) {
+            Swal.fire("End Date should be greater than Start Date");
+        } else {
+            setEndDate(selectedDate);
+            return getDataBySelectedDate(selectedDate);
+        }
+    };
+    const getDataBySelectedDate = (endDatesss) => {
+        debugger;
+        return getPendingData(startDate, endDatesss);
     };
     useEffect(() => {
         const usrID = sessionStorage.getItem("userID");
@@ -210,12 +230,14 @@ function LeaveListDashboard() {
                 <div className="col-md-12">
                     <div className="row">
                         <div className="col-md-7">
+                            <label className="Heading">Leave Request </label>&nbsp;&nbsp;&nbsp;&nbsp;
                             {
-                                sessionStorage.getItem("roleID") == 2 && (
-                                    <Link href="/Requests/hrleaverequest" className="Heading mx-5" ><u>All Staff Leave Details</u></Link>
+                                sessionStorage.getItem("roleID") == 3 && (
+                                    <Link href="/Requests/Myteamleaverequests">
+                                        <label className="Heading">My Team Request</label>
+                                    </Link>
                                 )
                             }
-                            <label className="Heading">Leave Request </label>
                         </div>
                     </div>
                     <br />
@@ -225,16 +247,16 @@ function LeaveListDashboard() {
                                 <div className="row">
                                     <div className="col-lg-6">
                                         <label style={{ fontWeight: "bold" }}>Start Date:</label>
-                                        <input id="date" name="date" type="date" placeholder="Duration" className="form-control " value={startDate} onChange={(e) => getStartDate(e.target.value)} />
+                                        <input id="date" name="date" type="date" placeholder="Duration" className="form-control " onChange={(e) => getStartDate(e.target.value)} />
                                     </div>
                                     <div className="col-lg-6">
                                         <label style={{ fontWeight: "bold" }}>End Date:</label>
-                                        <input id="date" name="date" type="date" placeholder="Duration" className="form-control " value={endDate || ""} onChange={(e) => getEndDate(e.target.value)} />
+                                        <input id="date" name="date" type="date" placeholder="Duration" className="form-control " onChange={(e) => getEndDate(e.target.value)} />
                                     </div>
                                     <br /> <br /><br /> <br />
                                     <div className="col-lg-12 searchtxt ">
-                                    <label style={{ fontWeight: "bold" }}>Search:</label>
-                                        <br /><input type="search" placeholder="Search for date or Status" className="form-control " onChange={e => setKeyword(e.target.value)} />
+                                        <label style={{ fontWeight: "bold" }}>Search:</label>
+                                        <br /><input type="search" placeholder="Search here.." className="form-control " onChange={e => setKeyword(e.target.value)} />
                                     </div>
                                     <br /><br />
                                 </div>
@@ -250,7 +272,8 @@ function LeaveListDashboard() {
                                     <div className='btn-group'>
                                         <button onClick={toggleCalender} className={`toggleButton ${calender ? "focus" : ""}`}>Calender</button>
                                         <button onClick={toggleListView} className={`toggleButton ${listview ? "focus" : ""}`}>List View</button>
-                                    </div>
+                                    </div><br /><br />
+                                    <h6 style={{ color: "#3247d5" }}>Showing {count} Results</h6>
                                 </div>
                             </div>
                             <br />
@@ -305,11 +328,11 @@ function LeaveListDashboard() {
                                 )
                             }
                         </div>
-                    </div>
+                    </div><br />
                     <div className="row">
                         <div className="col-lg-12">
                             {pending && (
-                                <table className='table table-hover mt-4'>
+                                <table className='table'>
                                     <thead className='bg-info text-white'>
                                         <tr>
                                             <th>From Date</th>
@@ -321,7 +344,7 @@ function LeaveListDashboard() {
                                     <tbody>
                                         {
                                             pendingdata.filter(data => {
-                                                if ((data.sDateOfLeave.toString().includes(keyword.toLowerCase())) || (data.eDateOfLeave.toString().includes(keyword)) || (data.status.toLowerCase().includes(keyword))) {
+                                                if ((data.sDateOfLeave.toString().includes(keyword.toLowerCase())) || (data.eDateOfLeave.toString().includes(keyword)) || (data.status.toLowerCase().includes(keyword)) || (data.leaveReason.toString().includes(keyword.toLowerCase()))) {
                                                     return data;
                                                 }
                                             }).slice(offset, offset + PER_PAGE).map((data) => {
@@ -339,7 +362,7 @@ function LeaveListDashboard() {
                             )}
 
                             {approved && (
-                                <table className='table table-hover mt-4'>
+                                <table className='table'>
                                     <thead className='bg-info text-white'>
                                         <tr>
                                             <th>From Date</th>
@@ -351,7 +374,7 @@ function LeaveListDashboard() {
                                     <tbody>
                                         {
                                             approveddata.filter(data => {
-                                                if ((data.sDateOfLeave.toString().includes(keyword.toLowerCase())) || (data.eDateOfLeave.toString().includes(keyword)) || (data.status.toLowerCase().includes(keyword))) {
+                                                if ((data.sDateOfLeave.toString().includes(keyword.toLowerCase())) || (data.eDateOfLeave.toString().includes(keyword)) || (data.status.toLowerCase().includes(keyword)) || (data.status.toLowerCase().includes(keyword)) || (data.leaveReason.toString().includes(keyword.toLowerCase()))) {
                                                     return data;
                                                 }
                                             }).slice(offset, offset + PER_PAGE).map((data) => {
@@ -368,7 +391,7 @@ function LeaveListDashboard() {
                                 </table>
                             )}
                             {rejected && (
-                                <table className='table table-hover mt-4'>
+                                <table className='table'>
                                     <thead className='bg-info text-white'>
                                         <tr>
                                             <th>From Date</th>
@@ -380,7 +403,7 @@ function LeaveListDashboard() {
                                     <tbody>
                                         {
                                             rejecteddata.filter(data => {
-                                                if ((data.sDateOfLeave.toString().includes(keyword.toLowerCase())) || (data.eDateOfLeave.toString().includes(keyword)) || (data.status.toLowerCase().includes(keyword))) {
+                                                if ((data.sDateOfLeave.toString().includes(keyword.toLowerCase())) || (data.eDateOfLeave.toString().includes(keyword)) || (data.status.toLowerCase().includes(keyword)) || (data.status.toLowerCase().includes(keyword)) || (data.leaveReason.toString().includes(keyword.toLowerCase()))) {
                                                     return data;
                                                 }
                                             }).slice(offset, offset + PER_PAGE).map((data) => {

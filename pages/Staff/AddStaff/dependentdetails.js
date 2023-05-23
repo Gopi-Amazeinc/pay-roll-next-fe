@@ -87,7 +87,7 @@ export default function DependentDetails() {
                 RelationshipID: data.RelationshipID,
                 Gender: data.Gender,
                 DateOfBirth: data.DateOfBirth,
-                StaffID: sessionStorage.getItem('userID'),
+                StaffID:  sessionStorage.getItem('CreatedEmpID'),
                 DependentAttachment: filePath,
             }
             let res = await axios.post(hostURL + "Payroll/InsertDependentDetails", Enity);
@@ -127,7 +127,7 @@ export default function DependentDetails() {
             RelationshipID: existingData ? existingData.relationshipID : "",
             Gender:  existingData ? existingData.gender : "",
             DateOfBirth: existingData ? existingData.dateOfBirth : "",
-            StaffID: sessionStorage.getItem('userID'),
+            StaffID: sessionStorage.getItem('CreatedEmpID'),
             DependentAttachment: "No Image",
         }
         reset(etty);

@@ -390,78 +390,91 @@ const Sidebar = ({ children, applyPageName }) => {
               )}
             </>
           )}
-          <hr></hr>
-          <button className={styles.sidemenu} onClick={toggleAttendenceMenu}>
-            <BiCalendar style={customStyles.icons} />
-            Attendance
-          </button>
-          {displayAttendence && (
-            <div>
-              <Link
-                href="/Attendance/AttendanceDetails"
-                className={styles.sidemenulink}
-              >
-                <button
-                  className={getSubStyle(41)}
-                  onClick={updateActiveMenu.bind(this, {
-                    id: 41,
-                    name: "Attendence Details",
-                  })}
-                >
-                  <BiCalendarCheck style={customStyles.icons} />
-                  Attendance Details
+
+          {
+            userRole != 1 && (
+              <>
+                <hr></hr>
+                <button className={styles.sidemenu} onClick={toggleAttendenceMenu}>
+                  <BiCalendar style={customStyles.icons} />
+                  Attendance
                 </button>
-              </Link>
-              {userRole != 5 && userRole != 3 && (
-                <Link
-                  href="/Attendance/OverTimeUnitsUpload"
-                  className={styles.sidemenulink}
-                >
-                  <button
-                    className={getSubStyle(42)}
-                    onClick={updateActiveMenu.bind(this, {
-                      id: 42,
-                      name: "Overtime Units Upload",
-                    })}
-                  >
-                    <BiCalendarPlus style={customStyles.icons} />
-                    Overtime Units Upload
-                  </button>
-                </Link>
-              )}
-              <Link
-                href="/Attendance/AttendanceCorrections"
-                className={styles.sidemenulink}
-              >
-                <button
-                  className={getSubStyle(43)}
-                  onClick={updateActiveMenu.bind(this, {
-                    id: 43,
-                    name: "Attendance Correction",
-                  })}
-                >
-                  <BiCalendarExclamation style={customStyles.icons} />
-                  Attendance Correction
-                </button>
-              </Link>
-              <Link
-                href="/Attendance/ShiftDetails"
-                className={styles.sidemenulink}
-              >
-                <button
-                  className={getSubStyle(44)}
-                  onClick={updateActiveMenu.bind(this, {
-                    id: 44,
-                    name: "Shift Details",
-                  })}
-                >
-                  <BiCalendarExclamation style={customStyles.icons} />
-                  Shift Details
-                </button>
-              </Link>
-            </div>
-          )}
-          {userRole != 4 && (
+                {displayAttendence && (
+                  <div>
+                    <Link
+                      href="/Attendance/AttendanceDetails"
+                      className={styles.sidemenulink}
+                    >
+                      <button
+                        className={getSubStyle(41)}
+                        onClick={updateActiveMenu.bind(this, {
+                          id: 41,
+                          name: "Attendence Details",
+                        })}
+                      >
+                        <BiCalendarCheck style={customStyles.icons} />
+                        Attendance Details
+                      </button>
+                    </Link>
+                    {userRole != 5 && userRole != 3 && (
+                      <Link
+                        href="/Attendance/OverTimeUnitsUpload"
+                        className={styles.sidemenulink}
+                      >
+                        <button
+                          className={getSubStyle(42)}
+                          onClick={updateActiveMenu.bind(this, {
+                            id: 42,
+                            name: "Overtime Units Upload",
+                          })}
+                        >
+                          <BiCalendarPlus style={customStyles.icons} />
+                          Overtime Units Upload
+                        </button>
+                      </Link>
+                    )}
+                    {
+                      userRole != 4 && (
+                        <>
+                          <Link
+                            href="/Attendance/AttendanceCorrections"
+                            className={styles.sidemenulink}
+                          >
+                            <button
+                              className={getSubStyle(43)}
+                              onClick={updateActiveMenu.bind(this, {
+                                id: 43,
+                                name: "Attendance Correction",
+                              })}
+                            >
+                              <BiCalendarExclamation style={customStyles.icons} />
+                              Attendance Correction
+                            </button>
+                          </Link>
+                        </>
+                      )
+                    }
+                    <Link
+                      href="/Attendance/ShiftDetails"
+                      className={styles.sidemenulink}
+                    >
+                      <button
+                        className={getSubStyle(44)}
+                        onClick={updateActiveMenu.bind(this, {
+                          id: 44,
+                          name: "Shift Details",
+                        })}
+                      >
+                        <BiCalendarExclamation style={customStyles.icons} />
+                        Shift Details
+                      </button>
+                    </Link>
+                  </div>
+                )}
+              </>
+            )
+          }
+          {userRole != 4 && userRole != 1 && userRole != 2 && (
             <>
               <hr></hr>
               <button className={styles.sidemenu} onClick={togglerequestsMenu}>
@@ -612,7 +625,7 @@ const Sidebar = ({ children, applyPageName }) => {
                     onClick={toggleFinalRunMenu}
                   >
                     <GiMoneyStack style={customStyles.icons} />
-                    final Run
+                    Final Run
                   </button>
                   {displayFinalRun && (
                     <>
@@ -1207,7 +1220,7 @@ const Sidebar = ({ children, applyPageName }) => {
               )}
             </div>
           )}
-          {userRole == 3 && (
+          {userRole == 3 || userRole == 1 && (
             <div>
               <hr></hr>
               <Link href="/Holiday" className={styles.sidemenulink}>
@@ -1224,7 +1237,7 @@ const Sidebar = ({ children, applyPageName }) => {
               </Link>
             </div>
           )}
-          {userRole == 3 && (
+          {userRole == 3 || userRole == 1 && (
             <>
               <hr></hr>
               <Link href="/Announcement" className={styles.sidemenulink}>
@@ -1773,28 +1786,35 @@ const Sidebar = ({ children, applyPageName }) => {
           )}
 
           <hr></hr>
-          <Link href="" className={styles.sidemenulink}>
-            <button
-              className={getStyle(501)}
-              onClick={updateActiveMenu.bind(this, { id: 501, name: "Help" })}
-            >
-              <IoMdHelpCircleOutline style={customStyles.icons} />
-              Help
-            </button>
-          </Link>
-          <hr></hr>
-          <Link href="/SupportTickets" className={styles.sidemenulink}>
-            <button
-              className={getStyle(601)}
-              onClick={updateActiveMenu.bind(this, {
-                id: 601,
-                name: "Support tickets",
-              })}
-            >
-              <HiOutlineTicket style={customStyles.icons} />
-              Support tickets
-            </button>
-          </Link>
+
+          <div>
+            <Link href="" className={styles.sidemenulink}>
+              <button
+                className={getStyle(501)}
+                onClick={updateActiveMenu.bind(this, { id: 501, name: "Help" })}
+              >
+                <IoMdHelpCircleOutline style={customStyles.icons} />
+                Help
+              </button>
+            </Link>
+            <hr></hr>
+          </div>
+
+          <div>
+            <Link href="/SupportTickets" className={styles.sidemenulink}>
+              <button
+                className={getStyle(601)}
+                onClick={updateActiveMenu.bind(this, {
+                  id: 601,
+                  name: "Support tickets",
+                })}
+              >
+                <HiOutlineTicket style={customStyles.icons} />
+                Support tickets
+              </button>
+            </Link>
+          </div>
+
         </div>
       </div>
     </div>

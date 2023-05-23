@@ -94,7 +94,7 @@ const PhilhealthForm = ({ editData }) => {
                                         <input
                                             name="lowLimit"
                                             type="text"
-                                            className='form-control'
+                                            className='form-control' placeholder='Taxiable income low limit'
                                             {...register("Taxiableincomelowlimit", {
                                                 required: true,
                                                 pattern: {
@@ -117,7 +117,7 @@ const PhilhealthForm = ({ editData }) => {
                                         <input
                                             name="highLimit"
                                             type="text"
-                                            className='form-control'
+                                            className='form-control'placeholder='Taxiable income high limit'
                                             {...register("Taxiableincomehighlimit", {
                                                 required: true,
                                                 pattern: {
@@ -139,7 +139,7 @@ const PhilhealthForm = ({ editData }) => {
                                         <input
                                             name="Philhealth"
                                             type="text"
-                                            className='form-control'
+                                            className='form-control' placeholder='Phihealth value'
                                             {...register("Phihealthvalue", {
                                                 required: true,
                                                 pattern: {

@@ -16,6 +16,7 @@ const Locatordashboard = () => {
     const [rejecteddDashboard, getRejected] = useState([])
     const [keyword, setKeyword] = useState("");
     const [userID, setUserID] = useState();
+    const [count, setcount] = useState("");
 
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
@@ -30,7 +31,8 @@ const Locatordashboard = () => {
     const getEndDate = (selectedDate) => {
         setEndDate(selectedDate);
         sessionStorage.setItem("EndDate", endDate);
-        return getDateBySelectedDate(selectedDate);
+        return dateValidation(selectedDate);
+        // return getDateBySelectedDate(selectedDate);
     };
     const getDateBySelectedDate = (endDatesss) => {
         debugger;
@@ -90,6 +92,7 @@ const Locatordashboard = () => {
         let pending = await apiService.commonGetCall("Payroll/GetLocatorRequests?UserID=" + UserID);
         getPending(pending.data);
         console.log("pending", pending.data)
+        setcount(pending.data.length);
     }
     const getApproveData = async () => {
         debugger;
@@ -97,6 +100,7 @@ const Locatordashboard = () => {
         let approved = await apiService.commonGetCall("Payroll/GetApprovedLocatorRequest?UserID=" + UserID);
         getApproved(approved.data);
         console.log("approved", approved.data)
+        setcount(approved.data.length);
     }
 
     const getRejectedData = async () => {
@@ -105,6 +109,7 @@ const Locatordashboard = () => {
         let rejected = await apiService.commonGetCall("Payroll/GetRejectedLocatorRequest?UserID=" + UserID);
         getRejected(rejected.data);
         console.log(rejected.data, "rejected")
+        setcount(rejected.data.length);
     }
 
     const Delete = (id) => {
@@ -144,6 +149,19 @@ const Locatordashboard = () => {
         return;
     }, [userID])
 
+    const dateValidation = (selectedDate) => {
+        if (new Date(startDate) > new Date(selectedDate)) {
+            Swal.fire("End Date should be greater than Start Date");
+        } else {
+            setEndDate(selectedDate);
+            return getDataBySelectedDate(selectedDate);
+        }
+    };
+    const getDataBySelectedDate = (endDatesss) => {
+        debugger;
+        return getPendingData(startDate, endDatesss);
+    };
+
 
 
     return (
@@ -151,7 +169,10 @@ const Locatordashboard = () => {
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-lg-12">
-                        <p className="Heading">My OBASIS Details</p>
+                        <Link style={{ borderBottom: "2px solid #2f87cc;" }} href="/Requests/Myteamobasisrequest">  <span className="Heading">My OBASIS Details</span> </Link>
+                        &nbsp;&nbsp;&nbsp;
+                        <Link style={{ textDecoration: "none" }} href="/Requests/Myteamobasisrequest">  <span className="Heading">My Team OBASIS Details</span> </Link>
+                        <br />         <br />
                         <div className="card p-3 rounded-3 shadow border-0 ">
                             <div className="row">
                                 <div className="col-lg-1">
@@ -159,17 +180,17 @@ const Locatordashboard = () => {
                                 </div>
                                 <div className="col-lg-2">
                                     <label style={{ fontWeight: "bold" }}>From Date</label>
-                                    <input type="date" className="form-control" value={startDate} onChange={(e) => getStartDate(e.target.value)} />
+                                    <input type="date" className="form-control" onChange={(e) => getStartDate(e.target.value)} />
                                 </div>
                                 <div className="col-lg-2">
                                     <label style={{ fontWeight: "bold" }}>To Date</label>
-                                    <input type="date" className="form-control" value={endDate || ""} onChange={(e) => getEndDate(e.target.value)} />
+                                    <input type="date" className="form-control" onChange={(e) => getEndDate(e.target.value)} />
                                 </div>
-                                <div className="col-lg-3">
+                                <div className="col-lg-3 searchtxt">
                                     <br />
                                     <input
-                                        type="text"
-                                        placeholder="Search for Date or Status"
+                                        type="search"
+                                        placeholder="Search here.."
                                         className="form-control"
                                         onChange={e => setKeyword(e.target.value)}
                                     ></input>
@@ -183,6 +204,7 @@ const Locatordashboard = () => {
                                 <button onClick={toggleApproved} className={`toggleButton ${approved ? "focus" : ""}`}>Approved</button>
                                 <button onClick={toggleRejected} className={`toggleButton ${rejected ? "focus" : ""}`}>Rejected</button>
                             </div>
+                            <h6 style={{ color: "#3247d5" }}>Showing {count} Results</h6>
                             <div className="col-6"></div>
                             <div className="col-2">
                                 <Link href="/Requests/Locatorrequest/new"><button className="submit-button">New Requests </button></Link>
@@ -208,7 +230,7 @@ const Locatordashboard = () => {
                                         </thead>
                                         <tbody>
                                             {pendingDashboard.filter(data => {
-                                                if ((data.date.toString().includes(keyword.toLowerCase())) || (data.approveStatus.toLowerCase().includes(keyword))) {
+                                                if ((data.date.toString().includes(keyword.toString())) || (data.approveStatus.toLowerCase().includes(keyword.toLowerCase())) || (data.startTime.toString().includes(keyword.toString())) || (data.endTime.toString().includes(keyword.toString())) || (data.task.toString().includes(keyword.toString())) || (data.comments.toString().includes(keyword.toString()))) {
                                                     return data;
                                                 }
                                             }).slice(offset, offset + PER_PAGE).map((data, index) => {
@@ -251,7 +273,7 @@ const Locatordashboard = () => {
                                         </thead>
                                         <tbody>
                                             {approvedDashboard.filter(data => {
-                                                if ((data.date.toString().includes(keyword.toLowerCase())) || (data.approveStatus.toLowerCase().includes(keyword))) {
+                                                if ((data.date.toString().includes(keyword.toString())) || (data.approveStatus.toLowerCase().includes(keyword.toLowerCase())) || (data.startTime.toString().includes(keyword.toString())) || (data.endTime.toString().includes(keyword.toString())) || (data.task.toString().includes(keyword.toString())) || (data.comments.toString().includes(keyword.toString()))) {
                                                     return data;
                                                 }
                                             }).slice(offset, offset + PER_PAGE).map((data, index) => {
@@ -287,7 +309,7 @@ const Locatordashboard = () => {
                                         </thead>
                                         <tbody>
                                             {rejecteddDashboard.filter(data => {
-                                                if ((data.date.toString().includes(keyword.toLowerCase())) || (data.approveStatus.toLowerCase().includes(keyword))) {
+                                                if ((data.date.toString().includes(keyword.toString())) || (data.approveStatus.toLowerCase().includes(keyword.toLowerCase())) || (data.startTime.toString().includes(keyword.toString())) || (data.endTime.toString().includes(keyword.toString())) || (data.task.toString().includes(keyword.toString())) || (data.comments.toString().includes(keyword.toString()))) {
                                                     return data;
                                                 }
                                             }).slice(offset, offset + PER_PAGE).map((data, index) => {

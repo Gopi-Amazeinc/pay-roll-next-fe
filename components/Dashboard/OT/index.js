@@ -181,7 +181,7 @@ XLSX.writeFile(workbook, "output.xlsx");
                     className="form-control CancelBTN"
                     onClick={openEditModal}
                   >
-                    UPLOAD LOANS
+                    Upload Overtime
                   </button>
                 </div>
                 <div className="col-lg-3">

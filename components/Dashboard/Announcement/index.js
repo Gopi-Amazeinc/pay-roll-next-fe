@@ -1,9 +1,10 @@
 import React from 'react';
 import { useState, useEffect } from "react";
 import { apiService } from "@/services/api.service";
+import Link from 'next/link';
 
 const AnnoucementDash = () => {
-  const [upcomming, setupcomming] = useState(false);
+  const [upcomming, setupcomming] = useState(true);
   const [completed, setcompleted] = useState(false);
 
   const [upcommingdashboard, setupcommingdashboard] = useState([]);
@@ -47,101 +48,117 @@ const AnnoucementDash = () => {
   }, [1]);
 
   return (
-    <>
-      <div>
-        <h4 style={{ color: "blue" }}>AnnoucementDashboard</h4>
-        <br />
-        <div class="shadow-lg p-3 mb-5 bg-white rounded">
+    <div className='container-fluid'>
+      <p className='Heading'>Annoucement Dashboard</p>
+      <div className='row'>
+        <div className='col-lg-12'>
+          <div className='card border-0 rounded-3 p-3'>
+            <div className="row">
+              <div className="col-lg-1">
+                <p>Filter BY</p>
+              </div>
+              <div className="col-lg-2">
+                <input type="date" className="form-control" />
+              </div>
+              <div className="col-lg-3">
+                <input
+                  type="text"
+                  className="form-control"
+                  placeholder="Search For Announcement"
+                />
+              </div>
+            </div>
+          </div>
+
+          <br />
+
           <div className="row">
             <div className="col-lg-1">
-              <p>Filter BY</p>
+              <div className="btn-group">
+                <button onClick={toggleUpcomming} className={`toggleButton ${upcomming ? "focus" : ""}`}>
+                  UPCOMING
+                </button>
+                <button onClick={toggleCompleted} className={`toggleButton ${completed ? "focus" : ""}`}>
+                  COMPLETED
+                </button>
+              </div>
             </div>
+            <div className='col-lg-9'></div>
             <div className="col-lg-2">
-              <input type="date" className="form-control" />
+              <Link href="/Announcement/announcementform">
+                <button
+                  className="AddButton"
+                >
+                  Add New
+                </button>
+              </Link>
             </div>
-            <div className="col-lg-4">
-              <input
-                type="text"
-                className="form-control"
-                placeholder="Search For Announcement"
-              />
+          </div>
+          <br></br>
+
+          <br />
+          <div className='row'>
+            <div className='col-lg-12'>
+              {completed && (
+                <table className="table table-hover">
+                  <thead className="bg-info text-white">
+                    <tr>
+                      <th>Announcement Date</th>
+                      <th>Announcement Time</th>
+                      <th>Announcement</th>
+                      <th>Announcement Description</th>
+                      <th>Venue</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    {completedashboard.map((data) => {
+                      return (
+                        <tr key={data.id}>
+                          <td>{data.dateTime}</td>
+                          <td>{data.time}</td>
+                          <td>{data.reason}</td>
+                          <td>{data.description}</td>
+                          <td>{data.venue} </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              )}
+
+              {upcomming && (
+                <table className="table table-hover">
+                  <thead className="bg-info text-white">
+                    <tr>
+                      <th>Announcement Date</th>
+                      <th>Announcement Time</th>
+                      <th>Announcement</th>
+                      <th>Announcement Description</th>
+                      <th>Venue</th>
+                    </tr>
+                  </thead>
+
+                  <tbody>
+                    {upcommingdashboard.map((data) => {
+                      return (
+                        <tr key={data.id}>
+                          <td>{data.dateTime}</td>
+                          <td>{data.time}</td>
+                          <td>{data.reason}</td>
+                          <td>{data.description}</td>
+                          <td>{data.venue} </td>
+                        </tr>
+                      );
+                    })}
+                  </tbody>
+                </table>
+              )}
             </div>
           </div>
         </div>
-
-        <div className="btn-group"></div>
-
-        <div className="row">
-          <div className="col-lg-1">
-            <div className="btn-group">
-              <button onClick={toggleUpcomming} className="toggleButton">
-                UPCOMING
-              </button>
-              <button onClick={toggleCompleted} className="toggleButton">
-                COMPLETED
-              </button>
-            </div>
-          </div>
-        </div>
-        <br></br>
-
-        {completed && (
-          <table className="table table-hover">
-            <thead className="bg-info text-white">
-              <tr>
-                <th>Announcement Date</th>
-                <th>Announcement Time</th>
-                <th>Announcement</th>
-                <th>Announcement Description</th>
-                <th>Venue</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {completedashboard.map((data) => {
-                return (
-                  <tr key={data.id}>
-                    <td>{data.dateTime}</td>
-                    <td>{data.time}</td>
-                    <td>{data.reason}</td>
-                    <td>{data.description}</td>
-                    <td>{data.venue} </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        )}
-
-        {upcomming && (
-          <table className="table table-hover">
-            <thead className="bg-info text-white">
-              <tr>
-                <th>Announcement Date</th>
-                <th>Announcement Time</th>
-                <th>Announcement</th>
-                <th>Announcement Description</th>
-                <th>Venue</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              {upcommingdashboard.map((data) => {
-                return (
-                  <tr key={data.id}>
-                    <td>{data.dateTime}</td>
-                    <td>{data.time}</td>
-                    <td>{data.reason}</td>
-                    <td>{data.description}</td>
-                    <td>{data.venue} </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        )}
       </div>
-    </>
+    </div>
   );
 };
 
