@@ -4,6 +4,7 @@ import { apiService } from "@/services/api.service";
 import { useEffect, useState } from 'react'
 import { Modal, ModalBody, ModalFooter } from "reactstrap";
 import { useForm } from 'react-hook-form';
+import Styles from "@/styles/attendancedetails.module.css";
 
 const Index = () => {
 
@@ -44,8 +45,9 @@ const Index = () => {
     const [modalOpen, setModalOpen] = useState(false);
     const { register, handleSubmit, reset, watch, formState: { errors } } = useForm();
 
-    const getData = async () => {
-        const res = await apiService.commonGetCall("HR/GetStaffShiftDetails");
+    const getData = async (Supervisor) => {
+        const res = await apiService.commonGetCall("HR/GetStaffShiftDetailsBySupervisor?Supervisor=" +
+            Supervisor);
         console.log(res.data)
         getWeeklyShiftData(res.data)
     }
@@ -80,11 +82,11 @@ const Index = () => {
 
                         <div className='col-lg-3'>
                             <br />
-                            <Link href="/Attendance/ShiftDetails" className="Heading">  My Weekly Shift</Link>
+                            <Link href="/Attendance/ShiftDetails" className={Styles.mainheader}>  My Weekly Shift</Link>
                         </div>
                         <div className='col-lg-3'>
                             <br />
-                            <Link href="/Attendance/MyTeamWeeklyShift" className="Heading"> My Team Weekly Shift</Link>
+                            <Link href="/Attendance/MyTeamWeeklyShift" className={Styles.mainheader}> My Team Weekly Shift</Link>
                         </div>
                     </div>
                     <br />
@@ -92,14 +94,14 @@ const Index = () => {
                     <div className='card border-0 p-3 rounded-3'>
                         <div className='row'>
                             <div className="col-lg-1">
-                                <p>Filter By</p>
+                                <p> <b>Filter By</b></p>
                             </div>
                             <div className='col-lg-2'>
-                                <label >START DATE <span style={{ color: "red" }} >*</span></label>
+                                <label ><b>START DATE</b> <span style={{ color: "red" }} >*</span></label>
                                 <input type='date' className='form-control' />
                             </div>
                             <div className='col-lg-2'>
-                                <label >END DATE <span style={{ color: "red" }} >*</span></label>
+                                <label > <b>END DATE </b><span style={{ color: "red" }} >*</span></label>
                                 <input type='date' className='form-control' />
                             </div>
                             <div className="col-lg-2">
