@@ -172,12 +172,14 @@ const Shiftdetails = () => {
           <Link href="/Attendance/shiftdetails" className={Styles.mainheader}>
             My Weekly Shift
           </Link>
+          <div className="line-border"></div>
         </div>
         <div className="col-lg-3">
           <br />
           {roleid != 3 ||
-            <Link href="/Attendance/MyTeamWeeklyShift" className={Styles.mainheader}> My Team Weekly Shift</Link>
-          }
+            <Link href="/Attendance/MyTeamWeeklyShift" className={Styles.mainheader}> My Team Weekly Shift
+            </Link>
+          } 
           {roleid != 2 ||
             <Link href="/Attendance/CompanyShiftDetails" className={Styles.mainheader}> Company Weekly Shift</Link>
           }

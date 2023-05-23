@@ -250,7 +250,9 @@ const MyTeamAttendancecorrectiondashboard = () => {
                             >
                                 My Team Attendance Correction
                             </Link>
+                            <div className="line-border"></div>
                         </div>
+                        
                     </>
                 )}
             </div>
