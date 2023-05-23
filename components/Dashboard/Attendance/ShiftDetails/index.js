@@ -183,7 +183,7 @@ const Shiftdetails = () => {
                      START DATE <span style={{ color: "red" }}>*</span>
                   </p>
                   <input type="date" className="form-control form-control-sm m-o"
-                    value={startDate}
+                    // value={startDate}
                     onChange={(e) => getStartDate(e.target.value)} />
                 </div>
                 <div className="col-lg-3">
@@ -191,7 +191,7 @@ const Shiftdetails = () => {
                     END DATE <span style={{ color: "red" }}>*</span>
                   </p>
                   <input type="date" className="form-control form-control-sm"
-                    value={endDate || ""}
+                    // value={endDate || ""}
                     onChange={(e) => getEndDate(e.target.value)} />
                 </div>
 

@@ -5,6 +5,7 @@ import * as XLSX from "xlsx";
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import Styles from '../../../../styles/payrollytd.module.css'
+import { useRouter } from "next/router";
 
 
 const Employmentjobhistory = () => {
@@ -14,6 +15,10 @@ const Employmentjobhistory = () => {
     const [dashboard, setDashboard] = useState([])
     const [YTDlist, setYTDlist] = useState([])
     const [PayrollHistory, setPayrollHistory] = useState(false)
+    const [keyword, setKeyword] = useState("");
+
+    const router = useRouter();
+
 
 
     const handleModalOpen = () => {
@@ -72,7 +77,7 @@ const Employmentjobhistory = () => {
                 icon: "success",
                 text: "Uploaded Successfully"
             })
-            location.href = "/Payroll/PayrollYTD"
+            router.push("/Payroll/PayrollYTD")
         }
     }
 
@@ -91,7 +96,7 @@ const Employmentjobhistory = () => {
                 icon: "success",
                 text: "Uploaded Successfully"
             })
-            location.href = "/Payroll/PayrollYTD"
+            router.push("/Payroll/PayrollYTD")
         }
     }
 
@@ -142,7 +147,7 @@ const Employmentjobhistory = () => {
                         <p>Filter By</p>
                     </div>
                     <div className='col-lg-4'>
-                        <input type='text' className='form-control' placeholder='Search for Staff ,Date of Joining or Role' />
+                        <input type='text' className='form-control' placeholder='Search for Staff ,Date of Joining or Role' onChange={e => { setKeyword(e.target.value) }} />
                     </div>
                 </div>
             </div>
@@ -246,7 +251,11 @@ const Employmentjobhistory = () => {
 
                             <tbody>
                                 {
-                                    YTDlist.map((YTD) => {
+                                    YTDlist.filter(data => {
+                                        if ((data.employeID.toString().includes(keyword)) || (data.firstAndLastName.toLowercase().includes(keyword.toLowercase()))) {
+                                            return data;
+                                        }
+                                    }).map((YTD) => {
                                         return (
                                             <tr key={YTD.id}>
                                                 <td>{YTD.employeID}</td>
