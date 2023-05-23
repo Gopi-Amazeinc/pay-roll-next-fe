@@ -1,12 +1,14 @@
-import TeamLeavedashboard from '@/components/Dashboard/Requests/Myteamleaverequest';
-import Layout from "@/components/layout/layout"
+import React from 'react'
+import Layout from '@/components/layout/layout'
+import TeamOvertimeDashboard from '@/components/Dashboard/Requests/Myteamleaverequest'
 const Index = () => {
     return (
         <div>
             <Layout>
-                <TeamLeavedashboard></TeamLeavedashboard>
+                <TeamOvertimeDashboard></TeamOvertimeDashboard>
             </Layout>
         </div>
     )
 }
-export default Index;
+
+export default Index
