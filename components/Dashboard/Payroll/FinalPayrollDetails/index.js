@@ -135,7 +135,7 @@ const FinalPayrollDetails = () => {
               sheet="users"
               currentTableRef={tableRef.current}
             >
-              <button type="button" className="form-control CancelBTN">Export To Excel </button>
+              <button type="button" className=" EditDelteBTN">Export To Excel </button>
             </DownloadTableExcel>
           </div>
         </div>
@@ -166,16 +166,16 @@ const FinalPayrollDetails = () => {
           <br />
           <table style={{ whiteSpace: "nowrap" }} className='table text-center ' ref={tableRef}>
             <thead>
-              <tr className='tr' >
-                <th className='text-white'>Select</th>
-                <th className='text-white'>Employee ID</th>
-                <th className='text-white'>Staff ID</th>
-                <th className='text-white'>Employee Name</th>
-                <th className='text-white'>End Date </th>
-                <th className='text-white'>Department</th>
-                <th className='text-white'>Basic Monthly Salary</th>
-                <th className='text-white'>Semi Monthly Salary</th>
-                <th className='text-white'>Action</th>
+              <tr className='text-white' >
+                <th >Select</th>
+                <th>Employee ID</th>
+                <th >Staff ID</th>
+                <th >Employee Name</th>
+                <th >End Date </th>
+                <th >Department</th>
+                <th >Basic Monthly Salary</th>
+                <th >Semi Monthly Salary</th>
+                <th >Action</th>
               </tr>
             </thead>
             <tbody >
