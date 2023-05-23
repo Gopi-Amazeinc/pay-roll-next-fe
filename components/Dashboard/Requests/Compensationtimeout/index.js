@@ -30,6 +30,7 @@ const Compensationtimeout = () => {
     const [isOpen, ModalIsOpen] = useState(false);
     const [keyword, setKeyword] = useState("");
     const [roleID, setRoleID] = useState();
+    const [count, setcount] = useState("");
     const [userID, setUserID] = useState()
 
     const openModal = () => {
@@ -83,28 +84,33 @@ const Compensationtimeout = () => {
         const res = await apiService.commonGetCall("Payroll/GetPendingCompensationTimeOutByStaffID?UserID=" + userID)
         // sessionStorage.setItem("supervisorID", res.data[0].supervisor)
         getPending(res.data)
+        setcount(res.data.length);
     }
 
-    const getApprovedData = async () => {        
+    const getApprovedData = async () => {
         const res = await apiService.commonGetCall("Payroll/GetApproveCompensationTimeOutByStaffID?UserID=" + userID)
         getApproved(res.data, "employee approved")
+        setcount(res.data.length);
     }
 
     const getRejectedData = async () => {
         const res = await apiService.commonGetCall("Payroll/GetRejectCompensationTimeOutByStaffID?UserID=" + userID)
         getRejected(res.data)
+        setcount(res.data.length);
     }
 
     const getManagerApprovedData = async () => {
         const res = await apiService.commonGetCall("Payroll/GetApproveCompensationTimeOutBySupervisor?UserID=" + userID)
         console.log(res.data)
         getManagerApproved(res.data)
+        setcount(res.data.length);
     }
 
     const getManagerRejectedData = async () => {
         const res = await apiService.commonGetCall("Payroll/GetRejectCompensationTimeOutBySupervisor?UserID=" + userID)
         console.log(res.data)
         getManagerRejected(res.data)
+        setcount(res.data.length);
     }
 
     const getPendingCompensation = async () => {
@@ -112,6 +118,7 @@ const Compensationtimeout = () => {
         const res = await apiService.commonGetCall("Payroll/GetPendingCompensationTimeOutBySupervisor?UserID=" + userID)
         console.log(res.data, "manager pending")
         getComponsation(res.data)
+        setcount(res.data.length);
     }
 
     const Delete = (id) => {
@@ -233,10 +240,11 @@ const Compensationtimeout = () => {
                     <div className='row'>
                         <div className='col-lg-4'>
                             <div className='btn-group'>
-                                <button onClick={ togglePending} className={`toggleButton ${pending ? "focus" : ""}`} >Pending</button>
+                                <button onClick={togglePending} className={`toggleButton ${pending ? "focus" : ""}`} >Pending</button>
                                 <button onClick={toggleApproved} className={`toggleButton ${approved ? "focus" : ""}`}  >Approved</button>
                                 <button onClick={toggleRejected} className={`toggleButton ${rejected ? "focus" : ""}`} >Rejected</button>
                             </div>
+                            <h6 style={{ color: "#3247d5" }}>Showing {count} Results</h6>
                         </div>
                     </div>
                     <br /><br />

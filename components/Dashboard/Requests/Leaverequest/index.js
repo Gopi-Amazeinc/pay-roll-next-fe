@@ -25,6 +25,7 @@ function LeaveListDashboard() {
     const [pending, setPending] = useState(false)
     const [approved, setApproved] = useState(false)
     const [rejected, setRejected] = useState(false)
+    const [count, setcount] = useState("");
     const togglePending = () => {
         setPending(true)
         setRejected(false)
@@ -92,18 +93,21 @@ function LeaveListDashboard() {
         const res = await apiService.commonGetCall("Employee/GetPendingStaffLeavesByStaffID?ID=" + userID + "&TypeID=1&Sdate=" + StartingDate + "&Edate=" + EndDate)
         setPendingData(res.data);
         console.log(res.data);
+        setcount(res.data.length);
     }
     const getApprovedData = async (StartingDate, EndDate) => {
         debugger;
         const res = await apiService.commonGetCall("Employee/GetApprovedStaffLeavesByStaffID?ID=" + userID + "&TypeID=1&Sdate=" + StartingDate + "&Edate=" + EndDate)
         setApprovedData(res.data);
         console.log(res.data);
+        setcount(res.data.length);
     }
     const getRejectedData = async (StartingDate, EndDate) => {
         debugger;
         const res = await apiService.commonGetCall("Employee/GetRejectedStaffLeavesByStaffID?ID=" + userID + "&TypeID=1&Sdate=" + StartingDate + "&Edate=" + EndDate)
         setRejectedData(res.data);
         console.log(res.data);
+        setcount(res.data.length);
     }
     const getCurrentMonthDates = () => {
         let newDate = new Date();
@@ -268,7 +272,8 @@ function LeaveListDashboard() {
                                     <div className='btn-group'>
                                         <button onClick={toggleCalender} className={`toggleButton ${calender ? "focus" : ""}`}>Calender</button>
                                         <button onClick={toggleListView} className={`toggleButton ${listview ? "focus" : ""}`}>List View</button>
-                                    </div>
+                                    </div><br /><br />
+                                    <h6 style={{ color: "#3247d5" }}>Showing {count} Results</h6>
                                 </div>
                             </div>
                             <br />
