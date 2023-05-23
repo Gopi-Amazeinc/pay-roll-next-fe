@@ -433,21 +433,27 @@ const Sidebar = ({ children, applyPageName }) => {
                         </button>
                       </Link>
                     )}
-                    <Link
-                      href="/Attendance/AttendanceCorrections"
-                      className={styles.sidemenulink}
-                    >
-                      <button
-                        className={getSubStyle(43)}
-                        onClick={updateActiveMenu.bind(this, {
-                          id: 43,
-                          name: "Attendance Correction",
-                        })}
-                      >
-                        <BiCalendarExclamation style={customStyles.icons} />
-                        Attendance Correction
-                      </button>
-                    </Link>
+                    {
+                      userRole != 4 && (
+                        <>
+                          <Link
+                            href="/Attendance/AttendanceCorrections"
+                            className={styles.sidemenulink}
+                          >
+                            <button
+                              className={getSubStyle(43)}
+                              onClick={updateActiveMenu.bind(this, {
+                                id: 43,
+                                name: "Attendance Correction",
+                              })}
+                            >
+                              <BiCalendarExclamation style={customStyles.icons} />
+                              Attendance Correction
+                            </button>
+                          </Link>
+                        </>
+                      )
+                    }
                     <Link
                       href="/Attendance/ShiftDetails"
                       className={styles.sidemenulink}
