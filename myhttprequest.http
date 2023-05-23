@@ -14,4 +14,7 @@
 
 # Content-Type: "application/json"
 
-GET https://103.12.1.103/PayRollRevampAPI/https://103.12.1.103/PayRollRevampAPI/Employee/GetStaffLeaves?ID=38243&TypeID=1&Sdate=2023-05-19&Edate=2023-05-19
+# GET https://103.12.1.103/PayRollRevampAPI/Employee/GetStaffLeaves?ID=38243&TypeID=1&Sdate=2023-05-19&Edate=2023-05-19
+
+# GET https://103.12.1.103/PayRollRevampAPI/HR/GetAttendanceByManagerID?Supervisor=20540&SDate=2023-05-19&EDate=2023-05-22  HTTP/1.1
+GET https://103.12.1.103/PayRollRevampAPI/Payroll/GetStaffByEmployeID?ID=38244 HTTP/1.1
