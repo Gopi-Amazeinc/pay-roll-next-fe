@@ -84,7 +84,13 @@ const AttendenceDetails = () => {
   const dateValidation = (selectedDate) => {
     if (new Date(startDate) > new Date(selectedDate)) {
       Swal.fire("End Date should be greater than Start Date");
-    } else {
+      // setEndDate("");
+    } 
+    // else if (new Date(startDate) == new Date(selectedDate)) {
+    //   Swal.fire("End Date should not be same as Start Date");
+      
+    // }
+    else {
       setEndDate(selectedDate);
       return getDataBySelectedDate(selectedDate);
     }

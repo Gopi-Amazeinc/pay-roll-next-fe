@@ -18,6 +18,7 @@ function PositionDetails() {
     const [costlistData, setCostlistData] = useState([]);
     const [Provincelist, setProvincelistData] = useState([]);
     const [Citylist, setCitylisttData] = useState([]);
+    // const [empID, setEmpID] = useState();
 
     const [worklocationlist, setworklocationlisttData] = useState([]);
     const [workCountrylistData, setWorkCountryListData] = useState([]);
@@ -101,7 +102,7 @@ function PositionDetails() {
                 ConfirmationDueDate: data.ConfirmationDueDate,
                 ProbationStartDate: data.ProbationStartDate,
                 ProbationEndDate: data.ProbationEndDate,
-                StaffID: sessionStorage.getItem('userID')
+                StaffID: sessionStorage.getItem('CreatedEmpID')
 
             }
             let res = await axios.post(hostURL + "/Payroll/InsertPositionDetails", Enity);
@@ -120,7 +121,8 @@ function PositionDetails() {
     useEffect(() => {
         debugger
         getData()
-
+        // let EmplID =  sessionStorage.getItem("CreatedEmpID");
+        // setEmpID(EmplID);
     }, [1]);
 
     async function getData() {

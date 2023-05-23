@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { apiService } from "@/services/api.service";
 import Styles from '../../../../styles/philhealth.module.css'
 import Swal from 'sweetalert2';
+import { BiFilterAlt } from "react-icons/bi";
 
 function Philhealth() {
     const [keyword, setKeyword] = useState("");
@@ -59,10 +60,10 @@ function Philhealth() {
                     <div className="col-lg-12">
                         <div className='card p-3 border-0 rounded-3 '>
                             <div className='row'>
-                                <div className='col-lg-1'>
-                                    <p>Filter By </p>
+                            <div className="col-lg-1">
+                                    <p> <BiFilterAlt /> Filter By</p>
                                 </div>
-
+                        
                                 <div className='col-lg-3'>
                                     <input type="text" className='form-control' placeholder='Search...' onChange={e => setKeyword(e.target.value)}/>
                                 </div>

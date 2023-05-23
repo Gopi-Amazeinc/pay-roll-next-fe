@@ -106,7 +106,7 @@ export default function EducationDetails() {
         StartDate: data.StartDate,
         EndDate: data.EndDate,
         AttachmentEdu: filePath,
-        StaffID: sessionStorage.getItem("userID"),
+        StaffID:  sessionStorage.getItem('CreatedEmpID')
       };
       await axios.post(hostURL + "Payroll/InsertEducationDetails", Entity);
       Swal.fire("Added Successfully!");
@@ -124,7 +124,7 @@ export default function EducationDetails() {
         StartDate: data.StartDate,
         EndDate: data.EndDate,
         AttachmentEdu: "No Image",
-        StaffID: sessionStorage.getItem("userID"),
+        StaffID:  sessionStorage.getItem('CreatedEmpID')
       };
 
       await axios.post(hostURL + "Payroll/UpdateEducationDetails", Entity);
@@ -149,7 +149,7 @@ export default function EducationDetails() {
       StartDate: existingData ? existingData.startDate : "",
       EndDate: existingData ? existingData.endDate : "",
       AttachmentEdu: existingData ? existingData.attachmentEdu : "",
-      StaffID: sessionStorage.getItem("userID"),
+      StaffID:  sessionStorage.getItem('CreatedEmpID')
     };
     reset(etty);
     setActionType(existingData ? "update" : "insert");

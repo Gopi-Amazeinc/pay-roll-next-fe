@@ -4,7 +4,6 @@ import axios from 'axios'
 import { apiService } from '@/services/api.service';
 import ReactPaginate from "react-paginate";
 import Swal from 'sweetalert2';
-import { SUCCESS } from 'dropzone';
 
 function FinalPayrollApproval() {
 

@@ -54,7 +54,7 @@ function ShiftMaster() {
           <div className="col-lg-1">
             <p> <BiFilterAlt /> Filter By</p>
           </div>
-          <div className="col-lg-5">
+          <div className="col-lg-3">
             <input
               type="text"
               placeholder="Search"
@@ -96,7 +96,8 @@ function ShiftMaster() {
                   <>
                     {shiftDetails
                       .filter(data => {
-                        if ((data.short.toLowerCase().includes(keyword.toLowerCase())) || (data.description.toLowerCase().includes(keyword))) {
+                        if ((data.short.toLowerCase().includes(keyword.toLowerCase())) || (data.description.toLowerCase().includes(keyword))||
+                        (data.shiftTimeings.toString().includes(keyword.toString())) || (data.grace.toString().includes(keyword))) {
                           return data;
                         }
                       })
