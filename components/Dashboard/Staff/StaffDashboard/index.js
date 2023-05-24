@@ -71,7 +71,7 @@ function StaffDashbaord() {
                 className="form-select"
                 aria-label="Default select example"
               >
-                <option>select Department</option>
+                <option>Select Department</option>
                 <option value="1">One</option>
                 <option value="2">Two</option>
                 <option value="3">Three</option>
@@ -123,13 +123,14 @@ function StaffDashbaord() {
           </div>
           <div className="col-lg-2"></div>
           <div className="col-lg-2">
+            <Link href="/Staff/AddStaff">
             <button
               type="button"
               className="AddButton"
               style={{ marginTop: "5%" }}
             >
-              ADD STAFF
-            </button>
+              Add Staff
+            </button></Link>
           </div>
           <div className="col-lg-2">
             <button
@@ -137,7 +138,7 @@ function StaffDashbaord() {
               className="AddButton"
               style={{ marginTop: "5%" }}
             >
-              UPLOAD STAFF
+              Upload Staff
             </button>
           </div>
         </div>

@@ -93,7 +93,7 @@ function PositionDetails({ data }) {
         DivisionID: data.DivisionID,
         DepartmentID: data.DepartmentID,
         SectionID: data.SectionID,
-        ManagerID: data.ManagerID,
+        // ManagerID: data.ManagerID,
         NextLevelManagerID: data.NextLevelManagerID,
         SAPVendorNo: data.SAPVendorNo,
         WorkArrangement: data.WorkArrangement,
@@ -131,7 +131,7 @@ function PositionDetails({ data }) {
         DivisionID: data.DivisionID,
         DepartmentID: data.DepartmentID,
         SectionID: data.SectionID,
-        ManagerID: data.ManagerID,
+        // ManagerID: data.ManagerID,
         NextLevelManagerID: data.NextLevelManagerID,
         SAPVendorNo: data.SAPVendorNo,
         WorkArrangement: data.WorkArrangement,
@@ -147,7 +147,8 @@ function PositionDetails({ data }) {
         ProbationEndDate: data.ProbationEndDate,
         StaffID: sessionStorage.getItem("CreatedEmpID"),
       };
-      await axios.post(hostURL + "", Entity);
+      await axios.post(hostURL + "/Payroll/UpdatePositionDetails", Entity);
+      Swal.fire("Updated Successfully!")
     }
   }
 
@@ -231,9 +232,9 @@ function PositionDetails({ data }) {
       DivisionID: data ? data.divisionID : "",
       DepartmentID: data ? data.departmentID : "",
       SectionID: data ? data.sectionID : "",
-      ManagerID: data ? data.managerID : "",
+      // ManagerID: data ? data.managerID : "",
       NextLevelManagerID: data ? data.nextLevelManagerID : "",
-      SAPVendorNo: data ? data.sAPVendorNo : "",
+      SAPVendorNo: data ? data.sapVendorNo : "",
       WorkArrangement: data ? data.workArrangement : "",
       WorksiteCountryID: data ? data.worksiteCountryID : "",
       WorksiteProvinceID: data ? data.worksiteProvinceID : "",
@@ -607,7 +608,7 @@ function PositionDetails({ data }) {
                     </div>
                   }
 
-                  {
+                  {/* {
                     <div style={customPopupDivision.popupinputs}>
                       <p>
                         Immediate Manager
@@ -637,7 +638,7 @@ function PositionDetails({ data }) {
                         </div>
                       }
                     </div>
-                  }
+                  } */}
 
                   {
                     <div style={customPopupDivision.popupinputs}>

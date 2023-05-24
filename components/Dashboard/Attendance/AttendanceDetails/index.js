@@ -136,7 +136,7 @@ const AttendenceDetails = () => {
     <div className="container-fluid">
       <div className="row mt-3">
         <div className="col-lg-3">
-          <div className={Styles.mainheader} style={{ maxContent: "60%" }} onClick={() => router.push("/Attendance/AttendanceDetails")}> My Attendance Details</div>
+          <div className={Styles.mainheader} style={{ maxContent: "60%" ,width: "70%" }} onClick={() => router.push("/Attendance/AttendanceDetails")}> My Attendance Details</div>
           <div className="line-border"></div>
         </div>
         <div className="col-lg-3">

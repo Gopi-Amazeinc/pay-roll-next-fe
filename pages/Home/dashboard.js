@@ -226,8 +226,9 @@ const Dashboard = () => {
           readExcel(file);
         }}
       /> */}
-      <div className="container-fluid">
+      <div className="container-fluid">          <br/>
         <div className="row">
+
           <div className={dashboard.card1}>
             <div className="card p-0" style={{ borderRadius: "20px" }}>
               <div
@@ -604,7 +605,7 @@ const Dashboard = () => {
           <br /> <br />
           <div className="row mt-4 ">
             <div className="col-lg-6 ">
-              <div className="card" style={{ borderRadius: "20px" }}>
+              <div className="card" style={{ borderRadius: "20px" ,padding:"15px" }}>
                 <div className="">
                   <h4
                     className={dashboard.cardheader}
