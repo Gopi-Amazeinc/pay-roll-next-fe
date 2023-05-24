@@ -50,7 +50,7 @@ const MyTeamOverTimeDetail = () => {
   }, []);
 
   const getData = async () => {
-    let res = await apiService.commonGetCall("Master/GetOvertimeMaster");
+    let res = await apiService.commonGetCall("Payroll/GetStaffOverTimeDetailsUpload");
     SetovertimeUnitsUpload(res.data);
   };
 
@@ -86,17 +86,12 @@ const MyTeamOverTimeDetail = () => {
           const res = await apiService.commonGetCall(
             "Payroll/GetStaffByEmployeeID?EmployeID=" + overtime.EmployeeID
           );
-          const staffData = res.data[0];
+          const staffData = res.data[0] || res.data;
           return {
             StaffID: staffData.id,
-            overtimeType: overtime.overtimeType,
-            overtimeAmount: overtime.overtimeAmount,
-            EMIAmount: overtime.SemiMonthlyAmmortization,
-            Period: overtime.Period,
-            Category: "NA",
-            Status: "Manager Approved",
-            Attachment: "NA",
-            Comments: overtime.Comments,
+            OT_name:overtime.name,
+            Hours:overtime.hours,
+            PayDate:overtime.Date,
           };
         })
         : []
@@ -122,7 +117,7 @@ const MyTeamOverTimeDetail = () => {
 
   return (
     <div className="container-fluid">
-      <p className="Heading">Yet to bind</p>
+      <p className="Heading">Overtime Units Upload</p>
       <div className="row">
         <div className="col-lg-12">
           <div className={Styles.filter}>
@@ -285,11 +280,11 @@ const MyTeamOverTimeDetail = () => {
                         {overtimeUnitsUpload.map((data) => {
                           return (
                             <tr key={data.id}>
-                              <td>{data.payrollComponentType}</td>
-                              <td>{data.employeeName}</td>
-                              <td>{data.payDtae}</td>
-                              <td>{data.componentName}</td>
-                              <td>{data.endTime}</td>
+                              <td>{data.staffID}</td>
+                              <td>{data.staffname}</td>
+                              <td>{data.payDate}</td>
+                              <td>{data.oT_name}</td>
+                              <td>{data.hours}</td>
 
                             </tr>
                           );

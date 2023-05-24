@@ -5,6 +5,10 @@ import { useEffect, useState } from 'react'
 import { Modal, ModalBody, ModalFooter } from "reactstrap";
 import { useForm } from 'react-hook-form';
 import Styles from "@/styles/attendancedetails.module.css";
+import { DownloadTableExcel } from "react-export-table-to-excel";
+import { useRef } from "react";
+import ReactPaginate from "react-paginate";
+import Swal from 'sweetalert2';
 
 const Index = () => {
 
@@ -41,19 +45,49 @@ const Index = () => {
     //     setRejected(false)
     // }
 
+    const [userID, setUserID] = useState();
+    const [roleID, setRoleID] = useState();
+
+    const tableRef = useRef(null);
+
     const [weeklyShiftData, getWeeklyShiftData] = useState([])
     const [modalOpen, setModalOpen] = useState(false);
+
+    const [count, setcount] = useState("");
+
+    const [startDate, setStartDate] = useState("");
+    const [endDate, setEndDate] = useState("");
+
     const { register, handleSubmit, reset, watch, formState: { errors } } = useForm();
 
-    const getData = async (Supervisor) => {
-        const res = await apiService.commonGetCall("HR/GetStaffShiftDetailsBySupervisor?Supervisor=" +
-            Supervisor);
+    useEffect(() => {
+        const userid = sessionStorage.getItem("userID");
+        const roleid = sessionStorage.getItem("roleID");
+        setUserID(userid);
+        setRoleID(roleid);
+    }, []);
+
+    useEffect(() => {
+        debugger
+        if (userID) {
+            getData();
+        }
+
+    }, [userID])
+
+    const getData = async () => {
+        debugger
+        const res = await apiService.commonGetCall("Payroll/GetStaffShiftDetailsBySupervisor?Supervisor=" +
+            userID);
         console.log(res.data)
         getWeeklyShiftData(res.data)
+        setcount(res.data.length);
+
     }
 
     const approve = async (id) => {
         const res = await apiService.commonPostCall("Payroll/ApproveStaffShiftDetails", id)
+        Swal.fire("Approved Successfully")
         getData();
     }
 
@@ -61,18 +95,72 @@ const Index = () => {
         setModalOpen(!modalOpen)
         sessionStorage.setItem("rejectID", id)
     }
+    const getStartDate = (selectedDate) => {
+        setStartDate(selectedDate);
+        setEndDate("");
+        // return dateValidation(selectedDate)
+    };
+    const getCurrentMonthDates = () => {
+        let newDate = new Date();
+        let firstDayOfMonth = new Date(newDate.getFullYear(), newDate.getMonth());
+        let fromDate = formateDate(firstDayOfMonth);
+
+        const year = newDate.getFullYear();
+        const month = newDate.getMonth() + 1;
+        const lastDay = new Date(year, month, 0).getDate();
+        const toDate = `${year}-${month.toString().padStart(2, "0")}-${lastDay
+            .toString()
+            .padStart(2, "0")}`;
+        setStartDate(fromDate);
+        setEndDate(toDate);
+        return {
+            setStartDate: fromDate,
+            setEndDate: toDate,
+        };
+    };
+
+
+    const getEndDate = (selectedDate) => {
+        setEndDate(selectedDate);
+        return dateValidation(selectedDate);
+    };
+    const dateValidation = (selectedDate) => {
+        if (new Date(startDate) > new Date(selectedDate)) {
+            Swal.fire("End Date should be greater than Start Date");
+            // setEndDate("");
+        }
+        // else if (new Date(startDate) == new Date(selectedDate)) {
+        //   Swal.fire("End Date should not be same as Start Date");
+
+        // }
+        else {
+            setEndDate(selectedDate);
+            return getDataBySelectedDate(selectedDate);
+        }
+    };
+    const getDataBySelectedDate = (endDatesss) => {
+        debugger;
+        return getData(startDate, endDatesss);
+    };
+
+
 
     const onReject = async () => {
         let ID = sessionStorage.getItem("rejectID")
         let Reason = watch("reason")
         const res = await apiService.commonPostCall("Payroll/RejectStaffShiftDetails", Reason, ID)
+        Swal.fire("Rejected Successfully")
         sessionStorage.removeItem('rejectID');
         setModalOpen(!modalOpen)
     }
+    const PER_PAGE = 10;
+    const [currentPage, setCurrentPage] = useState(0);
+    function handlePageClick({ selected: selectedPage }) {
+        setCurrentPage(selectedPage);
+    }
+    const offset = currentPage * PER_PAGE;
+    const pageCount = Math.ceil(weeklyShiftData.length / PER_PAGE);
 
-    useEffect(() => {
-        getData();
-    }, [])
 
     return (
         <div className='container-fluid'>
@@ -83,13 +171,13 @@ const Index = () => {
                         <div className='col-lg-3'>
                             <br />
                             <Link href="/Attendance/ShiftDetails" className={Styles.mainheader}>  My Weekly Shift</Link>
-                           
+
                         </div>
-                       
+
                         <div className='col-lg-3'>
                             <br />
-                            <Link href="/Attendance/MyTeamWeeklyShift" className={Styles.mainheader}> My Team Weekly Shift</Link> 
-                             <div className="line-border"></div>
+                            <Link href="/Attendance/MyTeamWeeklyShift" className={Styles.mainheader}> My Team Weekly Shift</Link>
+                            <div className="line-border"></div>
                         </div>
                     </div>
                     <br />
@@ -101,11 +189,11 @@ const Index = () => {
                             </div>
                             <div className='col-lg-2'>
                                 <label ><b>START DATE</b> <span style={{ color: "red" }} >*</span></label>
-                                <input type='date' className='form-control' />
+                                <input type='date' onChange={(e) => getStartDate(e.target.value)} className='form-control' />
                             </div>
                             <div className='col-lg-2'>
                                 <label > <b>END DATE </b><span style={{ color: "red" }} >*</span></label>
-                                <input type='date' className='form-control' />
+                                <input type='date' onChange={(e) => getEndDate(e.target.value)} className='form-control' />
                             </div>
                             <div className="col-lg-2">
                                 <br />
@@ -115,7 +203,17 @@ const Index = () => {
                             <div className="col-lg-1"></div>
                             <div className="col-lg-2">
                                 <br />
-                                <button className='button' >Export To excel</button>
+                                {count > 0 ?
+                                    <>
+                                        <DownloadTableExcel
+                                            filename="users table"
+                                            sheet="users"
+                                            currentTableRef={tableRef.current}
+                                        >
+                                            <button className='button' >Export To excel</button>     </DownloadTableExcel>
+                                    </>
+                                    : null}
+
                             </div>
                         </div>
                     </div>
@@ -129,6 +227,7 @@ const Index = () => {
                         </div>
                     </div> */}
                     <br />
+                    <h6 style={{ color: "#3247d5" }}>Showing {count} Results</h6>
 
                     <div className='row'>
                         <div className='col-lg-12'>
@@ -150,7 +249,7 @@ const Index = () => {
 
                                 <tbody>
                                     {
-                                        weeklyShiftData.map((data) => {
+                                        weeklyShiftData.slice(offset, offset + PER_PAGE).map((data) => {
                                             return (
                                                 <tr key={data.id}>
                                                     <td>{data.staffID}</td>
@@ -175,6 +274,27 @@ const Index = () => {
                             </table>
                         </div>
                     </div>
+                    <div className="mb-4 mt-4 text-center">
+                        <ReactPaginate
+                            previousLabel={"Previous"}
+                            nextLabel={"Next"}
+                            breakLabel={"..."}
+                            pageCount={pageCount}
+                            marginPagesDisplayed={2}
+                            pageRangeDisplayed={3}
+                            onPageChange={handlePageClick}
+                            containerClassName={"pagination  justify-content-center"}
+                            pageClassName={"page-item "}
+                            pageLinkClassName={"page-link"}
+                            previousClassName={"page-item"}
+                            previousLinkClassName={"page-link"}
+                            nextClassName={"page-item"}
+                            nextLinkClassName={"page-link"}
+                            breakClassName={"page-item"}
+                            breakLinkClassName={"page-link"}
+                            activeClassName={"active primary"}
+                        />
+                    </div>
 
                     <div className='row'>
                         <Modal isOpen={modalOpen} >
@@ -185,8 +305,9 @@ const Index = () => {
                                 <button
                                     aria-label="Close"
                                     type="button"
+                                    className={Styles.close}
                                     onClick={() => setModalOpen(!modalOpen)}
-                                ></button>
+                                >X</button>
                             </div>
                             <form onSubmit={handleSubmit(reject)}>
                                 <ModalBody>
@@ -310,7 +431,7 @@ const Index = () => {
                     </div> */}
                 </div>
             </div>
-        </div>
+        </div >
     );
 }
 

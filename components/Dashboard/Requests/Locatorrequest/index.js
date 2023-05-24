@@ -16,6 +16,7 @@ const Locatordashboard = () => {
     const [rejecteddDashboard, getRejected] = useState([])
     const [keyword, setKeyword] = useState("");
     const [userID, setUserID] = useState();
+    const [count, setcount] = useState("");
 
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
@@ -91,6 +92,7 @@ const Locatordashboard = () => {
         let pending = await apiService.commonGetCall("Payroll/GetLocatorRequests?UserID=" + UserID);
         getPending(pending.data);
         console.log("pending", pending.data)
+        setcount(pending.data.length);
     }
     const getApproveData = async () => {
         debugger;
@@ -98,6 +100,7 @@ const Locatordashboard = () => {
         let approved = await apiService.commonGetCall("Payroll/GetApprovedLocatorRequest?UserID=" + UserID);
         getApproved(approved.data);
         console.log("approved", approved.data)
+        setcount(approved.data.length);
     }
 
     const getRejectedData = async () => {
@@ -106,6 +109,7 @@ const Locatordashboard = () => {
         let rejected = await apiService.commonGetCall("Payroll/GetRejectedLocatorRequest?UserID=" + UserID);
         getRejected(rejected.data);
         console.log(rejected.data, "rejected")
+        setcount(rejected.data.length);
     }
 
     const Delete = (id) => {
@@ -165,7 +169,10 @@ const Locatordashboard = () => {
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-lg-12">
-                        <p className="Heading">My OBASIS Details</p>
+                        <Link style={{ borderBottom: "2px solid #2f87cc;" }} href="/Requests/Myteamobasisrequest">  <span className="Heading">My OBASIS Details</span> </Link>
+                        &nbsp;&nbsp;&nbsp;
+                        <Link style={{ textDecoration: "none" }} href="/Requests/Myteamobasisrequest">  <span className="Heading">My Team OBASIS Details</span> </Link>
+                        <br />         <br />
                         <div className="card p-3 rounded-3 shadow border-0 ">
                             <div className="row">
                                 <div className="col-lg-1">
@@ -197,6 +204,7 @@ const Locatordashboard = () => {
                                 <button onClick={toggleApproved} className={`toggleButton ${approved ? "focus" : ""}`}>Approved</button>
                                 <button onClick={toggleRejected} className={`toggleButton ${rejected ? "focus" : ""}`}>Rejected</button>
                             </div>
+                            <h6 style={{ color: "#3247d5" }}>Showing {count} Results</h6>
                             <div className="col-6"></div>
                             <div className="col-2">
                                 <Link href="/Requests/Locatorrequest/new"><button className="submit-button">New Requests </button></Link>
@@ -207,119 +215,128 @@ const Locatordashboard = () => {
                         <div className="row">
                             <div className="col-lg-12">
                                 {pending && (
-                                    <table className='table' >
-                                        <thead>
-                                            <tr>
-                                                <th>Control Number</th>
-                                                <th>Date</th>
-                                                <th>Start Time</th>
-                                                <th>End Time</th>
-                                                <th>Task</th>
-                                                <th>Comments</th>
-                                                <th>Status</th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {pendingDashboard.filter(data => {
-                                                if ((data.date.toString().includes(keyword.toString())) || (data.approveStatus.toLowerCase().includes(keyword.toLowerCase())) || (data.startTime.toString().includes(keyword.toString())) || (data.endTime.toString().includes(keyword.toString())) || (data.task.toString().includes(keyword.toString())) || (data.comments.toString().includes(keyword.toString()))) {
-                                                    return data;
-                                                }
-                                            }).slice(offset, offset + PER_PAGE).map((data, index) => {
-                                                return (
-                                                    <tr key={index}>
-                                                        <td>{data.id}</td>
-                                                        <td>{data.date}</td>
-                                                        <td>{data.startTime}</td>
-                                                        <td>{data.endTime}</td>
-                                                        <td>{data.task}</td>
-                                                        <td>{data.comments}</td>
-                                                        <td>{data.approveStatus}</td>
-                                                        {/* <td>{
+                                    <>
+                                        <h6 style={{ color: "#3247d5" }}>Showing {pendingDashboard.length} Results</h6>
+                                        <table className='table' >
+                                            <thead>
+                                                <tr>
+                                                    <th>Control Number</th>
+                                                    <th>Date</th>
+                                                    <th>Start Time</th>
+                                                    <th>End Time</th>
+                                                    <th>Task</th>
+                                                    <th>Comments</th>
+                                                    <th>Status</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {pendingDashboard.filter(data => {
+                                                    if ((data.date.toString().includes(keyword.toString())) || (data.approveStatus.toLowerCase().includes(keyword.toLowerCase())) || (data.startTime.toString().includes(keyword.toString())) || (data.endTime.toString().includes(keyword.toString())) || (data.task.toString().includes(keyword.toString())) || (data.comments.toString().includes(keyword.toString()))) {
+                                                        return data;
+                                                    }
+                                                }).slice(offset, offset + PER_PAGE).map((data, index) => {
+                                                    return (
+                                                        <tr key={index}>
+                                                            <td>{data.id}</td>
+                                                            <td>{data.date}</td>
+                                                            <td>{data.startTime}</td>
+                                                            <td>{data.endTime}</td>
+                                                            <td>{data.task}</td>
+                                                            <td>{data.comments}</td>
+                                                            <td>{data.approveStatus}</td>
+                                                            {/* <td>{
                                                 <b>{data.statusID === 0 ? 'Manager Pending' :
                                                     data.statusID === 1 ? 'Manager approved' :
                                                         data.statusID === 2 ? 'Manager Rejected' : ' '}</b>
                                             }
                                             </td> */}
-                                                        <td><button onClick={Delete.bind(this, data.id)} className="edit-btn">Cancel</button></td>
-                                                    </tr>
-                                                )
-                                            })
-                                            }
-                                        </tbody>
-                                    </table>
+                                                            <td><button onClick={Delete.bind(this, data.id)} className="edit-btn">Cancel</button></td>
+                                                        </tr>
+                                                    )
+                                                })
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </>
                                 )}
 
                                 {approved && (
-                                    <table className='table' >
-                                        <thead>
-                                            <tr>
-                                                <th>Control Number</th>
-                                                <th>Date</th>
-                                                <th>Start Time</th>
-                                                <th>End Time</th>
-                                                <th>Task</th>
-                                                <th>Comments</th>
-                                                <th>Status</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {approvedDashboard.filter(data => {
-                                                if ((data.date.toString().includes(keyword.toString())) || (data.approveStatus.toLowerCase().includes(keyword.toLowerCase())) || (data.startTime.toString().includes(keyword.toString())) || (data.endTime.toString().includes(keyword.toString())) || (data.task.toString().includes(keyword.toString())) || (data.comments.toString().includes(keyword.toString()))) {
-                                                    return data;
+                                    <>
+                                        <h6 style={{ color: "#3247d5" }}>Showing {approvedDashboard.length} Results</h6>
+                                        <table className='table' >
+                                            <thead>
+                                                <tr>
+                                                    <th>Control Number</th>
+                                                    <th>Date</th>
+                                                    <th>Start Time</th>
+                                                    <th>End Time</th>
+                                                    <th>Task</th>
+                                                    <th>Comments</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {approvedDashboard.filter(data => {
+                                                    if ((data.date.toString().includes(keyword.toString())) || (data.approveStatus.toLowerCase().includes(keyword.toLowerCase())) || (data.startTime.toString().includes(keyword.toString())) || (data.endTime.toString().includes(keyword.toString())) || (data.task.toString().includes(keyword.toString())) || (data.comments.toString().includes(keyword.toString()))) {
+                                                        return data;
+                                                    }
+                                                }).slice(offset, offset + PER_PAGE).map((data, index) => {
+                                                    return (
+                                                        <tr className="text-dark" key={index}>
+                                                            <td>{data.id}</td>
+                                                            <td>{data.date}</td>
+                                                            <td>{data.startTime}</td>
+                                                            <td>{data.endTime}</td>
+                                                            <td>{data.task}</td>
+                                                            <td>{data.comments}</td>
+                                                            <td>{data.approveStatus}</td>
+                                                        </tr>
+                                                    )
+                                                })
                                                 }
-                                            }).slice(offset, offset + PER_PAGE).map((data, index) => {
-                                                return (
-                                                    <tr className="text-dark" key={index}>
-                                                        <td>{data.id}</td>
-                                                        <td>{data.date}</td>
-                                                        <td>{data.startTime}</td>
-                                                        <td>{data.endTime}</td>
-                                                        <td>{data.task}</td>
-                                                        <td>{data.comments}</td>
-                                                        <td>{data.approveStatus}</td>
-                                                    </tr>
-                                                )
-                                            })
-                                            }
-                                        </tbody>
-                                    </table>
+                                            </tbody>
+                                        </table>
+                                    </>
                                 )}
 
                                 {rejected && (
-                                    <table className='table' >
-                                        <thead>
-                                            <tr>
-                                                <th>Control Number</th>
-                                                <th>Date</th>
-                                                <th>Start Time</th>
-                                                <th>End Time</th>
-                                                <th>Task</th>
-                                                <th>Comments</th>
-                                                <th>Status</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {rejecteddDashboard.filter(data => {
-                                                 if ((data.date.toString().includes(keyword.toString())) || (data.approveStatus.toLowerCase().includes(keyword.toLowerCase())) || (data.startTime.toString().includes(keyword.toString())) || (data.endTime.toString().includes(keyword.toString())) || (data.task.toString().includes(keyword.toString())) || (data.comments.toString().includes(keyword.toString()))) {
-                                                    return data;
+                                    <>
+                                        <h6 style={{ color: "#3247d5" }}>Showing {rejecteddDashboard.length} Results</h6>
+                                        <table className='table' >
+                                            <thead>
+                                                <tr>
+                                                    <th>Control Number</th>
+                                                    <th>Date</th>
+                                                    <th>Start Time</th>
+                                                    <th>End Time</th>
+                                                    <th>Task</th>
+                                                    <th>Comments</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {rejecteddDashboard.filter(data => {
+                                                    if ((data.date.toString().includes(keyword.toString())) || (data.approveStatus.toLowerCase().includes(keyword.toLowerCase())) || (data.startTime.toString().includes(keyword.toString())) || (data.endTime.toString().includes(keyword.toString())) || (data.task.toString().includes(keyword.toString())) || (data.comments.toString().includes(keyword.toString()))) {
+                                                        return data;
+                                                    }
+                                                }).slice(offset, offset + PER_PAGE).map((data, index) => {
+                                                    return (
+                                                        <tr className="text-dark" key={index}>
+                                                            <td>{data.id}</td>
+                                                            <td>{data.date}</td>
+                                                            <td>{data.startTime}</td>
+                                                            <td>{data.endTime}</td>
+                                                            <td>{data.task}</td>
+                                                            <td>{data.comments}</td>
+                                                            <td>{data.approveStatus}</td>
+                                                        </tr>
+                                                    )
+                                                })
                                                 }
-                                            }).slice(offset, offset + PER_PAGE).map((data, index) => {
-                                                return (
-                                                    <tr className="text-dark" key={index}>
-                                                        <td>{data.id}</td>
-                                                        <td>{data.date}</td>
-                                                        <td>{data.startTime}</td>
-                                                        <td>{data.endTime}</td>
-                                                        <td>{data.task}</td>
-                                                        <td>{data.comments}</td>
-                                                        <td>{data.approveStatus}</td>
-                                                    </tr>
-                                                )
-                                            })
-                                            }
-                                        </tbody>
-                                    </table>
+                                            </tbody>
+                                        </table>
+                                    </>
                                 )}
                             </div>
                         </div>

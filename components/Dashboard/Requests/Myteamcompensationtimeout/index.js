@@ -31,6 +31,7 @@ const MyTeamCompensationtimeout = () => {
     const [keyword, setKeyword] = useState("");
     const [roleID, setRoleID] = useState();
     const [userID, setUserID] = useState()
+    const [count, setcount] = useState("");
 
     const openModal = () => {
         ModalIsOpen(true)
@@ -78,41 +79,26 @@ const MyTeamCompensationtimeout = () => {
 
 
 
-    const getPendingData = async () => {
-
-        const res = await apiService.commonGetCall("Payroll/GetPendingCompensationTimeOutByStaffID?UserID=" + userID)
-        // sessionStorage.setItem("supervisorID", res.data[0].supervisor)
-        getPending(res.data)
-    }
-
-    const getApprovedData = async () => {
-
-        const res = await apiService.commonGetCall("Payroll/GetApproveCompensationTimeOutByStaffID?UserID=" + userID)
-        getApproved(res.data, "employee approved")
-    }
-
-    const getRejectedData = async () => {
-
-        const res = await apiService.commonGetCall("Payroll/GetRejectCompensationTimeOutByStaffID?UserID=" + userID)
-        getRejected(res.data)
-    }
-
     const getManagerApprovedData = async () => {
         const res = await apiService.commonGetCall("Payroll/GetApproveCompensationTimeOutBySupervisor?UserID=" + userID)
         console.log(res.data)
         getManagerApproved(res.data)
+        setcount(res.data.length);
     }
 
     const getManagerRejectedData = async () => {
         const res = await apiService.commonGetCall("Payroll/GetRejectCompensationTimeOutBySupervisor?UserID=" + userID)
         console.log(res.data)
         getManagerRejected(res.data)
+        setcount(res.data.length);
     }
 
     const getPendingCompensation = async () => {
+        staffID = sessionStorage.getItem("userID");
         const res = await apiService.commonGetCall("Payroll/GetPendingCompensationTimeOutBySupervisor?UserID=" + userID)
         console.log(res.data, "manager pending")
         getComponsation(res.data)
+        setcount(res.data.length);
     }
 
     const Delete = (id) => {
@@ -238,6 +224,7 @@ const MyTeamCompensationtimeout = () => {
                                 <button onClick={toggleApproved} className={`toggleButton ${approved ? "focus" : ""}`}  >Approved</button>
                                 <button onClick={toggleRejected} className={`toggleButton ${rejected ? "focus" : ""}`} >Rejected</button>
                             </div>
+                            <h6 style={{ color: "#3247d5" }}>Showing {count} Results</h6>
                         </div>
                     </div>
                     <br /><br />
@@ -272,11 +259,11 @@ const MyTeamCompensationtimeout = () => {
                     <div className='row'>
                         <div className='col-lg-12'>
                             {
-                                pending && roleID != "3" && (
+                                pending && roleID == "3" && (
                                     <table className='table'>
                                         <thead className='bg-info text-white'>
                                             <tr>
-                                       <th input type='checkbox'></th>
+                                                <th input type='checkbox'></th>
                                                 <th>Controll Number</th>
                                                 <th>Employe ID</th>
                                                 <th>Employee Name</th>
@@ -289,7 +276,7 @@ const MyTeamCompensationtimeout = () => {
 
                                         <tbody>
                                             {
-                                                pendingDashboard.filter(data => {
+                                                compensation.filter(data => {
                                                     if ((data.date.toString().includes(keyword.toLowerCase())) || (data.status.toLowerCase().includes(keyword)) || (data.actuval_StartTime.toString().includes(keyword.toLowerCase())) || (data.actuval_EndTime.toString().includes(keyword.toLowerCase())) || (data.comments.toString().includes(keyword.toLowerCase()))) {
                                                         return data;
                                                     }
@@ -313,55 +300,14 @@ const MyTeamCompensationtimeout = () => {
                                 )
                             }
 
-                            {
 
-                                managertogglePending && roleID == "3" && (
-                                    <table className='table'>
-                                        <thead className='bg-info text-white'>
-                                            <tr>
-                                        
-                                                <th>Controll Number</th>
-                                                <th>Employe ID</th>
-                                                <th>Employee Name</th>
-                                                <th>Date</th>
-                                                <th>Start Time</th>
-                                                <th>End Time</th>
-                                                
-                                            </tr>
-                                        </thead>
-
-                                        <tbody>
-                                            {
-                                                compensation.filter(data => {
-                                                    if ((data.date.toString().includes(keyword.toLowerCase())) || (data.status.toLowerCase().includes(keyword))) {
-                                                        return data;
-                                                    }
-                                                }).slice(offset, offset + PER_PAGE).map((data) => {
-                                                    return (
-                                                        <tr key={data.id}>
-                                                            <td>{data.staffname}</td>
-                                                            <td>{data.date}</td>
-                                                            <td>{data.actuval_StartTime}</td>
-                                                            <td>{data.actuval_EndTime}</td>
-                                                            <td>
-                                                                <button onClick={approve.bind(this, data.id)} className='edit-btn'>Approve</button>
-                                                                <button onClick={openModal(sessionStorage.setItem("id", data.id))} className='edit-btn'>Reject</button>
-                                                            </td>
-                                                        </tr>
-                                                    )
-                                                })
-                                            }
-                                        </tbody>
-                                    </table>
-                                )
-                            }
 
                             {
-                                approved && roleID != "3" && (
+                                approved && roleID == "3" && (
                                     <table className='table table-hover'>
                                         <thead className='bg-info text-white'>
                                             <tr>
-                                            <th>Controll Number</th>
+                                                <th>Controll Number</th>
                                                 <th>Employe ID</th>
                                                 <th>Employee Name</th>
                                                 <th>Date</th>
@@ -370,13 +316,13 @@ const MyTeamCompensationtimeout = () => {
                                                 <th>Start Time</th>
                                                 <th>End Time</th>
                                                 <th>Reason</th>
-                                                
+
                                             </tr>
                                         </thead>
 
                                         <tbody>
                                             {
-                                                approvedDashboard.filter(data => {
+                                                managerApproved.filter(data => {
                                                     if ((data.date.toString().includes(keyword.toLowerCase())) || (data.status.toLowerCase().includes(keyword))) {
                                                         return data;
                                                     }
@@ -397,43 +343,10 @@ const MyTeamCompensationtimeout = () => {
                                 )
                             }
 
-                            {
 
-                                managerToggleapproved && roleID == "3" && (
-                                    <table className='table table-hover'>
-                                        <thead className='bg-info text-white'>
-                                            <tr>
-                                                <th>Employee Name</th>
-                                                <th>Date</th>
-                                                <th>Start Time</th>
-                                                <th>End Time</th>
-                                            </tr>
-                                        </thead>
-
-                                        <tbody>
-                                            {
-                                                managerApproved.filter(data => {
-                                                    if ((data.date.toLowerCase().includes(keyword.toLowerCase())) || (data.status.toLowerCase().includes(keyword))) {
-                                                        return data;
-                                                    }
-                                                }).slice(offset, offset + PER_PAGE).map((data) => {
-                                                    return (
-                                                        <tr key={data.id}>
-                                                            <td>{data.staffname}</td>
-                                                            <td>{data.date}</td>
-                                                            <td>{data.actuval_StartTime}</td>
-                                                            <td>{data.actuval_EndTime}</td>
-                                                        </tr>
-                                                    )
-                                                })
-                                            }
-                                        </tbody>
-                                    </table>
-                                )
-                            }
 
                             {
-                                rejected && roleID != "3" && (
+                                rejected && roleID == "3" && (
                                     <table className='table table-hover'>
                                         <thead className='bg-info text-white'>
                                             <tr>
@@ -447,7 +360,7 @@ const MyTeamCompensationtimeout = () => {
 
                                         <tbody>
                                             {
-                                                rejecteddDashboard.filter(data => {
+                                                managerRejected.filter(data => {
                                                     if ((data.date.toLowerCase().includes(keyword.toLowerCase())) || (data.status.toLowerCase().includes(keyword))) {
                                                         return data;
                                                     }
@@ -468,40 +381,7 @@ const MyTeamCompensationtimeout = () => {
                                 )
                             }
 
-                            {
-                                managertogglerejected && roleID == "3" && (
 
-                                    <table className='table table-hover'>
-                                        <thead className='bg-info text-white'>
-                                            <tr>
-                                                <th>Employee Name</th>
-                                                <th>Date</th>
-                                                <th>Start Time</th>
-                                                <th>End Time</th>
-                                            </tr>
-                                        </thead>
-
-                                        <tbody>
-                                            {
-                                                managerRejected.filter(data => {
-                                                    if ((data.date.toLowerCase().includes(keyword.toLowerCase())) || (data.status.toLowerCase().includes(keyword))) {
-                                                        return data;
-                                                    }
-                                                }).slice(offset, offset + PER_PAGE).map((data) => {
-                                                    return (
-                                                        <tr key={data.id}>
-                                                            <td>{data.staffname}</td>
-                                                            <td>{data.date}</td>
-                                                            <td>{data.actuval_StartTime}</td>
-                                                            <td>{data.actuval_EndTime}</td>
-                                                        </tr>
-                                                    )
-                                                })
-                                            }
-                                        </tbody>
-                                    </table>
-                                )
-                            }
                         </div>
                     </div>
                 </div>

@@ -150,7 +150,7 @@ const MyTeamAttendence = () => {
             >
               My Attendence Details
             </Link>
-            
+
           </div>
           <div className="col-lg-4" style={{ marginLeft: "-30px" }}>
             <Link
@@ -244,13 +244,19 @@ const MyTeamAttendence = () => {
               {/* <button className="button">Upload</button> */}
               <br />
               <p></p>
-              <DownloadTableExcel
-                filename="users table"
-                sheet="users"
-                currentTableRef={tableRef.current}
-              >
-                <button className="button">Export To Excel</button>
-              </DownloadTableExcel>
+
+              {count > 0 ?
+                <>
+                  <DownloadTableExcel
+                    filename="users table"
+                    sheet="users"
+                    currentTableRef={tableRef.current}
+                  >
+                    <button className="button">Export To Excel</button>
+                  </DownloadTableExcel>
+                </>
+                : null}
+
             </div>
           </div>
         </div>
