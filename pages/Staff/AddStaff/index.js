@@ -167,7 +167,7 @@ const Index = ({ editData }) => {
           ) : pgNo == 3 ? (
             <ContactDetails data={editData}  />
           ) : pgNo == 4 ? (
-            <DependentDetails />
+            <DependentDetails data={editData}/>
           ) : pgNo == 5 ? (
             <EmploymentHistory />
           ) : pgNo == 6 ? (

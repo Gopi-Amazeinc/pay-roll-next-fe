@@ -267,7 +267,7 @@ function EmployeeProfile({ data }) {
                   <input
                     type="text"
                     placeholder="First Name"
-                    {...register("FirstName", { required: true })}
+                    {...register("FirstName", { required: true,  minLength: 2, maxlength:20, pattern:"/^[A-Za-z]+$/" })}
                     className="form-control "
                   ></input>
                   {errors.FirstName && (
