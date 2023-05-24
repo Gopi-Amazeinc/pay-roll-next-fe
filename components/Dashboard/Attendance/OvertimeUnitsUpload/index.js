@@ -280,10 +280,10 @@ const MyTeamOverTimeDetail = () => {
                         {overtimeUnitsUpload.map((data) => {
                           return (
                             <tr key={data.id}>
-                              <td>{data.StaffID}</td>
-                              <td>{data.oT_name}</td>
+                              <td>{data.staffID}</td>
+                              <td>{data.staffname}</td>
                               <td>{data.payDate}</td>
-                              <td>{data.componentName}</td>
+                              <td>{data.oT_name}</td>
                               <td>{data.hours}</td>
 
                             </tr>

@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { Modal, ModalBody, ModalFooter } from "reactstrap";
 import { useForm } from 'react-hook-form';
 import Styles from "@/styles/attendancedetails.module.css";
+import { DownloadTableExcel } from "react-export-table-to-excel";
 
 const Index = () => {
 
@@ -43,6 +44,7 @@ const Index = () => {
 
     const [weeklyShiftData, getWeeklyShiftData] = useState([])
     const [modalOpen, setModalOpen] = useState(false);
+    const [count, setcount] = useState("");
     const { register, handleSubmit, reset, watch, formState: { errors } } = useForm();
 
     const getData = async (Supervisor) => {
@@ -50,6 +52,7 @@ const Index = () => {
             Supervisor);
         console.log(res.data)
         getWeeklyShiftData(res.data)
+        setcount(res.data.length);
     }
 
     const approve = async (id) => {
@@ -83,13 +86,13 @@ const Index = () => {
                         <div className='col-lg-3'>
                             <br />
                             <Link href="/Attendance/ShiftDetails" className={Styles.mainheader}>  My Weekly Shift</Link>
-                           
+
                         </div>
-                       
+
                         <div className='col-lg-3'>
                             <br />
-                            <Link href="/Attendance/MyTeamWeeklyShift" className={Styles.mainheader}> My Team Weekly Shift</Link> 
-                             <div className="line-border"></div>
+                            <Link href="/Attendance/MyTeamWeeklyShift" className={Styles.mainheader}> My Team Weekly Shift</Link>
+                            <div className="line-border"></div>
                         </div>
                     </div>
                     <br />
@@ -115,7 +118,17 @@ const Index = () => {
                             <div className="col-lg-1"></div>
                             <div className="col-lg-2">
                                 <br />
-                                <button className='button' >Export To excel</button>
+                                {count > 0 ?
+                                    <>
+                                        <DownloadTableExcel
+                                            filename="users table"
+                                            sheet="users"
+                                            currentTableRef={tableRef.current}
+                                        >
+                                            <button className='button' >Export To excel</button>     </DownloadTableExcel>
+                                    </>
+                                    : null}
+
                             </div>
                         </div>
                     </div>
@@ -129,6 +142,7 @@ const Index = () => {
                         </div>
                     </div> */}
                     <br />
+                    <h6 style={{ color: "#3247d5" }}>Showing {count} Results</h6>
 
                     <div className='row'>
                         <div className='col-lg-12'>
@@ -310,7 +324,7 @@ const Index = () => {
                     </div> */}
                 </div>
             </div>
-        </div>
+        </div >
     );
 }
 
