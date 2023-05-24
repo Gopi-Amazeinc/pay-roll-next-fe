@@ -195,7 +195,10 @@ const AttendenceDetails = () => {
                 <div className="col-lg-2">
                   <br />
                   <p></p>
-                  <DownloadTableExcel
+                  
+                  { count > 0 ?  
+                   <>               
+                    <DownloadTableExcel
                     filename="users table"
                     sheet="users"
                     currentTableRef={tableRef.current}
@@ -204,6 +207,9 @@ const AttendenceDetails = () => {
                       Download
                     </button>
                   </DownloadTableExcel>
+                  </>
+                  : null }
+                 
                 </div>
               </div>
             </div>
@@ -247,7 +253,7 @@ const AttendenceDetails = () => {
                         return (
                           <tr key={index}>
                             <td>{data.signinDate}</td>
-                            <td>{data.signInType}</td>
+                            <td>{data.shift}</td>
                             <td>{data.signInWorkType}</td>
                             <td>{data.expectedIn}</td>
                             <td>{data.expectedOut}</td>
