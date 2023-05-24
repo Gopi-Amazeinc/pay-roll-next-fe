@@ -14,6 +14,7 @@ const FinalPayrollDetails = () => {
   const [department, setDepartment] = useState([]);
   const [keyword, setKeyword] = useState("");
 
+
   const tableRef = useRef(null);
 
   const getData = async () => {
@@ -35,11 +36,11 @@ const FinalPayrollDetails = () => {
 
   const handleRowSelect = (event, id) => {
     debugger
-      if (id === 'all') {
-          setSelectedRows(event.target.checked ? preliminarySalary.map(data => data.id) : []);
-      } else {
-          setSelectedRows(selectedRows.includes(id) ? selectedRows.filter(rowId => rowId !== id) : [...selectedRows, id]);
-      }
+    if (id === 'all') {
+      setSelectedRows(event.target.checked ? preliminarySalary.map(data => data.id) : []);
+    } else {
+      setSelectedRows(selectedRows.includes(id) ? selectedRows.filter(rowId => rowId !== id) : [...selectedRows, id]);
+    }
   };
 
   useEffect(() => {
@@ -134,12 +135,12 @@ const FinalPayrollDetails = () => {
       const deleteddddsalary = await Promise.all(
         checkedState && checkedState.length > 0
           ? checkedState.map(async (data) => {
-              const res = await apiService.commonGetCall(
-                `Payroll/DeletePreliminary?staffID=${data.staffID}&Enddate=${data.endDateformated}`
-              );
-              const deletedData = res.data[0] || res.data;
-              // console.log(res.data);
-            })
+            const res = await apiService.commonGetCall(
+              `Payroll/DeletePreliminary?staffID=${data.staffID}&Enddate=${data.endDateformated}`
+            );
+            const deletedData = res.data[0] || res.data;
+            // console.log(res.data);
+          })
           : []
       );
       return deleteddddsalary;
@@ -188,7 +189,7 @@ const FinalPayrollDetails = () => {
             />
           </div>
           <div className="col-lg-2">
-            <select id="Department" name="Department" className="form-select">
+            <select id="Department" name="Department" className="form-select" >
               <option value="" disabled="">
                 Select Department
               </option>

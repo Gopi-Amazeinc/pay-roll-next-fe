@@ -217,7 +217,21 @@ const Compensationtimeout = () => {
         <div className='container-fluid'>
             <div className='row'>
                 <div className='col-lg-12'>
-                    <p className='Heading'>Compensation Time Out</p>
+                    <div className='row'>
+                        <div className="col-lg-3">
+                            <p className='Heading'>Compensation Time Out</p>
+                        </div>
+                        <div className='col-lg-3'>
+                            {
+                                sessionStorage.getItem("roleID") == 3 && (
+                                    <Link href="/Requests/Myteamcompensationtimeout">
+                                        <label className="Heading">My Compensation Time Out</label>
+                                    </Link>
+                                )
+                            }
+                        </div>
+                    </div>
+                    <br />
                     <div className='card p-3 border-0 rounded-3'>
                         <div className='row p-3'>
                             <div className='col-lg-1'>
@@ -244,7 +258,6 @@ const Compensationtimeout = () => {
                                 <button onClick={toggleApproved} className={`toggleButton ${approved ? "focus" : ""}`}  >Approved</button>
                                 <button onClick={toggleRejected} className={`toggleButton ${rejected ? "focus" : ""}`} >Rejected</button>
                             </div>
-                            <h6 style={{ color: "#3247d5" }}>Showing {count} Results</h6>
                         </div>
                     </div>
                     <br /><br />
@@ -280,223 +293,240 @@ const Compensationtimeout = () => {
                         <div className='col-lg-12'>
                             {
                                 pending && sessionStorage.getItem("roleID") != "3" && (
-                                    <table className='table'>
-                                        <thead className='bg-info text-white'>
-                                            <tr>
-                                                <th>Date</th>
-                                                <th>Start Time</th>
-                                                <th>End Time</th>
-                                                <th>Comments</th>
-                                                <th>Status</th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
+                                    <>
+                                        <h6 style={{ color: "#3247d5" }}>Showing {pendingDashboard.length} Results</h6>
+                                        <table className='table'>
+                                            <thead className='bg-info text-white'>
+                                                <tr>
+                                                    <th>Date</th>
+                                                    <th>Start Time</th>
+                                                    <th>End Time</th>
+                                                    <th>Comments</th>
+                                                    <th>Status</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
 
-                                        <tbody>
-                                            {
-                                                pendingDashboard.filter(data => {
-                                                    if ((data.date.toString().includes(keyword.toLowerCase())) || (data.status.toLowerCase().includes(keyword)) || (data.actuval_StartTime.toString().includes(keyword.toLowerCase())) || (data.actuval_EndTime.toString().includes(keyword.toLowerCase())) || (data.comments.toString().includes(keyword.toLowerCase()))) {
-                                                        return data;
-                                                    }
-                                                }).slice(offset, offset + PER_PAGE).map((data) => {
-                                                    return (
-                                                        <tr key={data.id}>
-                                                            <td>{data.date}</td>
-                                                            <td>{data.actuval_StartTime}</td>
-                                                            <td>{data.actuval_EndTime}</td>
-                                                            <td>{data.comments}</td>
-                                                            <td>{data.status}</td>
-                                                            <td>
-                                                                <button onClick={Delete.bind(this, data.id)} className='edit-btn'>Cancel</button>
-                                                            </td>
-                                                        </tr>
-                                                    )
-                                                })
-                                            }
-                                        </tbody>
-                                    </table>
+                                            <tbody>
+                                                {
+                                                    pendingDashboard.filter(data => {
+                                                        if ((data.date.toString().includes(keyword.toLowerCase())) || (data.status.toLowerCase().includes(keyword)) || (data.actuval_StartTime.toString().includes(keyword.toLowerCase())) || (data.actuval_EndTime.toString().includes(keyword.toLowerCase())) || (data.comments.toString().includes(keyword.toLowerCase()))) {
+                                                            return data;
+                                                        }
+                                                    }).slice(offset, offset + PER_PAGE).map((data) => {
+                                                        return (
+                                                            <tr key={data.id}>
+                                                                <td>{data.date}</td>
+                                                                <td>{data.actuval_StartTime}</td>
+                                                                <td>{data.actuval_EndTime}</td>
+                                                                <td>{data.comments}</td>
+                                                                <td>{data.status}</td>
+                                                                <td>
+                                                                    <button onClick={Delete.bind(this, data.id)} className='edit-btn'>Cancel</button>
+                                                                </td>
+                                                            </tr>
+                                                        )
+                                                    })
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </>
                                 )
                             }
 
                             {
-
                                 managertogglePending && sessionStorage.getItem("roleID") == "3" && (
-                                    <table className='table'>
-                                        <thead className='bg-info text-white'>
-                                            <tr>
-                                                <th>Employee Name</th>
-                                                <th>Date</th>
-                                                <th>Start Time</th>
-                                                <th>End Time</th>
-                                                <th colSpan={2}>Action</th>
-                                            </tr>
-                                        </thead>
+                                    <>
+                                        <h6 style={{ color: "#3247d5" }}>Showing {compensation.length} Results</h6>
+                                        <table className='table'>
+                                            <thead className='bg-info text-white'>
+                                                <tr>
+                                                    <th>Employee Name</th>
+                                                    <th>Date</th>
+                                                    <th>Start Time</th>
+                                                    <th>End Time</th>
+                                                    <th colSpan={2}>Action</th>
+                                                </tr>
+                                            </thead>
 
-                                        <tbody>
-                                            {
-                                                compensation.filter(data => {
-                                                    if ((data.date.toString().includes(keyword.toLowerCase())) || (data.status.toLowerCase().includes(keyword))) {
-                                                        return data;
-                                                    }
-                                                }).slice(offset, offset + PER_PAGE).map((data) => {
-                                                    return (
-                                                        <tr key={data.id}>
-                                                            <td>{data.staffname}</td>
-                                                            <td>{data.date}</td>
-                                                            <td>{data.actuval_StartTime}</td>
-                                                            <td>{data.actuval_EndTime}</td>
-                                                            <td>
-                                                                <button onClick={approve.bind(this, data.id)} className='edit-btn'>Approve</button>
-                                                                <button onClick={openModal(sessionStorage.setItem("id", data.id))} className='edit-btn'>Reject</button>
-                                                            </td>
-                                                        </tr>
-                                                    )
-                                                })
-                                            }
-                                        </tbody>
-                                    </table>
+                                            <tbody>
+                                                {
+                                                    compensation.filter(data => {
+                                                        if ((data.date.toString().includes(keyword.toLowerCase())) || (data.status.toLowerCase().includes(keyword))) {
+                                                            return data;
+                                                        }
+                                                    }).slice(offset, offset + PER_PAGE).map((data) => {
+                                                        return (
+                                                            <tr key={data.id}>
+                                                                <td>{data.staffname}</td>
+                                                                <td>{data.date}</td>
+                                                                <td>{data.actuval_StartTime}</td>
+                                                                <td>{data.actuval_EndTime}</td>
+                                                                <td>
+                                                                    <button onClick={approve.bind(this, data.id)} className='edit-btn'>Approve</button>
+                                                                    <button onClick={openModal(sessionStorage.setItem("id", data.id))} className='edit-btn'>Reject</button>
+                                                                </td>
+                                                            </tr>
+                                                        )
+                                                    })
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </>
                                 )
                             }
 
                             {
                                 approved && sessionStorage.getItem("roleID") != "3" && (
-                                    <table className='table table-hover'>
-                                        <thead className='bg-info text-white'>
-                                            <tr>
-                                                <th>Date</th>
-                                                <th>Start Time</th>
-                                                <th>End Time</th>
-                                                <th>Comments</th>
-                                                <th>Status</th>
-                                            </tr>
-                                        </thead>
+                                    <>
+                                        <h6 style={{ color: "#3247d5" }}>Showing {approvedDashboard.length} Results</h6>
+                                        <table className='table table-hover'>
+                                            <thead className='bg-info text-white'>
+                                                <tr>
+                                                    <th>Date</th>
+                                                    <th>Start Time</th>
+                                                    <th>End Time</th>
+                                                    <th>Comments</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
 
-                                        <tbody>
-                                            {
-                                                approvedDashboard.filter(data => {
-                                                    if ((data.date.toString().includes(keyword.toLowerCase())) || (data.status.toLowerCase().includes(keyword))) {
-                                                        return data;
-                                                    }
-                                                }).slice(offset, offset + PER_PAGE).map((data) => {
-                                                    return (
-                                                        <tr key={data.id}>
-                                                            <td>{data.date}</td>
-                                                            <td>{data.actuval_StartTime}</td>
-                                                            <td>{data.actuval_EndTime}</td>
-                                                            <td>{data.comments}</td>
-                                                            <td>{data.status}</td>
-                                                        </tr>
-                                                    )
-                                                })
-                                            }
-                                        </tbody>
-                                    </table>
+                                            <tbody>
+                                                {
+                                                    approvedDashboard.filter(data => {
+                                                        if ((data.date.toString().includes(keyword.toLowerCase())) || (data.status.toLowerCase().includes(keyword))) {
+                                                            return data;
+                                                        }
+                                                    }).slice(offset, offset + PER_PAGE).map((data) => {
+                                                        return (
+                                                            <tr key={data.id}>
+                                                                <td>{data.date}</td>
+                                                                <td>{data.actuval_StartTime}</td>
+                                                                <td>{data.actuval_EndTime}</td>
+                                                                <td>{data.comments}</td>
+                                                                <td>{data.status}</td>
+                                                            </tr>
+                                                        )
+                                                    })
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </>
                                 )
                             }
 
                             {
 
                                 managerToggleapproved && sessionStorage.getItem("roleID") == "3" && (
-                                    <table className='table table-hover'>
-                                        <thead className='bg-info text-white'>
-                                            <tr>
-                                                <th>Employee Name</th>
-                                                <th>Date</th>
-                                                <th>Start Time</th>
-                                                <th>End Time</th>
-                                            </tr>
-                                        </thead>
+                                    <>
+                                        <h6 style={{ color: "#3247d5" }}>Showing {managerApproved.length} Results</h6>
+                                        <table className='table table-hover'>
+                                            <thead className='bg-info text-white'>
+                                                <tr>
+                                                    <th>Employee Name</th>
+                                                    <th>Date</th>
+                                                    <th>Start Time</th>
+                                                    <th>End Time</th>
+                                                </tr>
+                                            </thead>
 
-                                        <tbody>
-                                            {
-                                                managerApproved.filter(data => {
-                                                    if ((data.date.toLowerCase().includes(keyword.toLowerCase())) || (data.status.toLowerCase().includes(keyword))) {
-                                                        return data;
-                                                    }
-                                                }).slice(offset, offset + PER_PAGE).map((data) => {
-                                                    return (
-                                                        <tr key={data.id}>
-                                                            <td>{data.staffname}</td>
-                                                            <td>{data.date}</td>
-                                                            <td>{data.actuval_StartTime}</td>
-                                                            <td>{data.actuval_EndTime}</td>
-                                                        </tr>
-                                                    )
-                                                })
-                                            }
-                                        </tbody>
-                                    </table>
+                                            <tbody>
+                                                {
+                                                    managerApproved.filter(data => {
+                                                        if ((data.date.toLowerCase().includes(keyword.toLowerCase())) || (data.status.toLowerCase().includes(keyword))) {
+                                                            return data;
+                                                        }
+                                                    }).slice(offset, offset + PER_PAGE).map((data) => {
+                                                        return (
+                                                            <tr key={data.id}>
+                                                                <td>{data.staffname}</td>
+                                                                <td>{data.date}</td>
+                                                                <td>{data.actuval_StartTime}</td>
+                                                                <td>{data.actuval_EndTime}</td>
+                                                            </tr>
+                                                        )
+                                                    })
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </>
                                 )
                             }
 
                             {
                                 rejected && sessionStorage.getItem("roleID") != "3" && (
-                                    <table className='table table-hover'>
-                                        <thead className='bg-info text-white'>
-                                            <tr>
-                                                <th>Date</th>
-                                                <th>Start Time</th>
-                                                <th>End Time</th>
-                                                <th>Reason</th>
-                                                <th>Status</th>
-                                            </tr>
-                                        </thead>
+                                    <>
+                                        <h6 style={{ color: "#3247d5" }}>Showing {rejecteddDashboard.length} Results</h6>
+                                        <table className='table table-hover'>
+                                            <thead className='bg-info text-white'>
+                                                <tr>
+                                                    <th>Date</th>
+                                                    <th>Start Time</th>
+                                                    <th>End Time</th>
+                                                    <th>Reason</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
 
-                                        <tbody>
-                                            {
-                                                rejecteddDashboard.filter(data => {
-                                                    if ((data.date.toLowerCase().includes(keyword.toLowerCase())) || (data.status.toLowerCase().includes(keyword))) {
-                                                        return data;
-                                                    }
-                                                }).slice(offset, offset + PER_PAGE).map((data) => {
-                                                    return (
-                                                        <tr key={data.id}>
-                                                            <td>{data.date}</td>
-                                                            <td>{data.actuval_StartTime}</td>
-                                                            <td>{data.actuval_EndTime}</td>
-                                                            <td>{data.comments}</td>
-                                                            <td>{data.status}</td>
-                                                        </tr>
-                                                    )
-                                                })
-                                            }
-                                        </tbody>
-                                    </table>
+                                            <tbody>
+                                                {
+                                                    rejecteddDashboard.filter(data => {
+                                                        if ((data.date.toLowerCase().includes(keyword.toLowerCase())) || (data.status.toLowerCase().includes(keyword))) {
+                                                            return data;
+                                                        }
+                                                    }).slice(offset, offset + PER_PAGE).map((data) => {
+                                                        return (
+                                                            <tr key={data.id}>
+                                                                <td>{data.date}</td>
+                                                                <td>{data.actuval_StartTime}</td>
+                                                                <td>{data.actuval_EndTime}</td>
+                                                                <td>{data.comments}</td>
+                                                                <td>{data.status}</td>
+                                                            </tr>
+                                                        )
+                                                    })
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </>
                                 )
                             }
 
                             {
                                 managertogglerejected && sessionStorage.getItem("roleID") == "3" && (
+                                    <>
+                                        <h6 style={{ color: "#3247d5" }}>Showing {managerRejected.length} Results</h6>
 
-                                    <table className='table table-hover'>
-                                        <thead className='bg-info text-white'>
-                                            <tr>
-                                                <th>Employee Name</th>
-                                                <th>Date</th>
-                                                <th>Start Time</th>
-                                                <th>End Time</th>
-                                            </tr>
-                                        </thead>
+                                        <table className='table table-hover'>
+                                            <thead className='bg-info text-white'>
+                                                <tr>
+                                                    <th>Employee Name</th>
+                                                    <th>Date</th>
+                                                    <th>Start Time</th>
+                                                    <th>End Time</th>
+                                                </tr>
+                                            </thead>
 
-                                        <tbody>
-                                            {
-                                                managerRejected.filter(data => {
-                                                    if ((data.date.toLowerCase().includes(keyword.toLowerCase())) || (data.status.toLowerCase().includes(keyword))) {
-                                                        return data;
-                                                    }
-                                                }).slice(offset, offset + PER_PAGE).map((data) => {
-                                                    return (
-                                                        <tr key={data.id}>
-                                                            <td>{data.staffname}</td>
-                                                            <td>{data.date}</td>
-                                                            <td>{data.actuval_StartTime}</td>
-                                                            <td>{data.actuval_EndTime}</td>
-                                                        </tr>
-                                                    )
-                                                })
-                                            }
-                                        </tbody>
-                                    </table>
+                                            <tbody>
+                                                {
+                                                    managerRejected.filter(data => {
+                                                        if ((data.date.toLowerCase().includes(keyword.toLowerCase())) || (data.status.toLowerCase().includes(keyword))) {
+                                                            return data;
+                                                        }
+                                                    }).slice(offset, offset + PER_PAGE).map((data) => {
+                                                        return (
+                                                            <tr key={data.id}>
+                                                                <td>{data.staffname}</td>
+                                                                <td>{data.date}</td>
+                                                                <td>{data.actuval_StartTime}</td>
+                                                                <td>{data.actuval_EndTime}</td>
+                                                            </tr>
+                                                        )
+                                                    })
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </>
                                 )
                             }
                         </div>
