@@ -68,11 +68,10 @@ const Index = () => {
     }, []);
 
     useEffect(() => {
-        debugger
+
         if (userID) {
             getData();
         }
-
     }, [userID])
 
     const getData = async () => {

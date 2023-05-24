@@ -22,7 +22,7 @@ const AttendanceCorrectionform = () => {
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
 
- 
+
 
   // const handleChangeStartTime = (Stime) => {
   //   debugger
@@ -44,16 +44,16 @@ const AttendanceCorrectionform = () => {
   const handleChangeEndTime = (event) => {
     const eTime = event.target.value
     setEndTime(eTime);
-    return handleTimes(startTime,Etime)
+    return handleTimes(startTime, Etime)
   };
 
- const compareTimes = (startTime, endTime) => {
+  const compareTimes = (startTime, endTime) => {
     const start = new Date(startTime);
     const end = new Date(endTime);
 
     return start > end;
   };
-  const handleTimes = (startTime,endTime) => {
+  const handleTimes = (startTime, endTime) => {
     debugger
     if (!compareTimes(startTime, endTime)) {
       Swal.fire("Start time must be greater than end time");
