@@ -97,6 +97,12 @@ const SSSForm = ({ editData }) => {
                                             name="lowLimit"
                                             type="text"
                                             className='form-control mt-2'placeholder='Taxiable income low limit'
+                                            onKeyPress={(event) => {
+                                                const charCode = (event.which) ? event.which : event.keyCode;
+                                                if (charCode !== 46 && charCode > 31 && (charCode < 48 || charCode > 57)) {
+                                                    event.preventDefault();
+                                                }
+                                            }} maxLength={10}
                                             {...register("Taxiableincomelowlimit", { required: true })}
                                         />
                                         {errors.Taxiableincomelowlimit && (
@@ -114,6 +120,12 @@ const SSSForm = ({ editData }) => {
                                             name="highLimit"
                                             type="text"
                                             className='form-control' placeholder='taxiable income high limit'
+                                            onKeyPress={(event) => {
+                                                const charCode = (event.which) ? event.which : event.keyCode;
+                                                if (charCode !== 46 && charCode > 31 && (charCode < 48 || charCode > 57)) {
+                                                    event.preventDefault();
+                                                }
+                                            }} maxLength={10}
                                             {...register("taxiableincomehighlimit", { required: true })}
 
                                         />
@@ -131,6 +143,12 @@ const SSSForm = ({ editData }) => {
                                             name="Philhealth"
                                             type="text"
                                             className='form-control 'placeholder='SSS_EEvalue'
+                                            onKeyPress={(event) => {
+                                                const charCode = (event.which) ? event.which : event.keyCode;
+                                                if (charCode !== 46 && charCode > 31 && (charCode < 48 || charCode > 57)) {
+                                                    event.preventDefault();
+                                                }
+                                            }} maxLength={10}
                                             {...register("SSS_EEvalue", { required: true })}
 
                                         />
@@ -148,6 +166,12 @@ const SSSForm = ({ editData }) => {
                                             name="Philhealth"
                                             type="text"
                                             className='form-control'placeholder='SSS_ERvalue'
+                                            onKeyPress={(event) => {
+                                                const charCode = (event.which) ? event.which : event.keyCode;
+                                                if (charCode !== 46 && charCode > 31 && (charCode < 48 || charCode > 57)) {
+                                                    event.preventDefault();
+                                                }
+                                            }} maxLength={10}
                                             {...register("SSS_ERvalue", { required: true })}
 
                                         />
@@ -165,6 +189,12 @@ const SSSForm = ({ editData }) => {
                                             name="Philhealth"
                                             type="text"
                                             className='form-control'placeholder='SSS_Ecvalue'
+                                            onKeyPress={(event) => {
+                                                const charCode = (event.which) ? event.which : event.keyCode;
+                                                if (charCode !== 46 && charCode > 31 && (charCode < 48 || charCode > 57)) {
+                                                    event.preventDefault();
+                                                }
+                                            }} maxLength={10}
                                             {...register("SSS_Ecvalue", { required: true })}
 
                                         />
