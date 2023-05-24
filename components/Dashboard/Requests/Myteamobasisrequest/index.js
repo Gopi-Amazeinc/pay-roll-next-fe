@@ -130,7 +130,8 @@ const MyTeamObasisRequest = () => {
             confirmButtonText: 'Yes, Approve it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                apiService.commonPostCall("Payroll/ApproveLocatorTable?id=" + id + "&Status=ManagerApproved")
+                let Status = "ManagerApproved";
+                apiService.commonPostCall("Payroll/ApproveLocatorTable", id, Status)
                 Swal.fire({
                     icon: "success",
                     titleText: "Approved Successfully"

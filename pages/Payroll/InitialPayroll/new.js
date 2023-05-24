@@ -82,7 +82,6 @@ const InitialPayrollForm = () => {
           .payrollEndDate;
         setStartDate(res);
         setEndDate(rres);
-        let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
         // This API is used to fetch the dashboard data based on StartDate,EndDate
         const sss = await apiService.commonGetCall(
 
