@@ -3,8 +3,10 @@ import { useForm } from "react-hook-form";
 import axios from "axios";
 import Swal from "sweetalert2";
 import Styles from "../../../styles/addStaff.module.css"
+import { apiService } from "@/services/api.service";
 
-export default function BankDetails() {
+
+export default function BankDetails({data}) {
   const {
     register,
     handleSubmit,
@@ -128,18 +130,34 @@ export default function BankDetails() {
   }
 
   useEffect(() => {
-    getBankDetails();
+    debugger
+    makecalls()
   }, [1]);
-
+ function makecalls() {
+      const { id } = data || {};
+      if (id) {
+        getByID(id);
+      } else {
+        cleardata()
+        getBankDetails();
+      }
+    }
   let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
   async function getBankDetails() {
-    let res = await axios.get(hostURL + "HR/GetBankDetails");
-    setBankDetailsData(res.data);
+    // let res = await axios.get(hostURL + "HR/GetBankDetails");
+    // setBankDetailsData(res.data);
 
     let res1 = await axios.get(hostURL + "Master/GetBankMaster");
     setBankMaster(res1.data);
   }
-
+const getByID = async (id) => {
+      debugger;
+      await getBankDetails();
+      const res = await apiService.commonGetCall(
+        "Payroll/GetBankDetailsByStaffID?StaffID=" + id
+      );
+      setBankDetailsData(res.data);
+    };
   return (
     <div style={customStyles}>
       <form onSubmit={handleSubmit(onSubmit)}>

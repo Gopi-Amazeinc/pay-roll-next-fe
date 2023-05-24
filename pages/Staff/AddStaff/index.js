@@ -169,15 +169,15 @@ const Index = ({ editData }) => {
           ) : pgNo == 4 ? (
             <DependentDetails data={editData}/>
           ) : pgNo == 5 ? (
-            <EmploymentHistory />
+            <EmploymentHistory data={editData}/>
           ) : pgNo == 6 ? (
-            <NominationDetails />
+            <NominationDetails data={editData}/>
           ) : pgNo == 7 ? (
-            <EducationalAttainment />
+            <EducationalAttainment data={editData}/>
           ) : pgNo == 8 ? (
-            <BankDetails />
+            <BankDetails data={editData}/>
           ) : (
-            <IDDetails />
+            <IDDetails data={editData}/>
           )}
           <br></br>
           <center style={{ display: "flex", justifyContent: "end", marginRight: "1%" }}>

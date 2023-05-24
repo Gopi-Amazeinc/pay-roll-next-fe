@@ -90,6 +90,7 @@ function Announcementform({ editData }) {
         );
         console.log(res, "File Path");
         Swal.fire("Uploaded successfully");
+
         setFilePath(res.data);
     };
 
@@ -111,9 +112,22 @@ function Announcementform({ editData }) {
                             <form onSubmit={handleSubmit(submit)}>
                                 <div className='row'>
                                     <div className='col-lg-2'>
-                                        <label className='fw-bold'>Annoucement <i className='text-danger'>*</i></label>
-                                        <input type='text' className='form-control' placeholder='Announcement Name' {...register('Name', { required: "Please add a Short Name", pattern: { value: (/^[A-Za-z ]+$/), message: "Please enter a valid Short Name" } })} />
-                                        {errors.Name && <p className="error-message" style={{ color: "red" }}>{errors.Name.message}</p>}
+                                        <label className='fw-bold'>Announcement <i className='text-danger'>*</i></label>
+                                        <input className='form-control' placeholder='Announcement Name' {...register("announcement", {
+                                            required: true,
+                                            maxLength: 100,
+                                            pattern: /^[A-Za-z]+$/i
+                                        })} /><div className='text-danger'>
+                                        {errors.announcement ?.type==='required' && 
+                                           " Please enter announcement name"
+                                        }
+                                        {errors.announcement ?.type === "maxLength" && 
+                                            "name cannot exceed 20 characters"
+                                        }
+                                        {errors.announcement?.type === "pattern" && 
+                                            "Alphabetical characters only"
+                                        }
+                                        </div>
                                     </div>
 
                                     <div className='col-lg-3'>

@@ -3,8 +3,9 @@ import { useEffect, useState } from 'react';
 import { useForm } from "react-hook-form";
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import { apiService } from "@/services/api.service";
 
-export default function EmploymentDetails() {
+export default function EmploymentDetails({data}) {
 
     const [EmploymentDetals, setEmploymentData] = useState([]);
     const [EmploymentTypeMaster, setEmploymentTypeMaster] = useState([]);
@@ -103,7 +104,7 @@ export default function EmploymentDetails() {
             ID: existingData ? existingData.id : "",
             CompanyName: existingData ? existingData.companyName : "",
             PositionTitle: existingData ? existingData.positionTitle : "",
-            EmployementTypeID: existingData ? existingData.employementType : "",
+            EmployementTypeID: existingData ? existingData.employementTypeID : "",
             StartDate: existingData ? existingData.startDate : "",
             EndDate: existingData ? existingData.endDate : "",
             StaffID: sessionStorage.getItem('userID')
@@ -113,14 +114,30 @@ export default function EmploymentDetails() {
     }
 
     useEffect(() => {
-        getData();
+      debugger
+      makecalls()
     }, [1]);
-
+    function makecalls() {
+      const { id } = data || {};
+      if (id) {
+        getByID(id);
+      } else {
+        cleardata()
+        getData();
+      }
+    }
+    const getByID = async (id) => {
+      debugger;
+      await getData();
+      const res = await apiService.commonGetCall(
+        "Payroll/GetEmploymentDetailsByStaffID?StaffID=" + id
+      );
+      setEmploymentData(res.data);
+    };
     async function getData() {
         let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-        let res = await axios.get(hostURL + "HR/GetEmploymentDetails");
-        setEmploymentData(res.data);
-
+        // let res = await axios.get(hostURL + "HR/GetEmploymentDetails");
+        // setEmploymentData(res.data);
 
         let res1 = await axios.get(hostURL + "/Master/GetEmploymentTypeMaster");
         setEmploymentTypeMaster(res1.data);
@@ -131,7 +148,7 @@ export default function EmploymentDetails() {
         let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
         let res = await axios.get(hostURL + "Payroll/GetEmploymentDetailsByID?ID=" + data);
         cleardata(res.data[0]);
-
+        makecalls()
     }
 
     async function deleteData(data) {
