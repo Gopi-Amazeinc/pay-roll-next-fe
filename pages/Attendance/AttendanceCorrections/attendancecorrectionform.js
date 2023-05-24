@@ -10,8 +10,8 @@ import { useRouter } from "next/router";
 
 
 const AttendanceCorrectionform = () => {
-const[StartTime,setStartTime]=useState(null);
-const [EndTime,setEndTime]=useState(null);
+
+
   const router = useRouter();
   const {
     register,
@@ -21,7 +21,47 @@ const [EndTime,setEndTime]=useState(null);
   } = useForm();
   const [actionType, setActionType] = useState("insert");
 
+  const [startTime, setStartTime] = useState("");
+  const [endTime, setEndTime] = useState("");
 
+
+
+  // const handleChangeStartTime = (Stime) => {
+  //   debugger
+  //   setStartTime(Stime);
+  //   setEndTime("");
+  // };
+
+  // const handleChangeEndTime = (Etime) => {
+  //   debugger
+  //   setEndTime(Etime);
+  //   return handleTimes(startTime,endTime)
+  // };
+  const handleChangeStartTime = (event) => {
+    const sTime = event.target.value
+    setStartTime(sTime);
+    setEndTime("");
+  };
+
+  const handleChangeEndTime = (event) => {
+    const eTime = event.target.value
+    setEndTime(eTime);
+    return handleTimes(startTime, Etime)
+  };
+
+  const compareTimes = (startTime, endTime) => {
+    const start = new Date(startTime);
+    const end = new Date(endTime);
+
+    return start > end;
+  };
+  const handleTimes = (startTime, endTime) => {
+    debugger
+    if (!compareTimes(startTime, endTime)) {
+      Swal.fire("Start time must be greater than end time");
+      return;
+    }
+  };
   // const [UserID, setUserIDdata] = useState("")
 
   // useEffect(() => {
@@ -83,6 +123,8 @@ const [EndTime,setEndTime]=useState(null);
                 <input 
                   type="time" onChange={e=>setStartTime(e.target.value)}
                   className="form-control"
+                  // onChange={(e)=>handleChangeStartTime(e.target.value)}
+               
                   {...register("StartTime", { required: true })}
                 />
                 {errors.StartTime && (
@@ -96,6 +138,8 @@ const [EndTime,setEndTime]=useState(null);
                 <input
                   type="time"
                   className="form-control"
+                  // onChange={(e)=>handleChangeEndTime(e.target.value)}
+                  onChange={handleChangeEndTime}
                   {...register("EndTime", { required: true ,})}
                 />
                 

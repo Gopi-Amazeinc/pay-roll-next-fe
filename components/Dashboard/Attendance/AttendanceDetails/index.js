@@ -136,7 +136,7 @@ const AttendenceDetails = () => {
     <div className="container-fluid">
       <div className="row mt-3">
         <div className="col-lg-3">
-          <div className={Styles.mainheader} style={{ maxContent: "60%" }} onClick={() => router.push("/Attendance/AttendanceDetails")}> My Attendance Details</div>
+          <div className={Styles.mainheader} style={{ maxContent: "60%" ,width: "70%" }} onClick={() => router.push("/Attendance/AttendanceDetails")}> My Attendance Details</div>
           <div className="line-border"></div>
         </div>
         <div className="col-lg-3">
@@ -195,15 +195,21 @@ const AttendenceDetails = () => {
                 <div className="col-lg-2">
                   <br />
                   <p></p>
-                  <DownloadTableExcel
-                    filename="users table"
-                    sheet="users"
-                    currentTableRef={tableRef.current}
-                  >
-                    <button className="button" id="AddButton">
-                      Download
-                    </button>
-                  </DownloadTableExcel>
+
+                  {count > 0 ?
+                    <>
+                      <DownloadTableExcel
+                        filename="users table"
+                        sheet="users"
+                        currentTableRef={tableRef.current}
+                      >
+                        <button className="button" id="AddButton">
+                          Download
+                        </button>
+                      </DownloadTableExcel>
+                    </>
+                    : null}
+
                 </div>
               </div>
             </div>
@@ -214,7 +220,7 @@ const AttendenceDetails = () => {
 
       <div className="row mt-4">
         <div className="col-lg-12">
-   <h6 style={{ color: "#3247d5" }}>Showing {count} Results</h6>
+          <h6 style={{ color: "#3247d5" }}>Showing {count} Results</h6>
           <div className="table-responsive">
             <table
               className="table "
@@ -247,7 +253,7 @@ const AttendenceDetails = () => {
                         return (
                           <tr key={index}>
                             <td>{data.signinDate}</td>
-                            <td>{data.signInType}</td>
+                            <td>{data.shift}</td>
                             <td>{data.signInWorkType}</td>
                             <td>{data.expectedIn}</td>
                             <td>{data.expectedOut}</td>
