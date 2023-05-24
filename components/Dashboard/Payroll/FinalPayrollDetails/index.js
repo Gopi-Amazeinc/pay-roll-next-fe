@@ -217,14 +217,20 @@ const FinalPayrollDetails = () => {
       </div>
       <br />
       <div className="row">
-        <div className="col-lg-10"></div>
-        <div className="col-lg-2">Total Amount:</div>
+        <div className="col-lg-8"></div>
+
+
+        <div className="col-lg-2" style={{ marginLeft: "95px", color: "#3247d5" }}>Total Amount:</div>
       </div>
       <br />
       <br />
       <div className="row">
-        <div className="col-lg-9"></div>
-        <div className="col-lg-2">
+        <div className="col-lg-4">
+        </div>
+        <div className="col-lg-4"
+        ><p className="Heading">Employees in selected Period</p>
+        </div>
+        <div className="col-lg-2" style={{ marginLeft: "92px" }}>
           <button
             type="button"
             className="EditDelteBTN fw-bold"
@@ -237,7 +243,7 @@ const FinalPayrollDetails = () => {
       <div className="row ">
         <div className="col-lg-4"> </div>
         <div className="col-lg-5">
-          <h4 className="Heading">Employees in selected Period</h4>
+
         </div>
 
         <div className="col-lg-12">
@@ -337,7 +343,7 @@ const FinalPayrollDetails = () => {
           <div className="modalbody">
             <div className="row">
               <div className="col-lg-12">
-                <table className="table  table-bordered mt-4 text-center table-striped ">
+                <table className="table  table-bordered text-center ">
                   <thead>
                     <tr>
                       <th className="text-white">Component Name</th>

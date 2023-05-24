@@ -95,6 +95,12 @@ const PhilhealthForm = ({ editData }) => {
                                             name="lowLimit"
                                             type="text"
                                             className='form-control' placeholder='Taxiable income low limit'
+                                            onKeyPress={(event) => {
+                                                const charCode = (event.which) ? event.which : event.keyCode;
+                                                if (charCode !== 46 && charCode > 31 && (charCode < 48 || charCode > 57)) {
+                                                    event.preventDefault();
+                                                }
+                                            }} maxLength={10}
                                             {...register("Taxiableincomelowlimit", {
                                                 required: true,
                                                 pattern: {
@@ -118,6 +124,12 @@ const PhilhealthForm = ({ editData }) => {
                                             name="highLimit"
                                             type="text"
                                             className='form-control'placeholder='Taxiable income high limit'
+                                            onKeyPress={(event) => {
+                                                const charCode = (event.which) ? event.which : event.keyCode;
+                                                if (charCode !== 46 && charCode > 31 && (charCode < 48 || charCode > 57)) {
+                                                    event.preventDefault();
+                                                }
+                                            }} maxLength={10}
                                             {...register("Taxiableincomehighlimit", {
                                                 required: true,
                                                 pattern: {
@@ -140,6 +152,12 @@ const PhilhealthForm = ({ editData }) => {
                                             name="Philhealth"
                                             type="text"
                                             className='form-control' placeholder='Phihealth value'
+                                            onKeyPress={(event) => {
+                                                const charCode = (event.which) ? event.which : event.keyCode;
+                                                if (charCode !== 46 && charCode > 31 && (charCode < 48 || charCode > 57)) {
+                                                    event.preventDefault();
+                                                }
+                                            }} maxLength={10}
                                             {...register("Phihealthvalue", {
                                                 required: true,
                                                 pattern: {

@@ -58,7 +58,7 @@ const Header = ({ makelogout }) => {
   return (
     <div className={"container-fluid " + HeaderStyles.header}>
       <div className="row">
-        <div className="col-lg-2 mt-1">
+        <div className="col-lg-2 mt-2">
           <Image
             className="img-fluid "
             src={Digilogo}
@@ -67,7 +67,7 @@ const Header = ({ makelogout }) => {
             height={45}
           />
         </div>
-        <div className="col-lg-6 text-white ">
+        <div className="col-lg-6 text-white mt-2">
           <p className={HeaderStyles.time1}>
             <span className={HeaderStyles.time}>{hh}:</span>{" "}
             <span className={HeaderStyles.time}>{mm}:</span>
@@ -82,7 +82,7 @@ const Header = ({ makelogout }) => {
               <div className={HeaderStyles.card}>
 
                 <button className="btn btn-danger" style={{ float: "right" }}>Clear all</button>
-                <p style={{ color: "balck" }} >Lorem ipsum dolor sit amet consectetur adipisicing elit. Consequuntur facere atque vel laudantium deserunt officia, reiciendis quod consequatur ab inventore. </p>
+                <p style={{ color: "balck" }} >Dummy text</p>
               </div>
             )}
             <span className={HeaderStyles.initial}>{initial}</span>
