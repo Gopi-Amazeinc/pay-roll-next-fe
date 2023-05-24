@@ -181,7 +181,8 @@ const Index = () => {
             confirmButtonText: 'Yes, Approve it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                apiService.commonPostCall("Payroll/UpdateApproveOtFromManager?id=" + id + "&Status=ManagerApproved")
+                let Status = "ManagerApproved";
+                apiService.commonPostCall("Payroll/UpdateApproveOtFromManager", id, Status)
                 Swal.fire({
                     icon: "success",
                     titleText: "Approved Successfully"
