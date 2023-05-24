@@ -15,6 +15,8 @@ const New = () => {
     const { register, handleSubmit, watch, reset, formState } = useForm();
     const { errors } = formState;
 
+    const [endDate, setEndDate] = useState('');
+
     const getShiftname = async () => {
         const res = await apiService.commonGetCall("Master/GetShiftMaster");
         setStaffShift(res.data)
@@ -52,6 +54,18 @@ const New = () => {
         getShiftname();
     }, [])
 
+
+    const handleEndDateChange = (e) => {
+        const endDateValue = new Date(e.target.value);
+        const startDateValue = new Date();
+
+        if (endDateValue < startDateValue) {
+            Swal.fire("End Date should be greater than Start Date");
+        } else {
+            setEndDate(e.target.value);
+        }
+    };
+
     return (
         <Layout>
             <div className="row">
@@ -73,10 +87,10 @@ const New = () => {
 
                             <div className="col-lg-2">
                                 <label htmlFor=""><b>End Date</b></label>
-                                <input type="date" name="" id="" className='form-control'   {...register("EndDate", { required: true })} />
-                                {
-                                    errors.endDate && <p className='text-danger'> End Date is Required</p>
-                                }
+                                <input type="date" name="" id="" className='form-control'
+                                    {...register("EndDate", { required: true })}
+                                    onChange={handleEndDateChange}
+                                />
                             </div>
                             <div className="col-lg-2">
                                 <label htmlFor=""><b>ShiftName</b></label>
@@ -96,7 +110,7 @@ const New = () => {
                             </div>
                             <div className="col-lg-2">
                                 <label htmlFor=""><b>Start Time</b></label>
-                                <input type="text" {...register('StartTime', { required: true })} value={startTime} className='form-control' disabled/>
+                                <input type="text" {...register('StartTime', { required: true })} value={startTime} className='form-control' disabled />
 
                             </div>
                             <div className="col-lg-2">

@@ -16,7 +16,7 @@ function Holidayform({ editData }) {
   const router = useRouter();
   const [actionType, setActionType] = useState("insert");
 
-
+  
   useEffect(() => {
     const { id } = editData || {};
     if (id) {
@@ -32,7 +32,7 @@ function Holidayform({ editData }) {
 
 
   function clearForm(HolidaysData = null) {
-    debugger;
+    // debugger;
     let details = {
       "ID": HolidaysData ? HolidaysData.id : "",
       "Holiday": HolidaysData ? HolidaysData.holiday : "",

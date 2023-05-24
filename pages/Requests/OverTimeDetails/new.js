@@ -145,7 +145,10 @@ const OverTimeDetails = () => {
                   </div>
                   <div className='row'>
                     <div className='col-lg-4'>
-                      <textarea className='form-control' placeholder='Write here...' {...register('comments')}></textarea>
+                      <textarea className='form-control' placeholder='Write here...' {...register('comments',{ required: "This field is required" })}>
+                      </textarea>
+                      {errors.comments && <label className="error-message" style={{ color: "red" }}>{errors.comments.message}</label>}
+
                     </div>
                     {/* <div className='col-lg-4'>
                 <input type='file' className='form-control' {...register('Attachments')}></input>
