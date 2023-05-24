@@ -22,7 +22,7 @@ function StaffDashbaord() {
   //   sessionStorage.setItem("id", data.id);
   // };
   const clearData = () => {
-    sessionStorage.setItem("id", "");
+    // sessionStorage.setItem("id", "");
   };
   // const enableDisableStaff = async (data) => {
   //   let entity = {
@@ -200,8 +200,8 @@ function StaffDashbaord() {
                      <button onClick={() => editStaff(data.id)} className={Styles.editBtn}>Edit</button>
                   </td> */}
                         <td>
-                          <Link href={`/Staff/AddStaff/Edit/${data.id}`}>
-                            <buttton className={Styles.editBtn}>Edit</buttton>
+                          <Link  href={`/Staff/AddStaff/Edit/${data.id}`}>
+                            <buttton className={Styles.editBtnn}>Edit</buttton>
                           </Link>
                         </td>
                       </tr>
