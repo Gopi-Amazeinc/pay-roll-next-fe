@@ -219,13 +219,17 @@ const Shiftdetails = () => {
                 </div>
                 <div className="col-lg-2">
                   <br />
-                  <DownloadTableExcel
-                    filename="users table"
-                    sheet="users"
-                    currentTableRef={tableRef.current}
-                  > <button className="button" style={{ marginTop: "7px" }} > Download</button></DownloadTableExcel>
-                </div>
+                  {count > 0 ?
+                    <>
+                      <DownloadTableExcel
+                        filename="users table"
+                        sheet="users"
+                        currentTableRef={tableRef.current}
+                      > <button className="button" style={{ marginTop: "7px" }} > Download</button></DownloadTableExcel>
 
+                    </>
+                    : null}
+                </div>
 
 
               </div>
