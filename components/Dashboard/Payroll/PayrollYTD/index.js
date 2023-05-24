@@ -252,7 +252,7 @@ const Employmentjobhistory = () => {
                             <tbody>
                                 {
                                     YTDlist.filter(data => {
-                                        if ((data.employeID.toString().includes(keyword)) || (data.firstAndLastName.toLowercase().includes(keyword.toLowercase()))) {
+                                        if ((data.nettaxableYTD.toString().includes(keyword.toString())) || (data.firstAndLastName.toLowercase().includes(keyword.toLowercase()))) {
                                             return data;
                                         }
                                     }).map((YTD) => {
@@ -279,7 +279,7 @@ const Employmentjobhistory = () => {
 
             <div className='row'>
                 <div className='col-lg-12'>
-                    <table className='table'>
+                    <table className='table text-center'>
                         <thead >
                             <tr>
                                 <th>Employee ID</th>
@@ -307,9 +307,8 @@ const Employmentjobhistory = () => {
                                             <td></td>
                                             <td>
                                                 <button onClick={handlePayrollYTD.bind(this, data)} className={Styles.upload}>Payroll History</button>
-                                            </td>
-                                            <td>
-                                                <button onClick={handlePayrollYTD.bind(this, data)} className={Styles.upload}>PayrollYTD</button>
+                                                &nbsp; &nbsp;
+                                                <button onClick={handlePayrollYTD.bind(this, data)} className={Styles.upload}>Payroll YTD</button>
                                             </td>
                                         </tr>
                                     )

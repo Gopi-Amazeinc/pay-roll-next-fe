@@ -92,7 +92,7 @@ const MyTeamCompensationtimeout = () => {
         getManagerRejected(res.data)
         setcount(res.data.length);
     }
-
+    let staffID
     const getPendingCompensation = async () => {
         staffID = sessionStorage.getItem("userID");
         const res = await apiService.commonGetCall("Payroll/GetPendingCompensationTimeOutBySupervisor?UserID=" + userID)
@@ -182,10 +182,10 @@ const MyTeamCompensationtimeout = () => {
         setUserID(usrID);
         const userRoleID = sessionStorage.getItem("roleID");
         setRoleID(userRoleID);
-        getPendingData()
+        // getPendingData()
         getPendingCompensation();
-        getApprovedData();
-        getRejectedData();
+        // getApprovedData();
+        // getRejectedData();
         getManagerApprovedData();
         getManagerRejectedData();
         setPending(true);

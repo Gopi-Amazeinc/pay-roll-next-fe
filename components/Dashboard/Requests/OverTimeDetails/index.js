@@ -201,11 +201,10 @@ const Index = () => {
     const reject = () => {
         id = sessionStorage.getItem("id")
         let Reason = watch("Reason")
-        let Status = "Manager Rejected";
         let data = {
             "id": id,
             "RejectReason": Reason,
-            "Status": Status
+            "Status": "Manager Rejected"
         }
         Swal.fire({
             title: 'Confirm To Reject?',

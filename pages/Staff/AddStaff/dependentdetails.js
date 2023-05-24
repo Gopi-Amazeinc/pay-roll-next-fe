@@ -4,8 +4,9 @@ import axios from 'axios';
 import React, {useCallback} from 'react'
 import {useDropzone} from 'react-dropzone'
 import Swal from 'sweetalert2';
+import { apiService } from "@/services/api.service";
 
-export default function DependentDetails() {
+export default function DependentDetails({data}) {
     const [RelationShipMaster, setRelationShipMaster] = useState([]);
     const [DependentList, setDependentList] = useState([]);
     const { register, handleSubmit, watch, reset, formState: { errors } } = useForm();
@@ -136,16 +137,31 @@ export default function DependentDetails() {
 
     useEffect(() => {
         debugger
-        getData()
-
-
+        makecalls()
     }, [1]);
-
+    function makecalls() {
+      const { id } = data || {};
+      if (id) {
+        getByID(id);
+      } else {
+        cleardata()
+        getData();
+      }
+    }
+    const getByID = async (id) => {
+      debugger;
+      await getData();
+      const res = await apiService.commonGetCall(
+        "Payroll/GetDependentDetailsByStaffID?StaffID=" + id
+      );
+      setDependentList(res.data);
+    };
+  
     async function getData() {
         let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
 
-        let res = await axios.get(hostURL + "HR/GetDependentDetails");
-        setDependentList(res.data);
+        // let res = await axios.get(hostURL + "HR/GetDependentDetails");
+        // setDependentList(res.data);
 
         let res1 = await axios.get(hostURL + "Master/GetRelationShipMaster");
         setRelationShipMaster(res1.data);
@@ -155,7 +171,7 @@ export default function DependentDetails() {
         let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
         let res = await axios.get(hostURL + "Payroll/GetDependentDetailsByID?ID=" + data);
         cleardata(res.data[0]);
-
+        makecalls()
     }
 
     async function deleteData(data) {
@@ -346,7 +362,7 @@ export default function DependentDetails() {
                         return (
                           <tr className="text-dark" key={index}>
                             <td>{data.dependentName}</td>
-                            <td>{data.relationship}</td>
+                            <td>{data.relationshipID}</td>
                             <td>{data.gender}</td>
                             <td>{data.dateOfBirth}</td>
                             <td>{data.status}</td>
