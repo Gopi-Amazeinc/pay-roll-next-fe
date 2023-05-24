@@ -15,6 +15,7 @@ const InitialPayrollDetails = () => {
     const [department, setDepartment] = useState([]);
     const [selectedRows, setSelectedRows] = useState([]);
     const [checkedState, setCheckedState] = useState([]);
+    const [departmentFilter, setDepartmentFilter] = useState("")
     const handleRowSelect = (event, id) => {
         debugger
         if (id === 'all') {
@@ -112,28 +113,7 @@ const InitialPayrollDetails = () => {
         getData();
     };
 
-    // const handleDelete = async (staffID, endDateFormated) => {
-    //     try {
-    //         debugger;
-    //         let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-    //         // This API is used to delete the dashboard data based on StaffID,EndDate
-    //         const res = await apiService.commonGetCall(`Payroll/DeletePreliminary?staffID=${staffID}&Enddate=${endDateFormated}`);
-    //         Swal.fire({
-    //             icon: "success",
-    //             title: "Hurray..",
-    //             text: "Data was Deleted...!",
-    //         });
-    //         console.log(res.data);
-    //         getData();
-    //     } catch (error) {
-    //         console.error(error);
-    //         Swal.fire({
-    //             icon: "error",
-    //             title: "Oops..",
-    //             text: "Data was Not Deleted...!",
-    //         });
-    //     }
-    // };
+
 
     const deleteSalary = async (checkedState) => {
         try {
@@ -183,7 +163,7 @@ const InitialPayrollDetails = () => {
                         <input type="text" className='form-control' placeholder='Search...' onChange={e => { setKeyword(e.target.value) }} />
                     </div>
                     <div className='col-lg-2'>
-                        <select id="Department" name="Department" className='form-select'>
+                        <select className='form-select' onChange={e => { setDepartmentFilter(e.target.value) }}>
                             <option value="" disabled="">
                                 Select Department </option>
                             {
@@ -236,7 +216,8 @@ const InitialPayrollDetails = () => {
                         <tbody >
                             {
                                 preliminarySalary.filter((data) => {
-                                    if ((data.staffID.toString().includes(keyword)) || (data.componentValue.toString().includes(keyword.toString()))) {
+                                    if ((data.staffID.toString().includes(keyword)) || (data.componentValue.toString().includes(keyword.toString()))
+                                        || (data.department_name.toString().includes(departmentFilter.toLowerCase().includes(departmentFilter.toLocaleLowerCase())))) {
                                         return data;
                                     }
                                 }).slice(offset, offset + PER_PAGE).map((data, index) => {
