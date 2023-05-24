@@ -215,119 +215,128 @@ const Locatordashboard = () => {
                         <div className="row">
                             <div className="col-lg-12">
                                 {pending && (
-                                    <table className='table' >
-                                        <thead>
-                                            <tr>
-                                                <th>Control Number</th>
-                                                <th>Date</th>
-                                                <th>Start Time</th>
-                                                <th>End Time</th>
-                                                <th>Task</th>
-                                                <th>Comments</th>
-                                                <th>Status</th>
-                                                <th>Action</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {pendingDashboard.filter(data => {
-                                                if ((data.date.toString().includes(keyword.toString())) || (data.approveStatus.toLowerCase().includes(keyword.toLowerCase())) || (data.startTime.toString().includes(keyword.toString())) || (data.endTime.toString().includes(keyword.toString())) || (data.task.toString().includes(keyword.toString())) || (data.comments.toString().includes(keyword.toString()))) {
-                                                    return data;
-                                                }
-                                            }).slice(offset, offset + PER_PAGE).map((data, index) => {
-                                                return (
-                                                    <tr key={index}>
-                                                        <td>{data.id}</td>
-                                                        <td>{data.date}</td>
-                                                        <td>{data.startTime}</td>
-                                                        <td>{data.endTime}</td>
-                                                        <td>{data.task}</td>
-                                                        <td>{data.comments}</td>
-                                                        <td>{data.approveStatus}</td>
-                                                        {/* <td>{
+                                    <>
+                                        <h6 style={{ color: "#3247d5" }}>Showing {pendingDashboard.length} Results</h6>
+                                        <table className='table' >
+                                            <thead>
+                                                <tr>
+                                                    <th>Control Number</th>
+                                                    <th>Date</th>
+                                                    <th>Start Time</th>
+                                                    <th>End Time</th>
+                                                    <th>Task</th>
+                                                    <th>Comments</th>
+                                                    <th>Status</th>
+                                                    <th>Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {pendingDashboard.filter(data => {
+                                                    if ((data.date.toString().includes(keyword.toString())) || (data.approveStatus.toLowerCase().includes(keyword.toLowerCase())) || (data.startTime.toString().includes(keyword.toString())) || (data.endTime.toString().includes(keyword.toString())) || (data.task.toString().includes(keyword.toString())) || (data.comments.toString().includes(keyword.toString()))) {
+                                                        return data;
+                                                    }
+                                                }).slice(offset, offset + PER_PAGE).map((data, index) => {
+                                                    return (
+                                                        <tr key={index}>
+                                                            <td>{data.id}</td>
+                                                            <td>{data.date}</td>
+                                                            <td>{data.startTime}</td>
+                                                            <td>{data.endTime}</td>
+                                                            <td>{data.task}</td>
+                                                            <td>{data.comments}</td>
+                                                            <td>{data.approveStatus}</td>
+                                                            {/* <td>{
                                                 <b>{data.statusID === 0 ? 'Manager Pending' :
                                                     data.statusID === 1 ? 'Manager approved' :
                                                         data.statusID === 2 ? 'Manager Rejected' : ' '}</b>
                                             }
                                             </td> */}
-                                                        <td><button onClick={Delete.bind(this, data.id)} className="edit-btn">Cancel</button></td>
-                                                    </tr>
-                                                )
-                                            })
-                                            }
-                                        </tbody>
-                                    </table>
+                                                            <td><button onClick={Delete.bind(this, data.id)} className="edit-btn">Cancel</button></td>
+                                                        </tr>
+                                                    )
+                                                })
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </>
                                 )}
 
                                 {approved && (
-                                    <table className='table' >
-                                        <thead>
-                                            <tr>
-                                                <th>Control Number</th>
-                                                <th>Date</th>
-                                                <th>Start Time</th>
-                                                <th>End Time</th>
-                                                <th>Task</th>
-                                                <th>Comments</th>
-                                                <th>Status</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {approvedDashboard.filter(data => {
-                                                if ((data.date.toString().includes(keyword.toString())) || (data.approveStatus.toLowerCase().includes(keyword.toLowerCase())) || (data.startTime.toString().includes(keyword.toString())) || (data.endTime.toString().includes(keyword.toString())) || (data.task.toString().includes(keyword.toString())) || (data.comments.toString().includes(keyword.toString()))) {
-                                                    return data;
+                                    <>
+                                        <h6 style={{ color: "#3247d5" }}>Showing {approvedDashboard.length} Results</h6>
+                                        <table className='table' >
+                                            <thead>
+                                                <tr>
+                                                    <th>Control Number</th>
+                                                    <th>Date</th>
+                                                    <th>Start Time</th>
+                                                    <th>End Time</th>
+                                                    <th>Task</th>
+                                                    <th>Comments</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {approvedDashboard.filter(data => {
+                                                    if ((data.date.toString().includes(keyword.toString())) || (data.approveStatus.toLowerCase().includes(keyword.toLowerCase())) || (data.startTime.toString().includes(keyword.toString())) || (data.endTime.toString().includes(keyword.toString())) || (data.task.toString().includes(keyword.toString())) || (data.comments.toString().includes(keyword.toString()))) {
+                                                        return data;
+                                                    }
+                                                }).slice(offset, offset + PER_PAGE).map((data, index) => {
+                                                    return (
+                                                        <tr className="text-dark" key={index}>
+                                                            <td>{data.id}</td>
+                                                            <td>{data.date}</td>
+                                                            <td>{data.startTime}</td>
+                                                            <td>{data.endTime}</td>
+                                                            <td>{data.task}</td>
+                                                            <td>{data.comments}</td>
+                                                            <td>{data.approveStatus}</td>
+                                                        </tr>
+                                                    )
+                                                })
                                                 }
-                                            }).slice(offset, offset + PER_PAGE).map((data, index) => {
-                                                return (
-                                                    <tr className="text-dark" key={index}>
-                                                        <td>{data.id}</td>
-                                                        <td>{data.date}</td>
-                                                        <td>{data.startTime}</td>
-                                                        <td>{data.endTime}</td>
-                                                        <td>{data.task}</td>
-                                                        <td>{data.comments}</td>
-                                                        <td>{data.approveStatus}</td>
-                                                    </tr>
-                                                )
-                                            })
-                                            }
-                                        </tbody>
-                                    </table>
+                                            </tbody>
+                                        </table>
+                                    </>
                                 )}
 
                                 {rejected && (
-                                    <table className='table' >
-                                        <thead>
-                                            <tr>
-                                                <th>Control Number</th>
-                                                <th>Date</th>
-                                                <th>Start Time</th>
-                                                <th>End Time</th>
-                                                <th>Task</th>
-                                                <th>Comments</th>
-                                                <th>Status</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {rejecteddDashboard.filter(data => {
-                                                if ((data.date.toString().includes(keyword.toString())) || (data.approveStatus.toLowerCase().includes(keyword.toLowerCase())) || (data.startTime.toString().includes(keyword.toString())) || (data.endTime.toString().includes(keyword.toString())) || (data.task.toString().includes(keyword.toString())) || (data.comments.toString().includes(keyword.toString()))) {
-                                                    return data;
+                                    <>
+                                        <h6 style={{ color: "#3247d5" }}>Showing {rejecteddDashboard.length} Results</h6>
+                                        <table className='table' >
+                                            <thead>
+                                                <tr>
+                                                    <th>Control Number</th>
+                                                    <th>Date</th>
+                                                    <th>Start Time</th>
+                                                    <th>End Time</th>
+                                                    <th>Task</th>
+                                                    <th>Comments</th>
+                                                    <th>Status</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                {rejecteddDashboard.filter(data => {
+                                                    if ((data.date.toString().includes(keyword.toString())) || (data.approveStatus.toLowerCase().includes(keyword.toLowerCase())) || (data.startTime.toString().includes(keyword.toString())) || (data.endTime.toString().includes(keyword.toString())) || (data.task.toString().includes(keyword.toString())) || (data.comments.toString().includes(keyword.toString()))) {
+                                                        return data;
+                                                    }
+                                                }).slice(offset, offset + PER_PAGE).map((data, index) => {
+                                                    return (
+                                                        <tr className="text-dark" key={index}>
+                                                            <td>{data.id}</td>
+                                                            <td>{data.date}</td>
+                                                            <td>{data.startTime}</td>
+                                                            <td>{data.endTime}</td>
+                                                            <td>{data.task}</td>
+                                                            <td>{data.comments}</td>
+                                                            <td>{data.approveStatus}</td>
+                                                        </tr>
+                                                    )
+                                                })
                                                 }
-                                            }).slice(offset, offset + PER_PAGE).map((data, index) => {
-                                                return (
-                                                    <tr className="text-dark" key={index}>
-                                                        <td>{data.id}</td>
-                                                        <td>{data.date}</td>
-                                                        <td>{data.startTime}</td>
-                                                        <td>{data.endTime}</td>
-                                                        <td>{data.task}</td>
-                                                        <td>{data.comments}</td>
-                                                        <td>{data.approveStatus}</td>
-                                                    </tr>
-                                                )
-                                            })
-                                            }
-                                        </tbody>
-                                    </table>
+                                            </tbody>
+                                        </table>
+                                    </>
                                 )}
                             </div>
                         </div>
