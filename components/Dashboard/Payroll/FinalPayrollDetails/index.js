@@ -14,6 +14,7 @@ const FinalPayrollDetails = () => {
   const [department, setDepartment] = useState([]);
   const [keyword, setKeyword] = useState("");
 
+
   const tableRef = useRef(null);
 
   const getData = async () => {
@@ -35,11 +36,11 @@ const FinalPayrollDetails = () => {
 
   const handleRowSelect = (event, id) => {
     debugger
-      if (id === 'all') {
-          setSelectedRows(event.target.checked ? preliminarySalary.map(data => data.id) : []);
-      } else {
-          setSelectedRows(selectedRows.includes(id) ? selectedRows.filter(rowId => rowId !== id) : [...selectedRows, id]);
-      }
+    if (id === 'all') {
+      setSelectedRows(event.target.checked ? preliminarySalary.map(data => data.id) : []);
+    } else {
+      setSelectedRows(selectedRows.includes(id) ? selectedRows.filter(rowId => rowId !== id) : [...selectedRows, id]);
+    }
   };
 
   useEffect(() => {
@@ -134,12 +135,12 @@ const FinalPayrollDetails = () => {
       const deleteddddsalary = await Promise.all(
         checkedState && checkedState.length > 0
           ? checkedState.map(async (data) => {
-              const res = await apiService.commonGetCall(
-                `Payroll/DeletePreliminary?staffID=${data.staffID}&Enddate=${data.endDateformated}`
-              );
-              const deletedData = res.data[0] || res.data;
-              // console.log(res.data);
-            })
+            const res = await apiService.commonGetCall(
+              `Payroll/DeletePreliminary?staffID=${data.staffID}&Enddate=${data.endDateformated}`
+            );
+            const deletedData = res.data[0] || res.data;
+            // console.log(res.data);
+          })
           : []
       );
       return deleteddddsalary;
@@ -188,7 +189,7 @@ const FinalPayrollDetails = () => {
             />
           </div>
           <div className="col-lg-2">
-            <select id="Department" name="Department" className="form-select">
+            <select id="Department" name="Department" className="form-select" >
               <option value="" disabled="">
                 Select Department
               </option>
@@ -216,14 +217,20 @@ const FinalPayrollDetails = () => {
       </div>
       <br />
       <div className="row">
-        <div className="col-lg-10"></div>
-        <div className="col-lg-2">Total Amount:</div>
+        <div className="col-lg-8"></div>
+
+
+        <div className="col-lg-2" style={{ marginLeft: "95px", color: "#3247d5" }}>Total Amount:</div>
       </div>
       <br />
       <br />
       <div className="row">
-        <div className="col-lg-9"></div>
-        <div className="col-lg-2">
+        <div className="col-lg-4">
+        </div>
+        <div className="col-lg-4"
+        ><p className="Heading">Employees in selected Period</p>
+        </div>
+        <div className="col-lg-2" style={{ marginLeft: "92px" }}>
           <button
             type="button"
             className="EditDelteBTN fw-bold"
@@ -236,7 +243,7 @@ const FinalPayrollDetails = () => {
       <div className="row ">
         <div className="col-lg-4"> </div>
         <div className="col-lg-5">
-          <h4 className="Heading">Employees in selected Period</h4>
+
         </div>
 
         <div className="col-lg-12">
@@ -336,7 +343,7 @@ const FinalPayrollDetails = () => {
           <div className="modalbody">
             <div className="row">
               <div className="col-lg-12">
-                <table className="table  table-bordered mt-4 text-center table-striped ">
+                <table className="table  table-bordered text-center ">
                   <thead>
                     <tr>
                       <th className="text-white">Component Name</th>

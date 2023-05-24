@@ -79,25 +79,25 @@ const MyTeamCompensationtimeout = () => {
 
 
 
-    const getPendingData = async () => {
-
-        const res = await apiService.commonGetCall("Payroll/GetPendingCompensationTimeOutBySupervisor?UserID=" + userID)
-        // sessionStorage.setItem("supervisorID", res.data[0].supervisor)
-        getPending(res.data)
-        setcount(res.data.length);
-    }
-
-    const getApprovedData = async () => {
-
+    const getManagerApprovedData = async () => {
         const res = await apiService.commonGetCall("Payroll/GetApproveCompensationTimeOutBySupervisor?UserID=" + userID)
-        getApproved(res.data, "employee approved")
+        console.log(res.data)
+        getManagerApproved(res.data)
         setcount(res.data.length);
     }
 
-    const getRejectedData = async () => {
-
+    const getManagerRejectedData = async () => {
         const res = await apiService.commonGetCall("Payroll/GetRejectCompensationTimeOutBySupervisor?UserID=" + userID)
-        getRejected(res.data)
+        console.log(res.data)
+        getManagerRejected(res.data)
+        setcount(res.data.length);
+    }
+    let staffID
+    const getPendingCompensation = async () => {
+        staffID = sessionStorage.getItem("userID");
+        const res = await apiService.commonGetCall("Payroll/GetPendingCompensationTimeOutBySupervisor?UserID=" + userID)
+        console.log(res.data, "manager pending")
+        getComponsation(res.data)
         setcount(res.data.length);
     }
 
@@ -182,10 +182,10 @@ const MyTeamCompensationtimeout = () => {
         setUserID(usrID);
         const userRoleID = sessionStorage.getItem("roleID");
         setRoleID(userRoleID);
-        getPendingData()
+        // getPendingData()
         getPendingCompensation();
-        getApprovedData();
-        getRejectedData();
+        // getApprovedData();
+        // getRejectedData();
         getManagerApprovedData();
         getManagerRejectedData();
         setPending(true);
@@ -276,7 +276,7 @@ const MyTeamCompensationtimeout = () => {
 
                                         <tbody>
                                             {
-                                                pendingDashboard.filter(data => {
+                                                compensation.filter(data => {
                                                     if ((data.date.toString().includes(keyword.toLowerCase())) || (data.status.toLowerCase().includes(keyword)) || (data.actuval_StartTime.toString().includes(keyword.toLowerCase())) || (data.actuval_EndTime.toString().includes(keyword.toLowerCase())) || (data.comments.toString().includes(keyword.toLowerCase()))) {
                                                         return data;
                                                     }
@@ -322,7 +322,7 @@ const MyTeamCompensationtimeout = () => {
 
                                         <tbody>
                                             {
-                                                approvedDashboard.filter(data => {
+                                                managerApproved.filter(data => {
                                                     if ((data.date.toString().includes(keyword.toLowerCase())) || (data.status.toLowerCase().includes(keyword))) {
                                                         return data;
                                                     }
@@ -360,7 +360,7 @@ const MyTeamCompensationtimeout = () => {
 
                                         <tbody>
                                             {
-                                                rejecteddDashboard.filter(data => {
+                                                managerRejected.filter(data => {
                                                     if ((data.date.toLowerCase().includes(keyword.toLowerCase())) || (data.status.toLowerCase().includes(keyword))) {
                                                         return data;
                                                     }

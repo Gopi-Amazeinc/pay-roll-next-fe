@@ -3,6 +3,8 @@ import Modal from 'react-modal';
 import Swal from 'sweetalert2';
 import axios from 'axios'
 import ReactPaginate from "react-paginate";
+import Styles from "../.././../../styles/finalpayrolldetails.module.css";
+
 import Link from 'next/link'
 import { DownloadTableExcel } from 'react-export-table-to-excel';
 import { IoIosClose } from 'react-icons/io'
@@ -14,7 +16,10 @@ const InitialPayrollDetails = () => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const [department, setDepartment] = useState([]);
     const [selectedRows, setSelectedRows] = useState([]);
+    const [checkedState, setCheckedState] = useState([]);
+    const [departmentFilter, setDepartmentFilter] = useState("")
     const handleRowSelect = (event, id) => {
+        debugger
         if (id === 'all') {
             setSelectedRows(event.target.checked ? preliminarySalary.map(data => data.id) : []);
         } else {
@@ -74,25 +79,72 @@ const InitialPayrollDetails = () => {
         setIsOpen(false);
     }
 
-    const handleDelete = async (staffID, endDateFormated) => {
+    const handleOnChange = (event) => {
+        debugger;
+        const { checked } = event.target;
+        const data = JSON.parse(event.target.value);
+        // console.log(`${value} is ${checked}`);
+        if (checked) {
+            preliminarySalary.find((x) => x.id == data.id).isChecked = true;
+            let entity = {
+                staffID: data.staffID,
+                endDateformated: data.endDateFormated,
+            };
+            setCheckedState([...checkedState, entity]);
+        } else {
+            preliminarySalary.find((x) => x.id == data.id).isChecked = false;
+            const index = checkedState.indexOf(event.target.value);
+            if (index !== -1) {
+                setCheckedState(checkedState.splice(index, 1));
+            }
+        }
+        // setIsChecked(event.target.checked);
+        console.log("checked", event.target.value);
+    };
+    console.log(checkedState);
+
+    const handleDelete = async () => {
+        const deletedIDS = await deleteSalary(checkedState);
+        console.log(deletedIDS);
+        // checkedState[index].isCompleted = true;
+        Swal.fire({
+            icon: "success",
+            title: "Hurray..",
+            text: "Data Deleted Successfully...!",
+        });
+        getData();
+    };
+
+
+
+    const deleteSalary = async (checkedState) => {
         try {
             debugger;
-            let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+            // const index = checkedState.indexOf(event.target.value);
+            // if (index !== -1) {
+            //   checkedState[index].isCompleted = true;
+            //   setCheckedState(checkedState);
+            // }
+            const deleteddddsalary = await Promise.all(
+                checkedState && checkedState.length > 0
+                    ? checkedState.map(async (data) => {
+                        const res = await apiService.commonGetCall(
+                            `Payroll/DeletePreliminary?staffID=${data.staffID}&Enddate=${data.endDateformated}`
+                        );
+                        const deletedData = res.data[0] || res.data;
+                        // console.log(res.data);
+                    })
+                    : []
+            );
+            return deleteddddsalary;
+
             // This API is used to delete the dashboard data based on StaffID,EndDate
-            const res = await apiService.commonGetCall(`Payroll/DeletePreliminary?staffID=${staffID}&Enddate=${endDateFormated}`);
-            Swal.fire({
-                icon: "success",
-                title: "Hurray..",
-                text: "Data was Deleted...!",
-            });
-            console.log(res.data);
-            getData();
         } catch (error) {
-            console.error(error);
+            // console.error(error);
             Swal.fire({
                 icon: "error",
                 title: "Oops..",
-                text: "Data was Not Deleted...!",
+                text: "Data Not Deleted...!",
             });
         }
     };
@@ -113,7 +165,7 @@ const InitialPayrollDetails = () => {
                         <input type="text" className='form-control' placeholder='Search...' onChange={e => { setKeyword(e.target.value) }} />
                     </div>
                     <div className='col-lg-2'>
-                        <select id="Department" name="Department" className='form-select'>
+                        <select className='form-select' onChange={e => { setDepartmentFilter(e.target.value) }}>
                             <option value="" disabled="">
                                 Select Department </option>
                             {
@@ -137,19 +189,20 @@ const InitialPayrollDetails = () => {
                 </div>
             </div><br /><br />
             <div className='row '>
+
                 <div className='col-lg-4'> </div>
-                <div className='col-lg-5'>
+                <div className='col-lg-4' >
                     <p className='Heading' >Employees in selected Period</p>
                 </div>
-                <div className='col-lg-2'>
-                    <button type='button' className='EditDelteBTN' onClick={() => handleDelete.bind(this)}>Delete</button>
+                <div className='col-lg-2' style={{ marginLeft: "92px" }}>
+                    <button type='button' className='EditDelteBTN' onClick={() => handleDelete()}>Delete</button>
                 </div>
             </div>
             <div className='row'>
                 <div className='col-lg-12'>
                     <span>Select All <input type="checkbox" checked={selectedRows.length === preliminarySalary.length} onChange={e => handleRowSelect(e, 'all')} /></span>
                     <br />
-                    <table className='table' ref={tableRef}>
+                    <table className='table text-center' ref={tableRef}>
                         <thead>
                             <tr className='text-white' style={{ whiteSpace: 'nowrap' }}>
                                 <th>Select</th>
@@ -165,15 +218,17 @@ const InitialPayrollDetails = () => {
                         </thead>
                         <tbody >
                             {
-                                preliminarySalary.filter(data => {
-                                    if ((data.staffID.toString().includes(keyword)) || (data.componentValue.toString().includes(keyword.toString()))) {
+                                preliminarySalary.filter((data) => {
+                                    if ((data.staffID.toString().includes(keyword)) || (data.componentValue.toString().includes(keyword.toString()))
+                                        || (data.department_name.toString().includes(departmentFilter.toLowerCase().includes(departmentFilter)))) {
                                         return data;
                                     }
                                 }).slice(offset, offset + PER_PAGE).map((data, index) => {
                                     return (
                                         <tr className="text-dark" key={index}>
                                             <td>
-                                                <input type="checkbox" checked={selectedRows.includes(data.id)} onChange={e => handleRowSelect(e, data.id)} />
+                                                <input type="checkbox" checked={data.isChecked}
+                                                    value={JSON.stringify(data)} onChange={handleOnChange} />
                                             </td>
                                             <td>{data.employeID}</td>
                                             <td>{data.staffID}</td>
@@ -183,7 +238,7 @@ const InitialPayrollDetails = () => {
                                             <td>{data.baseSal}</td>
                                             <td>{data.componentValue}</td>
                                             <td>
-                                                <button className='submit-button fw-bold ' onClick={openModal}>View Component Details</button>
+                                                <button className={Styles.actionButton} onClick={openModal}>View Component Details</button>
                                             </td>
                                         </tr>
                                     )
@@ -208,7 +263,7 @@ const InitialPayrollDetails = () => {
                     <div className='modalbody'>
                         <div className="row">
                             <div className='col-lg-12'>
-                                <table className='table  table-bordered mt-4 text-center table-striped ' >
+                                <table className='table  table-bordered mt-4 text-center  ' >
                                     <thead>
                                         <tr className='text-white' >
                                             <th>Component Name</th>

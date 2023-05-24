@@ -10,6 +10,8 @@ import { useRouter } from "next/router";
 
 
 const AttendanceCorrectionform = () => {
+
+
   const router = useRouter();
   const {
     register,
@@ -19,7 +21,47 @@ const AttendanceCorrectionform = () => {
   } = useForm();
   const [actionType, setActionType] = useState("insert");
 
+  const [startTime, setStartTime] = useState("");
+  const [endTime, setEndTime] = useState("");
 
+
+
+  // const handleChangeStartTime = (Stime) => {
+  //   debugger
+  //   setStartTime(Stime);
+  //   setEndTime("");
+  // };
+
+  // const handleChangeEndTime = (Etime) => {
+  //   debugger
+  //   setEndTime(Etime);
+  //   return handleTimes(startTime,endTime)
+  // };
+  const handleChangeStartTime = (event) => {
+    const sTime = event.target.value
+    setStartTime(sTime);
+    setEndTime("");
+  };
+
+  const handleChangeEndTime = (event) => {
+    const eTime = event.target.value
+    setEndTime(eTime);
+    return handleTimes(startTime, Etime)
+  };
+
+  const compareTimes = (startTime, endTime) => {
+    const start = new Date(startTime);
+    const end = new Date(endTime);
+
+    return start > end;
+  };
+  const handleTimes = (startTime, endTime) => {
+    debugger
+    if (!compareTimes(startTime, endTime)) {
+      Swal.fire("Start time must be greater than end time");
+      return;
+    }
+  };
   // const [UserID, setUserIDdata] = useState("")
 
   // useEffect(() => {
@@ -78,9 +120,11 @@ const AttendanceCorrectionform = () => {
                 <label>
                   <b> Start Time</b> <i className="text-danger">*</i>
                 </label>
-                <input
-                  type="time"
+                <input 
+                  type="time" onChange={e=>setStartTime(e.target.value)}
                   className="form-control"
+                  // onChange={(e)=>handleChangeStartTime(e.target.value)}
+               
                   {...register("StartTime", { required: true })}
                 />
                 {errors.StartTime && (
@@ -94,25 +138,32 @@ const AttendanceCorrectionform = () => {
                 <input
                   type="time"
                   className="form-control"
-                  {...register("EndTime", { required: true })}
+                  // onChange={(e)=>handleChangeEndTime(e.target.value)}
+                  onChange={handleChangeEndTime}
+                  {...register("EndTime", { required: true ,})}
                 />
+                
                 {errors.EndTime && (
                   <p className="text-danger mt-2">Select Valid End Time</p>
                 )}
+               
               </div>
               <div className="col-lg-3">
                 <label>
                   <b>Comments </b>
                   <i className="text-danger">*</i>
-                </label>
+                </label> 
                 <textarea
                   rows={6}
+               
                   className="form-control"
-                  {...register("Comment", { required: true })}
-                ></textarea>
-                {errors.Comment && (
+                  {...register("Comment", { required: true,  maxLength: "10"})}
+                />
+                {errors?.Comment?.type==='required' && (
                   <p className="text-danger mt-2">Please Enter Comments</p>
                 )}
+                {errors?.Comment?.type=== "maxLength" && (
+        <p>First name cannot exceed 20 characters</p>)}
               </div>
             </div>
             <div className="row mt-5">

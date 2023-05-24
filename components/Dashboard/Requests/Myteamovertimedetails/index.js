@@ -25,6 +25,7 @@ const Index = () => {
     const [isOpen, ModalIsOpen] = useState(false)
     const [roleID, setRoleID] = useState();
     const [userID, setUserID] = useState();
+    const [keyword, setKeyword] = useState("");
     const togglePending = () => {
         setManagerTogglePending(true);
         setManagerToggleApproved(false);
@@ -60,7 +61,7 @@ const Index = () => {
             marginRight: '-50%',
             transform: 'translate(-50%, -50%)',
             width: '50%',
-            height: '30%'
+            height: '40%'
         }
     }
     const getManagerPendingDetails = async () => {
@@ -150,6 +151,10 @@ const Index = () => {
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
     const approve = (id) => {
+        let data = {
+            "id": id,
+            "Status": "Manager Approved"
+        }
         Swal.fire({
             title: 'Confirm To Approve?',
             text: "You won't be able to revert this!",
@@ -160,20 +165,24 @@ const Index = () => {
             confirmButtonText: 'Yes, Approve it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                apiService.commonPostCall("Payroll/UpdateApproveOtFromManager?id=" + id + "&Status=ManagerApproved")
+                apiService.commonPostCall("Payroll/UpdateApproveOtFromManager", data)
                 Swal.fire({
                     icon: "success",
                     titleText: "Approved Successfully"
                 })
-                getManagerPendingDetails();
             }
         })
+        getManagerPendingDetails();
     }
     let id;
     const reject = () => {
-        debugger;
         id = sessionStorage.getItem("id")
         let reason = watch("Reason")
+        let data = {
+            "id": id,
+            "RejectReason": reason,
+            "Status": "Manager Rejected"
+        }
         Swal.fire({
             title: 'Confirm To Reject?',
             text: "You won't be able to revert this!",
@@ -184,14 +193,14 @@ const Index = () => {
             confirmButtonText: 'Yes, Reject it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                apiService.commonPostCall(`Payroll/UpdateOtFromManager?id=${id}&Status=ManagerRejected&RejectedReason=${reason}`);
+                apiService.commonPostCall(`Payroll/UpdateOtFromManager`, data);
                 Swal.fire({
                     icon: "success",
                     titleText: "Rejected Successfully"
                 })
-                getManagerPendingDetails();
             }
         })
+        getManagerPendingDetails();
     }
     return (
         <div className='container-fluid'>
@@ -242,117 +251,138 @@ const Index = () => {
                         <div className='col-lg-12'>
                             {
                                 managertogglePending && sessionStorage.getItem("roleID") == 3 && (
-                                    <table className='table table-hover'>
-                                        <thead className='bg-info text-white'>
-                                            <tr>
-                                                <td>
-                                                    <input type='checkbox' />
-                                                </td>
-                                                <th>Date Request</th>
-                                                <th>Start Time</th>
-                                                <th>End Time</th>
-                                                <th>OT Details</th>
-                                                <th>Purpose</th>
-                                                <th>Status</th>
-                                                <th>Actions</th>
-                                            </tr>
-                                        </thead>
+                                    <>
+                                        <h6 style={{ color: "#3247d5" }}>Showing {managerPending.length} Results</h6>
+                                        <table className='table table-hover'>
+                                            <thead className='bg-info text-white'>
+                                                <tr>
+                                                    <td>
+                                                        <input type='checkbox' />
+                                                    </td>
+                                                    <th>Date Request</th>
+                                                    <th>Start Time</th>
+                                                    <th>End Time</th>
+                                                    <th>OT Details</th>
+                                                    <th>Purpose</th>
+                                                    <th>Status</th>
+                                                    <th>Actions</th>
+                                                </tr>
+                                            </thead>
 
-                                        <tbody>
-                                            {
-                                                managerPending.slice(offset, offset + PER_PAGE).map((data) => {
-                                                    return (
-                                                        <tr key={data.id}>
-                                                            <td>
-                                                                <input type='checkbox' />
-                                                            </td>
-                                                            <td>{data.date}</td>
-                                                            <td>{data.startTime}</td>
-                                                            <td>{data.endTime}</td>
-                                                            <td>
-                                                                <button className='edit-btn' onClick={openEditModal} >Details</button>
-                                                            </td>
-                                                            <td>{data.comments}</td>
-                                                            <td>{data.status}</td>
-                                                            <td>
-                                                                <button onClick={approve.bind(this, data.id)} className='edit-btn'>Approve</button>
-                                                                <button onClick={() => openModal(sessionStorage.setItem("id", data.id))} className='edit-btn'>Reject</button>
-                                                            </td>
-                                                        </tr>
-                                                    )
-                                                })
-                                            }
-                                        </tbody>
-                                    </table>
+                                            <tbody>
+                                                {
+                                                    managerPending.filter(data => {
+                                                        if ((data.date.toString().includes(keyword.toString())) || (data.startTime.toString().includes(keyword)) || (data.endTime.toString().includes(keyword)) || (data.status.toString().includes(keyword)) || (data.comments.toString().includes(keyword.toString()))) {
+                                                            return data;
+                                                        }
+                                                    }).slice(offset, offset + PER_PAGE).map((data) => {
+                                                        return (
+                                                            <tr key={data.id}>
+                                                                <td>
+                                                                    <input type='checkbox' />
+                                                                </td>
+                                                                <td>{data.date}</td>
+                                                                <td>{data.startTime}</td>
+                                                                <td>{data.endTime}</td>
+                                                                <td>
+                                                                    <button className='edit-btn' onClick={openEditModal} >Details</button>
+                                                                </td>
+                                                                <td>{data.comments}</td>
+                                                                <td>{data.status}</td>
+                                                                <td>
+                                                                    <button onClick={approve.bind(this, data.id)} className='edit-btn'>Approve</button>
+                                                                    <button onClick={() => openModal(sessionStorage.setItem("id", data.id))} className='edit-btn'>Reject</button>
+                                                                </td>
+                                                            </tr>
+                                                        )
+                                                    })
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </>
                                 )
                             }
 
 
                             {
                                 managerToggleapproved && sessionStorage.getItem("roleID") == 3 && (
-                                    <table className='table table-hover'>
-                                        <thead className='bg-info text-white'>
-                                            <tr>
-                                                <th>Date Request</th>
-                                                <th>Start Time</th>
-                                                <th>End Time</th>
-                                                {/* <th>Purpose</th> */}
-                                                <th>Status</th>
-                                                {/* <th>Actions</th> */}
-                                            </tr>
-                                        </thead>
+                                    <>
+                                        <h6 style={{ color: "#3247d5" }}>Showing {managerApproved.length} Results</h6>
+                                        <table className='table table-hover'>
+                                            <thead className='bg-info text-white'>
+                                                <tr>
+                                                    <th>Date Request</th>
+                                                    <th>Start Time</th>
+                                                    <th>End Time</th>
+                                                    {/* <th>Purpose</th> */}
+                                                    <th>Status</th>
+                                                    {/* <th>Actions</th> */}
+                                                </tr>
+                                            </thead>
 
-                                        <tbody>
-                                            {
-                                                managerApproved.slice(offset, offset + PER_PAGE).map((data) => {
-                                                    return (
-                                                        <tr key={data.id}>
-                                                            <td>{data.date}</td>
-                                                            <td>{data.startTime}</td>
-                                                            <td>{data.endTime}</td>
-                                                            {/* <td>{data.comments}</td> */}
-                                                            <td>{data.status}</td>
-                                                        </tr>
-                                                    )
-                                                })
-                                            }
-                                        </tbody>
-                                    </table>
+                                            <tbody>
+                                                {
+                                                    managerApproved.filter(data => {
+                                                        if ((data.date.toString().includes(keyword.toString())) || (data.startTime.toString().includes(keyword)) || (data.endTime.toString().includes(keyword)) || (data.status.toString().includes(keyword)) || (data.comments.toString().includes(keyword.toString()))) {
+                                                            return data;
+                                                        }
+                                                    }).slice(offset, offset + PER_PAGE).map((data) => {
+                                                        return (
+                                                            <tr key={data.id}>
+                                                                <td>{data.date}</td>
+                                                                <td>{data.startTime}</td>
+                                                                <td>{data.endTime}</td>
+                                                                {/* <td>{data.comments}</td> */}
+                                                                <td>{data.status}</td>
+                                                            </tr>
+                                                        )
+                                                    })
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </>
                                 )
                             }
 
 
                             {
                                 managertogglerejected && sessionStorage.getItem("roleID") == 3 && (
-                                    <table className='table table-hover'>
-                                        <thead className='bg-info text-white'>
-                                            <tr>
-                                                <th>Date Request</th>
-                                                <th>Start Time</th>
-                                                <th>End Time</th>
-                                                {/* <th>OT Details</th> */}
-                                                {/* <th>Purpose</th> */}
-                                                <th>Status</th>
-                                                {/* <th>Actions</th> */}
-                                            </tr>
-                                        </thead>
+                                    <>
+                                        <h6 style={{ color: "#3247d5" }}>Showing {managerRejected.length} Results</h6>
+                                        <table className='table table-hover'>
+                                            <thead className='bg-info text-white'>
+                                                <tr>
+                                                    <th>Date Request</th>
+                                                    <th>Start Time</th>
+                                                    <th>End Time</th>
+                                                    {/* <th>OT Details</th> */}
+                                                    {/* <th>Purpose</th> */}
+                                                    <th>Status</th>
+                                                    {/* <th>Actions</th> */}
+                                                </tr>
+                                            </thead>
 
-                                        <tbody>
-                                            {
-                                                managerRejected.slice(offset, offset + PER_PAGE).map((data) => {
-                                                    return (
-                                                        <tr key={data.id}>
-                                                            <td>{data.date}</td>
-                                                            <td>{data.startTime}</td>
-                                                            <td>{data.endTime}</td>
-                                                            {/* <td>{data.comments}</td> */}
-                                                            <td>{data.status}</td>
-                                                        </tr>
-                                                    )
-                                                })
-                                            }
-                                        </tbody>
-                                    </table>
+                                            <tbody>
+                                                {
+                                                    managerRejected.filter(data => {
+                                                        if ((data.date.toString().includes(keyword.toString())) || (data.startTime.toString().includes(keyword)) || (data.endTime.toString().includes(keyword)) || (data.status.toString().includes(keyword)) || (data.comments.toString().includes(keyword.toString()))) {
+                                                            return data;
+                                                        }
+                                                    }).slice(offset, offset + PER_PAGE).map((data) => {
+                                                        return (
+                                                            <tr key={data.id}>
+                                                                <td>{data.date}</td>
+                                                                <td>{data.startTime}</td>
+                                                                <td>{data.endTime}</td>
+                                                                {/* <td>{data.comments}</td> */}
+                                                                <td>{data.status}</td>
+                                                            </tr>
+                                                        )
+                                                    })
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </>
                                 )
                             }
                         </div>

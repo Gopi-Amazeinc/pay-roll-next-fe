@@ -35,16 +35,22 @@ const MyTeamAttendence = () => {
 
   // Gopi's Code => tried for onchnage function
   useEffect(() => {
+    
     if (userID) {
       debugger;
       getstaffDetails();
     }
   }, [userID]);
   const getstaffDetails = async () => {
+    const getAttendancedata = []
     const staffDetails = await apiService.commonGetCall(
       "Payroll/GetStaffBySupervisorID?Supervisor=" + userID
     );
-    setStaffData(staffDetails.data);
+    for (let i=0; i< staffDetails.length ; i++){
+      getAttendancedata.push(staffDetails[i].fullname)
+    }
+    setStaffData(getAttendancedata);
+    // setStaffData(staffDetails.data);
     // setcount(res.data.length);
   };
 
@@ -150,7 +156,7 @@ const MyTeamAttendence = () => {
             >
               My Attendence Details
             </Link>
-            
+
           </div>
           <div className="col-lg-4" style={{ marginLeft: "-30px" }}>
             <Link
@@ -192,9 +198,9 @@ const MyTeamAttendence = () => {
               <p className={Styles.filterdate}>
                 Staff<i className="text-danger">*</i>
               </p>
-              {/* <Multiselect
-                displayValue="id"
-                // isObject={false}
+              <Multiselect
+                // displayValue="id"
+                isObject={false}
                 onKeyPressFn={function noRefCheck() {}}
                 onRemove={function noRefCheck() {}}
                 onSearch={function noRefCheck() {}}
@@ -212,8 +218,8 @@ const MyTeamAttendence = () => {
                 // }}
                 showCheckbox
                 selectedValues={{}}
-              /> */}
-              <select
+              />
+              {/* <select
                 className="form-select"
                 onChange={(e) => handleStaffChange(e.target.value)}
               >
@@ -225,7 +231,7 @@ const MyTeamAttendence = () => {
                     </option>
                   );
                 })}
-              </select>
+              </select> */}
             </div>
 
             <div className="col-lg-2">
@@ -244,13 +250,19 @@ const MyTeamAttendence = () => {
               {/* <button className="button">Upload</button> */}
               <br />
               <p></p>
-              <DownloadTableExcel
-                filename="users table"
-                sheet="users"
-                currentTableRef={tableRef.current}
-              >
-                <button className="button">Export To Excel</button>
-              </DownloadTableExcel>
+
+              {count > 0 ?
+                <>
+                  <DownloadTableExcel
+                    filename="users table"
+                    sheet="users"
+                    currentTableRef={tableRef.current}
+                  >
+                    <button className="button">Export To Excel</button>
+                  </DownloadTableExcel>
+                </>
+                : null}
+
             </div>
           </div>
         </div>
@@ -284,11 +296,12 @@ const MyTeamAttendence = () => {
               <>
                 {MyTeamAttendence
                   // {MyTeamAttendence
-                  //   .filter(data => {
-                  //     if ((data.startTime.toLowerCase().includes(keyword)) || (data.date.toLowerCase().includes(keyword)) || (data.endTime.toLowerCase().includes(keyword))) {
-                  //       return data;
-                  //     }
-                  //   })
+                  .filter(post => {
+                    return Object.values(post).some(value =>
+                      value !== null && value.toString().toLowerCase().includes(keyword.toLowerCase())
+                    );
+                  })
+
                   .slice(offset, offset + PER_PAGE).map(
                     (data, index) => {
                       return (

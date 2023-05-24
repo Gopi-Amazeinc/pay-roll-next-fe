@@ -4,8 +4,9 @@ import axios from "axios";
 import Swal from "sweetalert2";
 import React, { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
+import { apiService } from "@/services/api.service";
 
-export default function EducationDetails() {
+export default function EducationDetails({data}) {
     
   const [EducationDetals, setEducationData] = useState([]);
   const [LicenseOrCertificationMaster, setLicenseOrCertificationMaster] =
@@ -156,17 +157,34 @@ export default function EducationDetails() {
   }
 
   useEffect(() => {
-    getData();
+    debugger
+    makecalls()
   }, [1]);
-
+  function makecalls() {
+    const { id } = data || {};
+    if (id) {
+      getByID(id);
+    } else {
+      cleardata()
+      getData();
+    }
+  }
+  const getByID = async (id) => {
+    debugger;
+    await getData();
+    const res = await apiService.commonGetCall(
+      "Payroll/GetEducationDetailsByStaffID?StaffID=" + id
+    );
+    setEducationData(res.data);
+  };
   async function getData() {
     let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
 
     let res = await axios.get(hostURL + "/Master/GetEducationTypeMaster");
     setEducationAttainmentlistData(res.data);
 
-    let res3 = await axios.get(hostURL + "/HR/GetEducationDetails");
-    setEducationData(res3.data);
+    // let res3 = await axios.get(hostURL + "/HR/GetEducationDetails");
+    // setEducationData(res3.data);
 
     let res2 = await axios.get(hostURL + "/Master/GetCountryType");
     setCountryData(res2.data);

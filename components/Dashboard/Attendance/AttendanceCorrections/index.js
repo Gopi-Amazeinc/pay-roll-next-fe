@@ -227,7 +227,7 @@ const Attendancecorrectiondashboard = () => {
           </Link>
           <div className="line-border"></div>
         </div>
-       
+
         <div className="col-lg-3">
           {(roleID == 3) && (
             <>
@@ -238,7 +238,7 @@ const Attendancecorrectiondashboard = () => {
                 My Team Attendance Correction
 
               </Link>
-              
+
             </>
           )}
         </div>
@@ -270,16 +270,26 @@ const Attendancecorrectiondashboard = () => {
                     </button>
                   </Link>
                 </div>
-                <div className="col-lg-3">
-                  <DownloadTableExcel
-                    filename="Attendance table"
-                    sheet="Attendance"
-                    currentTableRef={tableRef.current}
-                  >
-                    <button className="button">Download</button>
-                  </DownloadTableExcel>
-                </div>
+
+                {pendingcount > 0 || rejectcount > 0 || approvedcount > 0 ? (
+                  <>
+                    <div className="col-lg-3">
+                      <DownloadTableExcel
+                        filename="Attendance table"
+                        sheet="Attendance"
+                        currentTableRef={tableRef.current}
+                      >
+                        <button className="button">Download</button>
+                      </DownloadTableExcel>
+                    </div>
+                  </>
+                ) : null}
+
+
               </div>
+
+
+
             )}
 
             {/* {roleID != 3 || (

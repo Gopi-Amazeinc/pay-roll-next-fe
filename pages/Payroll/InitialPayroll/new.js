@@ -20,6 +20,11 @@ const InitialPayrollForm = () => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [runPayrollDashboard, setRunPayrollDashboardData] = useState("");
+  const [keyword, setKeyword] = useState("");
+  const [deparmentFilter, setDEpartmentFilter] = useState("")
+  const [positionFilter, setPositionFilter] = useState("")
+
+
 
   const router = useRouter();
 
@@ -28,7 +33,7 @@ const InitialPayrollForm = () => {
       let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
       //gurukiran@amazeinc.in, This API is used for fetch the Paycode data for Dropdown
       let res = await apiService.commonGetCall("HR/GetPayPeriodSetting");
-      // console.log(res.data)
+      console.log(res.data)
       sessionStorage.setItem("StartDate", res.data[0].payrollStartDate);
       sessionStorage.setItem("EndDate", res.data[0].payrollEndDate);
       setPayCode(res.data);
@@ -41,7 +46,7 @@ const InitialPayrollForm = () => {
     }
     getData();
   }, []);
-
+ 
   const runPayrollButton = () => {
     router.push("/Payroll/InitialPayroll")
     Swal.fire({
@@ -57,6 +62,8 @@ const InitialPayrollForm = () => {
         .payrollStartDate;
       let rres = paycode.filter((x) => x.paycode == watch("PayCode"))[0]
         .payrollEndDate;
+      console.log(res)
+      console.log(rres)
       setStartDate(res);
       setEndDate(rres);
     } else {
@@ -77,11 +84,10 @@ const InitialPayrollForm = () => {
           .payrollEndDate;
         setStartDate(res);
         setEndDate(rres);
-        let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
         // This API is used to fetch the dashboard data based on StartDate,EndDate
         const sss = await apiService.commonGetCall(
 
-          `Payroll/Get_Employees_For_Payroll?startdate=${startDate}&enddate=${endDate}`
+          `Payroll/ ?startdate=${startDate}&enddate=${endDate}`
         );
         setDashboardData(sss.data);
       }
@@ -177,6 +183,9 @@ const InitialPayrollForm = () => {
                   placeholder="Search"
                   type="text"
                   className="form-control form-control-sm"
+                  onChange={(e) => {
+                    setKeyword(e.target.value);
+                  }}
                 />
               </div>
               <div className="col-lg-1"></div>
@@ -207,6 +216,7 @@ const InitialPayrollForm = () => {
                     id="Year"
                     name="Year"
                     className="form-select form-select-sm "
+                    onChange={e => { setPositionFilter(e.target.value) }}
                   >
                     {/* <br ></br> */}
                     <option
@@ -233,6 +243,9 @@ const InitialPayrollForm = () => {
                     id="Year"
                     name="Year"
                     className="form-select form-select-sm "
+                    onChange={(e) => {
+                      setDEpartmentFilter(e.target.value);
+                    }}
                   >
                     {/* <br ></br> */}
                     <option
@@ -304,7 +317,15 @@ const InitialPayrollForm = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {dashboard.map((data) => {
+                  {dashboard.filter((data) => {
+                    if (
+                      data.staffID.toString().includes(keyword) ||
+                      data.componentValue.toString().includes(keyword) || data.department_name.toLowercase().includes(deparmentFilter)
+                      || data.short.toLowercase().includes(positionFilter)
+                    ) {
+                      return data;
+                    }
+                  }).map((data) => {
                     return (
                       <>
                         <div className="row">
