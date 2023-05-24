@@ -168,63 +168,76 @@ function MyForm1({ data }) {
             </div>
             <div className="col-lg-2">
               <label className={styles.p}>Company Name<span style={{ color: "red" }}>*</span></label>
-              <input type="text" className="form-control" {...register('Company_Name', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
+              <input type="text" className="form-control" {...register('Company_Name', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9 ]+$/, message: "Please enter a valid Short Name" } })} />
+              {errors.Company_Name && <p className="error-message" style={{ color: "red" }}>{errors.Company_Name.message}</p>}
             </div>
             <div className="col-lg-2">
               <label className={styles.p}>Nature of Business</label>
-              <input type="text" className="form-control"  {...register('Nature_Of_Business', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
+              <input type="text" className="form-control"  {...register('Nature_Of_Business', { required: "Please add a Short Name", pattern: { value: "[a-zA-Z0-9\s]+", message: "Please enter a valid Short Name" } })} />
+              {errors.Nature_Of_Business && <p className="error-message" style={{ color: "red" }}>{errors.Nature_Of_Business.message}</p>}
             </div>
             <div className="col-lg-3">
               <label className={styles.p}>Address1</label>
               <input type="text" className="form-control"  {...register('Address1', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
+              {errors.Address1 && <p className="error-message" style={{ color: "red" }}>{errors.Address1.message}</p>}
             </div>
             <div className="col-lg-3">
               <label className={styles.p}>Address2</label>
               <input type="text" className="form-control"  {...register('Address2', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
+              {errors.Address2 && <p className="error-message" style={{ color: "red" }}>{errors.Address2.message}</p>}
             </div>
           </div>
           <div className="row">
             <div className="col-lg-2">
               <label className={styles.p}>Zip Code</label>
               <input type="text" className="form-control"   {...register('Zipcode', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
+              {errors.Zipcode && <p className="error-message" style={{ color: "red" }}>{errors.Zipcode.message}</p>}
             </div>
             <div className="col-lg-2">
               <label className={styles.p}>RDO</label>
-              <input type="text" className="form-control"  {...register('RDO', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
+              <input type="number" className="form-control"  {...register('RDO', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
+              {errors.RDO && <p className="error-message" style={{ color: "red" }}>{errors.RDO.message}</p>}
             </div>
             <div className="col-lg-2">
               <label className={styles.p}>Email</label>
-              <input type="text" className="form-control"  {...register('Email', { required: "Please add a Short Name", pattern:"[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$", message: "Please enter a valid Short Name"  })} />
+              <input type="email" className="form-control"  {...register('Email', { required: "Please add a Short Name", pattern:"[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$", message: "Please enter a valid Short Name"  })} />
+              {errors.Email && <p className="error-message" style={{ color: "red" }}>{errors.Email.message}</p>}
             </div>
             <div className="col-lg-2">
               <label className={styles.p}>Phone</label>
-              <input type="text" className="form-control"  {...register('Phone', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
+              <input type="tel" className="form-control"  {...register('Phone', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9 ]+$/, message: "Please enter a valid Short Name" } })} />
+              {errors.Phone && <p className="error-message" style={{ color: "red" }}>{errors.Phone.message}</p>}
             </div>
             <div className="col-lg-2">
               <label className={styles.p}>Fax</label>
               <input type="text" className="form-control"  {...register('Fax', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
+              {errors.Fax && <p className="error-message" style={{ color: "red" }}>{errors.Fax.message}</p>}
             </div>
             <div className="col-lg-2">
               <label className={styles.p}>TIN<span style={{ color: "red" }}>*</span></label>
               <input type="text" className="form-control"  {...register('Tin', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
+              {errors.TIN && <p className="error-message" style={{ color: "red" }}>{errors.TIN.message}</p>}
             </div>
           </div>
           <div className="row">
             <div className="col-lg-2">
               <label className={styles.p}>SSS No<span style={{ color: "red" }}>*</span></label>
               <input type="text" className="form-control"  {...register('SSN_No', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
+              {errors.SSN_No && <p className="error-message" style={{ color: "red" }}>{errors.SSN_No.message}</p>}
             </div>
             <div className="col-lg-2">
               <label className={styles.p}>PhilHealth No.<span style={{ color: "red" }}>*</span></label>
               <input type="text" className="form-control"  {...register('PhilHealthNumber', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
+              {errors.PhilHealthNumber && <p className="error-message" style={{ color: "red" }}>{errors.PhilHealthNumber.message}</p>}
             </div>
             <div className="col-lg-2">
               <label className={styles.p}>HDMF No.<span style={{ color: "red" }}>*</span></label>
               <input type="text" className="form-control"  {...register('HDMFNumber', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
+              {errors.HDMFNumber && <p className="error-message" style={{ color: "red" }}>{errors.HDMFNumber.message}</p>}
             </div>
             <div className="col-lg-2">
               <label className={styles.p}>Country</label>
-              <select className="form-select"  >
+              <select className="form-select" {...register('Country', { required: "Please add a Country Name" })} >
                 <option>Select Country</option>
                 {/* {
                     countrydata.map((data) => {
@@ -240,14 +253,13 @@ function MyForm1({ data }) {
                 <option>Japan</option>
                 <option>China</option>
                 <option>Pakistana</option>
-
-
-
               </select>
+              {errors.Country && <p className="error-message" style={{ color: "red" }}>{errors.Country.message}</p>}
             </div>
+
             <div className="col-lg-2">
               <label className={styles.p}>Province</label>
-              <select className="form-select"  >
+              <select className="form-select" {...register('Province', { required: "Please add a Province Name" })} >
                 <option value={"Select Province"}>Select Province</option>
                 {/* {
                     provincedata.map((data) => {
@@ -268,7 +280,7 @@ function MyForm1({ data }) {
             </div>
             <div className="col-lg-2">
               <label className={styles.p}>City</label>
-              <select className="form-select"  >
+              <select className="form-select" {...register('Province', { required: "Please add a Province Name" })}  >
                 <option value={"Select City"}>Select City</option>
                 {/* {
                     citydata.map((data) => {
@@ -285,12 +297,14 @@ function MyForm1({ data }) {
                 <option>Shida</option>
                 <option>Taliban</option>
               </select>
+              {errors.Province && <p className="error-message" style={{ color: "red" }}>{errors.Province.message}</p>}
             </div>
           </div>
+
           <div className="row">
             <div className="col-lg-2">
               <label className={styles.p}>Barangay <span style={{ color: "red" }}>*</span></label>
-              <select className="form-select"  >
+              <select className="form-select" {...register('Barangay', { required: "Please add a Province Name" })} >
                 <option value={"Select Barangay"}>Select Barangay</option>
                 {/* {
                     Barangay.map((data) => {
@@ -306,14 +320,17 @@ function MyForm1({ data }) {
                 <option>KtG nagar</option>
                 <option>afanistan</option>
               </select>
+              {errors.Barangay && <p className="error-message" style={{ color: "red" }}>{errors.Barangay.message}</p>}
             </div>
             <div className="col-lg-2">
               <label className={styles.p}>Company Bank ACC NO<span style={{ color: "red" }}>*</span></label>
-              <input type="text" className="form-control"  {...register('CompanyBankAccNo', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
+              <input type="number" className="form-control"  {...register('CompanyBankAccNo', { required: "Please add a CompanyBankAccNo Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid CompanyBankAccNo Name" } })} />
+              {errors.CompanyBankAccNo && <p className="error-message" style={{ color: "red" }}>{errors.CompanyBankAccNo.message}</p>}
             </div>
             <div className="col-lg-2">
               <label className={styles.p}>CompanyId Code <span style={{ color: "red" }}>*</span></label>
-              <input type="text" className="form-control"  {...register('CompanyCode', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
+              <input type="text" className="form-control"  {...register('CompanyCode', { required: "Please add a CompanyCode Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid CompanyCode Name" } })} />
+              {errors.CompanyCode && <p className="error-message" style={{ color: "red" }}>{errors.CompanyCode.message}</p>}
             </div>
           </div>
           <div className="row">
@@ -440,6 +457,7 @@ function MyForm2({ data }) {
               <div className="col-lg-2">
                 <label className={styles.p}>Work Days Per Year <span style={{ color: "red" }}>*</span></label>
                 <input type="text" className="form-control" {...register('Work_Days_Per_Year', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
+                {errors.Work_Days_Per_Year && <p className="error-message" style={{ color: "red" }}>{errors.Work_Days_Per_Year.message}</p>}
               </div>
               <div className="col-lg-2">
                 <label className={styles.p}>Work Months Per Year<span style={{ color: "red" }}>*</span></label>
@@ -449,10 +467,12 @@ function MyForm2({ data }) {
                   <option value="2">2</option>
                   <option value="3">3</option>
                 </select>
+                {errors.Work_Months_Per_Year && <p className="error-message" style={{ color: "red" }}>{errors.Work_Months_Per_Year.message}</p>}
               </div>
               <div className="col-lg-2">
                 <label className={styles.p}>Daily Rate Factor<span style={{ color: "red" }}>*</span></label>
                 <input type="text" className="form-control" {...register('DailyRate', { required: "Please add a Short Name" })} />
+                {errors.DailyRate && <p className="error-message" style={{ color: "red" }}>{errors.DailyRate.message}</p>}
               </div>
             </div>
 
@@ -713,29 +733,29 @@ function MyForm3({ data }) {
                     <label className={styles.p}>SSS:</label>
                   </div>
                   <div className="col-lg-2">
-                    <label className={styles.p}> <input type="radio" name="yes"  {...register('Sss_ded')} />&nbsp;&nbsp;Yes</label>&nbsp;
+                    <label className={styles.p}> <input type="radio" name="yes"  {...register('Sss_ded',{ required: true })} />&nbsp;&nbsp;Yes</label>&nbsp;
                     <label className={styles.p}><input type="radio" name="yes" {...register('Sss_ded')} />&nbsp;No </label>
                   </div>
                   <div className="col-lg-1">
                     <label className={styles.p}>Pagibig:</label>
                   </div>
                   <div className="col-lg-2">
-                    <label className={styles.p}> <input type="radio" name="yes" {...register('Pagibig_ded')} />&nbsp;&nbsp;Yes</label>&nbsp;
+                    <label className={styles.p}> <input type="radio" name="yes" {...register('Pagibig_ded',{ required: true })} />&nbsp;&nbsp;Yes</label>&nbsp;
                     <label className={styles.p}><input type="radio" name="yes" {...register('Pagibig_ded')} />&nbsp;No </label>
                   </div>
                   <div className="col-lg-1">
                     <label className={styles.p}>Philhealth:</label>
                   </div>
                   <div className="col-lg-2">
-                    <label className={styles.p}> <input type="radio" name="yes" {...register('Philhealth_ded')} />&nbsp;&nbsp;Yes</label>&nbsp;
+                    <label className={styles.p}> <input type="radio" name="yes" {...register('Philhealth_ded',{ required: true })} />&nbsp;&nbsp;Yes</label>&nbsp;
                     <label className={styles.p}><input type="radio" name="yes" {...register('Philhealth_ded')} />&nbsp;No </label>
                   </div>
                   <div className="col-lg-1">
                     <label className={styles.p}>MPF:</label>
                   </div>
                   <div className="col-lg-2">
-                    <label className={styles.p}> <input type="radio" name="yes" {...register('Mpf_ded')} />&nbsp;&nbsp;Yes</label>&nbsp;
-                    <label className={styles.p}><input type="radio" name="yes" {...register('Mpf_ded')} />&nbsp;No </label>
+                    <label className={styles.p}> <input type="radio" name="yes" {...register('Mpf_ded', { required: true })} />&nbsp;&nbsp;Yes</label>&nbsp;
+                    <label className={styles.p}><input type="radio" name="yes" {...register('Mpf_ded', { required: true })} />&nbsp;No </label>
                   </div>
                 </div>
               </div>
@@ -751,8 +771,8 @@ function MyForm3({ data }) {
                 <label className={styles.p}>Attendance:</label> &nbsp; &nbsp;
               </div>
               <div className="col-lg-2">
-                <label className={styles.p}> <input type="radio" name="yes" {...register('Attedance_config_bit')} />&nbsp;&nbsp;Yes</label>&nbsp;
-                <label className={styles.p}><input type="radio" name="yes" {...register('Attedance_config_bit')} />&nbsp;No </label>
+                <label className={styles.p}> <input type="radio" name="yes" {...register('Attedance_config_bit',{ required: true })} />&nbsp;&nbsp;Yes</label>&nbsp;
+                <label className={styles.p}><input type="radio" name="yes" {...register('Attedance_config_bit',{ required: true })} />&nbsp;No </label>
               </div>
               <div className="col-lg-7"></div>
             </div>
@@ -772,7 +792,7 @@ function MyForm3({ data }) {
               <div className="row mt-4">
                 <div className="col-lg-2"></div>
                 <div className="col-lg-4">
-                  <label className={styles.p}><input type="radio" {...register('ComputationSalaryt')} />&nbsp;Pro-rated/Current/Full Salary</label>
+                  <label className={styles.p}><input type="radio" {...register('ComputationSalaryt',{ required: true })} />&nbsp;Pro-rated/Current/Full Salary</label>
                 </div>
                 <div className="col-lg-6"></div>
               </div><br />
@@ -782,10 +802,10 @@ function MyForm3({ data }) {
                   <label className={styles.p}>Optional:</label>
                 </div>
                 <div className="col-lg-2">
-                  <input type="checkbox" {...register('ComputationBasicAdjustment')} />
+                  <input type="checkbox" {...register('ComputationBasicAdjustment',{ required: true })} />
                   <label className={styles.p}>Basic</label>
                   <br />
-                  <label className={styles.p}><input type="checkbox" {...register('ComputationDeminimis')} />Deminimis</label>
+                  <label className={styles.p}><input type="checkbox" {...register('ComputationDeminimis',{ required: true })} />Deminimis</label>
                 </div>
                 <div className="col-lg-7"></div>
               </div>
@@ -813,16 +833,16 @@ function MyForm3({ data }) {
             <div className="row">
               <div className="col-lg-1"></div>
               <div className="col-lg-3">
-                <label className={styles.p}> <input type="radio" name="yes" {...register('FinalPay_Deduct_Absent')} />&nbsp;&nbsp;Yes</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <label className={styles.p}><input type="radio" name="yes" {...register('FinalPay_Deduct_Absent')} />&nbsp;No </label>
+                <label className={styles.p}> <input type="radio" name="yes" {...register('FinalPay_Deduct_Absent',{ required: true })} />&nbsp;&nbsp;Yes</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <label className={styles.p}><input type="radio" name="yes" {...register('FinalPay_Deduct_Absent',{ required: true })} />&nbsp;No </label>
               </div>
               <div className="col-lg-3">
                 <label className={styles.p}> <input type="radio" name="yes" {...register('FinalPay_Deduct_Late')} />&nbsp;&nbsp;Yes</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                <label className={styles.p}><input type="radio" name="yes" {...register('FinalPay_Deduct_Late')} />&nbsp;No </label>
+                <label className={styles.p}><input type="radio" name="yes" {...register('FinalPay_Deduct_Late',{ required: true })} />&nbsp;No </label>
               </div>
               <div className="col-lg-3">
                 <label className={styles.p}> <input type="radio" name="yes" {...register('Final_Pay_13th_Month')} />&nbsp;&nbsp;Yes</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <label className={styles.p}><input type="radio" name="yes" {...register('Final_Pay_13th_Month')} />&nbsp;No </label>
+                <label className={styles.p}><input type="radio" name="yes" {...register('Final_Pay_13th_Month',{ required: true })} />&nbsp;No </label>
               </div>
               <div className="col-lg-2"></div>
             </div>
@@ -943,7 +963,7 @@ function MyForm4({ data }) {
                 <label className={styles.p}>Payroll Calendar</label>
               </div>
               <div className="col-lg-6">
-                <label className={styles.p}><input type="checkbox"  {...register('PayrollCalendar', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
+                <label className={styles.p}><input type="checkbox"  {...register('PayrollCalendar', { required: true, pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
                   &nbsp;Calendar Year(From January to December)</label>
               </div>
               <div className="col-lg-4"></div>
@@ -963,11 +983,13 @@ function MyForm4({ data }) {
             <div className="row">
               <div className="col-lg-4">
                 <label className={styles.p}>Non-Tax Exemption Ceiling<span style={{ color: "red" }}>*</span></label>
-                <input type="text" className="form-control" {...register('Non_Tax_Essential_Sealing]', { required: "Please add a Short Name", })}></input>
+                <input type="text" className="form-control" {...register('Non_Tax_Essential_Sealing]', { required: true,pattern: { value: "[a-zA-Z0-9\s]+", message: "Please enter a valid Short Name" } })}></input>
+                {errors.Non_Tax_Essential_Sealing && <p className="error-message" style={{ color: "red" }}>{errors.Non_Tax_Essential_Sealing}</p>}
               </div>
               <div className="col-lg-4">
                 <label className={styles.p}>Deminimis Exemption Ceiling<span style={{ color: "red" }}>*</span></label>
-                <input type="text" className="form-control" {...register('Deminimis_Exemption', { required: "Please add a Short Name", })}></input>
+                <input type="text" className="form-control" {...register('Deminimis_Exemption', { required: true, })}></input>
+                {errors.Deminimis_Exemption && <p className="error-message" style={{ color: "red" }}>{errors.Deminimis_Exemption.message}</p>}
               </div>
               <div className="col-lg-4"></div>
             </div>
