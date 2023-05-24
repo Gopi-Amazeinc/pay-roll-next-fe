@@ -167,19 +167,19 @@ const CompanyAttendanceDetails = () => {
     const loans = await Promise.all(
       items && items.length > 0
         ? items.map(async (attnd) => {
-            const res = await apiService.commonGetCall(
-              "Payroll/GetStaffByEmployeeID?EmployeID=" + attnd.EmployeeID
-            );
-            const staffData = res.data[0];
-            return {
-                UserID : staffData.id,
-                SigninDate : attnd.Date,
-                SignoutDate : attnd.Date,
-                punchinip : attnd.Punchintime,
-                punchoutip : attnd.PunchOuttime,
-                ApprovalStatus : "Manager Approved & Hr Approved",
-            };
-          })
+          const res = await apiService.commonGetCall(
+            "Payroll/GetStaffByEmployeeID?EmployeID=" + attnd.EmployeeID
+          );
+          const staffData = res.data[0];
+          return {
+            UserID: staffData.id,
+            SigninDate: attnd.Date,
+            SignoutDate: attnd.Date,
+            punchinip: attnd.Punchintime,
+            punchoutip: attnd.PunchOuttime,
+            ApprovalStatus: "Manager Approved & Hr Approved",
+          };
+        })
         : []
     );
     return loans;
@@ -276,9 +276,18 @@ const CompanyAttendanceDetails = () => {
             <div className="col-lg-2">
               <button className="button" onClick={openEditModal}>Upload</button>
               <br />
-              <p></p>
-              </div>
-              <div>
+              <p></p>        <DownloadTableExcel
+                  filename="users table"
+                  sheet="users"
+                  currentTableRef={tableRef.current}
+                >
+                  <button className="button">Export To Excel</button>{" "}
+                </DownloadTableExcel>
+            </div>
+            <div>
+   
+        
+             
               <Modal
                 isOpen={modalOpen}
                 style={customStyles}
@@ -323,9 +332,10 @@ const CompanyAttendanceDetails = () => {
                   </div>
                   <div className="row">
                     {/* <ModalFooter> */}
-                    <div className="col-lg-6">
+                    <div className="col-lg-5">
+                      <br/>
                       <button
-                        className="mt-4"
+                        className="button"
                         id={Styles.UploadStaffButton}
                         onClick={() => uploadAttendance()}
                         color="primary"
@@ -339,18 +349,11 @@ const CompanyAttendanceDetails = () => {
                   <div className="col-lg-6"></div>
                 </div>
               </Modal>
-            </div>
-
-              <div className="col-lg-2">
-              <DownloadTableExcel
-                filename="users table"
-                sheet="users"
-                currentTableRef={tableRef.current}
-              >
-                <button className="button">Export To Excel</button>{" "}
-              </DownloadTableExcel>
+ 
             </div>
           </div>
+
+
         </div>
         <br />
         <div className="row">
