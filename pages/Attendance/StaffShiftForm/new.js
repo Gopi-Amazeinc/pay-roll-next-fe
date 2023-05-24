@@ -64,7 +64,7 @@ const New = () => {
 
 
                             <div className="col-lg-2">
-                                <label htmlFor="">Start Date</label>
+                                <label htmlFor=""><b>Start Date</b></label>
                                 <input type="date" name="" id="" className='form-control'  {...register("ShiftDate", { required: true })} />
                                 {
                                     errors.startDate && <p className='text-danger'> Start Date is Required</p>
@@ -72,14 +72,14 @@ const New = () => {
                             </div>
 
                             <div className="col-lg-2">
-                                <label htmlFor="">End Date</label>
+                                <label htmlFor=""><b>End Date</b></label>
                                 <input type="date" name="" id="" className='form-control'   {...register("EndDate", { required: true })} />
                                 {
                                     errors.endDate && <p className='text-danger'> End Date is Required</p>
                                 }
                             </div>
                             <div className="col-lg-2">
-                                <label htmlFor="">ShiftName</label>
+                                <label htmlFor=""><b>ShiftName</b></label>
                                 <select name="" id="" className='form-select' {...register('ShiftName')} onChange={getshiftTimings} >
                                     < option   >Select</option>
                                     {
@@ -95,12 +95,12 @@ const New = () => {
 
                             </div>
                             <div className="col-lg-2">
-                                <label htmlFor="">Start Time</label>
+                                <label htmlFor=""><b>Start Time</b></label>
                                 <input type="text" {...register('StartTime', { required: true })} value={startTime} className='form-control' disabled/>
 
                             </div>
                             <div className="col-lg-2">
-                                <label htmlFor="">End Time</label>
+                                <label htmlFor=""><b>End Time</b></label>
                                 <input type="text" name='' {...register('EndTime', { required: true })} value={endTime} className='form-control' disabled />
 
                             </div>
