@@ -290,11 +290,12 @@ const MyTeamAttendence = () => {
               <>
                 {MyTeamAttendence
                   // {MyTeamAttendence
-                  //   .filter(data => {
-                  //     if ((data.startTime.toLowerCase().includes(keyword)) || (data.date.toLowerCase().includes(keyword)) || (data.endTime.toLowerCase().includes(keyword))) {
-                  //       return data;
-                  //     }
-                  //   })
+                  .filter(post => {
+                    return Object.values(post).some(value =>
+                      value !== null && value.toString().toLowerCase().includes(keyword.toLowerCase())
+                    );
+                  })
+
                   .slice(offset, offset + PER_PAGE).map(
                     (data, index) => {
                       return (
