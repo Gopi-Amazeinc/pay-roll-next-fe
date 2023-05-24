@@ -345,6 +345,7 @@ const Index = () => {
                                     <table className='table'>
                                         <thead className='bg-info text-white'>
                                             <tr>
+                                                <th>Select all</th>
                                                 <th>From Date</th>
                                                 <th>To Date</th>
                                                 <th>Leave Reason</th>
@@ -361,6 +362,9 @@ const Index = () => {
                                                 }).slice(offset, offset + PER_PAGE).map((data) => {
                                                     return (
                                                         <tr key={data.id}>
+                                                            <td>
+                                                                <input type="checkbox"></input>
+                                                            </td>
                                                             <td>{data.sDateOfLeave}</td>
                                                             <td>{data.eDateOfLeave}</td>
                                                             <td>{data.leaveReason}</td>
