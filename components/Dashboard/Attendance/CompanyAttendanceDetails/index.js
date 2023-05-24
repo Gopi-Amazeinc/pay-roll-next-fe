@@ -12,7 +12,7 @@ import * as XLSX from "xlsx";
 
 const CompanyAttendanceDetails = () => {
   const tableRef = useRef(null);
-   const [CompanyAttendence, setCompanyAttendence] = useState([]);
+  const [CompanyAttendence, setCompanyAttendence] = useState([]);
   const [userID, setUserID] = useState();
   const [roleID, setRoleID] = useState();
   const router = useRouter();
@@ -22,8 +22,7 @@ const CompanyAttendanceDetails = () => {
   const [StaffData, setStaffData] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [keyword, setKeyword] = useState("");
-
-
+  const [companystaff, setCompanystaff] = useState("");
 
 
 
@@ -142,20 +141,19 @@ const CompanyAttendanceDetails = () => {
       setcount(res.data.length);
     }
   };
-  // useEffect(() => {
-  //   if (userID) {
-  //     debugger;
-  //     getstaffDetails();
-  //   }
-  // }, [userID]);
-  // const getstaffDetails = async () => {
-  //   const staffDetails = await apiService.commonGetCall(
-  //     "Payroll/GetAttendanceByHR?=" + userID
-  //   );
-  //   setStaffData(staffDetails.data);
-  //   // setcount(res.data.length);
-  // };
-
+  useEffect(() => {
+    if (userID) {
+      debugger;
+      getstaffDetails();
+    }
+  }, [userID]);
+  const getstaffDetails = async () => {
+    const staffDetails = await apiService.commonGetCall(
+      "Payroll/GetAllStaffNewforstaffdashboard"
+    );
+    setStaffData(staffDetails.data);
+    // setcount(res.data.length);
+  };
 
   //   Written By:-Gopi  => Read the uploaded excel file and convert that into array - used "XLSX" package
   const incomingfile = async (file) => {
@@ -249,11 +247,13 @@ const CompanyAttendanceDetails = () => {
         <div className="card p-3 border-0 shadow-lg rounded-3 mt-4">
           <div className="row">
             <div className="col-lg-1">
-              <p>Filter By</p>
+              <label ><b>     Filter By</b></label>
+
             </div>
 
             <div className="col-lg-2">
-              <p>Start Date</p>
+              <label ><b>Start Date</b></label>
+
               <input
                 type="date"
                 className="form-control"
@@ -263,7 +263,8 @@ const CompanyAttendanceDetails = () => {
             </div>
 
             <div className="col-lg-2">
-              <p>End Date</p>
+              <label ><b>End Date</b></label>
+
               <input
                 type="date"
                 className="form-control"
@@ -273,25 +274,22 @@ const CompanyAttendanceDetails = () => {
             </div>
 
             <div className="col-lg-2">
-              <p>
-                Staff<i className="text-danger">*</i>
-              </p>
-              <select className="form-select">
+              <label ><b>Staff</b>  <i className="text-danger">*</i></label>
+              <select className="form-select" onChange={(e) => setCompanystaff(e.target.value)}>
                 <option>Select Staff</option>
-                {/* {StaffData.map((data, index) => {
+                {StaffData.map((data, index) => {
                   return (
                     <option value={data.id} key={index}>
-                      {data.fullname}
+                      {data.firstName}
                     </option>
                   );
-                })} */}
+                })}
               </select>
             </div>
 
             <div className="col-lg-2">
-              <p>
-                Search<i className="text-danger">*</i>
-              </p>
+              <label ><b>Search</b> <i className="text-danger">*</i></label>
+
               <input
                 type="text"
                 className="form-control"
@@ -409,7 +407,7 @@ const CompanyAttendanceDetails = () => {
                   CompanyAttendence.length > 0 && (
                     <>
                       {CompanyAttendence
-                         .filter(post => {
+                        .filter(post => {
                           return Object.values(post).some(value =>
                             value !== null && value.toString().toLowerCase().includes(keyword.toLowerCase())
                           );
