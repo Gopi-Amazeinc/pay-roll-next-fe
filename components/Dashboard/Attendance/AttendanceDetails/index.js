@@ -247,7 +247,7 @@ const AttendenceDetails = () => {
                         return (
                           <tr key={index}>
                             <td>{data.signinDate}</td>
-                            <td>{data.signInType}</td>
+                            <td>{data.shift}</td>
                             <td>{data.signInWorkType}</td>
                             <td>{data.expectedIn}</td>
                             <td>{data.expectedOut}</td>
