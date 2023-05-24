@@ -28,7 +28,7 @@ function Announcementform() {
         formData.append("file_upload", data[0], data[0].name);
 
         Swal.fire("Uploaded successfully");
-        
+
     };
 
     const submit = (data) => {
@@ -45,11 +45,22 @@ function Announcementform() {
                             <form onSubmit={handleSubmit(submit)}>
                                 <div className='row'>
                                     <div className='col-lg-2'>
-                                        <label className='fw-bold'>Annoucement <i className='text-danger'>*</i></label>
-                                        <input type='text' className='form-control' placeholder='Announcement Name' {...register("announcement", { required: true })} />
-                                        {errors.announcement && (
-                                            <p className='text-danger'>Please enter announcement name</p>
-                                        )}
+                                        <label className='fw-bold'>Announcement <i className='text-danger'>*</i></label>
+                                        <input className='form-control' placeholder='Announcement Name' {...register("announcement", {
+                                            required: true,
+                                            maxLength: 100,
+                                            pattern: /^[A-Za-z]+$/i
+                                        })} /><div className='text-danger'>
+                                        {errors.announcement ?.type==='required' && 
+                                           " Please enter announcement name"
+                                        }
+                                        {errors.announcement ?.type === "maxLength" && 
+                                            "name cannot exceed 20 characters"
+                                        }
+                                        {errors.announcement?.type === "pattern" && 
+                                            "Alphabetical characters only"
+                                        }
+                                        </div>
                                     </div>
 
                                     <div className='col-lg-3'>
