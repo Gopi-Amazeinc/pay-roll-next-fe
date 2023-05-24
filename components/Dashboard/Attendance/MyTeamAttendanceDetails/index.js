@@ -35,16 +35,22 @@ const MyTeamAttendence = () => {
 
   // Gopi's Code => tried for onchnage function
   useEffect(() => {
+    
     if (userID) {
       debugger;
       getstaffDetails();
     }
   }, [userID]);
   const getstaffDetails = async () => {
+    const getAttendancedata = []
     const staffDetails = await apiService.commonGetCall(
       "Payroll/GetStaffBySupervisorID?Supervisor=" + userID
     );
-    setStaffData(staffDetails.data);
+    for (let i=0; i< staffDetails.length ; i++){
+      getAttendancedata.push(staffDetails[i].fullname)
+    }
+    setStaffData(getAttendancedata);
+    // setStaffData(staffDetails.data);
     // setcount(res.data.length);
   };
 
@@ -192,9 +198,9 @@ const MyTeamAttendence = () => {
               <p className={Styles.filterdate}>
                 Staff<i className="text-danger">*</i>
               </p>
-              {/* <Multiselect
-                displayValue="id"
-                // isObject={false}
+              <Multiselect
+                // displayValue="id"
+                isObject={false}
                 onKeyPressFn={function noRefCheck() {}}
                 onRemove={function noRefCheck() {}}
                 onSearch={function noRefCheck() {}}
@@ -212,8 +218,8 @@ const MyTeamAttendence = () => {
                 // }}
                 showCheckbox
                 selectedValues={{}}
-              /> */}
-              <select
+              />
+              {/* <select
                 className="form-select"
                 onChange={(e) => handleStaffChange(e.target.value)}
               >
@@ -225,7 +231,7 @@ const MyTeamAttendence = () => {
                     </option>
                   );
                 })}
-              </select>
+              </select> */}
             </div>
 
             <div className="col-lg-2">
