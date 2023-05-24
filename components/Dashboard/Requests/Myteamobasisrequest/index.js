@@ -140,6 +140,14 @@ const MyTeamObasisRequest = () => {
         })
     }
     let id;
+
+    // const reject = async () => {
+    //     let ID = sessionStorage.getItem("id")
+    //     let reason = watch("reason")
+    //     const res = await apiService.commonPostCall("Payroll/UpdateOtFromManager", reason, id)
+    //     sessionStorage.removeItem('id');
+    //     setModalOpen(!modalOpen)
+    // }
     const reject = () => {
         debugger;
         id = sessionStorage.getItem("id")
@@ -154,7 +162,7 @@ const MyTeamObasisRequest = () => {
             confirmButtonText: 'Yes, Reject it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                apiService.commonPostCall(`Payroll/UpdateOtFromManager?id=${id}&Status=ManagerRejected&RejectedReason=${reason}`);
+                apiService.commonPostCall("Payroll/UpdateOtFromManager", reason, id);
                 Swal.fire({
                     icon: "success",
                     titleText: "Rejected Successfully"
