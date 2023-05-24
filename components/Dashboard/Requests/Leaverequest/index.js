@@ -272,8 +272,7 @@ function LeaveListDashboard() {
                                     <div className='btn-group'>
                                         <button onClick={toggleCalender} className={`toggleButton ${calender ? "focus" : ""}`}>Calender</button>
                                         <button onClick={toggleListView} className={`toggleButton ${listview ? "focus" : ""}`}>List View</button>
-                                    </div><br /><br />
-                                    <h6 style={{ color: "#3247d5" }}>Showing {count} Results</h6>
+                                    </div>
                                 </div>
                             </div>
                             <br />
@@ -332,92 +331,102 @@ function LeaveListDashboard() {
                     <div className="row">
                         <div className="col-lg-12">
                             {pending && (
-                                <table className='table'>
-                                    <thead className='bg-info text-white'>
-                                        <tr>
-                                            <th>From Date</th>
-                                            <th>To Date</th>
-                                            <th>Leave Reason</th>
-                                            <th>Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {
-                                            pendingdata.filter(data => {
-                                                if ((data.sDateOfLeave.toString().includes(keyword.toLowerCase())) || (data.eDateOfLeave.toString().includes(keyword)) || (data.status.toLowerCase().includes(keyword)) || (data.leaveReason.toString().includes(keyword.toLowerCase()))) {
-                                                    return data;
-                                                }
-                                            }).slice(offset, offset + PER_PAGE).map((data) => {
-                                                return (
-                                                    <tr key={data.id}>
-                                                        <td>{data.sDateOfLeave}</td>
-                                                        <td>{data.eDateOfLeave}</td>
-                                                        <td>{data.leaveReason}</td>
-                                                        <td>{data.status}</td>
-                                                    </tr>
-                                                );
-                                            })}
-                                    </tbody>
-                                </table>
+                                <>
+                                    <h6 style={{ color: "#3247d5" }}>Showing {pendingdata.length} Results</h6>
+
+                                    <table className='table'>
+                                        <thead className='bg-info text-white'>
+                                            <tr>
+                                                <th>From Date</th>
+                                                <th>To Date</th>
+                                                <th>Leave Reason</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {
+                                                pendingdata.filter(data => {
+                                                    if ((data.sDateOfLeave.toString().includes(keyword.toLowerCase())) || (data.eDateOfLeave.toString().includes(keyword)) || (data.status.toLowerCase().includes(keyword)) || (data.leaveReason.toString().includes(keyword.toLowerCase()))) {
+                                                        return data;
+                                                    }
+                                                }).slice(offset, offset + PER_PAGE).map((data) => {
+                                                    return (
+                                                        <tr key={data.id}>
+                                                            <td>{data.sDateOfLeave}</td>
+                                                            <td>{data.eDateOfLeave}</td>
+                                                            <td>{data.leaveReason}</td>
+                                                            <td>{data.status}</td>
+                                                        </tr>
+                                                    );
+                                                })}
+                                        </tbody>
+                                    </table>
+                                </>
                             )}
 
                             {approved && (
-                                <table className='table'>
-                                    <thead className='bg-info text-white'>
-                                        <tr>
-                                            <th>From Date</th>
-                                            <th>To Date</th>
-                                            <th>Leave Reason</th>
-                                            <th>Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {
-                                            approveddata.filter(data => {
-                                                if ((data.sDateOfLeave.toString().includes(keyword.toLowerCase())) || (data.eDateOfLeave.toString().includes(keyword)) || (data.status.toLowerCase().includes(keyword)) || (data.status.toLowerCase().includes(keyword)) || (data.leaveReason.toString().includes(keyword.toLowerCase()))) {
-                                                    return data;
-                                                }
-                                            }).slice(offset, offset + PER_PAGE).map((data) => {
-                                                return (
-                                                    <tr key={data.id}>
-                                                        <td>{data.sDateOfLeave}</td>
-                                                        <td>{data.eDateOfLeave}</td>
-                                                        <td>{data.leaveReason}</td>
-                                                        <td>{data.status}</td>
-                                                    </tr>
-                                                );
-                                            })}
-                                    </tbody>
-                                </table>
+                                <>
+                                    <h6 style={{ color: "#3247d5" }}>Showing {approveddata.length} Results</h6>
+                                    <table className='table'>
+                                        <thead className='bg-info text-white'>
+                                            <tr>
+                                                <th>From Date</th>
+                                                <th>To Date</th>
+                                                <th>Leave Reason</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {
+                                                approveddata.filter(data => {
+                                                    if ((data.sDateOfLeave.toString().includes(keyword.toLowerCase())) || (data.eDateOfLeave.toString().includes(keyword)) || (data.status.toLowerCase().includes(keyword)) || (data.status.toLowerCase().includes(keyword)) || (data.leaveReason.toString().includes(keyword.toLowerCase()))) {
+                                                        return data;
+                                                    }
+                                                }).slice(offset, offset + PER_PAGE).map((data) => {
+                                                    return (
+                                                        <tr key={data.id}>
+                                                            <td>{data.sDateOfLeave}</td>
+                                                            <td>{data.eDateOfLeave}</td>
+                                                            <td>{data.leaveReason}</td>
+                                                            <td>{data.status}</td>
+                                                        </tr>
+                                                    );
+                                                })}
+                                        </tbody>
+                                    </table>
+                                </>
                             )}
                             {rejected && (
-                                <table className='table'>
-                                    <thead className='bg-info text-white'>
-                                        <tr>
-                                            <th>From Date</th>
-                                            <th>To Date</th>
-                                            <th>Leave Reason</th>
-                                            <th>Status</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {
-                                            rejecteddata.filter(data => {
-                                                if ((data.sDateOfLeave.toString().includes(keyword.toLowerCase())) || (data.eDateOfLeave.toString().includes(keyword)) || (data.status.toLowerCase().includes(keyword)) || (data.status.toLowerCase().includes(keyword)) || (data.leaveReason.toString().includes(keyword.toLowerCase()))) {
-                                                    return data;
-                                                }
-                                            }).slice(offset, offset + PER_PAGE).map((data) => {
-                                                return (
-                                                    <tr key={data.id}>
-                                                        <td>{data.sDateOfLeave}</td>
-                                                        <td>{data.eDateOfLeave}</td>
-                                                        <td>{data.leaveReason}</td>
-                                                        <td>{data.status}</td>
-                                                    </tr>
-                                                );
-                                            })}
-                                    </tbody>
-                                </table>
+                                <>
+                                    <h6 style={{ color: "#3247d5" }}>Showing {rejecteddata.length} Results</h6>
+                                    <table className='table'>
+                                        <thead className='bg-info text-white'>
+                                            <tr>
+                                                <th>From Date</th>
+                                                <th>To Date</th>
+                                                <th>Leave Reason</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {
+                                                rejecteddata.filter(data => {
+                                                    if ((data.sDateOfLeave.toString().includes(keyword.toLowerCase())) || (data.eDateOfLeave.toString().includes(keyword)) || (data.status.toLowerCase().includes(keyword)) || (data.status.toLowerCase().includes(keyword)) || (data.leaveReason.toString().includes(keyword.toLowerCase()))) {
+                                                        return data;
+                                                    }
+                                                }).slice(offset, offset + PER_PAGE).map((data) => {
+                                                    return (
+                                                        <tr key={data.id}>
+                                                            <td>{data.sDateOfLeave}</td>
+                                                            <td>{data.eDateOfLeave}</td>
+                                                            <td>{data.leaveReason}</td>
+                                                            <td>{data.status}</td>
+                                                        </tr>
+                                                    );
+                                                })}
+                                        </tbody>
+                                    </table>
+                                </>
                             )}
                         </div>
                     </div>

@@ -75,8 +75,8 @@ const Myovertimedetails = () => {
     });
   };
 
-  const uploadLoan = async () => {
-    const transformedData = await transformedLoans(items);
+  const uploadot = async () => {
+    const transformedData = await transformedot(items);
     if (transformedData.length > 0) {
       await apiService.commonPostCall(
         "Payroll/InsertStaffOvetimeOTupload",
@@ -90,7 +90,7 @@ const Myovertimedetails = () => {
     getApproveStaffOverTimeDetails();
   };
 
-  const transformedLoans = async (items) => {
+  const transformedot = async (items) => {
     console.log(items);
     debugger;
     const loans = await Promise.all(
@@ -249,7 +249,7 @@ XLSX.writeFile(workbook, "output.xlsx");
                     <button
                       className="mt-4"
                       id={Styles.UploadStaffButton}
-                      onClick={() => uploadLoan()}
+                      onClick={() => uploadot()}
                       color="primary"
                       type="button"
                     >

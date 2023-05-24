@@ -181,7 +181,8 @@ const Index = () => {
             confirmButtonText: 'Yes, Approve it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                apiService.commonPostCall("Payroll/UpdateApproveOtFromManager?id=" + id + "&Status=ManagerApproved")
+                let Status = "ManagerApproved";
+                apiService.commonPostCall("Payroll/UpdateApproveOtFromManager", id, Status)
                 Swal.fire({
                     icon: "success",
                     titleText: "Approved Successfully"
@@ -290,9 +291,13 @@ const Index = () => {
                             <h4 className='Heading'>My Overtime Details</h4>&nbsp;&nbsp;&nbsp;&nbsp;
                         </div>
                         <div className='col-lg-4'>
-                            <Link style={{ textDecoration: "none" }} href="/Requests/Myteamovertimedetails">
-                                <h4 className='Heading' >My Team Overtime Details</h4>
-                            </Link>
+                            {
+                                sessionStorage.getItem("roleID") == 3 && (
+                                    <Link style={{ textDecoration: "none" }} href="/Requests/Myteamovertimedetails">
+                                        <h4 className='Heading' >My Team Overtime Details</h4>
+                                    </Link>
+                                )
+                            }
                         </div>
                     </div><br />
                     <div className='card p-3 border-0 rounded-3'>

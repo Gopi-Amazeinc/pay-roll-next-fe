@@ -20,6 +20,11 @@ const InitialPayrollForm = () => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [runPayrollDashboard, setRunPayrollDashboardData] = useState("");
+  const [keyword, setKeyword] = useState("");
+  const [deparmentFilter, setDEpartmentFilter] = useState("")
+  const [positionFilter, setPositionFilter] = useState("")
+
+
 
   const router = useRouter();
 
@@ -177,6 +182,9 @@ const InitialPayrollForm = () => {
                   placeholder="Search"
                   type="text"
                   className="form-control form-control-sm"
+                  onChange={(e) => {
+                    setKeyword(e.target.value);
+                  }}
                 />
               </div>
               <div className="col-lg-1"></div>
@@ -207,6 +215,7 @@ const InitialPayrollForm = () => {
                     id="Year"
                     name="Year"
                     className="form-select form-select-sm "
+                    onChange={e => { setPositionFilter(e.target.value) }}
                   >
                     {/* <br ></br> */}
                     <option
@@ -233,6 +242,9 @@ const InitialPayrollForm = () => {
                     id="Year"
                     name="Year"
                     className="form-select form-select-sm "
+                    onChange={(e) => {
+                      setDEpartmentFilter(e.target.value);
+                    }}
                   >
                     {/* <br ></br> */}
                     <option
@@ -304,7 +316,15 @@ const InitialPayrollForm = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {dashboard.map((data) => {
+                  {dashboard.filter((data) => {
+                    if (
+                      data.staffID.toString().includes(keyword) ||
+                      data.componentValue.toString().includes(keyword) || data.department_name.toLowercase().includes(deparmentFilter)
+                      || data.short.toLowercase().includes(positionFilter)
+                    ) {
+                      return data;
+                    }
+                  }).map((data) => {
                     return (
                       <>
                         <div className="row">
