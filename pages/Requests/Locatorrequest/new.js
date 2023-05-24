@@ -71,8 +71,11 @@ const Locatorrequest = () => {
                             </div>
                             <div className="col-lg-2">
                                 <label htmlFor="" className={styles.p}>Task<span style={{ color: "red" }}>*</span></label>
-                                <input type="text" className="form-control" placeholder="Task" {...register('Task', { required: "This field is required" })} />
-                                {errors.Task && <p className="error-message" style={{ color: "red" }}>{errors.Task.message}</p>}
+                                <input type="text" className="form-control" placeholder="Task" {...register('Task', { required: "This field is required" , pattern: /^[a-zA-Z]{2,}(?: [a-zA-Z]+){0,2}$/})} />
+                                <div className="error-message"style={{ color: "red" }}>
+                                {errors.Task && <p  >{errors.Task.message}</p>}
+                                {errors.Task?.type==='pattern' && "characters only"}
+                                </div>
                             </div>
                             <div className="col-lg-2">
                                 <label htmlFor="" className={styles.p}>Start Time<span style={{ color: "red" }}>*</span></label>

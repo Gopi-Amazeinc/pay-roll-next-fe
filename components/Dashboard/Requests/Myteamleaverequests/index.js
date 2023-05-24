@@ -97,7 +97,7 @@ const Index = () => {
             marginRight: '-50%',
             transform: 'translate(-50%, -50%)',
             width: '50%',
-            height: '30%'
+            height: '40%'
         }
     }
     const [startDate, setStartDate] = useState("");
@@ -199,6 +199,10 @@ const Index = () => {
 
     const resourceMap = [];
     const approve = (id) => {
+        let data = {
+            "id": id,
+            "Status": "Manager Approved"
+        }
         Swal.fire({
             title: 'Confirm To Approve?',
             text: "You won't be able to revert this!",
@@ -223,6 +227,11 @@ const Index = () => {
         debugger;
         id = sessionStorage.getItem("id")
         let reason = watch("Reason")
+        let data = {
+            "id": id,
+            "RejectReason": reason,
+            "Status": "Manager Rejected"
+        }
         Swal.fire({
             title: 'Confirm To Reject?',
             text: "You won't be able to revert this!",
@@ -345,6 +354,7 @@ const Index = () => {
                                     <table className='table'>
                                         <thead className='bg-info text-white'>
                                             <tr>
+                                                <th>Select all</th>
                                                 <th>From Date</th>
                                                 <th>To Date</th>
                                                 <th>Leave Reason</th>
@@ -361,6 +371,9 @@ const Index = () => {
                                                 }).slice(offset, offset + PER_PAGE).map((data) => {
                                                     return (
                                                         <tr key={data.id}>
+                                                            <td>
+                                                                <input type="checkbox"></input>
+                                                            </td>
                                                             <td>{data.sDateOfLeave}</td>
                                                             <td>{data.eDateOfLeave}</td>
                                                             <td>{data.leaveReason}</td>

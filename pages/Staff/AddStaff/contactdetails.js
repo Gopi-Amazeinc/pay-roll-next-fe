@@ -133,6 +133,7 @@ export default function ContactDetails({ data }) {
       };
       await axios.post(hostURL + "Payroll/UpdateMyAddressDetails", Entity);
       Swal.fire("Updated Succesfully!");
+      // makecalls();
     }
   }
 
@@ -140,7 +141,7 @@ export default function ContactDetails({ data }) {
     debugger;
     makecalls();
     
-  }, [9]);
+  }, [1]);
   function makecalls() {
     const { id } = data || {};
     if (id) {
@@ -148,13 +149,11 @@ export default function ContactDetails({ data }) {
     } else {
       clearForm();
       getData();
-      getCountryofBirth();
     }
   }
 const getByID = async (id)=>{
     debugger
-    getData();
-    getCountryofBirth();
+    await getData();
     const res = await apiService.commonGetCall("Payroll/GetMyAddressDetailsByID?ID="+id);
     clearForm(res.data[0]);
    }
@@ -170,14 +169,11 @@ const getByID = async (id)=>{
 
     let res3 = await axios.get(hostURL + "/Master/GetCityType");
     setCitylistData(res3.data);
-  }
 
-  async function getCountryofBirth() {
-    debugger;
-    let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
     let res = await axios.get(hostURL + "/Master/GetCountryType");
     setCountrylistData(res.data);
   }
+
 async function clearForm(data = null){
     let details ={
         ID: data ? data.id: "",

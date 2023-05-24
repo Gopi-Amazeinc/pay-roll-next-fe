@@ -7,7 +7,9 @@ import Styles from "@../../../pages/OT/Ot.module.css"
 import { apiService } from "@/services/api.service";
 import { useForm } from 'react-hook-form';
 import ReactPaginate from "react-paginate";
+import { Router, useRouter } from 'next/router';
 const Index = () => {
+    const router = useRouter()
     const { register, handleSubmit, watch, formState } = useForm();
     const [pending, setPending] = useState(false)
     const [approved, setApproved] = useState(false)
@@ -65,14 +67,14 @@ const Index = () => {
     }
     const customStyles = {
         content: {
-            top: '20%',
+            top: '30%',
             left: '50%',
             right: 'auto',
             bottom: 'auto',
             marginRight: '-50%',
             transform: 'translate(-50%, -50%)',
             width: '50%',
-            height: '30%'
+            height: '40%'
         }
     }
 
@@ -171,6 +173,10 @@ const Index = () => {
         console.log("Modal data", res.data);
     }
     const approve = (id) => {
+        let data = {
+            "id": id,
+            "Status": "Manager Approved"
+        }
         Swal.fire({
             title: 'Confirm To Approve?',
             text: "You won't be able to revert this!",
@@ -181,20 +187,25 @@ const Index = () => {
             confirmButtonText: 'Yes, Approve it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                apiService.commonPostCall("Payroll/UpdateApproveOtFromManager?id=" + id + "&Status=ManagerApproved")
+                apiService.commonPostCall("Payroll/UpdateApproveOtFromManager", data)
                 Swal.fire({
                     icon: "success",
                     titleText: "Approved Successfully"
                 })
-                getManagerPendingDetails();
+
             }
         })
+        getManagerPendingDetails();
     }
     let id;
     const reject = () => {
-        debugger;
         id = sessionStorage.getItem("id")
-        let reason = watch("Reason")
+        let Reason = watch("Reason")
+        let data = {
+            "id": id,
+            "RejectReason": Reason,
+            "Status": "Manager Rejected"
+        }
         Swal.fire({
             title: 'Confirm To Reject?',
             text: "You won't be able to revert this!",
@@ -205,14 +216,18 @@ const Index = () => {
             confirmButtonText: 'Yes, Reject it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                apiService.commonPostCall(`Payroll/UpdateOtFromManager?id=${id}&Status=ManagerRejected&RejectedReason=${reason}`);
+                apiService.commonPostCall(`Payroll/UpdateOtFromManager`, data);
                 Swal.fire({
                     icon: "success",
                     titleText: "Rejected Successfully"
                 })
-                getManagerPendingDetails();
+
+
             }
+
         })
+        getManagerPendingDetails();
+        router.push("/Requests/OverTimeDetails")
     }
     const PER_PAGE = 5;
     const [currentPage, setCurrentPage] = useState(0);
@@ -223,7 +238,6 @@ const Index = () => {
     const pageCount = Math.ceil(newDashboard.length / PER_PAGE);
 
     useEffect(() => {
-        debugger;
         const usrID = sessionStorage.getItem("userID");
         setUserID(usrID);
         const userRoleID = sessionStorage.getItem("roleID");

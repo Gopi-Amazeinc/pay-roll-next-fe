@@ -271,16 +271,20 @@ const Attendancecorrectiondashboard = () => {
                   </Link>
                 </div>
 
+                {pendingcount > 0 || rejectcount > 0 || approvedcount > 0 ? (
+                  <>
+                    <div className="col-lg-3">
+                      <DownloadTableExcel
+                        filename="Attendance table"
+                        sheet="Attendance"
+                        currentTableRef={tableRef.current}
+                      >
+                        <button className="button">Download</button>
+                      </DownloadTableExcel>
+                    </div>
+                  </>
+                ) : null}
 
-                <div className="col-lg-3">
-                  <DownloadTableExcel
-                    filename="Attendance table"
-                    sheet="Attendance"
-                    currentTableRef={tableRef.current}
-                  >
-                    <button className="button">Download</button>
-                  </DownloadTableExcel>
-                </div>
 
               </div>
 

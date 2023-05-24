@@ -97,7 +97,6 @@ const MyTeamObasisRequest = () => {
         setPending(false)
     }
     const getPendingData = async () => {
-        debugger;
         let UserID = sessionStorage.getItem("userID");
         let pending = await apiService.commonGetCall("Payroll/GetPendingLocatorTableBySupervisorID?UserID=" + UserID);
         getPending(pending.data);
@@ -119,7 +118,14 @@ const MyTeamObasisRequest = () => {
         console.log(rejected.data, "rejected")
     }
 
-    const approve = (id) => {
+    const approve = (data) => {
+        let entity = {
+            "id": data.id,
+            "StaffID": data.staffID,
+            "AttendanceDate": data.date,
+            "StartTime ": data.startTime,
+            "EndTime ": data.endTime
+        }
         Swal.fire({
             title: 'Confirm To Approve?',
             text: "You won't be able to revert this!",
@@ -130,7 +136,7 @@ const MyTeamObasisRequest = () => {
             confirmButtonText: 'Yes, Approve it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                apiService.commonPostCall("Payroll/ApproveLocatorTable?id=" + id + "&Status=ManagerApproved")
+                apiService.commonPostCall("Payroll/ApproveLocatorTable", entity)
                 Swal.fire({
                     icon: "success",
                     titleText: "Approved Successfully"
@@ -149,9 +155,13 @@ const MyTeamObasisRequest = () => {
     //     setModalOpen(!modalOpen)
     // }
     const reject = () => {
-        debugger;
         id = sessionStorage.getItem("id")
         let reason = watch("Reason")
+        let data = {
+            "id": id,
+            "RejectComments": reason,
+            "Status": "Manager Rejected"
+        }
         Swal.fire({
             title: 'Confirm To Reject?',
             text: "You won't be able to revert this!",
@@ -162,7 +172,7 @@ const MyTeamObasisRequest = () => {
             confirmButtonText: 'Yes, Reject it!'
         }).then((result) => {
             if (result.isConfirmed) {
-                apiService.commonPostCall("Payroll/UpdateOtFromManager", reason, id);
+                apiService.commonPostCall(`Payroll/RejectLocatorTable`, data);
                 Swal.fire({
                     icon: "success",
                     titleText: "Rejected Successfully"
@@ -218,7 +228,7 @@ const MyTeamObasisRequest = () => {
             marginRight: '-50%',
             transform: 'translate(-50%, -50%)',
             width: '50%',
-            height: '30%'
+            height: '40%'
         }
     }
 
@@ -318,7 +328,7 @@ const MyTeamObasisRequest = () => {
                                                                     <td>{data.task}</td>
                                                                     <td>{data.comments}</td>
                                                                     <td>
-                                                                        <button onClick={approve.bind(this, data.id)} className='edit-btn'>Approve</button>&nbsp;&nbsp;&nbsp;
+                                                                        <button onClick={approve.bind(this, data)} className='edit-btn'>Approve</button>&nbsp;&nbsp;&nbsp;
                                                                         <button onClick={() => openModal(sessionStorage.setItem("id", data.id))} className='edit-btn'>Reject</button>
                                                                     </td>
                                                                     {/* <td>{data.approveStatus}</td> */}

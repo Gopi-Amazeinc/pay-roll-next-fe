@@ -15,6 +15,8 @@ const New = () => {
     const { register, handleSubmit, watch, reset, formState } = useForm();
     const { errors } = formState;
 
+    const [endDate, setEndDate] = useState('');
+
     const getShiftname = async () => {
         const res = await apiService.commonGetCall("Master/GetShiftMaster");
         setStaffShift(res.data)
@@ -52,6 +54,18 @@ const New = () => {
         getShiftname();
     }, [])
 
+
+    const handleEndDateChange = (e) => {
+        const endDateValue = new Date(e.target.value);
+        const startDateValue = new Date();
+
+        if (endDateValue < startDateValue) {
+            Swal.fire("End Date should be greater than Start Date");
+        } else {
+            setEndDate(e.target.value);
+        }
+    };
+
     return (
         <Layout>
             <div className="row">
@@ -64,7 +78,7 @@ const New = () => {
 
 
                             <div className="col-lg-2">
-                                <label htmlFor="">Start Date</label>
+                                <label htmlFor=""><b>Start Date</b></label>
                                 <input type="date" name="" id="" className='form-control'  {...register("ShiftDate", { required: true })} />
                                 {
                                     errors.startDate && <p className='text-danger'> Start Date is Required</p>
@@ -72,14 +86,14 @@ const New = () => {
                             </div>
 
                             <div className="col-lg-2">
-                                <label htmlFor="">End Date</label>
-                                <input type="date" name="" id="" className='form-control'   {...register("EndDate", { required: true })} />
-                                {
-                                    errors.endDate && <p className='text-danger'> End Date is Required</p>
-                                }
+                                <label htmlFor=""><b>End Date</b></label>
+                                <input type="date" name="" id="" className='form-control'
+                                    {...register("EndDate", { required: true })}
+                                    onChange={handleEndDateChange}
+                                />
                             </div>
                             <div className="col-lg-2">
-                                <label htmlFor="">ShiftName</label>
+                                <label htmlFor=""><b>ShiftName</b></label>
                                 <select name="" id="" className='form-select' {...register('ShiftName')} onChange={getshiftTimings} >
                                     < option   >Select</option>
                                     {
@@ -95,12 +109,12 @@ const New = () => {
 
                             </div>
                             <div className="col-lg-2">
-                                <label htmlFor="">Start Time</label>
-                                <input type="text" {...register('StartTime', { required: true })} value={startTime} className='form-control' disabled/>
+                                <label htmlFor=""><b>Start Time</b></label>
+                                <input type="text" {...register('StartTime', { required: true })} value={startTime} className='form-control' disabled />
 
                             </div>
                             <div className="col-lg-2">
-                                <label htmlFor="">End Time</label>
+                                <label htmlFor=""><b>End Time</b></label>
                                 <input type="text" name='' {...register('EndTime', { required: true })} value={endTime} className='form-control' disabled />
 
                             </div>
