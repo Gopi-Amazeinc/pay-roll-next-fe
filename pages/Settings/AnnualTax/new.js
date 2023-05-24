@@ -7,7 +7,7 @@ import Swal from 'sweetalert2';
 import Styles from '../../../styles/annualtaxform.module.css'
 
 import { useRouter } from "next/router"
-const AnnualTaxForm = ({editData}) => {
+const AnnualTaxForm = ({ editData }) => {
     const router = useRouter();
 
     const { register, handleSubmit, watch, reset, formState: { errors }, } = useForm();
@@ -32,7 +32,7 @@ const AnnualTaxForm = ({editData}) => {
     useEffect(() => {
         const { id } = editData || {};
         if (id) {
-           
+
             getData(id);
         } else {
             clearForm();
@@ -59,7 +59,7 @@ const AnnualTaxForm = ({editData}) => {
         }
     };
 
-   
+
 
     const customStyles = {
         content: {
@@ -105,17 +105,19 @@ const AnnualTaxForm = ({editData}) => {
                                                     event.preventDefault();
                                                 }
                                             }} maxLength={10}
-                                            {...register("Taxlowlevellimit", { required: true })}
-                                            placeholder="Tax low level limit"
-                                        />
-                                        
-                                        <div>
-                                            {errors.Taxlowlevellimit && (
-                                                <span style={customStyles.errorMsg}>
-                                                    Please enter tax low level limit
-                                                </span>
-                                            )}
+                                            {...register("Taxlowlevellimit", {
+                                                required: true,
+                                                pattern: /^\d+/
+                                            })} />
+                                        <div className="error-message" style={customStyles.errorMsg}>
+
+                                            {errors.Taxlowlevellimit?.type === 'required' &&
+                                                " Please enter tax low level limit"}
+                                            {errors.Taxlowlevellimit?.type === "pattern" &&
+                                                "Value only"
+                                            }
                                         </div>
+
                                     </div>
 
                                     <div className="col-lg-2 ">
@@ -132,16 +134,19 @@ const AnnualTaxForm = ({editData}) => {
                                                     event.preventDefault();
                                                 }
                                             }} maxLength={10}
-                                            {...register("Taxhighlevellimit", { required: true })}
-                                            placeholder="Tax high level limit"
-                                        />
-                                        <div>
-                                            {errors.Taxhighlevellimit && (
-                                                <span style={customStyles.errorMsg}>
-                                                    Please enter tax high level limit
-                                                </span>
-                                            )}
+                                            {...register("Taxhighlevellimit", {
+                                                required: true,
+                                                pattern: /^\d+/
+                                            })} />
+                                        <div className="error-message" style={customStyles.errorMsg}>
+
+                                            {errors.Taxhighlevellimit?.type === 'required' &&
+                                                " Please enter tax high level limit"}
+                                            {errors.Taxhighlevellimit?.type === "pattern" &&
+                                                "Value only"
+                                            }
                                         </div>
+
                                     </div>
 
                                     <div className="col-lg-2 ">
@@ -183,7 +188,7 @@ const AnnualTaxForm = ({editData}) => {
                                                 if (charCode !== 46 && charCode > 31 && (charCode < 48 || charCode > 57)) {
                                                     event.preventDefault();
                                                 }
-                                            }} maxLength={10}
+                                            }} maxLength={3}
                                             {...register("Percentage", { required: true })}
                                             placeholder="Percentage(%)"
                                         />

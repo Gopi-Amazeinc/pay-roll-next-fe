@@ -3,6 +3,8 @@ import Modal from 'react-modal';
 import Swal from 'sweetalert2';
 import axios from 'axios'
 import ReactPaginate from "react-paginate";
+import Styles from "../.././../../styles/finalpayrolldetails.module.css";
+
 import Link from 'next/link'
 import { DownloadTableExcel } from 'react-export-table-to-excel';
 import { IoIosClose } from 'react-icons/io'
@@ -187,11 +189,12 @@ const InitialPayrollDetails = () => {
                 </div>
             </div><br /><br />
             <div className='row '>
+
                 <div className='col-lg-4'> </div>
-                <div className='col-lg-5'>
+                <div className='col-lg-4' >
                     <p className='Heading' >Employees in selected Period</p>
                 </div>
-                <div className='col-lg-2'>
+                <div className='col-lg-2' style={{ marginLeft: "92px" }}>
                     <button type='button' className='EditDelteBTN' onClick={() => handleDelete()}>Delete</button>
                 </div>
             </div>
@@ -199,7 +202,7 @@ const InitialPayrollDetails = () => {
                 <div className='col-lg-12'>
                     <span>Select All <input type="checkbox" checked={selectedRows.length === preliminarySalary.length} onChange={e => handleRowSelect(e, 'all')} /></span>
                     <br />
-                    <table className='table' ref={tableRef}>
+                    <table className='table text-center' ref={tableRef}>
                         <thead>
                             <tr className='text-white' style={{ whiteSpace: 'nowrap' }}>
                                 <th>Select</th>
@@ -217,7 +220,7 @@ const InitialPayrollDetails = () => {
                             {
                                 preliminarySalary.filter((data) => {
                                     if ((data.staffID.toString().includes(keyword)) || (data.componentValue.toString().includes(keyword.toString()))
-                                        || (data.department_name.toString().includes(departmentFilter.toLowerCase().includes(departmentFilter.toLocaleLowerCase())))) {
+                                        || (data.department_name.toString().includes(departmentFilter.toLowerCase().includes(departmentFilter)))) {
                                         return data;
                                     }
                                 }).slice(offset, offset + PER_PAGE).map((data, index) => {
@@ -235,7 +238,7 @@ const InitialPayrollDetails = () => {
                                             <td>{data.baseSal}</td>
                                             <td>{data.componentValue}</td>
                                             <td>
-                                                <button className='submit-button fw-bold ' onClick={openModal}>View Component Details</button>
+                                                <button className={Styles.actionButton} onClick={openModal}>View Component Details</button>
                                             </td>
                                         </tr>
                                     )

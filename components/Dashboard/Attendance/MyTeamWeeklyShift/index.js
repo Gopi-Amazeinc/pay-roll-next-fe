@@ -57,6 +57,8 @@ const Index = () => {
 
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
+    
+  const [keyword, setKeyword] = useState("");
 
     const { register, handleSubmit, reset, watch, formState: { errors } } = useForm();
 
@@ -196,7 +198,7 @@ const Index = () => {
                             </div>
                             <div className="col-lg-2">
                                 <br />
-                                <input type="text" className='form-control' placeholder='Serach For Band' />
+                                <input type="text" className='form-control' placeholder='Serach For Band'   onChange={(e) => setKeyword(e.target.value)} />
                                 {/* <Link href="/Attendance/StaffShiftForm/new" ><button className='button'>Add Shift Details</button></Link> */}
                             </div>
                             <div className="col-lg-1"></div>
@@ -248,7 +250,13 @@ const Index = () => {
 
                                 <tbody>
                                     {
-                                        weeklyShiftData.slice(offset, offset + PER_PAGE).map((data) => {
+                                        weeklyShiftData 
+                                        .filter(post => {
+                                            return Object.values(post).some(value =>
+                                              value !== null && value.toString().toLowerCase().includes(keyword.toLowerCase())
+                                            );
+                                          })
+                                        .slice(offset, offset + PER_PAGE).map((data) => {
                                             return (
                                                 <tr key={data.id}>
                                                     <td>{data.staffID}</td>

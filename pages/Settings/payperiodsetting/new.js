@@ -60,7 +60,25 @@ export default function PayPeriodSettingform({ editData }) {
         }
     };
 
-
+    const customStyles = {
+        content: {
+            top: "50%",
+            left: "50%",
+            right: "auto",
+            bottom: "auto",
+            marginRight: "-50%",
+            transform: "translate(-50%, -50%)",
+            width: "60%",
+        },
+        errorMsg: {
+            fontSize: "12px",
+            fontWeight: "500",
+            color: "red",
+        },
+        inputLabel: {
+            fontSize: "16px",
+        },
+    };
 
 
     return (
@@ -77,7 +95,7 @@ export default function PayPeriodSettingform({ editData }) {
                                     <div className='col-lg-3 '>
                                         <label className='fw-bold'>Pay Code<i className='text-danger'>*</i></label>
                                         <input type="text" placeholder='Pay Code' className='form-control' {...register('PayCode', { required: "This Field is required"})} />
-                                        {errors.PayPeriod && <p className="PayCode" style={{ color: "red" }}>{errors.PayCode.message}</p>}
+                                        {errors.PayCode && <p  className="error-message"  style={customStyles.errorMsg}>{errors.PayCode.message}</p>}
                                         <br></br>
                                     </div>
 
@@ -88,31 +106,31 @@ export default function PayPeriodSettingform({ editData }) {
                                             <option>Semi Pay Period1</option>
                                             <option>Semi Pay Period2</option>
                                         </select>
-                                        {errors.PayPeriod && <p className="error-message" style={{ color: "red" }}>{errors.PayPeriod.message}</p>}
+                                        {errors.PayPeriod && <p className="error-message" style={customStyles.errorMsg}>{errors.PayPeriod.message}</p>}
                                     </div>
 
                                     <div className='col-lg-3 '>
                                         <label className='fw-bold'>Attendace Coverage Start Date<i className='text-danger'>*</i></label>
                                         <input type="date" className='form-control' placeholder='Effective Date' {...register('AttendanceCoverageStartdate', { required: "This Field is required" })} />
-                                        {errors.AttendanceCoverageStartdate && <p className="error-message" style={{ color: "red" }}>{errors.AttendanceCoverageStartdate.message}</p>}
+                                        {errors.AttendanceCoverageStartdate && <p className="error-message" style={customStyles.errorMsg}>{errors.AttendanceCoverageStartdate.message}</p>}
                                     </div>
 
                                     <div className='col-lg-3 '>
                                         <label className='fw-bold'>Attendace Coverage End Date<i className='text-danger'>*</i></label>
                                         <input type="date" className='form-control' placeholder='Effective Date' {...register('AttendanceCoverageEndDate', { required:"This Field is required" })} />
-                                        {errors.AttendanceCoverageEndDate && <p className="error-message" style={{ color: "red" }}>{errors.AttendanceCoverageEndDate.message}</p>}
+                                        {errors.AttendanceCoverageEndDate && <p className="error-message" style={customStyles.errorMsg}>{errors.AttendanceCoverageEndDate.message}</p>}
                                     </div>
 
                                     <div className='col-lg-3 '>
                                         <label className='fw-bold'>Payroll Start Date<i className='text-danger'>*</i></label>
                                         <input type="date" className='form-control' placeholder='Effective Date' {...register('PayrollStartDate', { required: "This Field is required"})} />
-                                        {errors.PayrollStartDate && <p className="error-message" style={{ color: "red" }}>{errors.PayrollStartDate.message}</p>}
+                                        {errors.PayrollStartDate && <p className="error-message" style={customStyles.errorMsg}>{errors.PayrollStartDate.message}</p>}
                                     </div>
 
                                     <div className='col-lg-3 '>
                                         <label className='fw-bold'>Payroll End Date<i className='text-danger'>*</i></label>
                                         <input type="date" className='form-control' placeholder='Effective Date' {...register('PayrollEndDate', { required: "This Field is required"})} />
-                                        {errors.PayrollEndDate && <p className="error-message" style={{ color: "red" }}>{errors.PayrollEndDate.message}</p>}
+                                        {errors.PayrollEndDate && <p className="error-message" style={customStyles.errorMsg}>{errors.PayrollEndDate.message}</p>}
                                     </div>
 
                                     <div className='col-lg-3 '>
@@ -120,20 +138,20 @@ export default function PayPeriodSettingform({ editData }) {
                                         <select className='form-select' {...register('PayrollRunType', { required: "This Field is required"})}>
                                             <option value="" disabled >Select PayRoll RunType</option>
                                             <option>NormalRun</option>
-                                            {errors.PayrollRunType && <p className="error-message" style={{ color: "red" }}>{errors.PayrollRunType.message}</p>}
+                                            {errors.PayrollRunType && <p className="error-message" style={customStyles.errorMsg}>{errors.PayrollRunType.message}</p>}
                                         </select>
                                     </div>
                                     <div className='col-lg-3 '>
                                         <label className='fw-bold'>Pay Date<i className='text-danger'>*</i></label>
                                         <input type="date" className='form-control' placeholder='Effective Date' {...register('PayDate', { required: "This Field is required" })} />
-                                        {errors.PayDate && <p className="error-message" style={{ color: "red" }}>{errors.PayDate.message}</p>}
+                                        {errors.PayDate && <p className="error-message" style={customStyles.errorMsg}>{errors.PayDate.message}</p>}
                                         <br />
                                     </div>
 
                                     <div className='col-lg-3 '>
                                         <label className='fw-bold'>Comments<i className='text-danger'>*</i></label>
                                         <textarea className='form-control' placeholder='Comments' {...register('Comments', { required: "This Field is required" })}></textarea>
-                                        {errors.Comments && <p className="error-message" style={{ color: "red" }}>{errors.Comments.message}</p>}
+                                        {errors.Comments && <p className="error-message" style={customStyles.errorMsg}>{errors.Comments.message}</p>}
                                     </div>
 
                                     <br />

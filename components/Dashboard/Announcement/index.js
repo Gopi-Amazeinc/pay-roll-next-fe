@@ -9,7 +9,7 @@ const AnnoucementDash = () => {
 
   const [upcommingdashboard, setupcommingdashboard] = useState([]);
   const [completedashboard, setcompletedashboard] = useState([]);
-
+  const [keyword, setKeyword] = useState("")
   function toggleUpcomming() {
     setupcomming(true);
     setcompleted(false);
@@ -65,6 +65,7 @@ const AnnoucementDash = () => {
                   type="text"
                   className="form-control"
                   placeholder="Search For Announcement"
+                  onChange={e=>setKeyword(e.target.value)}
                 />
               </div>
             </div>
@@ -112,12 +113,16 @@ const AnnoucementDash = () => {
                   </thead>
 
                   <tbody>
-                    {completedashboard.map((data) => {
+                    {completedashboard.filter(data => {
+                                    if ((data.dateTime.toString().includes(keyword))||(data.description.toLowerCase().includes(keyword.toLowerCase())) ) {
+                                        return data;
+                                    }
+                                }).map((data) => {
                       return (
                         <tr key={data.id}>
                           <td>{data.dateTime}</td>
                           <td>{data.time}</td>
-                          <td>{data.reason}</td>
+                          <td>{data.name}</td>
                           <td>{data.description}</td>
                           <td>{data.venue} </td>
                         </tr>
@@ -145,7 +150,7 @@ const AnnoucementDash = () => {
                         <tr key={data.id}>
                           <td>{data.dateTime}</td>
                           <td>{data.time}</td>
-                          <td>{data.reason}</td>
+                          <td>{data.name}</td>
                           <td>{data.description}</td>
                           <td>{data.venue} </td>
                         </tr>
