@@ -57,7 +57,25 @@ const PagibigForm = ({ editData }) => {
             router.push('/Settings/Pagibig');
         }
     };
-
+    const customStyles = {
+        content: {
+            top: "50%",
+            left: "50%",
+            right: "auto",
+            bottom: "auto",
+            marginRight: "-50%",
+            transform: "translate(-50%, -50%)",
+            width: "60%",
+        },
+        errorMsg: {
+            fontSize: "12px",
+            fontWeight: "500",
+            color: "red",
+        },
+        inputLabel: {
+            fontSize: "16px",
+        },
+    };
 
     return (
         <Layout>
@@ -72,22 +90,43 @@ const PagibigForm = ({ editData }) => {
                                 <div className="row">
                                     <div className="col-lg-3">
                                         <label className='fw-bold' >Taxable income low limit <span className={Styles.span}>*</span></label>
-                                        <input type="text" className='form-control'placeholder='Taxiable income low limit'  {...register('Taxiableincomelowlimit', { required: true})}
+                                        <input type="text" className='form-control'placeholder='Taxiable income low limit' 
+                                         onKeyPress={(event) => {
+                                            const charCode = (event.which) ? event.which : event.keyCode;
+                                            if (charCode !== 46 && charCode > 31 && (charCode < 48 || charCode > 57)) {
+                                                event.preventDefault();
+                                            }
+                                        }} maxLength={10}
+                                        {...register('Taxiableincomelowlimit', { required: true})}
                                          />
-                                         {errors.Taxiableincomelowlimit && <p className='text-danger'>Enter Low level Tax Limit</p>}
+                                         {errors.Taxiableincomelowlimit && <p style={customStyles.errorMsg}>Enter Low level Tax Limit</p>}
                                         <br />
                                     </div>
 
                                     <div className="col-lg-3">
                                         <label className='fw-bold'>Taxable income high limit <span className={Styles.span}>*</span></label>
-                                        <input type="text" className='form-control' placeholder='Taxiable income high limit'  {...register('Taxiableincomehighlimit', { required: true })} />
-                                        {errors.Taxiableincomehighlimit && <p className='text-danger'>Enter High level Tax Limit</p>}
+                                        <input type="text" className='form-control' placeholder='Taxiable income high limit' 
+                                         onKeyPress={(event) => {
+                                            const charCode = (event.which) ? event.which : event.keyCode;
+                                            if (charCode !== 46 && charCode > 31 && (charCode < 48 || charCode > 57)) {
+                                                event.preventDefault();
+                                            }
+                                        }} maxLength={10}
+                                        {...register('Taxiableincomehighlimit', { required: true })} />
+                                        {errors.Taxiableincomehighlimit && <p style={customStyles.errorMsg}>Enter High level Tax Limit</p>}
                                     </div>
 
                                     <div className="col-lg-3">
                                         <label className='fw-bold'>Pagibig value <span className={Styles.span}>*</span></label> <br />
-                                        <input type="text" className='form-control' placeholder='Pagibig value'  {...register('Pagibigvalue', { required: true})} />
-                                        {errors.Pagibigvalue && <p className='text-danger'>Enter Pagibig Value</p>}
+                                        <input type="text" className='form-control' placeholder='Pagibig value'  
+                                         onKeyPress={(event) => {
+                                            const charCode = (event.which) ? event.which : event.keyCode;
+                                            if (charCode !== 46 && charCode > 31 && (charCode < 48 || charCode > 57)) {
+                                                event.preventDefault();
+                                            }
+                                        }} maxLength={10}
+                                        {...register('Pagibigvalue', { required: true})} />
+                                        {errors.Pagibigvalue && <p style={customStyles.errorMsg}>Enter Pagibig Value</p>}
                                     </div>
 
                                     <div className="col-lg-3">
@@ -101,7 +140,7 @@ const PagibigForm = ({ editData }) => {
                                             <option>2027</option>
                                             <option>2028</option>
                                         </select>
-                                        {errors.Pagibigvalue && <p className='text-danger'>Enter Year</p>}
+                                        {errors.Pagibigvalue && <p style={customStyles.errorMsg}>Enter Year</p>}
                                     </div>
                                 </div>
                                 <br />

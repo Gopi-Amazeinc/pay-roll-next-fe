@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 
-const SemiMonthlyTaxForm = ({  editData}) => {
+const SemiMonthlyTaxForm = ({ editData }) => {
     const router = useRouter();
     const { register, handleSubmit, reset, formState: { errors } } = useForm();
     const [actionType, setActionType] = useState("insert");
@@ -28,7 +28,7 @@ const SemiMonthlyTaxForm = ({  editData}) => {
     useEffect(() => {
         const { id } = editData || {};
         if (id) {
-           
+
             getData(id);
         } else {
             clearForm();
@@ -43,7 +43,7 @@ const SemiMonthlyTaxForm = ({  editData}) => {
     const onSubmit = async (data) => {
         if (actionType == "insert") {
             await apiService.commonPostCall("HR/InsertTaxconfigarationsemimonth", data) // inserting new division master data [Shashank]
-            router.push( '/Settings/SemiMonthlyTax');
+            router.push('/Settings/SemiMonthlyTax');
             Swal.fire({
                 icon: 'success',
                 title: 'Added Successfully',
@@ -55,8 +55,26 @@ const SemiMonthlyTaxForm = ({  editData}) => {
         }
     };
 
+    const customStyles = {
+        content: {
+            top: "50%",
+            left: "50%",
+            right: "auto",
+            bottom: "auto",
+            marginRight: "-50%",
+            transform: "translate(-50%, -50%)",
+            width: "60%",
+        },
+        errorMsg: {
+            fontSize: "12px",
+            fontWeight: "500",
+            color: "red",
+        },
+        inputLabel: {
+            fontSize: "16px",
+        },
+    };
 
- 
 
 
     return (
@@ -72,39 +90,155 @@ const SemiMonthlyTaxForm = ({  editData}) => {
                                 <div className='row  '>
                                     <div className='col-lg-3'>
                                         <label className='fw-bold'>Tax low level limit <i className='text-danger'>*</i></label>
-                                        <input {...register("Taxlowlevellimit", { required: true })} type="number" placeholder='Tax low level limit' className='form-control' />
-                                        {errors.Taxlowlevellimit && <p className='text-danger'>Enter Low level Tax Limit</p>}
-                                        <br/>
+                                        <input 
+                                        type="text" 
+                                        placeholder='Tax low level limit' 
+                                        className='form-control'
+                                        onKeyPress={(event) => {
+                                            const charCode = (event.which) ? event.which : event.keyCode;
+                                            if (charCode !== 46 && charCode > 31 && (charCode < 48 || charCode > 57)) {
+                                                event.preventDefault();
+                                            }
+                                        }} maxLength={10}
+                                        {...register("Taxlowlevellimit", { 
+                                            required: true,
+                                            pattern: /^\d+/
+                                        })} />
+                                    <div className="error-message" style={customStyles.errorMsg}>
+
+                                        {errors.Taxlowlevellimit?.type === 'required' &&
+                                            " Enter Low level Tax Limit"}
+                                        {errors.Taxlowlevellimit?.type === "pattern" &&
+                                            "Value only"
+                                        }
+                                    </div>
+                                        
+                                        <br />
                                     </div>
 
                                     <div className='col-lg-2 '>
                                         <label className='fw-bold'>Tax high level limit <i className='text-danger'>*</i></label>
-                                        <input {...register("Taxhighlevellimit", { required: true })} type="text" placeholder='Tax high level limit' className='form-control' />
-                                        {errors.Taxhighlevellimit && <p className='text-danger'>Enter High Level Limit</p>}
+                                        <input
+                                        type="text" placeholder='Tax high level limit' className='form-control' 
+                                        onKeyPress={(event) => {
+                                            const charCode = (event.which) ? event.which : event.keyCode;
+                                            if (charCode !== 46 && charCode > 31 && (charCode < 48 || charCode > 57)) {
+                                                event.preventDefault();
+                                            }
+                                        }} maxLength={10}
+                                        {...register("Taxhighlevellimit", { 
+                                            required: true,
+                                            pattern: /^\d+/
+                                        })} />
+                                    <div className="error-message" style={customStyles.errorMsg}>
+
+                                        {errors.Taxhighlevellimit?.type === 'required' &&
+                                            " Enter High Level Limit"}
+                                        {errors.Taxhighlevellimit?.type === "pattern" &&
+                                            "Value only"
+                                        }
+                                    </div>
+                                        
                                     </div>
 
                                     <div className='col-lg-2 '>
                                         <label className='fw-bold'>slab <i className='text-danger'>*</i></label>
-                                        <input {...register("slab", { required: true })} type="text" placeholder='slab' className='form-control' />
-                                        {errors.slab && <p className='text-danger'>Enter slab</p>}
+                                        <input
+                                         type="text" placeholder='slab' className='form-control' 
+                                         onKeyPress={(event) => {
+                                            const charCode = (event.which) ? event.which : event.keyCode;
+                                            if (charCode !== 46 && charCode > 31 && (charCode < 48 || charCode > 57)) {
+                                                event.preventDefault();
+                                            }
+                                        }} maxLength={10}
+                                        {...register("slab", { 
+                                            required: true,
+                                            pattern: /^\d+/
+                                        })} />
+                                    <div className="error-message" style={customStyles.errorMsg}>
+
+                                        {errors.slab?.type === 'required' &&
+                                            " Enter slab"}
+                                        {errors.slab?.type === "pattern" &&
+                                            "Value only"
+                                        }
+                                    </div>
+                                        
                                     </div>
 
                                     <div className='col-lg-2 '>
                                         <label className='fw-bold'>Percentage <i className='text-danger'>*</i></label>
-                                        <input {...register("Percentage", { required: true })} type="text" placeholder='Percentage' className='form-control' />
-                                        {errors.Percentage && <p className='text-danger'>Enter Percentage</p>}
+                                        <input 
+                                         type="text" placeholder='Percentage' className='form-control'
+                                         onKeyPress={(event) => {
+                                            const charCode = (event.which) ? event.which : event.keyCode;
+                                            if (charCode !== 46 && charCode > 31 && (charCode < 48 || charCode > 57)) {
+                                                event.preventDefault();
+                                            }
+                                        }} maxLength={3}
+                                        {...register("Percentage", { 
+                                            required: true,
+                                            pattern: /^\d+/
+                                        })} />
+                                    <div className="error-message" style={customStyles.errorMsg}>
+
+                                        {errors.Percentage?.type === 'required' &&
+                                            " Enter Percentage"}
+                                        {errors.Percentage?.type === "pattern" &&
+                                            "Value only"
+                                        }
+                                    </div>
+                                     
                                     </div>
 
                                     <div className='col-lg-2 '>
                                         <label className='fw-bold'>Tax excess amount <i className='text-danger'>*</i></label>
-                                        <input {...register("Taxexcessamount", { required: true })} type="text" placeholder='Tax excess amount' className='form-control' />
-                                        {errors.Taxexcessamount && <p className='text-danger'>Enter Excess Amount</p>}
+                                        <input 
+                                         type="text" placeholder='Tax excess amount' className='form-control'
+                                         onKeyPress={(event) => {
+                                            const charCode = (event.which) ? event.which : event.keyCode;
+                                            if (charCode !== 46 && charCode > 31 && (charCode < 48 || charCode > 57)) {
+                                                event.preventDefault();
+                                            }
+                                        }} maxLength={10}
+                                        {...register("Taxexcessamount", { 
+                                            required: true,
+                                            pattern: /^\d+/
+                                        })} />
+                                    <div className="error-message" style={customStyles.errorMsg}>
+
+                                        {errors.Taxexcessamount?.type === 'required' &&
+                                            " Enter Excess Amount"}
+                                        {errors.Taxexcessamount?.type === "pattern" &&
+                                            "Value only"
+                                        }
+                                    </div>
+                                        
                                     </div>
 
                                     <div className='col-lg-2 '>
                                         <label className='fw-bold'>Tax deduction amount <i className='text-danger'>*</i></label>
-                                        <input {...register("Taxdeductionamount", { required: true })} type="text" placeholder='Tax deduction amount' className='form-control' />
-                                        {errors.Taxdeductionamount && <p className='text-danger'>Enter Deduction Amount</p>}
+                                        <input
+                                        type="text" placeholder='Tax deduction amount' className='form-control'
+                                        onKeyPress={(event) => {
+                                            const charCode = (event.which) ? event.which : event.keyCode;
+                                            if (charCode !== 46 && charCode > 31 && (charCode < 48 || charCode > 57)) {
+                                                event.preventDefault();
+                                            }
+                                        }} maxLength={10}
+                                        {...register("Taxdeductionamount", { 
+                                            required: true,
+                                            pattern: /^\d+/
+                                        })} />
+                                    <div className="error-message" style={customStyles.errorMsg}>
+
+                                        {errors.Taxdeductionamount?.type === 'required' &&
+                                            " Enter Deduction Amount"}
+                                        {errors.Taxdeductionamount?.type === "pattern" &&
+                                            "Value only"
+                                        }
+                                    </div>
+                                       
                                     </div>
 
                                     <div className='col-lg-2 '>
@@ -120,7 +254,7 @@ const SemiMonthlyTaxForm = ({  editData}) => {
                                             <option value="2029">2029</option>
                                             <option value="2030">2030</option>
                                         </select>
-                                        {errors.Year && <p className='text-danger'>Please Select Year</p>}
+                                        {errors.Year && <p style={customStyles.errorMsg}>Please Select Year</p>}
                                     </div>
 
                                     <div className='col-lg-6'></div>
@@ -128,8 +262,8 @@ const SemiMonthlyTaxForm = ({  editData}) => {
                                     <div className='col-lg-8'></div>
                                     <div className='col-lg-2 text-end'>
 
-                                     <Link href="/Settings/SemiMonthlyTax"> <button type='submit' className=' AddButton'>Cancel</button>
-</Link>
+                                        <Link href="/Settings/SemiMonthlyTax"> <button type='submit' className=' AddButton'>Cancel</button>
+                                        </Link>
                                     </div>
                                     <div className='col-lg-2'>
                                         {
@@ -146,10 +280,10 @@ const SemiMonthlyTaxForm = ({  editData}) => {
                                 </div>
                             </form>
                         </div>
-                        </div>
-                        </div>
-                        </div>
-                    </Layout>)
+                    </div>
+                </div>
+            </div>
+        </Layout>)
 }
 
-                    export default SemiMonthlyTaxForm
+export default SemiMonthlyTaxForm
