@@ -12,15 +12,20 @@ import * as XLSX from "xlsx";
 
 const CompanyAttendanceDetails = () => {
   const tableRef = useRef(null);
-  const [CompanyAttendence, setCompanyAttendence] = useState([]);
+   const [CompanyAttendence, setCompanyAttendence] = useState([]);
   const [userID, setUserID] = useState();
   const [roleID, setRoleID] = useState();
   const router = useRouter();
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [count, setcount] = useState("");
-
+  const [StaffData, setStaffData] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
+  const [keyword, setKeyword] = useState("");
+
+
+
+
 
   const [items, setItems] = useState([]);
   const openEditModal = () => {
@@ -137,6 +142,20 @@ const CompanyAttendanceDetails = () => {
       setcount(res.data.length);
     }
   };
+  // useEffect(() => {
+  //   if (userID) {
+  //     debugger;
+  //     getstaffDetails();
+  //   }
+  // }, [userID]);
+  // const getstaffDetails = async () => {
+  //   const staffDetails = await apiService.commonGetCall(
+  //     "Payroll/GetAttendanceByHR?=" + userID
+  //   );
+  //   setStaffData(staffDetails.data);
+  //   // setcount(res.data.length);
+  // };
+
 
   //   Written By:-Gopi  => Read the uploaded excel file and convert that into array - used "XLSX" package
   const incomingfile = async (file) => {
@@ -259,6 +278,13 @@ const CompanyAttendanceDetails = () => {
               </p>
               <select className="form-select">
                 <option>Select Staff</option>
+                {/* {StaffData.map((data, index) => {
+                  return (
+                    <option value={data.id} key={index}>
+                      {data.fullname}
+                    </option>
+                  );
+                })} */}
               </select>
             </div>
 
@@ -269,7 +295,7 @@ const CompanyAttendanceDetails = () => {
               <input
                 type="text"
                 className="form-control"
-                placeholder="Search"
+                placeholder="Search" onChange={(e) => setKeyword(e.target.value)}
               />
             </div>
 
@@ -277,17 +303,17 @@ const CompanyAttendanceDetails = () => {
               <button className="button" onClick={openEditModal}>Upload</button>
               <br />
               <p></p>        <DownloadTableExcel
-                  filename="users table"
-                  sheet="users"
-                  currentTableRef={tableRef.current}
-                >
-                  <button className="button">Export To Excel</button>{" "}
-                </DownloadTableExcel>
+                filename="users table"
+                sheet="users"
+                currentTableRef={tableRef.current}
+              >
+                <button className="button">Export To Excel</button>{" "}
+              </DownloadTableExcel>
             </div>
             <div>
-   
-        
-             
+
+
+
               <Modal
                 isOpen={modalOpen}
                 style={customStyles}
@@ -333,7 +359,7 @@ const CompanyAttendanceDetails = () => {
                   <div className="row">
                     {/* <ModalFooter> */}
                     <div className="col-lg-5">
-                      <br/>
+                      <br />
                       <button
                         className="button"
                         id={Styles.UploadStaffButton}
@@ -349,7 +375,7 @@ const CompanyAttendanceDetails = () => {
                   <div className="col-lg-6"></div>
                 </div>
               </Modal>
- 
+
             </div>
           </div>
 
@@ -382,28 +408,34 @@ const CompanyAttendanceDetails = () => {
                 {Array.isArray(CompanyAttendence) &&
                   CompanyAttendence.length > 0 && (
                     <>
-                      {CompanyAttendence.slice(offset, offset + PER_PAGE).map(
-                        (data, index) => {
-                          return (
-                            <tr key={index} value={data.index}>
-                              <td>{data.date}</td>
-                              <td>{data.staffname}</td>
-                              <td>{data.position}</td>
-
-                              <td>{data.expectedIn}</td>
-                              <td>{data.expectedOut}</td>
-                              <td>{data.expectedIn}</td>
-
-                              <td>{data.expectedOut}</td>
-                              <td>{data.punchedInForm}</td>
-                              <td>{data.overtime}</td>
-
-                              <td>{data.expectedOutTime}</td>
-                              <td>{data.late}</td>
-                            </tr>
+                      {CompanyAttendence
+                         .filter(post => {
+                          return Object.values(post).some(value =>
+                            value !== null && value.toString().toLowerCase().includes(keyword.toLowerCase())
                           );
-                        }
-                      )}
+                        })
+                        .slice(offset, offset + PER_PAGE).map(
+                          (data, index) => {
+                            return (
+                              <tr key={index} value={data.index}>
+                                <td>{data.date}</td>
+                                <td>{data.staffname}</td>
+                                <td>{data.position}</td>
+
+                                <td>{data.expectedIn}</td>
+                                <td>{data.expectedOut}</td>
+                                <td>{data.expectedIn}</td>
+
+                                <td>{data.expectedOut}</td>
+                                <td>{data.punchedInForm}</td>
+                                <td>{data.overtime}</td>
+
+                                <td>{data.expectedOutTime}</td>
+                                <td>{data.late}</td>
+                              </tr>
+                            );
+                          }
+                        )}
                     </>
                   )}
               </tbody>
