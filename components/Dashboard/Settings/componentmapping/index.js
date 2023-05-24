@@ -93,11 +93,11 @@ export default function ComponentMappingDashboard() {
                         <td>{data.componentName}</td>
                         <td>
                           <Link href={`/Settings/componentmapping/Edit/${data.id}`}>
-                            <button className="edit-btn" onClick={getData.bind(this, data)} >Edit</button>
+                            <button className="edit-btn"  >Edit</button>
                           </Link>
                           &nbsp;
 
-                          <button className="edit-btn" onClick={() => handleDelete(data.id)}>Delete</button>
+                          <button className="edit-btn" >Delete</button>
                         </td>
                       </tr>
                     )
