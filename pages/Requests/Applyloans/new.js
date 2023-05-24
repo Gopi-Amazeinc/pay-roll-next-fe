@@ -73,23 +73,34 @@ const Applyloans = () => {
                                     </div>
                                     <div className='col-lg-2'>
                                         <label style={{ fontWeight: "bold" }}>Loan Amount<span style={{ color: "red" }}>*</span></label>
-                                        <input type='text' placeholder='Loan Amount' {...register('loanAmount', {
-                                            required: "Loan amount  is required", pattern: {
-                                                value: '^[A-Za-z0-9 ]+$',
-                                                message: "Please enter a valid Position Name"
-                                            }
-                                        })} className='form-control form-control-sm' />
-                                        {errors.loanAmount && <p className="error-message" style={{ color: "red" }}>{errors.loanAmount.message}</p>}
+                                        <input type='number' placeholder='Loan Amount'
+                                         {...register('loanAmount', {
+                                            required: true,
+                                             pattern: /^\d+/
+                                         } )} className='form-control form-control-sm' />
+                                         <div className="error-message"  style={{ color: "red" }}>
+
+                                        {errors.loanAmount?.type==='required' && 
+                                           " Please enter Loan Amounts"}
+                                       {errors.loanAmount?.type === "pattern" && 
+                                            "numbers only"
+                                        }
+                                    </div>
                                     </div>
                                     <div className='col-lg-2'>
                                         <label style={{ fontWeight: "bold" }}>Tenure <span style={{ color: "red" }}>*</span></label>
                                         <input type='text' placeholder='Tenure' {...register('Tenure', {
-                                            required: "Tenure is required", pattern: {
-                                                value: '^[A-Za-z0-9 ]+$',
-                                                message: "Please enter a valid Tenure"
-                                            }
-                                        })} className='form-control form-control-sm' />
-                                        {errors.Tenure && <p className="error-message" style={{ color: "red" }}>{errors.Tenure.message}</p>}
+                                          required: true,
+                                          pattern: /^\d+/
+                                      } )} className='form-control form-control-sm' />
+                                      <div className="error-message"  style={{ color: "red" }}>
+
+                                     {errors.Tenure?.type==='required' && 
+                                        " Please enter Tenure"}
+                                    {errors.Tenure?.type === "pattern" && 
+                                         "numbers only"
+                                     }
+                                 </div>
                                     </div>
                                     <div className='col-lg-4'>
                                         <label style={{ fontWeight: "bold" }}>Comments<span style={{ color: "red" }}>*</span></label>

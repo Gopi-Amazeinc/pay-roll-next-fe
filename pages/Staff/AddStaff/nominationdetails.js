@@ -4,8 +4,9 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import React, {useCallback} from 'react'
 import {useDropzone} from 'react-dropzone'
+import { apiService } from "@/services/api.service";
 
-export default function NominationDetails() {
+export default function NominationDetails({data}) {
     const [RelationShipMaster, setRelationShipMaster] = useState([]);
     const [NominationDetals, setNominationData] = useState([]);
     const { register, handleSubmit, watch, reset, formState: { errors } } = useForm();
@@ -134,13 +135,30 @@ export default function NominationDetails() {
 
 
     useEffect(() => {
-        getData();
+      debugger
+      makecalls()
     }, [1]);
-
+    function makecalls() {
+      const { id } = data || {};
+      if (id) {
+        getByID(id);
+      } else {
+        cleardata()
+        getData();
+      }
+    }
+    const getByID = async (id) => {
+      debugger;
+      await getData();
+      const res = await apiService.commonGetCall(
+        "Payroll/GetNominationByStaffID?StaffID=" + id
+      );
+      setNominationData(res.data);
+    };
     async function getData() {
         let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-        let res = await axios.get(hostURL + "/HR/GetNomination");
-        setNominationData(res.data);
+        // let res = await axios.get(hostURL + "/HR/GetNomination");
+        // setNominationData(res.data);
 
         let res1 = await axios.get(hostURL + "/Master/GetRelationShipMaster");
         setRelationShipMaster(res1.data);
@@ -340,7 +358,7 @@ export default function NominationDetails() {
                       return (
                         <tr className="text-dark" key={index}>
                           <td>{data.beneficiaryName}</td>
-                          <td>{data.short}</td>
+                          <td>{data.beneficiaryRelationshipID}</td>
                           <td>{data.percentage}</td>
                           <td>{data.nomineeType}</td>
                           <td>{data.beneficiaryDOB}</td>
