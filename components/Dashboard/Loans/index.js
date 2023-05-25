@@ -131,9 +131,9 @@ const TeamLoans = () => {
       <div className="container-fluid">
         <br />
 
-        <p id={Styles.p}> My Loan Details</p>
+        <p className={Styles.p}> My Loan Details</p>
 
-        <div className="card shadow-lg p-4 rounded-3" id={Styles.card}>
+        <div className="card shadow-lg p-4 rounded-3" >
           <div className="row">
             <div className="col-lg-1">
               <p>Filter By</p>
@@ -146,13 +146,11 @@ const TeamLoans = () => {
               />
             </div>
             <div className="col-lg-3">
-              <button
-                id={Styles.UploadLoansButton}
-                color="primary"
+              <button className="button"
                 type="button"
                 onClick={openEditModal}
               >
-                UPLOAD LOANS
+                Upload Loans
               </button>
             </div>
             <div>
@@ -162,13 +160,13 @@ const TeamLoans = () => {
                 contentLabel="Example Modal"
               >
                 <div className=" modal-header">
-                  <h5 className=" modal-title" id="exampleModalLabel">
+                  <h5 className=" modal-title" style={{color:"#3247d5"}} id="exampleModalLabel">
                     Upload Loans
                   </h5>
                   <button
                     aria-label="Close"
                     className={Styles.close}
-                    type="button"
+                    type="button" 
                     onClick={closeModal}
                   >
                     X{/* <i onClick={closeModal} class="mdi mdi-close"></i> */}
@@ -200,12 +198,14 @@ const TeamLoans = () => {
                   </div>
                   <div className="row">
                     {/* <ModalFooter> */}
-                    <div className="col-lg-6">
+                    
+                    <div className="col-lg-8">
+                    <br/>
                       <button
                         className="mt-4"
                         id={Styles.UploadStaffButton}
                         onClick={() => uploadLoan()}
-                        color="primary"
+                       
                         type="button"
                       >
                         Upload Loans
@@ -219,43 +219,45 @@ const TeamLoans = () => {
             </div>
           </div>
         </div>
-      </div>
-      <div className="row ">
-        <table
-          className=" table mt-3 text-center"
-          id={Styles.table}
-          ref={tableRef}
-        >
-          <thead>
-            <tr id={Styles.tr}>
-              <th className="text-white">Employee Id</th>
-              <th className="text-white">Employee Name</th>
-              <th className="text-white">Loan Type</th>
-              <th className="text-white">Category</th>
-              <th className="text-white">Loan Amount</th>
-              <th className="text-white">Ammortization</th>
-              <th className="text-white">Tenure</th>
-              <th className="text-white">Comments</th>
-            </tr>
-          </thead>
-          <tbody>
-            {loansData.map((data, index) => {
-              return (
-                <tr className="text-dark" key={index}>
-                  <td>{data.staffID}</td>
-                  <td>{data.name}</td>
-                  <td>{data.loanType}</td>
-                  <td>{data.category}</td>
-                  <td>{data.loanAmount}</td>
-                  <td>{data.emiAmount}</td>
-                  <td>{data.period}</td>
-                  <td>{data.comments}</td>
-             
+
+        <div className="row ">
+          <div className="col-lg-12">
+            <table
+              className="table mt-3 text-center"
+              ref={tableRef}
+            >
+              <thead>
+                <tr id={Styles.tr}>
+                  <th className="text-white">Employee Id</th>
+                  <th className="text-white">Employee Name</th>
+                  <th className="text-white">Loan Type</th>
+                  <th className="text-white">Category</th>
+                  <th className="text-white">Loan Amount</th>
+                  <th className="text-white">Ammortization</th>
+                  <th className="text-white">Tenure</th>
+                  <th className="text-white">Comments</th>
                 </tr>
-              );
-            })}
-          </tbody>
-        </table>
+              </thead>
+              <tbody>
+                {loansData.map((data, index) => {
+                  return (
+                    <tr className="text-dark" key={index}>
+                      <td>{data.staffID}</td>
+                      <td>{data.name}</td>
+                      <td>{data.loanType}</td>
+                      <td>{data.category}</td>
+                      <td>{data.loanAmount}</td>
+                      <td>{data.emiAmount}</td>
+                      <td>{data.period}</td>
+                      <td>{data.comments}</td>
+
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </div>
       </div>
     </>
   );
