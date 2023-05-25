@@ -230,10 +230,10 @@ const FinalPayrollDetails = () => {
         <div className="col-lg-4"
         ><p className="Heading">Employees in selected Period</p>
         </div>
-        <div className="col-lg-2" style={{ marginLeft: "92px" }}>
+        <div className="col-lg-2" style={{ marginLeft: "83px" }}>
           <button
             type="button"
-            className="EditDelteBTN fw-bold"
+            className="EditDelteBTN "
             onClick={() => handleDelete()}
           >
             Delete
@@ -276,15 +276,12 @@ const FinalPayrollDetails = () => {
             </thead>
             <tbody>
               {preliminarySalary
-                .filter((data) => {
-                  if (
-                    data.staffID.toString().includes(keyword) ||
-                    data.componentValue.toString().includes(keyword)
-                  ) {
-                    return data;
-                  }
-                })
-                .slice(offset, offset + PER_PAGE)
+                .filter(post => {
+                  return Object.values(post).some(value =>
+                    value !== null &&
+                    value.toString().toLowerCase().includes(keyword.toLowerCase())
+                  );
+                }).slice(offset, offset + PER_PAGE)
                 .map((data, index) => {
                   return (
                     <tr className="text-dark" key={index}>
@@ -343,7 +340,7 @@ const FinalPayrollDetails = () => {
           <div className="modalbody">
             <div className="row">
               <div className="col-lg-12">
-                <table className="table  table-bordered text-center ">
+                <table className="table  text-center ">
                   <thead>
                     <tr>
                       <th className="text-white">Component Name</th>

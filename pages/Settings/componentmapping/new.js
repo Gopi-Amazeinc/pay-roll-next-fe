@@ -20,7 +20,25 @@ function ComponentMappingForm({ }) {
     catch (error) {
       alert("data not inserted")
     }
-  }
+  }    const customStyles = {
+    content: {
+        top: "50%",
+        left: "50%",
+        right: "auto",
+        bottom: "auto",
+        marginRight: "-50%",
+        transform: "translate(-50%, -50%)",
+        width: "60%",
+    },
+    errorMsg: {
+        fontSize: "12px",
+        fontWeight: "500",
+        color: "red",
+    },
+    inputLabel: {
+        fontSize: "16px",
+    },
+};
 
   return (
     <Layout>
@@ -50,7 +68,7 @@ function ComponentMappingForm({ }) {
                       <option value="Neutral">Neutral</option>
 
                     </select>
-                    {errors.PayrollComponentType && <p className="error-message" style={{ color: "red" }}>{errors.PayrollComponentType.message}</p>}
+                    {errors.PayrollComponentType && <p className="error-message" style={customStyles.errorMsg}>{errors.PayrollComponentType.message}</p>}
                   </div>
                   <div className="col-lg-2">
                     <label>
@@ -63,7 +81,7 @@ function ComponentMappingForm({ }) {
                       name="Code"
                       className="form-control "
                     />
-                    {errors.Code && <p className="error-message" style={{ color: "red" }}>{errors.Code.message}</p>}
+                    {errors.Code && <p className="error-message" style={customStyles.errorMsg}>{errors.Code.message}</p>}
                   </div>
                   <div className="col-lg-2">
                     <label>
@@ -88,7 +106,7 @@ function ComponentMappingForm({ }) {
                         Witholding Tax Refund 2021
                       </option>
                     </select>
-                    {errors.ComponentName && <p className="error-message" style={{ color: "red" }}>{errors.ComponentName.message}</p>}
+                  <div >{errors.ComponentName && <p className="error-message" style={customStyles.errorMsg}>{errors.ComponentName.message}</p>}</div>
 
                   </div>
                   <div className="col-lg-2">
@@ -96,13 +114,13 @@ function ComponentMappingForm({ }) {
                       Tax Flag<span style={{ color: "red" }}>*</span>
                     </label>
                     <br />
-                    <input {...register('TaxFlag')}
+                    <input {...register('TaxFlag' ,{required:"please select"})}
                       type="checkbox"
                       placeholder="Tax Flag"
                       id="TaxFlag"
                       name="TaxFlag"
                     />
-                    {errors.TaxFlag && <p className="error-message" style={{ color: "red" }}>{errors.TaxFlag.message}</p>}
+                    {errors.TaxFlag && <p className="error-message"  style={customStyles.errorMsg}>{errors.TaxFlag.message}</p>}
                   </div>
 
                   <div className="col-lg-2">
@@ -110,14 +128,14 @@ function ComponentMappingForm({ }) {
                       NinetyThousandTaxExemption<span style={{ color: "red" }}>*</span>
                     </label>
                     <br />
-                    <input {...register('NinetyThousandTaxExemption')}
+                    <input {...register('NinetyThousandTaxExemption',{required:"please select"})}
                       type="checkbox"
                       placeholder="NinetyThousandTaxExemption"
                       id="NinetyThousandTaxExemption"
                       name="NinetyThousandTaxExemption"
                       className=""
                     />
-                    {errors.NinetyThousandTaxExemption && <p className="error-message" style={{ color: "red" }}>{errors.NinetyThousandTaxExemption.message}</p>}
+                    {errors.NinetyThousandTaxExemption && <p className="error-message" style={customStyles.errorMsg}>{errors.NinetyThousandTaxExemption.message}</p>}
                   </div>
                 </div>
                 <br />
@@ -135,7 +153,7 @@ function ComponentMappingForm({ }) {
                       <option value="1">1</option>
                       <option value="2">2</option>
                     </select>
-                    {errors.PayrollPeriod && <p className="error-message" style={{ color: "red" }}>{errors.PayrollPeriod.message}</p>}
+                    {errors.PayrollPeriod && <p className="error-message" style={customStyles.errorMsg}>{errors.PayrollPeriod.message}</p>}
                   </div>
 
 
@@ -148,7 +166,7 @@ function ComponentMappingForm({ }) {
                       placeholder="EffectiveDate"
                     >
                     </input>
-                    {errors.Effeactivedate && <p className="error-message" style={{ color: "red" }}>{errors.Effeactivedate.message}</p>}
+                    {errors.Effeactivedate && <p className="error-message" style={customStyles.errorMsg}>{errors.Effeactivedate.message}</p>}
                   </div>
 
 
@@ -157,27 +175,27 @@ function ComponentMappingForm({ }) {
                       Enable<span style={{ color: "red" }}>*</span>
                     </label>
                     <br />
-                    <input {...register('Enable')}
+                    <input {...register('Enable',{required:"please select"})}
                       type="checkbox"
                       id="Enable"
                       name="Enable"
                       className=""
-                    />
-                    {errors.Enable && <p className="error-message" style={{ color: "red" }}>{errors.Enable.message}</p>}
-                    &nbsp; Yes
+                    />&nbsp; Yes
+                    {errors.Enable && <p className="error-message" style={customStyles.errorMsg}>{errors.Enable.message}</p>}
+                    
                   </div>
                   <div className="col-lg-2">
                     <label>
                       Print On PaySlip<span style={{ color: "red" }}>*</span>
                     </label>
                     <br />
-                    <input {...register('PrintOnPaySlip')}
+                    <input {...register('PrintOnPaySlip',{required:"please select"})}
                       type="checkbox"
                       id="PrintOnPaySlip"
                       name="PrintOnPaySlip"
                       className=""
                     />
-                    {errors.PrintOnPaySlip && <p className="error-message" style={{ color: "red" }}>{errors.PrintOnPaySlip.message}</p>}
+                    {errors.PrintOnPaySlip && <p className="error-message" style={customStyles.errorMsg}>{errors.PrintOnPaySlip.message}</p>}
                   </div>
                 </div>
                 <br />

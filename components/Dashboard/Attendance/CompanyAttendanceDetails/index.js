@@ -221,7 +221,7 @@ const CompanyAttendanceDetails = () => {
 
   return (
     <div>
-      <div className="container">
+      <div className="container-fluid">
         <div className="row mt-3">
           <div className="col-lg-3 ">
             <Link
@@ -231,7 +231,7 @@ const CompanyAttendanceDetails = () => {
               My Attendence Details
             </Link>
           </div>
-          <div className="col-lg-3" style={{ marginLeft: "-50px" }}>
+          <div className="col-lg-3" style={{ marginLeft: "-30px" }}>
             <div
               className={Styles.mainheader}
               onClick={() =>
