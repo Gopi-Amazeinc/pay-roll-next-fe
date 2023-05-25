@@ -46,7 +46,7 @@ const InitialPayrollForm = () => {
     }
     getData();
   }, []);
- 
+
   const runPayrollButton = () => {
     router.push("/Payroll/InitialPayroll")
     Swal.fire({
@@ -195,13 +195,13 @@ const InitialPayrollForm = () => {
                 <Button
                   style={{ background: "#3247d5", border: "none" }}
                   type="button"
-                  className="form-control  "
+                  className="form-control "
                   id="collapseExample"
                   onClick={() => {
                     setCollapseOpen(!collapseOpen), handleButtonClick();
                   }}
                 >
-                  FETCH EMPLOYEES
+                  Fetch Employees
                 </Button>
               </div>
               <div className="col-lg-3"></div>
@@ -279,7 +279,7 @@ const InitialPayrollForm = () => {
                 //   href="/Payroll/InitialPayroll"
                 //   style={{ textDecoration: "none" }}
                 // >
-                <button className="form-control CancelBTN" onClick={runPayrollButton}>
+                <button className="newPayrollBtn " onClick={runPayrollButton} >
                   Run Payroll
                 </button>
                 // </Link>
@@ -317,14 +317,11 @@ const InitialPayrollForm = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {dashboard.filter((data) => {
-                    if (
-                      data.staffID.toString().includes(keyword) ||
-                      data.componentValue.toString().includes(keyword) || data.department_name.toLowercase().includes(deparmentFilter)
-                      || data.short.toLowercase().includes(positionFilter)
-                    ) {
-                      return data;
-                    }
+                  {dashboard.filter(post => {
+                    return Object.values(post).some(value =>
+                      value !== null &&
+                      value.toString().toLowerCase().includes(keyword.toLowerCase())
+                    );
                   }).map((data) => {
                     return (
                       <>

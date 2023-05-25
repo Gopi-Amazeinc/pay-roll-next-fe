@@ -169,7 +169,12 @@ function FinalPayrollApproval() {
                         </thead>
                         <tbody>
                             {
-                                finalData.slice(offset, offset + PER_PAGE).map((data, index) => {
+                                finalData.filter(post => {
+                                    return Object.values(post).some(value =>
+                                        value !== null &&
+                                        value.toString().toLowerCase().includes(keyword.toLowerCase())
+                                    );
+                                }).slice(offset, offset + PER_PAGE).map((data, index) => {
                                     return (
                                         <tr key={index}>
                                             <td>{data.employeID}</td>
