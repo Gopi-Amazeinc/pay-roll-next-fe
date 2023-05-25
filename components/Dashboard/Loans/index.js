@@ -249,8 +249,7 @@ const TeamLoans = () => {
                   <td>{data.emiAmount}</td>
                   <td>{data.period}</td>
                   <td>{data.comments}</td>
-                  <td></td>
-                  <td></td>
+             
                 </tr>
               );
             })}

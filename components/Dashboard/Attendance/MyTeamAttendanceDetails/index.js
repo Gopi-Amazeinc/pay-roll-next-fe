@@ -275,9 +275,11 @@ const MyTeamAttendence = () => {
         >
           <thead className="bg-info text-white ">
             <tr style={{ whiteSpace: "nowrap" }}>
-              <th>Date</th>
-              <th>Staff Name</th>
+              <th>EmployeID</th>
+
+              <th>Employe Name	</th>
               <th>Shift</th>
+              <th>Date</th>
 
               <th>Day Type </th>
               <th>Expected in Time</th>
@@ -307,9 +309,10 @@ const MyTeamAttendence = () => {
                       return (
 
                         <tr value={data.id} key={index}>
-                          <td>{data.date}</td>
+                          <td>{data.staffID}</td>
                           <td>{data.staffname1}</td>
                           <td>{data.position}</td>
+                          <td>{data.filterdate}</td>
 
                           <td>{data.dayType}</td>
                           <td>{data.etime}</td>
