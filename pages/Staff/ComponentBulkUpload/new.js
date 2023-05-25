@@ -81,8 +81,8 @@ const ComponentBulkUploadForm = ({ editData }) => {
             <div className="row">
               <div className="col-lg-3">
                 <label >
-                  Staff Name<span style={{ color: "red" }}>*</span>{" "}
-                </label>{" "}
+                  Staff Name<span style={{ color: "red" }}>*</span>
+                </label>
                 <br />
                 <select
                   className={Styles.selector}

@@ -9,7 +9,7 @@ import { apiService } from "@/services/api.service";
 import { useRouter } from "next/router";
 
 const AddStaffSalaryForm = ({ editData }) => {
-  const router = useRouter();
+  const router  = useRouter();
 
   const { register, handleSubmit, reset, formState } = useForm();
   const [Staff, setStaff] = useState([]);
@@ -68,7 +68,7 @@ const AddStaffSalaryForm = ({ editData }) => {
       };
       await apiService.commonPostCall("Payroll/InsertStaffSalary", Entity);
       Swal.fire({ icon: "success", text: "Data successfully added" });
-      // router.push("Staff/StaffSalary");
+      router.push("Staff/StaffSalary");
     } else {
       let Entity = {
         ID: data.ID,
@@ -82,7 +82,7 @@ const AddStaffSalaryForm = ({ editData }) => {
       };
       await apiService.commonPostCall("Payroll/UpdateStaffSalary", Entity);
       Swal.fire({ icon: "success", text: "Data updated successfully" });
-      // router.push("Staff/StaffSalary");
+      router.push("Staff/StaffSalary");
     }
   };
   const customStyles = {
