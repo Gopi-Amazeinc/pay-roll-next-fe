@@ -27,7 +27,7 @@ const Compensationtimeout = () => {
     const [isOpen, ModalIsOpen] = useState(false);
     const [keyword, setKeyword] = useState("");
 
-    const [pendingcount, setpendingcount] = useState("");
+    const [pendingcount, setpendingcount] = useState();
     const [approvedcount, setapprovedcount] = useState();
     const [rejectcount, setrejectcount] = useState();
 

@@ -184,7 +184,7 @@ const MyTeamCompensationtimeout = () => {
                     <div className='row'>
                         <div className="col-lg-3">
                             <Link href="/Requests/Compensationtimeout">
-                                <label className="mainheader">My Compensation Time Out</label>
+                                <label className="mainheader">Compensation Time Out</label>
                             </Link>
                         </div>
                         <div className='col-lg-3'>
