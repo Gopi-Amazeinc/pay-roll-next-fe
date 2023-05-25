@@ -10,20 +10,11 @@ import leave from "../../../../pages/Requests/Compensationtimeout/compensation.m
 
 const MyTeamCompensationtimeout = () => {
 
-
-    const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-
-    const [pending, setPending] = useState(true)
+    const [pending, setPending] = useState(false)
     const [approved, setApproved] = useState(false)
     const [rejected, setRejected] = useState(false)
-    const [managertogglePending, setManagerTogglePending] = useState(false)
-    const [managerToggleapproved, setManagerToggleApproved] = useState(false)
-    const [managertogglerejected, setManagerToggleRejected] = useState(false);
-
 
     const [pendingDashboard, getPending] = useState([])
-    const [approvedDashboard, getApproved] = useState([])
-    const [rejecteddDashboard, getRejected] = useState([])
     const [compensation, getComponsation] = useState([])
     const [managerApproved, getManagerApproved] = useState([])
     const [managerRejected, getManagerRejected] = useState([])
@@ -37,14 +28,12 @@ const MyTeamCompensationtimeout = () => {
         ModalIsOpen(true)
     }
 
-
+    let staffID = sessionStorage.getItem("userID");
     const togglePending = () => {
         setPending(true);
         setApproved(false)
         setRejected(false)
-        setManagerTogglePending(true)
-        setManagerToggleApproved(false)
-        setManagerToggleRejected(false)
+        // setManagerTogglePending(true)
         console.log("pending manager login")
     }
 
@@ -52,19 +41,14 @@ const MyTeamCompensationtimeout = () => {
         setApproved(true)
         setPending(false)
         setRejected(false)
-        setManagerTogglePending(false);
-        setManagerToggleApproved(true);
-        setManagerToggleRejected(false);
-
+        // setManagerTogglePending(false);
     }
 
     const toggleRejected = () => {
         setRejected(true)
         setApproved(false)
         setPending(false)
-        setManagerTogglePending(false);
-        setManagerToggleApproved(false);
-        setManagerToggleRejected(true);
+        // setManagerTogglePending(false);
     }
 
 
@@ -80,22 +64,22 @@ const MyTeamCompensationtimeout = () => {
 
 
     const getManagerApprovedData = async () => {
-        const res = await apiService.commonGetCall("Payroll/GetApproveCompensationTimeOutBySupervisor?UserID=" + userID)
+        const res = await apiService.commonGetCall("Payroll/GetApproveCompensationTimeOutBySupervisor?UserID=" + staffID)
         console.log(res.data)
         getManagerApproved(res.data)
         setcount(res.data.length);
     }
 
     const getManagerRejectedData = async () => {
-        const res = await apiService.commonGetCall("Payroll/GetRejectCompensationTimeOutBySupervisor?UserID=" + userID)
+        const res = await apiService.commonGetCall("Payroll/GetRejectCompensationTimeOutBySupervisor?UserID=" + staffID)
         console.log(res.data)
         getManagerRejected(res.data)
         setcount(res.data.length);
     }
-    let staffID
+
     const getPendingCompensation = async () => {
-        staffID = sessionStorage.getItem("userID");
-        const res = await apiService.commonGetCall("Payroll/GetPendingCompensationTimeOutBySupervisor?UserID=" + userID)
+
+        const res = await apiService.commonGetCall("Payroll/GetPendingCompensationTimeOutBySupervisor?UserID=" + staffID)
         console.log(res.data, "manager pending")
         getComponsation(res.data)
         setcount(res.data.length);
@@ -263,7 +247,7 @@ const MyTeamCompensationtimeout = () => {
                                     <table className='table'>
                                         <thead className='bg-info text-white'>
                                             <tr>
-                                                <th input type='checkbox'></th>
+                                                <th ><input type='checkbox' /></th>
                                                 <th>Controll Number</th>
                                                 <th>Employe ID</th>
                                                 <th>Employee Name</th>
@@ -283,6 +267,7 @@ const MyTeamCompensationtimeout = () => {
                                                 }).slice(offset, offset + PER_PAGE).map((data) => {
                                                     return (
                                                         <tr key={data.id}>
+                                                            <td><input type='checkbox' /></td>
                                                             <td>{data.date}</td>
                                                             <td>{data.actuval_StartTime}</td>
                                                             <td>{data.actuval_EndTime}</td>
@@ -312,11 +297,7 @@ const MyTeamCompensationtimeout = () => {
                                                 <th>Employee Name</th>
                                                 <th>Date</th>
                                                 <th>Start Time</th>
-                                                <th>End Time</th>  <th>Date</th>
-                                                <th>Start Time</th>
                                                 <th>End Time</th>
-                                                <th>Reason</th>
-
                                             </tr>
                                         </thead>
 
@@ -350,11 +331,13 @@ const MyTeamCompensationtimeout = () => {
                                     <table className='table table-hover'>
                                         <thead className='bg-info text-white'>
                                             <tr>
+                                                <th>Controll Number</th>
+                                                <th>Employe ID</th>
+                                                <th>Employee Name</th>
                                                 <th>Date</th>
                                                 <th>Start Time</th>
                                                 <th>End Time</th>
                                                 <th>Reason</th>
-                                                <th>Status</th>
                                             </tr>
                                         </thead>
 

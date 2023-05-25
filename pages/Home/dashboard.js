@@ -78,31 +78,36 @@ const Dashboard = () => {
     getLocalIPAddress();
   }, [1]);
   useEffect(() => {
-    var todayDate = new Date().toISOString().slice(0, 10);
     debugger;
     if (userID) {
-      apiService.commonGetCall("HR/GetAttendance").then((staffData) => {
-        staffDetailsRef.current = staffData.data.filter(
-          (x) => x.filterdate == todayDate && x.userID == userID
-        );
-        if (staffDetailsRef.current.length && staffDetailsRef.current[0].signinDate != null) {
-          setPunchedIn(true);
-          setWorkTypeID(staffDetailsRef.current[0].signInTypeID);
-          setStartTime(staffDetailsRef.current[0].startTime);
-        }
-
-        if (staffDetailsRef.current.length && staffDetailsRef.current[0].signoutDate != null) {
-          setPunchedOut(true);
-          setWorkTypeID(staffDetailsRef.current[0].signOutTypeID);
-          setEndTime(staffDetailsRef.current[0].endTime);
-        }
-
-        // const currentTime = new Date();
-        // setPunchintime(currentTime.toLocaleTimeString());
-        // setSubmitted(true);
-      });
+      getAttendance()
     }
   }, [userID]);
+
+
+  const getAttendance =( )=> {
+    var todayDate = new Date().toISOString().slice(0, 10);
+    apiService.commonGetCall("HR/GetAttendance").then((staffData) => {
+      staffDetailsRef.current = staffData.data.filter(
+        (x) => x.filterdate == todayDate && x.userID == userID
+      );
+      if (staffDetailsRef.current.length && staffDetailsRef.current[0].signinDate != null) {
+        setPunchedIn(true);
+        setWorkTypeID(staffDetailsRef.current[0].signInTypeID);
+        setStartTime(staffDetailsRef.current[0].startTime);
+      }
+
+      if (staffDetailsRef.current.length && staffDetailsRef.current[0].signoutDate != null) {
+        setPunchedOut(true);
+        setWorkTypeID(staffDetailsRef.current[0].signOutTypeID);
+        setEndTime(staffDetailsRef.current[0].endTime);
+      }
+
+      // const currentTime = new Date();
+      // setPunchintime(currentTime.toLocaleTimeString());
+      // setSubmitted(true);
+    });
+  }
 
   const modelopenForPunch = () => {
     if (punchedIn == false) {
@@ -152,6 +157,7 @@ const Dashboard = () => {
       );
       if (res.data && res.status == 200) {
         setPunchedIn(true);
+        getAttendance();
       }
 
       // const staffPunchedinID = res.data || res;
@@ -176,7 +182,7 @@ const Dashboard = () => {
     ) {
       Swal.fire("Please Fill Work Type");
     }
-    else if (WorkTypeID !=  staffDetailsRef.current[0].signInTypeID ) {
+    else if (WorkTypeID !=  staffDetailsRef.current[0].WorkType ) {
       
       Swal.fire("please select correct work Type to Punchout!")
     }
@@ -209,6 +215,7 @@ const Dashboard = () => {
         if (res1.data && res1.status == 200) {
           // setActionType(res1);
           setPunchedOut(true);
+          getAttendance();
         }
       });
     }
