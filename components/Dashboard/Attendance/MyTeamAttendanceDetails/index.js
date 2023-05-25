@@ -46,6 +46,7 @@ const MyTeamAttendence = () => {
     const staffDetails = await apiService.commonGetCall(
       "Payroll/GetStaffBySupervisorID?Supervisor=" + userID
     );
+    //TODO: MUltiselct DROP DOEN 
     for (let i=0; i< staffDetails.length ; i++){
       getAttendancedata.push(staffDetails[i].fullname)
     }
@@ -269,7 +270,7 @@ const MyTeamAttendence = () => {
         <br />
         <h6 style={{ color: "#3247d5" }}>Showing {count} Results</h6>
         <table
-          className="table table-hover"
+          className="table "
           style={{ marginLeft: "0px" }}
           ref={tableRef}
         >

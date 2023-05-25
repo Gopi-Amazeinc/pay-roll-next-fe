@@ -100,13 +100,13 @@ const Shiftdetails = () => {
     return getShiftBySlectedDate(startDate, endDatesss);
   };
 
-  // const getShiftBySlectedDate =  async (startDate,endDatesss) = {
-  //   const data = shiftDetails.filter((item) => {
-  //         return item.shiftDate >= start && item.end_date <= end;
-  //       });
-  // return 
-
-  // }
+  const getShiftBySlectedDate =  async (Sdate,Edate) => {
+    debugger
+    const datesss = shiftDetails.filter((item) => {
+          return item.shiftDate == Sdate && item.endDate == Edate;
+        });
+        return datesss
+  }
   const getShiftDetails = async () => {
     const userid = sessionStorage.getItem("userID");
     debugger
