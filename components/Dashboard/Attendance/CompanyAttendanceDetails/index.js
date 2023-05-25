@@ -425,7 +425,7 @@ const CompanyAttendanceDetails = () => {
                                 <td>{data.expectedIn}</td>
 
                                 <td>{data.expectedOut}</td>
-                                <td>{data.punchedInForm}</td>
+                                <td>{data.hr}</td>
                                 <td>{data.overtime}</td>
 
                                 <td>{data.expectedOutTime}</td>
