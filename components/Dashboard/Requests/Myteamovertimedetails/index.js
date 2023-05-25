@@ -201,14 +201,15 @@ const Index = () => {
         <div className='container-fluid'>
             <div className='row'>
                 <div className='col-lg-12'>
+                    <br />
                     <div className='row'>
                         <div className='col-lg-3'>
-                            <Link style={{ textDecoration: "none" }} href="/Requests/OverTimeDetails">
-                                <h4 className='Heading'>My OverTime Details</h4>
+                            <Link href="/Requests/OverTimeDetails">
+                                <label className='mainheader'>My OverTime Details</label>
                             </Link>
                         </div>
                         <div className='col-lg-3'>
-                            <h4 className='Heading'>My Team OverTime Details</h4>
+                            <label className='mainheader'>My Team OverTime Details</label>
                         </div>
                     </div>
                     <br />

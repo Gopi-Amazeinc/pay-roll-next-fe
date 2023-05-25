@@ -211,15 +211,16 @@ const Compensationtimeout = () => {
         <div className='container-fluid'>
             <div className='row'>
                 <div className='col-lg-12'>
+                    <br />
                     <div className='row'>
                         <div className="col-lg-3">
-                            <p className='Heading'>Compensation Time Out</p>
+                            <p className='mainheader'>Compensation Time Out</p>
                         </div>
                         <div className='col-lg-3'>
                             {
                                 sessionStorage.getItem("roleID") == 3 && (
                                     <Link href="/Requests/Myteamcompensationtimeout">
-                                        <label className="Heading">My Compensation Time Out</label>
+                                        <label className="mainheader">My Compensation Time Out</label>
                                     </Link>
                                 )
                             }

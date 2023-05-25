@@ -6,7 +6,6 @@ import Modal from 'react-modal';
 import { AiOutlineClose } from 'react-icons/ai'
 import { apiService } from "@/services/api.service";
 import ReactPaginate from "react-paginate";
-import leave from "../../../../pages/Requests/Compensationtimeout/compensation.module.css"
 
 const MyTeamCompensationtimeout = () => {
 
@@ -181,7 +180,24 @@ const MyTeamCompensationtimeout = () => {
         <div className='container-fluid'>
             <div className='row'>
                 <div className='col-lg-12'>
-                    <p className='Heading'>Compensation Time Out</p>
+                    <br />
+                    <div className='row'>
+                        <div className="col-lg-3">
+                            <Link href="/Requests/Compensationtimeout">
+                                <label className="mainheader">My Compensation Time Out</label>
+                            </Link>
+                        </div>
+                        <div className='col-lg-3'>
+                            {
+                                sessionStorage.getItem("roleID") == 3 && (
+                                    <Link href="/Requests/Myteamcompensationtimeout">
+                                        <label className="mainheader">My Compensation Time Out</label>
+                                    </Link>
+                                )
+                            }
+                        </div>
+                    </div>
+                    <br />
                     <div className='card p-3 border-0 rounded-3'>
                         <div className='row p-3'>
                             <div className='col-lg-1'>
