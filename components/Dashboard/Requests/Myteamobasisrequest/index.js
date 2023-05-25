@@ -237,9 +237,16 @@ const MyTeamObasisRequest = () => {
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-lg-12">
-                        <Link style={{ textDecoration: "none" }} href="/Requests/Locatorrequest">  <span className="Heading">My OBASIS Details</span> </Link>&nbsp;&nbsp;&nbsp;
-                        <Link style={{ borderBottom: "2px solid #2f87cc;" }} href="/Requests/Myteamobasisrequest">  <span className="Heading">My Team OBASIS Details</span> </Link>
-                        <br />         <br />
+                        <br />
+                        <div className="row">
+                            <div className="col-lg-3">
+                                <Link href="/Requests/Locatorrequest">  <label className="mainheader">My OBASIS Details</label> </Link>
+                            </div>
+                            <div className="col-lg-3">
+                                <Link href="/Requests/Myteamobasisrequest">  <label className="mainheader">My Team OBASIS Details</label> </Link>
+                            </div>
+                        </div>
+                        <br />
                         <div className="card p-3 rounded-3 shadow border-0 ">
 
                             <div className="row">

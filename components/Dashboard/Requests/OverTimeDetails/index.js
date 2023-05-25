@@ -295,15 +295,16 @@ const Index = () => {
         <div className='container-fluid'>
             <div className='row'>
                 <div className="col-lg-12">
+                    <br />
                     <div className="row">
                         <div className="col-lg-3">
-                            <h4 className='Heading'>My Overtime Details</h4>&nbsp;&nbsp;&nbsp;&nbsp;
+                            <label className='mainheader'>My Overtime Details</label>
                         </div>
-                        <div className='col-lg-4'>
+                        <div className='col-lg-3'>
                             {
                                 sessionStorage.getItem("roleID") == 3 && (
                                     <Link style={{ textDecoration: "none" }} href="/Requests/Myteamovertimedetails">
-                                        <h4 className='Heading' >My Team Overtime Details</h4>
+                                        <label className='mainheader' >My Team Overtime Details</label>
                                     </Link>
                                 )
                             }
@@ -442,7 +443,7 @@ const Index = () => {
                                         <table className='table table-hover'>
                                             <thead className='bg-info text-white'>
                                                 <tr>
-                                                <th>Controll Number</th>
+                                                    <th>Controll Number</th>
                                                     <th>EmployeID</th>
                                                     <th>Employee Name</th>
                                                     <th>Date Request</th>
