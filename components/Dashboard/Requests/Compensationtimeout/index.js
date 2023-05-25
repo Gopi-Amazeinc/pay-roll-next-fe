@@ -10,6 +10,7 @@ const Compensationtimeout = () => {
     const [pending, setPending] = useState(false)
     const [approved, setApproved] = useState(false)
     const [rejected, setRejected] = useState(false)
+
     const [managertogglePending, setManagerTogglePending] = useState(true)
     const [managerToggleapproved, setManagerToggleApproved] = useState(false)
     const [managertogglerejected, setManagerToggleRejected] = useState(false);
@@ -18,13 +19,24 @@ const Compensationtimeout = () => {
     const [pendingDashboard, getPending] = useState([])
     const [approvedDashboard, getApproved] = useState([])
     const [rejecteddDashboard, getRejected] = useState([])
+
     const [compensation, getComponsation] = useState([])
     const [managerApproved, getManagerApproved] = useState([])
     const [managerRejected, getManagerRejected] = useState([])
+
     const [isOpen, ModalIsOpen] = useState(false);
     const [keyword, setKeyword] = useState("");
-    const [roleID, setRoleID] = useState();
-    const [count, setcount] = useState("");
+
+    const [pendingcount, setpendingcount] = useState("");
+    const [approvedcount, setapprovedcount] = useState();
+    const [rejectcount, setrejectcount] = useState();
+
+    const [managerpendingcount, setmanagerpendingcount] = useState();
+    const [managerapprovedcount, setmanagerapprovedcount] = useState();
+    const [managerrejectedcount, setmanagerrejectedcount] = useState();
+
+ 
+    const [roleID ,setRoleID] = useState();
     const [userID, setUserID] = useState()
 
     const openModal = () => {
@@ -71,48 +83,81 @@ const Compensationtimeout = () => {
         },
     };
 
+    useEffect(() => {
+        debugger
+        const usrID = sessionStorage.getItem("userID");
+        setUserID(usrID);
+        const userRoleID = sessionStorage.getItem("roleID");
+        setRoleID(userRoleID);
+        // getPendingData()
+        // getPendingCompensation();
+        // getApprovedData();
+        // getRejectedData();
+        // getManagerApprovedData();
+        // getManagerRejectedData();
+        setPending(true);
+    }, [])
 
-    let staffID;
-    staffID = sessionStorage.getItem("userID")
+    useEffect(() => {
+        debugger
+        if (userID) {
+            if (roleID == 5) {
+                debugger
+                getPendingData()
+                getApprovedData();
+                getRejectedData();
+            }
+            else {
+                getManagerPendingCompensation();
+                getManagerApprovedData();
+                getManagerRejectedData();
+            }
+        }
+    }, [userID])
+
+
+
+    // let staffID;
+    // staffID = sessionStorage.getItem("userID")
     const getPendingData = async () => {
-        const res = await apiService.commonGetCall("Payroll/GetPendingCompensationTimeOutByStaffID?UserID=" + staffID)
+        const res = await apiService.commonGetCall("Payroll/GetPendingCompensationTimeOutByStaffID?UserID=" + userID)
         // sessionStorage.setItem("supervisorID", res.data[0].supervisor)
         getPending(res.data)
-        setcount(res.data.length);
+        setpendingcount(res.data.length);
     }
 
     const getApprovedData = async () => {
-        const res = await apiService.commonGetCall("Payroll/GetApproveCompensationTimeOutByStaffID?UserID=" + staffID)
+        const res = await apiService.commonGetCall("Payroll/GetApproveCompensationTimeOutByStaffID?UserID=" + userID)
         getApproved(res.data, "employee approved")
-        setcount(res.data.length);
+        setapprovedcount(res.data.length);
     }
 
     const getRejectedData = async () => {
-        const res = await apiService.commonGetCall("Payroll/GetRejectCompensationTimeOutByStaffID?UserID=" + staffID)
+        const res = await apiService.commonGetCall("Payroll/GetRejectCompensationTimeOutByStaffID?UserID=" + userID)
         getRejected(res.data)
-        setcount(res.data.length);
+        setrejectcount(res.data.length);
     }
 
     const getManagerApprovedData = async () => {
-        const res = await apiService.commonGetCall("Payroll/GetApproveCompensationTimeOutBySupervisor?UserID=" + staffID)
+        const res = await apiService.commonGetCall("Payroll/GetApproveCompensationTimeOutBySupervisor?UserID=" + userID)
         console.log(res.data)
         getManagerApproved(res.data)
-        setcount(res.data.length);
+        setmanagerapprovedcount(res.data.length);
     }
 
     const getManagerRejectedData = async () => {
-        const res = await apiService.commonGetCall("Payroll/GetRejectCompensationTimeOutBySupervisor?UserID=" + staffID)
+        const res = await apiService.commonGetCall("Payroll/GetRejectCompensationTimeOutBySupervisor?UserID=" + userID)
         console.log(res.data)
         getManagerRejected(res.data)
-        setcount(res.data.length);
+        setmanagerrejectedcount(res.data.length);
     }
 
-    const getPendingCompensation = async () => {
-        staffID = sessionStorage.getItem("userID");
-        const res = await apiService.commonGetCall("Payroll/GetPendingCompensationTimeOutBySupervisor?UserID=" + staffID)
+    const getManagerPendingCompensation = async () => {
+        // staffID = sessionStorage.getItem("userID");
+        const res = await apiService.commonGetCall("Payroll/GetPendingCompensationTimeOutBySupervisor?UserID=" + userID)
         console.log(res.data, "manager pending")
         getComponsation(res.data)
-        setcount(res.data.length);
+        setmanagerpendingcount(res.data.length);
     }
 
     const Delete = (id) => {
@@ -163,25 +208,25 @@ const Compensationtimeout = () => {
     const reject = () => {
         id = sessionStorage.getItem("id")
         alert(id)
-        // Swal.fire({
-        //     title: 'Confirm To Reject?',
-        //     text: "You won't be able to revert this!",
-        //     icon: 'warning',
-        //     showCancelButton: true,
-        //     confirmButtonColor: '#3085d6',
-        //     cancelButtonColor: '#d33',
-        //     confirmButtonText: 'Yes, Reject it!'
-        // }).then((result) => {
-        //     if (result.isConfirmed) {
-        //         staffID = sessionStorage.getItem("userID");
-        //         axios.post(hostURL + "Payroll/RejectCompensationTimeOut?id=" + id)
-        //         Swal.fire({
-        //             icon: "success",
-        //             titleText: "Rejected Successfully"
-        //         })
-        //         getPendingCompensation();
-        //     }
-        // })
+        Swal.fire({
+            title: 'Confirm To Reject?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Reject it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                staffID = sessionStorage.getItem("userID");
+                axios.post(hostURL + "Payroll/RejectCompensationTimeOut?id=" + id)
+                Swal.fire({
+                    icon: "success",
+                    titleText: "Rejected Successfully"
+                })
+                getPendingCompensation();
+            }
+        })
     }
     const PER_PAGE = 5;
     const [currentPage, setCurrentPage] = useState(0);
@@ -191,20 +236,7 @@ const Compensationtimeout = () => {
     const offset = currentPage * PER_PAGE;
     const pageCount = Math.ceil(pendingDashboard.length / PER_PAGE);
 
-    useEffect(() => {
-        const usrID = sessionStorage.getItem("userID");
-        setUserID(usrID);
-        const userRoleID = sessionStorage.getItem("roleID");
-        setRoleID(userRoleID);
-        getPendingData()
-        getPendingCompensation();
-        getApprovedData();
-        getRejectedData();
-        getManagerApprovedData();
-        getManagerRejectedData();
-        setPending(true);
-        console.log("working useEffect")
-    }, [1])
+
 
     return (
 
@@ -218,7 +250,7 @@ const Compensationtimeout = () => {
                         </div>
                         <div className='col-lg-3'>
                             {
-                                sessionStorage.getItem("roleID") == 3 && (
+                                roleID == 3 && (
                                     <Link href="/Requests/Myteamcompensationtimeout">
                                         <label className="mainheader">My Compensation Time Out</label>
                                     </Link>
@@ -237,7 +269,7 @@ const Compensationtimeout = () => {
                                 <input type="search" className='form-control' placeholder='Search here...' onChange={e => setKeyword(e.target.value)} />
                             </div>
                             {
-                                sessionStorage.getItem("roleID") != "3" && (
+                                roleID != "3" && (
                                     <div className='col-lg-3' style={{ whiteSpace: "nowrap" }}>
                                         <Link href="/Requests/Compensationtimeout/new"><button className='EditDelteBTN'>Add Compensation Time Out</button></Link>
                                     </div>
@@ -279,7 +311,7 @@ const Compensationtimeout = () => {
                                     <button type='submit' className=' edit-btn mt-5'>Cancel</button>
                                 </div>
                                 <div className='col-lg-2 mb-3'>
-                                    <button onClick={reject} type='submit' className='edit-btn mt-5'>Reject </button>
+                                    <button type='submit' className='edit-btn mt-5'>Reject </button>
                                 </div>
                             </div>
                         </div>
@@ -287,9 +319,9 @@ const Compensationtimeout = () => {
                     <div className='row'>
                         <div className='col-lg-12'>
                             {
-                                pending && sessionStorage.getItem("roleID") != "3" && (
+                                pending && roleID != "3" && (
                                     <>
-                                        <h6 style={{ color: "#3247d5" }}>Showing {pendingDashboard.length} Results</h6>
+                                        <h6 style={{ color: "#3247d5" }}>Showing {pendingcount} Results</h6>
                                         <table className='table'>
                                             <thead className='bg-info text-white'>
                                                 <tr>
@@ -333,9 +365,9 @@ const Compensationtimeout = () => {
                             }
 
                             {
-                                managertogglePending && sessionStorage.getItem("roleID") == "3" && (
+                                managertogglePending && roleID == "3" && (
                                     <>
-                                        <h6 style={{ color: "#3247d5" }}>Showing {compensation.length} Results</h6>
+                                        <h6 style={{ color: "#3247d5" }}>Showing {managerpendingcount} Results</h6>
                                         <table className='table'>
                                             <thead className='bg-info text-white'>
                                                 <tr>
@@ -382,9 +414,9 @@ const Compensationtimeout = () => {
                             }
 
                             {
-                                approved && sessionStorage.getItem("roleID") != "3" && (
+                                approved && roleID != "3" && (
                                     <>
-                                        <h6 style={{ color: "#3247d5" }}>Showing {approvedDashboard.length} Results</h6>
+                                        <h6 style={{ color: "#3247d5" }}>Showing {approvedcount} Results</h6>
                                         <table className='table table-hover'>
                                             <thead className='bg-info text-white'>
                                                 <tr>
@@ -425,9 +457,9 @@ const Compensationtimeout = () => {
 
                             {
 
-                                managerToggleapproved && sessionStorage.getItem("roleID") == "3" && (
+                                managerToggleapproved && roleID == "3" && (
                                     <>
-                                        <h6 style={{ color: "#3247d5" }}>Showing {managerApproved.length} Results</h6>
+                                        <h6 style={{ color: "#3247d5" }}>Showing {managerapprovedcount} Results</h6>
                                         <table className='table table-hover'>
                                             <thead className='bg-info text-white'>
                                                 <tr>
@@ -466,7 +498,7 @@ const Compensationtimeout = () => {
                             {
                                 rejected && sessionStorage.getItem("roleID") != "3" && (
                                     <>
-                                        <h6 style={{ color: "#3247d5" }}>Showing {rejecteddDashboard.length} Results</h6>
+                                        <h6 style={{ color: "#3247d5" }}>Showing {rejectcount} Results</h6>
                                         <table className='table table-hover'>
                                             <thead className='bg-info text-white'>
                                                 <tr>
@@ -508,7 +540,7 @@ const Compensationtimeout = () => {
                             {
                                 managertogglerejected && sessionStorage.getItem("roleID") == "3" && (
                                     <>
-                                        <h6 style={{ color: "#3247d5" }}>Showing {managerRejected.length} Results</h6>
+                                        <h6 style={{ color: "#3247d5" }}>Showing {managerrejectedcount} Results</h6>
 
                                         <table className='table table-hover'>
                                             <thead className='bg-info text-white'>
