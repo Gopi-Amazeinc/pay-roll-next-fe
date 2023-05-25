@@ -249,7 +249,7 @@ const Index = () => {
             getManagerPendingDetails(userID);
             getManagerApprovedData(userID);
             getManagerRejectedData(userID);
-            getModalData(startTime, endTime, date, userID);
+            // getModalData(startTime, endTime, date, userID);
 
         }
         else {

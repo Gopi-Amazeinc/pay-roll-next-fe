@@ -191,10 +191,10 @@ const InitialPayrollDetails = () => {
             <div className='row '>
 
                 <div className='col-lg-4'> </div>
-                <div className='col-lg-4' >
+                <div className='col-lg-4' > 
                     <p className='Heading' >Employees in selected Period</p>
                 </div>
-                <div className='col-lg-2' style={{ marginLeft: "92px" }}>
+                <div className='col-lg-2' style={{ marginLeft: "83px" }}>
                     <button type='button' className='EditDelteBTN' onClick={() => handleDelete()}>Delete</button>
                 </div>
             </div>
@@ -218,11 +218,11 @@ const InitialPayrollDetails = () => {
                         </thead>
                         <tbody >
                             {
-                                preliminarySalary.filter((data) => {
-                                    if ((data.staffID.toString().includes(keyword)) || (data.componentValue.toString().includes(keyword.toString()))
-                                        || (data.department_name.toString().includes(departmentFilter.toLowerCase().includes(departmentFilter)))) {
-                                        return data;
-                                    }
+                                preliminarySalary.filter(post => {
+                                    return Object.values(post).some(value =>
+                                        value !== null &&
+                                        value.toString().toLowerCase().includes(keyword.toLowerCase())
+                                    );
                                 }).slice(offset, offset + PER_PAGE).map((data, index) => {
                                     return (
                                         <tr className="text-dark" key={index}>
