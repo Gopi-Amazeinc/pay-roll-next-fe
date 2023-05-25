@@ -183,7 +183,7 @@ const Index = ({ editData }) => {
           <center style={{ display: "flex", justifyContent: "end", marginRight: "1%" }}>
             {pgNo > 1 && (
               <button
-                className="btn btn-primary"
+                className="staffNextBtn"
                 type="button"
                 onClick={() => {
                   let pg = pgNo;
@@ -195,7 +195,7 @@ const Index = ({ editData }) => {
             )} &nbsp;&nbsp;
             {pgNo < 9 && (
               <button
-                className="btn btn-primary"
+                className="staffNextBtn"
                 type="button"
                 onClick={() => {
                   let pg = pgNo;
@@ -205,7 +205,9 @@ const Index = ({ editData }) => {
                 Next
               </button>
             )}
+            
           </center>
+          <br></br>
         </div>
       </div>
     </Layout>

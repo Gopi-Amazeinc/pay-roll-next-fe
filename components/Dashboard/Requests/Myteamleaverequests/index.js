@@ -265,13 +265,15 @@ const Index = () => {
         <div className="container-fluid">
             <div claasName="row">
                 <div className="col-lg-12">
+                    <br/>
                     <div className="row">
-                        <div className="col-md-7">
+                        <div className="col-md-3">
                             <Link href="/Requests/Leaverequest">
-                                <label className="Heading">My Leave Request</label>
-                            </Link>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <label className="Heading">My Team Leave Request</label>
-
+                                <label className="mainheader">Leave Request</label>
+                            </Link>
+                        </div>
+                        <div className="col-md-3">
+                            <label className="mainheader">My Team Leave Request</label>
                         </div>
                     </div><br />
                     <div className="row">
