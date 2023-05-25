@@ -151,7 +151,7 @@ const MyTeamAttendence = () => {
     <div>
       <div className="container">
         <div className="row mt-3">
-          <div className="col-lg-3" style={{ marginLeft: "15px" }}>
+          <div className="col-lg-3" >
             <Link
               className={Styles.mainheader}
               href="/Attendance/AttendanceDetails"
