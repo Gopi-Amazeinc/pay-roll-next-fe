@@ -35,7 +35,7 @@ const Index = () => {
     const getPendingData = async (StartingDate, EndDate) => {
         debugger;
         const res = await apiService.commonGetCall("Employee/GetPendingManagerLeavesByStaffID?ID=" + userID + "&TypeID=1&Sdate=" + StartingDate + "&Edate=" + EndDate)
-        setPendingData(res.data);
+        setPendingData(res.data, "pending");
         console.log(res.data);
     }
     const getApprovedData = async (StartingDate, EndDate) => {
@@ -251,18 +251,29 @@ const Index = () => {
             }
         })
     }
+    const [selectedRows, setSelectedRows] = useState([]);
+    const handleRowSelect = (event, id) => {
+        debugger
+        if (id === 'all') {
+            setSelectedRows(event.target.checked ? pendingdata.map(data => data.id) : []);
+        } else {
+            setSelectedRows(selectedRows.includes(id) ? selectedRows.filter(rowId => rowId !== id) : [...selectedRows, id]);
+        }
+    };
 
     return (
         <div className="container-fluid">
             <div claasName="row">
                 <div className="col-lg-12">
+                    <br/>
                     <div className="row">
-                        <div className="col-md-7">
+                        <div className="col-md-3">
                             <Link href="/Requests/Leaverequest">
-                                <label className="Heading">My Leave Request</label>
-                            </Link>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <label className="Heading">My Team Leave Request</label>
-
+                                <label className="mainheader">Leave Request</label>
+                            </Link>
+                        </div>
+                        <div className="col-md-3">
+                            <label className="mainheader">My Team Leave Request</label>
                         </div>
                     </div><br />
                     <div className="row">
@@ -354,11 +365,19 @@ const Index = () => {
                                     <table className='table'>
                                         <thead className='bg-info text-white'>
                                             <tr>
-                                                <th>Select all</th>
+                                                <th>
+                                                    <input type="checkbox"
+                                                        checked={selectedRows.length === pendingdata.length}
+                                                        onChange={e => handleRowSelect(e, 'all')} />
+                                                    Select all</th>
+                                                <th>Employee Name</th>
                                                 <th>From Date</th>
                                                 <th>To Date</th>
+                                                <th>Leave Type</th>
                                                 <th>Leave Reason</th>
-                                                <th>Status</th>
+                                                <th>Leave Days Count</th>
+                                                <th>Attachment</th>
+                                                <th>Stage & Status</th>
                                                 <th>Actions</th>
                                             </tr>
                                         </thead>

@@ -46,6 +46,7 @@ const MyTeamAttendence = () => {
     const staffDetails = await apiService.commonGetCall(
       "Payroll/GetStaffBySupervisorID?Supervisor=" + userID
     );
+    //TODO: MUltiselct DROP DOEN 
     for (let i=0; i< staffDetails.length ; i++){
       getAttendancedata.push(staffDetails[i].fullname)
     }
@@ -113,15 +114,16 @@ const MyTeamAttendence = () => {
     return getAttendenceByID(20540, startDate, endDatesss);
   };
 
-  const getAttendenceByID = async (Supervisor, SDate, EDate) => {
+  const getAttendenceByID = async (EmployeeID, startdate, enddate) => {
+    debugger
     if (userID) {
       const res = await apiService.commonGetCall(
-        "HR/GetAttendanceByManagerID?Supervisor=" +
-        Supervisor +
-        "&SDate=" +
-        SDate +
-        "&EDate=" +
-        EDate
+        "Payroll/Get_AttendanceReportForEmployee?EmployeeID=" +
+        EmployeeID +
+        "&startdate=" +
+        startdate +
+        "&enddate=" +
+        enddate
       );
       setMyTeamAttendence(res.data);
       setcount(res.data.length);
@@ -269,15 +271,17 @@ const MyTeamAttendence = () => {
         <br />
         <h6 style={{ color: "#3247d5" }}>Showing {count} Results</h6>
         <table
-          className="table table-hover"
+          className="table "
           style={{ marginLeft: "0px" }}
           ref={tableRef}
         >
           <thead className="bg-info text-white ">
             <tr style={{ whiteSpace: "nowrap" }}>
-              <th>Date</th>
-              <th>Staff Name</th>
+              <th>EmployeID</th>
+
+              <th>Employe Name	</th>
               <th>Shift</th>
+              <th>Date</th>
 
               <th>Day Type </th>
               <th>Expected in Time</th>
@@ -307,9 +311,10 @@ const MyTeamAttendence = () => {
                       return (
 
                         <tr value={data.id} key={index}>
-                          <td>{data.date}</td>
+                          <td>{data.employeID}</td>
                           <td>{data.staffname1}</td>
-                          <td>{data.position}</td>
+                          <td>{data.shift}</td>
+                          <td>{data.filterdate}</td>
 
                           <td>{data.dayType}</td>
                           <td>{data.etime}</td>

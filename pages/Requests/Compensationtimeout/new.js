@@ -45,7 +45,25 @@ const Compensationtimeoutform = () => {
 
     }, [1])
 
-
+    const customStyles = {
+        content: {
+            top: "50%",
+            left: "50%",
+            right: "auto",
+            bottom: "auto",
+            marginRight: "-50%",
+            transform: "translate(-50%, -50%)",
+            width: "60%",
+        },
+        errorMsg: {
+            fontSize: "12px",
+            fontWeight: "500",
+            color: "red",
+        },
+        inputLabel: {
+            fontSize: "16px",
+        },
+    };
     return (
         <Layout>
             <div className='container-fluid'>
@@ -58,22 +76,27 @@ const Compensationtimeoutform = () => {
                                     <div className='col-lg-3'>
                                         <label style={{ fontWeight: "bold" }}>Date Request <i className='text-danger'>*</i></label>
                                         <input type='date' className='form-control' {...register('Date_Request', { required: "Select Valid Date" })} />
-                                        {errors.Date_Request && <p className="error-message" style={{ color: "red" }}>{errors.Date_Request.message}</p>}
+                                        {errors.Date_Request && <p className="error-message"  style={customStyles.errorMsg}>{errors.Date_Request.message}</p>}
                                     </div>
                                     <div className='col-lg-3'>
                                         <label style={{ fontWeight: "bold" }}>Start Time <i className='text-danger'>*</i></label>
                                         <input type='time' className='form-control' {...register('Actuval_StartTime', { required: "Select Valid Start Time" })} />
-                                        {errors.Actuval_StartTime && <p className="error-message" style={{ color: "red" }}>{errors.Actuval_StartTime.message}</p>}
+                                        {errors.Actuval_StartTime && <p className="error-message"  style={customStyles.errorMsg}>{errors.Actuval_StartTime.message}</p>}
                                     </div>
                                     <div className='col-lg-3'>
                                         <label style={{ fontWeight: "bold" }}>End Time <i className='text-danger'>*</i></label>
                                         <input type='time' className='form-control' {...register('Actuval_EndTime', { required: "Select Valid End Time" })} />
-                                        {errors.Actuval_EndTime && <p className="error-message" style={{ color: "red" }}>{errors.Actuval_EndTime.message}</p>}
+                                        {errors.Actuval_EndTime && <p className="error-message"  style={customStyles.errorMsg}>{errors.Actuval_EndTime.message}</p>}
                                     </div>
                                     <div className='col-lg-3'>
                                         <label style={{ fontWeight: "bold" }}>Comments <i className='text-danger'>*</i></label>
-                                        <textarea rows={6} className='form-control' {...register('Comments', { required: "Please Enter Comments" })}></textarea>
-                                        {errors.Comments && <p className="error-message" style={{ color: "red" }}>{errors.Comments.message}</p>}
+                                        <textarea rows={6} className='form-control' minLength={10} {...register('Comments', { required: "Please Enter Comments" , })}
+                                        
+                                        ></textarea>
+                                        {errors.Comments && <p className="error-message"  style={customStyles.errorMsg}>{errors.Comments.message}</p>}
+                                        {errors.Comments?.type === "minLength" && 
+                                         "min length should be more"
+                                     }
                                     </div>
                                 </div><br /><br />
                                 <div className='row'>
