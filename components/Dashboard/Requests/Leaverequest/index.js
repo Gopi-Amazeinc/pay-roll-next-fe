@@ -92,7 +92,7 @@ function LeaveListDashboard() {
         debugger;
         const res = await apiService.commonGetCall("Employee/GetPendingStaffLeavesByStaffID?ID=" + userID + "&TypeID=1&Sdate=" + StartingDate + "&Edate=" + EndDate)
         setPendingData(res.data);
-        console.log(res.data);
+        console.log(res.data, "pending");
         setcount(res.data.length);
     }
     const getApprovedData = async (StartingDate, EndDate) => {
@@ -234,7 +234,7 @@ function LeaveListDashboard() {
                             {
                                 sessionStorage.getItem("roleID") == 3 && (
                                     <Link href="/Requests/Myteamleaverequests">
-                                        <label className="Heading">My Team Request</label>
+                                        <label className="Heading">My Team Leave Request</label>
                                     </Link>
                                 )
                             }
@@ -339,8 +339,12 @@ function LeaveListDashboard() {
                                             <tr>
                                                 <th>From Date</th>
                                                 <th>To Date</th>
+                                                <th>Leave Type</th>
                                                 <th>Leave Reason</th>
-                                                <th>Status</th>
+                                                <th>Leave Days Count</th>
+                                                <th>Attachment</th>
+                                                <th>Stage & Status</th>
+                                                <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -372,8 +376,11 @@ function LeaveListDashboard() {
                                             <tr>
                                                 <th>From Date</th>
                                                 <th>To Date</th>
+                                                <th>Leave Type</th>
                                                 <th>Leave Reason</th>
-                                                <th>Status</th>
+                                                <th>Leave Days Count</th>
+                                                <th>Attachment</th>
+                                                <th>Stage & Status</th>
                                             </tr>
                                         </thead>
                                         <tbody>

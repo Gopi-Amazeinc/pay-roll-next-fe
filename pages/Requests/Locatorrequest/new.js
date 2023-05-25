@@ -57,6 +57,25 @@ const Locatorrequest = () => {
         Swal.fire("Uploaded successfully");
         setFilePath(res.data);
     };
+    const customStyles = {
+        content: {
+            top: "50%",
+            left: "50%",
+            right: "auto",
+            bottom: "auto",
+            marginRight: "-50%",
+            transform: "translate(-50%, -50%)",
+            width: "60%",
+        },
+        errorMsg: {
+            fontSize: "12px",
+            fontWeight: "500",
+            color: "red",
+        },
+        inputLabel: {
+            fontSize: "16px",
+        },
+    };
     return (
         <Layout>
             <div className="row">
@@ -67,12 +86,12 @@ const Locatorrequest = () => {
                             <div className="col-lg-2">
                                 <label htmlFor="" className={styles.p}>Date<span style={{ color: "red" }}>*</span></label>
                                 <input type="date" className="form-control" {...register('Date', { required: "This field is required" })} />
-                                {errors.Date && <p className="error-message" style={{ color: "red" }}>{errors.Date.message}</p>}
+                                {errors.Date && <p className="error-message"style={customStyles.errorMsg}>{errors.Date.message}</p>}
                             </div>
                             <div className="col-lg-2">
                                 <label htmlFor="" className={styles.p}>Task<span style={{ color: "red" }}>*</span></label>
                                 <input type="text" className="form-control" placeholder="Task" {...register('Task', { required: "This field is required" , pattern: /^[a-zA-Z]{2,}(?: [a-zA-Z]+){0,2}$/})} />
-                                <div className="error-message"style={{ color: "red" }}>
+                                <div className="error-message"style={customStyles.errorMsg}>
                                 {errors.Task && <p  >{errors.Task.message}</p>}
                                 {errors.Task?.type==='pattern' && "characters only"}
                                 </div>
@@ -80,17 +99,17 @@ const Locatorrequest = () => {
                             <div className="col-lg-2">
                                 <label htmlFor="" className={styles.p}>Start Time<span style={{ color: "red" }}>*</span></label>
                                 <input type="time" className="form-control" {...register('StartTime', { required: "This field is required" })} />
-                                {errors.StartTime && <p className="error-message" style={{ color: "red" }}>{errors.StartTime.message}</p>}
+                                {errors.StartTime && <p className="error-message" style={customStyles.errorMsg}>{errors.StartTime.message}</p>}
                             </div>
                             <div className="col-lg-2">
                                 <label htmlFor="" className={styles.p}>End Time<span style={{ color: "red" }}>*</span></label>
                                 <input type="time" className="form-control" {...register('EndTime', { required: "This field is required" })} />
-                                {errors.EndTime && <p className="error-message" style={{ color: "red" }}>{errors.EndTime.message}</p>}
+                                {errors.EndTime && <p className="error-message" style={customStyles.errorMsg}>{errors.EndTime.message}</p>}
                             </div>
                             <div className="col-lg-2">
                                 <label htmlFor="" className={styles.p}>Comments<span style={{ color: "red" }}>*</span></label>
-                                <input type="text" className="form-control" placeholder="Comments" {...register('Comments', { required: "This field is required" })} />
-                                {errors.Comments && <p className="error-message" style={{ color: "red" }}>{errors.Comments.message}</p>}
+                                <input type="text" className="form-control" placeholder="Comments"  minLength={10}  {...register('Comments', { required: "This field is required" })} />
+                                {errors.Comments && <p className="error-message" style={customStyles.errorMsg}>{errors.Comments.message}</p>}
                             </div>
                         </div>
                         <br />
@@ -99,7 +118,8 @@ const Locatorrequest = () => {
                                 <label htmlFor="" className={styles.p}> Attachment</label>
                                 <div style={{ border: '2px dashed blue', height: "100px" }}>
                                     <div {...getRootProps()}>
-                                        <input {...getInputProps()} />
+                                        <input {...getInputProps()} 
+                                        {...register('Dropzone', { required: "This field is required" })}/>
                                         {isDragActive ? (
                                             <p>Drop the files here ...</p>
                                         ) : (
@@ -108,7 +128,7 @@ const Locatorrequest = () => {
                                             </p>
                                         )}
                                     </div>
-                                </div>
+                                </div> {errors.Dropzone && <p className="error-message" style={customStyles.errorMsg}>{errors.Dropzone.message}</p>}
                             </div>
                         </div>
                         <br />
