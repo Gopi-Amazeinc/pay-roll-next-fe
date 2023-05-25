@@ -59,8 +59,11 @@ const Index = () => {
         ModalIsOpen(true)
     }
 
-    const openEditModal = () => {
+    const openEditModal = async (data) => {
         setModalOpen(true)
+        const res = await apiService.commonGetCall("HR/GetOtNightOt?StartTime=" + data.startTime + "&EndTime=" + data.endTime + "&Shift=1&StaffID=" + userID + "&Date=" + data.filterdate);
+        setModalData(res.data);
+        console.log("Modal data", res.data);
     }
     const closeModal = () => {
         setModalOpen(false)
@@ -74,7 +77,7 @@ const Index = () => {
             marginRight: '-50%',
             transform: 'translate(-50%, -50%)',
             width: '50%',
-            height: '40%'
+            height: '30%'
         }
     }
 
@@ -166,12 +169,7 @@ const Index = () => {
         console.log("Manager Rejected", res.data);
         setcount(res.data.length);
     }
-    const getModalData = async (startTime, endTime, date, userID) => {
-        // debugger;      
-        const res = await apiService.commonGetCall("HR/GetOtNightOt?StartTime=" + startTime + "&EndTime=" + endTime + "&Shift=1&StaffID=" + userID + "&Date=" + date);
-        setModalData(res.data);
-        console.log("Modal data", res.data);
-    }
+
     const approve = (id) => {
         let data = {
             "id": id,
@@ -258,7 +256,6 @@ const Index = () => {
             getPendingDetails();
             getApprovedDetails();
             getRejectedDetails();
-            getModalData(startTime, endTime, date, userID);
         }
         if (userID) {
             const resu = getCurrentMonthDates();
@@ -266,7 +263,6 @@ const Index = () => {
                 getManagerPendingDetails(resu.setStartDate, resu.setEndDate);
                 getManagerApprovedData(resu.setStartDate, resu.setEndDate);
                 getManagerRejectedData(resu.setStartDate, resu.setEndDate);
-                getModalData(startTime, endTime, date, userID);
             }
         }
         return;
@@ -355,10 +351,14 @@ const Index = () => {
                                         <table className='table table-hover'>
                                             <thead className='bg-info text-white'>
                                                 <tr>
+                                                    <th>Controll Number</th>
+                                                    <th>EmployeID</th>
+                                                    <th>Employee Name</th>
                                                     <th>Date Request</th>
                                                     <th>Start Time</th>
                                                     <th>End Time</th>
                                                     <th>OT Details</th>
+                                                    <th>Attachment</th>
                                                     <th>Purpose</th>
                                                     <th>Status</th>
                                                     <th>Actions</th>
@@ -374,7 +374,7 @@ const Index = () => {
                                                                 <td>{data.startTime}</td>
                                                                 <td>{data.endTime}</td>
                                                                 <td>
-                                                                    <button className='edit-btn' onClick={openEditModal} >Details</button>
+                                                                    <button className='edit-btn' onClick={openEditModal.bind(this, data)} >Details</button>
                                                                 </td>
                                                                 <td>{data.comments}</td>
                                                                 <td>{data.status}</td>
@@ -401,12 +401,16 @@ const Index = () => {
                                         <table className='table table-hover'>
                                             <thead className='bg-info text-white'>
                                                 <tr>
+                                                    <th>Controll Number</th>
+                                                    <th>EmployeID</th>
+                                                    <th>Employee Name</th>
                                                     <th>Date Request</th>
-                                                    <th>Start Time</th>
-                                                    <th>End Time</th>
-                                                    {/* <th>Purpose</th> */}
+                                                    <th>Approved Start Time</th>
+                                                    <th>Approved End Time</th>
+                                                    <th>OT Details</th>
+                                                    <th>Attachment</th>
+                                                    <th>Purpose</th>
                                                     <th>Status</th>
-                                                    {/* <th>Actions</th> */}
                                                 </tr>
                                             </thead>
 
@@ -438,13 +442,16 @@ const Index = () => {
                                         <table className='table table-hover'>
                                             <thead className='bg-info text-white'>
                                                 <tr>
+                                                <th>Controll Number</th>
+                                                    <th>EmployeID</th>
+                                                    <th>Employee Name</th>
                                                     <th>Date Request</th>
-                                                    <th>Start Time</th>
-                                                    <th>End Time</th>
-                                                    {/* <th>OT Details</th> */}
-                                                    {/* <th>Purpose</th> */}
+                                                    <th>Approved Start Time</th>
+                                                    <th>Approved End Time</th>
+                                                    <th>OT Details</th>
+                                                    <th>Attachment</th>
+                                                    <th>Reject Reason</th>
                                                     <th>Status</th>
-                                                    {/* <th>Actions</th> */}
                                                 </tr>
                                             </thead>
 

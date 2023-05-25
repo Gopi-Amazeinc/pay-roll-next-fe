@@ -103,7 +103,5 @@ export default function ComponentMappingDashboard() {
         </div>
       </div>
     </div >
-
   );
-
 }
