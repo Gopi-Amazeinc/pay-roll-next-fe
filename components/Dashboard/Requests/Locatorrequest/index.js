@@ -172,7 +172,7 @@ const Locatordashboard = () => {
                         <br />
                         <div className="row">
                             <div className="col-lg-3">
-                                <Link href="/Requests/Myteamobasisrequest">  <label className="mainheader">My OBASIS Details</label> </Link>
+                                <Link href="/Requests/Locatorrequest">  <label className="mainheader">My OBASIS Details</label> </Link>
                             </div>
                             <div className="col-lg-3">
                                 <Link href="/Requests/Myteamobasisrequest">  <label className="mainheader">My Team OBASIS Details</label> </Link>
