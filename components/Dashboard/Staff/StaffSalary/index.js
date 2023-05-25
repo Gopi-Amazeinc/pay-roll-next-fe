@@ -90,8 +90,7 @@ function StaffSalaryComponent() {
 
 
   const getStaffSalary = async () => {
-    //get api for staffsalarycomponent//
-    const { data } = await axios.get(hostURL + "HR/GetAllStaffNew")
+    const { data } = await axios.get(hostURL + "Payroll/GetStaffSalary")
 
     setstaffSalary(data)
     console.log(data)
@@ -105,9 +104,7 @@ function StaffSalaryComponent() {
       <div>
         <div className="container">
           <div>
-            <h4>Add,edit APIs throwing 500 error
-            </h4>
-            <h3 className="Heading">Salary Staff Details</h3>
+            <h3 className="Heading">Staff Salary Details</h3>
             <div className="card p-3 border-0 rounded-3 mt-4">
               <div className="row">
                 <div className="col-lg-1">
@@ -207,13 +204,15 @@ function StaffSalaryComponent() {
                 <table className="table table-striped">
                   <thead>
                     <tr>
-                      <th>Employee ID</th>
                       <th>Staff Name</th>
                       <th>Position</th>
                       <th>Department</th>
-                      <th>Salary</th>
+                      <th>Basic Salary</th>
+                      <th>Effective Date</th>
                       <th>Working Days In Month </th>
                       <th>Working Hours In Day </th>
+                      <th>Hourly Rate</th>
+                      <th>Daily Rate</th>
                       <th>Action</th>
                     </tr>
                   </thead>
@@ -221,15 +220,15 @@ function StaffSalaryComponent() {
                     {staffSalary.map((data) => {
                       return (
                         <tr key={data.id}>
-                          <td>{data.employeID} </td>
-                          <td>
-                            {data.name} {data.last_Name}
-                          </td>
-                          <td>{data.role}</td>
-                          <td>{data.department_name}</td>
-                          <td>{data.baseSal}</td>
-                          <td>{data.daysinmonth}</td>
-                          <td>{data.hoursinday}</td>
+                          <td>{data.staffID} </td>
+                          <td>NA</td>
+                          <td>NA</td>
+                          <td>{data.basicSalary}</td>
+                          <td>{data.effectiveDate}</td>
+                          <td>{data.workDaysInMonth}</td>
+                          <td>{data.workHoursInDay}</td>
+                          <td>{data.hourlyRate}</td>
+                          <td>{data.dailyRate}</td>
                           <td>
                             <Link href={`/Staff/StaffSalary/Edit/${data.id}`}>
                               <button

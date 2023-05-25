@@ -234,7 +234,7 @@ function LeaveListDashboard() {
                             {
                                 sessionStorage.getItem("roleID") == 3 && (
                                     <Link href="/Requests/Myteamleaverequests">
-                                        <label className="Heading">My Team Request</label>
+                                        <label className="Heading">My Team Leave Request</label>
                                     </Link>
                                 )
                             }

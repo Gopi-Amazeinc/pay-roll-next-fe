@@ -270,8 +270,20 @@ const Attendancecorrectiondashboard = () => {
                     </button>
                   </Link>
                 </div>
-
-                {pendingcount > 0 || rejectcount > 0 || approvedcount > 0 ? (
+                {/* {pendingDashboardData ? ( */}
+                  <>
+                    <div className="col-lg-3">
+                      <DownloadTableExcel
+                        filename="Attendance table"
+                        sheet="Attendance"
+                        currentTableRef={tableRef.current}
+                      >
+                        <button className="button">Download</button>
+                      </DownloadTableExcel>
+                    </div>
+                  </>
+                {/* ) : null} */}
+                    {/* {approved ? (
                   <>
                     <div className="col-lg-3">
                       <DownloadTableExcel
@@ -284,6 +296,19 @@ const Attendancecorrectiondashboard = () => {
                     </div>
                   </>
                 ) : null}
+                    {pendingDashboardData ? (
+                  <>
+                    <div className="col-lg-3">
+                      <DownloadTableExcel
+                        filename="Attendance table"
+                        sheet="Attendance"
+                        currentTableRef={tableRef.current}
+                      >
+                        <button className="button">Download</button>
+                      </DownloadTableExcel>
+                    </div>
+                  </>
+                ) : null} */}
 
 
               </div>
@@ -415,91 +440,6 @@ const Attendancecorrectiondashboard = () => {
             </>
           )}
 
-          {/* {pending && roleID == "2" && (
-            <>
-              <div className="col-lg-2 text-primary fs-6 fw-bold">
-                <h6>Showing {pendingcount} Results</h6>
-              </div>
-              <table className="table table-hover" ref={tableRef}>
-                <thead className="bg-info text-white">
-                  <tr>
-                    <th>Employee Name</th>
-                    <th>Date</th>
-                    <th>Start Time</th>
-                    <th>End Time</th>
-                    <th colSpan={2}>Action</th>
-                  </tr>
-                </thead>
-
-                <tbody>
-                  {Array.isArray(managerPending) && managerPending.length > 0 && (
-                    <>
-                      {managerPending.map((data) => {
-                        return (
-                          <tr key={data.id}>
-                            <td>{data.staffname}</td>
-                            <td>{data.date}</td>
-                            <td>{data.startTime}</td>
-                            <td>{data.endTime}</td>
-                            <td>
-                              <button
-                                onClick={approveAttedanceCorrection.bind(
-                                  this,
-                                  data
-                                )}
-                                className="edit-btn"
-                              >
-                                Accept
-                              </button>
-                              <button className="edit-btn">Reject</button>
-                            </td>
-                          </tr>
-                        );
-                      })}
-                    </>
-                  )}
-                </tbody>
-              </table>
-            </>
-          )} */}
-
-          {/* {approved && roleID != "2" && (
-            <>
-              <div className="col-lg-2 text-primary fs-6 fw-bold">
-                <h6>Showing {approvedcount} Results</h6>
-              </div>
-              <table className="table table-hover" ref={tableRef}>
-                <thead className="bg-info text-white">
-                  <tr>
-                    <th>Date</th>
-                    <th>Start Time</th>
-                    <th>End Time</th>
-                    <th>Comments</th>
-                    <th>Status</th>
-                  </tr>
-                </thead>
-
-                <tbody>
-                  {Array.isArray(approvedDashboardData) &&
-                    approvedDashboardData.length > 0 && (
-                      <>
-                        {approvedDashboardData.map((data) => {
-                          return (
-                            <tr key={data.id}>
-                              <td>{data.date}</td>
-                              <td>{data.startTime}</td>
-                              <td>{data.endTime}</td>
-                              <td>{data.Comments}</td>
-                              <td>{data.status}</td>
-                            </tr>
-                          );
-                        })}
-                      </>
-                    )}
-                </tbody>
-              </table>
-            </>
-          )} */}
 
           {approved && roleID != "4" && (
             <>
@@ -575,41 +515,7 @@ const Attendancecorrectiondashboard = () => {
             </>
           )}
 
-          {/* {rejected && (
-            <>
-              <div className="col-lg-2 text-primary fs-6 fw-bold">
-                <h6 style={{ color: "#3247d5" }}>Showing {rejectcount} Results</h6>
-              </div>
-              <table className="table table-hover" ref={tableRef}>
-                <thead className="bg-info text-white">
-                  <tr>
-                    <th>Employee Name</th>
-                    <th>Date</th>
-                    <th>Start Time</th>
-                    <th>End Time</th>
-                  </tr>
-                </thead>
 
-                <tbody>
-                  {Array.isArray(managerRejected) && managerRejected.length > 0 && (
-                    <>
-                      {managerRejected.map((data) => {
-                        return (
-                          <tr key={data.id}>
-                            <td>{data.date}</td>
-                            <td>{data.startTime}</td>
-                            <td>{data.endTime}</td>
-                            <td>{data.Comments}</td>
-                            <td>{data.status}</td>
-                          </tr>
-                        );
-                      })}
-                    </>
-                  )}
-                </tbody>
-              </table>
-            </>
-          )} */}
         </div>
       </div>
     </div>
