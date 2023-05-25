@@ -1,22 +1,16 @@
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
-import axios from 'axios';
 import Swal from 'sweetalert2';
 import Modal from 'react-modal';
 import { AiOutlineClose } from 'react-icons/ai'
 import { apiService } from "@/services/api.service";
 import ReactPaginate from "react-paginate";
-import leave from "../../../../pages/Requests/Compensationtimeout/compensation.module.css"
-
 const Compensationtimeout = () => {
 
-
-    const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-
-    const [pending, setPending] = useState(true)
+    const [pending, setPending] = useState(false)
     const [approved, setApproved] = useState(false)
     const [rejected, setRejected] = useState(false)
-    const [managertogglePending, setManagerTogglePending] = useState(false)
+    const [managertogglePending, setManagerTogglePending] = useState(true)
     const [managerToggleapproved, setManagerToggleApproved] = useState(false)
     const [managertogglerejected, setManagerToggleRejected] = useState(false);
 
@@ -81,33 +75,33 @@ const Compensationtimeout = () => {
     let staffID;
     staffID = sessionStorage.getItem("userID")
     const getPendingData = async () => {
-        const res = await apiService.commonGetCall("Payroll/GetPendingCompensationTimeOutByStaffID?UserID=" + userID)
+        const res = await apiService.commonGetCall("Payroll/GetPendingCompensationTimeOutByStaffID?UserID=" + staffID)
         // sessionStorage.setItem("supervisorID", res.data[0].supervisor)
         getPending(res.data)
         setcount(res.data.length);
     }
 
     const getApprovedData = async () => {
-        const res = await apiService.commonGetCall("Payroll/GetApproveCompensationTimeOutByStaffID?UserID=" + userID)
+        const res = await apiService.commonGetCall("Payroll/GetApproveCompensationTimeOutByStaffID?UserID=" + staffID)
         getApproved(res.data, "employee approved")
         setcount(res.data.length);
     }
 
     const getRejectedData = async () => {
-        const res = await apiService.commonGetCall("Payroll/GetRejectCompensationTimeOutByStaffID?UserID=" + userID)
+        const res = await apiService.commonGetCall("Payroll/GetRejectCompensationTimeOutByStaffID?UserID=" + staffID)
         getRejected(res.data)
         setcount(res.data.length);
     }
 
     const getManagerApprovedData = async () => {
-        const res = await apiService.commonGetCall("Payroll/GetApproveCompensationTimeOutBySupervisor?UserID=" + userID)
+        const res = await apiService.commonGetCall("Payroll/GetApproveCompensationTimeOutBySupervisor?UserID=" + staffID)
         console.log(res.data)
         getManagerApproved(res.data)
         setcount(res.data.length);
     }
 
     const getManagerRejectedData = async () => {
-        const res = await apiService.commonGetCall("Payroll/GetRejectCompensationTimeOutBySupervisor?UserID=" + userID)
+        const res = await apiService.commonGetCall("Payroll/GetRejectCompensationTimeOutBySupervisor?UserID=" + staffID)
         console.log(res.data)
         getManagerRejected(res.data)
         setcount(res.data.length);
@@ -115,7 +109,7 @@ const Compensationtimeout = () => {
 
     const getPendingCompensation = async () => {
         staffID = sessionStorage.getItem("userID");
-        const res = await apiService.commonGetCall("Payroll/GetPendingCompensationTimeOutBySupervisor?UserID=" + userID)
+        const res = await apiService.commonGetCall("Payroll/GetPendingCompensationTimeOutBySupervisor?UserID=" + staffID)
         console.log(res.data, "manager pending")
         getComponsation(res.data)
         setcount(res.data.length);
@@ -298,6 +292,9 @@ const Compensationtimeout = () => {
                                         <table className='table'>
                                             <thead className='bg-info text-white'>
                                                 <tr>
+                                                    <th>Controll Number</th>
+                                                    <th>EmployeeID</th>
+                                                    <th>Employee Name</th>
                                                     <th>Date</th>
                                                     <th>Start Time</th>
                                                     <th>End Time</th>
@@ -341,11 +338,18 @@ const Compensationtimeout = () => {
                                         <table className='table'>
                                             <thead className='bg-info text-white'>
                                                 <tr>
+                                                    <th>
+                                                        <input type='checkbox' />
+                                                    </th>
+                                                    <th>Controll Number</th>
+                                                    <th>EmployeeID</th>
                                                     <th>Employee Name</th>
                                                     <th>Date</th>
                                                     <th>Start Time</th>
                                                     <th>End Time</th>
-                                                    <th colSpan={2}>Action</th>
+                                                    <th>Comments</th>
+                                                    <th>Status</th>
+                                                    <th>Action</th>
                                                 </tr>
                                             </thead>
 
@@ -383,6 +387,9 @@ const Compensationtimeout = () => {
                                         <table className='table table-hover'>
                                             <thead className='bg-info text-white'>
                                                 <tr>
+                                                    <th>Controll Number</th>
+                                                    <th>EmployeeID</th>
+                                                    <th>Employee Name</th>
                                                     <th>Date</th>
                                                     <th>Start Time</th>
                                                     <th>End Time</th>
@@ -423,6 +430,8 @@ const Compensationtimeout = () => {
                                         <table className='table table-hover'>
                                             <thead className='bg-info text-white'>
                                                 <tr>
+                                                    <th>Controll Number</th>
+                                                    <th>EmployeID</th>
                                                     <th>Employee Name</th>
                                                     <th>Date</th>
                                                     <th>Start Time</th>
@@ -460,6 +469,9 @@ const Compensationtimeout = () => {
                                         <table className='table table-hover'>
                                             <thead className='bg-info text-white'>
                                                 <tr>
+                                                    <th>Controll Number</th>
+                                                    <th>EmployeeID</th>
+                                                    <th>Employee Name</th>
                                                     <th>Date</th>
                                                     <th>Start Time</th>
                                                     <th>End Time</th>
@@ -500,10 +512,13 @@ const Compensationtimeout = () => {
                                         <table className='table table-hover'>
                                             <thead className='bg-info text-white'>
                                                 <tr>
+                                                    <th>Controll Number</th>
+                                                    <th>EmployeID</th>
                                                     <th>Employee Name</th>
                                                     <th>Date</th>
                                                     <th>Start Time</th>
                                                     <th>End Time</th>
+                                                    <th>Reason</th>
                                                 </tr>
                                             </thead>
 
