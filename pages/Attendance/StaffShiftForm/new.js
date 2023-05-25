@@ -43,6 +43,7 @@ const New = () => {
         reset(details);
     }
     const onSubmit = async (data) => {
+        debugger
         await apiService.commonPostCall("HR/InsertStaffShiftDetails", data);
         Swal.fire("Added successfully!");
         // console.log(data);
@@ -81,7 +82,7 @@ const New = () => {
                                 <label htmlFor=""><b>Start Date</b></label>
                                 <input type="date" name="" id="" className='form-control'  {...register("ShiftDate", { required: true })} />
                                 {
-                                    errors.startDate && <p className='text-danger'> Start Date is Required</p>
+                                    errors.ShiftDate && <p className='text-danger'> Start Date is Required</p>
                                 }
                             </div>
 
@@ -89,8 +90,11 @@ const New = () => {
                                 <label htmlFor=""><b>End Date</b></label>
                                 <input type="date" name="" id="" className='form-control'
                                     {...register("EndDate", { required: true })}
-                                    onChange={handleEndDateChange}
+                                // onChange={handleEndDateChange}
                                 />
+                                {
+                                    errors.EndDate && <p className='text-danger'> End Date is Required</p>
+                                }
                             </div>
                             <div className="col-lg-2">
                                 <label htmlFor=""><b>ShiftName</b></label>
@@ -103,19 +107,23 @@ const New = () => {
                                             )
                                         })
                                     }
+                                    {
+                                        errors.ShiftName && <p className='text-danger'> ShiftName is Required</p>
+                                    }
 
 
                                 </select>
 
+
                             </div>
                             <div className="col-lg-2">
                                 <label htmlFor=""><b>Start Time</b></label>
-                                <input type="text" {...register('StartTime', { required: true })} value={startTime} className='form-control' disabled />
+                                <input type="text" {...register('StartTime',)} value={startTime} className='form-control' disabled />
 
                             </div>
                             <div className="col-lg-2">
                                 <label htmlFor=""><b>End Time</b></label>
-                                <input type="text" name='' {...register('EndTime', { required: true })} value={endTime} className='form-control' disabled />
+                                <input type="text" name='' {...register('EndTime',)} value={endTime} className='form-control' disabled />
 
                             </div>
                         </div>

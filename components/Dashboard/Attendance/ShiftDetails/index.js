@@ -218,7 +218,7 @@ const Shiftdetails = () => {
                   }
                 </div>
                 <div className="col-lg-2">
-                  <br /> 
+                  <br />
                   {count > 0 ?
                     <>
                       <DownloadTableExcel
@@ -254,7 +254,7 @@ const Shiftdetails = () => {
             <tbody>
               {Array.isArray(shiftDetails) && shiftDetails.length > 0 && (
                 <>
-                  {shiftDetails.map((data) => {
+                  {shiftDetails.slice(offset, offset + PER_PAGE).map((data) => {
                     return (
                       <tr key={data.id}>
                         <td>{data.shiftDate}</td>
