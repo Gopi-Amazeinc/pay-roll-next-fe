@@ -107,7 +107,7 @@ export default function DependentDetails({data}) {
                 RelationshipID: data.RelationshipID,
                 Gender: data.Gender,
                 DateOfBirth: data.DateOfBirth,
-                StaffID: sessionStorage.getItem('userID'),
+                StaffID: sessionStorage.getItem('CreatedEmpID'),
                 DependentAttachment: "No Image",
             }
             await axios.post(hostURL + "Payroll/UpdateDependentDetails", Enity);
