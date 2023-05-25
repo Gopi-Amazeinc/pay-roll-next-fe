@@ -92,7 +92,7 @@ function LeaveListDashboard() {
         debugger;
         const res = await apiService.commonGetCall("Employee/GetPendingStaffLeavesByStaffID?ID=" + userID + "&TypeID=1&Sdate=" + StartingDate + "&Edate=" + EndDate)
         setPendingData(res.data);
-        console.log(res.data);
+        console.log(res.data, "pending");
         setcount(res.data.length);
     }
     const getApprovedData = async (StartingDate, EndDate) => {
@@ -228,13 +228,16 @@ function LeaveListDashboard() {
         <div className="container-fluid">
             <div claasName="row">
                 <div className="col-md-12">
+                    <br/>
                     <div className="row">
-                        <div className="col-md-7">
-                            <label className="Heading">Leave Request </label>&nbsp;&nbsp;&nbsp;&nbsp;
+                        <div className="col-md-3">
+                            <label className="mainheader">Leave Request </label>
+                        </div>
+                        <div className="col-lg-3">
                             {
                                 sessionStorage.getItem("roleID") == 3 && (
                                     <Link href="/Requests/Myteamleaverequests">
-                                        <label className="Heading">My Team Leave Request</label>
+                                        <label className="mainheader">My Team Leave Request</label>
                                     </Link>
                                 )
                             }
@@ -339,8 +342,12 @@ function LeaveListDashboard() {
                                             <tr>
                                                 <th>From Date</th>
                                                 <th>To Date</th>
+                                                <th>Leave Type</th>
                                                 <th>Leave Reason</th>
-                                                <th>Status</th>
+                                                <th>Leave Days Count</th>
+                                                <th>Attachment</th>
+                                                <th>Stage & Status</th>
+                                                <th>Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -372,8 +379,11 @@ function LeaveListDashboard() {
                                             <tr>
                                                 <th>From Date</th>
                                                 <th>To Date</th>
+                                                <th>Leave Type</th>
                                                 <th>Leave Reason</th>
-                                                <th>Status</th>
+                                                <th>Leave Days Count</th>
+                                                <th>Attachment</th>
+                                                <th>Stage & Status</th>
                                             </tr>
                                         </thead>
                                         <tbody>

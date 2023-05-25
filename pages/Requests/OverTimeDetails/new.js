@@ -88,6 +88,26 @@ const OverTimeDetails = () => {
     console.log("Inserted data:", details);
     router.push("/Requests/OverTimeDetails");
   }
+  const customStylese = {
+    content: {
+        top: "50%",
+        left: "50%",
+        right: "auto",
+        bottom: "auto",
+        marginRight: "-50%",
+        transform: "translate(-50%, -50%)",
+        width: "60%",
+    },
+    errorMsg: {
+        fontSize: "12px",
+        fontWeight: "500",
+        color: "red",
+    },
+    inputLabel: {
+        fontSize: "16px",
+    },
+};
+
   return (
     <Layout>
       <div className='container-fluid'>
@@ -114,18 +134,18 @@ const OverTimeDetails = () => {
                   <div className='row'>
                     <div className='col-lg-4'>
                       <input type='date' id='Date' name="Date" className='form-control' {...register('Date', { required: "This field is required" })}></input>
-                      {errors.Date && <label className="error-message" style={{ color: "red" }}>{errors.Date.message}</label>}
+                      {errors.Date && <label className="error-message" style={customStylese.errorMsg}>{errors.Date.message}</label>}
                     </div>
                     <div className='col-lg-2'>
                       {/* <input type="text" maxlength="2" class="form-control text-center bs-timepicker-field" placeholder="HH" /> */}
                       {/* <TimePicker onChange={handleTimeChange} value={time} disableClock={true} clearIcon={null} /> */}
                       <input type='time' className='form-control' id='StartTime' name='time' min="00:00" max="23:59" step="1" {...register('StartTime', { required: "This field is required" })} />
-                      {errors.StartTime && <label className="error-message" style={{ color: "red" }}>{errors.StartTime.message}</label>}
+                      {errors.StartTime && <label className="error-message" style={customStylese.errorMsg}>{errors.StartTime.message}</label>}
                     </div>
                     {/* <div className='col-lg-2'></div> */}
                     <div className='col-lg-2'>
                       <input type="time" className='form-control' id='EndTime' name='time' min="00:00" max="23:59" step="1" {...register('EndTime', { required: "This field is required" })} />
-                      {errors.EndTime && <label className="error-message" style={{ color: "red" }}>{errors.EndTime.message}</label>}
+                      {errors.EndTime && <label className="error-message"style={customStylese.errorMsg}>{errors.EndTime.message}</label>}
                     </div>
                     {/* <div className='col-lg-1'></div> */}
                     <div className='col-lg-2'>
@@ -145,9 +165,9 @@ const OverTimeDetails = () => {
                   </div>
                   <div className='row'>
                     <div className='col-lg-4'>
-                      <textarea className='form-control' placeholder='Write here...' {...register('comments',{ required: "This field is required" })}>
+                      <textarea className='form-control' placeholder='Write here...' minLength={10}{...register('comments',{ required: "This field is required" })}>
                       </textarea>
-                      {errors.comments && <label className="error-message" style={{ color: "red" }}>{errors.comments.message}</label>}
+                      {errors.comments && <label className="error-message" style={customStylese.errorMsg}>{errors.comments.message}</label>}
 
                     </div>
                     {/* <div className='col-lg-4'>
