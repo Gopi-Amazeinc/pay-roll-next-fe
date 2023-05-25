@@ -46,7 +46,7 @@ const BankAdviceList = () => {
             <br />
             <div className='row'>
                 <div className='col-lg-2'>
-                    <button className='EditDelteBTN'>NORMAL PAYROLL</button>
+                    <p className='Heading'>Normal Payroll</p>
                 </div>
                 <div className='col-lg-10'></div>
             </div>
@@ -56,13 +56,16 @@ const BankAdviceList = () => {
                 <div className='col-lg-6'>
                     <div className='row'>
                         <div className='card p-3'>
-                            <div className='row'>
-                                <label className='Heading'>BANK ADVICE LIST</label>
+                            <div className='row '>
+                                <div className='col-lg-4'></div>
+                                <div className='col-lg-5'>
+                                    <label className='Heading'>Bank Advice List</label>
+                                </div>
                                 <hr />
                             </div>
                             <div className='row'>
-
-                                <div className='col-lg-2'>
+                                <div className='col-lg-2'></div>
+                                <div className='col-lg-2 text-end'>
                                     <span>Year:</span>
                                 </div>
 
@@ -78,7 +81,8 @@ const BankAdviceList = () => {
                             </div>
                             <br />
                             <div className='row'>
-                                <div className='col-lg-2'>
+                                <div className='col-lg-2'></div>
+                                <div className='col-lg-2 text-end'>
                                     <span>Month:</span>
                                 </div>
 
@@ -94,7 +98,8 @@ const BankAdviceList = () => {
                             </div>
                             <br />
                             <div className='row'>
-                                <div className='col-lg-2'>
+                                <div className='col-lg-2'></div>
+                                <div className='col-lg-2 text-end'>
                                     <span>Pay Period:</span>
                                 </div>
 
@@ -111,10 +116,11 @@ const BankAdviceList = () => {
                             <br />
                             <div className='row'>
                                 <div className='col-lg-2'></div>
+                                <div className='col-lg-2'></div>
                                 {/* <div className='col-lg-3'></div> */}
 
                                 <div className='col-lg-5'>
-                                    <button className='EditDelteBTN'>GENERATE</button>
+                                    <button className='EditDelteBTN'>Generate</button>
                                 </div>
                                 <div className='col-lg-4'></div>
                             </div>

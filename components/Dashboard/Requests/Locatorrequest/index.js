@@ -169,10 +169,16 @@ const Locatordashboard = () => {
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-lg-12">
-                        <Link style={{ borderBottom: "2px solid #2f87cc;" }} href="/Requests/Myteamobasisrequest">  <span className="Heading">My OBASIS Details</span> </Link>
-                        &nbsp;&nbsp;&nbsp;
-                        <Link style={{ textDecoration: "none" }} href="/Requests/Myteamobasisrequest">  <span className="Heading">My Team OBASIS Details</span> </Link>
-                        <br />         <br />
+                        <br />
+                        <div className="row">
+                            <div className="col-lg-3">
+                                <Link href="/Requests/Locatorrequest">  <label className="mainheader">My OBASIS Details</label> </Link>
+                            </div>
+                            <div className="col-lg-3">
+                                <Link href="/Requests/Myteamobasisrequest">  <label className="mainheader">My Team OBASIS Details</label> </Link>
+                            </div>
+                        </div>
+                        <br />
                         <div className="card p-3 rounded-3 shadow border-0 ">
                             <div className="row">
                                 <div className="col-lg-1">
@@ -197,20 +203,19 @@ const Locatordashboard = () => {
                                 </div>
                             </div>
                         </div>
-
-                        <div className="row mt-5">
-                            <div className="col-4">
+                        <br />
+                        <div className="row">
+                            <div className="col-lg-4">
                                 <button onClick={togglePending} className={`toggleButton ${pending ? "focus" : ""}`}>Pending</button>
                                 <button onClick={toggleApproved} className={`toggleButton ${approved ? "focus" : ""}`}>Approved</button>
                                 <button onClick={toggleRejected} className={`toggleButton ${rejected ? "focus" : ""}`}>Rejected</button>
                             </div>
-                            <h6 style={{ color: "#3247d5" }}>Showing {count} Results</h6>
-                            <div className="col-6"></div>
-                            <div className="col-2">
+                           
+                            <div className="col-lg-6"></div>
+                            <div className="col-lg-2">
                                 <Link href="/Requests/Locatorrequest/new"><button className="submit-button">New Requests </button></Link>
                             </div>
                         </div>
-                        <br /><br />
 
                         <div className="row">
                             <div className="col-lg-12">

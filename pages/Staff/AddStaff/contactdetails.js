@@ -210,7 +210,7 @@ async function clearForm(data = null){
     <div style={customStyles}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="container-fluid">
-          <div className="card p-3">
+          <div className="card p-3 border-0">
             <div className="row">
               <div className="col-12">
                 <h6>Employee Address 1</h6>
@@ -384,7 +384,7 @@ async function clearForm(data = null){
           </div>
           <br></br>
 
-          <div className="card p-3">
+          <div className="card p-3 border-0">
             <div className="row">
               <div className="col-12">
                 <h6>Employee Address 2</h6>
@@ -557,7 +557,7 @@ async function clearForm(data = null){
           </div>
           <br></br>
 
-          <div className="card p-3">
+          <div className="card p-3 border-0">
             <div className="row">
               <div className="col-12">
                 <h6>Emergency Contact 1</h6>
@@ -702,7 +702,7 @@ async function clearForm(data = null){
           </div>
           <br></br>
 
-          <div className="card p-3">
+          <div className="card p-3 border-0">
             <div className="row">
               <div className="col-12">
                 <h6>Emergency Contact 2</h6>

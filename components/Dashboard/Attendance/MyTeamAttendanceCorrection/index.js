@@ -518,9 +518,9 @@ const MyTeamAttendancecorrectiondashboard = () => {
                                             return (
                                                 <tr key={data.id}>
                                                     <td>{data.staffname}</td>
-                                                    <td>{data.sDate}</td>
+                                                    <td>{data.date}</td>
+                                                    <td>{data.startTime}</td>
                                                     <td>{data.endTime}</td>
-                                                    <td>{data.Comments}</td>
                                                     <td>{data.approved}</td>
                                                 </tr>
                                             );
@@ -556,7 +556,7 @@ const MyTeamAttendancecorrectiondashboard = () => {
                                                         <td>{data.staffname}</td>
                                                         <td>{data.startTime}</td>
                                                         <td>{data.endTime}</td>
-                                                        <td>{data.Comments}</td>
+                                                        <td>{data.comment}</td>
                                                         <td>{data.approved}</td>
                                                     </tr>
                                                 );

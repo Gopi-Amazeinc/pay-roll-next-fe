@@ -1,31 +1,23 @@
 
 import Link from "next/link";
 import { useEffect, useState } from 'react';
-import axios from "axios";
+import { apiService } from "@/services/api.service";
 import Swal from "sweetalert2";
 export default function ComponentMappingDashboard() {
-
-
-  const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
-
-
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [componentMapping, setcomponentMapping] = useState([]);
 
   const getcomponentMapping = async () => {
-    let res = await axios.get(hostURL + "Payroll/GetComponentMapping"); //This Api is useed for Get the Dashborad data band Master
+    let res = await apiService.commonGetCall("Payroll/GetComponentMapping");
     setcomponentMapping(res.data);
   }
 
-  // eslint-disable-next-line react-hooks/rules-of-hooks
   useEffect(() => {
     getcomponentMapping()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [1])
 
   const handleDelete = async (id) => {
     try {
-      let res = await axios.get(hostURL + `Payroll/DeleteComponentMapping?id=${id}`); // this is for deleting the data for dashborad using delete api call 
+      let res = await apiService.commonGetCall(`Payroll/DeleteComponentMapping?id=${id}`);
       console.log(res.data);
       Swal.fire('Data deleted successfully')
       getcomponentMapping();
@@ -111,7 +103,5 @@ export default function ComponentMappingDashboard() {
         </div>
       </div>
     </div >
-
   );
-
 }

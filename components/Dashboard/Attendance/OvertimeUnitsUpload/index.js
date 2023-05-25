@@ -11,14 +11,16 @@ import OvertimeUnitsUpload from "@/pages/Attendance/OverTimeUnitsUpload";
 import { apiService } from "@/services/api.service";
 import Link from "next/link";
 import Swal from "sweetalert2";
+import ReactPaginate from "react-paginate";
 import * as XLSX from "xlsx";
 
 const MyTeamOverTimeDetail = () => {
   const [overtimeUnitsUpload, SetovertimeUnitsUpload] = useState([]);
   const tableRef = useRef(null);
   const [modalOpen, setModalOpen] = useState(false);
-
+  const [keyword, setKeyword] = useState("");
   const [items, setItems] = useState([]);
+  const [count, setCount] = useState([]);
   const customStyles = {
     content: {
       top: "20%",
@@ -27,7 +29,7 @@ const MyTeamOverTimeDetail = () => {
       bottom: "auto",
       marginRight: "-50%",
       transform: "translate(-50%, -50%)",
-      width: "30%",
+      width: "35%",
     },
     errorMsg: {
       fontSize: "12px",
@@ -52,6 +54,7 @@ const MyTeamOverTimeDetail = () => {
   const getData = async () => {
     let res = await apiService.commonGetCall("Payroll/GetStaffOverTimeDetailsUpload");
     SetovertimeUnitsUpload(res.data);
+    setCount(res.data.length)
   };
 
   //   Written By:-Gopi  => Read the uploaded excel file and convert that into array - used "XLSX" package
@@ -89,9 +92,9 @@ const MyTeamOverTimeDetail = () => {
           const staffData = res.data[0] || res.data;
           return {
             StaffID: staffData.id,
-            OT_name:overtime.name,
-            Hours:overtime.hours,
-            PayDate:overtime.Date,
+            OT_name: overtime.name,
+            Hours: overtime.hours,
+            PayDate: overtime.Date,
           };
         })
         : []
@@ -115,6 +118,16 @@ const MyTeamOverTimeDetail = () => {
     getEmployeeOvertimes();
   };
 
+
+  const PER_PAGE = 8;
+  const [currentPage, setCurrentPage] = useState(0);
+  const handlePageClick = ({ selected: selectedPage }) => {
+    setCurrentPage(selectedPage);
+  };
+  const offset = currentPage * PER_PAGE;
+  const pageCount = Math.ceil(overtimeUnitsUpload.length / PER_PAGE);
+
+
   return (
     <div className="container-fluid">
       <p className="Heading">Overtime Units Upload</p>
@@ -124,7 +137,7 @@ const MyTeamOverTimeDetail = () => {
             <div className="card p-3  border-0  rounded-3">
               <div className="row">
                 <div className="col-lg-1">
-                  <p className={Styles.filterdate}>Filter By</p>
+                  <p className={Styles.filterdate} style={{marginTop:"20px"}}>Filter By</p>
                 </div>
 
                 <div className="col-lg-4">
@@ -134,7 +147,7 @@ const MyTeamOverTimeDetail = () => {
                     name="term"
                     type="search"
                     placeholder="Search for staff.. "
-                    className="form-control "
+                    className="form-control " onChange={(e)=> setKeyword(e.target.value)}
                   ></input>
                 </div>
                 <div className="col-lg-2">
@@ -154,7 +167,7 @@ const MyTeamOverTimeDetail = () => {
                   contentLabel="Example Modal"
                 >
                   <div className=" modal-header">
-                    <h5 className=" modal-title" id="exampleModalLabel">
+                    <h5 className=" modal-title" style={{ color: "#3247d5" }} id="exampleModalLabel">
                       Upload Overtimes
                     </h5>
                     <button
@@ -192,13 +205,15 @@ const MyTeamOverTimeDetail = () => {
                     </div>
                     <div className="row">
                       {/* <ModalFooter> */}
-                      <div className="col-lg-6">
+
+                      <div className="col-lg-8">
+                        <br />
                         <button
                           className="mt-4"
                           id={Styles.UploadOvetimefButton}
                           onClick={() => uploadOvertime()}
                           color="primary"
-                          type="button"
+                          type="button" style={{ padding: "10px" }}
                         >
                           Upload Overtimes
                         </button>
@@ -254,7 +269,7 @@ const MyTeamOverTimeDetail = () => {
           </div>
           <br />
           <div className="text-primary fs-6 fw-bold">
-            <h6 style={{ color: "#3247d5" }}>Showing Results</h6>
+          <h6 style={{ color: "#3247d5" }}>Showing {count} Results</h6>
           </div>
           <br />
           <div className="row">
@@ -277,22 +292,49 @@ const MyTeamOverTimeDetail = () => {
                   <tbody>
                     {Array.isArray(overtimeUnitsUpload) && overtimeUnitsUpload.length > 0 && (
                       <>
-                        {overtimeUnitsUpload.map((data) => {
-                          return (
-                            <tr key={data.id}>
-                              <td>{data.staffID}</td>
-                              <td>{data.staffname}</td>
-                              <td>{data.payDate}</td>
-                              <td>{data.oT_name}</td>
-                              <td>{data.hours}</td>
+                        {overtimeUnitsUpload
+                          .filter(post => {
+                            return Object.values(post).some(value =>
+                              value !== null && value.toString().toLowerCase().includes(keyword.toLowerCase())
+                            );
+                          })
+                          .slice(offset, offset + PER_PAGE).map((data) => {
+                            return (
+                              <tr key={data.id}>
+                                <td>{data.staffID}</td>
+                                <td>{data.staffname}</td>
+                                <td>{data.payDate}</td>
+                                <td>{data.oT_name}</td>
+                                <td>{data.hours}</td>
 
-                            </tr>
-                          );
-                        })}
+                              </tr>
+                            );
+                          })}
                       </>
                     )}
                   </tbody>
                 </table>
+                <div className="mb-4 mt-4 text-center">
+                  <ReactPaginate
+                    previousLabel={"Previous"}
+                    nextLabel={"Next"}
+                    breakLabel={"..."}
+                    pageCount={pageCount}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={3}
+                    onPageChange={handlePageClick}
+                    containerClassName={"pagination  justify-content-center"}
+                    pageClassName={"page-item "}
+                    pageLinkClassName={"page-link"}
+                    previousClassName={"page-item"}
+                    previousLinkClassName={"page-link"}
+                    nextClassName={"page-item"}
+                    nextLinkClassName={"page-link"}
+                    breakClassName={"page-item"}
+                    breakLinkClassName={"page-link"}
+                    activeClassName={"active primary"}
+                  />
+                </div>
               </div>
             </div>
           </div>

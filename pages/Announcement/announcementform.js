@@ -47,7 +47,7 @@ function Announcementform({ editData }) {
             "Time": AnnounceData ? AnnounceData.venue : "",
             // "Attachment": AnnounceData ? AnnounceData.attachment : "",
             "BuildingID": AnnounceData ? AnnounceData.buildingID : "",
-            "Attachment": AnnounceData ? filePath : AnnounceData.attachment ,
+            "Attachment": filePath,
 
         };
         reset(details);
@@ -97,6 +97,26 @@ function Announcementform({ editData }) {
 
 
 
+    const customStyles = {
+        content: {
+            top: "50%",
+            left: "50%",
+            right: "auto",
+            bottom: "auto",
+            marginRight: "-50%",
+            transform: "translate(-50%, -50%)",
+            width: "60%",
+        },
+        errorMsg: {
+            fontSize: "12px",
+            fontWeight: "500",
+            color: "red",
+        },
+        inputLabel: {
+            fontSize: "16px",
+        },
+    }
+
 
     // const submit = (data) => {
     //     alert(JSON.stringify(data))
@@ -117,38 +137,38 @@ function Announcementform({ editData }) {
                                             required: true,
                                             maxLength: 100,
                                             pattern: /^[A-Za-z]+$/i
-                                        })} /><div className='text-danger'>
-                                        {errors.announcement ?.type==='required' && 
-                                           " Please enter announcement name"
-                                        }
-                                        {errors.announcement ?.type === "maxLength" && 
-                                            "name cannot exceed 20 characters"
-                                        }
-                                        {errors.announcement?.type === "pattern" && 
-                                            "Alphabetical characters only"
-                                        }
+                                        })} /><div  style={customStyles.errorMsg}>
+                                            {errors.announcement?.type === 'required' &&
+                                                " Please enter announcement name"
+                                            }
+                                            {errors.announcement?.type === "maxLength" &&
+                                                "name cannot exceed 20 characters"
+                                            }
+                                            {errors.announcement?.type === "pattern" &&
+                                                "Alphabetical characters only"
+                                            }
                                         </div>
                                     </div>
 
                                     <div className='col-lg-3'>
                                         <label className='fw-bold'>Annoucement Description <i className='text-danger'>*</i></label>
-                                        <textarea className='form-control' placeholder='Announcement Description' {...register('Description', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9 ]+$/, message: "Please enter a valid Short Name" } })} />
-                                        {errors.Description && <p className="error-message" style={{ color: "red" }}>{errors.Description.message}</p>}
+                                        <textarea className='form-control' placeholder='Announcement Description'minLength={10} {...register('Description', { required: "Please add a description", pattern: { value: /^[A-Za-z0-9 ]+$/, message: "Please enter a valid Short Name" } })} />
+                                        {errors.Description && <p  style={customStyles.errorMsg}>{errors.Description.message}</p>}
                                     </div>
 
                                     <div className='col-lg-2'>
                                         <label className='fw-bold'>Annoucement Date <i className='text-danger'>*</i></label>
                                         <input type='date' className='form-control' placeholder='Announcement Date' {...register("DateTime", { required: true })} />
-                                        {errors.date && (
-                                            <p className='text-danger'>Please enter announcement date</p>
+                                        {errors.DateTime && (
+                                            <p  style={customStyles.errorMsg}>Please enter announcement date</p>
                                         )}
                                     </div>
 
                                     <div className='col-lg-2'>
                                         <label className='fw-bold'>Annoucement Time <i className='text-danger'>*</i></label>
                                         <input type='time' className='form-control' placeholder='Announcement Time' {...register("Time", { required: true })} />
-                                        {errors.time && (
-                                            <p className='text-danger'>Please enter announcement time</p>
+                                        {errors.Time && (
+                                            <p className='text-danger' style={customStyles.errorMsg}>Please enter announcement time</p>
                                         )}
                                     </div>
 
@@ -156,7 +176,7 @@ function Announcementform({ editData }) {
                                         <label className='fw-bold'>Venue <i className='text-danger'>*</i></label>
                                         <input type='text' className='form-control' placeholder='Announcement Venue' {...register("venue", { required: true })} />
                                         {errors.venue && (
-                                            <p className='text-danger'>Please enter announcement venue</p>
+                                            <p style={customStyles.errorMsg}>Please enter announcement venue</p>
                                         )}
                                         <br />
                                         <br />
@@ -166,7 +186,7 @@ function Announcementform({ editData }) {
                                         <label className='fw-bold'>Attachment <i className='text-danger'>*</i></label>
                                         <div style={{ border: '2px dashed black' }}>
                                             <div {...getRootProps()}>
-                                                <input {...getInputProps()} />
+                                                <input {...getInputProps()} {...register("dropzone", { required: true })} />
                                                 {isDragActive ? (
                                                     <p>Drop the files here ...</p>
                                                 ) : (
@@ -176,7 +196,7 @@ function Announcementform({ editData }) {
                                                     </p>
                                                 )}
                                             </div>
-                                        </div>
+                                        </div>          {errors.venue && (     <p style={customStyles.errorMsg}>Please enter announcement venue</p> )}
                                     </div>
 
                                     <div className='col-lg-2'>

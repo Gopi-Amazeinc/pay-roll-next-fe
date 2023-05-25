@@ -92,7 +92,25 @@ const AttendanceCorrectionform = () => {
   useEffect(() => {
     clearForm();
   }, [1]);
-
+  const customStyles = {
+    content: {
+        top: "50%",
+        left: "50%",
+        right: "auto",
+        bottom: "auto",
+        marginRight: "-50%",
+        transform: "translate(-50%, -50%)",
+        width: "60%",
+    },
+    errorMsg: {
+        fontSize: "12px",
+        fontWeight: "500",
+        color: "red",
+    },
+    inputLabel: {
+        fontSize: "16px",
+    },
+};
   return (
     <Layout>
       <div className="container">
@@ -113,7 +131,7 @@ const AttendanceCorrectionform = () => {
                   {...register("SDate", { required: true })}
                 />
                 {errors.SDate && (
-                  <p className="text-danger mt-2">Select Valid Date</p>
+                  <p style={customStyles.errorMsg}>Select Valid Date</p>
                 )}
               </div>
               <div className="col-lg-3">
@@ -128,7 +146,7 @@ const AttendanceCorrectionform = () => {
                   {...register("StartTime", { required: true })}
                 />
                 {errors.StartTime && (
-                  <p className="text-danger mt-2">Select Valid Start Time</p>
+                  <p style={customStyles.errorMsg}>Select Valid Start Time</p>
                 )}
               </div>
               <div className="col-lg-3">
@@ -144,7 +162,7 @@ const AttendanceCorrectionform = () => {
                 />
                 
                 {errors.EndTime && (
-                  <p className="text-danger mt-2">Select Valid End Time</p>
+                  <p style={customStyles.errorMsg}>Select Valid End Time</p>
                 )}
                
               </div>
@@ -156,14 +174,14 @@ const AttendanceCorrectionform = () => {
                 <textarea
                   rows={6}
                
-                  className="form-control"
+                  className="form-control"minLength={10}
                   {...register("Comment", { required: true,  maxLength: "10"})}
                 />
                 {errors?.Comment?.type==='required' && (
-                  <p className="text-danger mt-2">Please Enter Comments</p>
+                  <p style={customStyles.errorMsg}>Please Enter Comments</p>
                 )}
                 {errors?.Comment?.type=== "maxLength" && (
-        <p>First name cannot exceed 20 characters</p>)}
+        <p style={customStyles.errorMsg}>First name cannot exceed 20 characters</p>)}
               </div>
             </div>
             <div className="row mt-5">

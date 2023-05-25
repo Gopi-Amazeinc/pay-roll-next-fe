@@ -107,7 +107,7 @@ export default function DependentDetails({data}) {
                 RelationshipID: data.RelationshipID,
                 Gender: data.Gender,
                 DateOfBirth: data.DateOfBirth,
-                StaffID: sessionStorage.getItem('userID'),
+                StaffID: sessionStorage.getItem('CreatedEmpID'),
                 DependentAttachment: "No Image",
             }
             await axios.post(hostURL + "Payroll/UpdateDependentDetails", Enity);
@@ -185,7 +185,7 @@ export default function DependentDetails({data}) {
       <div style={customStyles}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="container-fluid">
-            <div className="card p-3">
+            <div className="card p-3 border-0">
               <div className="row">
                 <div className="col-12">
                   <h6>Dependent Details</h6>

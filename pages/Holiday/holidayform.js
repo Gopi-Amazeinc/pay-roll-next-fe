@@ -16,7 +16,7 @@ function Holidayform({ editData }) {
   const router = useRouter();
   const [actionType, setActionType] = useState("insert");
 
-  
+
   useEffect(() => {
     const { id } = editData || {};
     if (id) {
@@ -47,6 +47,25 @@ function Holidayform({ editData }) {
     setActionType(HolidaysData ? "update" : "insert");
   }
 
+  const customStyles = {
+    content: {
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      marginRight: "-50%",
+      transform: "translate(-50%, -50%)",
+      width: "60%",
+    },
+    errorMsg: {
+      fontSize: "12px",
+      fontWeight: "500",
+      color: "red",
+    },
+    inputLabel: {
+      fontSize: "16px",
+    },
+  };
 
 
 
@@ -99,8 +118,9 @@ function Holidayform({ editData }) {
                       <p>
                         Holiday<i className="text-danger">*</i>
                       </p>
-                      <input type="text" className="form-control" placeholder="Holiday"{...register('Holiday', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
-                      {errors.Name && <p className="error-message" style={{ color: "red" }}>{errors.Name.message}</p>}
+                      <input type="text" className="form-control" placeholder="Holiday"
+                        {...register('Holiday', { required: "Please add a  Name" })} />
+                      {errors.Holiday && <p className="error-message" style={customStyles.errorMsg}>{errors.Holiday.message}</p>}
                     </div>
 
                     <div className="col-lg-4">
@@ -109,18 +129,18 @@ function Holidayform({ editData }) {
                       </p>
                       <textarea
                         className="form-control"
-                        placeholder="Holiday Description"
-                        {...register('HolidayDescription', { required: "Please add a Descrption Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Descrption Name" } })}
+                        placeholder="Holiday Description" minLength={10}
+                        {...register('HolidayDescription', { required: "Please add a Descrption " })}
                       ></textarea>
-                      {errors.Name && <p className="error-message" style={{ color: "red" }}>{errors.Name.message}</p>}
+                      {errors.HolidayDescription && <p className="error-message" style={customStyles.errorMsg}>{errors.HolidayDescription.message}</p>}
                     </div>
 
                     <div className="col-lg-4">
                       <p>
                         Holiday Date<i className="text-danger">*</i>
                       </p>
-                      <input type="date" className="form-control" placeholder="Holiday Date"{...register('HolidayDate', { required: "true" })} />
-                      {errors.Name && <p className="error-message" style={{ color: "red" }}>{errors.Name.message}</p>}
+                      <input type="date" className="form-control" placeholder="Holiday Date"{...register('HolidayDate', { required: "Please add Date " })} />
+                      {errors.HolidayDate && <p className="error-message" style={customStyles.errorMsg}>{errors.HolidayDate.message}</p>}
                     </div>
                   </div>
 
@@ -130,22 +150,22 @@ function Holidayform({ editData }) {
                       <p>
                         Attachment<i className="text-danger">*</i>
                       </p>
-                      <input type="text" className="form-control" placeholder="Attachment"{...register('Attachment', { required: "Please add a Short Name", pattern: { message: "Please enter a valid Short Name" } })} />
-                      {errors.Name && <p className="error-message" style={{ color: "red" }}>{errors.Name.message}</p>}
+                      <input type="text" className="form-control" placeholder="Attachment"{...register('Attachment', { required: "Please add file" })} />
+                      {errors.Name && <p className="error-message"  style={customStyles.errorMsg}>{errors.Name.message}</p>} {errors.Attachment && <p className="error-message" style={{ color: "red" }}>{errors.Attachment.message}</p>}
                     </div>
                     <div className="col-lg-4">
                       <p>
                         Holiday Category<i className="text-danger">*</i>
                       </p>
-                      <input type="text" className="form-control" placeholder="Holiday Category"{...register('HolidayCategory', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
-                      {errors.Name && <p className="error-message" style={{ color: "red" }}>{errors.Name.message}</p>}
+                      <input type="text" className="form-control" placeholder="Holiday Category"{...register('HolidayCategory', { required: "Please add HolidayCategory"})} />
+                      {errors.HolidayCategory && <p className="error-message"  style={customStyles.errorMsg}>{errors.HolidayCategory.message}</p>}
                     </div>
                     <div className="col-lg-4">
                       <p>
                         Region<i className="text-danger">*</i>
                       </p>
-                      <input type="text" className="form-control" placeholder="Region"{...register('Region', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
-                      {errors.Name && <p className="error-message" style={{ color: "red" }}>{errors.Name.message}</p>}
+                      <input type="text" className="form-control" placeholder="Region"{...register('Region', { required: "Please add Region" })} />
+                      {errors.Region && <p className="error-message"  style={customStyles.errorMsg}>{errors.Region.message}</p>}
                     </div>
                   </div>
                   <br />

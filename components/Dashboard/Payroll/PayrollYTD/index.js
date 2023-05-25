@@ -6,6 +6,8 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import Styles from '../../../../styles/payrollytd.module.css'
 import { useRouter } from "next/router";
+import ReactPaginate from "react-paginate";
+
 
 
 const Employmentjobhistory = () => {
@@ -137,6 +139,14 @@ const Employmentjobhistory = () => {
     useEffect(() => {
         getPayroll();
     }, [])
+
+    const PER_PAGE = 5;
+    const [currentPage, setCurrentPage] = useState(0);
+    function handlePageClick({ selected: selectedPage }) {
+        setCurrentPage(selectedPage);
+    }
+    const offset = currentPage * PER_PAGE;
+    const pageCount = Math.ceil(YTDlist.length / PER_PAGE);
     return (
         <div className='container-fluid'>
             <p className='Heading '>Payroll YTD Upload</p>
@@ -251,22 +261,24 @@ const Employmentjobhistory = () => {
 
                             <tbody>
                                 {
-                                    YTDlist.filter(data => {
-                                        if ((data.nettaxableYTD.toString().includes(keyword.toString())) || (data.firstAndLastName.toLowercase().includes(keyword.toLowercase()))) {
-                                            return data;
-                                        }
-                                    }).map((YTD) => {
-                                        return (
-                                            <tr key={YTD.id}>
-                                                <td>{YTD.employeID}</td>
-                                                <td>{YTD.firstAndLastName}</td>
-                                                <td>{YTD.nettaxableYTD}</td>
-                                                <td>{YTD.taxYTD}</td>
-                                                <td>{YTD.taxableBonusYTD}</td>
-                                                <td>{YTD.nonTaxableBonusYTD}</td>
-                                            </tr>
-                                        )
-                                    })
+                                    YTDlist.filter(post => {
+                                        return Object.values(post).some(value =>
+                                            value !== null &&
+                                            value.toString().toLowerCase().includes(keyword.toLowerCase())
+                                        );
+                                    }).slice(offset, offset + PER_PAGE)
+                                        .map((YTD) => {
+                                            return (
+                                                <tr key={YTD.id}>
+                                                    <td>{YTD.employeID}</td>
+                                                    <td>{YTD.firstAndLastName}</td>
+                                                    <td>{YTD.nettaxableYTD}</td>
+                                                    <td>{YTD.taxYTD}</td>
+                                                    <td>{YTD.taxableBonusYTD}</td>
+                                                    <td>{YTD.nonTaxableBonusYTD}</td>
+                                                </tr>
+                                            )
+                                        })
                                 }
                             </tbody>
                         </table>
@@ -317,6 +329,28 @@ const Employmentjobhistory = () => {
                         </tbody>
                     </table>
                 </div>
+            </div>
+
+            <div className="text-center">
+                <ReactPaginate
+                    previousLabel={"Previous"}
+                    nextLabel={"Next"}
+                    breakLabel={"..."}
+                    pageCount={pageCount}
+                    marginPagesDisplayed={2}
+                    pageRangeDisplayed={3}
+                    onPageChange={handlePageClick}
+                    containerClassName={"pagination  justify-content-center"}
+                    pageClassName={"page-item "}
+                    pageLinkClassName={"page-link"}
+                    previousClassName={"page-item"}
+                    previousLinkClassName={"page-link"}
+                    nextClassName={"page-item"}
+                    nextLinkClassName={"page-link"}
+                    breakClassName={"page-item"}
+                    breakLinkClassName={"page-link"}
+                    activeClassName={"active primary"}
+                />
             </div>
         </div >
     )

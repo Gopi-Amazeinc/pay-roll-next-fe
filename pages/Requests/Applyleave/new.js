@@ -62,7 +62,27 @@ const ApplyLeave = () => {
     console.log(res, "File Path");
     Swal.fire("Uploaded successfully");
     setFilePath(res.data);
+
   };
+  const customStyles = {
+    content: {
+        top: "50%",
+        left: "50%",
+        right: "auto",
+        bottom: "auto",
+        marginRight: "-50%",
+        transform: "translate(-50%, -50%)",
+        width: "60%",
+    },
+    errorMsg: {
+        fontSize: "12px",
+        fontWeight: "500",
+        color: "red",
+    },
+    inputLabel: {
+        fontSize: "16px",
+    },
+};
   return (
     <Layout>
       <div className="container-fluid">
@@ -95,7 +115,7 @@ const ApplyLeave = () => {
                         );
                       })}
                     </select>
-                    {errors.LeaveType && <p className="error-message" style={{ color: "red" }}>{errors.LeaveType.message}</p>}
+                    {errors.LeaveType && <p className="error-message" style={customStyles.errorMsg}>{errors.LeaveType.message}</p>}
                   </div>
                   <div className="col-lg-2">
                     <label style={{ fontWeight: "bold" }}>
@@ -108,7 +128,7 @@ const ApplyLeave = () => {
                       {...register("LeaveReason", { required: "This field is required" })}
                       placeholder="Leave Reason"
                     ></textarea>
-                    {errors.LeaveType && <p className="error-message" style={{ color: "red" }}>{errors.LeaveType.message}</p>}
+                    {errors.LeaveType && <p className="error-message" style={customStyles.errorMsg}>{errors.LeaveType.message}</p>}
                   </div>
                   <div className="col-lg-2">
                     <label style={{ fontWeight: "bold" }}>
@@ -119,7 +139,7 @@ const ApplyLeave = () => {
                       className="form-control"
                       {...register("SDateOfLeave", { required: "This field is required" })}
                     />
-                    {errors.SDateOfLeave && <p className="error-message" style={{ color: "red" }}>{errors.SDateOfLeave.message}</p>}
+                    {errors.SDateOfLeave && <p className="error-message" style={customStyles.errorMsg}>{errors.SDateOfLeave.message}</p>}
                   </div>
                   <div className="col-lg-2">
                     <label style={{ fontWeight: "bold" }}>
@@ -130,7 +150,7 @@ const ApplyLeave = () => {
                       className="form-control"
                       {...register("EDateOfLeave", { required: "This field is required" })}
                     />
-                    {errors.EDateOfLeave && <p className="error-message" style={{ color: "red" }}>{errors.EDateOfLeave.message}</p>}
+                    {errors.EDateOfLeave && <p className="error-message" style={customStyles.errorMsg}>{errors.EDateOfLeave.message}</p>}
                   </div>
                 </div>
                 <br />
@@ -140,16 +160,17 @@ const ApplyLeave = () => {
                     {/* <DropZone {...register("MedicalUrl", { required: true })} /> */}
                     <div style={{ border: '2px dashed blue', height: "100px"}}>
                       <div {...getRootProps()}>
-                        <input {...getInputProps()} />
+                        <input {...getInputProps()}{...register("Attachment", { required: "This field is required" })} />
+                       
                         {isDragActive ? (
                           <p>Drop the files here ...</p>
                         ) : (
                           <p style={{marginTop:"30px",textAlign:"center"}}>
                             Drop the files here ..
                           </p>
-                        )}
+                        )} 
                       </div>
-                    </div>
+                    </div>{errors.Attachment && <p className="error-message" style={customStyles.errorMsg}>{errors.Attachment.message}</p>}
                     {/* {errors.MedicalUrl && <p className="error-message" style={{ color: "red" }}>{errors.MedicalUrl.message}</p>} */}
                   </div>
                   <div className="col-lg-2"></div>
@@ -158,13 +179,13 @@ const ApplyLeave = () => {
                   <div className="col-lg-8"></div>
                   <div className="col-lg-2">
                     <Link href="/Requests/Leaverequest">
-                      <button className="submit-button">
+                      <button className="AddButton">
                         Cancel
                       </button>
                     </Link>
                   </div>
                   <div className="col-lg-2" style={{ float: "right" }}>
-                    <button type="submit" className="submit-button">
+                    <button type="submit" className="AddButton">
                       Save
                     </button>
                   </div>

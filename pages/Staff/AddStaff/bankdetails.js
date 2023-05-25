@@ -162,7 +162,7 @@ const getByID = async (id) => {
     <div style={customStyles}>
       <form onSubmit={handleSubmit(onSubmit)}>
         <div className="container-fluid">
-          <div className="card p-3">
+          <div className="card p-3 border-0">
             <div className="row">
               <div className="col-12">
               <h6>Bank Details</h6>

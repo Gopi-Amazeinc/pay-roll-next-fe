@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
+import ReactPaginate from "react-paginate";
 
 const Index = () => {
   const [bulkUpload, setBulkUploadData] = useState([]);
@@ -34,6 +35,16 @@ const Index = () => {
       Swal.fire("Failed to delete data");
     }
   };
+
+  const PER_PAGE = 5;
+  const [currentPage, setCurrentPage] = useState(0);
+  function handlePageClick({ selected: selectedPage }) {
+    setCurrentPage(selectedPage);
+  }
+  const offset = currentPage * PER_PAGE;
+  const pageCount = Math.ceil(bulkUpload.length / PER_PAGE);
+
+
   return (
     <div className="container">
       <br />
@@ -67,17 +78,17 @@ const Index = () => {
           </div>
           <div className="col-lg-2">
             <Link href="">
-              <button className="uploadButton">EXPORT TO EXCEL</button>
+              <button className="AddButton">EXPORT TO EXCEL</button>
             </Link>
           </div>
           <div className="col-lg-2">
             <Link href="">
-              <button className="uploadButton">UPLOAD</button>
+              <button className="AddButton">UPLOAD</button>
             </Link>
           </div>
           <div className="col-lg-2">
             <Link href="/Staff/ComponentBulkUpload/new">
-              <button className="uploadButton">ADD NEW</button>
+              <button className="AddButton">ADD NEW</button>
             </Link>
           </div>
         </div>
@@ -95,7 +106,7 @@ const Index = () => {
             </tr>
           </thead>
           <tbody>
-            {bulkUpload.map((data, index) => {
+            {bulkUpload.slice(offset, offset + PER_PAGE).map((data, index) => {
               return (
                 <tr className="text-dark" key={index}>
                   <td>{data.id}</td>
@@ -117,6 +128,28 @@ const Index = () => {
             })}
           </tbody>
         </table>
+
+        <div className="mb-4 mt-4 text-center">
+                <ReactPaginate
+                  previousLabel={"Previous"}
+                  nextLabel={"Next"}
+                  breakLabel={"..."}
+                  pageCount={pageCount}
+                  marginPagesDisplayed={2}
+                  pageRangeDisplayed={3}
+                  onPageChange={handlePageClick}
+                  containerClassName={"pagination  justify-content-center"}
+                  pageClassName={"page-item "}
+                  pageLinkClassName={"page-link"}
+                  previousClassName={"page-item"}
+                  previousLinkClassName={"page-link"}
+                  nextClassName={"page-item"}
+                  nextLinkClassName={"page-link"}
+                  breakClassName={"page-item"}
+                  breakLinkClassName={"page-link"}
+                  activeClassName={"active primary"}
+                />
+              </div>
       </div>
     </div>
   );

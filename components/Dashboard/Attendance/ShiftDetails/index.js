@@ -34,14 +34,12 @@ const Shiftdetails = () => {
   let staffID;
   const tableRef = useRef(null);
 
-  const PER_PAGE = 10;
-  const [currentPage, setCurrentPage] = useState(0);
-  function handlePageClick({ selected: selectedPage }) {
-    setCurrentPage(selectedPage)
-  }
-  const offset = currentPage * PER_PAGE;
-  const pageCount = Math.ceil(shiftDetails.length / PER_PAGE);
-
+  
+  useEffect(() => {
+    getShiftDetails();
+    // getapprovedshiftDetails();
+    // getrejectedshiftDetails();
+  }, []);
 
 
   useEffect(() => {
@@ -52,13 +50,6 @@ const Shiftdetails = () => {
       }
     }
   }, [userid]);
-
-
-  useEffect(() => {
-    getShiftDetails();
-    // getapprovedshiftDetails();
-    // getrejectedshiftDetails();
-  }, []);
 
 
   const getCurrentMonthDates = () => {
@@ -101,15 +92,22 @@ const Shiftdetails = () => {
       Swal.fire("End Date should be greater than Start Date");
     } else {
       setEndDate(selectedDate);
-      return getDateBySelectedDate(selectedDate);
+      return getDataBySelectedDate(selectedDate);
     }
   };
 
-  const getDateBySelectedDate = (endDatesss) => {
-    return getShiftDetails(startDate, endDatesss);
+  const getDataBySelectedDate = (endDatesss) => {
+    return getShiftBySlectedDate(startDate, endDatesss);
   };
 
-  const getShiftDetails = async (SDate, EDate) => {
+  const getShiftBySlectedDate =  async (Sdate,Edate) => {
+    debugger
+    const datesss = shiftDetails.filter((item) => {
+          return item.shiftDate == Sdate && item.endDate == Edate;
+        });
+        return datesss
+  }
+  const getShiftDetails = async () => {
     const userid = sessionStorage.getItem("userID");
     debugger
     const res = await apiService.commonGetCall("HR/GetStaffShiftDetailsByband?staffID=" + userid);
@@ -119,6 +117,17 @@ const Shiftdetails = () => {
 
     // https://103.12.1.103/PayrollDemoAPI/Master/GetStaffShiftDetails
   };
+
+
+  const PER_PAGE = 10;
+  const [currentPage, setCurrentPage] = useState(0);
+  function handlePageClick({ selected: selectedPage }) {
+    setCurrentPage(selectedPage)
+  }
+  const offset = currentPage * PER_PAGE;
+  const pageCount = Math.ceil(shiftDetails.length / PER_PAGE);
+
+
 
   //   const getapprovedshiftDetails = async () => {
   //     const userid = sessionStorage.getItem("userID");
@@ -218,7 +227,7 @@ const Shiftdetails = () => {
                   }
                 </div>
                 <div className="col-lg-2">
-                  <br /> 
+                  <br />
                   {count > 0 ?
                     <>
                       <DownloadTableExcel
@@ -254,7 +263,7 @@ const Shiftdetails = () => {
             <tbody>
               {Array.isArray(shiftDetails) && shiftDetails.length > 0 && (
                 <>
-                  {shiftDetails.map((data) => {
+                  {shiftDetails.slice(offset, offset + PER_PAGE).map((data) => {
                     return (
                       <tr key={data.id}>
                         <td>{data.shiftDate}</td>
