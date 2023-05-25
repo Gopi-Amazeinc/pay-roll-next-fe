@@ -47,6 +47,25 @@ const Applyloans = () => {
     //         clearForm(ApplyLoansdata);
     //     }
     // ),[]}
+    const customStyles = {
+        content: {
+            top: "50%",
+            left: "50%",
+            right: "auto",
+            bottom: "auto",
+            marginRight: "-50%",
+            transform: "translate(-50%, -50%)",
+            width: "60%",
+        },
+        errorMsg: {
+            fontSize: "12px",
+            fontWeight: "500",
+            color: "red",
+        },
+        inputLabel: {
+            fontSize: "16px",
+        },
+    };
     return (
         <Layout>
             <div className="container-fluid">
@@ -78,7 +97,7 @@ const Applyloans = () => {
                                             required: true,
                                              pattern: /^\d+/
                                          } )} className='form-control form-control-sm' />
-                                         <div className="error-message"  style={{ color: "red" }}>
+                                         <div className="error-message" style={customStyles.errorMsg} >
 
                                         {errors.loanAmount?.type==='required' && 
                                            " Please enter Loan Amounts"}
@@ -93,7 +112,7 @@ const Applyloans = () => {
                                           required: true,
                                           pattern: /^\d+/
                                       } )} className='form-control form-control-sm' />
-                                      <div className="error-message"  style={{ color: "red" }}>
+                                      <div className="error-message"  style={customStyles.errorMsg}>
 
                                      {errors.Tenure?.type==='required' && 
                                         " Please enter Tenure"}
@@ -104,13 +123,13 @@ const Applyloans = () => {
                                     </div>
                                     <div className='col-lg-4'>
                                         <label style={{ fontWeight: "bold" }}>Comments<span style={{ color: "red" }}>*</span></label>
-                                        <textarea rows={3} className='form-control' {...register('Comments', {
+                                        <textarea rows={3} className='form-control'minLength={10} {...register('Comments', {
                                             required: "Comments is required", pattern: {
                                                 value: '^[A-Za-z0-9 ]+$',
                                                 message: "Please enter a valid Position Name"
                                             }
                                         })} placeholder='Comments' />
-                                        {errors.Comments && <p className="error-message" style={{ color: "red" }}>{errors.Comments.message}</p>}
+                                        {errors.Comments && <p className="error-message" style={customStyles.errorMsg}>{errors.Comments.message}</p>}
                                     </div>
                                 </div>
                                 <div className='row mt-3'>
