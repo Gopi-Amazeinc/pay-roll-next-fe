@@ -114,15 +114,16 @@ const MyTeamAttendence = () => {
     return getAttendenceByID(20540, startDate, endDatesss);
   };
 
-  const getAttendenceByID = async (Supervisor, SDate, EDate) => {
+  const getAttendenceByID = async (EmployeeID, startdate, enddate) => {
+    debugger
     if (userID) {
       const res = await apiService.commonGetCall(
-        "HR/GetAttendanceByManagerID?Supervisor=" +
-        Supervisor +
-        "&SDate=" +
-        SDate +
-        "&EDate=" +
-        EDate
+        "Payroll/Get_AttendanceReportForEmployee?EmployeeID=" +
+        EmployeeID +
+        "&startdate=" +
+        startdate +
+        "&enddate=" +
+        enddate
       );
       setMyTeamAttendence(res.data);
       setcount(res.data.length);
@@ -150,7 +151,7 @@ const MyTeamAttendence = () => {
     <div>
       <div className="container">
         <div className="row mt-3">
-          <div className="col-lg-3" style={{ marginLeft: "15px" }}>
+          <div className="col-lg-3" >
             <Link
               className={Styles.mainheader}
               href="/Attendance/AttendanceDetails"
@@ -310,9 +311,9 @@ const MyTeamAttendence = () => {
                       return (
 
                         <tr value={data.id} key={index}>
-                          <td>{data.staffID}</td>
+                          <td>{data.employeID}</td>
                           <td>{data.staffname1}</td>
-                          <td>{data.position}</td>
+                          <td>{data.shift}</td>
                           <td>{data.filterdate}</td>
 
                           <td>{data.dayType}</td>

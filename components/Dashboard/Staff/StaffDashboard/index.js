@@ -18,9 +18,9 @@ function StaffDashbaord() {
     );
     setStaffData(res.data);
   };
-  // const getData = (data) => {
-  //   sessionStorage.setItem("id", data.id);
-  // };
+  const getData = (data) => {
+    // sessionStorage.setItem("id", data.id);
+  };
   const clearData = () => {
     // sessionStorage.setItem("id", "");
   };
@@ -158,7 +158,7 @@ function StaffDashbaord() {
                     <th>Email</th>
                     <th>Date Of Joining</th>
                     <th>Manager</th>
-                    {/* <th>Attendance Enable</th> */}
+                    <th>Attendance Enable</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
@@ -175,33 +175,48 @@ function StaffDashbaord() {
                         <td>{data.emailID}</td>
                         <td>{data.hiredDate}</td>
                         <td>{data.manager}</td>
-                        {/* <td>
+                        <td>
                     <span onClick={() => enableDisableStaff(data)}>
                       {data.attendanceEnable ? (
                         <button
                         onClick={getData.bind(this, data)}
                         className="enableDisableBtn"
                       >
-                        Disable
+                        DISABLE
                       </button>  
                       ) : (
                         <button
                         onClick={getData.bind(this, data)}
                         className="enableDisableBtn"
                       >
-                        Enable
+                        ENABLE
                       </button>  
                       )}
 
                     </span>
                                         
-                  </td> */}
+                  </td>
                         {/* <td >
                      <button onClick={() => editStaff(data.id)} className={Styles.editBtn}>Edit</button>
                   </td> */}
                         <td>
-                          <Link  href={`/Staff/AddStaff/Edit/${data.id}`}>
-                            <buttton className={Styles.editBtnn}>Edit</buttton>
+                          <Link href={`/Staff/AddStaff/Edit/${data.id}`}>
+                            {/* <buttton style={{
+                              textShadow: "none",
+                              letterSpacing: ".5px",
+                              borderRadius: "5px",
+                              borderColor: "#3247d5",
+                              backgroundColor: "white",
+                              color: "#3247d5",
+                              fontWeight: "600",
+                              width: "53px",
+                              height: "26px",
+                              border: "2px solid #3247d5"
+                                  }}>Edit</buttton> */}
+                                <div style={{width:"50px"}}>
+                                  <BiEdit />
+                                </div>
+                              
                           </Link>
                         </td>
                       </tr>

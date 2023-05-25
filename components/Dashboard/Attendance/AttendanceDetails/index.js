@@ -135,11 +135,16 @@ const AttendenceDetails = () => {
   return (
     <div className="container-fluid">
       <div className="row mt-3">
-        <div className="col-lg-3">
-          <div className={Styles.mainheader} style={{ maxContent: "60%" ,width: "70%" }} onClick={() => router.push("/Attendance/AttendanceDetails")}> My Attendance Details</div>
-          <div className="line-border"></div>
+        <div className="col-lg-3" >
+          <Link
+            className={Styles.mainheader}
+            href="/Attendance/AttendanceDetails"
+          >
+            My Attendence Details
+          </Link>
+
         </div>
-        <div className="col-lg-3">
+        <div className="col-lg-3" style={{ marginLeft: "-30px" }}>
           {roleID == 3 && (
             <>
               <Link

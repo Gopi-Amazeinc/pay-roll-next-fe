@@ -161,7 +161,7 @@ export default function EmploymentDetails({data}) {
     return (
       <div>
         <div className="container-fluid">
-          <div className="card p-3">
+          <div className="card p-3 border-0">
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="row">
                 <div className="col-12">

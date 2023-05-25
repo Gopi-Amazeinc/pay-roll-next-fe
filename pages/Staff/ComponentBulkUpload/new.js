@@ -71,12 +71,16 @@ const ComponentBulkUploadForm = ({ editData }) => {
   return (
     <Layout>
       <div className="container">
-        <div className={Styles.card}>
-          <h3 className="text-primary fs-5 mb-2 fw-bold">Staff Add Component Mapping</h3>
+        <br></br>
+        <br></br>
+        <br></br>
+        <div className="card p-3 border-0">
+          <h3 className="Heading">Staff Add Component Mapping</h3>
           <form onSubmit={handleSubmit(onSubmit)}>
+            <br></br>
             <div className="row">
               <div className="col-lg-3">
-                <label className={Styles.labels}>
+                <label >
                   Staff Name<span style={{ color: "red" }}>*</span>{" "}
                 </label>{" "}
                 <br />
@@ -84,7 +88,7 @@ const ComponentBulkUploadForm = ({ editData }) => {
                   className={Styles.selector}
                   {...register("EmployeeID", { required: true })}
                 >
-                  <option value="" className={Styles.options}>
+                  <option value="" >
                     Select Staff
                   </option>
                   {staff.map((data) => {
@@ -103,12 +107,12 @@ const ComponentBulkUploadForm = ({ editData }) => {
                 )}
               </div>
               <div className="col-lg-3">
-                <label className={Styles.labels}>
+                <label>
                   Component<span style={{ color: "red" }}>*</span>
                 </label>
                 <br />
                 <select
-                  className={Styles.selector}
+                  className="form-select"
                   {...register("PayCode", { required: true })}
                 >
                   <option value="">Select Component</option>
@@ -129,13 +133,14 @@ const ComponentBulkUploadForm = ({ editData }) => {
                 )}
               </div>
               <div className="col-lg-3">
-                <label className={Styles.labels}>
+                <label>
                   Amount<span style={{ color: "red" }}>*</span>{" "}
                 </label>
                 <br />
                 <input
                   type="number"
-                  className={Styles.selector}
+                  placeholder="Amount"
+                  className="form-control"
                   {...register("Amount", { required: true })}
                 />
                 {errors.Amount && (
@@ -145,7 +150,7 @@ const ComponentBulkUploadForm = ({ editData }) => {
                 )}
               </div>
               <div className="col-lg-3">
-                <label className={Styles.labels}>
+                <label>
                   Payment Frequency<span style={{ color: "red" }}>*</span>{" "}
                 </label>
                 <br />
@@ -169,23 +174,24 @@ const ComponentBulkUploadForm = ({ editData }) => {
 
             </div>
             <br />
-            <div className="row">
-              <div className="col-lg-11">
+            <div className="row mt-3">
+              <div className="col-lg-8"></div>
+              <div className="col-lg-2">
                 <Link href="/Staff/ComponentBulkUpload">
-                  <button
-                    className="btn btn-primary"
-                    style={{ float: "right", marginLeft: "5px" }}
-                  >
-                    Cancel
-                  </button>
+                  <button className="AddButton">Cancel</button>
                 </Link>
-                <button
-                  type="submit"
-                  className="btn btn-primary"
-                  style={{ float: "right" }}
-                >
-                  Save
-                </button>
+              </div>
+              <div className="col-lg-2">
+                {actionType == "insert" && (
+                  <button type="submit" className="AddButton">
+                    Save
+                  </button>
+                )}
+                {actionType == "update" && (
+                  <button type="submit" className="AddButton">
+                    Update
+                  </button>
+                )}
               </div>
             </div>
           </form>
