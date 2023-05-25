@@ -37,7 +37,7 @@ const RunFinalPayroll = () => {
     }, []);
 
     const handleButtonClick = async () => {
-        try {   
+        try {
             if (watch("PayCode")) {
                 let res = paycode.filter(x => x.payCode == watch("PayCode"))[0].payrollStartDate;
                 let rres = paycode.filter(x => x.payCode == watch("PayCode"))[0].payrollEndDate;;
@@ -135,7 +135,7 @@ const RunFinalPayroll = () => {
                                         handleButtonClick();
                                     }}
                                 >
-                                    FETCH EMPLOYEES
+                                    Fetch Employees
                                 </button>
                             </div>
                             <div className="col-lg-2">
@@ -190,7 +190,7 @@ const RunFinalPayroll = () => {
                     <br ></br>
                     {
                         runPayrollData && (
-                            <button type="button" id="btn_button" className="form-control CancelBTN" style={{ width: "70%" }}>Run Payroll</button>
+                            <button type="button" id="btn_button" className="newPayrollBtn" style={{ width: "70%" }}>Run Payroll</button>
                         )
                     }
                 </div>
@@ -225,10 +225,11 @@ const RunFinalPayroll = () => {
                         </thead>
                         <tbody >
                             {
-                                dashboard.filter(data => {
-                                    if ((data.employeID.toString().includes(keyword)) || (data.name.toLowerCase().includes(keyword.toLowerCase()))) {
-                                        return data;
-                                    }
+                                dashboard.filter(post => {
+                                    return Object.values(post).some(value =>
+                                        value !== null &&
+                                        value.toString().toLowerCase().includes(keyword.toLowerCase())
+                                    );
                                 }).map((data, index) => {
                                     return (
                                         <tr className="text-dark" key={index}>

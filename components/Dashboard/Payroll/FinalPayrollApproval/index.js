@@ -9,7 +9,6 @@ function FinalPayrollApproval() {
 
     const [uniquelist, setUniqueList] = useState([]);
     const [normalpayroll, setNormalPayroll] = useState(false)
-    // eslint-disable-next-line react-hooks/rules-of-hooks
     const [finalpayroll, setFinalPayroll] = useState(true)
     const [userID, setUserID] = useState()
     const toggleNewRequest = () => {
