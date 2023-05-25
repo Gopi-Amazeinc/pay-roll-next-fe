@@ -85,7 +85,16 @@ const AddStaffSalaryForm = ({ editData }) => {
       // router.push("Staff/StaffSalary");
     }
   };
-
+  const customStyles = {
+    span: {
+      color: "red",
+    },
+    errorMsg: {
+      fontSize: "12px",
+      fontWeight: "500",
+      color: "red",
+    },
+  };
   return (
     <Layout>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -95,7 +104,9 @@ const AddStaffSalaryForm = ({ editData }) => {
           <div className="card shadow p-3">
             <div className="row">
               <div className="col-lg-3">
-                <label>Staff</label>
+                <label>
+                  Staff<span style={customStyles.span}>*</span>
+                </label>
                 <select
                   id="Staff"
                   name="Staff"
@@ -113,62 +124,114 @@ const AddStaffSalaryForm = ({ editData }) => {
                     );
                   })}
                 </select>
+                {errors.StaffID && (
+                  <span style={customStyles.errorMsg}>Please select staff</span>
+                )}
               </div>
               <div className="col-lg-3">
-                <label>Basic Salary</label>
-                <input
-                  {...register("BasicSalary")}
-                  type="number"
-                  placeholder="Basic Salary"
-                  className="form-control "
-                />
+                <label>
+                  Basic Salary<span style={customStyles.span}>*</span>
+                </label>
+                <div>
+                  <input
+                    {...register("BasicSalary")}
+                    type="number"
+                    placeholder="Basic Salary"
+                    className="form-control"
+                  />
+                  {errors.BasicSalary && (
+                    <span style={customStyles.errorMsg}>
+                      Please enter basic salary
+                    </span>
+                  )}
+                </div>
               </div>
               <div className="col-lg-3">
-                <label>Effective Date</label>
+                <label>
+                  Effective Date<span style={customStyles.span}>*</span>
+                </label>
                 <input
                   {...register("EffectiveDate")}
                   type="date"
-                  className="form-control "
+                  className="form-control"
                 />
+                {errors.EffectiveDate && (
+                  <span style={customStyles.errorMsg}>
+                    {" "}
+                    Please select effective date
+                  </span>
+                )}
               </div>
               <div className="col-lg-3">
-                <label>Working Days In Month</label>
+                <label>
+                  Working Days In Month<span style={customStyles.span}>*</span>
+                </label>
                 <input
                   {...register("WorkDaysInMonth")}
                   type="number"
                   placeholder="Working Days In Month"
                   className="form-control "
                 />
+                {errors.WorkDaysInMonth && (
+                  <span style={customStyles.errorMsg}>
+                    {" "}
+                    Please enter work days in a month
+                  </span>
+                )}
               </div>
             </div>
             <br></br>
             <div className="row">
               <div className="col-lg-3">
-                <label>Working Hours In Day</label>
+                <label>
+                  Working Hours In Day<span style={customStyles.span}>*</span>
+                </label>
                 <input
                   {...register("WorkHoursInDay")}
                   type="number"
                   placeholder="Working Hours In Day"
                   className="form-control"
                 />
+                {errors.WorkDaysInMonth && (
+                  <span style={customStyles.errorMsg}>
+                    {" "}
+                    Please enter work hours in a day
+                  </span>
+                )}
               </div>
               <div className="col-lg-3">
-                <label>Hourly Rate</label>
+                <label>
+                  Hourly Rate<span style={customStyles.span}>*</span>
+                </label>
                 <input
                   {...register("HourlyRate")}
                   type="number"
                   placeholder="Hourly Rate"
                   className="form-control "
                 />
+                {errors.HourlyRate && (
+                  <span style={customStyles.errorMsg}>
+                    {" "}
+                    Please enter hourly rate
+                  </span>
+                )}
               </div>
               <div className="col-lg-3">
-                <label>Daily Rate</label>
+                <label>
+                  Daily Rate<span style={customStyles.span}>*</span>
+                </label>
                 <input
                   {...register("DailyRate")}
                   type="number"
                   placeholder="Daily Rate"
                   className="form-control "
                 />
+                {errors.DailyRate && (
+                  <span style={customStyles.errorMsg}>
+                    {" "}
+                    Please enter daily rate
+                  </span>
+                )}
               </div>
             </div>
             <br></br>

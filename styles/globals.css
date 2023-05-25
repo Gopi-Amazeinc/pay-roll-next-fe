@@ -50,7 +50,18 @@
   text-transform: capitalize;
   font-size: 16px;
 }
-
+.staffNextBtn{
+  box-sizing: border-box;
+  width: 72px;
+  height: 32px;
+  border-radius: 5px;
+  font-style: normal;
+  color: #fff;
+  background: #3247d5;
+  border: 2px solid #3247d5;
+  text-transform: capitalize;
+  font-size: 16px;
+}
 .staffEditBtn {
   display: flex;
   justify-content: center;
@@ -99,11 +110,11 @@
 }
 
 .enableDisableBtn {
-  background-color: #e6e6e6;
+  background-color: #eeeeee;
   color: red;
   border-radius: 5px;
   border: red;
-  /* text-transform: uppercase; */
+  text-transform: uppercase;
   font-weight: 400;
   text-shadow: none;
   letter-spacing: .5px;
