@@ -47,15 +47,15 @@ const InitialPayrollForm = () => {
     getData();
   }, []);
 
-  const runPayrollButton = () => {
-    router.push("/Payroll/InitialPayroll")
-    Swal.fire({
-      icon: "success",
-      title: "Initial payroll ran Successfully",
-      text: "Payroll run has been completed",
-    });
+  // const runPayrollButton = () => {
+  //   router.push("/Payroll/InitialPayroll")
+  //   Swal.fire({
+  //     icon: "success",
+  //     title: "Initial payroll ran Successfully",
+  //     text: "Payroll run has been completed",
+  //   });
 
-  }
+  // }
   function handleData(data) {
     if (watch("PayCode")) {
       let res = paycode.filter((x) => x.paycode == watch("PayCode"))[0]
@@ -128,6 +128,8 @@ const InitialPayrollForm = () => {
         setRunPayrollDashboardData(response.data);
         console.log(response.data);
         Swal.fire("Initial Payroll Ran Successfully!");
+        router.push("/Payroll/InitialPayroll")
+
       }
     } catch (error) {
       console.error(error);
@@ -183,9 +185,7 @@ const InitialPayrollForm = () => {
                   placeholder="Search"
                   type="text"
                   className="form-control form-control-sm"
-                  onChange={(e) => {
-                    setKeyword(e.target.value);
-                  }}
+                  onChange={e => { setKeyword(e.target.value) }}
                 />
               </div>
               <div className="col-lg-1"></div>

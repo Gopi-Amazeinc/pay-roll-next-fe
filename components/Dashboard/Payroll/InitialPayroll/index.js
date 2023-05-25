@@ -56,12 +56,7 @@ const InitialPayroll = () => {
                 </tr>
               </thead>
               <tbody>
-                {intialPayroll.filter(post => {
-                  return Object.values(post).some(value =>
-                    value !== null &&
-                    value.toString().toLowerCase().includes(keyword.toLowerCase())
-                  );
-                }).slice(offset, offset + PER_PAGE).map((data, index) => {
+                {intialPayroll.slice(offset, offset + PER_PAGE).map((data, index) => {
                   return (
                     <tr key={data.index}>
                       <td>{data.endyear}</td>
