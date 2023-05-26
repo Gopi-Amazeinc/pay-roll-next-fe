@@ -51,7 +51,25 @@ const DepartmentMasterForm = ({ editData }) => {
         );
         clearForm(res.data[0]);
     };
-
+    const customStyles = {
+        content: {
+          top: "50%",
+          left: "50%",
+          right: "auto",
+          bottom: "auto",
+          marginRight: "-50%",
+          transform: "translate(-50%, -50%)",
+          width: "60%",
+        },
+        errorMsg: {
+          fontSize: "12px",
+          fontWeight: "500",
+          color: "red",
+        },
+        inputLabel: {
+          fontSize: "16px",
+        },
+      };
 
 
     return (
@@ -75,14 +93,14 @@ const DepartmentMasterForm = ({ editData }) => {
                                             }
                                         })} className={`form-control`} />
 
-                                        {errors.Department_name && <p className="error-message" style={{ color: "red" }}>{errors.Department_name.message}</p>}
+                                        {errors.Department_name && <p className="error-message" style={customStyles.errorMsg}>{errors.Department_name.message}</p>}
 
                                         {/* <div className="invalid-feedback">{errors.Department_name?.message}</div> */}
 
                                     </div>
                                     <div className="col-lg-5">
                                         <label className='fw-bold'>Department Description<span id={Styles.span}>*</span></label>
-                                        <textarea rows="3" type="text"  {...register('Department_Desc', {
+                                        <textarea rows="3" type="text" minLength={10} {...register('Department_Desc', {
                                             required: "Please add a Description ", pattern: {
 
                                                 value: '^[A-Za-z0-9 ]+$',
@@ -91,7 +109,7 @@ const DepartmentMasterForm = ({ editData }) => {
 
                                             }
                                         })} placeholder="Description" className="form-control"></textarea>
-                                        {errors.Department_Desc && <p className="error-message" style={{ color: "red" }}>{errors.Department_Desc.message}</p>}
+                                        {errors.Department_Desc && <p className="error-message" style={customStyles.errorMsg}>{errors.Department_Desc.message}</p>}
 
 
                                     </div>

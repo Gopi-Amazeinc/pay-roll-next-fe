@@ -52,6 +52,26 @@ export default function SubsidaryMasterForm({ editData }) {
         );
         clearForm(res.data[0]);
     };
+    const customStyles = {
+        content: {
+          top: "50%",
+          left: "50%",
+          right: "auto",
+          bottom: "auto",
+          marginRight: "-50%",
+          transform: "translate(-50%, -50%)",
+          width: "60%",
+        },
+        errorMsg: {
+          fontSize: "12px",
+          fontWeight: "500",
+          color: "red",
+        },
+        inputLabel: {
+          fontSize: "16px",
+        },
+      };
+    
 
     return (
         <Layout>
@@ -70,18 +90,18 @@ export default function SubsidaryMasterForm({ editData }) {
                                                 message: "Please enter a valid Subsidiary Name"
                                             }
                                         })} placeholder="Subsidiary Name" />
-                                        {errors.Name && <p className="error-message" style={{ color: "red" }}>{errors.Name.message}</p>}
+                                        {errors.Name && <p className="error-message" style={customStyles.errorMsg}>{errors.Name.message}</p>}
 
                                     </div>
                                     <div className="col-lg-5" style={{ marginBottom: "20px" }}>
                                         <label className='fw-bold'>Subsidiary Description<span className={subsidaryform.span}>*</span></label> <br />
-                                        <textarea className="form-control"{...register('Description', {
+                                        <textarea className="form-control" minLength={10}{...register('Description', {
                                             required: "Please add a Description", pattern: {
                                                 value: '^[A-Za-z0-9 ]+$',
                                                 message: "Please enter a Description"
                                             }
                                         })} placeholder='Description' />
-                                        {errors.Description && <p className="error-message" style={{ color: "red" }}>{errors.Description.message}</p>}
+                                        {errors.Description && <p className="error-message" style={customStyles.errorMsg}>{errors.Description.message}</p>}
                                     </div>
                                 </div>
                                 <br />

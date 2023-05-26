@@ -244,6 +244,7 @@ const MyTeamObasisRequest = () => {
                             </div>
                             <div className="col-lg-3">
                                 <Link href="/Requests/Myteamobasisrequest">  <label className="mainheader">My Team OBASIS Details</label> </Link>
+                                
                             </div>
                         </div>
                         <br />

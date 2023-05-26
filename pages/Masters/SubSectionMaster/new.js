@@ -103,7 +103,7 @@ const SubSectionMasterForm = ({ editData }) => {
                       className="form-control"
                       name="Description"
                       rows="3"
-                      type="text"
+                      type="text" minLength={10}
                       {...register("Description", { required: true })}
                       placeholder="Description"
                     />

@@ -50,6 +50,26 @@ function DivDivisionMaster({ editData }) {
         );
         clearForm(res.data[0]);
     };
+    const customStyles = {
+        content: {
+          top: "50%",
+          left: "50%",
+          right: "auto",
+          bottom: "auto",
+          marginRight: "-50%",
+          transform: "translate(-50%, -50%)",
+          width: "60%",
+        },
+        errorMsg: {
+          fontSize: "12px",
+          fontWeight: "500",
+          color: "red",
+        },
+        inputLabel: {
+          fontSize: "16px",
+        },
+      };
+
 
     return (
         <Layout>
@@ -71,7 +91,7 @@ function DivDivisionMaster({ editData }) {
                                         />
                                         <div>
                                             {errors.Short && (
-                                                <span className="mt-2 text-danger">
+                                                <span className="mt-2 text-danger"style={customStyles.errorMsg}>
                                                     Please enter name
                                                 </span>
                                             )}
@@ -81,13 +101,13 @@ function DivDivisionMaster({ editData }) {
                                         <label className='fw-bold'>Description <i className="text-danger">*</i></label>
                                         <textarea
                                             name="Description"
-                                            className="form-control"
+                                            className="form-control"minLength={10}
                                             {...register("Description", { required: true })}
                                             placeholder="Description"
                                         />
                                         <div>
                                             {errors.Description && (
-                                                <span className="text-danger mt-2" >
+                                                <span className="text-danger mt-2" style={customStyles.errorMsg}>
                                                     Please enter description
                                                 </span>
                                             )}

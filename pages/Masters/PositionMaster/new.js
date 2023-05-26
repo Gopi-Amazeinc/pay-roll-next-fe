@@ -51,6 +51,26 @@ const PositionMasterDetails = ({ editData }) => {
         );
         clearForm(res.data[0]);
     };
+    const customStyles = {
+        content: {
+          top: "50%",
+          left: "50%",
+          right: "auto",
+          bottom: "auto",
+          marginRight: "-50%",
+          transform: "translate(-50%, -50%)",
+          width: "60%",
+        },
+        errorMsg: {
+          fontSize: "12px",
+          fontWeight: "500",
+          color: "red",
+        },
+        inputLabel: {
+          fontSize: "16px",
+        },
+      };
+    
 
     return (
         <Layout>
@@ -76,14 +96,14 @@ const PositionMasterDetails = ({ editData }) => {
 
                                             })} placeholder="Position Name" />
 
-                                            {errors.Short && <p className="error-message" style={{ color: "red" }}>{errors.Short.message}</p>}
+                                            {errors.Short && <p className="error-message" style={customStyles.errorMsg}>{errors.Short.message}</p>}
 
                                         </div>
                                         <div className="col-lg-5">
                                             <label className='fw-bold'> Description<span className="text-danger">*</span></label>
-                                            <input name="Description"   {...register("Description", { required: true })} rows="3" type="text" placeholder='Description' className={`form-control `} />
+                                            <input name="Description"  minLength={10} {...register("Description", { required: true })} rows="3" type="text" placeholder='Description' className={`form-control `} />
                                             {
-                                                errors.Description && <p  className="error-message" style={{ color: "red" }}>Description is Required</p>
+                                                errors.Description && <p  className="error-message" style={customStyles.errorMsg}>Description is Required</p>
                                             }
                                         </div>
                                     </div>

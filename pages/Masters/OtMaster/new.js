@@ -53,7 +53,25 @@ function Otmaster({ editData }) {
     );
     clearForm(res.data[0]);
   };
-
+  const customStyles = {
+    content: {
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      marginRight: "-50%",
+      transform: "translate(-50%, -50%)",
+      width: "60%",
+    },
+    errorMsg: {
+      fontSize: "12px",
+      fontWeight: "500",
+      color: "red",
+    },
+    inputLabel: {
+      fontSize: "16px",
+    },
+  };
   return (
     <Layout>
 
@@ -69,14 +87,14 @@ function Otmaster({ editData }) {
                     <input type="text" name="day" className='form-control'placeholder="Day" {...register("Day", {
                       required: "This field is required", pattern: { value: '^[A-Za-z0-9 ]+$', message: "Please enter a valid Day" }
                     })} />
-                    {errors.Day && <p className="error-message" style={{ color: "red" }}>{errors.Day.message}</p>}
+                    {errors.Day && <p className="error-message" style={customStyles.errorMsg}>{errors.Day.message}</p>}
                   </div>
                   <div className="col-lg-4">
                     <label className="fw-bold"> Normal<span style={{ color: "red" }}>*</span></label>
                     <input type="text" name="normal" className='form-control' placeholder="Normal" {...register("Normal", {
                       required: "This field is required", pattern: { value: '^[A-Za-z0-9 ]+$', message: "Please enter valid Details" }
                     })} />
-                    {errors.Normal && <p className="error-message" style={{ color: "red" }}>{errors.Normal.message}</p>}
+                    {errors.Normal && <p className="error-message" style={customStyles.errorMsg}>{errors.Normal.message}</p>}
                   </div>
                   <div className="col-lg-4">
                     <label className="fw-bold"> OT<span style={{ color: "red" }}>*</span></label>
@@ -85,21 +103,21 @@ function Otmaster({ editData }) {
                         value: '^[0-9 .]+$', message: "Please enter valid Details"
                       }
                     })} />
-                    {errors.OT && <p className="error-message" style={{ color: "red" }}>{errors.OT.message}</p>}
+                    {errors.OT && <p className="error-message" style={customStyles.errorMsg}>{errors.OT.message}</p>}
                   </div>
                   <div className="col-lg-4">
                     <label className="fw-bold"> ND<span style={{ color: "red" }}>*</span></label>
                     <input type="text" name="nd" className='form-control' placeholder="ND" {...register("ND", {
                       required: "This field is required", pattern: { value: '^[A-Za-z0-9 ]+$', message: "Please enter valid Details" }
                     })} />
-                    {errors.ND && <p className="error-message" style={{ color: "red" }}>{errors.ND.message}</p>}
+                    {errors.ND && <p className="error-message" style={customStyles.errorMsg}>{errors.ND.message}</p>}
                   </div>
                   <div className="col-lg-4">
                     <label className="fw-bold"> NDOT<span style={{ color: "red" }}>*</span></label>
                     <input type="text" name="ndot" className='form-control' placeholder="NDOT" {...register("NDOT", {
                       required: "This field is required", pattern: { value: '^[A-Za-z0-9 ]+$', message: "Please enter valid Details" }
                     })} />
-                    {errors.NDOT && <p className="error-message" style={{ color: "red" }}>{errors.NDOT.message}</p>}
+                    {errors.NDOT && <p className="error-message" style={customStyles.errorMsg}>{errors.NDOT.message}</p>}
                   </div>
                 </div>
                 <br />
