@@ -22,7 +22,10 @@ const CompanyAttendanceDetails = () => {
   const [StaffData, setStaffData] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [keyword, setKeyword] = useState("");
-  const [companystaff, setCompanystaff] = useState("");
+
+  const [selctedStaffdata, setselctedStaffdata] = useState();
+
+  // const [companystaff, setCompanystaff] = useState("");
 
 
 
@@ -74,14 +77,14 @@ const CompanyAttendanceDetails = () => {
     // getAttendenceByID();
   }, []);
 
-  useEffect(() => {
-    if (userID) {
-      const resu = getCurrentMonthDates();
-      if (resu) {
-        getCompanyAttendance(resu.setStartDate, resu.setEndDate);
-      }
-    }
-  }, [userID]);
+  // useEffect(() => {
+  //   if (userID) {
+  //     const resu = getCurrentMonthDates();
+  //     if (resu) {
+  //       getCompanyAttendance(resu.setStartDate, resu.setEndDate);
+  //     }
+  //   }
+  // }, [userID]);
 
   const PER_PAGE = 10;
   const [currentPage, setCurrentPage] = useState(0);
@@ -94,30 +97,6 @@ const CompanyAttendanceDetails = () => {
     setCurrentPage(selectedPage);
   };
 
-  const getCurrentMonthDates = () => {
-    let newDate = new Date();
-    let firstDayOfMonth = new Date(newDate.getFullYear(), newDate.getMonth());
-    let fromDate = formateDate(firstDayOfMonth);
-
-    const year = newDate.getFullYear();
-    const month = newDate.getMonth() + 1;
-    const lastDay = new Date(year, month, 0).getDate();
-    const toDate = `${year}-${month.toString().padStart(2, "0")}-${lastDay
-      .toString()
-      .padStart(2, "0")}`;
-    setStartDate(fromDate);
-    setEndDate(toDate);
-    return {
-      setStartDate: fromDate,
-      setEndDate: toDate,
-    };
-  };
-  const formateDate = (datetoformat) => {
-    const day = datetoformat.getDate().toString().padStart(2, "0");
-    const month = (datetoformat.getMonth() + 1).toString().padStart(2, "0");
-    const year = datetoformat.getFullYear().toString();
-    return `${year}-${month}-${day}`;
-  };
 
   const getStartDate = (selectedDate) => {
     setStartDate(selectedDate);
@@ -126,16 +105,21 @@ const CompanyAttendanceDetails = () => {
 
   const getEndDate = (selectedDate) => {
     setEndDate(selectedDate);
-    return getDateBySelectedDate(selectedDate);
+    // return getDateBySelectedDate(selectedDate);
   };
-  const getDateBySelectedDate = (endDatesss) => {
-    return getCompanyAttendance(startDate, endDatesss);
-  };
+  // const getDateBySelectedDate = (endDatesss) => {
+  //   return getCompanyAttendance(startDate, endDatesss);
+  // };
 
-  const getCompanyAttendance = async (SDate, EDate) => {
+  const getCompanyAttendance = async (staff, startdate, enddate) => {
     if (userID) {
       const res = await apiService.commonGetCall(
-        "Payroll/GetAttendanceByHR?SDate=" + SDate + "&EDate=" + EDate
+        "Payroll/Get_AttendanceReportForEmployee?EmployeeID=" +
+        staff +
+        "&startdate=" +
+        startdate +
+        "&enddate=" +
+        enddate
       );
       setCompanyAttendence(res.data);
       setcount(res.data.length);
@@ -147,6 +131,12 @@ const CompanyAttendanceDetails = () => {
       getstaffDetails();
     }
   }, [userID]);
+
+  const setCompanystaff = (staff) => {
+    setselctedStaffdata(staff);
+    return getCompanyAttendance(staff, startDate, endDate);
+  };
+
   const getstaffDetails = async () => {
     const staffDetails = await apiService.commonGetCall(
       "Payroll/GetAllStaffNewforstaffdashboard"
@@ -392,19 +382,21 @@ const CompanyAttendanceDetails = () => {
             <table className="table  mt-2 " ref={tableRef}>
               <thead className="bg-info text-white ">
                 <tr style={{ whiteSpace: "nowrap" }}>
+                  <th>EmployeID</th>
+
+                  <th>Employe Name	</th>
+                  <th>Shift</th>
                   <th>Date</th>
-                  <th>Staff </th>
+
                   <th>Day Type </th>
+                  <th>Expected in Time</th>
+                  <th>Expected Out Time</th>
 
-                  <th>Expected In Time </th>
-                  <th>Expected Out Time </th>
-                  <th>Punch In Time</th>
-
+                  <th>Punch in Time</th>
                   <th>Punch Out Time </th>
                   <th>Work Hours(HH:MM) </th>
-                  <th>Overtime</th>
 
-                  <th>UnderTime</th>
+                  <th>Overtime</th>
                   <th>Late</th>
                 </tr>
               </thead>
@@ -422,20 +414,21 @@ const CompanyAttendanceDetails = () => {
                           (data, index) => {
                             return (
                               <tr key={index} value={data.index}>
+                                <td>{data.employeID}</td>
+                                <td>{data.staffname1}</td>
+                                <td>{data.shift}</td>
                                 <td>{data.date}</td>
-                                <td>{data.staffname}</td>
-                                <td>{data.position}</td>
 
-                                <td>{data.expectedIn}</td>
+                                <td>{data.dayType}</td>
+                                <td>{data.etime}</td>
                                 <td>{data.expectedOut}</td>
-                                <td>{data.expectedIn}</td>
 
-                                <td>{data.expectedOut}</td>
+                                <td>{data.punchInTime}</td>
+                                <td>{data.punchOutTime}</td>
                                 <td>{data.hr}</td>
-                                <td>{data.overtime}</td>
 
-                                <td>{data.expectedOutTime}</td>
-                                <td>{data.late}</td>
+                                <td>{data.ot}</td>
+                                <td>{data.latepunchin}</td>
                               </tr>
                             );
                           }

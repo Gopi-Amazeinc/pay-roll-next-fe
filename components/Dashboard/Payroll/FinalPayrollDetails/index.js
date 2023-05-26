@@ -112,6 +112,7 @@ const FinalPayrollDetails = () => {
   };
 
   console.log(checkedState);
+  
   const handleDelete = async () => {
     const deletedIDS = await deleteSalary(checkedState);
     console.log(deletedIDS);

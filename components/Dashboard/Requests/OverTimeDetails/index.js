@@ -14,12 +14,13 @@ const Index = () => {
     const [pending, setPending] = useState(false)
     const [approved, setApproved] = useState(false)
     const [rejected, setRejected] = useState(false);
-    const [managertogglePending, setManagerTogglePending] = useState(false)
-    const [managerToggleapproved, setManagerToggleApproved] = useState(false)
-    const [managertogglerejected, setManagerToggleRejected] = useState(false);
-    const [managerPending, setManagerPendingData] = useState([]);
-    const [managerApproved, setManagerApprovedData] = useState([]);
-    const [managerRejected, setManagerRejectedData] = useState([]);
+    const [keyword, setKeyword] = useState("");
+    // const [managertogglePending, setManagerTogglePending] = useState(false)
+    // const [managerToggleapproved, setManagerToggleApproved] = useState(false)
+    // const [managertogglerejected, setManagerToggleRejected] = useState(false);
+    // const [managerPending, setManagerPendingData] = useState([]);
+    // const [managerApproved, setManagerApprovedData] = useState([]);
+    // const [managerRejected, setManagerRejectedData] = useState([]);
     const [newDashboard, setNewDashboardData] = useState([]);
     const [newApproved, setnewApprovedData] = useState([]);
     const [newRejected, setnewRejectedData] = useState([]);
@@ -28,31 +29,21 @@ const Index = () => {
     const [isOpen, ModalIsOpen] = useState(false)
     const [roleID, setRoleID] = useState();
     const [userID, setUserID] = useState()
-    const [count, setcount] = useState("");
 
     const togglePending = () => {
         setPending(true)
         setApproved(false)
         setRejected(false)
-        setManagerTogglePending(true);
-        setManagerToggleApproved(false);
-        setManagerToggleRejected(false);
     }
 
     const toggleApproved = () => {
         setApproved(true)
         setPending(false)
         setRejected(false)
-        setManagerTogglePending(false);
-        setManagerToggleApproved(true);
-        setManagerToggleRejected(false);
     }
     const toggleRejected = () => {
         setRejected(true)
         setApproved(false)
-        setManagerTogglePending(false);
-        setManagerToggleApproved(false);
-        setManagerToggleRejected(true);
         setPending(false)
     }
     const openModal = () => {
@@ -126,49 +117,43 @@ const Index = () => {
         }
     };
 
-
     const getDataBySelectedDate = (endDatesss) => {
         debugger;
         return getPendingDetails(startDate, endDatesss);
     };
+
     const getPendingDetails = async () => {
         const res = await apiService.commonGetCall("Payroll/GetPendingStaffOverTimeDetails")
         setNewDashboardData(res.data);
         console.log("Pending emp", res.data);
-        setcount(res.data.length);
     }
     const getApprovedDetails = async () => {
         const res = await apiService.commonGetCall("Payroll/GetApproveStaffOverTimeDetails")
         setnewApprovedData(res.data);
         console.log("Approved", res.data);
-        setcount(res.data.length);
     }
     const getRejectedDetails = async () => {
         const res = await apiService.commonGetCall("Payroll/GetRejectStaffOverTimeDetails")
         setnewRejectedData(res.data);
         console.log("Rejected", res.data);
-        setcount(res.data.length);
     }
-    const getManagerPendingDetails = async () => {
-        const res = await apiService.commonGetCall("Payroll/GetPendingOverTimeDetailsByManagerID?ManagerID=" + userID)
-        setManagerPendingData(res.data)
-        console.log("Manager Pending", res.data);
-        setcount(res.data.length);
-    }
-    const getManagerApprovedData = async () => {
-        const res = await apiService.commonGetCall("Payroll/GetApprovedOverTimeDetailsByManagerID?ManagerID=" + userID)
-        setManagerApprovedData(res.data)
-        console.log("Manager Approved", res.data);
-        setcount(res.data.length);
-    }
+    // const getManagerPendingDetails = async () => {
+    //     const res = await apiService.commonGetCall("Payroll/GetPendingOverTimeDetailsByManagerID?ManagerID=" + userID)
+    //     setManagerPendingData(res.data)
+    //     console.log("Manager Pending", res.data);
+    // }
+    // const getManagerApprovedData = async () => {
+    //     const res = await apiService.commonGetCall("Payroll/GetApprovedOverTimeDetailsByManagerID?ManagerID=" + userID)
+    //     setManagerApprovedData(res.data)
+    //     console.log("Manager Approved", res.data);
+    // }
 
-    const getManagerRejectedData = async () => {
-        // debugger;
-        const res = await apiService.commonGetCall("Payroll/GetRejectOverTimeDetailsByManagerID?ManagerID=" + userID)
-        setManagerRejectedData(res.data)
-        console.log("Manager Rejected", res.data);
-        setcount(res.data.length);
-    }
+    // const getManagerRejectedData = async () => {
+    //     // debugger;
+    //     const res = await apiService.commonGetCall("Payroll/GetRejectOverTimeDetailsByManagerID?ManagerID=" + userID)
+    //     setManagerRejectedData(res.data)
+    //     console.log("Manager Rejected", res.data);
+    // }
 
     const approve = (id) => {
         let data = {
@@ -247,26 +232,14 @@ const Index = () => {
         var date = sessionStorage.getItem("Date");
         var startTime = sessionStorage.getItem("StartTime");
         var endTime = sessionStorage.getItem("EndTime");
-        setManagerTogglePending(true);
+        // setManagerTogglePending(true);
         setPending(true)
-        if (roleID == 5) {
-            getManagerPendingDetails(userID);
-            getManagerApprovedData(userID);
-            getManagerRejectedData(userID);
-            // getModalData(startTime, endTime, date, userID);
-
-        }
-        else {
-            getPendingDetails();
-            getApprovedDetails();
-            getRejectedDetails();
-        }
         if (userID) {
             const resu = getCurrentMonthDates();
             if (resu) {
-                getManagerPendingDetails(resu.setStartDate, resu.setEndDate);
-                getManagerApprovedData(resu.setStartDate, resu.setEndDate);
-                getManagerRejectedData(resu.setStartDate, resu.setEndDate);
+                getPendingDetails();
+                getApprovedDetails();
+                getRejectedDetails();
             }
         }
         return;
@@ -306,9 +279,16 @@ const Index = () => {
                         </div>
                         <div className='col-lg-3'>
                             {
-                                sessionStorage.getItem("roleID") == 3 && (
+                                roleID == 3 && (
                                     <Link style={{ textDecoration: "none" }} href="/Requests/Myteamovertimedetails">
                                         <label className='mainheader' >My Team Overtime Details</label>
+                                    </Link>
+                                )
+                            }
+                            {
+                                roleID == 2 && (
+                                    <Link style={{ textDecoration: "none" }} href="/Requests/Staffovertimedetails">
+                                        <label className='mainheader' >Staff Overtime Details</label>
                                     </Link>
                                 )
                             }
@@ -347,146 +327,18 @@ const Index = () => {
                         </div>
                     </div>
                     <div className='row'>
-                        {
-                            managertogglePending && sessionStorage.getItem("roleID") == 3 && (
-                                <>
-                                    <h6 style={{ color: "#3247d5" }}>Showing {managerPending.length} Results</h6>
-
-                                    <table className='table table-hover'>
-                                        <thead className='bg-info text-white'>
-                                            <tr>
-                                                <th>Controll Number</th>
-                                                <th>EmployeID</th>
-                                                <th>Employee Name</th>
-                                                <th>Date Request</th>
-                                                <th>Start Time</th>
-                                                <th>End Time</th>
-                                                <th>OT Details</th>
-                                                <th>Attachment</th>
-                                                <th>Purpose</th>
-                                                <th>Status</th>
-                                                <th>Actions</th>
-                                            </tr>
-                                        </thead>
-
-                                        <tbody>
-                                            {
-                                                managerPending.slice(offset, offset + PER_PAGE).map((data) => {
-                                                    return (
-                                                        <tr key={data.id}>
-                                                            <td>{data.date}</td>
-                                                            <td>{data.startTime}</td>
-                                                            <td>{data.endTime}</td>
-                                                            <td>
-                                                                <button className='edit-btn' onClick={openEditModal.bind(this, data)} >Details</button>
-                                                            </td>
-                                                            <td>{data.comments}</td>
-                                                            <td>{data.status}</td>
-                                                            <td>
-                                                                <button onClick={approve.bind(this, data.id)} className='edit-btn'>Approve</button>
-                                                                <button onClick={() => openModal(sessionStorage.setItem("id", data.id))} className='edit-btn'>Reject</button>
-                                                            </td>
-                                                        </tr>
-                                                    )
-                                                })
-                                            }
-                                        </tbody>
-                                    </table>
-                                </>
-                            )
-
-                        }
-
-
-                        {
-                            managerToggleapproved && sessionStorage.getItem("roleID") == 3 && (
-                                <>
-                                    <h6 style={{ color: "#3247d5" }}>Showing {managerApproved.length} Results</h6>
-                                    <table className='table table-hover'>
-                                        <thead className='bg-info text-white'>
-                                            <tr>
-                                                <th>Controll Number</th>
-                                                <th>EmployeID</th>
-                                                <th>Employee Name</th>
-                                                <th>Date Request</th>
-                                                <th>Approved Start Time</th>
-                                                <th>Approved End Time</th>
-                                                <th>OT Details</th>
-                                                <th>Attachment</th>
-                                                <th>Purpose</th>
-                                                <th>Status</th>
-                                            </tr>
-                                        </thead>
-
-                                        <tbody>
-                                            {
-                                                managerApproved.slice(offset, offset + PER_PAGE).map((data) => {
-                                                    return (
-                                                        <tr key={data.id}>
-                                                            <td>{data.date}</td>
-                                                            <td>{data.startTime}</td>
-                                                            <td>{data.endTime}</td>
-                                                            {/* <td>{data.comments}</td> */}
-                                                            <td>{data.status}</td>
-                                                        </tr>
-                                                    )
-                                                })
-                                            }
-                                        </tbody>
-                                    </table>
-                                </>
-                            )
-                        }
-
-
-                        {
-                            managertogglerejected && sessionStorage.getItem("roleID") == 3 && (
-                                <>
-                                    <h6 style={{ color: "#3247d5" }}>Showing {managerRejected.length} Results</h6>
-                                    <table className='table table-hover'>
-                                        <thead className='bg-info text-white'>
-                                            <tr>
-                                                <th>Controll Number</th>
-                                                <th>EmployeID</th>
-                                                <th>Employee Name</th>
-                                                <th>Date Request</th>
-                                                <th>Approved Start Time</th>
-                                                <th>Approved End Time</th>
-                                                <th>OT Details</th>
-                                                <th>Attachment</th>
-                                                <th>Reject Reason</th>
-                                                <th>Status</th>
-                                            </tr>
-                                        </thead>
-
-                                        <tbody>
-                                            {
-                                                managerRejected.slice(offset, offset + PER_PAGE).map((data) => {
-                                                    return (
-                                                        <tr key={data.id}>
-                                                            <td>{data.date}</td>
-                                                            <td>{data.startTime}</td>
-                                                            <td>{data.endTime}</td>
-                                                            {/* <td>{data.comments}</td> */}
-                                                            <td>{data.status}</td>
-                                                        </tr>
-                                                    )
-                                                })
-                                            }
-                                        </tbody>
-                                    </table>
-                                </>
-                            )
-                        }
                         <div className='col-lg-12'>
                             {
-                                pending && sessionStorage.getItem("roleID") == 5 && (
+                                pending && (
                                     <>
                                         <h6 style={{ color: "#3247d5" }}>Showing {newDashboard.length} Results</h6>
                                         <table className='table table-hover'>
                                             <thead className='bg-info text-white'>
                                                 <tr>
-                                                    <th>Date Request</th>
+                                                    <th>Controll Number</th>
+                                                    <th>EmployeID</th>
+                                                    <th>Employee Name</th>
+                                                    <th>Date </th>
                                                     <th>Start Time</th>
                                                     <th>End Time</th>
                                                     <th>OT Details</th>
@@ -498,9 +350,16 @@ const Index = () => {
 
                                             <tbody>
                                                 {
-                                                    newDashboard.slice(offset, offset + PER_PAGE).map((data) => {
+                                                    newDashboard.filter(data => {
+                                                        if ((data.controlNumber.toString().includes(keyword.toString())) || (data.staffID.toString().includes(keyword.toString())) || (data.firstName.toString().includes(keyword.toString())) || (data.date.toString().includes(keyword.toString())) || (data.startTime.toString().includes(keyword)) || (data.endTime.toString().includes(keyword)) || (data.status.toString().includes(keyword)) || (data.comments.toString().includes(keyword.toString()))) {
+                                                            return data;
+                                                        }
+                                                    }).slice(offset, offset + PER_PAGE).map((data) => {
                                                         return (
                                                             <tr key={data.id}>
+                                                                <td>{data.controlNumber}</td>
+                                                                <td>{data.staffID}</td>
+                                                                <td>{data.firstName}</td>
                                                                 <td>{data.date}</td>
                                                                 <td>{data.startTime}</td>
                                                                 <td>{data.endTime}</td>
@@ -522,30 +381,41 @@ const Index = () => {
                                 )
                             }
                             {
-                                approved && sessionStorage.getItem("roleID") == 5 && (
+                                approved && (
                                     <>
                                         <h6 style={{ color: "#3247d5" }}>Showing {newApproved.length} Results</h6>
 
                                         <table className='table table-hover'>
                                             <thead className='bg-info text-white'>
                                                 <tr>
-                                                    <th>Date Request</th>
+                                                    <th>Controll Number</th>
+                                                    <th>EmployeID</th>
+                                                    <th>Employee Name</th>
+                                                    <th>Date </th>
                                                     <th>Start Time</th>
                                                     <th>End Time</th>
                                                     {/* <th>OT Details</th> */}
+                                                    <th>Purpose</th>
                                                     <th>Status</th>
                                                 </tr>
                                             </thead>
 
                                             <tbody>
                                                 {
-                                                    newApproved.slice(offset, offset + PER_PAGE).map((data) => {
+                                                    newApproved.filter(data => {
+                                                        if ((data.controlNumber.toString().includes(keyword.toString())) || (data.staffID.toString().includes(keyword.toString())) || (data.firstName.toString().includes(keyword.toString())) || (data.date.toString().includes(keyword.toString())) || (data.startTime.toString().includes(keyword)) || (data.endTime.toString().includes(keyword)) || (data.status.toString().includes(keyword)) || (data.comments.toString().includes(keyword.toString()))) {
+                                                            return data;
+                                                        }
+                                                    }).slice(offset, offset + PER_PAGE).map((data) => {
                                                         return (
                                                             <tr key={data.id}>
+                                                                <td>{data.controlNumber}</td>
+                                                                <td>{data.staffID}</td>
+                                                                <td>{data.firstName}</td>
                                                                 <td>{data.date}</td>
                                                                 <td>{data.startTime}</td>
                                                                 <td>{data.endTime}</td>
-                                                                {/* <td>{data.comments}</td> */}
+                                                                <td>{data.comments}</td>
                                                                 <td>{data.status}</td>
                                                             </tr>
                                                         )
@@ -557,29 +427,40 @@ const Index = () => {
                                 )
                             }
                             {
-                                rejected && sessionStorage.getItem("roleID") == 5 && (
+                                rejected && (
                                     <>
-                                        <h6 style={{ color: "#3247d5" }}>Showing {newApproved.length} Results</h6>
+                                        <h6 style={{ color: "#3247d5" }}>Showing {newRejected.length} Results</h6>
                                         <table className='table table-hover'>
                                             <thead className='bg-info text-white'>
                                                 <tr>
-                                                    <th>Date Request</th>
+                                                    <th>Controll Number</th>
+                                                    <th>EmployeID</th>
+                                                    <th>Employee Name</th>
+                                                    <th>Date </th>
                                                     <th>Start Time</th>
                                                     <th>End Time</th>
+                                                    {/* <th>OT Details</th> */}
+                                                    <th>Purpose</th>
                                                     <th>Status</th>
-                                                    {/* <th>Actions</th> */}
                                                 </tr>
                                             </thead>
 
                                             <tbody>
                                                 {
-                                                    newRejected.slice(offset, offset + PER_PAGE).map((data) => {
+                                                    newRejected.filter(data => {
+                                                        if ((data.controlNumber.toString().includes(keyword.toString())) || (data.staffID.toString().includes(keyword.toString())) || (data.firstName.toString().includes(keyword.toString())) || (data.date.toString().includes(keyword.toString())) || (data.startTime.toString().includes(keyword)) || (data.endTime.toString().includes(keyword)) || (data.status.toString().includes(keyword)) || (data.comments.toString().includes(keyword.toString()))) {
+                                                            return data;
+                                                        }
+                                                    }).slice(offset, offset + PER_PAGE).map((data) => {
                                                         return (
                                                             <tr key={data.id}>
+                                                                <td>{data.controlNumber}</td>
+                                                                <td>{data.staffID}</td>
+                                                                <td>{data.firstName}</td>
                                                                 <td>{data.date}</td>
                                                                 <td>{data.startTime}</td>
                                                                 <td>{data.endTime}</td>
-                                                                {/* <td>{data.comments}</td> */}
+                                                                <td>{data.comments}</td>
                                                                 <td>{data.status}</td>
                                                             </tr>
                                                         )

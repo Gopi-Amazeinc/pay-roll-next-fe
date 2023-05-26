@@ -8,12 +8,15 @@ import { useRef } from "react";
 import { DownloadTableExcel } from "react-export-table-to-excel";
 import Modal from "react-modal";
 import * as XLSX from "xlsx";
-
+import Swal from "sweetalert2";
 function StaffDashbaord() {
   const [staff, setStaffData] = useState([]);
   const tableRef = useRef(null);
   const [count, setcount] = useState("");
   const [keyword, setKeyword] = useState("");
+  
+  const [enableDisablestate, setenableDisablestate] = useState(false);
+
   const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
 
   useEffect(() => {
@@ -25,10 +28,13 @@ function StaffDashbaord() {
       hostURL + "Payroll/GetAllStaffNewforstaffdashboard"
     );
     setStaffData(res.data);
+    if(res.attendanceEnable = 1 ) {
+
+    }
     setcount(res.data.length);
   };
   const getData = (data) => {
-    // sessionStorage.setItem("id", data.id);
+    sessionStorage.setItem("id", data.id);
   };
   const clearData = () => {
     // sessionStorage.setItem("id", "");
@@ -36,16 +42,19 @@ function StaffDashbaord() {
   const enableDisableStaff = async (data) => {
     debugger;
     let entity = {
-      StaffID: data.employeID,
+      StaffID: data.id,
       AttendanceEnable: 1,
     };
-    await axios.post(hostURL + "Payroll/UpdateAttendanceEnableDisable", entity);
-    if (entity.AttendanceEnable == true) {
+    let res = await axios.post(hostURL + "Payroll/UpdateAttendanceEnableDisable", entity);
+
+    if (res.status ==  200 && res != null) {
+      setenableDisablestate(true)
       Swal.fire("Attendance enabled");
     } else {
+      setenableDisablestate(false)
       Swal.fire("Attendance disabled");
     }
-    getData();
+    getData(data);
   };
   const handleDelete = async (id) => {
     try {
@@ -297,7 +306,7 @@ function StaffDashbaord() {
                           <td>{data.manager}</td>
                           <td className="text-center">
                             <span onClick={() => enableDisableStaff(data)}>
-                              {data.attendanceEnable ? (
+                              {data.attendanceEnablee == false ? (
                                 <button
                                   onClick={getData.bind(this, data)}
                                   className="enableDisableBtn"
