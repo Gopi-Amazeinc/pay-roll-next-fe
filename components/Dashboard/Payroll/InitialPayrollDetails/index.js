@@ -21,11 +21,33 @@ const InitialPayrollDetails = () => {
     const handleRowSelect = (event, id) => {
         debugger
         if (id === 'all') {
-            setSelectedRows(event.target.checked ? preliminarySalary.map(data => data.id) : []);
+            setCheckedState(event.target.checked ? preliminarySalary.map(data => data.staffID) : []);
+            setPreliminarySalary(prevPreliminarySalary => {
+                return prevPreliminarySalary.map(item => {
+                    return { ...item, isChecked: event.target.checked };
+                });
+            });
         } else {
-            setSelectedRows(selectedRows.includes(id) ? selectedRows.filter(rowId => rowId !== id) : [...selectedRows, id]);
+            setCheckedState(prevcheckedState => {
+                if (prevcheckedState.includes(id)) {
+                    return prevcheckedState.filter(rowId => rowId !== id);
+                } else {
+                    return [...prevcheckedState, id];
+                }
+            });
+            setPreliminarySalary(prevPreliminarySalary => {
+                return prevPreliminarySalary.map(item => {
+                    if (item.staffID === id) {
+                        return { ...item, isChecked: !item.isChecked };
+                    }
+                    return item;
+                });
+            });
         }
+
     };
+
+    console.log(checkedState)
     const [keyword, setKeyword] = useState("");
     const tableRef = useRef(null);
 
@@ -44,12 +66,12 @@ const InitialPayrollDetails = () => {
     useEffect(() => {
         getData();
     }, []);
-    const handleData = (data) => {
-        // let res = preliminarySalary.filter(data.staffID);
-        // res = preliminarySalary.filter(data.endDate);
-        // console.log(Object.values(res.data));
-        handleDelete(data.staffID, data.endDateFormated);
-    }
+    // const handleData = (data) => {
+    //     // let res = preliminarySalary.filter(data.staffID);
+    //     // res = preliminarySalary.filter(data.endDate);
+    //     // console.log(Object.values(res.data));
+    //     // handleDelete(data.staffID, data.endDateFormated);
+    // }
     const PER_PAGE = 5;
     const [currentPage, setCurrentPage] = useState(0);
     function handlePageClick({ selected: selectedPage }) {
@@ -78,35 +100,33 @@ const InitialPayrollDetails = () => {
     function closeModal() {
         setIsOpen(false);
     }
-
     const handleOnChange = (event) => {
-        debugger;
-        const { checked } = event.target;
-        const data = JSON.parse(event.target.value);
-        // console.log(`${value} is ${checked}`);
-        if (checked) {
-            preliminarySalary.find((x) => x.id == data.id).isChecked = true;
-            let entity = {
-                staffID: data.staffID,
-                endDateformated: data.endDateFormated,
-            };
-            setCheckedState([...checkedState, entity]);
-        } else {
-            preliminarySalary.find((x) => x.id == data.id).isChecked = false;
-            const index = checkedState.indexOf(event.target.value);
-            if (index !== -1) {
-                setCheckedState(checkedState.splice(index, 1));
+        const { checked, value } = event.target;
+        const data = JSON.parse(value);
+
+        setPreliminarySalary(prevPreliminarySalary => {
+            const updatedSalary = prevPreliminarySalary.map(item => {
+                if (item.staffID === data.staffID) {
+                    return { ...item, isChecked: checked };
+                }
+                return item;
+            });
+            return updatedSalary;
+        });
+
+        setCheckedState(prevCheckedState => {
+            if (checked) {
+                return [...prevCheckedState, { staffID: data.staffID, endDateformated: data.endDateFormated }];
+            } else {
+                return prevCheckedState.filter(item => item.staffID !== data.staffID);
             }
-        }
-        // setIsChecked(event.target.checked);
-        console.log("checked", event.target.value);
+        });
     };
-    console.log(checkedState);
+
+    // console.log(checkedState);
 
     const handleDelete = async () => {
-        const deletedIDS = await deleteSalary(checkedState);
-        console.log(deletedIDS);
-        // checkedState[index].isCompleted = true;
+        await deleteSalary(checkedState);
         Swal.fire({
             icon: "success",
             title: "Hurray..",
@@ -119,28 +139,14 @@ const InitialPayrollDetails = () => {
 
     const deleteSalary = async (checkedState) => {
         try {
-            debugger;
-            // const index = checkedState.indexOf(event.target.value);
-            // if (index !== -1) {
-            //   checkedState[index].isCompleted = true;
-            //   setCheckedState(checkedState);
-            // }
-            const deleteddddsalary = await Promise.all(
-                checkedState && checkedState.length > 0
-                    ? checkedState.map(async (data) => {
-                        const res = await apiService.commonGetCall(
-                            `Payroll/DeletePreliminary?staffID=${data.staffID}&Enddate=${data.endDateformated}`
-                        );
-                        const deletedData = res.data[0] || res.data;
-                        // console.log(res.data);
-                    })
-                    : []
+            await Promise.all(
+                checkedState.map(async (data) => {
+                    await apiService.commonGetCall(
+                        `Payroll/DeletePreliminary?staffID=${data.staffID}&Enddate=${data.endDateformated}`
+                    );
+                })
             );
-            return deleteddddsalary;
-
-            // This API is used to delete the dashboard data based on StaffID,EndDate
         } catch (error) {
-            // console.error(error);
             Swal.fire({
                 icon: "error",
                 title: "Oops..",
@@ -191,7 +197,7 @@ const InitialPayrollDetails = () => {
             <div className='row '>
 
                 <div className='col-lg-4'> </div>
-                <div className='col-lg-4' > 
+                <div className='col-lg-4' >
                     <p className='Heading' >Employees in selected Period</p>
                 </div>
                 <div className='col-lg-2' style={{ marginLeft: "83px" }}>
@@ -200,7 +206,7 @@ const InitialPayrollDetails = () => {
             </div>
             <div className='row'>
                 <div className='col-lg-12'>
-                    <span>Select All <input type="checkbox" checked={selectedRows.length === preliminarySalary.length} onChange={e => handleRowSelect(e, 'all')} /></span>
+                    <span>Select All <input type="checkbox" checked={checkedState.length === preliminarySalary.length} onChange={e => handleRowSelect(e, 'all')} /></span>
                     <br />
                     <table className='table text-center' ref={tableRef}>
                         <thead>
