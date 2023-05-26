@@ -142,7 +142,13 @@ const AttendenceDetails = () => {
           >
             My Attendence Details
           </Link>
-
+          <div className="line-border" style={{
+            border: "1px solid #2f87cc",
+            bordertopleftradius: "51px",
+            bordertoprightradius: "51px",
+            margintop: "0px",
+            width: "70%"
+          }}></div>
         </div>
         <div className="col-lg-3" style={{ marginLeft: "-30px" }}>
           {roleID == 3 && (
@@ -311,7 +317,7 @@ const AttendenceDetails = () => {
           </div>
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 
