@@ -276,7 +276,7 @@ const Attendancecorrectiondashboard = () => {
                     </button>
                   </Link>
                 </div>
-                {/* {pendingDashboardData ? ( */}
+                { pending ? (
                 <>
                   <div className="col-lg-3">
                     <DownloadTableExcel
@@ -288,7 +288,8 @@ const Attendancecorrectiondashboard = () => {
                     </DownloadTableExcel>
                   </div>
                 </>
-                {/* ) : null} */}
+                ): null } 
+
                 {/* {approved ? (
                   <>
                     <div className="col-lg-3">
@@ -463,9 +464,9 @@ const Attendancecorrectiondashboard = () => {
                 </thead>
 
                 <tbody>
-                  {Array.isArray(managerApproved) && managerApproved.length > 0 && (
+                  {Array.isArray(approvedDashboardData) && approvedDashboardData.length > 0 && (
                     <>
-                      {managerApproved.map((data) => {
+                      {approvedDashboardData.map((data) => {
                         return (
                           <tr key={data.id}>
                             <td>{data.date}</td>
@@ -486,7 +487,7 @@ const Attendancecorrectiondashboard = () => {
           {rejected && roleID != "4" && (
             <>
               <div className="col-lg-2 text-primary fs-6 fw-bold">
-                <h6>Showing {rejectcount} Results</h6>
+                <h6 style={{ color: "#3247d5" }}>Showing {rejectcount} Results</h6>
               </div>
               <table className="table table-hover" ref={tableRef}>
                 <thead className="bg-info text-white">
