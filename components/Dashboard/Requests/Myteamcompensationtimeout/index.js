@@ -5,12 +5,14 @@ import Modal from 'react-modal';
 import { AiOutlineClose } from 'react-icons/ai'
 import { apiService } from "@/services/api.service";
 import ReactPaginate from "react-paginate";
+import { useForm } from 'react-hook-form';
 
 const MyTeamCompensationtimeout = () => {
 
     const [pending, setPending] = useState(false)
     const [approved, setApproved] = useState(false)
     const [rejected, setRejected] = useState(false)
+    const { register, handleSubmit, reset, watch, formState } = useForm();
 
     const [pendingDashboard, getPending] = useState([])
     const [compensation, getComponsation] = useState([])
@@ -22,31 +24,23 @@ const MyTeamCompensationtimeout = () => {
     const [userID, setUserID] = useState()
     const [count, setcount] = useState("");
 
-    const openModal = () => {
-        ModalIsOpen(true)
-    }
-
     let staffID = sessionStorage.getItem("userID");
     const togglePending = () => {
         setPending(true);
         setApproved(false)
         setRejected(false)
-        // setManagerTogglePending(true)
-        console.log("pending manager login")
     }
 
     const toggleApproved = () => {
         setApproved(true)
         setPending(false)
         setRejected(false)
-        // setManagerTogglePending(false);
     }
 
     const toggleRejected = () => {
         setRejected(true)
         setApproved(false)
         setPending(false)
-        // setManagerTogglePending(false);
     }
 
 
@@ -62,7 +56,7 @@ const MyTeamCompensationtimeout = () => {
 
 
     const getManagerApprovedData = async () => {
-        const res = await apiService.commonGetCall("Payroll/GetApproveCompensationTimeOutBySupervisor?UserID=" + staffID)
+        const res = await apiService.commonGetCall("Payroll/GetPendingCompensationTimeOutBySupervisor?UserID=" + staffID)
         console.log(res.data)
         getManagerApproved(res.data)
         setcount(res.data.length);
@@ -100,33 +94,46 @@ const MyTeamCompensationtimeout = () => {
                     icon: "success",
                     titleText: "Approved Successfully"
                 })
-                getPendingCompensation();
+
             }
+            getPendingCompensation();
         })
     }
-    let id;
+
+    const [rowID, setID] = useState("")
+
+    const openModal = (id) => {
+        ModalIsOpen(true)
+        setID(id)
+    }
+
+    console.log(rowID, "row ID")
+
     const reject = () => {
-        id = sessionStorage.getItem("id")
-        alert(id)
-        // Swal.fire({
-        //     title: 'Confirm To Reject?',
-        //     text: "You won't be able to revert this!",
-        //     icon: 'warning',
-        //     showCancelButton: true,
-        //     confirmButtonColor: '#3085d6',
-        //     cancelButtonColor: '#d33',
-        //     confirmButtonText: 'Yes, Reject it!'
-        // }).then((result) => {
-        //     if (result.isConfirmed) {
-        //         staffID = sessionStorage.getItem("userID");
-        //         axios.post(hostURL + "Payroll/RejectCompensationTimeOut?id=" + id)
-        //         Swal.fire({
-        //             icon: "success",
-        //             titleText: "Rejected Successfully"
-        //         })
-        //         getPendingCompensation();
-        //     }
-        // })
+        let ApporveedComments = watch("reason")
+        let entity = {
+            "ApporveedComments": ApporveedComments,
+            "id": rowID
+        }
+        Swal.fire({
+            title: 'Confirm To Reject?',
+            text: "You won't be able to revert this!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Yes, Reject it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                apiService.commonPostCall("Payroll/RejectCompensationTimeOut", entity)
+                Swal.fire({
+                    icon: "success",
+                    titleText: "Rejected Successfully"
+                })
+
+            }
+            getPendingCompensation();
+        })
     }
     const PER_PAGE = 5;
     const [currentPage, setCurrentPage] = useState(0);
@@ -141,14 +148,10 @@ const MyTeamCompensationtimeout = () => {
         setUserID(usrID);
         const userRoleID = sessionStorage.getItem("roleID");
         setRoleID(userRoleID);
-        // getPendingData()
         getPendingCompensation();
-        // getApprovedData();
-        // getRejectedData();
         getManagerApprovedData();
         getManagerRejectedData();
         setPending(true);
-        console.log("working useEffect")
     }, [])
 
     return (
@@ -169,8 +172,17 @@ const MyTeamCompensationtimeout = () => {
                                     <Link href="/Requests/Myteamcompensationtimeout">
                                         <label className="mainheader ">My Compensation Time Out</label>
                                     </Link>
+
                                 )
+
                             }
+                            <div className="line-border" style={{
+                                border: "1px solid #2f87cc",
+                                bordertopleftradius: "51px",
+                                bordertoprightradius: "51px",
+                                margintop: "0px",
+                                width: "70%"
+                            }}></div>
                         </div>
                     </div>
                     <br />
@@ -187,7 +199,7 @@ const MyTeamCompensationtimeout = () => {
                                 roleID != "3" && (
                                     <div className='col-lg-3' style={{ whiteSpace: "nowrap" }}>
                                         <Link href="/Requests/Compensationtimeout/new"><button className='EditDelteBTN'>Add Compensation Time Out</button></Link>
-                                      
+
                                     </div>
                                 )
                             }
@@ -217,20 +229,22 @@ const MyTeamCompensationtimeout = () => {
                                     <button onClick={() => ModalIsOpen(false)} className='btn-primary'><AiOutlineClose /></button>
                                 </div>
                             </div>
-                            <div className='row mt-3'>
-                                <div className='col-lg-12'>
-                                    <textarea rows={4} className='form-control'></textarea>
+                            <form onSubmit={handleSubmit(reject)}>
+                                <div className='row mt-3'>
+                                    <div className='col-lg-12'>
+                                        <textarea {...register("reason", { required: true })} rows={4} className='form-control'></textarea>
+                                    </div>
                                 </div>
-                            </div>
-                            <div className='row'>
-                                <div className='col-lg-8'></div>
-                                <div className='col-lg-2 mb-3'>
-                                    <button type='submit' className=' edit-btn mt-5'>Cancel</button>
+                                <div className='row'>
+                                    <div className='col-lg-8'></div>
+                                    <div className='col-lg-2 mb-3'>
+                                        <button type='submit' onClick={() => ModalIsOpen(false)} className=' edit-btn mt-5'>Cancel</button>
+                                    </div>
+                                    <div className='col-lg-2 mb-3'>
+                                        <button type='submit' className='edit-btn mt-5'>Reject </button>
+                                    </div>
                                 </div>
-                                <div className='col-lg-2 mb-3'>
-                                    <button onClick={reject} type='submit' className='edit-btn mt-5'>Reject </button>
-                                </div>
-                            </div>
+                            </form>
                         </div>
                     </Modal>
                     <div className='row'>
@@ -270,7 +284,7 @@ const MyTeamCompensationtimeout = () => {
                                                             <td>{data.status}</td>
                                                             <td>
                                                                 <button onClick={approve.bind(this, data.id)} className='edit-btn'>Approve</button>
-                                                                <button onClick={openModal} className='edit-btn'>Reject</button>
+                                                                <button onClick={openModal.bind(this, data.id)} className='edit-btn'>Reject</button>
                                                             </td>
                                                         </tr>
                                                     )

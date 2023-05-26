@@ -34,9 +34,11 @@ function StateMasterDashboard() {
     }).then((result) => {
       if (result.isConfirmed) {
         apiService.commonGetCall("Master/DeleteStateType?ID=" + id); //naveen.th@amazeinc.in, Delete API for State master, to delete data
-        getData()
+
       }
+      getData()
     });
+
   }
 
   const [keyword, setKeyword] = useState("");

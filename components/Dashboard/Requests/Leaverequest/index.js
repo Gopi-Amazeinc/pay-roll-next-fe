@@ -76,24 +76,20 @@ function LeaveListDashboard() {
 
     };
     const getDateBySelectedDate = (endDatesss) => {
-        debugger;
         return getPendingData(startDate, endDatesss);
     };
 
     const getPendingData = async (StartingDate, EndDate) => {
-        debugger;
-        const res = await apiService.commonGetCall("Employee/GetPendingStaffLeavesByStaffID?ID=" + userID + "&TypeID=1&Sdate=" + StartingDate + "&Edate=" + EndDate)
+        const res = await apiService.commonGetCall("Employee/GetPendingStaffLeavesByStaffID?id=" + userID + "&TypeID=1&Sdate=" + StartingDate + "&Edate=" + EndDate)
         setPendingData(res.data);
     }
     const getApprovedData = async (StartingDate, EndDate) => {
-        debugger;
-        const res = await apiService.commonGetCall("Employee/GetApprovedStaffLeavesByStaffID?ID=" + userID + "&TypeID=1&Sdate=" + StartingDate + "&Edate=" + EndDate)
+        const res = await apiService.commonGetCall("Employee/GetApprovedStaffLeavesByStaffID?id=" + userID + "&TypeID=1&Sdate=" + StartingDate + "&Edate=" + EndDate)
         setApprovedData(res.data);
         console.log(res.data);
     }
     const getRejectedData = async (StartingDate, EndDate) => {
-        debugger;
-        const res = await apiService.commonGetCall("Employee/GetRejectedStaffLeavesByStaffID?ID=" + userID + "&TypeID=1&Sdate=" + StartingDate + "&Edate=" + EndDate)
+        const res = await apiService.commonGetCall("Employee/GetRejectedStaffLeavesByStaffID?id=" + userID + "&TypeID=1&Sdate=" + StartingDate + "&Edate=" + EndDate)
         setRejectedData(res.data);
         console.log(res.data);
     }
@@ -133,7 +129,7 @@ function LeaveListDashboard() {
         debugger;
         return getPendingData(startDate, endDatesss);
     };
-    
+
     useEffect(() => {
         const usrID = sessionStorage.getItem("userID");
         setUserID(usrID);
