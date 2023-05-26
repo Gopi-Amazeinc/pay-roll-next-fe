@@ -429,7 +429,7 @@ const Index = () => {
                             {
                                 rejected && (
                                     <>
-                                        <h6 style={{ color: "#3247d5" }}>Showing {newApproved.length} Results</h6>
+                                        <h6 style={{ color: "#3247d5" }}>Showing {newRejected.length} Results</h6>
                                         <table className='table table-hover'>
                                             <thead className='bg-info text-white'>
                                                 <tr>
