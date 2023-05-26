@@ -258,7 +258,7 @@ function StaffSalaryComponent() {
                                     width: "100px",
                                   }}
                                 >
-                                  Edit
+                                  EDIT
                                 </button>
                               </Link>
                             </td>
