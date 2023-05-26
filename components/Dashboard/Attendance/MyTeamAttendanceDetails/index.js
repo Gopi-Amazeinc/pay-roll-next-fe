@@ -42,30 +42,31 @@ const MyTeamAttendence = () => {
     }
   }, [userID]);
   const getstaffDetails = async () => {
-    const getAttendancedata = []
+    // const getAttendancedata = []
     const staffDetails = await apiService.commonGetCall(
       "Payroll/GetStaffBySupervisorID?Supervisor=" + userID
     );
     //TODO: MUltiselct DROP DOEN 
-    for (let i = 0; i < staffDetails.length; i++) {
-      getAttendancedata.push(staffDetails[i].fullname)
-    }
-    setStaffData(getAttendancedata);
-    // setStaffData(staffDetails.data);
+    // for (let i = 0; i < staffDetails.length; i++) {
+    //   getAttendancedata.push(staffDetails[i].fullname)
+    // }
+    // setStaffData(getAttendancedata);
+
+    setStaffData(staffDetails.data);
     // setcount(res.data.length);
   };
 
   // console.log(StaffData);
   // Gopi's code end's
 
-  useEffect(() => {
-    if (userID) {
-      const resu = getCurrentMonthDates();
-      if (resu) {
-        getAttendenceByID(userID, resu.setStartDate, resu.setEndDate);
-      }
-    }
-  }, [userID]);
+  // useEffect(() => {
+    // if (userID) {
+      // const resu = getCurrentMonthDates();
+      // if (resu) {
+        // getMyTeamAttendenceByID(userID, resu.setStartDate, resu.setEndDate);
+      // }
+    // }
+  // }, [userID]);
 
   const PER_PAGE = 10;
   const [currentPage, setCurrentPage] = useState(0);
@@ -75,32 +76,6 @@ const MyTeamAttendence = () => {
   const offset = currentPage * PER_PAGE;
   const pageCount = Math.ceil(MyTeamAttendence.length / PER_PAGE);
 
-  const getCurrentMonthDates = () => {
-    let newDate = new Date();
-    let firstDayOfMonth = new Date(newDate.getFullYear(), newDate.getMonth());
-    let fromDate = formateDate(firstDayOfMonth);
-
-    const year = newDate.getFullYear();
-    const month = newDate.getMonth() + 1;
-    const lastDay = new Date(year, month, 0).getDate();
-    const toDate = `${year}-${month.toString().padStart(2, "0")}-${lastDay
-      .toString()
-      .padStart(2, "0")}`;
-    setStartDate(fromDate);
-    setEndDate(toDate);
-    return {
-      setStartDate: fromDate,
-      setEndDate: toDate,
-    };
-  };
-
-  const formateDate = (datetoformat) => {
-    const day = datetoformat.getDate().toString().padStart(2, "0");
-    const month = (datetoformat.getMonth() + 1).toString().padStart(2, "0");
-    const year = datetoformat.getFullYear().toString();
-    return `${year}-${month}-${day}`;
-  };
-
   const getStartDate = (selectedDate) => {
     setStartDate(selectedDate);
     setEndDate("");
@@ -108,13 +83,13 @@ const MyTeamAttendence = () => {
 
   const getEndDate = (selectedDate) => {
     setEndDate(selectedDate);
-    return getDateBySelectedDate(selectedDate);
+    // return getDateBySelectedDate(selectedDate);
   };
-  const getDateBySelectedDate = (endDatesss) => {
-    return getAttendenceByID(20540, startDate, endDatesss);
-  };
+  // const getDateBySelectedDate = (endDatesss) => {
+  //   return getMyTeamAttendenceByID(startDate, endDatesss);
+  // };
 
-  const getAttendenceByID = async (EmployeeID, startdate, enddate) => {
+  const getMyTeamAttendenceByID = async (EmployeeID, startdate, enddate) => {
     debugger
     if (userID) {
       const res = await apiService.commonGetCall(
@@ -132,6 +107,7 @@ const MyTeamAttendence = () => {
 
   const handleStaffChange = (selectedStaff) => {
     setselctedStaffdata(selectedStaff);
+    return getMyTeamAttendenceByID(selectedStaff,startDate, endDate);
   };
 
   // this.state = {
@@ -206,7 +182,7 @@ const MyTeamAttendence = () => {
               <p className={Styles.filterdate}>
                 Staff<i className="text-danger">*</i>
               </p>
-              <Multiselect
+              {/* <Multiselect
                 // displayValue="id"
                 isObject={false}
                 onKeyPressFn={function noRefCheck() { }}
@@ -226,8 +202,10 @@ const MyTeamAttendence = () => {
                 // }}
                 showCheckbox
                 selectedValues={{}}
-              />
-              {/* <select
+              /> */}
+
+
+              <select
                 className="form-select"
                 onChange={(e) => handleStaffChange(e.target.value)}
               >
@@ -239,7 +217,7 @@ const MyTeamAttendence = () => {
                     </option>
                   );
                 })}
-              </select> */}
+              </select>
             </div>
 
             <div className="col-lg-2">
@@ -320,14 +298,14 @@ const MyTeamAttendence = () => {
                           <td>{data.employeID}</td>
                           <td>{data.staffname1}</td>
                           <td>{data.shift}</td>
-                          <td>{data.filterdate}</td>
+                          <td>{data.date}</td>
 
                           <td>{data.dayType}</td>
                           <td>{data.etime}</td>
                           <td>{data.expectedOut}</td>
 
-                          <td>{data.stime}</td>
-                          <td>{data.etime}</td>
+                          <td>{data.punchInTime}</td>
+                          <td>{data.punchOutTime}</td>
                           <td>{data.hr}</td>
 
                           <td>{data.ot}</td>

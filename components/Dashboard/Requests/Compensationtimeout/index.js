@@ -170,7 +170,7 @@ const Compensationtimeout = () => {
         )
     }
 
-    
+
     const PER_PAGE = 5;
     const [currentPage, setCurrentPage] = useState(0);
     const handlePageClick = ({ selected: selectedPage }) => {
@@ -189,7 +189,9 @@ const Compensationtimeout = () => {
                     <br />
                     <div className='row'>
                         <div className="col-lg-3">
-                            <p className='mainheader'>Compensation Time Out</p>
+                            <Link href="/Requests/Compensationtimeout">
+                                <label className="mainheader focus ">Compensation Time Out</label>
+                            </Link>
                         </div>
                         <div className='col-lg-3'>
                             {
@@ -439,7 +441,7 @@ const Compensationtimeout = () => {
                             } */}
 
                             {
-                                rejected  && (
+                                rejected && (
                                     <>
                                         <h6 style={{ color: "#3247d5" }}>Showing {rejectcount} Results</h6>
                                         <table className='table table-hover'>

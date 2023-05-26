@@ -11,6 +11,10 @@
   text-decoration: none;
 }
 
+.mainheader:focus {
+  border-bottom: #3247d5;
+}
+
 .AddButton {
   width: 100%;
   height: 40px;
@@ -58,6 +62,7 @@
   text-transform: capitalize;
   font-size: 16px;
 }
+
 .staffNextBtn {
   box-sizing: border-box;
   width: 72px;
@@ -70,6 +75,7 @@
   text-transform: capitalize;
   font-size: 16px;
 }
+
 .staffEditBtn {
   display: flex;
   justify-content: center;
@@ -532,9 +538,11 @@ tr:nth-child(even) {
   overflow: hidden;
   font-size: 16px;
 }
+
 .table-row {
   background-color: transparent;
 }
+
 /* gopi endedd */
 /* .line-border {
   border: 1px solid #2f87cc;

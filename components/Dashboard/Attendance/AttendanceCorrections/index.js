@@ -75,6 +75,7 @@ const Attendancecorrectiondashboard = () => {
   }
   const offset = currentPage * PER_PAGE;
   const pageCount = Math.ceil(pendingDashboardData.length / PER_PAGE);
+  
 
 
   useEffect(() => {
@@ -276,7 +277,7 @@ const Attendancecorrectiondashboard = () => {
                     </button>
                   </Link>
                 </div>
-                {/* {pendingDashboardData ? ( */}
+                { pending ? (
                 <>
                   <div className="col-lg-3">
                     <DownloadTableExcel
@@ -288,7 +289,8 @@ const Attendancecorrectiondashboard = () => {
                     </DownloadTableExcel>
                   </div>
                 </>
-                {/* ) : null} */}
+                ): null } 
+
                 {/* {approved ? (
                   <>
                     <div className="col-lg-3">
@@ -459,13 +461,14 @@ const Attendancecorrectiondashboard = () => {
                     <th>Date</th>
                     <th>Start Time</th>
                     <th>End Time</th>
+                    <th>Status</th>
                   </tr>
                 </thead>
 
                 <tbody>
-                  {Array.isArray(managerApproved) && managerApproved.length > 0 && (
+                  {Array.isArray(approvedDashboardData) && approvedDashboardData.length > 0 && (
                     <>
-                      {managerApproved.map((data) => {
+                      {approvedDashboardData.map((data) => {
                         return (
                           <tr key={data.id}>
                             <td>{data.date}</td>
@@ -480,13 +483,34 @@ const Attendancecorrectiondashboard = () => {
                   )}
                 </tbody>
               </table>
+              <div className="mb-4 mt-4 text-center">
+                <ReactPaginate
+                  previousLabel={"Previous"}
+                  nextLabel={"Next"}
+                  breakLabel={"..."}
+                  pageCount={pageCount}
+                  marginPagesDisplayed={2}
+                  pageRangeDisplayed={3}
+                  onPageChange={handlePageClick}
+                  containerClassName={"pagination  justify-content-center"}
+                  pageClassName={"page-item "}
+                  pageLinkClassName={"page-link"}
+                  previousClassName={"page-item"}
+                  previousLinkClassName={"page-link"}
+                  nextClassName={"page-item"}
+                  nextLinkClassName={"page-link"}
+                  breakClassName={"page-item"}
+                  breakLinkClassName={"page-link"}
+                  activeClassName={"active primary"}
+                />
+              </div>
             </>
           )}
 
           {rejected && roleID != "4" && (
             <>
               <div className="col-lg-2 text-primary fs-6 fw-bold">
-                <h6>Showing {rejectcount} Results</h6>
+                <h6 style={{ color: "#3247d5" }}>Showing {rejectcount} Results</h6>
               </div>
               <table className="table table-hover" ref={tableRef}>
                 <thead className="bg-info text-white">
@@ -518,6 +542,27 @@ const Attendancecorrectiondashboard = () => {
                     )}
                 </tbody>
               </table>
+              <div className="mb-4 mt-4 text-center">
+                <ReactPaginate
+                  previousLabel={"Previous"}
+                  nextLabel={"Next"}
+                  breakLabel={"..."}
+                  pageCount={pageCount}
+                  marginPagesDisplayed={2}
+                  pageRangeDisplayed={3}
+                  onPageChange={handlePageClick}
+                  containerClassName={"pagination  justify-content-center"}
+                  pageClassName={"page-item "}
+                  pageLinkClassName={"page-link"}
+                  previousClassName={"page-item"}
+                  previousLinkClassName={"page-link"}
+                  nextClassName={"page-item"}
+                  nextLinkClassName={"page-link"}
+                  breakClassName={"page-item"}
+                  breakLinkClassName={"page-link"}
+                  activeClassName={"active primary"}
+                />
+              </div>
             </>
           )}
 

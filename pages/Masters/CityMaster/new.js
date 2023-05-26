@@ -74,7 +74,25 @@ function CityMasterForm({ editData }) {
         );
         clearForm(res.data[0]);
     };
-
+    const customStyles = {
+        content: {
+          top: "50%",
+          left: "50%",
+          right: "auto",
+          bottom: "auto",
+          marginRight: "-50%",
+          transform: "translate(-50%, -50%)",
+          width: "60%",
+        },
+        errorMsg: {
+          fontSize: "12px",
+          fontWeight: "500",
+          color: "red",
+        },
+        inputLabel: {
+          fontSize: "16px",
+        },
+      };
     return (
         <Layout>
             <div className="container-fluid">
@@ -128,8 +146,9 @@ function CityMasterForm({ editData }) {
                                             type="text"
                                             className="form-control"
                                             placeholder="Short"
-                                            {...register("Short", { required: true })}
+                                            {...register("Short", { required: "enter the field" })}
                                         />
+                                         {errors.Short && <p className="error-message"  style={customStyles.errorMsg}>{errors.Short.message}</p>}
                                     </div>
 
                                     <div className="col-lg-4">
@@ -138,9 +157,10 @@ function CityMasterForm({ editData }) {
                                         </label>
                                         <textarea
                                             className="form-control"
-                                            placeholder="Description"
-                                            {...register("Description", { required: true })}
+                                            placeholder="Description" minLength={10}
+                                            {...register("Description", { required: "Description is required" })}
                                         ></textarea>
+                                         {errors.Description && <p className="error-message"  style={customStyles.errorMsg}>{errors.Description.message}</p>}
                                     </div>
                                 </div>
                                 <br />

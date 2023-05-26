@@ -167,7 +167,7 @@ const MyTeamCompensationtimeout = () => {
                             {
                                 sessionStorage.getItem("roleID") == 3 && (
                                     <Link href="/Requests/Myteamcompensationtimeout">
-                                        <label className="mainheader">My Compensation Time Out</label>
+                                        <label className="mainheader ">My Compensation Time Out</label>
                                     </Link>
                                 )
                             }
@@ -187,12 +187,13 @@ const MyTeamCompensationtimeout = () => {
                                 roleID != "3" && (
                                     <div className='col-lg-3' style={{ whiteSpace: "nowrap" }}>
                                         <Link href="/Requests/Compensationtimeout/new"><button className='EditDelteBTN'>Add Compensation Time Out</button></Link>
+                                      
                                     </div>
                                 )
                             }
                         </div>
                     </div>
-                    <br /><br />
+                    <br />
                     <div className='row'>
                         <div className='col-lg-4'>
                             <div className='btn-group'>
@@ -200,10 +201,10 @@ const MyTeamCompensationtimeout = () => {
                                 <button onClick={toggleApproved} className={`toggleButton ${approved ? "focus" : ""}`}  >Approved</button>
                                 <button onClick={toggleRejected} className={`toggleButton ${rejected ? "focus" : ""}`} >Rejected</button>
                             </div>
-                            <h6 style={{ color: "#3247d5" }}>Showing {count} Results</h6>
+
                         </div>
                     </div>
-                    <br /><br />
+                    <br />
 
                     <Modal isOpen={isOpen} style={customStyles}>
                         <div className='container'>
@@ -234,7 +235,9 @@ const MyTeamCompensationtimeout = () => {
                     </Modal>
                     <div className='row'>
                         <div className='col-lg-12'>
+                            <h6 style={{ color: "#3247d5" }}>Showing {count} Results</h6>
                             {
+
                                 pending && roleID == "3" && (
                                     <table className='table'>
                                         <thead className='bg-info text-white'>
@@ -265,9 +268,8 @@ const MyTeamCompensationtimeout = () => {
                                                             <td>{data.actuval_EndTime}</td>
                                                             <td>{data.comments}</td>
                                                             <td>{data.status}</td>
-                                                            &nsbp;
                                                             <td>
-                                                                <button onClick={ approve.bind(this, data.id)} className='edit-btn'>Approve</button> 
+                                                                <button onClick={approve.bind(this, data.id)} className='edit-btn'>Approve</button>
                                                                 <button onClick={openModal} className='edit-btn'>Reject</button>
                                                             </td>
                                                         </tr>

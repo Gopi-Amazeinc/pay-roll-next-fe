@@ -225,7 +225,7 @@ const Index = () => {
               <th>Name</th>
               <th>Component Code</th>
               <th>Amount</th>
-              <th>Action</th>
+              <th style={{textAlign: "center"}}>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -248,19 +248,19 @@ const Index = () => {
                     <td>{data.name}</td>
                     <td>{data.payCode}</td>
                     <td>{data.amount}</td>
-                    <td>
+                    <td style={{textAlign: "center"}}>
                       <span onClick={() => enableDisableStaff(data)}>
                         {data.attendanceEnable ? (
                           <button
                             onClick={getData.bind(this, data)}
-                            className="enableDisableBtn"
+                            className="enableDisableBtn mx-2"
                           >
                             DISABLE
                           </button>
                         ) : (
                           <button
                             onClick={getData.bind(this, data)}
-                            className="enableDisableBtn"
+                            className="enableDisableBtn mx-2"
                           >
                             ENABLE
                           </button>
@@ -268,14 +268,14 @@ const Index = () => {
                       </span>
                       <Link href={`/Staff/ComponentBulkUpload/Edit/${data.id}`}>
                         <button className="editDeleteBtnTable mx-2">
-                          Edit
+                          EDIT
                         </button>
                       </Link>
                       <button
                         className="editDeleteBtnTable mx-2"
                         onClick={() => handleDelete(data.id)}
                       >
-                        Delete
+                        DELETE
                       </button>
                     </td>
                   </tr>
