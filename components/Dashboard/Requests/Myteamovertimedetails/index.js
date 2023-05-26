@@ -272,7 +272,7 @@ const Index = () => {
                                             <tbody>
                                                 {
                                                     managerPending.filter(data => {
-                                                        if ((data.date.toString().includes(keyword.toString())) || (data.startTime.toString().includes(keyword)) || (data.endTime.toString().includes(keyword)) || (data.status.toString().includes(keyword)) || (data.comments.toString().includes(keyword.toString()))) {
+                                                        if ((data.controlNumber.toString().includes(keyword.toString())) || (data.staffID.toString().includes(keyword.toString())) || (data.firstName.toString().includes(keyword.toString())) || (data.date.toString().includes(keyword.toString())) || (data.startTime.toString().includes(keyword)) || (data.endTime.toString().includes(keyword)) || (data.status.toString().includes(keyword)) || (data.comments.toString().includes(keyword.toString()))) {
                                                             return data;
                                                         }
                                                     }).slice(offset, offset + PER_PAGE).map((data) => {
@@ -332,7 +332,7 @@ const Index = () => {
                                             <tbody>
                                                 {
                                                     managerApproved.filter(data => {
-                                                        if ((data.date.toString().includes(keyword.toString())) || (data.startTime.toString().includes(keyword)) || (data.endTime.toString().includes(keyword)) || (data.status.toString().includes(keyword)) || (data.comments.toString().includes(keyword.toString()))) {
+                                                        if ((data.controlNumber.toString().includes(keyword.toString())) || (data.staffID.toString().includes(keyword.toString())) || (data.firstName.toString().includes(keyword.toString())) || (data.date.toString().includes(keyword.toString())) || (data.startTime.toString().includes(keyword)) || (data.endTime.toString().includes(keyword)) || (data.status.toString().includes(keyword)) || (data.comments.toString().includes(keyword.toString()))) {
                                                             return data;
                                                         }
                                                     }).slice(offset, offset + PER_PAGE).map((data) => {
@@ -380,7 +380,7 @@ const Index = () => {
                                             <tbody>
                                                 {
                                                     managerRejected.filter(data => {
-                                                        if ((data.date.toString().includes(keyword.toString())) || (data.startTime.toString().includes(keyword)) || (data.endTime.toString().includes(keyword)) || (data.status.toString().includes(keyword)) || (data.comments.toString().includes(keyword.toString()))) {
+                                                        if ((data.controlNumber.toString().includes(keyword.toString())) || (data.staffID.toString().includes(keyword.toString())) || (data.firstName.toString().includes(keyword.toString())) || (data.date.toString().includes(keyword.toString())) || (data.startTime.toString().includes(keyword)) || (data.endTime.toString().includes(keyword)) || (data.status.toString().includes(keyword)) || (data.comments.toString().includes(keyword.toString()))) {
                                                             return data;
                                                         }
                                                     }).slice(offset, offset + PER_PAGE).map((data) => {
