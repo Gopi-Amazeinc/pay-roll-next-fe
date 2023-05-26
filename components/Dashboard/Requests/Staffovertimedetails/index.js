@@ -8,19 +8,14 @@ import { apiService } from "@/services/api.service";
 import { useForm } from 'react-hook-form';
 import ReactPaginate from "react-paginate";
 import { Router, useRouter } from 'next/router';
+import { DownloadTableExcel } from "react-export-table-to-excel";
 const Index = () => {
     const router = useRouter()
     const { register, handleSubmit, watch, formState } = useForm();
+    const tableRef = useRef(null);
     const [pending, setPending] = useState(false)
     const [approved, setApproved] = useState(false)
     const [rejected, setRejected] = useState(false);
-    const [keyword, setKeyword] = useState("");
-    // const [managertogglePending, setManagerTogglePending] = useState(false)
-    // const [managerToggleapproved, setManagerToggleApproved] = useState(false)
-    // const [managertogglerejected, setManagerToggleRejected] = useState(false);
-    // const [managerPending, setManagerPendingData] = useState([]);
-    // const [managerApproved, setManagerApprovedData] = useState([]);
-    // const [managerRejected, setManagerRejectedData] = useState([]);
     const [newDashboard, setNewDashboardData] = useState([]);
     const [newApproved, setnewApprovedData] = useState([]);
     const [newRejected, setnewRejectedData] = useState([]);
@@ -28,7 +23,8 @@ const Index = () => {
     const [modalData, setModalData] = useState([]);
     const [isOpen, ModalIsOpen] = useState(false)
     const [roleID, setRoleID] = useState();
-    const [userID, setUserID] = useState()
+    const [userID, setUserID] = useState();
+    const [keyword, setKeyword] = useState("");
 
     const togglePending = () => {
         setPending(true)
@@ -46,16 +42,14 @@ const Index = () => {
         setApproved(false)
         setPending(false)
     }
-    const openModal = () => {
+    const openModal = async () => {
         ModalIsOpen(true)
-    }
-
-    const openEditModal = async (data) => {
         setModalOpen(true)
         const res = await apiService.commonGetCall("HR/GetOtNightOt?StartTime=" + data.startTime + "&EndTime=" + data.endTime + "&Shift=1&StaffID=" + userID + "&Date=" + data.filterdate);
         setModalData(res.data);
         console.log("Modal data", res.data);
     }
+
     const closeModal = () => {
         setModalOpen(false)
     }
@@ -117,11 +111,11 @@ const Index = () => {
         }
     };
 
+
     const getDataBySelectedDate = (endDatesss) => {
         debugger;
         return getPendingDetails(startDate, endDatesss);
     };
-
     const getPendingDetails = async () => {
         const res = await apiService.commonGetCall("Payroll/GetPendingStaffOverTimeDetails")
         setNewDashboardData(res.data);
@@ -137,80 +131,11 @@ const Index = () => {
         setnewRejectedData(res.data);
         console.log("Rejected", res.data);
     }
-    // const getManagerPendingDetails = async () => {
-    //     const res = await apiService.commonGetCall("Payroll/GetPendingOverTimeDetailsByManagerID?ManagerID=" + userID)
-    //     setManagerPendingData(res.data)
-    //     console.log("Manager Pending", res.data);
-    // }
-    // const getManagerApprovedData = async () => {
-    //     const res = await apiService.commonGetCall("Payroll/GetApprovedOverTimeDetailsByManagerID?ManagerID=" + userID)
-    //     setManagerApprovedData(res.data)
-    //     console.log("Manager Approved", res.data);
-    // }
-
-    // const getManagerRejectedData = async () => {
-    //     // debugger;
-    //     const res = await apiService.commonGetCall("Payroll/GetRejectOverTimeDetailsByManagerID?ManagerID=" + userID)
-    //     setManagerRejectedData(res.data)
-    //     console.log("Manager Rejected", res.data);
-    // }
-
-    const approve = (id) => {
-        let data = {
-            "id": id,
-            "Status": "Manager Approved"
-        }
-        Swal.fire({
-            title: 'Confirm To Approve?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, Approve it!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                apiService.commonPostCall("Payroll/UpdateApproveOtFromManager", data)
-                Swal.fire({
-                    icon: "success",
-                    titleText: "Approved Successfully"
-                })
-
-            }
-        })
-        getManagerPendingDetails();
-    }
-    let id;
-    const reject = () => {
-        id = sessionStorage.getItem("id")
-        let Reason = watch("Reason")
-        let data = {
-            "id": id,
-            "RejectReason": Reason,
-            "Status": "Manager Rejected"
-        }
-        Swal.fire({
-            title: 'Confirm To Reject?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, Reject it!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                apiService.commonPostCall(`Payroll/UpdateOtFromManager`, data);
-                Swal.fire({
-                    icon: "success",
-                    titleText: "Rejected Successfully"
-                })
-
-
-            }
-
-        })
-        getManagerPendingDetails();
-        router.push("/Requests/OverTimeDetails")
+    const openEditModal = async (data) => {
+        setModalOpen(true)
+        const res = await apiService.commonGetCall("HR/GetOtNightOt?StartTime=" + data.startTime + "&EndTime=" + data.endTime + "&Shift=1&StaffID=" + userID + "&Date=" + data.filterdate);
+        setModalData(res.data);
+        console.log("Modal data", res.data);
     }
     const PER_PAGE = 5;
     const [currentPage, setCurrentPage] = useState(0);
@@ -219,32 +144,6 @@ const Index = () => {
     };
     const offset = currentPage * PER_PAGE;
     const pageCount = Math.ceil(newDashboard.length / PER_PAGE);
-
-    useEffect(() => {
-        const usrID = sessionStorage.getItem("userID");
-        setUserID(usrID);
-        const userRoleID = sessionStorage.getItem("roleID");
-        setRoleID(userRoleID);
-        setPending(true);
-        getPendingDetails();
-        getApprovedDetails();
-        getRejectedDetails();
-        var date = sessionStorage.getItem("Date");
-        var startTime = sessionStorage.getItem("StartTime");
-        var endTime = sessionStorage.getItem("EndTime");
-        // setManagerTogglePending(true);
-        setPending(true)
-        if (userID) {
-            const resu = getCurrentMonthDates();
-            if (resu) {
-                getPendingDetails();
-                getApprovedDetails();
-                getRejectedDetails();
-            }
-        }
-        return;
-
-    }, [userID])
     const Delete = (id) => {
         Swal.fire({
             title: 'Are You Sure To Cancel?',
@@ -266,53 +165,63 @@ const Index = () => {
         }
         )
     }
+    useEffect(() => {
+        const usrID = sessionStorage.getItem("userID");
+        setUserID(usrID);
+        const userRoleID = sessionStorage.getItem("roleID");
+        setRoleID(userRoleID);
+        setPending(true);
+        getPendingDetails();
+        getApprovedDetails();
+        getRejectedDetails();
+        setPending(true)
+        if (userID) {
+            const resu = getCurrentMonthDates();
+            if (resu) {
+                getPendingDetails();
+                getApprovedDetails();
+                getRejectedDetails();
+            }
+        }
+        return;
 
+    }, [userID])
 
     return (
         <div className='container-fluid'>
             <div className='row'>
                 <div className="col-lg-12">
-                    <br />
                     <div className="row">
-                        <div className="col-lg-3">
-                            <label className='mainheader'>My Overtime Details</label>
-                        </div>
                         <div className='col-lg-3'>
                             {
-                                roleID == 3 && (
-                                    <Link style={{ textDecoration: "none" }} href="/Requests/Myteamovertimedetails">
-                                        <label className='mainheader' >My Team Overtime Details</label>
-                                    </Link>
-                                )
-                            }
-                            {
                                 roleID == 2 && (
-                                    <Link style={{ textDecoration: "none" }} href="/Requests/Staffovertimedetails">
-                                        <label className='mainheader' >Staff Overtime Details</label>
-                                    </Link>
+                                    <Link style={{ textDecoration: "none" }} href="/Requests/OverTimeDetails">
+                                        <label className='mainheader' >My Overtime Details</label>
+                                    </Link>                                    
                                 )
                             }
+                        </div>
+                        <div className="col-lg-3">
+                            <label className='mainheader'>Staff Overtime Details</label>
                         </div>
                     </div><br />
                     <div className='card p-3 border-0 rounded-3'>
                         <div className='row'>
-                            <div className='col-lg-4'>
-                                <label style={{ fontWeight: "bold" }}>Start Date:</label>
-                                <input type="date" className='form-control' onChange={(e) => getStartDate(e.target.value)} />
+                            <div className='col-lg-1'>
+                                <label style={{ fontWeight: "bold" }}>Filter by :</label>
                             </div>
-                            <div className='col-lg-4'>
-                                <label style={{ fontWeight: "bold" }}>End Date:</label>
-                                <input type="date" className='form-control' onChange={(e) => getEndDate(e.target.value)} />
+                            <div className="col-lg-3">
+                                <label style={{ fontWeight: "bold" }}>Search:</label>
+                                <br /><input type="search" placeholder="Search here.." className="form-control " onChange={e => setKeyword(e.target.value)} />
                             </div>
-                            <div className='col-lg-1'></div>
-                            <div className='col-lg-3 mt-3'>
-                                <Link href="/Requests/OverTimeDetails/new">
-                                    <button className="AddButton">Apply Overtime</button>
-                                </Link>
-                            </div><br /><br /><br />
+                            <div className='col-lg-6'></div>
+                            <div className='col-lg-2'>
+                                <DownloadTableExcel filename="users table" sheet="users" currentTableRef={tableRef.current}>
+                                    <button className="button" id="AddButton"> Download</button>
+                                </DownloadTableExcel>
+                            </div>
                         </div>
-                    </div>
-
+                    </div><br />
                     <div className="row">
                         <div className="col-lg-12">
                             <div className='col-lg-4'><br />
@@ -320,8 +229,7 @@ const Index = () => {
                                     <button onClick={togglePending} className={`toggleButton ${pending ? "focus" : ""}`}> Pending</button>
                                     <button onClick={toggleApproved} className={`toggleButton ${approved ? "focus" : ""}`}>Approved</button>
                                     <button onClick={toggleRejected} className={`toggleButton ${rejected ? "focus" : ""}`}>Rejected</button>
-                                </div><br /><br />
-                                {/* <h6 style={{ color: "#3247d5" }}>Showing {managerRejected.length} Results</h6> */}
+                                </div>
                             </div>
                             <br />
                         </div>
@@ -335,6 +243,9 @@ const Index = () => {
                                         <table className='table table-hover'>
                                             <thead className='bg-info text-white'>
                                                 <tr>
+                                                    <th>Select All&nbsp;
+                                                        <input type='checkbox' />
+                                                    </th>
                                                     <th>Controll Number</th>
                                                     <th>EmployeID</th>
                                                     <th>Employee Name</th>
@@ -357,6 +268,9 @@ const Index = () => {
                                                     }).slice(offset, offset + PER_PAGE).map((data) => {
                                                         return (
                                                             <tr key={data.id}>
+                                                                <td>
+                                                                    <input type='checkbox' />
+                                                                </td>
                                                                 <td>{data.controlNumber}</td>
                                                                 <td>{data.staffID}</td>
                                                                 <td>{data.firstName}</td>
@@ -364,7 +278,7 @@ const Index = () => {
                                                                 <td>{data.startTime}</td>
                                                                 <td>{data.endTime}</td>
                                                                 <td>
-                                                                    <button className='edit-btn' onClick={openEditModal}>Details</button>
+                                                                    <button className='edit-btn' onClick={openModal.bind(this, data)}>Details</button>
                                                                 </td>
                                                                 <td>{data.comments}</td>
                                                                 <td>{data.status}</td>
@@ -510,58 +424,11 @@ const Index = () => {
                                     </div>
                                 </div>
                             </Modal>
-                            <Modal ariaHideApp={false} isOpen={isOpen} style={customStyles}>
-                                <div className='container'>
-                                    <div className='row card-header'>
-                                        <div className='col-lg-8'>
-                                            <h4>Rejecting Request</h4>
-                                        </div>
-                                        <div className='col-lg-3'></div>
-                                        <div className='col-lg-1'>
-                                            <button aria-label="Close" type="button" className={Styles.close} onClick={() => ModalIsOpen(false)}>X</button>
-                                        </div>
-                                    </div><br />
-                                    <div className='row'>
-                                        <div className='col-lg-12'>
-                                            <textarea rows={4} {...register("Reason")} className='form-control' placeholder='Write the reason here..'></textarea>
-                                        </div>
-                                    </div>
-                                    <div className='row'>
-                                        <div className='col-lg-8'></div>
-                                        <div className='col-lg-2'>
-                                            <button type='submit' className='edit-btn mt-5' onClick={() => ModalIsOpen(false)}>Cancel</button>
-                                        </div>
-                                        <div className='col-lg-2'>
-                                            <button onClick={reject} type='submit' className='edit-btn mt-5'>REJECT </button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </Modal>
                         </div>
                     </div>
-                    <ReactPaginate
-                        previousLabel={"Previous"}
-                        nextLabel={"Next"}
-                        breakLabel={"..."}
-                        pageCount={pageCount}
-                        marginPagesDisplayed={2}
-                        pageRangeDisplayed={3}
-                        onPageChange={handlePageClick}
-                        containerClassName={"pagination  justify-content-center"}
-                        pageClassName={"page-item "}
-                        pageLinkClassName={"page-link"}
-                        previousClassName={"page-item"}
-                        previousLinkClassName={"page-link"}
-                        nextClassName={"page-item"}
-                        nextLinkClassName={"page-link"}
-                        breakClassName={"page-item"}
-                        breakLinkClassName={"page-link"}
-                        activeClassName={"active primary"}
-                    />
-                </div >
+                </div>
             </div>
         </div>
     )
 }
-
 export default Index
