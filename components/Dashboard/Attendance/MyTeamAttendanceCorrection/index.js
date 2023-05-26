@@ -444,8 +444,8 @@ const MyTeamAttendancecorrectiondashboard = () => {
                                 <div className='row'>
                                     <div className='col-lg-12'>
                                         <label>Reason *</label>
-                                        <textarea placeholder='Reason'{...register("comments", { required: true,minLength:"5", maxLength: "40" })} className='form-control'></textarea>
-                                        {errors.comments && (
+                                        <textarea placeholder='Reason'minLength={5} {...register("comments", { required: true })} className='form-control'></textarea>
+                                        {errors.comments?.type==='required' && (
                                             <p className="text-danger">
                                                 Please enter Valid Reason
                                             </p>
