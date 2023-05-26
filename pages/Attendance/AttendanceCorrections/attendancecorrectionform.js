@@ -180,8 +180,7 @@ const AttendanceCorrectionform = () => {
                 {errors?.Comment?.type==='required' && (
                   <p style={customStyles.errorMsg}>Please Enter Comments</p>
                 )}
-                {errors?.Comment?.type=== "maxLength" && (
-        <p style={customStyles.errorMsg}>First name cannot exceed 20 characters</p>)}
+       
               </div>
             </div>
             <div className="row mt-5">

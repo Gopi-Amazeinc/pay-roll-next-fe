@@ -142,6 +142,7 @@ function StateMasterForm({ editData }) {
                     <textarea
                       name="Description"
                       className="form-control"
+                      minLength={10}
                       {...register("Description", { required: true })}
                       placeholder="Description"
                     />

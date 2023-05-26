@@ -81,6 +81,25 @@ const BarangayMasterForm = ({ editData }) => {
       router.push("/Masters/BarangayMaster");
     }
   };
+  const customStyles = {
+    content: {
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      marginRight: "-50%",
+      transform: "translate(-50%, -50%)",
+      width: "60%",
+    },
+    errorMsg: {
+      fontSize: "12px",
+      fontWeight: "500",
+      color: "red",
+    },
+    inputLabel: {
+      fontSize: "16px",
+    },
+  };
   return (
     <Layout>
       <div className="container-fluid">
@@ -111,7 +130,7 @@ const BarangayMasterForm = ({ editData }) => {
                       })}
                     </select>
                     {errors.CountryID && (
-                      <p style={{ color: "red" }} className="error">
+                      <p style={customStyles.errorMsg} className="error">
                         Please select a country
                       </p>
                     )}
@@ -135,7 +154,7 @@ const BarangayMasterForm = ({ editData }) => {
                       })}
                     </select>
                     {errors.ProvinceID && (
-                      <p style={{ color: "red" }} className="error">
+                      <p style={customStyles.errorMsg} className="error">
                         Please select a Province
                       </p>
                     )}
@@ -159,7 +178,7 @@ const BarangayMasterForm = ({ editData }) => {
                       })}
                     </select>
                     {errors.CityID && (
-                      <p style={{ color: "red" }} className="error">
+                      <p style={customStyles.errorMsg} className="error">
                         Please select a City
                       </p>
                     )}
@@ -175,7 +194,7 @@ const BarangayMasterForm = ({ editData }) => {
                       {...register("Name", { required: true })}
                     />
                     {errors.Name && (
-                      <p style={{ color: "red" }} className="error">
+                      <p style={customStyles.errorMsg} className="error">
                         Please Enter a Barangay
                       </p>
                     )}
