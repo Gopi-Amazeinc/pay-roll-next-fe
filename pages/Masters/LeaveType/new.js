@@ -98,6 +98,7 @@ function LeaveTypeForm({ editData }) {
                                             name="Description"
                                             rows="3"
                                             type="text"
+                                            minLength={10}
                                             {...register("Description", { required: true })}
                                             placeholder="Description"
                                         />
