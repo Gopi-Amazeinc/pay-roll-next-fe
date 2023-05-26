@@ -66,19 +66,19 @@ const Index = () => {
 
     const getPendingData = async (StartingDate, EndDate) => {
         debugger;
-        const res = await apiService.commonGetCall("Employee/GetPendingManagerLeavesByStaffID?ID=" + userID + "&TypeID=1&Sdate=" + StartingDate + "&Edate=" + EndDate)
+        const res = await apiService.commonGetCall("Employee/GetPendingManagerLeavesByStaffID?Supervisor=" + userID + "&TypeID=1&Sdate=" + StartingDate + "&Edate=" + EndDate)
         setPendingData(res.data, "pending");
         console.log(res.data);
     }
     const getApprovedData = async (StartingDate, EndDate) => {
         debugger;
-        const res = await apiService.commonGetCall("Employee/GetApprovedManagerLeavesByStaffID?ID=" + userID + "&TypeID=1&Sdate=" + StartingDate + "&Edate=" + EndDate)
+        const res = await apiService.commonGetCall("Employee/GetApprovedManagerLeavesByStaffID?Supervisor=" + userID + "&TypeID=1&Sdate=" + StartingDate + "&Edate=" + EndDate)
         setApprovedData(res.data);
         console.log(res.data);
     }
     const getRejectedData = async (StartingDate, EndDate) => {
         debugger;
-        const res = await apiService.commonGetCall("Employee/GetRejectedManagerLeavesByStaffID?ID=" + userID + "&TypeID=1&Sdate=" + StartingDate + "&Edate=" + EndDate)
+        const res = await apiService.commonGetCall("Employee/GetRejectedManagerLeavesByStaffID?Supervisor=" + userID + "&TypeID=1&Sdate=" + StartingDate + "&Edate=" + EndDate)
         setRejectedData(res.data);
         console.log(res.data);
     }

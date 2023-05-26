@@ -177,7 +177,13 @@ const Locatordashboard = () => {
                         <div className="row">
                             <div className="col-lg-3">
                                 <Link href="/Requests/Locatorrequest">  <label className="mainheader">My OBASIS Details</label> </Link>
-                             
+                                <div className="line-border" style={{
+                                    border: "1px solid #2f87cc",
+                                    bordertopleftradius: "51px",
+                                    bordertoprightradius: "51px",
+                                    margintop: "0px",
+                                    width: "70%"
+                                }}></div>
                             </div>
                             {
                                 roleID != 5 && (
