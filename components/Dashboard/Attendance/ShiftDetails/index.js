@@ -34,7 +34,7 @@ const Shiftdetails = () => {
   let staffID;
   const tableRef = useRef(null);
 
-  
+
   useEffect(() => {
     getShiftDetails();
     // getapprovedshiftDetails();
@@ -100,12 +100,12 @@ const Shiftdetails = () => {
     return getShiftBySlectedDate(startDate, endDatesss);
   };
 
-  const getShiftBySlectedDate =  async (Sdate,Edate) => {
+  const getShiftBySlectedDate = async (Sdate, Edate) => {
     debugger
     const datesss = shiftDetails.filter((item) => {
-          return item.shiftDate == Sdate && item.endDate == Edate;
-        });
-        return datesss
+      return item.shiftDate == Sdate && item.endDate == Edate;
+    });
+    return datesss
   }
   const getShiftDetails = async () => {
     const userid = sessionStorage.getItem("userID");
@@ -178,12 +178,18 @@ const Shiftdetails = () => {
       <div className="row">
         <div className="col-lg-3">
           <br />
-          <Link href="/Attendance/shiftdetails" className={Styles.mainheader}>
+          <Link href="/Attendance/ShiftDetails" className={Styles.mainheader}>
             My Weekly Shift
           </Link>
-          <div className="line-border"></div>
+          <div className="line-border" style={{
+            border: "1px solid #2f87cc",
+            bordertopleftradius: "51px",
+            bordertoprightradius: "51px",
+            margintop: "0px",
+            width: "51%"
+          }}></div>
         </div>
-        <div className="col-lg-3">
+        <div className="col-lg-3" style={{ marginLeft: "-30px" }} >
           <br />
           {roleid != 3 ||
             <Link href="/Attendance/MyTeamWeeklyShift" className={Styles.mainheader}> My Team Weekly Shift

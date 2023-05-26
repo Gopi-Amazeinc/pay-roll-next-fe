@@ -63,12 +63,18 @@ const Index = () => {
                     <br />
                     <Link href="/Attendance/ShiftDetails" className={Styles.mainheader}>  My Weekly Shift</Link>
                 </div>
-                <div className='col-lg-3' style={{ marginLeft: "-10%" }}>
+                <div className='col-lg-3' style={{ marginLeft: "-30px" }}>
                     <br />
                     <Link href="/Attendance/MyTeamWeeklyShift" className={Styles.mainheader}> Company Weekly Shift</Link>
-                   <div className="line-border"></div>
+                    <div className="line-border" style={{
+                        border: "1px solid #2f87cc",
+                        bordertopleftradius: "51px",
+                        bordertoprightradius: "51px",
+                        margintop: "0px",
+                        width: "70%"
+                    }}></div>
                 </div>
-                
+
             </div>
             <div className='card shadow-lg p-4 rounded-3 mt-4'>
                 <div className='row'>
