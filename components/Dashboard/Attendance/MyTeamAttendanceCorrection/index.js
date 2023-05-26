@@ -243,16 +243,22 @@ const MyTeamAttendancecorrectiondashboard = () => {
                 </div>
                 {(roleID == 3 || roleID == 2) && (
                     <>
-                        <div className="col-lg-3" style={{ marginLeft: "-60px" }}>
+                        <div className="col-lg-3" style={{ marginLeft: "-30px" }}>
                             <Link
                                 className={Styles.mainheader}
                                 href="/Attendance/MyTeamAttendanceCorrection"
                             >
                                 My Team Attendance Correction
                             </Link>
-                            <div className="line-border"></div>
+                            <div className="line-border" style={{
+                                border: "1px solid #2f87cc",
+                                bordertopleftradius: "51px",
+                                bordertoprightradius: "51px",
+                                margintop: "0px",
+                                width: "98%"
+                            }}></div>
                         </div>
-                        
+
                     </>
                 )}
             </div>
@@ -375,7 +381,7 @@ const MyTeamAttendancecorrectiondashboard = () => {
                     </table>
                 )} */}
 
-                {(pending && roleID == "3" )  && (
+                {(pending && roleID == "3") && (
                     <>
                         <h6 style={{ color: "#3247d5" }}>Showing {pendingcount} Results</h6>
                         <table className="table table-hover" ref={tableRef}>
@@ -460,7 +466,7 @@ const MyTeamAttendancecorrectiondashboard = () => {
                     </Modal>
                 </div>
 
-{/* 
+                {/* 
                 {approved && roleID != "3" && (
                     <>
                         <h6 style={{ color: "#3247d5" }}>Showing {approvedcount} Results</h6>
