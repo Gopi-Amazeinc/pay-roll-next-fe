@@ -16,6 +16,7 @@ const Locatorrequest = () => {
 
     const [StaffID, setUserID] = useState()
     const [filePath, setFilePath] = useState();
+    const [fileName, setFileName] = useState();
 
     useEffect(() => {
         const usrID = sessionStorage.getItem("userID");
@@ -52,6 +53,7 @@ const Locatorrequest = () => {
         let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
         const formData = new FormData();
         formData.append("file_upload", data[0], data[0].name);
+        setFileName(data[0].name)
         let invoiceURL = await axios.post(
             hostURL + "Payroll/ProjectAttachments",
             formData
@@ -134,12 +136,15 @@ const Locatorrequest = () => {
                                         {isDragActive ? (
                                             <p>Drop the files here ...</p>
                                         ) : (
-                                            <p>
-                                                Drag 'n' drop some files here, or click to select
-                                                files
-                                            </p>
+                                            <>
+                                                {
+                                                    filePath && (
+                                                        <p>{fileName}</p>
+                                                    )
+                                                }</>
                                         )}
                                     </div>
+
                                 </div>
                             </div>
                         </div>
