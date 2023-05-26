@@ -75,6 +75,7 @@ const Attendancecorrectiondashboard = () => {
   }
   const offset = currentPage * PER_PAGE;
   const pageCount = Math.ceil(pendingDashboardData.length / PER_PAGE);
+  
 
 
   useEffect(() => {
@@ -460,6 +461,7 @@ const Attendancecorrectiondashboard = () => {
                     <th>Date</th>
                     <th>Start Time</th>
                     <th>End Time</th>
+                    <th>Status</th>
                   </tr>
                 </thead>
 
@@ -481,6 +483,27 @@ const Attendancecorrectiondashboard = () => {
                   )}
                 </tbody>
               </table>
+              <div className="mb-4 mt-4 text-center">
+                <ReactPaginate
+                  previousLabel={"Previous"}
+                  nextLabel={"Next"}
+                  breakLabel={"..."}
+                  pageCount={pageCount}
+                  marginPagesDisplayed={2}
+                  pageRangeDisplayed={3}
+                  onPageChange={handlePageClick}
+                  containerClassName={"pagination  justify-content-center"}
+                  pageClassName={"page-item "}
+                  pageLinkClassName={"page-link"}
+                  previousClassName={"page-item"}
+                  previousLinkClassName={"page-link"}
+                  nextClassName={"page-item"}
+                  nextLinkClassName={"page-link"}
+                  breakClassName={"page-item"}
+                  breakLinkClassName={"page-link"}
+                  activeClassName={"active primary"}
+                />
+              </div>
             </>
           )}
 
@@ -519,6 +542,27 @@ const Attendancecorrectiondashboard = () => {
                     )}
                 </tbody>
               </table>
+              <div className="mb-4 mt-4 text-center">
+                <ReactPaginate
+                  previousLabel={"Previous"}
+                  nextLabel={"Next"}
+                  breakLabel={"..."}
+                  pageCount={pageCount}
+                  marginPagesDisplayed={2}
+                  pageRangeDisplayed={3}
+                  onPageChange={handlePageClick}
+                  containerClassName={"pagination  justify-content-center"}
+                  pageClassName={"page-item "}
+                  pageLinkClassName={"page-link"}
+                  previousClassName={"page-item"}
+                  previousLinkClassName={"page-link"}
+                  nextClassName={"page-item"}
+                  nextLinkClassName={"page-link"}
+                  breakClassName={"page-item"}
+                  breakLinkClassName={"page-link"}
+                  activeClassName={"active primary"}
+                />
+              </div>
             </>
           )}
 

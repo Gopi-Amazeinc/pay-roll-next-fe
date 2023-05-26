@@ -33,7 +33,18 @@ const Shiftdetails = () => {
   let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
   let staffID;
   const tableRef = useRef(null);
+// Gopi:'s Code 
 
+// 
+// setShiftDetails(shifts => {
+//   const updatedshifts = shifts.map(item => {
+//       if (item.staffID === data.staffID) {
+//           return { ...item, isChecked: checked };
+//       }
+//       return item;
+//   });
+//   return updatedshifts;
+// });
 
   useEffect(() => {
     getShiftDetails();
