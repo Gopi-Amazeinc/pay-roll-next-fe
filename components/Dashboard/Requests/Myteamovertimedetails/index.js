@@ -255,14 +255,14 @@ const Index = () => {
                                                     <td>
                                                         <input type='checkbox' />
                                                     </td>
-                                                    <th>Controll Number</th>
+                                                    <th>Control Number</th>
                                                     <th>EmployeID</th>
                                                     <th>Employee Name</th>
                                                     <th>Date </th>
                                                     <th>Start Time</th>
                                                     <th>End Time</th>
                                                     <th>OT Details</th>
-                                                    <th>Attachment</th>
+                                                    {/* <th>Attachment</th> */}
                                                     <th>Comments</th>
                                                     <th>Status</th>
                                                     <th>Actions</th>
@@ -281,7 +281,11 @@ const Index = () => {
                                                                 <td>
                                                                     <input type='checkbox' />
                                                                 </td>
+                                                                <td>{data.controlNumber}</td>
+                                                                <td>{data.staffID}</td>
+                                                                <td>{data.firstName}</td>
                                                                 <td>{data.date}</td>
+                                                                {/* <td>{data.date}</td> */}
                                                                 <td>{data.startTime}</td>
                                                                 <td>{data.endTime}</td>
                                                                 <td>
@@ -317,11 +321,11 @@ const Index = () => {
                                                     <th>Date </th>
                                                     <th>Start Time</th>
                                                     <th>End Time</th>
-                                                    <th>OT Details</th>
-                                                    <th>Attachment</th>
+                                                    {/* <th>OT Details</th> */}
+                                                    {/* <th>Attachment</th> */}
                                                     <th>Comments</th>
                                                     <th>Status</th>
-                                                    <th>Actions</th>
+                                                    {/* <th>Actions</th> */}
                                                 </tr>
                                             </thead>
 
@@ -334,10 +338,13 @@ const Index = () => {
                                                     }).slice(offset, offset + PER_PAGE).map((data) => {
                                                         return (
                                                             <tr key={data.id}>
+                                                                <td>{data.controlNumber}</td>
+                                                                <td>{data.staffID}</td>
+                                                                <td>{data.firstName}</td>
                                                                 <td>{data.date}</td>
                                                                 <td>{data.startTime}</td>
                                                                 <td>{data.endTime}</td>
-                                                                {/* <td>{data.comments}</td> */}
+                                                                <td>{data.comments}</td>
                                                                 <td>{data.status}</td>
                                                             </tr>
                                                         )
@@ -363,9 +370,9 @@ const Index = () => {
                                                     <th>Date </th>
                                                     <th>Start Time</th>
                                                     <th>End Time</th>
-                                                    <th>OT Details</th>
-                                                    <th>Attachment</th>
-                                                    <th>Comments</th>
+                                                    {/* <th>OT Details</th> */}
+                                                    {/* <th>Attachment</th> */}
+                                                    {/* <th>Comments</th> */}
                                                     <th>Status</th>
                                                 </tr>
                                             </thead>
@@ -379,6 +386,9 @@ const Index = () => {
                                                     }).slice(offset, offset + PER_PAGE).map((data) => {
                                                         return (
                                                             <tr key={data.id}>
+                                                                <td>{data.controlNumber}</td>
+                                                                <td>{data.staffID}</td>
+                                                                <td>{data.firstName}</td>
                                                                 <td>{data.date}</td>
                                                                 <td>{data.startTime}</td>
                                                                 <td>{data.endTime}</td>

@@ -57,6 +57,7 @@ const Sidebar = ({ children, applyPageName }) => {
   let [displayBankReports, toggleBankReports] = useState(false);
   let [displaySSS, toggleSSS] = useState(false);
   let [displayPhilhealthMonthly, togglePhilhealthMonthly] = useState(false);
+  let [displayLeaveConfiguration, toggleLeaveConfiguration] = useState(false);
 
   const [activeMenu, setActiveMenu] = useState(1);
   const updateActiveMenu = (data) => {
@@ -173,6 +174,13 @@ const Sidebar = ({ children, applyPageName }) => {
     } else {
       togglePhilhealthMonthly(false);
     }
+
+    if (menuID > "900" ) {
+      toggleLeaveConfiguration(true);
+    } else {
+      toggleLeaveConfiguration(false);
+    }
+
   }, []);
 
   const getStyle = (menuID) => {
@@ -198,7 +206,10 @@ const Sidebar = ({ children, applyPageName }) => {
       marginRight: "5%",
     },
   };
-
+  const toggleLeaveConfigurationMenu = () => {
+    toggleLeaveConfiguration(!displayLeaveConfiguration);
+    sessionStorage.setItem("toggleLeaveConfiguration", displayLeaveConfiguration);
+  };
   const toggleSSSMenu = () => {
     toggleSSS(!displaySSS);
     sessionStorage.setItem("toggleSSS", displaySSS);
@@ -822,7 +833,26 @@ const Sidebar = ({ children, applyPageName }) => {
               )}
             </div>
           )}
+          {userRole==2 && (
+            <div>
+              <hr>
+              </hr>
+              <Link href="/Leaveconfiguration" className={styles.sidemenulink}>
+            <button
+              className={getStyle(900)}
+              onClick={updateActiveMenu.bind(this, {
+                id: 900,
+                name: "Leaveconfiguration",
+              })}
+            >
+              <RiSettings4Line style={customStyles.icons} />
+              Leave Configuration
+            </button>
+          </Link>
+            </div>
+          )
 
+          }
           {/* {userRole == 4 && (
           <div>
             <hr></hr>
