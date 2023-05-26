@@ -57,8 +57,8 @@ const Index = () => {
 
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
-    
-  const [keyword, setKeyword] = useState("");
+
+    const [keyword, setKeyword] = useState("");
 
     const { register, handleSubmit, reset, watch, formState: { errors } } = useForm();
 
@@ -175,10 +175,16 @@ const Index = () => {
 
                         </div>
 
-                        <div className='col-lg-3'>
+                        <div className='col-lg-3' style={{ marginLeft: "-30px" }}>
                             <br />
                             <Link href="/Attendance/MyTeamWeeklyShift" className={Styles.mainheader}> My Team Weekly Shift</Link>
-                            <div className="line-border"></div>
+                            <div className="line-border" style={{
+                                border: "1px solid #2f87cc",
+                                bordertopleftradius: "51px",
+                                bordertoprightradius: "51px",
+                                margintop: "0px",
+                                width: "69%"
+                            }}></div>
                         </div>
                     </div>
                     <br />
@@ -198,7 +204,7 @@ const Index = () => {
                             </div>
                             <div className="col-lg-2">
                                 <br />
-                                <input type="text" className='form-control' placeholder='Serach For Band'   onChange={(e) => setKeyword(e.target.value)} />
+                                <input type="text" className='form-control' placeholder='Serach For Band' onChange={(e) => setKeyword(e.target.value)} />
                                 {/* <Link href="/Attendance/StaffShiftForm/new" ><button className='button'>Add Shift Details</button></Link> */}
                             </div>
                             <div className="col-lg-1"></div>
@@ -250,32 +256,32 @@ const Index = () => {
 
                                 <tbody>
                                     {
-                                        weeklyShiftData 
-                                        .filter(post => {
-                                            return Object.values(post).some(value =>
-                                              value !== null && value.toString().toLowerCase().includes(keyword.toLowerCase())
-                                            );
-                                          })
-                                        .slice(offset, offset + PER_PAGE).map((data) => {
-                                            return (
-                                                <tr key={data.id}>
-                                                    <td>{data.staffID}</td>
-                                                    <td>{data.employeeName}</td>
-                                                    <td>{data.shiftdate}</td>
-                                                    <td>{data.endDate}</td>
-                                                    <td>{data.shiftName}</td>
-                                                    <td>{data.startTime1}</td>
-                                                    <td>{data.endTime1}</td>
-                                                    <td>{data.restDays}</td>
-                                                    <td>{data.status}</td>
-                                                    <td>
-                                                        <button onClick={approve.bind(this, data.id)} className='edit-btn'>Approve</button>
-                                                        &nbsp;
-                                                        <button onClick={reject.bind(this, data.id)} className='edit-btn'>Reject</button>
-                                                    </td>
-                                                </tr>
-                                            )
-                                        })
+                                        weeklyShiftData
+                                            .filter(post => {
+                                                return Object.values(post).some(value =>
+                                                    value !== null && value.toString().toLowerCase().includes(keyword.toLowerCase())
+                                                );
+                                            })
+                                            .slice(offset, offset + PER_PAGE).map((data) => {
+                                                return (
+                                                    <tr key={data.id}>
+                                                        <td>{data.staffID}</td>
+                                                        <td>{data.employeeName}</td>
+                                                        <td>{data.shiftdate}</td>
+                                                        <td>{data.endDate}</td>
+                                                        <td>{data.shiftName}</td>
+                                                        <td>{data.startTime1}</td>
+                                                        <td>{data.endTime1}</td>
+                                                        <td>{data.restDays}</td>
+                                                        <td>{data.status}</td>
+                                                        <td>
+                                                            <button onClick={approve.bind(this, data.id)} className='edit-btn'>Approve</button>
+                                                            &nbsp;
+                                                            <button onClick={reject.bind(this, data.id)} className='edit-btn'>Reject</button>
+                                                        </td>
+                                                    </tr>
+                                                )
+                                            })
                                     }
                                 </tbody>
                             </table>
