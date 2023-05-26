@@ -11,7 +11,7 @@
   text-decoration: none;
 }
 
-.mainheader:active {
+.mainheader:focus {
   border-bottom: #3247d5;
 }
 
