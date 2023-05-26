@@ -177,6 +177,7 @@ const Locatordashboard = () => {
                         <div className="row">
                             <div className="col-lg-3">
                                 <Link href="/Requests/Locatorrequest">  <label className="mainheader">My OBASIS Details</label> </Link>
+                             
                             </div>
                             {
                                 roleID != 5 && (
