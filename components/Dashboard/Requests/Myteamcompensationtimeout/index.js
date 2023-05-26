@@ -83,29 +83,6 @@ const MyTeamCompensationtimeout = () => {
         setcount(res.data.length);
     }
 
-    // const Delete = (id) => {
-
-    //     Swal.fire({
-    //         title: 'Are You Sure To Cancel?',
-    //         text: "You won't be able to revert this!",
-    //         icon: 'warning',
-    //         showCancelButton: true,
-    //         confirmButtonColor: '#3085d6',
-    //         cancelButtonColor: '#d33',
-    //         confirmButtonText: 'Yes, Cancel it!'
-    //     }).then((result) => {
-    //         if (result.isConfirmed) {
-    //             apiService.commonGetCall("Payroll/DeleteCompensationTimeOut?id=" + id)
-    //             Swal.fire({
-    //                 icon: "success",
-    //                 titleText: "Cancelled Successfully"
-    //             })
-    //             getPendingData();
-    //         }
-
-    //     }
-    //     )
-    // }
 
     const approve = (id) => {
         Swal.fire({
@@ -288,8 +265,10 @@ const MyTeamCompensationtimeout = () => {
                                                             <td>{data.actuval_EndTime}</td>
                                                             <td>{data.comments}</td>
                                                             <td>{data.status}</td>
+                                                            &nsbp;
                                                             <td>
-                                                                <button onClick={Delete.bind(this, data.id)} className='edit-btn'>Cancel</button>
+                                                                <button onClick={ approve.bind(this, data.id)} className='edit-btn'>Approve</button> 
+                                                                <button onClick={openModal} className='edit-btn'>Reject</button>
                                                             </td>
                                                         </tr>
                                                     )
