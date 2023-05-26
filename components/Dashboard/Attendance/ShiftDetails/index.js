@@ -178,7 +178,7 @@ const Shiftdetails = () => {
       <div className="row">
         <div className="col-lg-3">
           <br />
-          <Link href="/Attendance/shiftdetails" className={Styles.mainheader}>
+          <Link href="/Attendance/ShiftDetails" className={Styles.mainheader}>
             My Weekly Shift
           </Link>
           <div className="line-border"></div>

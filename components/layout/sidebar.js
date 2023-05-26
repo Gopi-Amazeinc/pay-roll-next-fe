@@ -474,7 +474,8 @@ const Sidebar = ({ children, applyPageName }) => {
               </>
             )
           }
-          {userRole != 4 && userRole != 1 && userRole != 2 && (
+          {/* {userRole && userRole != 4 && userRole != 1  */}
+          { userRole && userRole == 2 && userRole == 5  && (
             <>
               <hr></hr>
               <button className={styles.sidemenu} onClick={togglerequestsMenu}>
