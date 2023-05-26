@@ -35,7 +35,7 @@ const MyTeamAttendence = () => {
 
   // Gopi's Code => tried for onchnage function
   useEffect(() => {
-    
+
     if (userID) {
       debugger;
       getstaffDetails();
@@ -47,7 +47,7 @@ const MyTeamAttendence = () => {
       "Payroll/GetStaffBySupervisorID?Supervisor=" + userID
     );
     //TODO: MUltiselct DROP DOEN 
-    for (let i=0; i< staffDetails.length ; i++){
+    for (let i = 0; i < staffDetails.length; i++) {
       getAttendancedata.push(staffDetails[i].fullname)
     }
     setStaffData(getAttendancedata);
@@ -166,7 +166,13 @@ const MyTeamAttendence = () => {
               href="/Attendance/MyTeamAttendanceDetails"
             >
               My Team Attendance Details
-            </Link> <div className="line-border"></div>
+            </Link>  <div className="line-border" style={{
+              border: "1px solid #2f87cc",
+              bordertopleftradius: "51px",
+              bordertoprightradius: "51px",
+              margintop: "0px",
+              width: "64%"
+            }}></div>
           </div>
         </div>
 
@@ -203,18 +209,18 @@ const MyTeamAttendence = () => {
               <Multiselect
                 // displayValue="id"
                 isObject={false}
-                onKeyPressFn={function noRefCheck() {}}
-                onRemove={function noRefCheck() {}}
-                onSearch={function noRefCheck() {}}
+                onKeyPressFn={function noRefCheck() { }}
+                onRemove={function noRefCheck() { }}
+                onSearch={function noRefCheck() { }}
                 onSelect={(selectedOptions) => {
-                    console.log(selectedOptions);
-                    handleStaffChange(selectedOptions);
-                  }}
+                  console.log(selectedOptions);
+                  handleStaffChange(selectedOptions);
+                }}
                 // options={[
                 //   { id: 38243, short: "employee" },
                 //   { id: 38244, short: "testemployee" },
                 // ]}
-                options= {StaffData}
+                options={StaffData}
                 // onChange={(selectedOptions) => {
                 //   console.log(selectedOptions);
                 // }}

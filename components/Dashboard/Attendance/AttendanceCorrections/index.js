@@ -225,10 +225,16 @@ const Attendancecorrectiondashboard = () => {
           >
             Attendance Correction
           </Link>
-          <div className="line-border"></div>
+          <div className="line-border" style={{
+            border: "1px solid #2f87cc",
+            bordertopleftradius: "51px",
+            bordertoprightradius: "51px",
+            margintop: "0px",
+            width: "70%"
+          }}></div>
         </div>
 
-        <div className="col-lg-3">
+        <div className="col-lg-3" style={{ marginLeft: "-30px" }}>
           {(roleID == 3) && (
             <>
               <Link
@@ -271,19 +277,19 @@ const Attendancecorrectiondashboard = () => {
                   </Link>
                 </div>
                 {/* {pendingDashboardData ? ( */}
-                  <>
-                    <div className="col-lg-3">
-                      <DownloadTableExcel
-                        filename="Attendance table"
-                        sheet="Attendance"
-                        currentTableRef={tableRef.current}
-                      >
-                        <button className="button">Download</button>
-                      </DownloadTableExcel>
-                    </div>
-                  </>
+                <>
+                  <div className="col-lg-3">
+                    <DownloadTableExcel
+                      filename="Attendance table"
+                      sheet="Attendance"
+                      currentTableRef={tableRef.current}
+                    >
+                      <button className="button">Download</button>
+                    </DownloadTableExcel>
+                  </div>
+                </>
                 {/* ) : null} */}
-                    {/* {approved ? (
+                {/* {approved ? (
                   <>
                     <div className="col-lg-3">
                       <DownloadTableExcel

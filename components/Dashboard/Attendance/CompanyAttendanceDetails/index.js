@@ -240,7 +240,13 @@ const CompanyAttendanceDetails = () => {
             >
               Company Attendance Details
             </div>
-            <div className="line-border"></div>
+            <div className="line-border" style={{
+              border: "1px solid #2f87cc",
+              bordertopleftradius: "51px",
+              bordertoprightradius: "51px",
+              margintop: "0px",
+              width: "89%"
+            }}></div>
           </div>
         </div>
 
