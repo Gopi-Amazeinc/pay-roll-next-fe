@@ -10,6 +10,7 @@ import Link from "next/link";
 import { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import axios from "axios";
+import Image from "next/image";
 
 
 function MyForm1({ data }) {
@@ -128,16 +129,26 @@ function MyForm1({ data }) {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   const uploadFile = async (data) => {
+    debugger
     let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
     const formData = new FormData();
     formData.append("file_upload", data[0], data[0].name);
-    let res = await axios.post(
+    let invoiceURL = await axios.post(
       hostURL + "Payroll/ProjectAttachments",
       formData
     );
-    console.log(res, "File Path");
-    Swal.fire("Uploaded successfully");
-    setFilePath(res.data);
+    // console.log(res, "File Path");
+    // Swal.fire("Uploaded successfully");
+    // setFilePath(res.data);
+
+    // TODO: Gopi's code for validation
+  let environmentVariable = "https://103.12.1.103";
+
+  let imagePath = invoiceURL.data.split("\\", 1);
+  let Preview = invoiceURL.data.replace( imagePath,environmentVariable);
+  Swal.fire('Uploaded successfully.');
+  // setFilePath(invoiceURL.data);
+  setFilePath(Preview);
   };
 
   return (
@@ -164,8 +175,14 @@ function MyForm1({ data }) {
                           </p>
                         )}
                       </div>
-                    </div>              {/* {errors.Name && <p className="error-message" style={{ color: "red" }}>{errors.Name.message}</label>} */}
+                    </div>    
+                              {/* {errors.Name && <p className="error-message" style={{ color: "red" }}>{errors.Name.message}</label>} */}
             </div>
+            {/* <div>
+            
+            </div> */}
+
+            {/* TODO<Image src={filePath} height={10} width={10} alt="Picture"></Image> */}
             <div className="col-lg-2">
               <label className={styles.p}>Company Name<span style={{ color: "red" }}>*</span></label>
               <input type="text" className="form-control" {...register('Company_Name', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9 ]+$/, message: "Please enter a valid Short Name" } })} />

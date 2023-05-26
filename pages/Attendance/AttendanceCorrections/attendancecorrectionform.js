@@ -8,10 +8,7 @@ import Swal from "sweetalert2";
 import { apiService } from "@/services/api.service";
 import { useRouter } from "next/router";
 
-
 const AttendanceCorrectionform = () => {
-
-
   const router = useRouter();
   const {
     register,
@@ -23,8 +20,6 @@ const AttendanceCorrectionform = () => {
 
   const [startTime, setStartTime] = useState("");
   const [endTime, setEndTime] = useState("");
-
-
 
   // const handleChangeStartTime = (Stime) => {
   //   debugger
@@ -38,15 +33,15 @@ const AttendanceCorrectionform = () => {
   //   return handleTimes(startTime,endTime)
   // };
   const handleChangeStartTime = (event) => {
-    const sTime = event.target.value
+    const sTime = event.target.value;
     setStartTime(sTime);
     setEndTime("");
   };
 
   const handleChangeEndTime = (event) => {
-    const eTime = event.target.value
+    const eTime = event.target.value;
     setEndTime(eTime);
-    return handleTimes(startTime, Etime)
+    return handleTimes(startTime, Etime);
   };
 
   const compareTimes = (startTime, endTime) => {
@@ -56,7 +51,7 @@ const AttendanceCorrectionform = () => {
     return start > end;
   };
   const handleTimes = (startTime, endTime) => {
-    debugger
+    debugger;
     if (!compareTimes(startTime, endTime)) {
       Swal.fire("Start time must be greater than end time");
       return;
@@ -94,23 +89,23 @@ const AttendanceCorrectionform = () => {
   }, [1]);
   const customStyles = {
     content: {
-        top: "50%",
-        left: "50%",
-        right: "auto",
-        bottom: "auto",
-        marginRight: "-50%",
-        transform: "translate(-50%, -50%)",
-        width: "60%",
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      marginRight: "-50%",
+      transform: "translate(-50%, -50%)",
+      width: "60%",
     },
     errorMsg: {
-        fontSize: "12px",
-        fontWeight: "500",
-        color: "red",
+      fontSize: "12px",
+      fontWeight: "500",
+      color: "red",
     },
     inputLabel: {
-        fontSize: "16px",
+      fontSize: "16px",
     },
-};
+  };
   return (
     <Layout>
       <div className="container">
@@ -138,11 +133,12 @@ const AttendanceCorrectionform = () => {
                 <label>
                   <b> Start Time</b> <i className="text-danger">*</i>
                 </label>
-                <input 
-                  type="time" onChange={e=>setStartTime(e.target.value)}
+                <input
+                  type="time"
+                  onChange={(e) => setStartTime(e.target.value)}
                   className="form-control"
                   // onChange={(e)=>handleChangeStartTime(e.target.value)}
-               
+
                   {...register("StartTime", { required: true })}
                 />
                 {errors.StartTime && (
@@ -158,29 +154,36 @@ const AttendanceCorrectionform = () => {
                   className="form-control"
                   // onChange={(e)=>handleChangeEndTime(e.target.value)}
                   onChange={handleChangeEndTime}
-                  {...register("EndTime", { required: true ,})}
+                  {...register("EndTime", { required: true })}
                 />
-                
+
                 {errors.EndTime && (
                   <p style={customStyles.errorMsg}>Select Valid End Time</p>
                 )}
-               
               </div>
               <div className="col-lg-3">
                 <label>
                   <b>Comments </b>
                   <i className="text-danger">*</i>
-                </label> 
+                </label>
                 <textarea
                   rows={6}
-               
-                  className="form-control"minLength={10}
-                  {...register("Comment", { required: true,  maxLength: "10"})}
+                  className="form-control"
+                  minLength={10}
+                  {...register("Comment", { required: true, maxLength: "10" })}
                 />
-                {errors?.Comment?.type==='required' && (
+                {errors?.Comment?.type === "required" && (
                   <p style={customStyles.errorMsg}>Please Enter Comments</p>
                 )}
+<<<<<<< HEAD
        
+=======
+                {errors?.Comment?.type === "maxLength" && (
+                  <p style={customStyles.errorMsg}>
+                    First name cannot exceed 20 characters
+                  </p>
+                )}
+>>>>>>> bc530f93b352194c234ffff711c66bf0831ceec6
               </div>
             </div>
             <div className="row mt-5">

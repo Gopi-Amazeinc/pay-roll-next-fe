@@ -85,7 +85,7 @@ const ComponentBulkUploadForm = ({ editData }) => {
                 </label>
                 <br />
                 <select
-                  className={Styles.selector}
+                  className="form-select"
                   {...register("EmployeeID", { required: true })}
                 >
                   <option value="" >
@@ -155,7 +155,7 @@ const ComponentBulkUploadForm = ({ editData }) => {
                 </label>
                 <br />
                 <select
-                  className={Styles.selector}
+                  className="form-select"
                   {...register("Paymentfrequeicy", { required: true })}
                 >
                   <option value="">Select Payment Frequency</option>

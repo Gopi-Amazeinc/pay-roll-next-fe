@@ -1,31 +1,29 @@
-import Layout from "@/components/layout/layout"
 import React, { useEffect, useState } from 'react'
-import axios from 'axios';
 import Link from 'next/link';
 import { apiService } from "@/services/api.service";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import { useDropzone } from "react-dropzone";
-
-import {
-    Calendar as BigCalendar,
-    momentLocalizer,
-    Views
-} from "react-big-calendar";
+import { Calendar as BigCalendar, momentLocalizer, Views } from "react-big-calendar";
 import ReactPaginate from "react-paginate";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
-import leave from "../../../../pages/Requests/Compensationtimeout/compensation.module.css"
 moment.locale("en-GB");
-//momentLocalizer(moment);
 const localizer = momentLocalizer(moment);
+
 function LeaveListDashboard() {
     const { register, handleSubmit, reset, formState } = useForm();
     const [pending, setPending] = useState(false)
     const [approved, setApproved] = useState(false)
     const [rejected, setRejected] = useState(false)
-    const [count, setcount] = useState("");
+    const [pendingdata, setPendingData] = useState([])
+    const [approveddata, setApprovedData] = useState([])
+    const [rejecteddata, setRejectedData] = useState([])
+    const [roleID, setRoleID] = useState();
+    const [userID, setUserID] = useState();
+    const [keyword, setKeyword] = useState("");
+
     const togglePending = () => {
         setPending(true)
         setRejected(false)
@@ -46,6 +44,7 @@ function LeaveListDashboard() {
 
     const [calender, setCalender] = useState(false)
     const [listview, setListView] = useState(false)
+
     const toggleCalender = () => {
         setCalender(true)
         setListView(false)
@@ -81,33 +80,22 @@ function LeaveListDashboard() {
         return getPendingData(startDate, endDatesss);
     };
 
-    const [pendingdata, setPendingData] = useState([])
-    const [approveddata, setApprovedData] = useState([])
-    const [rejecteddata, setRejectedData] = useState([])
-    const [roleID, setRoleID] = useState();
-    const [userID, setUserID] = useState();
-    const [keyword, setKeyword] = useState("");
-
     const getPendingData = async (StartingDate, EndDate) => {
         debugger;
         const res = await apiService.commonGetCall("Employee/GetPendingStaffLeavesByStaffID?ID=" + userID + "&TypeID=1&Sdate=" + StartingDate + "&Edate=" + EndDate)
         setPendingData(res.data);
-        console.log(res.data, "pending");
-        setcount(res.data.length);
     }
     const getApprovedData = async (StartingDate, EndDate) => {
         debugger;
         const res = await apiService.commonGetCall("Employee/GetApprovedStaffLeavesByStaffID?ID=" + userID + "&TypeID=1&Sdate=" + StartingDate + "&Edate=" + EndDate)
         setApprovedData(res.data);
         console.log(res.data);
-        setcount(res.data.length);
     }
     const getRejectedData = async (StartingDate, EndDate) => {
         debugger;
         const res = await apiService.commonGetCall("Employee/GetRejectedStaffLeavesByStaffID?ID=" + userID + "&TypeID=1&Sdate=" + StartingDate + "&Edate=" + EndDate)
         setRejectedData(res.data);
         console.log(res.data);
-        setcount(res.data.length);
     }
     const getCurrentMonthDates = () => {
         let newDate = new Date();
@@ -145,17 +133,12 @@ function LeaveListDashboard() {
         debugger;
         return getPendingData(startDate, endDatesss);
     };
+    
     useEffect(() => {
         const usrID = sessionStorage.getItem("userID");
         setUserID(usrID);
         const userRoleID = sessionStorage.getItem("roleID");
         setRoleID(userRoleID);
-        // var StartingDate = sessionStorage.getItem("StartDate");
-        // var EndDate = sessionStorage.getItem("StartDate");
-        // getDateBySelectedDate();
-        // getPendingData(userID, StartingDate, EndDate);
-        // getApprovedData(userID, StartingDate, EndDate);
-        // getRejectedData(userID, StartingDate, EndDate);
         setListView(true);
         setPending(true);
         if (userID) {
@@ -228,7 +211,7 @@ function LeaveListDashboard() {
         <div className="container-fluid">
             <div claasName="row">
                 <div className="col-md-12">
-                    <br/>
+                    <br />
                     <div className="row">
                         <div className="col-md-3">
                             <label className="mainheader">Leave Request </label>
