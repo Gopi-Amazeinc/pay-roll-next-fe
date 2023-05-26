@@ -265,7 +265,6 @@ const MyTeamCompensationtimeout = () => {
                                                             <td>{data.actuval_EndTime}</td>
                                                             <td>{data.comments}</td>
                                                             <td>{data.status}</td>
-                                                            &nsbp;
                                                             <td>
                                                                 <button onClick={ approve.bind(this, data.id)} className='edit-btn'>Approve</button> 
                                                                 <button onClick={openModal} className='edit-btn'>Reject</button>
