@@ -71,7 +71,7 @@ const Applyloans = () => {
             <div className="container-fluid">
                 <div className="row">
                     <div className="col-lg-12">
-                        <h4 className="Heading">Apply Loan</h4><br />
+                        <h3 className=" fs-5 mt-3 fw-bold" style={{ color: "#3247d5" }}>Apply Loans</h3><br />
                         <form onSubmit={handleSubmit(onSubmit)}>
                             <div className='card p-3 border-0'>
                                 <div className='row'>
@@ -93,37 +93,37 @@ const Applyloans = () => {
                                     <div className='col-lg-2'>
                                         <label style={{ fontWeight: "bold" }}>Loan Amount<span style={{ color: "red" }}>*</span></label>
                                         <input type='number' placeholder='Loan Amount'
-                                         {...register('loanAmount', {
-                                            required: true,
-                                             pattern: /^\d+/
-                                         } )} className='form-control form-control-sm' />
-                                         <div className="error-message" style={customStyles.errorMsg} >
+                                            {...register('loanAmount', {
+                                                required: true,
+                                                pattern: /^\d+/
+                                            })} className='form-control form-control-sm' />
+                                        <div className="error-message" style={customStyles.errorMsg} >
 
-                                        {errors.loanAmount?.type==='required' && 
-                                           " Please enter Loan Amounts"}
-                                       {errors.loanAmount?.type === "pattern" && 
-                                            "numbers only"
-                                        }
-                                    </div>
+                                            {errors.loanAmount?.type === 'required' &&
+                                                " Please enter Loan Amounts"}
+                                            {errors.loanAmount?.type === "pattern" &&
+                                                "numbers only"
+                                            }
+                                        </div>
                                     </div>
                                     <div className='col-lg-2'>
                                         <label style={{ fontWeight: "bold" }}>Tenure <span style={{ color: "red" }}>*</span></label>
                                         <input type='text' placeholder='Tenure' {...register('Tenure', {
-                                          required: true,
-                                          pattern: /^\d+/
-                                      } )} className='form-control form-control-sm' />
-                                      <div className="error-message"  style={customStyles.errorMsg}>
+                                            required: true,
+                                            pattern: /^\d+/
+                                        })} className='form-control form-control-sm' />
+                                        <div className="error-message" style={customStyles.errorMsg}>
 
-                                     {errors.Tenure?.type==='required' && 
-                                        " Please enter Tenure"}
-                                    {errors.Tenure?.type === "pattern" && 
-                                         "numbers only"
-                                     }
-                                 </div>
+                                            {errors.Tenure?.type === 'required' &&
+                                                " Please enter Tenure"}
+                                            {errors.Tenure?.type === "pattern" &&
+                                                "numbers only"
+                                            }
+                                        </div>
                                     </div>
                                     <div className='col-lg-4'>
                                         <label style={{ fontWeight: "bold" }}>Comments<span style={{ color: "red" }}>*</span></label>
-                                        <textarea rows={3} className='form-control'minLength={10} {...register('Comments', {
+                                        <textarea rows={3} className='form-control' minLength={10} {...register('Comments', {
                                             required: "Comments is required", pattern: {
                                                 value: '^[A-Za-z0-9 ]+$',
                                                 message: "Please enter a valid Position Name"
@@ -140,7 +140,7 @@ const Applyloans = () => {
                                         </Link>
                                     </div>
                                     <div className='col-lg-2'>
-                                        <button type="submit" className="submit-button">submit</button>
+                                        <button type="submit" className="submit-button">Submit</button>
                                     </div>
                                 </div>
                             </div>

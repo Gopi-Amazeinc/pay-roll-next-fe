@@ -9,6 +9,19 @@ import Modal from "react-modal";
 import * as XLSX from "xlsx";
 
 function StaffSalaryComponent() {
+  const [password, setPassword] = useState("");
+  const [showProtectedContent, setShowProtectedContent] = useState(false);
+  const correctPassword = "123";
+
+  const checkPassword = () => {
+    if (password === correctPassword) {
+      console.log("Password correct!");
+      setShowProtectedContent(true); // Show protected content
+    } else {
+      console.log("Incorrect password!");
+    }
+  };
+
   const router = useRouter();
   let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
   const [items, setItems] = useState([]);
@@ -147,211 +160,236 @@ function StaffSalaryComponent() {
   const pageCount = Math.ceil(staffSalary.length / PER_PAGE);
   return (
     <div>
-      <div className="container">
-        <div>
-          <h3 className="Heading">Staff Salary Details</h3>
-          <div className="card p-3 border-0 rounded-3 mt-4">
-            <div className="row">
-              <div className="col-lg-1">
-                <p>Filter By</p>
-              </div>
-              <div className="col-lg-2">
-                <p>Position</p>
-                <select className="form-select">
-                  <option>No data</option>
-                </select>
-              </div>
+      {showProtectedContent ? (
+        <div className="container">
+          <div>
+            <h3 className="Heading">Staff Salary Details</h3>
+            <div className="card p-3 border-0 rounded-3 mt-4">
+              <div className="row">
+                <div className="col-lg-1">
+                  <p>Filter By</p>
+                </div>
+                <div className="col-lg-2">
+                  <p>Position</p>
+                  <select className="form-select">
+                    <option>No data</option>
+                  </select>
+                </div>
 
-              <div className="col-lg-2">
-                <p>Department</p>
-                <select className="form-select">
-                  <option>No Department</option>
-                </select>
-              </div>
+                <div className="col-lg-2">
+                  <p>Department</p>
+                  <select className="form-select">
+                    <option>No Department</option>
+                  </select>
+                </div>
 
-              <div className="col-lg-3">
-                <p>Search</p>
-                <input
-                  type="text"
-                  className="form-control"
-                  placeholder="Search..."
-                  onChange={(e) => setKeyword(e.target.value)}
-                />
-              </div>
-
-              <div className="col-lg-2"></div>
-              <div className="col-lg-1 text-primary">
-                <p>Count : {staffSalary.length}</p>
-              </div>
-            </div>
-          </div>
-          <br></br>
-          <div className="row">
-            <div className="col-lg-8"></div>
-            <div className="col-lg-2 mt-2 text-end">
-              <Link href="/Staff/StaffSalary/new">
-                <button className="AddButton">Add</button>
-              </Link>
-            </div>
-            <div className="col-lg-2 mt-2">
-              <button className="AddButton" onClick={openEditModal}>
-                Upload Salary
-              </button>
-            </div>
-          </div>
-          <br></br>
-          <div className="row">
-            <div className="col-lg-12">
-              <div className="table-responsive">
-                <table className="table">
-                  <thead>
-                    <tr>
-                      <th>Staff Name</th>
-                      <th>Position</th>
-                      <th>Department</th>
-                      <th>Basic Salary</th>
-                      <th>Effective Date</th>
-                      <th>Working Days In Month </th>
-                      <th>Working Hours In Day </th>
-                      <th>Hourly Rate</th>
-                      <th>Daily Rate</th>
-                      <th>Action</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {staffSalary
-                      .slice(offset, offset + PER_PAGE)
-                      .filter((post) => {
-                        return Object.values(post).some(
-                          (value) =>
-                            value !== null &&
-                            value
-                              .toString()
-                              .toLowerCase()
-                              .includes(keyword.toLowerCase())
-                        );
-                      })
-                      .map((data) => {
-                        return (
-                          <tr key={data.id}>
-                            <td>{data.staffID} </td>
-                            <td>NA</td>
-                            <td>NA</td>
-                            <td>{data.basicSalary}</td>
-                            <td>{data.effectiveDate}</td>
-                            <td>{data.workDaysInMonth}</td>
-                            <td>{data.workHoursInDay}</td>
-                            <td>{data.hourlyRate}</td>
-                            <td>{data.dailyRate}</td>
-                            <td>
-                              <Link href={`/Staff/StaffSalary/Edit/${data.id}`}>
-                                <button
-                                  style={{
-                                    textShadow: "none",
-                                    letterSpacing: ".5px",
-                                    borderRadius: "5px",
-                                    border: "none",
-                                    padding: "5px",
-                                    backgroundColor: "#3247d5",
-                                    color: "#fff",
-                                    fontWeight: "700",
-                                    width: "100px",
-                                  }}
-                                >
-                                  Edit
-                                </button>
-                              </Link>
-                            </td>
-                          </tr>
-                        );
-                      })}
-                  </tbody>
-                </table>
-
-                <div className="mb-4 mt-4 text-center">
-                  <ReactPaginate
-                    previousLabel={"Previous"}
-                    nextLabel={"Next"}
-                    breakLabel={"..."}
-                    pageCount={pageCount}
-                    marginPagesDisplayed={2}
-                    pageRangeDisplayed={3}
-                    onPageChange={handlePageClick}
-                    containerClassName={"pagination  justify-content-center"}
-                    pageClassName={"page-item "}
-                    pageLinkClassName={"page-link"}
-                    previousClassName={"page-item"}
-                    previousLinkClassName={"page-link"}
-                    nextClassName={"page-item"}
-                    nextLinkClassName={"page-link"}
-                    breakClassName={"page-item"}
-                    breakLinkClassName={"page-link"}
-                    activeClassName={"active primary"}
+                <div className="col-lg-3">
+                  <p>Search</p>
+                  <input
+                    type="text"
+                    className="form-control"
+                    placeholder="Search..."
+                    onChange={(e) => setKeyword(e.target.value)}
                   />
                 </div>
 
-                <Modal
-                  isOpen={modalOpen}
-                  style={customStyles}
-                  contentLabel="Example Modal"
-                >
-                  <div className=" modal-header">
-                    <h5 className=" modal-title" id="exampleModalLabel">
-                      Upload salary
-                    </h5>
-                    <button
-                      ariaLabel="Close"
-                      // className={Styles.close}
-                      type="button"
-                      onClick={closeModal}
-                    >
-                      X
-                    </button>
+                <div className="col-lg-2"></div>
+                <div className="col-lg-1 text-primary">
+                  <p>Count : {staffSalary.length}</p>
+                </div>
+              </div>
+            </div>
+            <br></br>
+            <div className="row">
+              <div className="col-lg-8"></div>
+              <div className="col-lg-2 mt-2 text-end">
+                <Link href="/Staff/StaffSalary/new">
+                  <button className="AddButton">Add</button>
+                </Link>
+              </div>
+              <div className="col-lg-2 mt-2">
+                <button className="AddButton" onClick={openEditModal}>
+                  Upload Salary
+                </button>
+              </div>
+            </div>
+            <br></br>
+            <div className="row">
+              <div className="col-lg-12">
+                <div className="table-responsive">
+                  <table className="table">
+                    <thead>
+                      <tr>
+                        <th>Staff Name</th>
+                        <th>Position</th>
+                        <th>Department</th>
+                        <th>Basic Salary</th>
+                        <th>Effective Date</th>
+                        <th>Working Days In Month </th>
+                        <th>Working Hours In Day </th>
+                        <th>Hourly Rate</th>
+                        <th>Daily Rate</th>
+                        <th>Action</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {staffSalary
+                        .slice(offset, offset + PER_PAGE)
+                        .filter((post) => {
+                          return Object.values(post).some(
+                            (value) =>
+                              value !== null &&
+                              value
+                                .toString()
+                                .toLowerCase()
+                                .includes(keyword.toLowerCase())
+                          );
+                        })
+                        .map((data) => {
+                          return (
+                            <tr key={data.id}>
+                              <td>{data.staffID} </td>
+                              <td>NA</td>
+                              <td>NA</td>
+                              <td>{data.basicSalary}</td>
+                              <td>{data.effectiveDate}</td>
+                              <td>{data.workDaysInMonth}</td>
+                              <td>{data.workHoursInDay}</td>
+                              <td>{data.hourlyRate}</td>
+                              <td>{data.dailyRate}</td>
+                              <td>
+                                <Link
+                                  href={`/Staff/StaffSalary/Edit/${data.id}`}
+                                >
+                                  <button
+                                    style={{
+                                      textShadow: "none",
+                                      letterSpacing: ".5px",
+                                      borderRadius: "5px",
+                                      border: "none",
+                                      padding: "5px",
+                                      backgroundColor: "#3247d5",
+                                      color: "#fff",
+                                      fontWeight: "700",
+                                      width: "100px",
+                                    }}
+                                  >
+                                    EDIT
+                                  </button>
+                                </Link>
+                              </td>
+                            </tr>
+                          );
+                        })}
+                    </tbody>
+                  </table>
+
+                  <div className="mb-4 mt-4 text-center">
+                    <ReactPaginate
+                      previousLabel={"Previous"}
+                      nextLabel={"Next"}
+                      breakLabel={"..."}
+                      pageCount={pageCount}
+                      marginPagesDisplayed={2}
+                      pageRangeDisplayed={3}
+                      onPageChange={handlePageClick}
+                      containerClassName={"pagination  justify-content-center"}
+                      pageClassName={"page-item "}
+                      pageLinkClassName={"page-link"}
+                      previousClassName={"page-item"}
+                      previousLinkClassName={"page-link"}
+                      nextClassName={"page-item"}
+                      nextLinkClassName={"page-link"}
+                      breakClassName={"page-item"}
+                      breakLinkClassName={"page-link"}
+                      activeClassName={"active primary"}
+                    />
                   </div>
-                  <hr></hr>
-                  <div className="row">
-                    <div className="col-lg-7">
-                      <input
-                        type="file"
-                        accept=".xls,.xlsx"
-                        style={{ display: "inline-block" }}
-                        onChange={(e) => {
-                          const file = e.target.files[0];
-                          incomingfile(file);
-                        }}
-                        placeholder="Upload file"
-                      />
+
+                  <Modal
+                    isOpen={modalOpen}
+                    style={customStyles}
+                    contentLabel="Example Modal"
+                  >
+                    <div className=" modal-header">
+                      <h5 className=" modal-title" id="exampleModalLabel">
+                        Upload salary
+                      </h5>
+                      <button
+                        ariaLabel="Close"
+                        // className={Styles.close}
+                        type="button"
+                        onClick={closeModal}
+                      >
+                        X
+                      </button>
                     </div>
-                    <div className="col-lg-5">
-                      <Link href="https://103.12.1.76/ALIAPI/Images/.xlsx">
-                        <span
-                          style={{ color: "navy", textDecoration: "underline" }}
-                        >
-                          UploadTemplate.XLSX
-                        </span>
-                      </Link>
-                    </div>
+                    <hr></hr>
                     <div className="row">
-                      {/* <ModalFooter> */}
-                      <div className="col-lg-6">
-                        <button
-                          // className="mt-4"
-                          className="AddButton mt-4"
-                          onClick={() => uploadSalary()}
-                          color="primary"
-                          type="button"
-                        >
-                          UPLOAD
-                        </button>
+                      <div className="col-lg-7">
+                        <input
+                          type="file"
+                          accept=".xls,.xlsx"
+                          style={{ display: "inline-block" }}
+                          onChange={(e) => {
+                            const file = e.target.files[0];
+                            incomingfile(file);
+                          }}
+                          placeholder="Upload file"
+                        />
+                      </div>
+                      <div className="col-lg-5">
+                        <Link href="https://103.12.1.76/ALIAPI/Images/.xlsx">
+                          <span
+                            style={{
+                              color: "navy",
+                              textDecoration: "underline",
+                            }}
+                          >
+                            UploadTemplate.XLSX
+                          </span>
+                        </Link>
+                      </div>
+                      <div className="row">
+                        {/* <ModalFooter> */}
+                        <div className="col-lg-6">
+                          <button
+                            // className="mt-4"
+                            className="AddButton mt-4"
+                            onClick={() => uploadSalary()}
+                            color="primary"
+                            type="button"
+                          >
+                            UPLOAD
+                          </button>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </Modal>
+                  </Modal>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
+      ) : (
+        <div>
+          <div className="container">
+            <div className="row" style={{paddingTop: "200px"}}>
+              <div className="text-center">
+                <div className="col-lg-3"></div>
+                  <input
+                  type="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="Enter password"
+                  />
+                <button onClick={checkPassword}>Submit</button>
+              </div>
+            </div>
+            
+          </div>
+        </div>
+      )}
     </div>
   );
 }

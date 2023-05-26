@@ -12,7 +12,7 @@ import "react-big-calendar/lib/css/react-big-calendar.css";
 moment.locale("en-GB");
 const localizer = momentLocalizer(moment);
 
-function LeaveListDashboard() {
+const Index = () => {
     const { register, handleSubmit, reset, formState } = useForm();
     const [pending, setPending] = useState(false)
     const [approved, setApproved] = useState(false)
@@ -23,7 +23,8 @@ function LeaveListDashboard() {
     const [roleID, setRoleID] = useState();
     const [userID, setUserID] = useState();
     const [keyword, setKeyword] = useState("");
-
+    const [position, setPositionData] = useState([]);
+    const [department, setDepartmentData] = useState([]);
     const togglePending = () => {
         setPending(true)
         setRejected(false)
@@ -41,7 +42,23 @@ function LeaveListDashboard() {
         setPending(false)
         setApproved(false)
     }
-
+    const getPendingData = async (StartingDate, EndDate) => {
+        debugger;
+        const res = await apiService.commonGetCall("Employee/GetPendingStaffLeavesByStaffID?ID=" + userID + "&TypeID=1&Sdate=" + StartingDate + "&Edate=" + EndDate)
+        setPendingData(res.data);
+    }
+    const getApprovedData = async (StartingDate, EndDate) => {
+        debugger;
+        const res = await apiService.commonGetCall("Employee/GetApprovedStaffLeavesByStaffID?ID=" + userID + "&TypeID=1&Sdate=" + StartingDate + "&Edate=" + EndDate)
+        setApprovedData(res.data);
+        console.log(res.data);
+    }
+    const getRejectedData = async (StartingDate, EndDate) => {
+        debugger;
+        const res = await apiService.commonGetCall("Employee/GetRejectedStaffLeavesByStaffID?ID=" + userID + "&TypeID=1&Sdate=" + StartingDate + "&Edate=" + EndDate)
+        setRejectedData(res.data);
+        console.log(res.data);
+    }
     const [calender, setCalender] = useState(false)
     const [listview, setListView] = useState(false)
 
@@ -57,7 +74,6 @@ function LeaveListDashboard() {
         setListView(true)
         setCalender(false)
     }
-
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
 
@@ -76,23 +92,9 @@ function LeaveListDashboard() {
 
     };
     const getDateBySelectedDate = (endDatesss) => {
+        debugger;
         return getPendingData(startDate, endDatesss);
     };
-
-    const getPendingData = async (StartingDate, EndDate) => {
-        const res = await apiService.commonGetCall("Employee/GetPendingStaffLeavesByStaffID?id=" + userID + "&TypeID=1&Sdate=" + StartingDate + "&Edate=" + EndDate)
-        setPendingData(res.data);
-    }
-    const getApprovedData = async (StartingDate, EndDate) => {
-        const res = await apiService.commonGetCall("Employee/GetApprovedStaffLeavesByStaffID?id=" + userID + "&TypeID=1&Sdate=" + StartingDate + "&Edate=" + EndDate)
-        setApprovedData(res.data);
-        console.log(res.data);
-    }
-    const getRejectedData = async (StartingDate, EndDate) => {
-        const res = await apiService.commonGetCall("Employee/GetRejectedStaffLeavesByStaffID?id=" + userID + "&TypeID=1&Sdate=" + StartingDate + "&Edate=" + EndDate)
-        setRejectedData(res.data);
-        console.log(res.data);
-    }
     const getCurrentMonthDates = () => {
         let newDate = new Date();
         let firstDayOfMonth = new Date(newDate.getFullYear(), newDate.getMonth());
@@ -129,7 +131,6 @@ function LeaveListDashboard() {
         debugger;
         return getPendingData(startDate, endDatesss);
     };
-
     useEffect(() => {
         const usrID = sessionStorage.getItem("userID");
         setUserID(usrID);
@@ -137,6 +138,8 @@ function LeaveListDashboard() {
         setRoleID(userRoleID);
         setListView(true);
         setPending(true);
+        getstaffDetails();
+        getDepartmentDetails();
         if (userID) {
             const resu = getCurrentMonthDates();
             if (resu) {
@@ -147,7 +150,6 @@ function LeaveListDashboard() {
         }
         return;
     }, [userID])
-
     const events = [
         // {
         //     id: 0,
@@ -203,57 +205,82 @@ function LeaveListDashboard() {
     const offset = currentPage * PER_PAGE;
     const pageCount = Math.ceil(pendingdata.length / PER_PAGE);
 
+    const getstaffDetails = async () => {
+        const staffDetails = await apiService.commonGetCall("Master/GetDepartmentMaster");
+        setPositionData(staffDetails.data);
+    };
+
+    const getDepartmentDetails = async () => {
+        const deptDetails = await apiService.commonGetCall("Master/GetRoleType");
+        setDepartmentData(deptDetails.data);
+    }
     return (
         <div className="container-fluid">
             <div claasName="row">
-                <div className="col-md-12">
-                    <br />
+                <div className="col-lg-12">
                     <div className="row">
-                        <div className="col-md-3">
-                            <label className="mainheader">Leave Request </label>
-                        </div>
                         <div className="col-lg-3">
                             {
-                                sessionStorage.getItem("roleID") == 3 && (
-                                    <Link href="/Requests/Myteamleaverequests">
-                                        <label className="mainheader">My Team Leave Request</label>
-                                    </Link>
-                                )
-                            }
-                            {
-                                roleID == 2 && (
-                                    <Link href="/Requests/Allstaffleavedetails">
-                                        <label className="mainheader">All Staff Leave Details</label>
+                                sessionStorage.getItem("roleID") == 2 && (
+                                    <Link href="/Requests/Leaverequest">
+                                        <label className="mainheader"> Leave Request</label>
                                     </Link>
                                 )
                             }
                         </div>
-                    </div>
-                    <br />
-                    <div className="row">
-                        <div className="col-lg-4">
+                        <div className="col-md-3">
+                            <label className="mainheader">My Team Leave Request </label>
+                        </div>
+                    </div><br />
+                    <div className='row'>
+                        <div className="col-lg-12">
                             <div className="card p-3 border-0">
                                 <div className="row">
-                                    <div className="col-lg-6">
+                                    <div className='col-lg-1'>
+                                        <label style={{ fontWeight: "bold" }}>Filter By</label>
+                                    </div>
+                                    <div className="col-lg-2">
                                         <label style={{ fontWeight: "bold" }}>Start Date:</label>
                                         <input id="date" name="date" type="date" placeholder="Duration" className="form-control " onChange={(e) => getStartDate(e.target.value)} />
                                     </div>
-                                    <div className="col-lg-6">
+                                    <div className="col-lg-2">
                                         <label style={{ fontWeight: "bold" }}>End Date:</label>
                                         <input id="date" name="date" type="date" placeholder="Duration" className="form-control " onChange={(e) => getEndDate(e.target.value)} />
                                     </div>
-                                    <br /> <br /><br /> <br />
-                                    <div className="col-lg-12 searchtxt ">
+                                    <div className="col-lg-2">
+                                        <label style={{ fontWeight: "bold" }}>Position:</label>
+                                        <select className='form-control'>
+                                            <option>Select Position</option>
+                                            {position.map((data, index) => {
+                                                return (
+                                                    <option value={data.id} key={index}>
+                                                        {data.department_name}
+                                                    </option>
+                                                );
+                                            })}
+                                        </select>
+                                    </div>
+                                    <div className="col-lg-2">
+                                        <label style={{ fontWeight: "bold" }}>Department:</label>
+                                        <select className='form-control'>
+                                            <option>Select Department</option>
+                                            {department.map((data, index) => {
+                                                return (
+                                                    <option value={data.id} key={index}>
+                                                        {data.short}
+                                                    </option>
+                                                );
+                                            })}
+                                        </select>
+                                    </div>
+                                    <div className="col-lg-3">
                                         <label style={{ fontWeight: "bold" }}>Search:</label>
                                         <br /><input type="search" placeholder="Search here.." className="form-control " onChange={e => setKeyword(e.target.value)} />
                                     </div>
-                                    <br /><br />
-                                </div>
+                                </div>   <br />
                             </div>
-
                         </div>
-                    </div>
-                    <br /><br />
+                    </div><br />
                     <div className="row">
                         <div className="col-lg-4">
                             <div className='row'>
@@ -264,13 +291,6 @@ function LeaveListDashboard() {
                                     </div>
                                 </div>
                             </div>
-                            <br />
-                        </div>
-                        <div className="col-lg-4"></div>
-                        <div className="col-lg-2"></div>
-                        <div className="col-lg-2">
-                            <Link href="/Requests/Applyleave/new"><button className="AddButton" tabIndex="0"> Apply Leave</button>
-                            </Link>
                         </div>
                     </div>
                     <br />
@@ -442,31 +462,9 @@ function LeaveListDashboard() {
                         </div>
                     </div>
                 </div>
-            </div>
-            <div className="text-center">
-                <ReactPaginate
-                    previousLabel={"Previous"}
-                    nextLabel={"Next"}
-                    breakLabel={"..."}
-                    pageCount={pageCount}
-                    marginPagesDisplayed={2}
-                    pageRangeDisplayed={3}
-                    onPageChange={handlePageClick}
-                    containerClassName={"pagination  justify-content-center"}
-                    pageClassName={"page-item "}
-                    pageLinkClassName={"page-link"}
-                    previousClassName={"page-item"}
-                    previousLinkClassName={"page-link"}
-                    nextClassName={"page-item"}
-                    nextLinkClassName={"page-link"}
-                    breakClassName={"page-item"}
-                    breakLinkClassName={"page-link"}
-                    activeClassName={"active primary"}
-                />
+
             </div>
         </div>
-
     )
 }
-
-export default LeaveListDashboard
+export default Index

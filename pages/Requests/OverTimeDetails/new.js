@@ -113,7 +113,8 @@ const OverTimeDetails = () => {
       <div className='container-fluid'>
         <div className='row'>
           <div className='col-lg-12'>
-            <p className='Heading'>Add Actual Time</p>
+            <label className='mainheader'>Add Actual Time</label>
+            <br /><br />
             <div className="card p-3 border-0">
               <div>
                 <form onSubmit={handleSubmit(insertDetails)}>
