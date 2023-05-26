@@ -49,7 +49,25 @@ function BrandMasterForm({ editData }) {
         );
         clearForm(res.data[0]);
     };
-
+    const customStyles = {
+        content: {
+          top: "50%",
+          left: "50%",
+          right: "auto",
+          bottom: "auto",
+          marginRight: "-50%",
+          transform: "translate(-50%, -50%)",
+          width: "60%",
+        },
+        errorMsg: {
+          fontSize: "12px",
+          fontWeight: "500",
+          color: "red",
+        },
+        inputLabel: {
+          fontSize: "16px",
+        },
+      };
     return (
         <Layout>
             <div className="container-fluid">
@@ -64,7 +82,7 @@ function BrandMasterForm({ editData }) {
                                             Short Name <i className="text-danger">*</i>
                                         </label>
                                         <input type="text" className="form-control" placeholder="Short Name"{...register('Short', { required: true })} />
-                                        {errors.Short && <p className="error-message" style={{ color: "red" }}>Please enter a valid Short Name</p>}
+                                        {errors.Short && <p className="error-message" style={customStyles.errorMsg}>Please enter a valid Short Name</p>}
                                     </div>
 
                                     <div className="col-lg-5">
@@ -73,10 +91,10 @@ function BrandMasterForm({ editData }) {
                                         </label>
                                         <textarea
                                             className="form-control"
-                                            placeholder="Description"
+                                            placeholder="Description" minLength={10}
                                             {...register('Description', { required: true, })}
                                         ></textarea>
-                                        {errors.Description && <p className="error-message" style={{ color: "red" }}>Please enter a valid Descrption Name</p>}
+                                        {errors.Description && <p className="error-message"style={customStyles.errorMsg}>Please enter a valid Descrption Name</p>}
 
                                     </div>
                                 </div>

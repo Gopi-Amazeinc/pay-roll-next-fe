@@ -134,9 +134,13 @@ const Locatordashboard = () => {
         }
         )
     }
+    const [roleID, setRoleID] = useState();
+
     useEffect(() => {
         const usrID = sessionStorage.getItem("userID");
         setUserID(usrID);
+        const userRoleID = sessionStorage.getItem("roleID");
+        setRoleID(userRoleID);
         setPending(true);
         if (userID) {
             const resu = getCurrentMonthDates();
@@ -173,10 +177,15 @@ const Locatordashboard = () => {
                         <div className="row">
                             <div className="col-lg-3">
                                 <Link href="/Requests/Locatorrequest">  <label className="mainheader">My OBASIS Details</label> </Link>
+                             
                             </div>
-                            <div className="col-lg-3">
-                                <Link href="/Requests/Myteamobasisrequest">  <label className="mainheader">My Team OBASIS Details</label> </Link>
-                            </div>
+                            {
+                                roleID != 5 && (
+                                    <div className="col-lg-3">
+                                        <Link href="/Requests/Myteamobasisrequest">  <label className="mainheader">My Team OBASIS Details</label> </Link>
+                                    </div>
+                                )
+                            }
                         </div>
                         <br />
                         <div className="card p-3 rounded-3 shadow border-0 ">
@@ -210,7 +219,7 @@ const Locatordashboard = () => {
                                 <button onClick={toggleApproved} className={`toggleButton ${approved ? "focus" : ""}`}>Approved</button>
                                 <button onClick={toggleRejected} className={`toggleButton ${rejected ? "focus" : ""}`}>Rejected</button>
                             </div>
-                           
+
                             <div className="col-lg-6"></div>
                             <div className="col-lg-2">
                                 <Link href="/Requests/Locatorrequest/new"><button className="submit-button">New Requests </button></Link>

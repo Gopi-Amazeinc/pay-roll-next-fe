@@ -170,50 +170,7 @@ const Compensationtimeout = () => {
         )
     }
 
-    const approve = (id) => {
-        Swal.fire({
-            title: 'Confirm To Approve?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, Approve it!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                apiService.commonPostCall("Payroll/ApproveCompensationTimeOut?id=" + id)
-                Swal.fire({
-                    icon: "success",
-                    titleText: "Approved Successfully"
-                })
-                getPendingCompensation();
-            }
-        })
-    }
-    let id;
-    const reject = () => {
-        id = sessionStorage.getItem("id")
-        alert(id)
-        Swal.fire({
-            title: 'Confirm To Reject?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, Reject it!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                staffID = sessionStorage.getItem("userID");
-                axios.post(hostURL + "Payroll/RejectCompensationTimeOut?id=" + id)
-                Swal.fire({
-                    icon: "success",
-                    titleText: "Rejected Successfully"
-                })
-                getPendingCompensation();
-            }
-        })
-    }
+
     const PER_PAGE = 5;
     const [currentPage, setCurrentPage] = useState(0);
     const handlePageClick = ({ selected: selectedPage }) => {
@@ -232,11 +189,13 @@ const Compensationtimeout = () => {
                     <br />
                     <div className='row'>
                         <div className="col-lg-3">
-                            <p className='mainheader'>Compensation Time Out</p>
+                            <Link href="/Requests/Compensationtimeout">
+                                <label className="mainheader focus ">Compensation Time Out</label>
+                            </Link>
                         </div>
                         <div className='col-lg-3'>
                             {
-                                roleID == 3 && (
+                                roleID == 3 && roleID != 5 && (
                                     <Link href="/Requests/Myteamcompensationtimeout">
                                         <label className="mainheader">My Compensation Time Out</label>
                                     </Link>
@@ -305,7 +264,7 @@ const Compensationtimeout = () => {
                     <div className='row'>
                         <div className='col-lg-12'>
                             {
-                                pending && roleID == "3" && (
+                                pending && (
                                     <>
                                         <h6 style={{ color: "#3247d5" }}>Showing {pendingcount} Results</h6>
                                         <table className='table'>
@@ -400,7 +359,7 @@ const Compensationtimeout = () => {
                             } */}
 
                             {
-                                approved && roleID == "3" && (
+                                approved && (
                                     <>
                                         <h6 style={{ color: "#3247d5" }}>Showing {approvedcount} Results</h6>
                                         <table className='table table-hover'>
@@ -482,7 +441,7 @@ const Compensationtimeout = () => {
                             } */}
 
                             {
-                                rejected && sessionStorage.getItem("roleID") == "3" && (
+                                rejected && (
                                     <>
                                         <h6 style={{ color: "#3247d5" }}>Showing {rejectcount} Results</h6>
                                         <table className='table table-hover'>

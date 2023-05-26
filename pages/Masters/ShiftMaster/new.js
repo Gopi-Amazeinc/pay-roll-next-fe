@@ -52,7 +52,25 @@ function ShiftMasterForm({ editData }) {
       );
       clearForm(res.data[0]);
    };
-
+   const customStyles = {
+      content: {
+        top: "50%",
+        left: "50%",
+        right: "auto",
+        bottom: "auto",
+        marginRight: "-50%",
+        transform: "translate(-50%, -50%)",
+        width: "60%",
+      },
+      errorMsg: {
+        fontSize: "12px",
+        fontWeight: "500",
+        color: "red",
+      },
+      inputLabel: {
+        fontSize: "16px",
+      },
+    };
 
    return (
       <Layout>
@@ -66,27 +84,27 @@ function ShiftMasterForm({ editData }) {
                            <div className="col-lg-2">
                               <label className="fw-bold">Short<span style={{ color: "red" }}>*</span></label>
                               <input type="text" placeholder="Enter Shift Name" name="Short" id="Short" className="form-control " {...register("Short", { required: "This field is required", pattern: { value: '^[A-Za-z0-9 ]+$', message: "Please enter a valid Detail" } })} />
-                              {errors.Short && <p className="error-message" style={{ color: "red" }}>{errors.Short.message}</p>}
+                              {errors.Short && <p className="error-message" style={customStyles.errorMsg}>{errors.Short.message}</p>}
                            </div>
                            <div className="col-lg-2">
                               <label className="fw-bold">Description<span style={{ color: "red" }}>*</span></label>
                               <input type="text" placeholder="Enter Description" name="Description" id="Description" className="form-control " {...register("Description", { required: "This field is required", pattern: { value: '^[A-Za-z0-9 ]+$', message: "Please enter a valid Detail" } })} />
-                              {errors.Description && <p className="error-message" style={{ color: "red" }}>{errors.Description.message}</p>}
+                              {errors.Description && <p className="error-message" style={customStyles.errorMsg}>{errors.Description.message}</p>}
                            </div>
                            <div className="col-lg-2">
                               <label className="fw-bold">Shift Timings<span style={{ color: "red" }}>*</span></label>
                               <input type="text" placeholder="Enter Shift Timeings" name="ShiftTimeings" id="ShiftTimeings" className="form-control " {...register("ShiftTimeings", { required: "This field is required" })} />
-                              {errors.ShiftTimeings && <p className="error-message" style={{ color: "red" }}>{errors.ShiftTimeings.message}</p>}
+                              {errors.ShiftTimeings && <p className="error-message"style={customStyles.errorMsg}>{errors.ShiftTimeings.message}</p>}
                            </div>
                            <div className="col-lg-2">
                               <label className="fw-bold">Grace Period<span style={{ color: "red" }}>*</span></label>
                               <input type="tel" placeholder="Enter Grace Period" name="Grace" id="Grace" className="form-control " {...register("Grace", { required: "This field is required" })} />
-                              {errors.Grace && <p className="error-message" style={{ color: "red" }}>{errors.Grace.message}</p>}
+                              {errors.Grace && <p className="error-message" style={customStyles.errorMsg}>{errors.Grace.message}</p>}
                            </div>
                            <div className="col-lg-2">
                               <label className="fw-bold">Shift Type<span style={{ color: "red" }}>*</span></label>
                               <input type="tel" placeholder="Enter Shift Type" name="ShiftType" id="ShiftType" className="form-control " {...register("ShiftType", { required: "This field is required" })} />
-                              {errors.ShiftType && <p className="error-message" style={{ color: "red" }}>{errors.ShiftType.message}</p>}
+                              {errors.ShiftType && <p className="error-message" style={customStyles.errorMsg}>{errors.ShiftType.message}</p>}
                            </div>
                         </div>
                         <br></br>

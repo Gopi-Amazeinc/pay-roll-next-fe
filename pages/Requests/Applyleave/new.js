@@ -66,29 +66,31 @@ const ApplyLeave = () => {
   };
   const customStyles = {
     content: {
-        top: "50%",
-        left: "50%",
-        right: "auto",
-        bottom: "auto",
-        marginRight: "-50%",
-        transform: "translate(-50%, -50%)",
-        width: "60%",
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      marginRight: "-50%",
+      transform: "translate(-50%, -50%)",
+      width: "60%",
     },
     errorMsg: {
-        fontSize: "12px",
-        fontWeight: "500",
-        color: "red",
+      fontSize: "12px",
+      fontWeight: "500",
+      color: "red",
     },
     inputLabel: {
-        fontSize: "16px",
+      fontSize: "16px",
     },
-};
+  };
   return (
     <Layout>
       <div className="container-fluid">
         <div className="row">
           <div className="col-lg-12">
-            <h3 className="Heading">Leave Requests</h3>
+            <h3 className=" fs-5 mt-3 fw-bold" style={{ color: "#3247d5" }}>
+             Leave Request
+            </h3>
             <div className="card p-3 border-0 shadow-lg  mt-4">
               <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="row">
@@ -158,17 +160,17 @@ const ApplyLeave = () => {
                   <div className="col-lg-3">
                     <label style={{ fontWeight: "bold" }}>Attachment</label>
                     {/* <DropZone {...register("MedicalUrl", { required: true })} /> */}
-                    <div style={{ border: '2px dashed blue', height: "100px"}}>
+                    <div style={{ border: '2px dashed blue', height: "100px" }}>
                       <div {...getRootProps()}>
                         <input {...getInputProps()}{...register("Attachment", { required: "This field is required" })} />
-                       
+
                         {isDragActive ? (
                           <p>Drop the files here ...</p>
                         ) : (
-                          <p style={{marginTop:"30px",textAlign:"center"}}>
+                          <p style={{ marginTop: "30px", textAlign: "center" }}>
                             Drop the files here ..
                           </p>
-                        )} 
+                        )}
                       </div>
                     </div>{errors.Attachment && <p className="error-message" style={customStyles.errorMsg}>{errors.Attachment.message}</p>}
                     {/* {errors.MedicalUrl && <p className="error-message" style={{ color: "red" }}>{errors.MedicalUrl.message}</p>} */}
