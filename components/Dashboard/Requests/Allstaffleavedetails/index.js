@@ -229,7 +229,7 @@ const Index = () => {
                             }
                         </div>
                         <div className="col-md-3">
-                            <label className="mainheader">My Team Leave Request </label>
+                            <label className="mainheader">All staff Leave Details </label>
                         </div>
                     </div><br />
                     <div className='row'>

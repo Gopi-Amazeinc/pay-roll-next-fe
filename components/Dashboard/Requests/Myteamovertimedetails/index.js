@@ -135,13 +135,17 @@ const Index = () => {
         return;
 
     }, [userID])
+    
     const PER_PAGE = 5;
     const [currentPage, setCurrentPage] = useState(0);
-    const handlePageClick = ({ selected: selectedPage }) => {
+    function handlePageClick({ selected: selectedPage }) {
         setCurrentPage(selectedPage);
-    };
+    }
     const offset = currentPage * PER_PAGE;
-    const pageCount = Math.ceil(managerPending.length / PER_PAGE);
+    const pageCount = Math.ceil(managerRejected.length / PER_PAGE);
+
+
+    
 
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
@@ -246,7 +250,7 @@ const Index = () => {
                     <div className='row'>
                         <div className='col-lg-12'>
                             {
-                                managertogglePending && sessionStorage.getItem("roleID") == 3 && (
+                                managertogglePending && (
                                     <>
                                         <h6 style={{ color: "#3247d5" }}>Showing {managerPending.length} Results</h6>
                                         <table className='table table-hover'>
@@ -309,7 +313,7 @@ const Index = () => {
 
 
                             {
-                                managerToggleapproved && sessionStorage.getItem("roleID") == 3 && (
+                                managerToggleapproved && (
                                     <>
                                         <h6 style={{ color: "#3247d5" }}>Showing {managerApproved.length} Results</h6>
                                         <table className='table table-hover'>
@@ -358,7 +362,7 @@ const Index = () => {
 
 
                             {
-                                managertogglerejected && sessionStorage.getItem("roleID") == 3 && (
+                                managertogglerejected && (
                                     <>
                                         <h6 style={{ color: "#3247d5" }}>Showing {managerRejected.length} Results</h6>
                                         <table className='table table-hover'>
