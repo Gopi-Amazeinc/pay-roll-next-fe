@@ -17,12 +17,12 @@ const Index = () => {
     const [managertogglePending, setManagerTogglePending] = useState(false)
     const [managerToggleapproved, setManagerToggleApproved] = useState(false)
     const [managertogglerejected, setManagerToggleRejected] = useState(false);
-    const [newDashboard, setNewDashboardData] = useState([]);
-    const [newApproved, setnewApprovedData] = useState([]);
-    const [newRejected, setnewRejectedData] = useState([]);
     const [managerPending, setManagerPendingData] = useState([]);
     const [managerApproved, setManagerApprovedData] = useState([]);
     const [managerRejected, setManagerRejectedData] = useState([]);
+    const [newDashboard, setNewDashboardData] = useState([]);
+    const [newApproved, setnewApprovedData] = useState([]);
+    const [newRejected, setnewRejectedData] = useState([]);
     const [modalOpen, setModalOpen] = useState(false);
     const [modalData, setModalData] = useState([]);
     const [isOpen, ModalIsOpen] = useState(false)
@@ -50,10 +50,10 @@ const Index = () => {
     const toggleRejected = () => {
         setRejected(true)
         setApproved(false)
-        setPending(false)
         setManagerTogglePending(false);
         setManagerToggleApproved(false);
         setManagerToggleRejected(true);
+        setPending(false)
     }
     const openModal = () => {
         ModalIsOpen(true)
@@ -240,6 +240,10 @@ const Index = () => {
         setUserID(usrID);
         const userRoleID = sessionStorage.getItem("roleID");
         setRoleID(userRoleID);
+        setPending(true);
+        getPendingDetails();
+        getApprovedDetails();
+        getRejectedDetails();
         var date = sessionStorage.getItem("Date");
         var startTime = sessionStorage.getItem("StartTime");
         var endTime = sessionStorage.getItem("EndTime");
@@ -343,138 +347,138 @@ const Index = () => {
                         </div>
                     </div>
                     <div className='row'>
+                        {
+                            managertogglePending && sessionStorage.getItem("roleID") == 3 && (
+                                <>
+                                    <h6 style={{ color: "#3247d5" }}>Showing {managerPending.length} Results</h6>
+
+                                    <table className='table table-hover'>
+                                        <thead className='bg-info text-white'>
+                                            <tr>
+                                                <th>Controll Number</th>
+                                                <th>EmployeID</th>
+                                                <th>Employee Name</th>
+                                                <th>Date Request</th>
+                                                <th>Start Time</th>
+                                                <th>End Time</th>
+                                                <th>OT Details</th>
+                                                <th>Attachment</th>
+                                                <th>Purpose</th>
+                                                <th>Status</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            {
+                                                managerPending.slice(offset, offset + PER_PAGE).map((data) => {
+                                                    return (
+                                                        <tr key={data.id}>
+                                                            <td>{data.date}</td>
+                                                            <td>{data.startTime}</td>
+                                                            <td>{data.endTime}</td>
+                                                            <td>
+                                                                <button className='edit-btn' onClick={openEditModal.bind(this, data)} >Details</button>
+                                                            </td>
+                                                            <td>{data.comments}</td>
+                                                            <td>{data.status}</td>
+                                                            <td>
+                                                                <button onClick={approve.bind(this, data.id)} className='edit-btn'>Approve</button>
+                                                                <button onClick={() => openModal(sessionStorage.setItem("id", data.id))} className='edit-btn'>Reject</button>
+                                                            </td>
+                                                        </tr>
+                                                    )
+                                                })
+                                            }
+                                        </tbody>
+                                    </table>
+                                </>
+                            )
+
+                        }
+
+
+                        {
+                            managerToggleapproved && sessionStorage.getItem("roleID") == 3 && (
+                                <>
+                                    <h6 style={{ color: "#3247d5" }}>Showing {managerApproved.length} Results</h6>
+                                    <table className='table table-hover'>
+                                        <thead className='bg-info text-white'>
+                                            <tr>
+                                                <th>Controll Number</th>
+                                                <th>EmployeID</th>
+                                                <th>Employee Name</th>
+                                                <th>Date Request</th>
+                                                <th>Approved Start Time</th>
+                                                <th>Approved End Time</th>
+                                                <th>OT Details</th>
+                                                <th>Attachment</th>
+                                                <th>Purpose</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            {
+                                                managerApproved.slice(offset, offset + PER_PAGE).map((data) => {
+                                                    return (
+                                                        <tr key={data.id}>
+                                                            <td>{data.date}</td>
+                                                            <td>{data.startTime}</td>
+                                                            <td>{data.endTime}</td>
+                                                            {/* <td>{data.comments}</td> */}
+                                                            <td>{data.status}</td>
+                                                        </tr>
+                                                    )
+                                                })
+                                            }
+                                        </tbody>
+                                    </table>
+                                </>
+                            )
+                        }
+
+
+                        {
+                            managertogglerejected && sessionStorage.getItem("roleID") == 3 && (
+                                <>
+                                    <h6 style={{ color: "#3247d5" }}>Showing {managerRejected.length} Results</h6>
+                                    <table className='table table-hover'>
+                                        <thead className='bg-info text-white'>
+                                            <tr>
+                                                <th>Controll Number</th>
+                                                <th>EmployeID</th>
+                                                <th>Employee Name</th>
+                                                <th>Date Request</th>
+                                                <th>Approved Start Time</th>
+                                                <th>Approved End Time</th>
+                                                <th>OT Details</th>
+                                                <th>Attachment</th>
+                                                <th>Reject Reason</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </thead>
+
+                                        <tbody>
+                                            {
+                                                managerRejected.slice(offset, offset + PER_PAGE).map((data) => {
+                                                    return (
+                                                        <tr key={data.id}>
+                                                            <td>{data.date}</td>
+                                                            <td>{data.startTime}</td>
+                                                            <td>{data.endTime}</td>
+                                                            {/* <td>{data.comments}</td> */}
+                                                            <td>{data.status}</td>
+                                                        </tr>
+                                                    )
+                                                })
+                                            }
+                                        </tbody>
+                                    </table>
+                                </>
+                            )
+                        }
                         <div className='col-lg-12'>
-                            {
-                                managertogglePending && sessionStorage.getItem("roleID") == 3 && (
-                                    <>
-                                        <h6 style={{ color: "#3247d5" }}>Showing {managerPending.length} Results</h6>
-
-                                        <table className='table table-hover'>
-                                            <thead className='bg-info text-white'>
-                                                <tr>
-                                                    <th>Controll Number</th>
-                                                    <th>EmployeID</th>
-                                                    <th>Employee Name</th>
-                                                    <th>Date Request</th>
-                                                    <th>Start Time</th>
-                                                    <th>End Time</th>
-                                                    <th>OT Details</th>
-                                                    <th>Attachment</th>
-                                                    <th>Purpose</th>
-                                                    <th>Status</th>
-                                                    <th>Actions</th>
-                                                </tr>
-                                            </thead>
-
-                                            <tbody>
-                                                {
-                                                    managerPending.slice(offset, offset + PER_PAGE).map((data) => {
-                                                        return (
-                                                            <tr key={data.id}>
-                                                                <td>{data.date}</td>
-                                                                <td>{data.startTime}</td>
-                                                                <td>{data.endTime}</td>
-                                                                <td>
-                                                                    <button className='edit-btn' onClick={openEditModal.bind(this, data)} >Details</button>
-                                                                </td>
-                                                                <td>{data.comments}</td>
-                                                                <td>{data.status}</td>
-                                                                <td>
-                                                                    <button onClick={approve.bind(this, data.id)} className='edit-btn'>Approve</button>
-                                                                    <button onClick={() => openModal(sessionStorage.setItem("id", data.id))} className='edit-btn'>Reject</button>
-                                                                </td>
-                                                            </tr>
-                                                        )
-                                                    })
-                                                }
-                                            </tbody>
-                                        </table>
-                                    </>
-                                )
-
-                            }
-
-
-                            {
-                                managerToggleapproved && sessionStorage.getItem("roleID") == 3 && (
-                                    <>
-                                        <h6 style={{ color: "#3247d5" }}>Showing {managerApproved.length} Results</h6>
-                                        <table className='table table-hover'>
-                                            <thead className='bg-info text-white'>
-                                                <tr>
-                                                    <th>Controll Number</th>
-                                                    <th>EmployeID</th>
-                                                    <th>Employee Name</th>
-                                                    <th>Date Request</th>
-                                                    <th>Approved Start Time</th>
-                                                    <th>Approved End Time</th>
-                                                    <th>OT Details</th>
-                                                    <th>Attachment</th>
-                                                    <th>Purpose</th>
-                                                    <th>Status</th>
-                                                </tr>
-                                            </thead>
-
-                                            <tbody>
-                                                {
-                                                    managerApproved.slice(offset, offset + PER_PAGE).map((data) => {
-                                                        return (
-                                                            <tr key={data.id}>
-                                                                <td>{data.date}</td>
-                                                                <td>{data.startTime}</td>
-                                                                <td>{data.endTime}</td>
-                                                                {/* <td>{data.comments}</td> */}
-                                                                <td>{data.status}</td>
-                                                            </tr>
-                                                        )
-                                                    })
-                                                }
-                                            </tbody>
-                                        </table>
-                                    </>
-                                )
-                            }
-
-
-                            {
-                                managertogglerejected && sessionStorage.getItem("roleID") == 3 && (
-                                    <>
-                                        <h6 style={{ color: "#3247d5" }}>Showing {managerRejected.length} Results</h6>
-                                        <table className='table table-hover'>
-                                            <thead className='bg-info text-white'>
-                                                <tr>
-                                                    <th>Controll Number</th>
-                                                    <th>EmployeID</th>
-                                                    <th>Employee Name</th>
-                                                    <th>Date Request</th>
-                                                    <th>Approved Start Time</th>
-                                                    <th>Approved End Time</th>
-                                                    <th>OT Details</th>
-                                                    <th>Attachment</th>
-                                                    <th>Reject Reason</th>
-                                                    <th>Status</th>
-                                                </tr>
-                                            </thead>
-
-                                            <tbody>
-                                                {
-                                                    managerRejected.slice(offset, offset + PER_PAGE).map((data) => {
-                                                        return (
-                                                            <tr key={data.id}>
-                                                                <td>{data.date}</td>
-                                                                <td>{data.startTime}</td>
-                                                                <td>{data.endTime}</td>
-                                                                {/* <td>{data.comments}</td> */}
-                                                                <td>{data.status}</td>
-                                                            </tr>
-                                                        )
-                                                    })
-                                                }
-                                            </tbody>
-                                        </table>
-                                    </>
-                                )
-                            }
                             {
                                 pending && sessionStorage.getItem("roleID") == 5 && (
                                     <>
