@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react'
 import Link from 'next/link'
-import axios from 'axios';
 import Swal from 'sweetalert2';
 import Modal from 'react-modal';
 import { AiOutlineClose } from 'react-icons/ai'
@@ -84,29 +83,29 @@ const MyTeamCompensationtimeout = () => {
         setcount(res.data.length);
     }
 
-    const Delete = (id) => {
+    // const Delete = (id) => {
 
-        Swal.fire({
-            title: 'Are You Sure To Cancel?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, Cancel it!'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                apiService.commonGetCall("Payroll/DeleteCompensationTimeOut?id=" + id)
-                Swal.fire({
-                    icon: "success",
-                    titleText: "Cancelled Successfully"
-                })
-                getPendingData();
-            }
+    //     Swal.fire({
+    //         title: 'Are You Sure To Cancel?',
+    //         text: "You won't be able to revert this!",
+    //         icon: 'warning',
+    //         showCancelButton: true,
+    //         confirmButtonColor: '#3085d6',
+    //         cancelButtonColor: '#d33',
+    //         confirmButtonText: 'Yes, Cancel it!'
+    //     }).then((result) => {
+    //         if (result.isConfirmed) {
+    //             apiService.commonGetCall("Payroll/DeleteCompensationTimeOut?id=" + id)
+    //             Swal.fire({
+    //                 icon: "success",
+    //                 titleText: "Cancelled Successfully"
+    //             })
+    //             getPendingData();
+    //         }
 
-        }
-        )
-    }
+    //     }
+    //     )
+    // }
 
     const approve = (id) => {
         Swal.fire({
