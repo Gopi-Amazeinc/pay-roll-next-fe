@@ -339,7 +339,7 @@ function LeaveListDashboard() {
                                                 {/* <th>Leave Type</th> */}
                                                 <th>Leave Reason</th>
                                                 {/* <th>Leave Days Count</th> */}
-                                                {/* <th>Attachment</th> */}
+                                                <th>Attachment</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
@@ -360,6 +360,7 @@ function LeaveListDashboard() {
                                                             <td>{data.sDateOfLeave}</td>
                                                             <td>{data.eDateOfLeave}</td>
                                                             <td>{data.leaveReason}</td>
+                                                            <td>{data.medicalUrl}</td>
                                                             <td>{data.status}</td>
                                                             <td>
                                                                 <button className='edit-btn'>Cancel</button>
