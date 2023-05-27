@@ -94,3 +94,17 @@
     height: 18px;
     color: #3247d5;
 }
+
+.submitBtn{
+    text-shadow: none;
+    letter-spacing: .5px;
+    border-radius: 5px;
+    border-color: #3247d5;
+    background-color: #3247d5;
+    color: white;
+    /* font-weight: 500; */
+    width: 51%;
+    height: 32px;
+    border: #3247d5;
+
+}
