@@ -56,7 +56,7 @@ const MyTeamCompensationtimeout = () => {
 
 
     const getManagerApprovedData = async () => {
-        const res = await apiService.commonGetCall("Payroll/GetPendingCompensationTimeOutBySupervisor?UserID=" + staffID)
+        const res = await apiService.commonGetCall("Payroll/GetApproveCompensationTimeOutBySupervisor?UserID=" + staffID)
         console.log(res.data)
         getManagerApproved(res.data)
         setcount(res.data.length);

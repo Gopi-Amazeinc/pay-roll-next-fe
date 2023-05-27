@@ -73,7 +73,6 @@ const Attendancecorrectiondashboard = () => {
   const pageCount = Math.ceil(pendingDashboardData.length / PER_PAGE);
 
 
-
   useEffect(() => {
     if (userID) {
       const resu = getCurrentMonthDates();
@@ -215,14 +214,14 @@ const Attendancecorrectiondashboard = () => {
             className={Styles.mainheader}
             href="/Attendance/AttendanceCorrections"
           >
-            Attendance Correction
+          My  Attendance Correction
           </Link>
           <div className="line-border" style={{
             border: "1px solid #2f87cc",
             bordertopleftradius: "51px",
             bordertoprightradius: "51px",
             margintop: "0px",
-            width: "70%"
+            width: "80%"
           }}></div>
         </div>
 
@@ -342,10 +341,10 @@ const Attendancecorrectiondashboard = () => {
                     pendingDashboardData.length > 0 && (
                       <>
                         {pendingDashboardData
-                          .filter(data => {
-                            if ((data.startTime.toLowerCase().includes(keyword)) || (data.date.toLowerCase().includes(keyword)) || (data.endTime.toLowerCase().includes(keyword))) {
-                              return data;
-                            }
+                          .filter(post => {
+                            return Object.values(post).some(value =>
+                              value !== null && value.toString().toLowerCase().includes(keyword.toLowerCase())
+                            );
                           })
                           .map((data, index) => {
                             return (
