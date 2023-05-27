@@ -118,7 +118,6 @@ const Index = () => {
     };
 
     const getDataBySelectedDate = (endDatesss) => {
-        debugger;
         return getPendingDetails(startDate, endDatesss);
     };
 
@@ -149,7 +148,6 @@ const Index = () => {
     // }
 
     // const getManagerRejectedData = async () => {
-    //     // debugger;
     //     const res = await apiService.commonGetCall("Payroll/GetRejectOverTimeDetailsByManagerID?ManagerID=" + userID)
     //     setManagerRejectedData(res.data)
     //     console.log("Manager Rejected", res.data);

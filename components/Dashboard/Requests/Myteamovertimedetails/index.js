@@ -68,19 +68,18 @@ const Index = () => {
         }
     }
     const getManagerPendingDetails = async () => {
-        const res = await apiService.commonGetCall("Payroll/GetPendingOverTimeDetailsByManagerID?ManagerID=" + userID)
+        const res = await apiService.commonGetCall("Payroll/GetPendingOverTimeDetailsByManagerID?supervisor=" + userID)
         setManagerPendingData(res.data)
         console.log("Manager Pending", res.data);
     }
     const getManagerApprovedData = async () => {
-        const res = await apiService.commonGetCall("Payroll/GetApprovedOverTimeDetailsByManagerID?ManagerID=" + userID)
+        const res = await apiService.commonGetCall("Payroll/GetApprovedOverTimeDetailsByManagerID?supervisor=" + userID)
         setManagerApprovedData(res.data)
         console.log("Manager Approved", res.data);
     }
 
     const getManagerRejectedData = async () => {
-        // debugger;
-        const res = await apiService.commonGetCall("Payroll/GetRejectOverTimeDetailsByManagerID?ManagerID=" + userID)
+        const res = await apiService.commonGetCall("Payroll/GetRejectOverTimeDetailsByManagerID?supervisor=" + userID)
         setManagerRejectedData(res.data)
         console.log("Manager Rejected", res.data);
     }
@@ -109,7 +108,6 @@ const Index = () => {
         return `${year}-${month}-${day}`;
     };
     useEffect(() => {
-        debugger;
         const usrID = sessionStorage.getItem("userID");
         setUserID(usrID);
         const userRoleID = sessionStorage.getItem("roleID");
