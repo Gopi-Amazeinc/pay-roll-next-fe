@@ -180,7 +180,7 @@ const Index = () => {
             />
           </div>
           <div className="col-lg-2">
-            <select className="form-select">
+            <select className="form-select" onChange={(e) => setKeyword(e.target.value)}>
               <option value="">Select Component</option>
               {component.map((data) => {
                 return (

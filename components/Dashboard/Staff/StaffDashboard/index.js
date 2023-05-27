@@ -9,12 +9,19 @@ import { DownloadTableExcel } from "react-export-table-to-excel";
 import Modal from "react-modal";
 import * as XLSX from "xlsx";
 import Swal from "sweetalert2";
+import { apiService } from "@/services/api.service";
+
 function StaffDashbaord() {
   const [staff, setStaffData] = useState([]);
   const tableRef = useRef(null);
   const [count, setcount] = useState("");
   const [keyword, setKeyword] = useState("");
-  
+  const [items, setItems] = useState([]);
+  const [showButtons, setShowButtons] = useState(false);
+  const [department, setDepartment] = useState([]);
+  const [position, setPosition] = useState([]);
+  const [level, setLevel] = useState([]);
+
   const [enableDisablestate, setenableDisablestate] = useState(false);
 
   const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
@@ -28,10 +35,16 @@ function StaffDashbaord() {
       hostURL + "Payroll/GetAllStaffNewforstaffdashboard"
     );
     setStaffData(res.data);
-    // if(res.attendanceEnable = 1 ) {
-
-    // }
     setcount(res.data.length);
+
+    let res1 = await axios.get(hostURL + "Master/GetDepartmentMaster");
+    setDepartment(res1.data);
+
+    let res2 = await axios.get(hostURL + "Master/GetPositionMaster");
+    setPosition(res2.data);
+
+    let res3 = await axios.get(hostURL + "Master/GetLevelType");
+    setLevel(res3.data);
   };
   const getData = (data) => {
     sessionStorage.setItem("id", data.id);
@@ -45,28 +58,34 @@ function StaffDashbaord() {
       StaffID: data.id,
       AttendanceEnable: 1,
     };
-    let res = await axios.post(hostURL + "Payroll/UpdateAttendanceEnableDisable", entity);
+    let res = await axios.post(
+      hostURL + "Payroll/UpdateAttendanceEnableDisable",
+      entity
+    );
 
-    if (res.status ==  200 && res != null) {
-      setenableDisablestate(true)
+    if (res.status == 200 && res != null) {
+      setenableDisablestate(true);
       Swal.fire("Attendance enabled");
     } else {
-      setenableDisablestate(false)
+      setenableDisablestate(false);
       Swal.fire("Attendance disabled");
     }
     getData(data);
   };
   const handleDelete = async (id) => {
     try {
-      let res = await axios.get(hostURL + ``);
+      let res = await axios.get(hostURL + `Payroll/DeleteStaff?ID=${id}`);
       console.log(res.data);
       Swal.fire("Data deleted successfully");
-      getbarangaymaster();
+      getStaffDetails();
     } catch (error) {
       console.error(error);
       Swal.fire("Failed to delete data");
     }
   };
+  const handleActive = async (id) => {
+
+  }
   const customStyles = {
     content: {
       top: "20%",
@@ -88,7 +107,6 @@ function StaffDashbaord() {
     },
   };
 
-
   const PER_PAGE = 7; //pagination
   const [currentPage, setCurrentPage] = useState(0);
   function handlePageClick({ selected: selectedPage }) {
@@ -96,7 +114,6 @@ function StaffDashbaord() {
   }
   const offset = currentPage * PER_PAGE;
   const pageCount = Math.ceil(staff.length / PER_PAGE);
-
 
   const [modalOpen, setModalOpen] = useState(false); //modal
   const openEditModal = () => {
@@ -106,9 +123,8 @@ function StaffDashbaord() {
     setModalOpen(false);
   };
 
-
-
   const incomingfile = async (file) => {
+    //excel upload
     const promise = new Promise((resolve, reject) => {
       const fileReader = new FileReader();
       fileReader.readAsArrayBuffer(file);
@@ -150,9 +166,9 @@ function StaffDashbaord() {
     debugger;
     const loans = await Promise.all(
       items && items.length > 0
-        ? items.map(async (salary) => {
+        ? items.map(async (staff) => {
             const res = await apiService.commonGetCall(
-              "Payroll/GetStaffByEmployeeID?EmployeID=" + salary.EmployeeID
+              "Payroll/GetStaffByEmployeeID?EmployeID=" + staff.EmployeeID
             );
             let staffData;
             // const staffData = res.data[0];
@@ -186,22 +202,32 @@ function StaffDashbaord() {
               <select
                 className="form-select"
                 aria-label="Default select example"
+                onChange={(e) => setKeyword(e.target.value)}
               >
                 <option>Select Department</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+                {department.map((data, index) => {
+                  return (
+                    <option key={data.id} value={data.id} >
+                      {data.department_name}
+                    </option>
+                  );
+                })}
               </select>
             </div>
             <div className="col-lg-2">
               <select
                 className="form-select"
                 aria-label="Default select example"
+                onChange={(e) => setKeyword(e.target.value)}
               >
                 <option>Select Level</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+                {level.map((data, index) => {
+                  return (
+                    <option key={data.id} value={data.id}>
+                      {data.short}
+                    </option>
+                  );
+                })}
               </select>
             </div>
 
@@ -209,11 +235,16 @@ function StaffDashbaord() {
               <select
                 className="form-select"
                 aria-label="Default select example"
+                onChange={(e) => setKeyword(e.target.value)}
               >
                 <option>Select Position</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+                {position.map((data, index) => {
+                  return (
+                    <option key={data.id} value={data.id} >
+                      {data.short}
+                    </option>
+                  );
+                })}
               </select>
             </div>
 
@@ -249,19 +280,15 @@ function StaffDashbaord() {
           <div className="col-lg-2"></div>
           <div className="col-lg-2">
             <Link href="/Staff/AddStaff">
-              <button
-                type="button"
-                className="AddButton"
-              >
+              <button type="button" className="AddButton">
                 Add Staff
               </button>
             </Link>
           </div>
           <div className="col-lg-2">
-          <button className="AddButton"
-           onClick={openEditModal}>
-                Upload Staff
-              </button>
+            <button className="AddButton" onClick={openEditModal}>
+              Upload Staff
+            </button>
           </div>
         </div>
 
@@ -287,9 +314,14 @@ function StaffDashbaord() {
                 <tbody>
                   {staff
                     .slice(offset, offset + PER_PAGE)
-                    .filter(post => {
-                      return Object.values(post).some(value =>
-                        value !== null && value.toString().toLowerCase().includes(keyword.toLowerCase())
+                    .filter((post) => {
+                      return Object.values(post).some(
+                        (value) =>
+                          value !== null &&
+                          value
+                            .toString()
+                            .toLowerCase()
+                            .includes(keyword.toLowerCase())
                       );
                     })
                     .map((data, index) => {
@@ -320,28 +352,46 @@ function StaffDashbaord() {
                                 >
                                   DISABLE
                                 </button>
-                              )
-                            }
+                              )}
                             </span>
                           </td>
+
                           <td className="text-center">
-                            <Link href={`/Staff/AddStaff/Edit/${data.id}`}>
-                              {/* <buttton style={{
-                              textShadow: "none",
-                              letterSpacing: ".5px",
-                              borderRadius: "5px",
-                              borderColor: "#3247d5",
-                              backgroundColor: "white",
-                              color: "#3247d5",
-                              fontWeight: "600",
-                              width: "53px",
-                              height: "26px",
-                              border: "2px solid #3247d5"
-                                  }}>Edit</buttton> */}
-                              <div style={{ width: "50px" }}>
-                                <BiEdit />
-                              </div>
-                            </Link>
+                            <BiEdit
+                              className={Styles.imgBtn}
+                              onClick={() => setShowButtons(!showButtons)}
+                            />
+
+                            {showButtons && (
+                              <>
+                                <div className="card p-2 mt-1">
+                                  <div>
+                                    <div className="row">
+                                      <Link
+                                        href={`/Staff/AddStaff/Edit/${data.id}`}
+                                      >
+                                        <button className={Styles.editBtnn}>
+                                          EDIT
+                                        </button>
+                                      </Link>
+                                    </div>
+                                    <br></br>
+                                    <div className="row">
+                                      <button className={Styles.deleteBtn}
+                                        onClick={handleDelete.bind(this, data.id)}>
+                                        DELETE
+                                      </button>
+                                    </div>
+                                    <br></br>
+                                    <div className="row">
+                                      <button className={Styles.activeBtn}>
+                                        ACTIVE
+                                      </button>
+                                    </div>
+                                  </div>
+                                </div>
+                              </>
+                            )}
                           </td>
                         </tr>
                       );
@@ -372,62 +422,62 @@ function StaffDashbaord() {
               </div>
 
               <Modal
-                  isOpen={modalOpen}
-                  style={customStyles}
-                  contentLabel="Example Modal"
-                >
-                  <div className=" modal-header">
-                    <h5 className=" modal-title" id="exampleModalLabel">
-                      Upload staff
-                    </h5>
-                    <button
-                      ariaLabel="Close"
-                      // className={Styles.close}
-                      type="button"
-                      onClick={closeModal}
-                    >
-                      X
-                    </button>
+                isOpen={modalOpen}
+                style={customStyles}
+                contentLabel="Example Modal"
+              >
+                <div className=" modal-header">
+                  <h5 className=" modal-title" id="exampleModalLabel">
+                    Upload staff
+                  </h5>
+                  <button
+                    ariaLabel="Close"
+                    // className={Styles.close}
+                    type="button"
+                    onClick={closeModal}
+                  >
+                    X
+                  </button>
+                </div>
+                <hr></hr>
+                <div className="row">
+                  <div className="col-lg-7">
+                    <input
+                      type="file"
+                      accept=".xls,.xlsx"
+                      style={{ display: "inline-block" }}
+                      onChange={(e) => {
+                        const file = e.target.files[0];
+                        incomingfile(file);
+                      }}
+                      placeholder="Upload file"
+                    />
                   </div>
-                  <hr></hr>
+                  <div className="col-lg-5">
+                    <Link href="https://103.12.1.76/ALIAPI/Images/.xlsx">
+                      <span
+                        style={{ color: "navy", textDecoration: "underline" }}
+                      >
+                        UploadTemplate.XLSX
+                      </span>
+                    </Link>
+                  </div>
                   <div className="row">
-                    <div className="col-lg-7">
-                      <input
-                        type="file"
-                        accept=".xls,.xlsx"
-                        style={{ display: "inline-block" }}
-                        onChange={(e) => {
-                          const file = e.target.files[0];
-                          incomingfile(file);
-                        }}
-                        placeholder="Upload file"
-                      />
-                    </div>
-                    <div className="col-lg-5">
-                      <Link href="https://103.12.1.76/ALIAPI/Images/.xlsx">
-                        <span
-                          style={{ color: "navy", textDecoration: "underline" }}
-                        >
-                          UploadTemplate.XLSX
-                        </span>
-                      </Link>
-                    </div>
-                    <div className="row">
-                      {/* <ModalFooter> */}
-                      <div className="col-lg-6">
-                        <button
-                          // className="mt-4"
-                          className="AddButton mt-4"
-                          onClick={() => uploadSalary()}
-                          color="primary"
-                          type="button"
-                        >
-                          UPLOAD
-                        </button>
-                      </div>
+                    {/* <ModalFooter> */}
+                    <div className="col-lg-6">
+                      <button
+                        // className="mt-4"
+                        className="AddButton mt-4"
+                        onClick={() => uploadStaff()}
+                        color="primary"
+                        type="button"
+                      >
+                        UPLOAD
+                      </button>
                     </div>
                   </div>
-                </Modal>
+                </div>
+              </Modal>
             </div>
           </div>
         </div>

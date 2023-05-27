@@ -9,7 +9,7 @@ import { apiService } from "@/services/api.service";
 import { useRouter } from "next/router";
 
 const AddStaffSalaryForm = ({ editData }) => {
-  const router  = useRouter();
+  const router = useRouter();
 
   const { register, handleSubmit, reset, formState } = useForm();
   const [Staff, setStaff] = useState([]);
@@ -133,11 +133,11 @@ const AddStaffSalaryForm = ({ editData }) => {
                   Basic Salary<span style={customStyles.span}>*</span>
                 </label>
                 <div>
-                  <input
-                    {...register("BasicSalary")}
-                    type="number"
-                    placeholder="Basic Salary"
+                  <input placeholder="Basic Salary"
                     className="form-control"
+                    {...register("BasicSalary", { required: true })}
+                    type="number"
+
                   />
                   {errors.BasicSalary && (
                     <span style={customStyles.errorMsg}>
@@ -150,10 +150,10 @@ const AddStaffSalaryForm = ({ editData }) => {
                 <label>
                   Effective Date<span style={customStyles.span}>*</span>
                 </label>
-                <input
-                  {...register("EffectiveDate")}
-                  type="date"
+                <input type="date"
                   className="form-control"
+                  {...register("EffectiveDate", { required: true })}
+
                 />
                 {errors.EffectiveDate && (
                   <span style={customStyles.errorMsg}>
@@ -167,15 +167,21 @@ const AddStaffSalaryForm = ({ editData }) => {
                   Working Days In Month<span style={customStyles.span}>*</span>
                 </label>
                 <input
-                  {...register("WorkDaysInMonth")}
+                  {...register("WorkDaysInMonth", { required: true ,pattern:/^((31)|(\d{0,1}?))$/g})}
                   type="number"
                   placeholder="Working Days In Month"
                   className="form-control "
                 />
-                {errors.WorkDaysInMonth && (
+                {errors.WorkDaysInMonth?.type==='required' && (
                   <span style={customStyles.errorMsg}>
                     {" "}
                     Please enter work days in a month
+                  </span>
+                )}
+                 {errors.WorkDaysInMonth?.type==='pattern' && (
+                  <span style={customStyles.errorMsg}>
+                    {" "}
+                    Please enter work days in a month not more than 31 
                   </span>
                 )}
               </div>
@@ -186,16 +192,20 @@ const AddStaffSalaryForm = ({ editData }) => {
                 <label>
                   Working Hours In Day<span style={customStyles.span}>*</span>
                 </label>
-                <input
-                  {...register("WorkHoursInDay")}
-                  type="number"
-                  placeholder="Working Hours In Day"
+                <input type="number" placeholder="Working Hours In Day" maxLength={2}
                   className="form-control"
+                  {...register("WorkHoursInDay", { required: true, pattern: /^((24)|(\d{0,1}?))$/g })}
                 />
-                {errors.WorkDaysInMonth && (
+                {errors.WorkHoursInDay?.type === 'required' && (
                   <span style={customStyles.errorMsg}>
                     {" "}
                     Please enter work hours in a day
+                  </span>
+                )}
+                {errors.WorkHoursInDay?.type === 'pattern' && (
+                  <span style={customStyles.errorMsg}>
+                    {" "}
+                    Please enter work hours in a day not more than 24 hour
                   </span>
                 )}
               </div>
@@ -204,7 +214,7 @@ const AddStaffSalaryForm = ({ editData }) => {
                   Hourly Rate<span style={customStyles.span}>*</span>
                 </label>
                 <input
-                  {...register("HourlyRate")}
+                  {...register("HourlyRate", { required: true })}
                   type="number"
                   placeholder="Hourly Rate"
                   className="form-control "
@@ -221,7 +231,7 @@ const AddStaffSalaryForm = ({ editData }) => {
                   Daily Rate<span style={customStyles.span}>*</span>
                 </label>
                 <input
-                  {...register("DailyRate")}
+                  {...register("DailyRate", { required: true })}
                   type="number"
                   placeholder="Daily Rate"
                   className="form-control "

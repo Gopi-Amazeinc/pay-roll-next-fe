@@ -10,6 +10,7 @@ const AnnoucementDash = () => {
   const [upcommingdashboard, setupcommingdashboard] = useState([]);
   const [completedashboard, setcompletedashboard] = useState([]);
   const [keyword, setKeyword] = useState("")
+  
   function toggleUpcomming() {
     setupcomming(true);
     setcompleted(false);
@@ -65,7 +66,7 @@ const AnnoucementDash = () => {
                   type="text"
                   className="form-control"
                   placeholder="Search For Announcement"
-                  onChange={e=>setKeyword(e.target.value)}
+                  onChange={e => setKeyword(e.target.value)}
                 />
               </div>
             </div>
@@ -113,11 +114,16 @@ const AnnoucementDash = () => {
                   </thead>
 
                   <tbody>
-                    {completedashboard.filter(data => {
-                                    if ((data.dateTime.toString().includes(keyword))||(data.description.toLowerCase().includes(keyword.toLowerCase())) ) {
-                                        return data;
-                                    }
-                                }).map((data) => {
+                    {completedashboard.filter((post) => {
+                      return Object.values(post).some(
+                        (value) =>
+                          value !== null &&
+                          value
+                            .toString()
+                            .toLowerCase()
+                            .includes(keyword.toLowerCase())
+                      );
+                    }).map((data) => {
                       return (
                         <tr key={data.id}>
                           <td>{data.dateTime}</td>
@@ -145,7 +151,16 @@ const AnnoucementDash = () => {
                   </thead>
 
                   <tbody>
-                    {upcommingdashboard.map((data) => {
+                    {upcommingdashboard.filter((post) => {
+                      return Object.values(post).some(
+                        (value) =>
+                          value !== null &&
+                          value
+                            .toString()
+                            .toLowerCase()
+                            .includes(keyword.toLowerCase())
+                      );
+                    }).map((data) => {
                       return (
                         <tr key={data.id}>
                           <td>{data.dateTime}</td>

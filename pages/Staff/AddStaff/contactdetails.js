@@ -140,7 +140,6 @@ export default function ContactDetails({ data }) {
   useEffect(() => {
     debugger;
     makecalls();
-    
   }, [1]);
   function makecalls() {
     const { id } = data || {};
@@ -151,12 +150,14 @@ export default function ContactDetails({ data }) {
       getData();
     }
   }
-const getByID = async (id)=>{
-    debugger
+  const getByID = async (id) => {
+    debugger;
     await getData();
-    const res = await apiService.commonGetCall("Payroll/GetMyAddressDetailsByID?ID="+id);
+    const res = await apiService.commonGetCall(
+      "Payroll/GetMyAddressDetailsByID?ID=" + id
+    );
     clearForm(res.data[0]);
-   }
+  };
   async function getData() {
     debugger;
     let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
@@ -174,38 +175,50 @@ const getByID = async (id)=>{
     setCountrylistData(res.data);
   }
 
-async function clearForm(data = null){
-    let details ={
-        ID: data ? data.id: "",
-        AddressType1: data ? data.addressType1: "",
-        AddressLine1: data ? data.addressLine1: "",
-        AddressLine2: data ? data.addressLine2: "",
-        CountryID1: data ? data.countryID1: "",
-        ProvinceID1: data ? data.provinceID1: "",
-        CityID1: data ? data.cityID1: "",
-        AddressType2: data ? data.addressType2: "",
-        AddressLine3: data ? data.addressLine3: "",
-        AddressLine4: data ? data.addressLine4: "",
-        CountryID2: data ? data.countryID2: "",
-        ProvinceID2: data ? data.provinceID2: "",
-        CityID2: data ? data.cityID2: "",
-        EmergencyContactName1: data ? data.emergencyContactName1: "",
-        EmergencyContactRelationship1: data ? data.emergencyContactRelationship1: "",
-        EmergencyContactMobileNumber1: data ? data.emergencyContactMobileNumber1: "",
-        EmergencyContactAddress1: data ? data.emergencyContactAddress1: "",
-        EmergencyContactEmailID1: data ? data.emergencyContactEmailID1: "",
-        EmergencyContactLandLineNumber1: data ? data.emergencyContactLandLineNumber1: "",
-        EmergencyContactName2: data ? data.emergencyContactName2: "",
-        EmergencyContactRelationship2: data ? data.emergencyContactRelationship2: "",
-        EmergencyContactMobileNumber2: data ? data.emergencyContactMobileNumber2: "",
-        EmergencyContactAddress2: data ? data.emergencyContactAddress2: "",
-        EmergencyContactEmailID2: data ? data.emergencyContactEmailID2: "",
-        EmergencyContactLandLineNumber2: data ? data.emergencyContactLandLineNumber2: "",
-        StaffID: sessionStorage.getItem("CreatedEmpID")
-    }
+  async function clearForm(data = null) {
+    let details = {
+      ID: data ? data.id : "",
+      AddressType1: data ? data.addressType1 : "",
+      AddressLine1: data ? data.addressLine1 : "",
+      AddressLine2: data ? data.addressLine2 : "",
+      CountryID1: data ? data.countryID1 : "",
+      ProvinceID1: data ? data.provinceID1 : "",
+      CityID1: data ? data.cityID1 : "",
+      AddressType2: data ? data.addressType2 : "",
+      AddressLine3: data ? data.addressLine3 : "",
+      AddressLine4: data ? data.addressLine4 : "",
+      CountryID2: data ? data.countryID2 : "",
+      ProvinceID2: data ? data.provinceID2 : "",
+      CityID2: data ? data.cityID2 : "",
+      EmergencyContactName1: data ? data.emergencyContactName1 : "",
+      EmergencyContactRelationship1: data
+        ? data.emergencyContactRelationship1
+        : "",
+      EmergencyContactMobileNumber1: data
+        ? data.emergencyContactMobileNumber1
+        : "",
+      EmergencyContactAddress1: data ? data.emergencyContactAddress1 : "",
+      EmergencyContactEmailID1: data ? data.emergencyContactEmailID1 : "",
+      EmergencyContactLandLineNumber1: data
+        ? data.emergencyContactLandLineNumber1
+        : "",
+      EmergencyContactName2: data ? data.emergencyContactName2 : "",
+      EmergencyContactRelationship2: data
+        ? data.emergencyContactRelationship2
+        : "",
+      EmergencyContactMobileNumber2: data
+        ? data.emergencyContactMobileNumber2
+        : "",
+      EmergencyContactAddress2: data ? data.emergencyContactAddress2 : "",
+      EmergencyContactEmailID2: data ? data.emergencyContactEmailID2 : "",
+      EmergencyContactLandLineNumber2: data
+        ? data.emergencyContactLandLineNumber2
+        : "",
+      StaffID: sessionStorage.getItem("CreatedEmpID"),
+    };
     reset(details);
     setActionType(data ? "update" : "insert");
-}
+  }
   return (
     <div style={customStyles}>
       <form onSubmit={handleSubmit(onSubmit)}>
@@ -573,17 +586,18 @@ async function clearForm(data = null){
                         type="text"
                         placeholder="First Name, Middle Initial and Last Name "
                         {...register("EmergencyContactName1", {
-                          required: true,pattern: /^[a-zA-Z]+ [a-zA-Z]+$/
+                          required: true,
+                          pattern: /^[a-zA-Z]+ [a-zA-Z]+$/,
                         })}
                         className="form-control "
                       ></input>
-                      {errors.EmergencyContactName1?.type==='required' && (
+                      {errors.EmergencyContactName1?.type === "required" && (
                         <span style={customStyles.errorMsg}>
                           {" "}
                           Please enter emergency contact name 1
                         </span>
                       )}
-                      {errors.EmergencyContactName1?.type==='pattern' && (
+                      {errors.EmergencyContactName1?.type === "pattern" && (
                         <span style={customStyles.errorMsg}>
                           {" "}
                           Please enter firstname & lastname
@@ -601,20 +615,23 @@ async function clearForm(data = null){
                         type="text"
                         placeholder="Contact Relationship"
                         {...register("EmergencyContactRelationship1", {
-                          required: true,pattern: /^[A-Za-z]+$/ 
+                          required: true,
+                          pattern: /^[A-Za-z]+$/,
                         })}
                         className="form-control "
                       ></input>
-                      {errors.EmergencyContactRelationship1?.type==='required' && (
+                      {errors.EmergencyContactRelationship1?.type ===
+                        "required" && (
                         <span style={customStyles.errorMsg}>
                           {" "}
                           Please enter conatct relatioship
                         </span>
                       )}
-                           {errors.EmergencyContactRelationship1?.type==='pattern' && (
+                      {errors.EmergencyContactRelationship1?.type ===
+                        "pattern" && (
                         <span style={customStyles.errorMsg}>
                           {" "}
-                         characters only
+                          characters only
                         </span>
                       )}
                     </div>
@@ -627,20 +644,23 @@ async function clearForm(data = null){
                     </p>
                     <div>
                       <input
-                        type="text"
-                        placeholder="+63 9xx xxx xxxxx " maxLength={13}
+                        type="number"
+                        placeholder="+63 9xx xxx xxxxx "
+                        maxLength={13}
                         {...register("EmergencyContactMobileNumber1", {
-                          required: true,pattern:/^[+]{1}[0-9]{12}$/
+                          required: true,
                         })}
                         className="form-control "
                       ></input>
-                      {errors.EmergencyContactMobileNumber1?.type==='required' && (
+                      {errors.EmergencyContactMobileNumber1?.type ===
+                        "required" && (
                         <span style={customStyles.errorMsg}>
                           {" "}
                           Please enter contact mobile number
                         </span>
                       )}
-                          {errors.EmergencyContactMobileNumber1?.type==='pattern' && (
+                      {errors.EmergencyContactMobileNumber1?.type ===
+                        "pattern" && (
                         <span style={customStyles.errorMsg}>
                           {" "}
                           Please enter correct(eg.+9xxxxxxxxxx )
@@ -680,17 +700,19 @@ async function clearForm(data = null){
                         type="text"
                         placeholder="Email Address "
                         {...register("EmergencyContactEmailID1", {
-                          required: true,pattern:/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/
+                          required: true,
+                          pattern:
+                            /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
                         })}
                         className="form-control "
                       ></input>
-                      {errors.EmergencyContactEmailID1?.type==='required' && (
+                      {errors.EmergencyContactEmailID1?.type === "required" && (
                         <span style={customStyles.errorMsg}>
                           {" "}
                           Please enter contact email ID
                         </span>
                       )}
-                      {errors.EmergencyContactEmailID1?.type==='pattern' && (
+                      {errors.EmergencyContactEmailID1?.type === "pattern" && (
                         <span style={customStyles.errorMsg}>
                           {" "}
                           Please enter correct email ID (eg. abc@yahoo.in)
@@ -705,20 +727,23 @@ async function clearForm(data = null){
                     </p>
                     <div>
                       <input
-                        type="text"
-                        placeholder="Landline "maxLength={11}
+                        type="number"
+                        placeholder="Landline "
+                        maxLength={11}
                         {...register("EmergencyContactLandLineNumber1", {
-                          required: true,pattern:/^[0-9]{11}$/
+                          required: true,
                         })}
                         className="form-control "
                       ></input>
-                      {errors.EmergencyContactLandLineNumber1?.type==='required' && (
+                      {errors.EmergencyContactLandLineNumber1?.type ===
+                        "required" && (
                         <span style={customStyles.errorMsg}>
                           {" "}
                           Please enter landline number
                         </span>
                       )}
-                      {errors.EmergencyContactLandLineNumber1?.type==='pattern' && (
+                      {errors.EmergencyContactLandLineNumber1?.type ===
+                        "pattern" && (
                         <span style={customStyles.errorMsg}>
                           {" "}
                           Please enter correct number
@@ -748,20 +773,22 @@ async function clearForm(data = null){
                         type="text"
                         placeholder="First Name, Middle Initial and Last Name"
                         {...register("EmergencyContactName2", {
-                          required: true,pattern: /^[a-zA-Z]+ [a-zA-Z]+$/
+                          required: true,
+                          pattern: /^[a-zA-Z]+ [a-zA-Z]+$/,
                         })}
                         className="form-control "
                       ></input>
-                      {errors.EmergencyContactName2?.type==='required' && (
+                      {errors.EmergencyContactName2?.type === "required" && (
                         <span style={customStyles.errorMsg}>
                           {" "}
-                          Please enter emergency contact name 2  
+                          Please enter emergency contact name 2
                         </span>
                       )}
-                        {errors.EmergencyContactName2?.type==='pattern' && (
+                      {errors.EmergencyContactName2?.type === "pattern" && (
                         <span style={customStyles.errorMsg}>
                           {" "}
-                          Please enter emergency contact name 2 firstname & lastname
+                          Please enter emergency contact name 2 firstname &
+                          lastname
                         </span>
                       )}
                     </div>
@@ -776,17 +803,20 @@ async function clearForm(data = null){
                         type="text"
                         placeholder="Contact Relationship"
                         {...register("EmergencyContactRelationship2", {
-                          required: true,pattern:/^[A-Za-z]+$/ 
+                          required: true,
+                          pattern: /^[A-Za-z]+$/,
                         })}
                         className="form-control "
                       ></input>
-                      {errors.EmergencyContactRelationship2?.type==='required' && (
+                      {errors.EmergencyContactRelationship2?.type ===
+                        "required" && (
                         <span style={customStyles.errorMsg}>
                           {" "}
                           Please enter contact relatioship
                         </span>
                       )}
-                       {errors.EmergencyContactRelationship2?.type==='pattern' && (
+                      {errors.EmergencyContactRelationship2?.type ===
+                        "pattern" && (
                         <span style={customStyles.errorMsg}>
                           {" "}
                           characters only
@@ -802,20 +832,23 @@ async function clearForm(data = null){
                     </p>
                     <div>
                       <input
-                        type="text"
-                        placeholder="+63 9xx xxx xxxxx "maxLength={13}
+                        type="number"
+                        placeholder="+63 9xx xxx xxxxx "
+                        maxLength={13}
                         {...register("EmergencyContactMobileNumber2", {
-                          required: true,pattern:/^[+]{1}[0-9]{12}$/
+                          required: true,
                         })}
                         className="form-control "
                       ></input>
-                      {errors.EmergencyContactMobileNumber2?.type==='required' && (
+                      {errors.EmergencyContactMobileNumber2?.type ===
+                        "required" && (
                         <span style={customStyles.errorMsg}>
                           {" "}
                           Please enter contact mobile number
                         </span>
                       )}
-                       {errors.EmergencyContactMobileNumber2?.type==='pattern' && (
+                      {errors.EmergencyContactMobileNumber2?.type ===
+                        "pattern" && (
                         <span style={customStyles.errorMsg}>
                           {" "}
                           Please enter correct(eg.+9xxxxxxxxxx )
@@ -855,17 +888,19 @@ async function clearForm(data = null){
                         type="text"
                         placeholder="Contact Email ID"
                         {...register("EmergencyContactEmailID2", {
-                          required: true,pattern:/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/
+                          required: true,
+                          pattern:
+                            /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/,
                         })}
                         className="form-control "
                       ></input>
-                      {errors.EmergencyContactEmailID2?.type==='required' && (
+                      {errors.EmergencyContactEmailID2?.type === "required" && (
                         <span style={customStyles.errorMsg}>
                           {" "}
                           Please enter contact email ID
                         </span>
                       )}
-                      {errors.EmergencyContactEmailID2?.type==='pattern' && (
+                      {errors.EmergencyContactEmailID2?.type === "pattern" && (
                         <span style={customStyles.errorMsg}>
                           {" "}
                           Please enter correct email ID (eg. abc@yahoo.in)
@@ -880,17 +915,26 @@ async function clearForm(data = null){
                     </p>
                     <div>
                       <input
-                        type="text"
+                        type="number"
                         placeholder="Landline"
+                        maxLength={11}
                         {...register("EmergencyContactLandLineNumber2", {
                           required: true,
                         })}
                         className="form-control "
                       ></input>
-                      {errors.EmergencyContactLandLineNumber2 && (
+                      {errors.EmergencyContactLandLineNumber2?.type ===
+                        "required" && (
                         <span style={customStyles.errorMsg}>
                           {" "}
                           Please enter landline number
+                        </span>
+                      )}
+                      {errors.EmergencyContactLandLineNumber2?.type ===
+                        "pattern" && (
+                        <span style={customStyles.errorMsg}>
+                          {" "}
+                          Please enter correct landline number
                         </span>
                       )}
                     </div>
@@ -902,16 +946,12 @@ async function clearForm(data = null){
           <br></br>
 
           <div className="d-flex justify-content-center w-100 mt-2 mb-2 pr-2">
-          {
-                                        actionType == "insert" && (
-                                            <button className='staffSubmitBtn' >Submit</button>
-                                        )
-                                    }
-                                    {
-                                        actionType == "update" && (
-                                            <button className='staffSubmitBtn' >Update</button>
-                                        )
-                                    }
+            {actionType == "insert" && (
+              <button className="staffSubmitBtn">Submit</button>
+            )}
+            {actionType == "update" && (
+              <button className="staffSubmitBtn">Update</button>
+            )}
           </div>
         </div>
       </form>

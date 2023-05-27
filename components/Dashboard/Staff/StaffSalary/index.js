@@ -7,6 +7,7 @@ import ReactPaginate from "react-paginate";
 import { apiService } from "@/services/api.service";
 import Modal from "react-modal";
 import * as XLSX from "xlsx";
+import Styles from "../../../../styles/addStaff.module.css";
 
 function StaffSalaryComponent() {
   const [password, setPassword] = useState("");
@@ -27,15 +28,22 @@ function StaffSalaryComponent() {
   const [items, setItems] = useState([]);
   const [staffSalary, setstaffSalary] = useState([]);
   const [keyword, setKeyword] = useState("");
+  const [department, setDepartment] = useState([]);
+  const [position, setPosition] = useState([]);
 
   useEffect(() => {
     getStaffSalary();
   }, []);
 
   const getStaffSalary = async () => {
-    const { data } = await axios.get(hostURL + "Payroll/GetStaffSalary");
-    setstaffSalary(data);
-    console.log(data);
+    let res = await axios.get(hostURL + "Payroll/GetStaffSalary");
+    setstaffSalary(res.data);
+
+    let res1 = await axios.get(hostURL + "Master/GetDepartmentMaster");
+    setDepartment(res1.data);
+
+    let res2 = await axios.get(hostURL + "Master/GetPositionMaster");
+    setPosition(res2.data);
   };
 
   const customStyles = {
@@ -171,15 +179,29 @@ function StaffSalaryComponent() {
                 </div>
                 <div className="col-lg-2">
                   <p>Position</p>
-                  <select className="form-select">
-                    <option>No data</option>
+                  <select className="form-select" onChange={(e) => setKeyword(e.target.value)}>
+                    <option>Select Position</option>
+                    {position.map((data, index) => {
+                      return (
+                        <option key={data.id} value={data.id}>
+                          {data.short}
+                        </option>
+                      );
+                    })}
                   </select>
                 </div>
 
                 <div className="col-lg-2">
                   <p>Department</p>
-                  <select className="form-select">
-                    <option>No Department</option>
+                  <select className="form-select" onChange={(e) => setKeyword(e.target.value)}>
+                    <option>Select Department</option>
+                    {department.map((data, index) => {
+                      return (
+                        <option key={data.id} value={data.id}>
+                          {data.department_name}
+                        </option>
+                      );
+                    })}
                   </select>
                 </div>
 
@@ -374,19 +396,31 @@ function StaffSalaryComponent() {
       ) : (
         <div>
           <div className="container">
-            <div className="row" style={{paddingTop: "200px"}}>
-              <div className="text-center">
-                <div className="col-lg-3"></div>
+            <div className="card p-4 border-0" style={{ marginTop: "200px" }}>
+              <div className="row">
+                <div className="col-lg-4"></div>
+                <div className="col-lg-4">
                   <input
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Enter password"
+                    className="form-control"
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    placeholder="Enter password"
                   />
-                <button onClick={checkPassword}>Submit</button>
+                </div>
+                <div className="col-lg-4"></div>
+              </div>
+              <br></br>
+              <div className="row">
+                <div className="col-lg-4"></div>
+                <div className="col-lg-4 text-center">
+                  <button onClick={checkPassword} className={Styles.submitBtn}>
+                    SUBMIT
+                  </button>
+                </div>
+                <div className="col-lg-4"></div>
               </div>
             </div>
-            
           </div>
         </div>
       )}

@@ -7,6 +7,9 @@ import Swal from "sweetalert2";
 import { useState, useEffect } from 'react';
 import { apiService } from "@/services/api.service";
 import { useRouter } from "next/router";
+import { useDropzone } from 'react-dropzone';
+import { useCallback } from 'react';
+
 
 
 function Holidayform({ editData }) {
@@ -15,6 +18,8 @@ function Holidayform({ editData }) {
   let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
   const router = useRouter();
   const [actionType, setActionType] = useState("insert");
+  const [filePath, setFilePath] = useState();
+  const [fileName, setFileName] = useState();
 
 
   useEffect(() => {
@@ -32,7 +37,7 @@ function Holidayform({ editData }) {
 
 
   function clearForm(HolidaysData = null) {
-    // debugger;
+    debugger;
     let details = {
       "ID": HolidaysData ? HolidaysData.id : "",
       "Holiday": HolidaysData ? HolidaysData.holiday : "",
@@ -70,15 +75,58 @@ function Holidayform({ editData }) {
 
 
   const onSubmit = async (data) => {
+    debugger
+
     if (actionType == "insert") {
-      await apiService.commonPostCall("HR/InsertHolidays", data);
+      let entity = {
+        "Attachment": filePath
+      }
+      const formData = { ...data, ...entity }
+      await apiService.commonPostCall("HR/InsertHolidays", formData);
       Swal.fire("Data Inserted successfully");
       router.push("/Holiday");
     } else {
-      await apiService.commonPostCall("HR/UpdateHolidays", data);
+      let entity = {
+        "Attachment": filePath
+      }
+      const formData = { ...data, ...entity }
+      await apiService.commonPostCall("HR/UpdateHolidays", formData);
       Swal.fire("Data Updated successfully");
       router.push("/Holiday");
     }
+  };
+
+
+  const onDrop = useCallback((acceptedFiles) => {
+    debugger;
+    console.log(acceptedFiles, "Uploaded file");
+    uploadFile(acceptedFiles);
+  }, []);
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+
+  const uploadFile = async (data) => {
+    debugger
+    let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+    const formData = new FormData();
+    formData.append("file_upload", data[0], data[0].name);
+    setFileName(data[0].name)
+    console.log(data[0].name)
+    let invoiceURL = await axios.post(
+      hostURL + "Payroll/ProjectAttachments",
+      formData
+    );
+    // console.log(res, "File Path");
+    // Swal.fire("Uploaded successfully");
+    // setFilePath(res.data);
+
+    // TODO: Gopi's code for validation
+    let environmentVariable = "https://103.12.1.103";
+
+    let imagePath = invoiceURL.data.split("\\", 1);
+    let Preview = invoiceURL.data.replace(imagePath, environmentVariable);
+    Swal.fire('Uploaded successfully.');
+    // setFilePath(invoiceURL.data);
+    setFilePath(Preview);
   };
 
 
@@ -150,22 +198,45 @@ function Holidayform({ editData }) {
                       <p>
                         Attachment<i className="text-danger">*</i>
                       </p>
-                      <input type="text" className="form-control" placeholder="Attachment"{...register('Attachment', { required: "Please add file" })} />
-                      {errors.Name && <p className="error-message"  style={customStyles.errorMsg}>{errors.Name.message}</p>} {errors.Attachment && <p className="error-message" style={{ color: "red" }}>{errors.Attachment.message}</p>}
+                      {/* <input type="text" className="form-control" placeholder="Attachment"{...register('Attachment', { required: "Please add file" })} /> */}
+                      <div style={{ border: '2px dashed black' }}>
+                        <div {...getRootProps()}>
+                          <input {...getInputProps()} />
+                          {isDragActive ? (
+                            <p>Drop the files here ...</p>
+                          ) : (
+                            <p style={{ padding: "6%" }}>
+                              {
+                                filePath == null && (
+                                  <p>Drag 'n' drop some files here, or click to select
+                                    files</p>
+                                )
+                              }
+                              {
+                                filePath && (
+                                  <p>{fileName}</p>
+                                )
+                              }
+                            </p>
+                          )}
+                        </div>
+
+                      </div>
+                      {errors.Name && <p className="error-message" style={customStyles.errorMsg}>{errors.Name.message}</p>} {errors.Attachment && <p className="error-message" style={{ color: "red" }}>{errors.Attachment.message}</p>}
                     </div>
                     <div className="col-lg-4">
                       <p>
                         Holiday Category<i className="text-danger">*</i>
                       </p>
-                      <input type="text" className="form-control" placeholder="Holiday Category"{...register('HolidayCategory', { required: "Please add HolidayCategory"})} />
-                      {errors.HolidayCategory && <p className="error-message"  style={customStyles.errorMsg}>{errors.HolidayCategory.message}</p>}
+                      <input type="text" className="form-control" placeholder="Holiday Category"{...register('HolidayCategory', { required: "Please add HolidayCategory" })} />
+                      {errors.HolidayCategory && <p className="error-message" style={customStyles.errorMsg}>{errors.HolidayCategory.message}</p>}
                     </div>
                     <div className="col-lg-4">
                       <p>
                         Region<i className="text-danger">*</i>
                       </p>
                       <input type="text" className="form-control" placeholder="Region"{...register('Region', { required: "Please add Region" })} />
-                      {errors.Region && <p className="error-message"  style={customStyles.errorMsg}>{errors.Region.message}</p>}
+                      {errors.Region && <p className="error-message" style={customStyles.errorMsg}>{errors.Region.message}</p>}
                     </div>
                   </div>
                   <br />

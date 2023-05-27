@@ -176,15 +176,21 @@ export default function EmploymentDetails({data}) {
                       <div>
                         <input
                           type="text"
-                          placeholder="Enter Comapany Name.."
+                          placeholder="Enter Comapany Name.." minLength={5}
                           onkeypress="return /[A-Za-z/\s/g]/i.test(event.key)"
-                          {...register("CompanyName", { required: true })}
+                          {...register("CompanyName", { required: true,pattern:/^[A-Za-z+ ]+$/ })}
                           className="form-control "
                         ></input>
-                        {errors.CompanyName && (
+                        {errors.CompanyName?.type==='required' && (
                           <span style={customStyles.errorMsg}>
                             {" "}
                             Please enter comapany name
+                          </span>
+                        )}
+                            {errors.CompanyName?.type==='pattern' && (
+                          <span style={customStyles.errorMsg}>
+                            {" "}
+                            Please enter characters only
                           </span>
                         )}
                       </div>

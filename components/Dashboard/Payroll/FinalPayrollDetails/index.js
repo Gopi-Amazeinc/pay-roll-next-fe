@@ -13,6 +13,7 @@ const FinalPayrollDetails = () => {
 
   const [department, setDepartment] = useState([]);
   const [keyword, setKeyword] = useState("");
+  const [departmentFilter, setDepartmentFilter] = useState("")
 
   const tableRef = useRef(null);
 
@@ -115,6 +116,7 @@ const FinalPayrollDetails = () => {
   };
 
   console.log(checkedState);
+
 
   const handleDelete = async () => {
     const deletedIDS = await deleteSalary(checkedState);

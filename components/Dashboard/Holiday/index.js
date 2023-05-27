@@ -8,6 +8,7 @@ import { apiService } from "@/services/api.service";
 
 const Holidaydashboard = () => {
   const [Holiday, setHoliday] = useState([]);
+  const [keyword, setKeyword] = useState("")
 
   const getHoliday = async () => {
     let res = await apiService.commonGetCall("HR/GetHolidays"); //This Api is useed for Get the Dashborad data band Master
@@ -55,11 +56,12 @@ const Holidaydashboard = () => {
                   type="search"
                   className=" form-control"
                   placeholder="Search "
+                  onChange={e => { setKeyword(e.target.value) }}
                 />
               </div>
             </div>
           </div>
-          <br/>
+          <br />
           <div className="row">
             <div className="col-lg-8"></div>
             <div className="col-lg-2"></div>
@@ -87,13 +89,22 @@ const Holidaydashboard = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {Holiday.map((data, index) => {
+                  {Holiday.filter((post) => {
+                    return Object.values(post).some(
+                      (value) =>
+                        value !== null &&
+                        value
+                          .toString()
+                          .toLowerCase()
+                          .includes(keyword.toLowerCase())
+                    );
+                  }).map((data, index) => {
                     return (
                       <tr key={index}>
                         <td>{data.holiday}</td>
                         <td>{data.holidayDescription}</td>
                         <td>{data.holidayDate}</td>
-                        <td>{data.attachment}</td>
+                        <td><img src={data.attachment} width={50} height={50}/></td>
                         <td>
                           <Link href={`/Holiday/edit/${data.id}`}>
                             <button className="edit-btn">Edit</button>
