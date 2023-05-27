@@ -2,20 +2,16 @@ import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import Swal from "sweetalert2";
 import Link from "next/link";
-import { DownloadTableExcel } from "react-export-table-to-excel";
+import * as XLSX from "xlsx";
 import Styles from "../.././../../styles/finalpayrolldetails.module.css";
 import { apiService } from "@/services/api.service";
 import ReactPaginate from "react-paginate";
-import { useRef } from "react";
 
 const FinalPayrollDetails = () => {
   const [preliminarySalary, setPreliminarySalary] = useState([]);
-
   const [department, setDepartment] = useState([]);
   const [keyword, setKeyword] = useState("");
   const [departmentFilter, setDepartmentFilter] = useState("")
-
-  const tableRef = useRef(null);
 
   const getData = async () => {
     // This API is used for fetch the Departmnent data for Dashboard and  Dropdown
@@ -195,6 +191,18 @@ const FinalPayrollDetails = () => {
   const offset = currentPage * PER_PAGE;
   const pageCount = Math.ceil(preliminarySalary.length / PER_PAGE);
 
+
+  const exportToExcel = () => {
+    let element = document.getElementById("payrollDataID");
+    if (element) {
+      const ws = XLSX.utils.table_to_sheet(element);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+
+      XLSX.writeFile(wb, "payrollData.xlsx");
+
+    };
+  }
   return (
     <div className="container-fluid">
       <h3 className=" Heading">Finalization Payroll Details</h3>
@@ -232,15 +240,15 @@ const FinalPayrollDetails = () => {
             </select>
           </div>
           <div className="col-lg-3">
-            <DownloadTableExcel
-              filename="users table"
-              sheet="users"
-              currentTableRef={tableRef.current}
-            >
-              <button type="button" className=" EditDelteBTN">
-                Export To Excel
-              </button>
-            </DownloadTableExcel>
+
+
+
+
+
+            <button type="button" className=" EditDelteBTN" onClick={exportToExcel}>
+              Export To Excel
+            </button>
+
           </div>
         </div>
       </div>
@@ -289,7 +297,7 @@ const FinalPayrollDetails = () => {
           <table
             style={{ whiteSpace: "nowrap" }}
             className="table text-center "
-            ref={tableRef}
+            id="payrollDataID"
           >
             <thead>
               <tr className="text-white">
@@ -312,14 +320,11 @@ const FinalPayrollDetails = () => {
             </thead>
             <tbody>
               {preliminarySalary
-                .filter((post) => {
-                  return Object.values(post).some(
-                    (value) =>
-                      value !== null &&
-                      value
-                        .toString()
-                        .toLowerCase()
-                        .includes(keyword.toLowerCase())
+                .filter(post => {
+                  return Object.values(post).some(value =>
+                    value !== null &&
+                    value.toString().toLowerCase().includes(keyword.toLowerCase()
+                    )
                   );
                 })
                 .slice(offset, offset + PER_PAGE)
