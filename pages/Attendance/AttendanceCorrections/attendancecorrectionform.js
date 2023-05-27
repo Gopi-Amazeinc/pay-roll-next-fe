@@ -170,7 +170,7 @@ const AttendanceCorrectionform = () => {
                   rows={6}
                   className="form-control"
                   maxLength={40}
-                  {...register("Comment", { required: true,maxLength:"40" })}
+                  {...register("Comment", { required: true })}
                 />
                 {errors?.Comment?.type === "required" && (
                   <p style={customStyles.errorMsg}>Please Enter Comments</p>
