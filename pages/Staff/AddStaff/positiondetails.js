@@ -269,13 +269,19 @@ function PositionDetails({ data }) {
                       <input
                         type="text"
                         placeholder="Employee ID"
-                        {...register("EmployeeCode", { required: true })}
+                        {...register("EmployeeCode", { required: true,pattern: /[a-zA-z]{3}[-]{1}[0-9]{4}$/ })}
                         className="form-control "
                       ></input>
-                      {errors.EmployeeCode && (
+                      {errors.EmployeeCode?.type==='required' && (
                         <span style={customStyles.errorMsg}>
                           {" "}
                           Please enter Employee ID *
+                        </span>
+                      )}
+                         {errors.EmployeeCode?.type==='pattern' && (
+                        <span style={customStyles.errorMsg}>
+                          {" "}
+                          Please enter proper Employee ID * (eg: EMP-1234)
                         </span>
                       )}
                     </div>
@@ -682,13 +688,19 @@ function PositionDetails({ data }) {
                       <input
                         type="text"
                         placeholder="SAP Vendor Code "
-                        {...register("SAPVendorNo", { required: true })}
+                        {...register("SAPVendorNo", { required: true, pattern:/^[a-zA-Z0-9 + ]{0,100}$/  })}
                         className="form-control "
                       ></input>
-                      {errors.SAPVendorNo && (
+                      {errors.SAPVendorNo?.type==='required' && (
                         <span style={customStyles.errorMsg}>
                           {" "}
                           Please SAP vendor code
+                        </span>
+                      )}
+                       {errors.SAPVendorNo?.type==='pattern' && (
+                        <span style={customStyles.errorMsg}>
+                          {" "}
+                         no special characters
                         </span>
                       )}
                     </div>

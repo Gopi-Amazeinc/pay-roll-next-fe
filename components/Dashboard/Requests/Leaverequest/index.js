@@ -76,24 +76,20 @@ function LeaveListDashboard() {
 
     };
     const getDateBySelectedDate = (endDatesss) => {
-        debugger;
         return getPendingData(startDate, endDatesss);
     };
 
     const getPendingData = async (StartingDate, EndDate) => {
-        debugger;
-        const res = await apiService.commonGetCall("Employee/GetPendingStaffLeavesByStaffID?ID=" + userID + "&TypeID=1&Sdate=" + StartingDate + "&Edate=" + EndDate)
+        const res = await apiService.commonGetCall("Employee/GetPendingStaffLeavesByStaffID?id=" + userID + "&TypeID=1&Sdate=" + StartingDate + "&Edate=" + EndDate)
         setPendingData(res.data);
     }
     const getApprovedData = async (StartingDate, EndDate) => {
-        debugger;
-        const res = await apiService.commonGetCall("Employee/GetApprovedStaffLeavesByStaffID?ID=" + userID + "&TypeID=1&Sdate=" + StartingDate + "&Edate=" + EndDate)
+        const res = await apiService.commonGetCall("Employee/GetApprovedStaffLeavesByStaffID?id=" + userID + "&TypeID=1&Sdate=" + StartingDate + "&Edate=" + EndDate)
         setApprovedData(res.data);
         console.log(res.data);
     }
     const getRejectedData = async (StartingDate, EndDate) => {
-        debugger;
-        const res = await apiService.commonGetCall("Employee/GetRejectedStaffLeavesByStaffID?ID=" + userID + "&TypeID=1&Sdate=" + StartingDate + "&Edate=" + EndDate)
+        const res = await apiService.commonGetCall("Employee/GetRejectedStaffLeavesByStaffID?id=" + userID + "&TypeID=1&Sdate=" + StartingDate + "&Edate=" + EndDate)
         setRejectedData(res.data);
         console.log(res.data);
     }
@@ -339,7 +335,7 @@ function LeaveListDashboard() {
                                                 {/* <th>Leave Type</th> */}
                                                 <th>Leave Reason</th>
                                                 {/* <th>Leave Days Count</th> */}
-                                                {/* <th>Attachment</th> */}
+                                                <th>Attachment</th>
                                                 <th>Status</th>
                                                 <th>Action</th>
                                             </tr>
@@ -360,6 +356,7 @@ function LeaveListDashboard() {
                                                             <td>{data.sDateOfLeave}</td>
                                                             <td>{data.eDateOfLeave}</td>
                                                             <td>{data.leaveReason}</td>
+                                                            <td>{data.medicalUrl}</td>
                                                             <td>{data.status}</td>
                                                             <td>
                                                                 <button className='edit-btn'>Cancel</button>

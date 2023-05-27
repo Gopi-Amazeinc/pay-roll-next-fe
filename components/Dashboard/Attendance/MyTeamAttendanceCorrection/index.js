@@ -166,9 +166,12 @@ const MyTeamAttendancecorrectiondashboard = () => {
             ID: RejectedID,
             Comments: reason
         }
-        const res = await apiService.commonPostCall("Payroll/RejectAttedanceCoorection", entity)
-        setModalOpen(!modalOpen)
-        getPendingManager(startDate, endDate);
+        if (reason) {
+            const res = await apiService.commonPostCall("Payroll/RejectAttedanceCoorection", entity)
+            Swal.fire(" Rejected Successfully!");
+            getPendingManager(startDate, endDate);
+        }
+
     }
 
 
@@ -442,8 +445,8 @@ const MyTeamAttendancecorrectiondashboard = () => {
                                 <div className='row'>
                                     <div className='col-lg-12'>
                                         <label>Reason *</label>
-                                        <textarea placeholder='Reason'{...register("comments", { required: true })} className='form-control'></textarea>
-                                        {errors.reason && (
+                                        <textarea placeholder='Reason'minLength={5} {...register("comments", { required: true })} className='form-control'></textarea>
+                                        {errors.comments && (
                                             <p className="text-danger">
                                                 Please enter Valid Reason
                                             </p>

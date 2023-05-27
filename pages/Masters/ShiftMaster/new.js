@@ -54,23 +54,23 @@ function ShiftMasterForm({ editData }) {
    };
    const customStyles = {
       content: {
-        top: "50%",
-        left: "50%",
-        right: "auto",
-        bottom: "auto",
-        marginRight: "-50%",
-        transform: "translate(-50%, -50%)",
-        width: "60%",
+         top: "50%",
+         left: "50%",
+         right: "auto",
+         bottom: "auto",
+         marginRight: "-50%",
+         transform: "translate(-50%, -50%)",
+         width: "60%",
       },
       errorMsg: {
-        fontSize: "12px",
-        fontWeight: "500",
-        color: "red",
+         fontSize: "12px",
+         fontWeight: "500",
+         color: "red",
       },
       inputLabel: {
-        fontSize: "16px",
+         fontSize: "16px",
       },
-    };
+   };
 
    return (
       <Layout>
@@ -94,7 +94,7 @@ function ShiftMasterForm({ editData }) {
                            <div className="col-lg-2">
                               <label className="fw-bold">Shift Timings<span style={{ color: "red" }}>*</span></label>
                               <input type="text" placeholder="Enter Shift Timeings" name="ShiftTimeings" id="ShiftTimeings" className="form-control " {...register("ShiftTimeings", { required: "This field is required" })} />
-                              {errors.ShiftTimeings && <p className="error-message"style={customStyles.errorMsg}>{errors.ShiftTimeings.message}</p>}
+                              {errors.ShiftTimeings && <p className="error-message" style={customStyles.errorMsg}>{errors.ShiftTimeings.message}</p>}
                            </div>
                            <div className="col-lg-2">
                               <label className="fw-bold">Grace Period<span style={{ color: "red" }}>*</span></label>

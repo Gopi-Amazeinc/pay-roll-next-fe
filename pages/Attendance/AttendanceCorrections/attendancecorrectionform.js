@@ -169,8 +169,13 @@ const AttendanceCorrectionform = () => {
                 <textarea
                   rows={6}
                   className="form-control"
+<<<<<<< HEAD
                   minLength={10}
-                  {...register("Comment", { required: true, maxLength: "10" })}
+                  {...register("Comment", { required: true, })}
+=======
+                  maxLength={40}
+                  {...register("Comment", { required: true,maxLength:"40" })}
+>>>>>>> fc5689d8b18933b65ebb02d3e20ed890d6cdd712
                 />
                 {errors?.Comment?.type === "required" && (
                   <p style={customStyles.errorMsg}>Please Enter Comments</p>
