@@ -168,27 +168,28 @@ const Locatordashboard = () => {
 
 
     const ImagePreview = () => {
-        const customStyles = {
-            content: {
-                top: "50%",
-                left: "50%",
-                right: "auto",
-                bottom: "auto",
-                marginRight: "-50%",
-                transform: "translate(-50%, -50%)",
-                width: "60%",
-            },
-            errorMsg: {
-                fontSize: "12px",
-                fontWeight: "500",
-                color: "red",
-            },
-            inputLabel: {
-                fontSize: "16px",
-            },
-        };
+
     }
 
+    const customStyles = {
+        content: {
+            top: "50%",
+            left: "50%",
+            right: "auto",
+            bottom: "auto",
+            marginRight: "-50%",
+            transform: "translate(-50%, -50%)",
+            width: "60%",
+        },
+        errorMsg: {
+            fontSize: "12px",
+            fontWeight: "500",
+            color: "red",
+        },
+        inputLabel: {
+            fontSize: "16px",
+        },
+    };
 
     return (
         <Layout>
@@ -287,8 +288,9 @@ const Locatordashboard = () => {
                                                             <td>{data.endTime}</td>
                                                             <td>{data.task}</td>
                                                             <td>{data.comments}</td>
-                                                            <td><img onClick={ImagePreview} src={data.attachment} width={50} height={50} /></td>
-                                                            <td>{data.approveStatus}</td>
+                                                            <td><img onClick={ImagePreview
+                                                            } src={data.attachment} width={50} height={50} /></td>
+                                                            <td>{daSta.approveStatus}</td>
                                                             {/* <td>{
                                                 <b>{data.statusID === 0 ? 'Manager Pending' :
                                                     data.statusID === 1 ? 'Manager approved' :
