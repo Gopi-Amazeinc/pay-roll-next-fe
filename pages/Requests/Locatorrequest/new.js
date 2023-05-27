@@ -43,34 +43,68 @@ const Locatorrequest = () => {
     }
 
     const onDrop = useCallback((acceptedFiles) => {
+
         debugger;
+
         console.log(acceptedFiles, "Uploaded file");
+
         uploadFile(acceptedFiles);
+
     }, []);
+
     const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
+
+
+
     const uploadFile = async (data) => {
+
         debugger
+
         let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+
         const formData = new FormData();
+
         formData.append("file_upload", data[0], data[0].name);
+
         setFileName(data[0].name)
+
+        console.log(data[0].name)
+
         let invoiceURL = await axios.post(
+
             hostURL + "Payroll/ProjectAttachments",
+
             formData
+
         );
+
         // console.log(res, "File Path");
+
         // Swal.fire("Uploaded successfully");
+
         // setFilePath(res.data);
 
+
+
+
         // TODO: Gopi's code for validation
+
         let environmentVariable = "https://103.12.1.103";
 
+
+
+
         let imagePath = invoiceURL.data.split("\\", 1);
+
         let Preview = invoiceURL.data.replace(imagePath, environmentVariable);
+
         Swal.fire('Uploaded successfully.');
+
         // setFilePath(invoiceURL.data);
+
         setFilePath(Preview);
+
     };
 
 
