@@ -206,14 +206,21 @@ const getByID = async (id) => {
                     <div>
                       <input
                         type="text"
-                        placeholder="Account Holder Name"
-                        {...register("AccountHolderName", { required: true })}
+                        placeholder="Account Holder Name" minLength={5}
+                        {...register("AccountHolderName", { required: true, pattern:/^[A-Za-z+ ]+$/})}
                         className="form-control "
                       ></input>
-                      {errors.AccountHolderName && (
+                      
+                      {errors.AccountHolderName?.type==='required' && (
                         <span style={customStyles.errorMsg}>
                           {" "}
                           Please enter account holder name
+                        </span>
+                      )}
+                          {errors.AccountHolderName?.type==='pattern' && (
+                        <span style={customStyles.errorMsg}>
+                          {" "}
+                          Please enter characters only
                         </span>
                       )}
                     </div>
@@ -228,13 +235,19 @@ const getByID = async (id) => {
                       <input
                         type="text"
                         placeholder="Bank Account Number"
-                        {...register("BankAccountNumber", { required: true })}
+                        {...register("BankAccountNumber", { required: true,pattern:/^\d{9,18}$/ })}
                         className="form-control "
                       ></input>
-                      {errors.BankAccountNumber && (
+                      {errors.BankAccountNumber?.type==='required' && (
                         <span style={customStyles.errorMsg}>
                           {" "}
                           Please enter bank account number
+                        </span>
+                      )}
+                       {errors.BankAccountNumber?.type==='pattern' && (
+                        <span style={customStyles.errorMsg}>
+                          {" "}
+                          Please enter correct bank account number
                         </span>
                       )}
                     </div>

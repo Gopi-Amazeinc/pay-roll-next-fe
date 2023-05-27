@@ -134,9 +134,13 @@ const Locatordashboard = () => {
         }
         )
     }
+    const [roleID, setRoleID] = useState();
+
     useEffect(() => {
         const usrID = sessionStorage.getItem("userID");
         setUserID(usrID);
+        const userRoleID = sessionStorage.getItem("roleID");
+        setRoleID(userRoleID);
         setPending(true);
         if (userID) {
             const resu = getCurrentMonthDates();
@@ -163,6 +167,29 @@ const Locatordashboard = () => {
     };
 
 
+    const ImagePreview = () => {
+
+    }
+
+    const customStyles = {
+        content: {
+            top: "50%",
+            left: "50%",
+            right: "auto",
+            bottom: "auto",
+            marginRight: "-50%",
+            transform: "translate(-50%, -50%)",
+            width: "60%",
+        },
+        errorMsg: {
+            fontSize: "12px",
+            fontWeight: "500",
+            color: "red",
+        },
+        inputLabel: {
+            fontSize: "16px",
+        },
+    };
 
     return (
         <Layout>
@@ -173,10 +200,21 @@ const Locatordashboard = () => {
                         <div className="row">
                             <div className="col-lg-3">
                                 <Link href="/Requests/Locatorrequest">  <label className="mainheader">My OBASIS Details</label> </Link>
+                                <div className="line-border" style={{
+                                    border: "1px solid #2f87cc",
+                                    bordertopleftradius: "51px",
+                                    bordertoprightradius: "51px",
+                                    margintop: "0px",
+                                    width: "57%"
+                                }}></div>
                             </div>
-                            <div className="col-lg-3">
-                                <Link href="/Requests/Myteamobasisrequest">  <label className="mainheader">My Team OBASIS Details</label> </Link>
-                            </div>
+                            {
+                                roleID != 5 && (
+                                    <div className="col-lg-3">
+                                        <Link href="/Requests/Myteamobasisrequest">  <label className="mainheader">My Team OBASIS Details</label> </Link>
+                                    </div>
+                                )
+                            }
                         </div>
                         <br />
                         <div className="card p-3 rounded-3 shadow border-0 ">
@@ -210,7 +248,7 @@ const Locatordashboard = () => {
                                 <button onClick={toggleApproved} className={`toggleButton ${approved ? "focus" : ""}`}>Approved</button>
                                 <button onClick={toggleRejected} className={`toggleButton ${rejected ? "focus" : ""}`}>Rejected</button>
                             </div>
-                           
+
                             <div className="col-lg-6"></div>
                             <div className="col-lg-2">
                                 <Link href="/Requests/Locatorrequest/new"><button className="submit-button">New Requests </button></Link>
@@ -231,6 +269,7 @@ const Locatordashboard = () => {
                                                     <th>End Time</th>
                                                     <th>Task</th>
                                                     <th>Comments</th>
+                                                    <th>Attachment</th>
                                                     <th>Status</th>
                                                     <th>Action</th>
                                                 </tr>
@@ -249,7 +288,9 @@ const Locatordashboard = () => {
                                                             <td>{data.endTime}</td>
                                                             <td>{data.task}</td>
                                                             <td>{data.comments}</td>
-                                                            <td>{data.approveStatus}</td>
+                                                            <td><img onClick={ImagePreview
+                                                            } src={data.attachment} width={50} height={50} /></td>
+                                                            <td>{daSta.approveStatus}</td>
                                                             {/* <td>{
                                                 <b>{data.statusID === 0 ? 'Manager Pending' :
                                                     data.statusID === 1 ? 'Manager approved' :

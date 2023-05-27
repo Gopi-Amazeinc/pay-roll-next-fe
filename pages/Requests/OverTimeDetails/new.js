@@ -90,30 +90,31 @@ const OverTimeDetails = () => {
   }
   const customStylese = {
     content: {
-        top: "50%",
-        left: "50%",
-        right: "auto",
-        bottom: "auto",
-        marginRight: "-50%",
-        transform: "translate(-50%, -50%)",
-        width: "60%",
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      marginRight: "-50%",
+      transform: "translate(-50%, -50%)",
+      width: "60%",
     },
     errorMsg: {
-        fontSize: "12px",
-        fontWeight: "500",
-        color: "red",
+      fontSize: "12px",
+      fontWeight: "500",
+      color: "red",
     },
     inputLabel: {
-        fontSize: "16px",
+      fontSize: "16px",
     },
-};
+  };
 
   return (
     <Layout>
       <div className='container-fluid'>
         <div className='row'>
           <div className='col-lg-12'>
-            <p className='Heading'>Add Actual Time</p>
+            <label className='mainheader'>Add Actual Time</label>
+            <br /><br />
             <div className="card p-3 border-0">
               <div>
                 <form onSubmit={handleSubmit(insertDetails)}>
@@ -145,7 +146,7 @@ const OverTimeDetails = () => {
                     {/* <div className='col-lg-2'></div> */}
                     <div className='col-lg-2'>
                       <input type="time" className='form-control' id='EndTime' name='time' min="00:00" max="23:59" step="1" {...register('EndTime', { required: "This field is required" })} />
-                      {errors.EndTime && <label className="error-message"style={customStylese.errorMsg}>{errors.EndTime.message}</label>}
+                      {errors.EndTime && <label className="error-message" style={customStylese.errorMsg}>{errors.EndTime.message}</label>}
                     </div>
                     {/* <div className='col-lg-1'></div> */}
                     <div className='col-lg-2'>
@@ -165,7 +166,7 @@ const OverTimeDetails = () => {
                   </div>
                   <div className='row'>
                     <div className='col-lg-4'>
-                      <textarea className='form-control' placeholder='Write here...' minLength={10}{...register('comments',{ required: "This field is required" })}>
+                      <textarea className='form-control' placeholder='Write here...' minLength={10}{...register('comments', { required: "This field is required" })}>
                       </textarea>
                       {errors.comments && <label className="error-message" style={customStylese.errorMsg}>{errors.comments.message}</label>}
 
@@ -228,7 +229,7 @@ const OverTimeDetails = () => {
           </div>
           <div className='row'>
             <div className='col-lg-12'>
-              <table className="table">
+              <table className='modal-table'>
                 <thead>
                   <tr>
                     <th>OT Type</th>
@@ -236,155 +237,157 @@ const OverTimeDetails = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  <tr>
+                  <tr className="table-row">
                     {dashboardData.map((data, index) => {
                       return (
                         <>
-                          <td key={index}>
-                            <tr>
-                              <td>Normal OT</td>
-                            </tr>
-                            <tr>
-                              <td>Night OT </td>
-                            </tr>
-                            <tr>
-                              <td> Excess Night OT </td>
-                            </tr>
-                            <tr>
-                              <td> Excess Normal OT </td>
-                            </tr>
-                            <tr>
-                              <td>Rest Normal OT </td>
-                            </tr>
-                            <tr>
-                              <td> Rest Night OT </td>
-                            </tr>
-                            <tr>
-                              <td> Excess Rest Normal OT </td>
-                            </tr>
-                            <tr>
-                              <td> Rest Excess Night OT </td>
-                            </tr>
-                            <tr>
-                              <td> Legal Night OT </td>
-                            </tr>
-                            <tr>
-                              <td> Legal Normal OT </td>
-                            </tr>
-                            <tr>
-                              <td> Legal Excess Normal OT </td>
-                            </tr>
-                            <tr>
-                              <td>Legal Excess Night OT </td>
-                            </tr>
-                            <tr>
-                              <td> Special Night OT </td>
-                            </tr>
-                            <tr>
-                              <td> Special Normal OT </td>
-                            </tr>
-                            <tr>
-                              <td> Special Excess Normal OT </td>
-                            </tr>
-                            <tr>
-                              <td> Special Excess Night OT </td>
-                            </tr>
-                            <tr>
-                              <td> Special Rest Night OT </td>
-                            </tr>
-                            <tr>
-                              <td>Special Rest Normal OT </td>
-                            </tr>
-                            <tr>
-                              <td> Special Rest Excess Normal OT </td>
-                            </tr>
-                            <tr>
-                              <td> Special Rest Excess Night OT </td>
-                            </tr>
-                            <tr>
-                              <td> Legal Rest Night OT </td>
-                            </tr>
-                            <tr>
-                              <td> Legal Rest Normal OT </td>
-                            </tr>
-                            <tr>
-                              <td> Legal Excess Rest Normal OT </td>
-                            </tr>
-                            <tr>
-                              <td> Legal Excess Rest Night OT </td>
-                            </tr>
-                          </td>
-                          <td key={index}>
-                            <tr>
+                          <tr>
+                            <td key={index} className="table-row">
+                              <tr className="table-row">
+                                <td>Normal OT</td>
+                              </tr>
+                              <tr className="table-row">
+                                <td>Night OT </td>
+                              </tr>
+                              <tr className="table-row">
+                                <td> Excess Night OT </td>
+                              </tr>
+                              <tr className="table-row">
+                                <td> Excess Normal OT </td>
+                              </tr>
+                              <tr className="table-row">
+                                <td>Rest Normal OT </td>
+                              </tr>
+                              <tr className="table-row">
+                                <td> Rest Night OT </td>
+                              </tr>
+                              <tr className="table-row">
+                                <td> Excess Rest Normal OT </td>
+                              </tr>
+                              <tr className="table-row">
+                                <td> Rest Excess Night OT </td>
+                              </tr>
+                              <tr className="table-row">
+                                <td> Legal Night OT </td>
+                              </tr>
+                              <tr className="table-row">
+                                <td> Legal Normal OT </td>
+                              </tr>
+                              <tr className="table-row">
+                                <td> Legal Excess Normal OT </td>
+                              </tr>
+                              <tr className="table-row">
+                                <td>Legal Excess Night OT </td>
+                              </tr>
+                              <tr className="table-row">
+                                <td> Special Night OT </td>
+                              </tr>
+                              <tr className="table-row">
+                                <td> Special Normal OT </td>
+                              </tr>
+                              <tr className="table-row">
+                                <td> Special Excess Normal OT </td>
+                              </tr>
+                              <tr className="table-row">
+                                <td> Special Excess Night OT </td>
+                              </tr>
+                              <tr className="table-row">
+                                <td> Special Rest Night OT </td>
+                              </tr>
+                              <tr className="table-row">
+                                <td>Special Rest Normal OT </td>
+                              </tr>
+                              <tr className="table-row">
+                                <td> Special Rest Excess Normal OT </td>
+                              </tr>
+                              <tr className="table-row">
+                                <td> Special Rest Excess Night OT </td>
+                              </tr>
+                              <tr className="table-row">
+                                <td> Legal Rest Night OT </td>
+                              </tr>
+                              <tr className="table-row">
+                                <td> Legal Rest Normal OT </td>
+                              </tr>
+                              <tr className="table-row">
+                                <td> Legal Excess Rest Normal OT </td>
+                              </tr>
+                              <tr className="table-row">
+                                <td> Legal Excess Rest Night OT </td>
+                              </tr>
+                            </td>
+                          </tr>
+                          <td key={index} className="table-row">
+                            <tr className="table-row">
                               <td>{data.normalOT}</td>
                             </tr>
-                            <tr>
+                            <tr className="table-row">
                               <td>{data.nightOt}</td>
                             </tr>
-                            <tr>
+                            <tr className="table-row">
                               <td>{data.exccessNightOt}</td>
                             </tr>
-                            <tr>
+                            <tr className="table-row">
                               <td>{data.exccessNormalOt}</td>
                             </tr>
-                            <tr>
+                            <tr className="table-row">
                               <td>{data.restNormalOT}</td>
                             </tr>
-                            <tr>
+                            <tr className="table-row">
                               <td>{data.restNightOt}</td>
                             </tr>
-                            <tr>
+                            <tr className="table-row">
                               <td>{data.exccessRestNormalOt}</td>
                             </tr>
-                            <tr>
+                            <tr className="table-row">
                               <td>{data.restExccessNightOt}</td>
                             </tr>
-                            <tr>
+                            <tr className="table-row">
                               <td>{data.legalNightOt}</td>
                             </tr>
-                            <tr>
+                            <tr className="table-row">
                               <td>{data.legalNormalOT}</td>
                             </tr>
-                            <tr>
+                            <tr className="table-row">
                               <td>{data.legalExccessNormalOt}</td>
                             </tr>
-                            <tr>
+                            <tr className="table-row">
                               <td>{data.legalExccessNightOt}</td>
                             </tr>
-                            <tr>
+                            <tr className="table-row">
                               <td>{data.specialNightOt}</td>
                             </tr>
-                            <tr>
+                            <tr className="table-row">
                               <td>{data.specialNormalOT}</td>
                             </tr>
-                            <tr>
+                            <tr className="table-row">
                               <td>{data.specialExccessNormalOt}</td>
                             </tr>
-                            <tr>
+                            <tr className="table-row">
                               <td>{data.specialExccessNightOt}</td>
                             </tr>
-                            <tr>
+                            <tr className="table-row">
                               <td>{data.specialRestNightOt}</td>
                             </tr>
-                            <tr>
+                            <tr className="table-row">
                               <td>{data.specialRestNormalOT}</td>
                             </tr>
-                            <tr>
+                            <tr className="table-row">
                               <td>{data.specialRestExccessNormalOt}</td>
                             </tr>
-                            <tr>
+                            <tr className="table-row">
                               <td>{data.specialRestExccessNightOt}</td>
                             </tr>
-                            <tr>
+                            <tr className="table-row">
                               <td>{data.legalRestNightOt}</td>
                             </tr>
-                            <tr>
+                            <tr className="table-row">
                               <td>{data.legalRestNormalOT}</td>
                             </tr>
-                            <tr>
+                            <tr className="table-row">
                               <td>{data.legalExccessRestNormalOt}</td>
                             </tr>
-                            <tr>
+                            <tr className="table-row">
                               <td>{data.legalExccessRestNightOt}</td>
                             </tr>
                           </td>

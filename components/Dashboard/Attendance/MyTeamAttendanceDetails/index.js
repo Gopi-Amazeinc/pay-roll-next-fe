@@ -7,8 +7,9 @@ import axios from "axios";
 import Styles from "@/styles/attendancedetails.module.css";
 import { apiService } from "@/services/api.service";
 import ReactPaginate from "react-paginate";
-import { DownloadTableExcel } from "react-export-table-to-excel";
 import Multiselect from "multiselect-react-dropdown";
+import * as XLSX from "xlsx";
+
 
 const MyTeamAttendence = () => {
   const staffDetailsRef = useRef(null);
@@ -26,6 +27,7 @@ const MyTeamAttendence = () => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [count, setcount] = useState("");
+  const [myattendance, setmyattendance] = useState(false);
   useEffect(() => {
     const userid = sessionStorage.getItem("userID");
     const roleid = sessionStorage.getItem("roleID");
@@ -35,37 +37,40 @@ const MyTeamAttendence = () => {
 
   // Gopi's Code => tried for onchnage function
   useEffect(() => {
-    
+
     if (userID) {
       debugger;
       getstaffDetails();
+      setmyattendance(true)
     }
   }, [userID]);
   const getstaffDetails = async () => {
-    const getAttendancedata = []
+    // const getAttendancedata = []
     const staffDetails = await apiService.commonGetCall(
       "Payroll/GetStaffBySupervisorID?Supervisor=" + userID
     );
+    const staffFilter = staffDetails.data.filter((item) => item.supervisor = userID)
     //TODO: MUltiselct DROP DOEN 
-    for (let i=0; i< staffDetails.length ; i++){
-      getAttendancedata.push(staffDetails[i].fullname)
-    }
-    setStaffData(getAttendancedata);
-    // setStaffData(staffDetails.data);
+    // for (let i = 0; i < staffDetails.length; i++) {
+    //   getAttendancedata.push(staffDetails[i].fullname)
+    // }
+    // setStaffData(getAttendancedata);
+
+    setStaffData(staffFilter);
     // setcount(res.data.length);
   };
 
   // console.log(StaffData);
   // Gopi's code end's
 
-  useEffect(() => {
-    if (userID) {
-      const resu = getCurrentMonthDates();
-      if (resu) {
-        getAttendenceByID(userID, resu.setStartDate, resu.setEndDate);
-      }
-    }
-  }, [userID]);
+  // useEffect(() => {
+  // if (userID) {
+  // const resu = getCurrentMonthDates();
+  // if (resu) {
+  // getMyTeamAttendenceByID(userID, resu.setStartDate, resu.setEndDate);
+  // }
+  // }
+  // }, [userID]);
 
   const PER_PAGE = 10;
   const [currentPage, setCurrentPage] = useState(0);
@@ -75,32 +80,6 @@ const MyTeamAttendence = () => {
   const offset = currentPage * PER_PAGE;
   const pageCount = Math.ceil(MyTeamAttendence.length / PER_PAGE);
 
-  const getCurrentMonthDates = () => {
-    let newDate = new Date();
-    let firstDayOfMonth = new Date(newDate.getFullYear(), newDate.getMonth());
-    let fromDate = formateDate(firstDayOfMonth);
-
-    const year = newDate.getFullYear();
-    const month = newDate.getMonth() + 1;
-    const lastDay = new Date(year, month, 0).getDate();
-    const toDate = `${year}-${month.toString().padStart(2, "0")}-${lastDay
-      .toString()
-      .padStart(2, "0")}`;
-    setStartDate(fromDate);
-    setEndDate(toDate);
-    return {
-      setStartDate: fromDate,
-      setEndDate: toDate,
-    };
-  };
-
-  const formateDate = (datetoformat) => {
-    const day = datetoformat.getDate().toString().padStart(2, "0");
-    const month = (datetoformat.getMonth() + 1).toString().padStart(2, "0");
-    const year = datetoformat.getFullYear().toString();
-    return `${year}-${month}-${day}`;
-  };
-
   const getStartDate = (selectedDate) => {
     setStartDate(selectedDate);
     setEndDate("");
@@ -108,13 +87,13 @@ const MyTeamAttendence = () => {
 
   const getEndDate = (selectedDate) => {
     setEndDate(selectedDate);
-    return getDateBySelectedDate(selectedDate);
+    // return getDateBySelectedDate(selectedDate);
   };
-  const getDateBySelectedDate = (endDatesss) => {
-    return getAttendenceByID(20540, startDate, endDatesss);
-  };
+  // const getDateBySelectedDate = (endDatesss) => {
+  //   return getMyTeamAttendenceByID(startDate, endDatesss);
+  // };
 
-  const getAttendenceByID = async (EmployeeID, startdate, enddate) => {
+  const getMyTeamAttendenceByID = async (EmployeeID, startdate, enddate) => {
     debugger
     if (userID) {
       const res = await apiService.commonGetCall(
@@ -132,7 +111,28 @@ const MyTeamAttendence = () => {
 
   const handleStaffChange = (selectedStaff) => {
     setselctedStaffdata(selectedStaff);
+
+    return getMyTeamAttendenceByID(selectedStaff, startDate, endDate);
   };
+
+  
+  const exportToExcel = () => {
+    let element;
+    if (myattendance == true) {
+      element = document.getElementById("attendanceid");
+    }
+
+    if (element) {
+      const ws = XLSX.utils.table_to_sheet(element);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+      if (myattendance == true) {
+        XLSX.writeFile(wb, "MyteamAttendetails.xlsx");
+      }
+
+    }
+  };
+
 
   // this.state = {
   //  staffoptions : [
@@ -166,7 +166,13 @@ const MyTeamAttendence = () => {
               href="/Attendance/MyTeamAttendanceDetails"
             >
               My Team Attendance Details
-            </Link> <div className="line-border"></div>
+            </Link>  <div className="line-border" style={{
+              border: "1px solid #2f87cc",
+              bordertopleftradius: "51px",
+              bordertoprightradius: "51px",
+              margintop: "0px",
+              width: "64%"
+            }}></div>
           </div>
         </div>
 
@@ -200,28 +206,30 @@ const MyTeamAttendence = () => {
               <p className={Styles.filterdate}>
                 Staff<i className="text-danger">*</i>
               </p>
-              <Multiselect
+              {/* <Multiselect
                 // displayValue="id"
                 isObject={false}
-                onKeyPressFn={function noRefCheck() {}}
-                onRemove={function noRefCheck() {}}
-                onSearch={function noRefCheck() {}}
+                onKeyPressFn={function noRefCheck() { }}
+                onRemove={function noRefCheck() { }}
+                onSearch={function noRefCheck() { }}
                 onSelect={(selectedOptions) => {
-                    console.log(selectedOptions);
-                    handleStaffChange(selectedOptions);
-                  }}
+                  console.log(selectedOptions);
+                  handleStaffChange(selectedOptions);
+                }}
                 // options={[
                 //   { id: 38243, short: "employee" },
                 //   { id: 38244, short: "testemployee" },
                 // ]}
-                options= {StaffData}
+                options={StaffData}
                 // onChange={(selectedOptions) => {
                 //   console.log(selectedOptions);
                 // }}
                 showCheckbox
                 selectedValues={{}}
-              />
-              {/* <select
+              /> */}
+
+
+              <select
                 className="form-select"
                 onChange={(e) => handleStaffChange(e.target.value)}
               >
@@ -233,7 +241,7 @@ const MyTeamAttendence = () => {
                     </option>
                   );
                 })}
-              </select> */}
+              </select>
             </div>
 
             <div className="col-lg-2">
@@ -255,13 +263,9 @@ const MyTeamAttendence = () => {
 
               {count > 0 ?
                 <>
-                  <DownloadTableExcel
-                    filename="users table"
-                    sheet="users"
-                    currentTableRef={tableRef.current}
-                  >
-                    <button className="button">Export To Excel</button>
-                  </DownloadTableExcel>
+
+                  <button className="button" onClick={exportToExcel}>Export To Excel</button>
+
                 </>
                 : null}
 
@@ -270,10 +274,10 @@ const MyTeamAttendence = () => {
         </div>
         <br />
         <h6 style={{ color: "#3247d5" }}>Showing {count} Results</h6>
-        <table
+        <table  id="attendanceid"
           className="table "
           style={{ marginLeft: "0px" }}
-          ref={tableRef}
+
         >
           <thead className="bg-info text-white ">
             <tr style={{ whiteSpace: "nowrap" }}>
@@ -314,14 +318,14 @@ const MyTeamAttendence = () => {
                           <td>{data.employeID}</td>
                           <td>{data.staffname1}</td>
                           <td>{data.shift}</td>
-                          <td>{data.filterdate}</td>
+                          <td>{data.date}</td>
 
                           <td>{data.dayType}</td>
                           <td>{data.etime}</td>
                           <td>{data.expectedOut}</td>
 
-                          <td>{data.stime}</td>
-                          <td>{data.etime}</td>
+                          <td>{data.punchInTime}</td>
+                          <td>{data.punchOutTime}</td>
                           <td>{data.hr}</td>
 
                           <td>{data.ot}</td>

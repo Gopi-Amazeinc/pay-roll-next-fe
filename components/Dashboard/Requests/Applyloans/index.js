@@ -11,6 +11,8 @@ const ApplyloansDashboard = () => {
     const [Applyloans, setApplyLoans] = useState([]);
     const [newApproved, setnewApprovedData] = useState([]);
     const [keyword, setKeyword] = useState("");
+    const [roleID, setRoleID] = useState();
+    const [userID, setUserID] = useState();
     const toggleNewRequest = () => {
         setNewRequest(true)
         setApproved(false)
@@ -32,10 +34,7 @@ const ApplyloansDashboard = () => {
     const offset = currentPage * PER_PAGE;
     const pageCount = Math.ceil(Applyloans.length / PER_PAGE);
 
-    useEffect(() => {
-        setNewRequest(true)
-        getApplyLoans();
-    }, [1]);
+
 
     const getnewApprovedData = async () => {
         let res = await apiService.commonGetCall("Payroll/GetEmployeeLoansByApproved"); //This Api is useed for Get the Dashborad data band Master
@@ -43,8 +42,17 @@ const ApplyloansDashboard = () => {
     };
 
     useEffect(() => {
-        getnewApprovedData();
-    }, [1]);
+        const usrID = sessionStorage.getItem("userID");
+        setUserID(usrID);
+        const userRoleID = sessionStorage.getItem("roleID");
+        setRoleID(userRoleID);
+        setNewRequest(true)
+        if (userID) {
+            getApplyLoans();
+            getnewApprovedData();
+        }
+        return;
+    }, [userID]);
 
     const getApplyLoansData = (data) => {
         sessionStorage.setItem("id", data.id);
@@ -81,10 +89,21 @@ const ApplyloansDashboard = () => {
         <>
             <div className="container-fluid">
                 <div className="row">
-                   
                     <div className="col-lg-12">
-                    <br/>
-                        <p className="mainheader">Apply Loans </p>
+                        <div className="row">
+                            <div className="col-lg-2">
+                                <label className="mainheader">My Loans </label>
+                            </div>
+                            <div className="col-lg-2">
+                                {
+                                    roleID == 2 && (
+                                        <Link href="/Requests/Allstaffloans">
+                                            <label className="mainheader"> All Staff Loans </label>
+                                        </Link>
+                                    )
+                                }
+                            </div>
+                        </div><br />
                         <div className='card p-4 border-0'>
                             <div className="row">
                                 <div className="col-lg-1">
@@ -204,7 +223,7 @@ const ApplyloansDashboard = () => {
                                 {
                                     approved && (
                                         <>
-                                            <h6 style={{ color: "#3247d5" }}>Showing {Applyloans.length} Results</h6>
+                                            <h6 style={{ color: "#3247d5" }}>Showing {newApproved.length} Results</h6>
                                             <div className="table-responsive">
                                                 <table className='table table-hover' style={{ whiteSpace: "nowrap" }}>
                                                     <thead className='bg-info text-white'>

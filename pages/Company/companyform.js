@@ -18,6 +18,7 @@ function MyForm1({ data }) {
   const { register, handleSubmit, watch, reset, formState: { errors }, } = useForm();
   const [actionType, setActionType] = useState("insert");
   const [filePath, setFilePath] = useState();
+  const [fileName, setFileName] = useState();
 
 
   const router = useRouter();
@@ -120,7 +121,7 @@ function MyForm1({ data }) {
     }
   }
 
-  
+
   const onDrop = useCallback((acceptedFiles) => {
     debugger;
     console.log(acceptedFiles, "Uploaded file");
@@ -133,6 +134,7 @@ function MyForm1({ data }) {
     let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
     const formData = new FormData();
     formData.append("file_upload", data[0], data[0].name);
+    setFileName(data[0].name)
     let invoiceURL = await axios.post(
       hostURL + "Payroll/ProjectAttachments",
       formData
@@ -142,55 +144,67 @@ function MyForm1({ data }) {
     // setFilePath(res.data);
 
     // TODO: Gopi's code for validation
-  let environmentVariable = "https://103.12.1.103";
+    let environmentVariable = "https://103.12.1.103";
 
-  let imagePath = invoiceURL.data.split("\\", 1);
-  let Preview = invoiceURL.data.replace( imagePath,environmentVariable);
-  Swal.fire('Uploaded successfully.');
-  // setFilePath(invoiceURL.data);
-  setFilePath(Preview);
+    let imagePath = invoiceURL.data.split("\\", 1);
+    let Preview = invoiceURL.data.replace(imagePath, environmentVariable);
+    Swal.fire('Uploaded successfully.');
+    // setFilePath(invoiceURL.data);
+    setFilePath(Preview);
   };
+  console.log("image path name ",filePath)
 
   return (
     <div className="container-fluid">
       <br />
-      <h4 style={{color:"blue"}}>Company Profile</h4>
+      <h4 style={{ color: "blue" }}>Company Profile</h4>
       <br />
       <div className="shadow-lg p-3 mb-3 bg-body rounded">
         <form onSubmit={handleSubmit(onSubmit)}>
           {/* <form onSubmit={handleSubmit(onSubmit)}> */}
-          
+
           <div className="row">
             <div className="col-lg-2">
               <label className={styles.p}>Company Logo</label>
-              <div style={{border:'2px dashed black'}}> 
-                      <div {...getRootProps()}>
-                        <input {...getInputProps()} />
-                        {isDragActive ? (
-                          <p>Drop the files here ...</p>
-                        ) : (
-                          <p>
-                            Drag 'n' drop some files here, or click to select
-                            files
-                          </p>
-                        )}
-                      </div>
-                    </div>    
-                              {/* {errors.Name && <p className="error-message" style={{ color: "red" }}>{errors.Name.message}</label>} */}
+              <div style={{ border: '2px dashed black' }}>
+                <div {...getRootProps()}>
+                  <input {...getInputProps()} />
+                  {isDragActive ? (
+                    <p>Drop the files here ...</p>
+                  ) : (
+                    <p style={{ padding: "6%" }}>
+                      {
+                        filePath == null && (
+                          <p>Drag 'n' drop some files here, or click to select
+                            files</p>
+                        )
+                      }
+                      {
+                        filePath && (
+                          <p>{fileName}</p>
+                        )
+                      }
+                    </p>
+                  )}
+                </div>
+
+              </div>
+              {/* {errors.Name && <p className="error-message" style={{ color: "red" }}>{errors.Name.message}</label>} */}
             </div>
             {/* <div>
             
             </div> */}
 
-            {/* TODO<Image src={filePath} height={10} width={10} alt="Picture"></Image> */}
+            {/* TODO */}
+            <Image src={filePath} height={10} width={10} alt="Picture"></Image> 
             <div className="col-lg-2">
               <label className={styles.p}>Company Name<span style={{ color: "red" }}>*</span></label>
-              <input type="text" className="form-control" {...register('Company_Name', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9 ]+$/, message: "Please enter a valid Short Name" } })} />
+              <input type="text" className="form-control" {...register('Company_Name', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+ $/, message: "Please enter a valid Short Name" } })} />
               {errors.Company_Name && <p className="error-message" style={{ color: "red" }}>{errors.Company_Name.message}</p>}
             </div>
             <div className="col-lg-2">
               <label className={styles.p}>Nature of Business</label>
-              <input type="text" className="form-control"  {...register('Nature_Of_Business', { required: "Please add a Short Name", pattern: { value: "[a-zA-Z0-9\s]+", message: "Please enter a valid Short Name" } })} />
+              <input type="text" className="form-control"  {...register('Nature_Of_Business', { required: "Please add a Short Name", pattern: { value: "[a-zA-Z0-9\s]", message: "Please enter a valid Short Name" } })} />
               {errors.Nature_Of_Business && <p className="error-message" style={{ color: "red" }}>{errors.Nature_Of_Business.message}</p>}
             </div>
             <div className="col-lg-3">
@@ -217,7 +231,7 @@ function MyForm1({ data }) {
             </div>
             <div className="col-lg-2">
               <label className={styles.p}>Email</label>
-              <input type="email" className="form-control"  {...register('Email', { required: "Please add a Short Name", pattern:"[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$", message: "Please enter a valid Short Name"  })} />
+              <input type="email" className="form-control"  {...register('Email', { required: "Please add a Short Name", pattern: "[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$", message: "Please enter a valid Short Name" })} />
               {errors.Email && <p className="error-message" style={{ color: "red" }}>{errors.Email.message}</p>}
             </div>
             <div className="col-lg-2">
@@ -353,19 +367,28 @@ function MyForm1({ data }) {
           <div className="row">
             <div className="col-lg-2">
               <label className={styles.p}>E-Signatory</label>
-              <div style={{border:'2px dashed black'}}> 
-                      <div {...getRootProps()}>
-                        <input {...getInputProps()} />
-                        {isDragActive ? (
-                          <p>Drop the files here ...</p>
-                        ) : (
-                          <p>
-                            Drag 'n' drop some files here, or click to select
-                            files
-                          </p>
-                        )}
-                      </div>
-                    </div>  
+              <div style={{ border: '2px dashed black' }}>
+                <div {...getRootProps()}>
+                  <input {...getInputProps()} />
+                  {isDragActive ? (
+                    <p>Drop the files here ...</p>
+                  ) : (
+                    <p style={{ padding: "6%" }}>
+                      {
+                        filePath == null && (
+                          <p>Drag 'n' drop some files here, or click to select
+                            files</p>
+                        )
+                      }
+                      {
+                        filePath && (
+                          <p>{fileName}</p>
+                        )
+                      }
+                    </p>
+                  )}
+                </div>
+              </div>
               {/* <input type="text" className="form-control"   {...register('E_Signatory', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} /> */}
             </div>
           </div>
@@ -496,7 +519,7 @@ function MyForm2({ data }) {
             <br />
             <div className="row">
               <div className="col-lg-4">
-                
+
               </div>
               <div className="col-lg-4">
                 {
@@ -508,7 +531,7 @@ function MyForm2({ data }) {
                 }
               </div>
               <div className="col-lg-4">
-              <Link href="/Company">
+                <Link href="/Company">
                   <button className={styles.button} >Cancel</button>
                 </Link>
               </div>
@@ -575,7 +598,7 @@ function MyForm3({ data }) {
   //   payRollForm(res.data[0]); 
 
   // }
-  
+
 
 
   // async function getCompanyByID(id) {
@@ -598,7 +621,7 @@ function MyForm3({ data }) {
       "Final_Pay_13th_Month": PayRollData ? PayRollData.final_Pay_13th_Month : "",
 
       "Absent_Deduction_BasicSalary": PayRollData ? PayRollData.absent_Deduction_BasicSalary : "",
-      
+
       "Absent_Deduction_Deminimis": PayRollData ? PayRollData.absent_Deduction_Deminimis : "",
 
       "Absent_Deduction_Allowance": PayRollData ? PayRollData.absent_Deduction_Allowance : "",
@@ -637,7 +660,7 @@ function MyForm3({ data }) {
 
       "ComputationDeminimis": PayRollData ? PayRollData.computationDeminimis : "",
 
-  
+
 
     };
     reset(details);
@@ -669,7 +692,7 @@ function MyForm3({ data }) {
         <div className="shadow-lg p-3 mb-3 bg-body rounded">
           <label className={styles.p}>PAYROLL COMPUTATION</label>
           <br />
-         
+
           <form onSubmit={handleSubmit(payRollSubmmit)}>
             <div className="row">
               <div className="col-lg-2">
@@ -750,21 +773,21 @@ function MyForm3({ data }) {
                     <label className={styles.p}>SSS:</label>
                   </div>
                   <div className="col-lg-2">
-                    <label className={styles.p}> <input type="radio" name="yes"  {...register('Sss_ded',{ required: true })} />&nbsp;&nbsp;Yes</label>&nbsp;
+                    <label className={styles.p}> <input type="radio" name="yes"  {...register('Sss_ded', { required: true })} />&nbsp;&nbsp;Yes</label>&nbsp;
                     <label className={styles.p}><input type="radio" name="yes" {...register('Sss_ded')} />&nbsp;No </label>
                   </div>
                   <div className="col-lg-1">
                     <label className={styles.p}>Pagibig:</label>
                   </div>
                   <div className="col-lg-2">
-                    <label className={styles.p}> <input type="radio" name="yes" {...register('Pagibig_ded',{ required: true })} />&nbsp;&nbsp;Yes</label>&nbsp;
+                    <label className={styles.p}> <input type="radio" name="yes" {...register('Pagibig_ded', { required: true })} />&nbsp;&nbsp;Yes</label>&nbsp;
                     <label className={styles.p}><input type="radio" name="yes" {...register('Pagibig_ded')} />&nbsp;No </label>
                   </div>
                   <div className="col-lg-1">
                     <label className={styles.p}>Philhealth:</label>
                   </div>
                   <div className="col-lg-2">
-                    <label className={styles.p}> <input type="radio" name="yes" {...register('Philhealth_ded',{ required: true })} />&nbsp;&nbsp;Yes</label>&nbsp;
+                    <label className={styles.p}> <input type="radio" name="yes" {...register('Philhealth_ded', { required: true })} />&nbsp;&nbsp;Yes</label>&nbsp;
                     <label className={styles.p}><input type="radio" name="yes" {...register('Philhealth_ded')} />&nbsp;No </label>
                   </div>
                   <div className="col-lg-1">
@@ -788,8 +811,8 @@ function MyForm3({ data }) {
                 <label className={styles.p}>Attendance:</label> &nbsp; &nbsp;
               </div>
               <div className="col-lg-2">
-                <label className={styles.p}> <input type="radio" name="yes" {...register('Attedance_config_bit',{ required: true })} />&nbsp;&nbsp;Yes</label>&nbsp;
-                <label className={styles.p}><input type="radio" name="yes" {...register('Attedance_config_bit',{ required: true })} />&nbsp;No </label>
+                <label className={styles.p}> <input type="radio" name="yes" {...register('Attedance_config_bit', { required: true })} />&nbsp;&nbsp;Yes</label>&nbsp;
+                <label className={styles.p}><input type="radio" name="yes" {...register('Attedance_config_bit', { required: true })} />&nbsp;No </label>
               </div>
               <div className="col-lg-7"></div>
             </div>
@@ -809,7 +832,7 @@ function MyForm3({ data }) {
               <div className="row mt-4">
                 <div className="col-lg-2"></div>
                 <div className="col-lg-4">
-                  <label className={styles.p}><input type="radio" {...register('ComputationSalaryt',{ required: true })} />&nbsp;Pro-rated/Current/Full Salary</label>
+                  <label className={styles.p}><input type="radio" {...register('ComputationSalaryt', { required: true })} />&nbsp;Pro-rated/Current/Full Salary</label>
                 </div>
                 <div className="col-lg-6"></div>
               </div><br />
@@ -819,10 +842,10 @@ function MyForm3({ data }) {
                   <label className={styles.p}>Optional:</label>
                 </div>
                 <div className="col-lg-2">
-                  <input type="checkbox" {...register('ComputationBasicAdjustment',{ required: true })} />
+                  <input type="checkbox" {...register('ComputationBasicAdjustment', { required: true })} />
                   <label className={styles.p}>Basic</label>
                   <br />
-                  <label className={styles.p}><input type="checkbox" {...register('ComputationDeminimis',{ required: true })} />Deminimis</label>
+                  <label className={styles.p}><input type="checkbox" {...register('ComputationDeminimis', { required: true })} />Deminimis</label>
                 </div>
                 <div className="col-lg-7"></div>
               </div>
@@ -850,16 +873,16 @@ function MyForm3({ data }) {
             <div className="row">
               <div className="col-lg-1"></div>
               <div className="col-lg-3">
-                <label className={styles.p}> <input type="radio" name="yes" {...register('FinalPay_Deduct_Absent',{ required: true })} />&nbsp;&nbsp;Yes</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <label className={styles.p}><input type="radio" name="yes" {...register('FinalPay_Deduct_Absent',{ required: true })} />&nbsp;No </label>
+                <label className={styles.p}> <input type="radio" name="yes" {...register('FinalPay_Deduct_Absent', { required: true })} />&nbsp;&nbsp;Yes</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <label className={styles.p}><input type="radio" name="yes" {...register('FinalPay_Deduct_Absent', { required: true })} />&nbsp;No </label>
               </div>
               <div className="col-lg-3">
                 <label className={styles.p}> <input type="radio" name="yes" {...register('FinalPay_Deduct_Late')} />&nbsp;&nbsp;Yes</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                <label className={styles.p}><input type="radio" name="yes" {...register('FinalPay_Deduct_Late',{ required: true })} />&nbsp;No </label>
+                <label className={styles.p}><input type="radio" name="yes" {...register('FinalPay_Deduct_Late', { required: true })} />&nbsp;No </label>
               </div>
               <div className="col-lg-3">
                 <label className={styles.p}> <input type="radio" name="yes" {...register('Final_Pay_13th_Month')} />&nbsp;&nbsp;Yes</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                <label className={styles.p}><input type="radio" name="yes" {...register('Final_Pay_13th_Month',{ required: true })} />&nbsp;No </label>
+                <label className={styles.p}><input type="radio" name="yes" {...register('Final_Pay_13th_Month', { required: true })} />&nbsp;No </label>
               </div>
               <div className="col-lg-2"></div>
             </div>
@@ -1000,7 +1023,7 @@ function MyForm4({ data }) {
             <div className="row">
               <div className="col-lg-4">
                 <label className={styles.p}>Non-Tax Exemption Ceiling<span style={{ color: "red" }}>*</span></label>
-                <input type="text" className="form-control" {...register('Non_Tax_Essential_Sealing]', { required: true,pattern: { value: "[a-zA-Z0-9\s]+", message: "Please enter a valid Short Name" } })}></input>
+                <input type="text" className="form-control" {...register('Non_Tax_Essential_Sealing]', { required: true, pattern: { value: "[a-zA-Z0-9\s]+", message: "Please enter a valid Short Name" } })}></input>
                 {errors.Non_Tax_Essential_Sealing && <p className="error-message" style={{ color: "red" }}>{errors.Non_Tax_Essential_Sealing}</p>}
               </div>
               <div className="col-lg-4">
@@ -1062,7 +1085,7 @@ const Companyform = ({ editData }) => {
         <MyForm2 data={editData} />
         <MyForm3 data={editData} />
         <MyForm4 data={editData} />
-        
+
 
 
 

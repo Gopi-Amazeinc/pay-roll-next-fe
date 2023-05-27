@@ -1,20 +1,23 @@
-import Layout from "@/components/layout/layout"
+import Layout from "@/components/layout/layout";
 import Link from "next/link";
-import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import { useRouter } from "next/router";
-import styles from '@/../../styles/Locatorrequest.module.css'
+import styles from "@/../../styles/Locatorrequest.module.css";
 import { apiService } from "@/services/api.service";
 import { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
+import axios from "axios";
 const Locatorrequest = () => {
-    const { register, handleSubmit, reset, formState } = useForm();
-    const router = useRouter();
-    const { errors } = formState;
+  const { register, handleSubmit, reset, formState } = useForm();
+  const router = useRouter();
+  const { errors } = formState;
 
-    const [StaffID, setUserID] = useState()
-    const [filePath, setFilePath] = useState();
+  const [StaffID, setUserID] = useState();
+  const [filePath, setFilePath] = useState();
+  const [fileName, setFileName] = useState();
+
 
     useEffect(() => {
         const usrID = sessionStorage.getItem("userID");
@@ -24,7 +27,7 @@ const Locatorrequest = () => {
 
     async function onSubmit(data) {
         let entity = {
-            "Attachment": ""
+            "Attachment": filePath
         }
         debugger;
         try {
@@ -37,26 +40,76 @@ const Locatorrequest = () => {
         } catch (error) {
             Swal.fire("Insert is not working");
         }
-
     }
+
     const onDrop = useCallback((acceptedFiles) => {
+
         debugger;
+
         console.log(acceptedFiles, "Uploaded file");
+
         uploadFile(acceptedFiles);
+
     }, []);
+
     const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
+
+
+
     const uploadFile = async (data) => {
+
+        debugger
+
         let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+
         const formData = new FormData();
+
         formData.append("file_upload", data[0], data[0].name);
-        let res = await apiService.commonPostCall("Payroll/ProjectAttachments",
+
+        setFileName(data[0].name)
+
+        console.log(data[0].name)
+
+        let invoiceURL = await axios.post(
+
+            hostURL + "Payroll/ProjectAttachments",
+
             formData
+
         );
-        console.log(res, "File Path");
-        Swal.fire("Uploaded successfully");
-        setFilePath(res.data);
+
+        // console.log(res, "File Path");
+
+        // Swal.fire("Uploaded successfully");
+
+        // setFilePath(res.data);
+
+
+
+
+        // TODO: Gopi's code for validation
+
+        let environmentVariable = "https://103.12.1.103";
+
+
+
+
+        let imagePath = invoiceURL.data.split("\\", 1);
+
+        let Preview = invoiceURL.data.replace(imagePath, environmentVariable);
+
+        Swal.fire('Uploaded successfully.');
+
+        // setFilePath(invoiceURL.data);
+
+        setFilePath(Preview);
+
     };
+
+
+
+
     const customStyles = {
         content: {
             top: "50%",
@@ -86,14 +139,14 @@ const Locatorrequest = () => {
                             <div className="col-lg-2">
                                 <label htmlFor="" className={styles.p}>Date<span style={{ color: "red" }}>*</span></label>
                                 <input type="date" className="form-control" {...register('Date', { required: "This field is required" })} />
-                                {errors.Date && <p className="error-message"style={customStyles.errorMsg}>{errors.Date.message}</p>}
+                                {errors.Date && <p className="error-message" style={customStyles.errorMsg}>{errors.Date.message}</p>}
                             </div>
                             <div className="col-lg-2">
                                 <label htmlFor="" className={styles.p}>Task<span style={{ color: "red" }}>*</span></label>
-                                <input type="text" className="form-control" placeholder="Task" {...register('Task', { required: "This field is required" , pattern: /^[a-zA-Z]{2,}(?: [a-zA-Z]+){0,2}$/})} />
-                                <div className="error-message"style={customStyles.errorMsg}>
-                                {errors.Task && <p  >{errors.Task.message}</p>}
-                                {errors.Task?.type==='pattern' && "characters only"}
+                                <input type="text" className="form-control" placeholder="Task" {...register('Task', { required: "This field is required", pattern: /^[a-zA-Z]{2,}(?: [a-zA-Z]+){0,2}$/ })} />
+                                <div className="error-message" style={customStyles.errorMsg}>
+                                    {errors.Task && <p  >{errors.Task.message}</p>}
+                                    {errors.Task?.type === 'pattern' && "characters only"}
                                 </div>
                             </div>
                             <div className="col-lg-2">
@@ -108,27 +161,37 @@ const Locatorrequest = () => {
                             </div>
                             <div className="col-lg-2">
                                 <label htmlFor="" className={styles.p}>Comments<span style={{ color: "red" }}>*</span></label>
-                                <input type="text" className="form-control" placeholder="Comments"  minLength={10}  {...register('Comments', { required: "This field is required" })} />
+                                <input type="text" className="form-control" placeholder="Comments" minLength={10}  {...register('Comments', { required: "This field is required" })} />
                                 {errors.Comments && <p className="error-message" style={customStyles.errorMsg}>{errors.Comments.message}</p>}
                             </div>
                         </div>
                         <br />
                         <div className="row">
-                            <div className="col-lg-3">
-                                <label htmlFor="" className={styles.p}> Attachment</label>
-                                <div style={{ border: '2px dashed blue', height: "100px" }}>
+                            <div className="col-lg-2">
+                                <label className={styles.p}>Attachment</label>
+                                <div style={{ border: '2px dashed black', width: "130%" }}>
                                     <div {...getRootProps()}>
-                                        <input {...getInputProps()} 
-                                        {...register('Dropzone', { required: "This field is required" })}/>
+                                        <input {...getInputProps()} />
                                         {isDragActive ? (
                                             <p>Drop the files here ...</p>
                                         ) : (
-                                            <p style={{ marginTop: "30px", textAlign: "center" }}>
-                                                Drop the files here ...
+                                            <p style={{ padding: "6%" }}>
+                                                {
+                                                    filePath == null && (
+                                                        <p>Drag 'n' drop some files here, or click to select
+                                                            files</p>
+                                                    )
+                                                }
+                                                {
+                                                    filePath && (
+                                                        <p>{fileName}</p>
+                                                    )
+                                                }
                                             </p>
                                         )}
                                     </div>
-                                </div> {errors.Dropzone && <p className="error-message" style={customStyles.errorMsg}>{errors.Dropzone.message}</p>}
+                                </div>
+                                {/* {errors.Name && <p className="error-message" style={{ color: "red" }}>{errors.Name.message}</label>} */}
                             </div>
                         </div>
                         <br />

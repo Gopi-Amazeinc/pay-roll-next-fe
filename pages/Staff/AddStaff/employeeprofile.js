@@ -267,12 +267,23 @@ function EmployeeProfile({ data }) {
                   <input
                     type="text"
                     placeholder="First Name"
-                    {...register("FirstName", { required: true,  minLength: 2, maxlength:20, pattern:"/^[A-Za-z]+$/" })}
+                    minLength={3}
+                    {...register("FirstName", { required: true, maxLength: 20, pattern: /^[A-Za-z]+$/ })}
                     className="form-control "
                   ></input>
-                  {errors.FirstName && (
+                  {errors.FirstName?.type === 'required' && (
                     <span style={customStyles.errorMsg}>
                       Please enter first name
+                    </span>
+                  )}
+                  {errors.FirstName?.type === 'maxLength' && (
+                    <span style={customStyles.errorMsg}>
+                      maxLength
+                    </span>
+                  )}
+                  {errors.FirstName?.type === 'pattern' && (
+                    <span style={customStyles.errorMsg}>
+                      only characters no spaces & special symbols
                     </span>
                   )}
                 </div>
@@ -285,12 +296,22 @@ function EmployeeProfile({ data }) {
                   <input
                     type="text"
                     placeholder="Middle Name"
-                    {...register("MiddleName", { required: true })}
+                    {...register("MiddleName", { required: true, maxLength: 20, pattern: /^[A-Za-z]+$/ })}
                     className="form-control "
                   ></input>
-                  {errors.MiddleName && (
+                  {errors.MiddleName?.type === 'required' && (
                     <span style={customStyles.errorMsg}>
-                      Please enter middle name
+                      Please enter Middle name
+                    </span>
+                  )}
+                  {errors.MiddleName?.type === 'maxLength' && (
+                    <span style={customStyles.errorMsg}>
+                      maxLength
+                    </span>
+                  )}
+                  {errors.MiddleName?.type === 'pattern' && (
+                    <span style={customStyles.errorMsg}>
+                      only characters no spaces & special symbols
                     </span>
                   )}
                 </div>
@@ -303,12 +324,22 @@ function EmployeeProfile({ data }) {
                   <input
                     type="text"
                     placeholder="Last Name"
-                    {...register("LastName", { required: true })}
+                    {...register("LastName", { required: true, maxLength: 20, pattern: /^[A-Za-z]+$/ })}
                     className="form-control "
                   ></input>
-                  {errors.LastName && (
+                  {errors.LastName?.type === 'required' && (
                     <span style={customStyles.errorMsg}>
-                      Please enter last name
+                      Please enter Last name
+                    </span>
+                  )}
+                  {errors.LastName?.type === 'maxLength' && (
+                    <span style={customStyles.errorMsg}>
+                      maxLength
+                    </span>
+                  )}
+                  {errors.LastName?.type === 'pattern' && (
+                    <span style={customStyles.errorMsg}>
+                      only characters no spaces & special symbols
                     </span>
                   )}
                 </div>
@@ -324,13 +355,22 @@ function EmployeeProfile({ data }) {
                   <input
                     type="text"
                     placeholder="Nick Name"
-                    {...register("NickName", { required: true })}
+                    {...register("NickName", { required: true, maxLength: 20, pattern: /^[A-Za-z]+$/ })}
                     className="form-control "
                   ></input>
-                  {errors.NickName && (
+                  {errors.NickName?.type === 'required' && (
                     <span style={customStyles.errorMsg}>
-                      {" "}
-                      Please enter nick name
+                      Please enter Nick name
+                    </span>
+                  )}
+                  {errors.NickName?.type === 'maxLength' && (
+                    <span style={customStyles.errorMsg}>
+                      maxLength
+                    </span>
+                  )}
+                  {errors.NickName?.type === 'pattern' && (
+                    <span style={customStyles.errorMsg}>
+                      only characters no spaces & special symbols
                     </span>
                   )}
                 </div>
@@ -391,7 +431,7 @@ function EmployeeProfile({ data }) {
                         );
                       })}
                     </select>
-                    {errors.Country_Of_Birth && (
+                    {errors.CountryOfBirthID && (
                       <span style={customStyles.errorMsg}>
                         {" "}
                         Please select country of birth
@@ -465,12 +505,17 @@ function EmployeeProfile({ data }) {
                   <input
                     type="text"
                     placeholder="Personal Email"
-                    {...register("PersonalEmail", { required: true })}
+                    {...register("PersonalEmail", { required: true, pattern: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/ })}
                     className="form-control "
                   ></input>
-                  {errors.PersonalEmail && (
+                  {errors.PersonalEmail?.type === 'required' && (
                     <span style={customStyles.errorMsg}>
                       Please enter personal email
+                    </span>
+                  )}
+                  {errors.PersonalEmail?.type === 'pattern' && (
+                    <span style={customStyles.errorMsg}>
+                      Please enter correct email (eg."abc@gm.com")
                     </span>
                   )}
                 </div>
@@ -483,12 +528,17 @@ function EmployeeProfile({ data }) {
                   <input
                     type="text"
                     placeholder="Mothers Name"
-                    {...register("MothersName", { required: true })}
+                    {...register("MothersName", { required: true, pattern: /^[A-Za-z]+$/  })}
                     className="form-control "
                   ></input>
-                  {errors.MothersName && (
+                  {errors.MothersName?.type === 'required' && (
                     <span style={customStyles.errorMsg}>
                       Please enter mother's name
+                    </span>
+                  )}
+                  {errors.MothersName?.type === 'pattern' && (
+                    <span style={customStyles.errorMsg}>
+                      characters,firstname and lastName only & no special symbols (eg.john snow)
                     </span>
                   )}
                 </div>
@@ -504,12 +554,16 @@ function EmployeeProfile({ data }) {
                   <input
                     type="text"
                     placeholder="Father's Name"
-                    {...register("FathersName", { required: true })}
+                    {...register("FathersName", { required: true, pattern: /^[A-Za-z]+$/ })}
                     className="form-control "
                   ></input>
-                  {errors.FathersName && (
+                  {errors.FathersName?.type==='required' && (
                     <span style={customStyles.errorMsg}>
                       Please enter father's name
+                    </span>
+                  )} {errors.FathersName?.type === 'pattern' && (
+                    <span style={customStyles.errorMsg}>
+                      characters,firstname and lastName only & no special symbols (eg.john snow)
                     </span>
                   )}
                 </div>

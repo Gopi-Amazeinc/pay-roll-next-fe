@@ -57,6 +57,7 @@ const Sidebar = ({ children, applyPageName }) => {
   let [displayBankReports, toggleBankReports] = useState(false);
   let [displaySSS, toggleSSS] = useState(false);
   let [displayPhilhealthMonthly, togglePhilhealthMonthly] = useState(false);
+  let [displayLeaveConfiguration, toggleLeaveConfiguration] = useState(false);
 
   const [activeMenu, setActiveMenu] = useState(1);
   const updateActiveMenu = (data) => {
@@ -173,6 +174,13 @@ const Sidebar = ({ children, applyPageName }) => {
     } else {
       togglePhilhealthMonthly(false);
     }
+
+    if (menuID > "900") {
+      toggleLeaveConfiguration(true);
+    } else {
+      toggleLeaveConfiguration(false);
+    }
+
   }, []);
 
   const getStyle = (menuID) => {
@@ -198,7 +206,10 @@ const Sidebar = ({ children, applyPageName }) => {
       marginRight: "5%",
     },
   };
-
+  const toggleLeaveConfigurationMenu = () => {
+    toggleLeaveConfiguration(!displayLeaveConfiguration);
+    sessionStorage.setItem("toggleLeaveConfiguration", displayLeaveConfiguration);
+  };
   const toggleSSSMenu = () => {
     toggleSSS(!displaySSS);
     sessionStorage.setItem("toggleSSS", displaySSS);
@@ -416,8 +427,8 @@ const Sidebar = ({ children, applyPageName }) => {
                         Attendance Details
                       </button>
                     </Link>
-                    {userRole != 5 && userRole != 3  &&  userRole != 4 && (
-                      <Link 
+                    {userRole != 5 && userRole != 3 && userRole != 4 && (
+                      <Link
                         href="/Attendance/OverTimeUnitsUpload"
                         className={styles.sidemenulink}
                       >
@@ -474,7 +485,158 @@ const Sidebar = ({ children, applyPageName }) => {
               </>
             )
           }
-          {userRole != 4 && userRole != 1 && userRole != 2 && (
+          {/* {userRole && userRole != 4 && userRole != 1  */}
+          {userRole == 2 && (
+            <>
+              <hr></hr>
+              <button className={styles.sidemenu} onClick={togglerequestsMenu}>
+                <HiOutlineUserGroup style={customStyles.icons} />
+                Requests
+              </button>
+              {displayRequests && (
+                <div>
+                  <Link href="/Requests/Leaverequest">
+                    <button
+                      className={getSubStyle(51)}
+                      onClick={updateActiveMenu.bind(this, {
+                        id: 51,
+                        name: "Leave Requests",
+                      })}
+                    >
+                      <RiUserShared2Line style={customStyles.icons} />
+                      Leave Requests
+                    </button>
+                  </Link>
+                  <Link href="/Requests/OverTimeDetails">
+                    <button
+                      className={getSubStyle(52)}
+                      onClick={updateActiveMenu.bind(this, {
+                        id: 52,
+                        name: "Over Time Details",
+                      })}
+                    >
+                      <RiFileUserLine style={customStyles.icons} />
+                      Over Time Details
+                    </button>
+                  </Link>
+                  <Link href="/Requests/Applyloans">
+                    <button
+                      className={getSubStyle(53)}
+                      onClick={updateActiveMenu.bind(this, {
+                        id: 53,
+                        name: "Loan Requests",
+                      })}
+                    >
+                      <RiUserShared2Line style={customStyles.icons} />
+                      Loan Requests
+                    </button>
+                  </Link>
+                  <Link href="/Requests/Locatorrequest">
+                    <button
+                      className={getSubStyle(55)}
+                      onClick={updateActiveMenu.bind(this, {
+                        id: 55,
+                        name: "Obasis Requests",
+                      })}
+                    >
+                      <RiUserShared2Line style={customStyles.icons} />
+                      Obasis Requests
+                    </button>
+                  </Link>
+                  <Link href="/Requests/Compensationtimeout">
+                    <button
+                      className={getSubStyle(56)}
+                      onClick={updateActiveMenu.bind(this, {
+                        id: 56,
+                        name: "Compensation Requests",
+                      })}
+                    >
+                      <RiFileUserLine style={customStyles.icons} />
+                      Compensation Requests
+                    </button>
+                  </Link>
+                </div>
+              )}
+            </>
+          )
+          }
+
+          {userRole == 3 && (
+            <>
+              <hr></hr>
+              <button className={styles.sidemenu} onClick={togglerequestsMenu}>
+                <HiOutlineUserGroup style={customStyles.icons} />
+                Requests
+              </button>
+              {displayRequests && (
+                <div>
+                  <Link href="/Requests/Leaverequest">
+                    <button
+                      className={getSubStyle(51)}
+                      onClick={updateActiveMenu.bind(this, {
+                        id: 51,
+                        name: "Leave Requests",
+                      })}
+                    >
+                      <RiUserShared2Line style={customStyles.icons} />
+                      Leave Requests
+                    </button>
+                  </Link>
+                  <Link href="/Requests/OverTimeDetails">
+                    <button
+                      className={getSubStyle(52)}
+                      onClick={updateActiveMenu.bind(this, {
+                        id: 52,
+                        name: "Over Time Details",
+                      })}
+                    >
+                      <RiFileUserLine style={customStyles.icons} />
+                      Over Time Details
+                    </button>
+                  </Link>
+                  <Link href="/Requests/Applyloans">
+                    <button
+                      className={getSubStyle(53)}
+                      onClick={updateActiveMenu.bind(this, {
+                        id: 53,
+                        name: "Loan Requests",
+                      })}
+                    >
+                      <RiUserShared2Line style={customStyles.icons} />
+                      Loan Requests
+                    </button>
+                  </Link>
+                  <Link href="/Requests/Locatorrequest">
+                    <button
+                      className={getSubStyle(55)}
+                      onClick={updateActiveMenu.bind(this, {
+                        id: 55,
+                        name: "Obasis Requests",
+                      })}
+                    >
+                      <RiUserShared2Line style={customStyles.icons} />
+                      Obasis Requests
+                    </button>
+                  </Link>
+                  <Link href="/Requests/Compensationtimeout">
+                    <button
+                      className={getSubStyle(56)}
+                      onClick={updateActiveMenu.bind(this, {
+                        id: 56,
+                        name: "Compensation Requests",
+                      })}
+                    >
+                      <RiFileUserLine style={customStyles.icons} />
+                      Compensation Requests
+                    </button>
+                  </Link>
+                </div>
+              )}
+            </>
+          )
+          }
+
+{userRole == 5 && (
             <>
               <hr></hr>
               <button className={styles.sidemenu} onClick={togglerequestsMenu}>
@@ -821,7 +983,26 @@ const Sidebar = ({ children, applyPageName }) => {
               )}
             </div>
           )}
+          {userRole == 2 && (
+            <div>
+              <hr>
+              </hr>
+              <Link href="/Leaveconfiguration" className={styles.sidemenulink}>
+                <button
+                  className={getStyle(900)}
+                  onClick={updateActiveMenu.bind(this, {
+                    id: 900,
+                    name: "Leaveconfiguration",
+                  })}
+                >
+                  <RiSettings4Line style={customStyles.icons} />
+                  Leave Configuration
+                </button>
+              </Link>
+            </div>
+          )
 
+          }
           {/* {userRole == 4 && (
           <div>
             <hr></hr>

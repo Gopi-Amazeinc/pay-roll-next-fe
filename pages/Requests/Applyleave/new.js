@@ -1,14 +1,10 @@
 import Layout from "@/components/layout/layout";
 import Link from "next/link";
-import ApplyLeaveDashboard from "@/components/Dashboard/Requests/Applyleave/index";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { apiService } from "@/services/api.service";
 import { useRouter } from "next/router";
-// import Astyle from 'styles//Requests//applyleave.module.css';
-import { BsArrowLeftSquare } from "react-icons/bs";
-import DropZone from "@/pages/SharedComponent/dropzone";
 import { useForm } from "react-hook-form";
 import { useDropzone } from "react-dropzone";
 import { useCallback } from "react";
@@ -20,6 +16,7 @@ const ApplyLeave = () => {
   const [userID, setUserId] = useState();
   const router = useRouter();
   const [filePath, setFilePath] = useState();
+  const [fileName, setFileName] = useState();
   const getDropdowndata = async () => {
     const res = await apiService.commonGetCall("Master/GetLeaveType");
     setLeaveType(res.data);
@@ -32,8 +29,10 @@ const ApplyLeave = () => {
 
   async function onSubmit(data) {
     let StaffID = sessionStorage.getItem("userID");
-    let formData = { ...data, StaffID }
-    debugger;
+    let entity = {
+      "MedicalUrl": filePath
+    }
+    let formData = { ...data, StaffID ,...entity }
     await apiService.commonPostCall("HR/InsertStaffLeaves", formData);
     Swal.fire({
       icon: "success",
@@ -41,7 +40,7 @@ const ApplyLeave = () => {
     });
     sessionStorage.setItem("Sdate", data.SDateOfLeave);
     sessionStorage.setItem("Edate", data.EDateOfLeave);
-    console.log(data);
+    console.log(formData);
     router.push("/Requests/Leaverequest");
   }
   const onDrop = useCallback((acceptedFiles) => {
@@ -52,43 +51,53 @@ const ApplyLeave = () => {
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   const uploadFile = async (data) => {
+    debugger
     let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
     const formData = new FormData();
     formData.append("file_upload", data[0], data[0].name);
-    let res = await axios.post(
+    setFileName(data[0].name)
+    console.log(data[0].name)
+    let invoiceURL = await axios.post(
       hostURL + "Payroll/ProjectAttachments",
       formData
     );
-    console.log(res, "File Path");
-    Swal.fire("Uploaded successfully");
-    setFilePath(res.data);
 
+    // TODO: Gopi's code for validation
+    let environmentVariable = "https://103.12.1.103";
+
+    let imagePath = invoiceURL.data.split("\\", 1);
+    let Preview = invoiceURL.data.replace(imagePath, environmentVariable);
+    Swal.fire('Uploaded successfully.');
+    // setFilePath(invoiceURL.data);
+    setFilePath(Preview);
   };
   const customStyles = {
     content: {
-        top: "50%",
-        left: "50%",
-        right: "auto",
-        bottom: "auto",
-        marginRight: "-50%",
-        transform: "translate(-50%, -50%)",
-        width: "60%",
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      marginRight: "-50%",
+      transform: "translate(-50%, -50%)",
+      width: "60%",
     },
     errorMsg: {
-        fontSize: "12px",
-        fontWeight: "500",
-        color: "red",
+      fontSize: "12px",
+      fontWeight: "500",
+      color: "red",
     },
     inputLabel: {
-        fontSize: "16px",
+      fontSize: "16px",
     },
-};
+  };
   return (
     <Layout>
       <div className="container-fluid">
         <div className="row">
           <div className="col-lg-12">
-            <h3 className="Heading">Leave Requests</h3>
+            <h3 className=" fs-5 mt-3 fw-bold" style={{ color: "#3247d5" }}>
+              Leave Request
+            </h3>
             <div className="card p-3 border-0 shadow-lg  mt-4">
               <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="row">
@@ -158,19 +167,30 @@ const ApplyLeave = () => {
                   <div className="col-lg-3">
                     <label style={{ fontWeight: "bold" }}>Attachment</label>
                     {/* <DropZone {...register("MedicalUrl", { required: true })} /> */}
-                    <div style={{ border: '2px dashed blue', height: "100px"}}>
+                    <div style={{ border: '2px dashed blue', height: "100px" }}>
                       <div {...getRootProps()}>
-                        <input {...getInputProps()}{...register("Attachment", { required: "This field is required" })} />
-                       
+                        <input {...getInputProps()} />
+
                         {isDragActive ? (
                           <p>Drop the files here ...</p>
                         ) : (
-                          <p style={{marginTop:"30px",textAlign:"center"}}>
-                            Drop the files here ..
+                          <p style={{ marginTop: "30px", textAlign: "center" }}>
+                            {
+                              filePath == null && (
+                                <p>Drag 'n' drop some files here, or click to select
+                                  files</p>
+                              )
+                            }
+                            {
+                              filePath && (
+                                <p>{fileName}</p>
+                              )
+                            }
                           </p>
-                        )} 
+                        )}
                       </div>
-                    </div>{errors.Attachment && <p className="error-message" style={customStyles.errorMsg}>{errors.Attachment.message}</p>}
+                    </div>
+                    {/* {errors.Attachment && <p className="error-message" style={customStyles.errorMsg}>{errors.Attachment.message}</p>} */}
                     {/* {errors.MedicalUrl && <p className="error-message" style={{ color: "red" }}>{errors.MedicalUrl.message}</p>} */}
                   </div>
                   <div className="col-lg-2"></div>

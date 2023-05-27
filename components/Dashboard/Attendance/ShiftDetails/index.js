@@ -5,10 +5,9 @@ import axios from "axios";
 import { apiService } from "@/services/api.service";
 import Styles from "@/styles/shiftdetails.module.css";
 import { IoIosAddCircleOutline } from "react-icons/io";
-import { DownloadTableExcel } from "react-export-table-to-excel";
 import ReactPaginate from "react-paginate";
 import Swal from "sweetalert2";
-
+import * as XLSX from "xlsx";
 
 
 // import Styles from '../../styles/shiftdetails.module.css'
@@ -25,6 +24,8 @@ const Shiftdetails = () => {
   const [shiftDetails, setShiftDetails] = useState([]);
   const [approvedshiftDetails, setapprovedshiftDetails] = useState([]);
   const [rejectedshiftDetails, setrejectedshiftDetails] = useState([]);
+  const [myshiftdetails, setmyshiftdetails] = useState(false);
+
 
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
@@ -33,49 +34,35 @@ const Shiftdetails = () => {
   let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
   let staffID;
   const tableRef = useRef(null);
+  // Gopi:'s Code 
 
-  
+  // 
+  // setShiftDetails(shifts => {
+  //   const updatedshifts = shifts.map(item => {
+  //       if (item.staffID === data.staffID) {
+  //           return { ...item, isChecked: checked };
+  //       }
+  //       return item;
+  //   });
+  //   return updatedshifts;
+  // });
+
   useEffect(() => {
     getShiftDetails();
+    setmyshiftdetails(true);
     // getapprovedshiftDetails();
     // getrejectedshiftDetails();
   }, []);
 
 
-  useEffect(() => {
-    if (userid) {
-      const resu = getCurrentMonthDates();
-      if (resu) {
-        getShiftDetails(resu.setStartDate, resu.setEndDate);
-      }
-    }
-  }, [userid]);
-
-
-  const getCurrentMonthDates = () => {
-    let newDate = new Date();
-    let firstDayOfMonth = new Date(newDate.getFullYear(), newDate.getMonth());
-    let fromDate = formateDate(firstDayOfMonth);
-    const year = newDate.getFullYear();
-    const month = newDate.getMonth() + 1;
-    const lastDay = new Date(year, month, 0).getDate();
-    const toDate = `${year}-${month.toString().padStart(2, "0")}-${lastDay
-      .toString()
-      .padStart(2, "0")}`;
-    setStartDate(fromDate);
-    setEndDate(toDate);
-    return {
-      setStartDate: fromDate,
-      setEndDate: toDate,
-    };
-  };
-
-  const formateDate = (datetoformat) => {
-    const day = datetoformat.getDate().toString().padStart(2, "0");
-    const month = (datetoformat.getMonth() + 1).toString().padStart(2, "0");
-    const year = datetoformat.getFullYear().toString();
-    return `${year}-${month}-${day}`;
-  };
+  // useEffect(() => {
+  //   if (userid) {
+  //     const resu = getCurrentMonthDates();
+  //     if (resu) {
+  //       getShiftDetails(resu.setStartDate, resu.setEndDate);
+  //     }
+  //   }
+  // }, [userid]);
 
   const getStartDate = (selectedDate) => {
     setStartDate(selectedDate);
@@ -100,12 +87,12 @@ const Shiftdetails = () => {
     return getShiftBySlectedDate(startDate, endDatesss);
   };
 
-  const getShiftBySlectedDate =  async (Sdate,Edate) => {
+  const getShiftBySlectedDate = async (Sdate, Edate) => {
     debugger
     const datesss = shiftDetails.filter((item) => {
-          return item.shiftDate == Sdate && item.endDate == Edate;
-        });
-        return datesss
+      item.shiftDate = Sdate && item.shiftDate == Edate;
+    });
+    return datesss
   }
   const getShiftDetails = async () => {
     const userid = sessionStorage.getItem("userID");
@@ -127,6 +114,23 @@ const Shiftdetails = () => {
   const offset = currentPage * PER_PAGE;
   const pageCount = Math.ceil(shiftDetails.length / PER_PAGE);
 
+
+  const exportToExcel = () => {
+    let element;
+    if (myshiftdetails == true) {
+      element = document.getElementById("shiftid");
+    }
+
+    if (element) {
+      const ws = XLSX.utils.table_to_sheet(element);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+      if (myshiftdetails == true) {
+        XLSX.writeFile(wb, "shiftdetails.xlsx");
+      }
+
+    }
+  };
 
 
   //   const getapprovedshiftDetails = async () => {
@@ -178,12 +182,18 @@ const Shiftdetails = () => {
       <div className="row">
         <div className="col-lg-3">
           <br />
-          <Link href="/Attendance/shiftdetails" className={Styles.mainheader}>
+          <Link href="/Attendance/ShiftDetails" className={Styles.mainheader}>
             My Weekly Shift
           </Link>
-          <div className="line-border"></div>
+          <div className="line-border" style={{
+            border: "1px solid #2f87cc",
+            bordertopleftradius: "51px",
+            bordertoprightradius: "51px",
+            margintop: "0px",
+            width: "51%"
+          }}></div>
         </div>
-        <div className="col-lg-3">
+        <div className="col-lg-3" style={{ marginLeft: "-30px" }} >
           <br />
           {roleid != 3 ||
             <Link href="/Attendance/MyTeamWeeklyShift" className={Styles.mainheader}> My Team Weekly Shift
@@ -230,12 +240,8 @@ const Shiftdetails = () => {
                   <br />
                   {count > 0 ?
                     <>
-                      <DownloadTableExcel
-                        filename="users table"
-                        sheet="users"
-                        currentTableRef={tableRef.current}
-                      > <button className="button" style={{ marginTop: "7px" }} > Download</button></DownloadTableExcel>
 
+                      <button className="button" onClick={exportToExcel} style={{ marginTop: "7px" }} > Download</button>
                     </>
                     : null}
                 </div>
@@ -249,7 +255,7 @@ const Shiftdetails = () => {
       <div className="row mt-3">
         <div className="col-lg-12">
           <h6 style={{ color: "#3247d5" }}>Showing {count} Results</h6>
-          <table className="table" style={{ width: "99%" }} ref={tableRef}>
+          <table className="table" style={{ width: "99%" }} id="shiftid">
             <thead>
               <tr className="bg-info text-white">
                 <th>Start Date</th>

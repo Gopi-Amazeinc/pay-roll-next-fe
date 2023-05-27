@@ -2,20 +2,16 @@ import React, { useState, useEffect } from "react";
 import Modal from "react-modal";
 import Swal from "sweetalert2";
 import Link from "next/link";
-import { DownloadTableExcel } from "react-export-table-to-excel";
+import * as XLSX from "xlsx";
 import Styles from "../.././../../styles/finalpayrolldetails.module.css";
 import { apiService } from "@/services/api.service";
 import ReactPaginate from "react-paginate";
-import { useRef } from "react";
 
 const FinalPayrollDetails = () => {
   const [preliminarySalary, setPreliminarySalary] = useState([]);
-
   const [department, setDepartment] = useState([]);
   const [keyword, setKeyword] = useState("");
-
-
-  const tableRef = useRef(null);
+  const [departmentFilter, setDepartmentFilter] = useState("")
 
   const getData = async () => {
     // This API is used for fetch the Departmnent data for Dashboard and  Dropdown
@@ -29,17 +25,21 @@ const FinalPayrollDetails = () => {
   };
   const [selectedRows, setSelectedRows] = useState([]);
   const [checkedState, setCheckedState] = useState([]);
-
+  const [ischeckedstate,setischeckedstate] = useState(false);
 
   // const [selctedValues, setSelctedValues] = useState([]);
   // const [deleteSalary, setDeleteSalary] = useState();
 
   const handleRowSelect = (event, id) => {
-    debugger
-    if (id === 'all') {
-      setSelectedRows(event.target.checked ? preliminarySalary.map(data => data.id) : []);
+    debugger;
+    if (id === "all") {
+      setCheckedState(event.target.checked ? preliminarySalary : []);
     } else {
-      setSelectedRows(selectedRows.includes(id) ? selectedRows.filter(rowId => rowId !== id) : [...selectedRows, id]);
+      setCheckedState(
+        checkedState.includes(id)
+          ? checkedState.filter((rowId) => rowId !== id)
+          : [...checkedState, id]
+      );
     }
   };
 
@@ -95,11 +95,11 @@ const FinalPayrollDetails = () => {
     // console.log(`${value} is ${checked}`);
     if (checked) {
       preliminarySalary.find((x) => x.id == data.id).isChecked = true;
-      let entity = {
-        staffID: data.staffID,
-        endDateformated: data.endDateFormated,
-      };
-      setCheckedState([...checkedState, entity]);
+      // let entity = {
+      //   staffID: data.staffID,
+      //   endDateformated: data.endDateFormated,
+      // };
+      setCheckedState([...checkedState, data]);
     } else {
       preliminarySalary.find((x) => x.id == data.id).isChecked = false;
       const index = checkedState.indexOf(event.target.value);
@@ -112,6 +112,8 @@ const FinalPayrollDetails = () => {
   };
 
   console.log(checkedState);
+
+
   const handleDelete = async () => {
     const deletedIDS = await deleteSalary(checkedState);
     console.log(deletedIDS);
@@ -132,17 +134,40 @@ const FinalPayrollDetails = () => {
       //   checkedState[index].isCompleted = true;
       //   setCheckedState(checkedState);
       // }
-      const deleteddddsalary = await Promise.all(
-        checkedState && checkedState.length > 0
-          ? checkedState.map(async (data) => {
-            const res = await apiService.commonGetCall(
-              `Payroll/DeletePreliminary?staffID=${data.staffID}&Enddate=${data.endDateformated}`
-            );
-            const deletedData = res.data[0] || res.data;
-            // console.log(res.data);
-          })
-          : []
+      // const deleteddddsalary = await Promise.all(
+      checkedState && checkedState.length > 0;
+      let entity = {
+        employeID: 202,
+        payrolltype: 1,
+        month: 3,
+        endyear: 2023,
+        endDateFormated: "2023-03-15",
+        name: "madhav",
+        id: 272548,
+        staffID: 38274,
+        componentName: "OT_ON_SPECIAL_HOL_GREATER_THAN_8_hrs",
+        componentValue: 646.71,
+        endDate: "2023-03-15T00:00:00",
+        modified: "2023-04-08T13:29:34.57",
+        modifiedBy: "Admin",
+        hidden: false,
+        ded_type: "Earning",
+        newvalue: 0,
+        department_name: null,
+        modifiedDate: "2023-04-08T13:29:34.57",
+        isChecked: 0,
+      };
+      // ? checkedState.map(async (data) => {
+      const res = await apiService.commonPostCall(
+        // `Payroll/DeletePreliminary?staffID=${data.staffID}&Enddate=${data.endDateformated}`
+        `Payroll/DeletePreliminary`,entity
+        // checkedState
       );
+      const deletedData = res.data[0] || res.data;
+      // console.log(res.data);
+      // })
+      // : []
+      // );
       return deleteddddsalary;
 
       // This API is used to delete the dashboard data based on StaffID,EndDate
@@ -166,6 +191,18 @@ const FinalPayrollDetails = () => {
   const offset = currentPage * PER_PAGE;
   const pageCount = Math.ceil(preliminarySalary.length / PER_PAGE);
 
+
+  const exportToExcel = () => {
+    let element = document.getElementById("payrollDataID");
+    if (element) {
+      const ws = XLSX.utils.table_to_sheet(element);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+
+      XLSX.writeFile(wb, "payrollData.xlsx");
+
+    };
+  }
   return (
     <div className="container-fluid">
       <h3 className=" Heading">Finalization Payroll Details</h3>
@@ -189,7 +226,7 @@ const FinalPayrollDetails = () => {
             />
           </div>
           <div className="col-lg-2">
-            <select id="Department" name="Department" className="form-select" >
+            <select id="Department" name="Department" className="form-select">
               <option value="" disabled="">
                 Select Department
               </option>
@@ -203,15 +240,15 @@ const FinalPayrollDetails = () => {
             </select>
           </div>
           <div className="col-lg-3">
-            <DownloadTableExcel
-              filename="users table"
-              sheet="users"
-              currentTableRef={tableRef.current}
-            >
-              <button type="button" className=" EditDelteBTN">
-                Export To Excel
-              </button>
-            </DownloadTableExcel>
+
+
+
+
+
+            <button type="button" className=" EditDelteBTN" onClick={exportToExcel}>
+              Export To Excel
+            </button>
+
           </div>
         </div>
       </div>
@@ -219,16 +256,19 @@ const FinalPayrollDetails = () => {
       <div className="row">
         <div className="col-lg-8"></div>
 
-
-        <div className="col-lg-2" style={{ marginLeft: "95px", color: "#3247d5" }}>Total Amount:</div>
+        <div
+          className="col-lg-2"
+          style={{ marginLeft: "95px", color: "#3247d5" }}
+        >
+          Total Amount:
+        </div>
       </div>
       <br />
       <br />
       <div className="row">
+        <div className="col-lg-4"></div>
         <div className="col-lg-4">
-        </div>
-        <div className="col-lg-4"
-        ><p className="Heading">Employees in selected Period</p>
+          <p className="Heading">Employees in selected Period</p>
         </div>
         <div className="col-lg-2" style={{ marginLeft: "83px" }}>
           <button
@@ -242,28 +282,32 @@ const FinalPayrollDetails = () => {
       </div>
       <div className="row ">
         <div className="col-lg-4"> </div>
-        <div className="col-lg-5">
-
-        </div>
+        <div className="col-lg-5"></div>
 
         <div className="col-lg-12">
-          <span>
+          {/* <span>
             Select All
             <input
               type="checkbox"
               checked={selectedRows.length === preliminarySalary.length}
-              onChange={e => handleRowSelect(e, 'all')}
+              onChange={(e) => handleRowSelect(e, "all")}
             />
-          </span>
+          </span> */}
           <br />
           <table
             style={{ whiteSpace: "nowrap" }}
             className="table text-center "
-            ref={tableRef}
+            id="payrollDataID"
           >
             <thead>
               <tr className="text-white">
-                <th>Select</th>
+                <th>Select
+                <input
+              type="checkbox"
+              checked={ischeckedstate}
+              onChange={(e) => handleRowSelect(e, "all")}
+            />
+                </th>
                 <th>Employee ID</th>
                 <th>Staff ID</th>
                 <th>Employee Name</th>
@@ -279,9 +323,11 @@ const FinalPayrollDetails = () => {
                 .filter(post => {
                   return Object.values(post).some(value =>
                     value !== null &&
-                    value.toString().toLowerCase().includes(keyword.toLowerCase())
+                    value.toString().toLowerCase().includes(keyword.toLowerCase()
+                    )
                   );
-                }).slice(offset, offset + PER_PAGE)
+                })
+                .slice(offset, offset + PER_PAGE)
                 .map((data, index) => {
                   return (
                     <tr className="text-dark" key={index}>

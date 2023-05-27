@@ -1,6 +1,4 @@
-import Layout from "@/components/layout/layout"
 import React, { useEffect, useState } from 'react'
-import axios from 'axios';
 import Link from 'next/link';
 import { apiService } from "@/services/api.service";
 import { useRouter } from "next/navigation";
@@ -9,17 +7,13 @@ import Swal from "sweetalert2";
 import { useDropzone } from "react-dropzone";
 import Modal from 'react-modal';
 import Styles from "@../../../pages/OT/Ot.module.css"
-import {
-    Calendar as BigCalendar,
-    momentLocalizer,
-    Views
-} from "react-big-calendar";
+import { Calendar as BigCalendar, momentLocalizer, Views } from "react-big-calendar";
 import ReactPaginate from "react-paginate";
 import moment from "moment";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 moment.locale("en-GB");
-//momentLocalizer(moment);
 const localizer = momentLocalizer(moment);
+
 const Index = () => {
     const { register, handleSubmit, reset, formState } = useForm();
     const [pending, setPending] = useState(false)
@@ -32,24 +26,6 @@ const Index = () => {
     const [userID, setUserID] = useState();
     const [isOpen, ModalIsOpen] = useState(false)
     const [keyword, setKeyword] = useState("");
-    const getPendingData = async (StartingDate, EndDate) => {
-        debugger;
-        const res = await apiService.commonGetCall("Employee/GetPendingManagerLeavesByStaffID?ID=" + userID + "&TypeID=1&Sdate=" + StartingDate + "&Edate=" + EndDate)
-        setPendingData(res.data, "pending");
-        console.log(res.data);
-    }
-    const getApprovedData = async (StartingDate, EndDate) => {
-        debugger;
-        const res = await apiService.commonGetCall("Employee/GetApprovedManagerLeavesByStaffID?ID=" + userID + "&TypeID=1&Sdate=" + StartingDate + "&Edate=" + EndDate)
-        setApprovedData(res.data);
-        console.log(res.data);
-    }
-    const getRejectedData = async (StartingDate, EndDate) => {
-        debugger;
-        const res = await apiService.commonGetCall("Employee/GetRejectedManagerLeavesByStaffID?ID=" + userID + "&TypeID=1&Sdate=" + StartingDate + "&Edate=" + EndDate)
-        setRejectedData(res.data);
-        console.log(res.data);
-    }
     const togglePending = () => {
         setPending(true)
         setRejected(false)
@@ -67,7 +43,6 @@ const Index = () => {
         setPending(false)
         setApproved(false)
     }
-
     const [calender, setCalender] = useState(false)
     const [listview, setListView] = useState(false)
     const toggleCalender = () => {
@@ -88,6 +63,25 @@ const Index = () => {
     const closeModal = () => {
         setModalOpen(false)
     }
+
+    const getPendingData = async (StartingDate, EndDate) => {
+        const res = await apiService.commonGetCall("Employee/GetPendingManagerLeavesByStaffID?supervisor=" + userID + "&TypeID=1&Sdate=" + StartingDate + "&Edate=" + EndDate)
+        setPendingData(res.data, "pending");
+        console.log(res.data);
+    }
+    const getApprovedData = async (StartingDate, EndDate) => {
+        const res = await apiService.commonGetCall("Employee/GetApprovedManagerLeavesByStaffID?supervisor=" + userID + "&TypeID=1&Sdate=" + StartingDate + "&Edate=" + EndDate)
+        setApprovedData(res.data);
+        console.log(res.data);
+    }
+    const getRejectedData = async (StartingDate, EndDate) => {
+        const res = await apiService.commonGetCall("Employee/GetRejectedManagerLeavesByStaffID?supervisor=" + userID + "&TypeID=1&Sdate=" + StartingDate + "&Edate=" + EndDate)
+        setRejectedData(res.data);
+        console.log(res.data);
+    }
+
+
+
     const customStyles = {
         content: {
             top: '20%',
@@ -118,7 +112,6 @@ const Index = () => {
 
     };
     const getDateBySelectedDate = (endDatesss) => {
-        debugger;
         return getPendingData(startDate, endDatesss);
     };
     const getCurrentMonthDates = () => {
@@ -154,7 +147,6 @@ const Index = () => {
         }
     };
     const getDataBySelectedDate = (endDatesss) => {
-        debugger;
         return getPendingData(startDate, endDatesss);
     };
     const PER_PAGE = 5;
@@ -224,7 +216,7 @@ const Index = () => {
     }
     let id;
     const reject = () => {
-        debugger;
+
         id = sessionStorage.getItem("id")
         let reason = watch("Reason")
         let data = {
@@ -253,7 +245,6 @@ const Index = () => {
     }
     const [selectedRows, setSelectedRows] = useState([]);
     const handleRowSelect = (event, id) => {
-        debugger
         if (id === 'all') {
             setSelectedRows(event.target.checked ? pendingdata.map(data => data.id) : []);
         } else {
@@ -265,7 +256,7 @@ const Index = () => {
         <div className="container-fluid">
             <div claasName="row">
                 <div className="col-lg-12">
-                    <br/>
+                    <br />
                     <div className="row">
                         <div className="col-md-3">
                             <Link href="/Requests/Leaverequest">
@@ -373,18 +364,18 @@ const Index = () => {
                                                 <th>Employee Name</th>
                                                 <th>From Date</th>
                                                 <th>To Date</th>
-                                                <th>Leave Type</th>
+                                                {/* <th>Leave Type</th> */}
                                                 <th>Leave Reason</th>
-                                                <th>Leave Days Count</th>
+                                                {/* <th>Leave Days Count</th> */}
                                                 <th>Attachment</th>
-                                                <th>Stage & Status</th>
+                                                <th>Status</th>
                                                 <th>Actions</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             {
                                                 pendingdata.filter(data => {
-                                                    if ((data.sDateOfLeave.toString().includes(keyword.toLowerCase())) || (data.eDateOfLeave.toString().includes(keyword)) || (data.status.toLowerCase().includes(keyword)) || (data.leaveReason.toString().includes(keyword.toLowerCase()))) {
+                                                    if ((data.sDateOfLeave.toString().includes(keyword.toLowerCase())) || (data.eDateOfLeave.toString().includes(keyword)) || (data.status.toLowerCase().includes(keyword)) || (data.leaveReason.toString().includes(keyword.toLowerCase())) || (data.medicalUrl.toString().includes(keyword.toString()))) {
                                                         return data;
                                                     }
                                                 }).slice(offset, offset + PER_PAGE).map((data) => {
@@ -393,9 +384,12 @@ const Index = () => {
                                                             <td>
                                                                 <input type="checkbox"></input>
                                                             </td>
+                                                            <td>{data.firstName}</td>
                                                             <td>{data.sDateOfLeave}</td>
                                                             <td>{data.eDateOfLeave}</td>
+                                                            {/* <td>{data.leaveType}</td> */}
                                                             <td>{data.leaveReason}</td>
+                                                            <td>{data.medicalUrl}</td>
                                                             <td>{data.status}</td>
                                                             <td>
                                                                 <button onClick={approve.bind(this, data.id)} className='edit-btn'>Approve</button>
@@ -415,9 +409,11 @@ const Index = () => {
                                     <table className='table'>
                                         <thead className='bg-info text-white'>
                                             <tr>
+                                                <th>Employee Name</th>
                                                 <th>From Date</th>
                                                 <th>To Date</th>
                                                 <th>Leave Reason</th>
+                                                <th>Attachment</th>
                                                 <th>Status</th>
                                             </tr>
                                         </thead>
@@ -430,9 +426,11 @@ const Index = () => {
                                                 }).slice(offset, offset + PER_PAGE).map((data) => {
                                                     return (
                                                         <tr key={data.id}>
+                                                            <td>{data.firstName}</td>
                                                             <td>{data.sDateOfLeave}</td>
                                                             <td>{data.eDateOfLeave}</td>
                                                             <td>{data.leaveReason}</td>
+                                                            <td>{data.medicalUrl}</td>
                                                             <td>{data.status}</td>
                                                         </tr>
                                                     );
@@ -447,6 +445,7 @@ const Index = () => {
                                     <table className='table'>
                                         <thead className='bg-info text-white'>
                                             <tr>
+                                                <th>Employee Name</th>
                                                 <th>From Date</th>
                                                 <th>To Date</th>
                                                 <th>Leave Reason</th>
@@ -462,6 +461,7 @@ const Index = () => {
                                                 }).slice(offset, offset + PER_PAGE).map((data) => {
                                                     return (
                                                         <tr key={data.id}>
+                                                            <td>{data.firstName}</td>
                                                             <td>{data.sDateOfLeave}</td>
                                                             <td>{data.eDateOfLeave}</td>
                                                             <td>{data.leaveReason}</td>

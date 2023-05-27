@@ -90,7 +90,7 @@ function WorkLocationMasterForm({ editData }) {
                   </div>
                   <div className="col-lg-5">
                     <label className="fw-bold">Description<span id={Styles.asterisk}>* </span></label>
-                    <textarea name="Description" className="form-control" {...register("Description", { required: true })} placeholder="Description" />
+                    <textarea name="Description" className="form-control" minLength={10}{...register("Description", { required: true })} placeholder="Description" />
                     <div>{errors.Description && <span style={customStyles.errorMsg} >Please enter description</span>}</div>
                   </div>
                 </div>

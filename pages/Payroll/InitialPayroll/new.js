@@ -47,15 +47,15 @@ const InitialPayrollForm = () => {
     getData();
   }, []);
 
-  // const runPayrollButton = () => {
-  //   router.push("/Payroll/InitialPayroll")
-  //   Swal.fire({
-  //     icon: "success",
-  //     title: "Initial payroll ran Successfully",
-  //     text: "Payroll run has been completed",
-  //   });
+  const runPayrollButton = () => {
+    router.push("/Payroll/InitialPayroll")
+    Swal.fire({
+      icon: "success",
+      title: "Initial payroll ran Successfully",
+      text: "Payroll run has been completed",
+    });
 
-  // }
+  }
   function handleData(data) {
     if (watch("PayCode")) {
       let res = paycode.filter((x) => x.paycode == watch("PayCode"))[0]
@@ -189,7 +189,7 @@ const InitialPayrollForm = () => {
                 />
               </div>
               <div className="col-lg-1"></div>
-              <div className="col-lg-2 ">
+              <div className="col-lg-3 ">
                 <br />
                 <label></label>
                 <Button

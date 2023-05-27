@@ -9,6 +9,9 @@ import { useRouter } from "next/router";
 import { DownloadTableExcel } from 'react-export-table-to-excel';
 import { Modal, ModalBody, ModalFooter } from "reactstrap";
 import { useForm } from 'react-hook-form';
+import ReactPaginate from "react-paginate";
+import * as XLSX from "xlsx";
+
 
 
 const MyTeamAttendancecorrectiondashboard = () => {
@@ -21,9 +24,9 @@ const MyTeamAttendancecorrectiondashboard = () => {
     const [approved, setApproved] = useState(false);
     const [rejected, setRejected] = useState(false);
 
-    const [pendingDashboardData, setpendingDashboardData] = useState([]);
-    const [approvedDashboardData, setapprovedDashboardData] = useState([]);
-    const [rejectedDashboardData, setrejectedDashboardData] = useState([]);
+    // const [pendingDashboardData, setpendingDashboardData] = useState([]);
+    // const [approvedDashboardData, setapprovedDashboardData] = useState([]);
+    // const [rejectedDashboardData, setrejectedDashboardData] = useState([]);
 
     const [managerPending, setManagerPendingData] = useState([]);
     const [managerApproved, setManagerApprovedData] = useState([]);
@@ -166,11 +169,21 @@ const MyTeamAttendancecorrectiondashboard = () => {
             ID: RejectedID,
             Comments: reason
         }
-        const res = await apiService.commonPostCall("Payroll/RejectAttedanceCoorection", entity)
-        setModalOpen(!modalOpen)
-        getPendingManager(startDate, endDate);
+        if (reason) {
+            const res = await apiService.commonPostCall("Payroll/RejectAttedanceCoorection", entity)
+            Swal.fire(" Rejected Successfully!");
+            getPendingManager(startDate, endDate);
+        }
+
     }
 
+    const PER_PAGE = 10;
+    const [currentPage, setCurrentPage] = useState(0);
+    function handlePageClick({ selected: selectedPage }) {
+        setCurrentPage(selectedPage)
+    }
+    const offset = currentPage * PER_PAGE;
+    const pageCount = Math.ceil(managerPending.length / PER_PAGE);
 
 
 
@@ -204,6 +217,33 @@ const MyTeamAttendancecorrectiondashboard = () => {
         });
     };
 
+
+     const exportToExcel = () => {
+    let element;
+    if (pending == true) {
+      element = document.getElementById("pendingid");
+    }
+    else if (approved == true) {
+      element = document.getElementById("approvedid");
+    }
+    else {
+      element = document.getElementById("rejectid");
+    }
+    if (element) {
+      const ws = XLSX.utils.table_to_sheet(element);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+      if(pending == true) {
+        XLSX.writeFile(wb, "Attendancepending.xlsx");
+      }
+      else if (approved == true) {
+        XLSX.writeFile(wb, "Attendanceapprooved.xlsx");
+      }
+      else {
+        XLSX.writeFile(wb, "Attendancerejected.xlsx");
+      }
+    }
+  };
 
 
     // const deleteAttendanceCorrection = (id) => {
@@ -243,16 +283,22 @@ const MyTeamAttendancecorrectiondashboard = () => {
                 </div>
                 {(roleID == 3 || roleID == 2) && (
                     <>
-                        <div className="col-lg-3" style={{ marginLeft: "-60px" }}>
+                        <div className="col-lg-3" style={{ marginLeft: "-30px" }}>
                             <Link
                                 className={Styles.mainheader}
                                 href="/Attendance/MyTeamAttendanceCorrection"
                             >
                                 My Team Attendance Correction
                             </Link>
-                            <div className="line-border"></div>
+                            <div className="line-border" style={{
+                                border: "1px solid #2f87cc",
+                                bordertopleftradius: "51px",
+                                bordertoprightradius: "51px",
+                                margintop: "0px",
+                                width: "98%"
+                            }}></div>
                         </div>
-                        
+
                     </>
                 )}
             </div>
@@ -281,7 +327,7 @@ const MyTeamAttendancecorrectiondashboard = () => {
                             <>
                                 <div className="row">
                                     <div className="col-lg-5">
-                                        <button className="button">Download</button>
+                                        <button className="button" onClick={exportToExcel} >Download</button>
                                     </div>
                                 </div>
                             </>
@@ -375,10 +421,10 @@ const MyTeamAttendancecorrectiondashboard = () => {
                     </table>
                 )} */}
 
-                {(pending && roleID == "3" )  && (
+                {(pending && roleID == "3") && (
                     <>
                         <h6 style={{ color: "#3247d5" }}>Showing {pendingcount} Results</h6>
-                        <table className="table table-hover" ref={tableRef}>
+                        <table className="table table-hover"  id="pendingid">
                             <thead className="bg-info text-white">
                                 <tr>
                                     <th>Employee Name</th>
@@ -393,30 +439,57 @@ const MyTeamAttendancecorrectiondashboard = () => {
                             <tbody>
                                 {Array.isArray(managerPending) && managerPending.length > 0 && (
                                     <>
-                                        {managerPending.map((data) => {
-                                            return (
-                                                <tr key={data.id}>
-                                                    <td>{data.staffname}</td>
-                                                    <td>{data.attendanceDate}</td>
-                                                    <td>{data.startTime}</td>
-                                                    <td>{data.endTime}</td>
-                                                    <td>{data.approved}</td>
-                                                    <td>
-                                                        <button
-                                                            onClick={() => approveAttedanceCorrection(data)}
-                                                            className="edit-btn"
-                                                        >
-                                                            Accept
-                                                        </button>&nbsp;
-                                                        <button onClick={() => reject(data)} className="edit-btn">Reject</button>
-                                                    </td>
-                                                </tr>
-                                            );
-                                        })}
+                                        {managerPending.
+                                            filter(post => {
+                                                return Object.values(post).some(value =>
+                                                    value !== null && value.toString().toLowerCase().includes(keyword.toLowerCase())
+                                                );
+                                            })
+                                            .map((data) => {
+                                                return (
+                                                    <tr key={data.id}>
+                                                        <td>{data.staffname}</td>
+                                                        <td>{data.attendanceDate}</td>
+                                                        <td>{data.startTime}</td>
+                                                        <td>{data.endTime}</td>
+                                                        <td>{data.approved}</td>
+                                                        <td>
+                                                            <button
+                                                                onClick={() => approveAttedanceCorrection(data)}
+                                                                className="edit-btn"
+                                                            >
+                                                                Accept
+                                                            </button>&nbsp;
+                                                            <button onClick={() => reject(data)} className="edit-btn">Reject</button>
+                                                        </td>
+                                                    </tr>
+                                                );
+                                            })}
                                     </>
                                 )}
                             </tbody>
                         </table>
+                        <div className="mb-4 mt-4 text-center">
+                            <ReactPaginate
+                                previousLabel={"Previous"}
+                                nextLabel={"Next"}
+                                breakLabel={"..."}
+                                pageCount={pageCount}
+                                marginPagesDisplayed={2}
+                                pageRangeDisplayed={3}
+                                onPageChange={handlePageClick}
+                                containerClassName={"pagination  justify-content-center"}
+                                pageClassName={"page-item "}
+                                pageLinkClassName={"page-link"}
+                                previousClassName={"page-item"}
+                                previousLinkClassName={"page-link"}
+                                nextClassName={"page-item"}
+                                nextLinkClassName={"page-link"}
+                                breakClassName={"page-item"}
+                                breakLinkClassName={"page-link"}
+                                activeClassName={"active primary"}
+                            />
+                        </div>
                     </>
                 )}
                 <div className='row'>
@@ -436,8 +509,8 @@ const MyTeamAttendancecorrectiondashboard = () => {
                                 <div className='row'>
                                     <div className='col-lg-12'>
                                         <label>Reason *</label>
-                                        <textarea placeholder='Reason'{...register("comments", { required: true })} className='form-control'></textarea>
-                                        {errors.reason && (
+                                        <textarea placeholder='Reason' minLength={5} {...register("comments", { required: true })} className='form-control'></textarea>
+                                        {errors.comments && (
                                             <p className="text-danger">
                                                 Please enter Valid Reason
                                             </p>
@@ -460,7 +533,7 @@ const MyTeamAttendancecorrectiondashboard = () => {
                     </Modal>
                 </div>
 
-{/* 
+                {/* 
                 {approved && roleID != "3" && (
                     <>
                         <h6 style={{ color: "#3247d5" }}>Showing {approvedcount} Results</h6>
@@ -500,7 +573,7 @@ const MyTeamAttendancecorrectiondashboard = () => {
                 {approved && roleID == "3" && (
                     <>
                         <h6 style={{ color: "#3247d5" }}>Showing {approvedcount} Results</h6>
-                        <table className="table table-hover" ref={tableRef}>
+                        <table className="table table-hover" id="approvedid">
                             <thead className="bg-info text-white">
                                 <tr>
                                     <th>Employee Name</th>
@@ -529,13 +602,34 @@ const MyTeamAttendancecorrectiondashboard = () => {
                                 )}
                             </tbody>
                         </table>
+                        <div className="mb-4 mt-4 text-center">
+                            <ReactPaginate
+                                previousLabel={"Previous"}
+                                nextLabel={"Next"}
+                                breakLabel={"..."}
+                                pageCount={pageCount}
+                                marginPagesDisplayed={2}
+                                pageRangeDisplayed={3}
+                                onPageChange={handlePageClick}
+                                containerClassName={"pagination  justify-content-center"}
+                                pageClassName={"page-item "}
+                                pageLinkClassName={"page-link"}
+                                previousClassName={"page-item"}
+                                previousLinkClassName={"page-link"}
+                                nextClassName={"page-item"}
+                                nextLinkClassName={"page-link"}
+                                breakClassName={"page-item"}
+                                breakLinkClassName={"page-link"}
+                                activeClassName={"active primary"}
+                            />
+                        </div>
                     </>
                 )}
 
                 {rejected && roleID == "3" && (
                     <>
                         <h6 style={{ color: "#3247d5" }}>Showing {rejectcount} Results</h6>
-                        <table className="table table-hover" ref={tableRef}>
+                        <table className="table table-hover" id="rejectid">
                             <thead className="bg-info text-white">
                                 <tr>
                                     <th>Date</th>
@@ -565,6 +659,27 @@ const MyTeamAttendancecorrectiondashboard = () => {
                                     )}
                             </tbody>
                         </table>
+                        <div className="mb-4 mt-4 text-center">
+                            <ReactPaginate
+                                previousLabel={"Previous"}
+                                nextLabel={"Next"}
+                                breakLabel={"..."}
+                                pageCount={pageCount}
+                                marginPagesDisplayed={2}
+                                pageRangeDisplayed={3}
+                                onPageChange={handlePageClick}
+                                containerClassName={"pagination  justify-content-center"}
+                                pageClassName={"page-item "}
+                                pageLinkClassName={"page-link"}
+                                previousClassName={"page-item"}
+                                previousLinkClassName={"page-link"}
+                                nextClassName={"page-item"}
+                                nextLinkClassName={"page-link"}
+                                breakClassName={"page-item"}
+                                breakLinkClassName={"page-link"}
+                                activeClassName={"active primary"}
+                            />
+                        </div>
                     </>
                 )}
 

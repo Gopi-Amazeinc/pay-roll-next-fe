@@ -102,7 +102,7 @@ function GroupMasterForm({ editData }) {
                                         <label className='fw-bold'>Description<span id={Styles.asterisk}>* </span></label>
                                         <textarea
                                             name="Description"
-                                            className="form-control"
+                                            className="form-control" minLength={10}
                                             {...register("Description", { required: true })}
                                             placeholder="Description"
                                         />

@@ -267,17 +267,23 @@ function PositionDetails({ data }) {
                     </p>
                     <div>
                       <input
-                        type="text"
+                        type="number"
                         placeholder="Employee ID"
                         {...register("EmployeeCode", { required: true })}
                         className="form-control "
                       ></input>
-                      {errors.EmployeeCode && (
+                      {errors.EmployeeCode?.type==='required' && (
                         <span style={customStyles.errorMsg}>
                           {" "}
                           Please enter Employee ID *
                         </span>
                       )}
+                         {/* {errors.EmployeeCode?.type==='pattern' && (
+                        <span style={customStyles.errorMsg}>
+                          {" "}
+                          Please enter proper Employee ID * (eg: EMP-1234)
+                        </span>
+                      )} */}
                     </div>
                   </div>
                   {
@@ -350,7 +356,7 @@ function PositionDetails({ data }) {
                       {
                         <div>
                           <select
-                            className="form-control "
+                            className="form-select "
                             {...register("Level", { required: true })}
                             style={customStyles.inputLabel}
                           >
@@ -682,13 +688,19 @@ function PositionDetails({ data }) {
                       <input
                         type="text"
                         placeholder="SAP Vendor Code "
-                        {...register("SAPVendorNo", { required: true })}
+                        {...register("SAPVendorNo", { required: true, pattern:/^[a-zA-Z0-9 + ]{0,100}$/  })}
                         className="form-control "
                       ></input>
-                      {errors.SAPVendorNo && (
+                      {errors.SAPVendorNo?.type==='required' && (
                         <span style={customStyles.errorMsg}>
                           {" "}
                           Please SAP vendor code
+                        </span>
+                      )}
+                       {errors.SAPVendorNo?.type==='pattern' && (
+                        <span style={customStyles.errorMsg}>
+                          {" "}
+                         no special characters
                         </span>
                       )}
                     </div>
