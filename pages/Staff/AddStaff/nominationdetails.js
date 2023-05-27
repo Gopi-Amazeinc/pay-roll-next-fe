@@ -195,14 +195,20 @@ export default function NominationDetails({data}) {
                       <div>
                         <input
                           type="text"
-                          placeholder="Enter Beneficiary Name.."
-                          {...register("BeneficiaryName", { required: true })}
+                          placeholder="Enter Beneficiary Name.." minLength={5}
+                          {...register("BeneficiaryName", { required: true,pattern: /^[A-Za-z+ ]+$/  })}
                           className="form-control "
                         ></input>
-                        {errors.BeneficiaryName && (
+                        {errors.BeneficiaryName?.type==='required' && (
                           <span style={customStyles.errorMsg}>
                             {" "}
                             Please enter beneficiary name
+                          </span>
+                        )}
+                         {errors.BeneficiaryName?.type==='pattern' && (
+                          <span style={customStyles.errorMsg}>
+                            {" "}
+                            Please enter characters only
                           </span>
                         )}
                       </div>
@@ -248,14 +254,20 @@ export default function NominationDetails({data}) {
                       <div>
                         <input
                           type="text"
-                          placeholder="Enter Percentage.."
-                          {...register("Percentage", { required: true })}
+                          placeholder="Enter Percentage.."maxLength={3}
+                          {...register("Percentage", { required: true ,pattern:/^((100)|(\d{1,2}(\.\d*)?))$/g})}
                           className="form-control "
                         ></input>
-                        {errors.Percentage && (
+                        {errors.Percentage?.type==='required' && (
                           <span style={customStyles.errorMsg}>
                             {" "}
                             Please enter percentage
+                          </span>
+                        )}
+                         {errors.Percentage?.type==='pattern' && (
+                          <span style={customStyles.errorMsg}>
+                            {" "}
+                            Please enter correct percentage(eg 0-100)
                           </span>
                         )}
                       </div>

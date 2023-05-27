@@ -236,7 +236,7 @@ const Attendancecorrectiondashboard = () => {
         </div>
 
         <div className="col-lg-3" style={{ marginLeft: "-30px" }}>
-          {(roleID == 3) && (
+          {(roleID == 3  || roleID == 2) && (
             <>
               <Link
                 className={Styles.mainheader}
@@ -277,7 +277,7 @@ const Attendancecorrectiondashboard = () => {
                     </button>
                   </Link>
                 </div>
-                { pending ? (
+                {/* { pending ? ( */}
                 <>
                   <div className="col-lg-3">
                     <DownloadTableExcel
@@ -289,7 +289,7 @@ const Attendancecorrectiondashboard = () => {
                     </DownloadTableExcel>
                   </div>
                 </>
-                ): null } 
+                {/* ): null }  */}
 
                 {/* {approved ? (
                   <>

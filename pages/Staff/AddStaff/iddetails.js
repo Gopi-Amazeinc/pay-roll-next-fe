@@ -228,14 +228,22 @@ export default function IDDetails({ data }) {
                       <input
                         type="text"
                         placeholder="ID Number"
-                        {...register("IDNumber", { required: true })}
+                        {...register("IDNumber", { required: true,pattern:/^\d+$/ })}
                         className="form-control "
                       ></input>
-                      {errors.IDNumber && (
+                      {errors.IDNumber?.type==='required' && (
                         <span style={customStyles.errorMsg}>
                           {" "}
                           Please enter ID number
                         </span>
+                        
+                      )}
+                       {errors.IDNumber?.type==='pattern' && (
+                        <span style={customStyles.errorMsg}>
+                          {" "}
+                          Please enter number
+                        </span>
+                        
                       )}
                     </div>
                   </div>
@@ -248,13 +256,19 @@ export default function IDDetails({ data }) {
                       <input
                         type="text"
                         placeholder="Name on ID"
-                        {...register("NameOnID", { required: true })}
+                        {...register("NameOnID", { required: true ,pattern: /^[A-Za-z+ ]+$/ })}
                         className="form-control "
                       ></input>
-                      {errors.NameOnID && (
+                      {errors.NameOnID?.type==='required' && (
                         <span style={customStyles.errorMsg}>
                           {" "}
                           Please enter name on ID
+                        </span>
+                      )}
+                      {errors.NameOnID?.type==='pattern' && (
+                        <span style={customStyles.errorMsg}>
+                          {" "}
+                          Please characters
                         </span>
                       )}
                     </div>

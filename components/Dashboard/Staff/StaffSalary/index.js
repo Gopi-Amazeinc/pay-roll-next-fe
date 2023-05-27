@@ -7,6 +7,7 @@ import ReactPaginate from "react-paginate";
 import { apiService } from "@/services/api.service";
 import Modal from "react-modal";
 import * as XLSX from "xlsx";
+import Styles from "../../../../styles/addStaff.module.css"
 
 function StaffSalaryComponent() {
   const [password, setPassword] = useState("");
@@ -374,19 +375,32 @@ function StaffSalaryComponent() {
       ) : (
         <div>
           <div className="container">
-            <div className="row" style={{paddingTop: "200px"}}>
-              <div className="text-center">
-                <div className="col-lg-3"></div>
-                  <input
+            <div className="card p-4 border-0" style={{marginTop: "200px"}}>
+            <div className="row" >
+              
+                <div className="col-lg-4"></div>
+                <div className="col-lg-4">
+                <input
+                  className="form-control"
                   type="password"
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   placeholder="Enter password"
                   />
-                <button onClick={checkPassword}>Submit</button>
-              </div>
+                </div>
+                <div className="col-lg-4"></div>
+                
+              
             </div>
-            
+            <br></br>
+            <div className="row" >
+            <div className="col-lg-4"></div>
+                <div className="col-lg-4 text-center">
+                <button onClick={checkPassword} className={Styles.submitBtn}>SUBMIT</button>
+                </div>
+                <div className="col-lg-4"></div>
+            </div> 
+            </div>  
           </div>
         </div>
       )}
