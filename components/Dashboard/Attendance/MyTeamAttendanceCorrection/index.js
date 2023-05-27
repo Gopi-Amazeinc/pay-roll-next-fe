@@ -402,7 +402,13 @@ const MyTeamAttendancecorrectiondashboard = () => {
                             <tbody>
                                 {Array.isArray(managerPending) && managerPending.length > 0 && (
                                     <>
-                                        {managerPending.map((data) => {
+                                        {managerPending.
+                                         filter(post => {
+                                            return Object.values(post).some(value =>
+                                              value !== null && value.toString().toLowerCase().includes(keyword.toLowerCase())
+                                            );
+                                          })
+                                        .map((data) => {
                                             return (
                                                 <tr key={data.id}>
                                                     <td>{data.staffname}</td>
