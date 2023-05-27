@@ -6,13 +6,11 @@ import Swal from "sweetalert2";
 import { apiService } from "@/services/api.service";
 import Styles from "@/styles/attendancedetails.module.css";
 import { useRouter } from "next/router";
-import { DownloadTableExcel } from 'react-export-table-to-excel';
 import { IoIosAddCircleOutline } from "react-icons/io";
 import ReactPaginate from "react-paginate";
 import * as XLSX from "xlsx";
 
 const Attendancecorrectiondashboard = () => {
-  const tableRef = useRef(null);
 
   const [roleID, setRoleID] = useState();
   const [userID, setUserID] = useState();
@@ -25,10 +23,6 @@ const Attendancecorrectiondashboard = () => {
   const [approvedDashboardData, setapprovedDashboardData] = useState([]);
   const [rejectedDashboardData, setrejectedDashboardData] = useState([]);
 
-  const [managerPending, setManagerPendingData] = useState([]);
-  const [managerApproved, setManagerApprovedData] = useState([]);
-  const [managerRejected, setManagerRejectedData] = useState([]);
-
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
 
@@ -38,41 +32,22 @@ const Attendancecorrectiondashboard = () => {
   const [rejectcount, setrejectcount] = useState();
   const [approvedcount, setapprovedcount] = useState();
 
-  // const [pendingdownload, setpendingdownload] = useState();
-  // const [rejectdownload, setrejectdownload] = useState();
-  // const [approveddownload, setapproveddownload] = useState();
-
-  // const [toggleState, setToggleState] = useState({
-  //   pending: false,
-  //   approved: false,
-  //   rejected: false
-  // });
 
 
   const togglePending = () => {
-    debugger
     setPending(true);
-    // setpendingdownload(true);
-    // setapproveddownload(false);
-    // setrejectdownload(false);
     setRejected(false);
     setApproved(false);
   };
 
   const toggleApproved = () => {
     setApproved(true);
-    // setpendingdownload(false);
-    // setapproveddownload(true);
-    // setrejectdownload(false);
     setPending(false);
     setRejected(false);
   };
 
   const toggleRejected = () => {
     setRejected(true);
-    // setpendingdownload(false);
-    // setapproveddownload(false);
-    // setrejectdownload(true);
     setApproved(false);
     setPending(false);
   };
@@ -85,7 +60,6 @@ const Attendancecorrectiondashboard = () => {
     setRoleID(userRoleID);
 
     setPending(true);
-    // setpendingdownload(true)
   }, []);
 
 
@@ -138,36 +112,6 @@ const Attendancecorrectiondashboard = () => {
     return `${year}-${month}-${day}`;
   };
 
-  // const approveAttedanceCorrection = async (data) => {
-  //   Swal.fire({
-  //     title: "Confirm To Approve?",
-  //     text: "You won't be able to revert this!",
-  //     icon: "warning",
-  //     showCancelButton: true,
-  //     confirmButtonColor: "#3085d6",
-  //     cancelButtonColor: "#d33",
-  //     confirmButtonText: "Yes, Approve it!",
-  //   }).then(async (result) => {
-  //     if (result.isConfirmed) {
-  //       await apiService.commonGetCall(
-  //         "Payroll/ApproveAttedanceCoorection?id=" +
-  //         data.id +
-  //         "&UserID=" +
-  //         data.staffID +
-  //         "&SigninDate=" +
-  //         SDate +
-  //         "&SignoutDate=" +
-  //         EDate
-  //       );
-  //       Swal.fire({
-  //         icon: "success",
-  //         titleText: "Approved Successfully",
-  //       });
-  //       getPendingManager(SDate, EDate);
-  //     }
-  //   });
-  // };
-
   const getPendingData = async (SDate, EDate) => {
     debugger;
     const res = await apiService.commonGetCall(
@@ -179,7 +123,6 @@ const Attendancecorrectiondashboard = () => {
       EDate
     );
     setpendingcount(res.data.length);
-    // const res = await axios.get( hostURL +  "Payroll/GetPendingAttendanceCorrectionByStaffID?userID=" + staffID + "&SDate=" + SDate + "&EDate=" + EDate);
     console.log(res, "pending");
     setpendingDashboardData(res.data);
   };
@@ -194,7 +137,6 @@ const Attendancecorrectiondashboard = () => {
       EDate
     );
     setapprovedcount(res.data.length);
-    // const res = await axios.get( hostURL +"Payroll/GetApprovedAttendanceCorrectionByStaffID?userID=" + staffID +"&SDate=" + SDate + "&EDate=" + EDate  );
     console.log(res, "approved");
     setapprovedDashboardData(res.data);
   };
@@ -209,40 +151,37 @@ const Attendancecorrectiondashboard = () => {
       EDate
     );
     setrejectcount(res.data.length);
-    //  const res = await axios.get(hostURL + "Payroll/GetRejectedAttendanceCorrectionByStaffID?userID=" +staffID + "&SDate=" + SDate + "&EDate=" + EDate );
     console.log(res, "rejected");
     setrejectedDashboardData(res.data);
   };
 
-  const deleteAttendanceCorrection = (id) => {
-    Swal.fire({
-      title: "Are You Sure To Cancel?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, Cancel it!",
-    }).then(async (result) => {
-      if (result.isConfirmed) {
-        await apiService.commonGetCall(
-          "Payroll/DeleteAttendanceCorrection?id=" + id
-        );
-        //  axios.get(hostURL + "Payroll/DeleteAttendanceCorrection?id=" + id);
-        Swal.fire({
-          icon: "success",
-          titleText: "Cancelled Successfully",
-        });
-      }
-      getPendingData();
-    });
-  };
+  // const deleteAttendanceCorrection = (id) => {
+  //   Swal.fire({
+  //     title: "Are You Sure To Cancel?",
+  //     text: "You won't be able to revert this!",
+  //     icon: "warning",
+  //     showCancelButton: true,
+  //     confirmButtonColor: "#3085d6",
+  //     cancelButtonColor: "#d33",
+  //     confirmButtonText: "Yes, Cancel it!",
+  //   }).then(async (result) => {
+  //     if (result.isConfirmed) {
+  //       await apiService.commonGetCall(
+  //         "Payroll/DeleteAttendanceCorrection?id=" + id
+  //       );
+  //       //  axios.get(hostURL + "Payroll/DeleteAttendanceCorrection?id=" + id);
+  //       Swal.fire({
+  //         icon: "success",
+  //         titleText: "Cancelled Successfully",
+  //       });
+  //     }
+  //     getPendingData();
+  //   });
+  // };
 
 
   const exportToExcel = () => {
     let element;
-    debugger
-    /* table id is passed over here */
     if (pending == true) {
       element = document.getElementById("pendingid");
     }
@@ -254,13 +193,17 @@ const Attendancecorrectiondashboard = () => {
     }
     if (element) {
       const ws = XLSX.utils.table_to_sheet(element);
-
-      /* generate workbook and add the worksheet */
       const wb = XLSX.utils.book_new();
       XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
-
-      /* save to file */
-      XLSX.writeFile(wb, "AttendanceUnitsUploadTemplate.xlsx");
+      if(pending == true) {
+        XLSX.writeFile(wb, "Attendancepending.xlsx");
+      }
+      else if (approved == true) {
+        XLSX.writeFile(wb, "Attendanceapprooved.xlsx");
+      }
+      else {
+        XLSX.writeFile(wb, "Attendancerejected.xlsx");
+      }
     }
   };
 
@@ -325,54 +268,13 @@ const Attendancecorrectiondashboard = () => {
                     </button>
                   </Link>
                 </div>
-                {/* {(pending || approved || rejected) && (
-                  <>
-          
-                      <DownloadTableExcel
-                        filename="Attendance table"
-                        sheet="Attendance"
-                        currentTableRef={tableRef.current}
-                      >
-                        <button className="button">Download</button>
-                      </DownloadTableExcel>
-                    </div>
-                  </>
-                )} */}          <div className="col-lg-3">
-                  {pending && (
-                    // <DownloadTableExcel
-                    //   filename="Attendance table"
-                    //   sheet="Attendance"
-                    //   currentTableRef={tableRef.current}
-                    // >
+                <div className="col-lg-3">
+                 
+        
                     <button className="button" onClick={exportToExcel} >
                       Download
                     </button>
-                    // </DownloadTableExcel>
-                  )}
-
-                  {approved && (
-                    // <DownloadTableExcel
-                    //   filename="Attendance table"
-                    //   sheet="Attendance"
-                    //   currentTableRef={tableRef.current}
-                    // >
-                    <button className="button" onClick={exportToExcel} >
-                      Download
-                    </button>
-                    // </DownloadTableExcel>
-                  )}
-
-                  {rejected && (
-                    // <DownloadTableExcel
-                    //   filename="Attendance table"
-                    //   sheet="Attendance"
-                    //   currentTableRef={tableRef.current}
-                    // >
-                    <button className="button" onClick={exportToExcel}  >
-                      Download
-                    </button>
-                    // </DownloadTableExcel>
-                  )}
+                
                 </div>
 
               </div>
@@ -381,15 +283,7 @@ const Attendancecorrectiondashboard = () => {
 
             )}
 
-            {/* {roleID != 3 || (
-              <>
-                <div className="row">
-                  <div className="col-lg-4">
-                    <button className="button">Download</button>
-                  </div>
-                </div>
-              </>
-            )} */}
+
           </div>
         </div>
       </div>
@@ -431,8 +325,7 @@ const Attendancecorrectiondashboard = () => {
               </div>
 
 
-              <table className="table" id="pendingid"
-                ref={tableRef}>
+              <table className="table" id="pendingid" >
                 <thead className="bg-info text-white">
                   <tr>
                     <th>Date</th>
@@ -510,7 +403,7 @@ const Attendancecorrectiondashboard = () => {
               <div className="col-lg-2 text-primary fs-6 fw-bold">
                 <h6 style={{ color: "#3247d5" }}>Showing {approvedcount} Results</h6>
               </div>
-              <table className="table table-hover" ref={tableRef} id="approvedid">
+              <table className="table table-hover" id="approvedid">
                 <thead className="bg-info text-white">
                   <tr>
                     <th>Employee ID</th>
@@ -570,7 +463,7 @@ const Attendancecorrectiondashboard = () => {
               <div className="col-lg-2 text-primary fs-6 fw-bold">
                 <h6 style={{ color: "#3247d5" }}>Showing {rejectcount} Results</h6>
               </div>
-              <table className="table table-hover" ref={tableRef} id="rejectid">
+              <table className="table table-hover" id="rejectid">
                 <thead className="bg-info text-white">
                   <tr>
                     <th>Date</th>
