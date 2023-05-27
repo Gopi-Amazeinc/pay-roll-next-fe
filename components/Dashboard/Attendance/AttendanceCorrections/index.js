@@ -9,7 +9,7 @@ import { useRouter } from "next/router";
 import { DownloadTableExcel } from 'react-export-table-to-excel';
 import { IoIosAddCircleOutline } from "react-icons/io";
 import ReactPaginate from "react-paginate";
-
+import * as XLSX from "xlsx";
 
 const Attendancecorrectiondashboard = () => {
   const tableRef = useRef(null);
@@ -38,20 +38,41 @@ const Attendancecorrectiondashboard = () => {
   const [rejectcount, setrejectcount] = useState();
   const [approvedcount, setapprovedcount] = useState();
 
+  // const [pendingdownload, setpendingdownload] = useState();
+  // const [rejectdownload, setrejectdownload] = useState();
+  // const [approveddownload, setapproveddownload] = useState();
+
+  // const [toggleState, setToggleState] = useState({
+  //   pending: false,
+  //   approved: false,
+  //   rejected: false
+  // });
+
+
   const togglePending = () => {
+    debugger
     setPending(true);
+    // setpendingdownload(true);
+    // setapproveddownload(false);
+    // setrejectdownload(false);
     setRejected(false);
     setApproved(false);
   };
 
   const toggleApproved = () => {
     setApproved(true);
+    // setpendingdownload(false);
+    // setapproveddownload(true);
+    // setrejectdownload(false);
     setPending(false);
     setRejected(false);
   };
 
   const toggleRejected = () => {
     setRejected(true);
+    // setpendingdownload(false);
+    // setapproveddownload(false);
+    // setrejectdownload(true);
     setApproved(false);
     setPending(false);
   };
@@ -64,6 +85,7 @@ const Attendancecorrectiondashboard = () => {
     setRoleID(userRoleID);
 
     setPending(true);
+    // setpendingdownload(true)
   }, []);
 
 
@@ -75,7 +97,7 @@ const Attendancecorrectiondashboard = () => {
   }
   const offset = currentPage * PER_PAGE;
   const pageCount = Math.ceil(pendingDashboardData.length / PER_PAGE);
-  
+
 
 
   useEffect(() => {
@@ -216,6 +238,32 @@ const Attendancecorrectiondashboard = () => {
     });
   };
 
+
+  const exportToExcel = () => {
+    let element;
+    debugger
+    /* table id is passed over here */
+    if (pending == true) {
+      element = document.getElementById("pendingid");
+    }
+    else if (approved == true) {
+      element = document.getElementById("approvedid");
+    }
+    else {
+      element = document.getElementById("rejectid");
+    }
+    if (element) {
+      const ws = XLSX.utils.table_to_sheet(element);
+
+      /* generate workbook and add the worksheet */
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+
+      /* save to file */
+      XLSX.writeFile(wb, "AttendanceUnitsUploadTemplate.xlsx");
+    }
+  };
+
   return (
     <div className="container-fluid">
       <div className="row mt-3">
@@ -236,7 +284,7 @@ const Attendancecorrectiondashboard = () => {
         </div>
 
         <div className="col-lg-3" style={{ marginLeft: "-30px" }}>
-          {(roleID == 3  || roleID == 2) && (
+          {(roleID == 3 || roleID == 2) && (
             <>
               <Link
                 className={Styles.mainheader}
@@ -277,23 +325,9 @@ const Attendancecorrectiondashboard = () => {
                     </button>
                   </Link>
                 </div>
-                {/* { pending ? ( */}
-                <>
-                  <div className="col-lg-3">
-                    <DownloadTableExcel
-                      filename="Attendance table"
-                      sheet="Attendance"
-                      currentTableRef={tableRef.current}
-                    >
-                      <button className="button">Download</button>
-                    </DownloadTableExcel>
-                  </div>
-                </>
-                {/* ): null }  */}
-
-                {/* {approved ? (
+                {/* {(pending || approved || rejected) && (
                   <>
-                    <div className="col-lg-3">
+          
                       <DownloadTableExcel
                         filename="Attendance table"
                         sheet="Attendance"
@@ -303,21 +337,43 @@ const Attendancecorrectiondashboard = () => {
                       </DownloadTableExcel>
                     </div>
                   </>
-                ) : null}
-                    {pendingDashboardData ? (
-                  <>
-                    <div className="col-lg-3">
-                      <DownloadTableExcel
-                        filename="Attendance table"
-                        sheet="Attendance"
-                        currentTableRef={tableRef.current}
-                      >
-                        <button className="button">Download</button>
-                      </DownloadTableExcel>
-                    </div>
-                  </>
-                ) : null} */}
+                )} */}          <div className="col-lg-3">
+                  {pending && (
+                    // <DownloadTableExcel
+                    //   filename="Attendance table"
+                    //   sheet="Attendance"
+                    //   currentTableRef={tableRef.current}
+                    // >
+                    <button className="button" onClick={exportToExcel} >
+                      Download
+                    </button>
+                    // </DownloadTableExcel>
+                  )}
 
+                  {approved && (
+                    // <DownloadTableExcel
+                    //   filename="Attendance table"
+                    //   sheet="Attendance"
+                    //   currentTableRef={tableRef.current}
+                    // >
+                    <button className="button" onClick={exportToExcel} >
+                      Download
+                    </button>
+                    // </DownloadTableExcel>
+                  )}
+
+                  {rejected && (
+                    // <DownloadTableExcel
+                    //   filename="Attendance table"
+                    //   sheet="Attendance"
+                    //   currentTableRef={tableRef.current}
+                    // >
+                    <button className="button" onClick={exportToExcel}  >
+                      Download
+                    </button>
+                    // </DownloadTableExcel>
+                  )}
+                </div>
 
               </div>
 
@@ -375,7 +431,7 @@ const Attendancecorrectiondashboard = () => {
               </div>
 
 
-              <table className="table"
+              <table className="table" id="pendingid"
                 ref={tableRef}>
                 <thead className="bg-info text-white">
                   <tr>
@@ -454,9 +510,10 @@ const Attendancecorrectiondashboard = () => {
               <div className="col-lg-2 text-primary fs-6 fw-bold">
                 <h6 style={{ color: "#3247d5" }}>Showing {approvedcount} Results</h6>
               </div>
-              <table className="table table-hover" ref={tableRef}>
+              <table className="table table-hover" ref={tableRef} id="approvedid">
                 <thead className="bg-info text-white">
                   <tr>
+                    <th>Employee ID</th>
                     <th>Employee Name</th>
                     <th>Date</th>
                     <th>Start Time</th>
@@ -471,10 +528,11 @@ const Attendancecorrectiondashboard = () => {
                       {approvedDashboardData.map((data) => {
                         return (
                           <tr key={data.id}>
+                            <td>{data.staffID}</td>
+                            <td>{data.staffname}</td>
                             <td>{data.date}</td>
                             <td>{data.startTime}</td>
                             <td>{data.endTime}</td>
-                            <td>{data.Comments}</td>
                             <td>{data.status}</td>
                           </tr>
                         );
@@ -512,7 +570,7 @@ const Attendancecorrectiondashboard = () => {
               <div className="col-lg-2 text-primary fs-6 fw-bold">
                 <h6 style={{ color: "#3247d5" }}>Showing {rejectcount} Results</h6>
               </div>
-              <table className="table table-hover" ref={tableRef}>
+              <table className="table table-hover" ref={tableRef} id="rejectid">
                 <thead className="bg-info text-white">
                   <tr>
                     <th>Date</th>
@@ -533,7 +591,7 @@ const Attendancecorrectiondashboard = () => {
                               <td>{data.date}</td>
                               <td>{data.startTime}</td>
                               <td>{data.endTime}</td>
-                              <td>{data.Comments}</td>
+                              <td>{data.comments}</td>
                               <td>{data.status}</td>
                             </tr>
                           );
