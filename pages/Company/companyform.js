@@ -152,6 +152,7 @@ function MyForm1({ data }) {
     // setFilePath(invoiceURL.data);
     setFilePath(Preview);
   };
+  console.log("image path name ",filePath)
 
   return (
     <div className="container-fluid">
@@ -194,7 +195,8 @@ function MyForm1({ data }) {
             
             </div> */}
 
-            {/* TODO<Image src={filePath} height={10} width={10} alt="Picture"></Image> */}
+            {/* TODO */}
+            <Image src={filePath} height={10} width={10} alt="Picture"></Image> 
             <div className="col-lg-2">
               <label className={styles.p}>Company Name<span style={{ color: "red" }}>*</span></label>
               <input type="text" className="form-control" {...register('Company_Name', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+ $/, message: "Please enter a valid Short Name" } })} />

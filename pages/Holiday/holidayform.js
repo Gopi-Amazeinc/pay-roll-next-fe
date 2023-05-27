@@ -37,7 +37,7 @@ function Holidayform({ editData }) {
 
 
   function clearForm(HolidaysData = null) {
-    // debugger;
+    debugger;
     let details = {
       "ID": HolidaysData ? HolidaysData.id : "",
       "Holiday": HolidaysData ? HolidaysData.holiday : "",
@@ -75,12 +75,22 @@ function Holidayform({ editData }) {
 
 
   const onSubmit = async (data) => {
+    debugger
+
     if (actionType == "insert") {
-      await apiService.commonPostCall("HR/InsertHolidays", data);
+      let entity = {
+        "Attachment": filePath
+      }
+      const formData = { ...data, ...entity }
+      await apiService.commonPostCall("HR/InsertHolidays", formData);
       Swal.fire("Data Inserted successfully");
       router.push("/Holiday");
     } else {
-      await apiService.commonPostCall("HR/UpdateHolidays", data);
+      let entity = {
+        "Attachment": filePath
+      }
+      const formData = { ...data, ...entity }
+      await apiService.commonPostCall("HR/UpdateHolidays", formData);
       Swal.fire("Data Updated successfully");
       router.push("/Holiday");
     }

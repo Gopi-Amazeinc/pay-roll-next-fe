@@ -56,7 +56,7 @@ const Holidaydashboard = () => {
                   type="search"
                   className=" form-control"
                   placeholder="Search "
-                  onChange={e=>{setKeyword(e.target.value)}}
+                  onChange={e => { setKeyword(e.target.value) }}
                 />
               </div>
             </div>
@@ -104,7 +104,7 @@ const Holidaydashboard = () => {
                         <td>{data.holiday}</td>
                         <td>{data.holidayDescription}</td>
                         <td>{data.holidayDate}</td>
-                        <td>{data.attachment}</td>
+                        <td><img src={data.attachment} width={50} height={50}/></td>
                         <td>
                           <Link href={`/Holiday/edit/${data.id}`}>
                             <button className="edit-btn">Edit</button>
