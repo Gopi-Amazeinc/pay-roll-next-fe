@@ -126,7 +126,6 @@ function LeaveListDashboard() {
         }
     };
     const getDataBySelectedDate = (endDatesss) => {
-        debugger;
         return getPendingData(startDate, endDatesss);
     };
 

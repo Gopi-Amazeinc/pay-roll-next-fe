@@ -1,14 +1,10 @@
 import Layout from "@/components/layout/layout";
 import Link from "next/link";
-import ApplyLeaveDashboard from "@/components/Dashboard/Requests/Applyleave/index";
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { apiService } from "@/services/api.service";
 import { useRouter } from "next/router";
-// import Astyle from 'styles//Requests//applyleave.module.css';
-import { BsArrowLeftSquare } from "react-icons/bs";
-import DropZone from "@/pages/SharedComponent/dropzone";
 import { useForm } from "react-hook-form";
 import { useDropzone } from "react-dropzone";
 import { useCallback } from "react";
@@ -33,7 +29,6 @@ const ApplyLeave = () => {
   async function onSubmit(data) {
     let StaffID = sessionStorage.getItem("userID");
     let formData = { ...data, StaffID }
-    debugger;
     await apiService.commonPostCall("HR/InsertStaffLeaves", formData);
     Swal.fire({
       icon: "success",
@@ -45,7 +40,6 @@ const ApplyLeave = () => {
     router.push("/Requests/Leaverequest");
   }
   const onDrop = useCallback((acceptedFiles) => {
-    debugger;
     console.log(acceptedFiles, "Uploaded file");
     uploadFile(acceptedFiles);
   }, []);
@@ -89,7 +83,7 @@ const ApplyLeave = () => {
         <div className="row">
           <div className="col-lg-12">
             <h3 className=" fs-5 mt-3 fw-bold" style={{ color: "#3247d5" }}>
-             Leave Request
+              Leave Request
             </h3>
             <div className="card p-3 border-0 shadow-lg  mt-4">
               <form onSubmit={handleSubmit(onSubmit)}>
@@ -162,7 +156,7 @@ const ApplyLeave = () => {
                     {/* <DropZone {...register("MedicalUrl", { required: true })} /> */}
                     <div style={{ border: '2px dashed blue', height: "100px" }}>
                       <div {...getRootProps()}>
-                        <input {...getInputProps()}{...register("Attachment", { required: "This field is required" })} />
+                        <input {...getInputProps()}{...register("Attachment")} />
 
                         {isDragActive ? (
                           <p>Drop the files here ...</p>
@@ -172,7 +166,8 @@ const ApplyLeave = () => {
                           </p>
                         )}
                       </div>
-                    </div>{errors.Attachment && <p className="error-message" style={customStyles.errorMsg}>{errors.Attachment.message}</p>}
+                    </div>
+                    {/* {errors.Attachment && <p className="error-message" style={customStyles.errorMsg}>{errors.Attachment.message}</p>} */}
                     {/* {errors.MedicalUrl && <p className="error-message" style={{ color: "red" }}>{errors.MedicalUrl.message}</p>} */}
                   </div>
                   <div className="col-lg-2"></div>
