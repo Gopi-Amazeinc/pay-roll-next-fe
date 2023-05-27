@@ -573,14 +573,20 @@ async function clearForm(data = null){
                         type="text"
                         placeholder="First Name, Middle Initial and Last Name "
                         {...register("EmergencyContactName1", {
-                          required: true,
+                          required: true,pattern: /^[a-zA-Z]+ [a-zA-Z]+$/
                         })}
                         className="form-control "
                       ></input>
-                      {errors.EmergencyContactName1 && (
+                      {errors.EmergencyContactName1?.type==='required' && (
                         <span style={customStyles.errorMsg}>
                           {" "}
                           Please enter emergency contact name 1
+                        </span>
+                      )}
+                      {errors.EmergencyContactName1?.type==='pattern' && (
+                        <span style={customStyles.errorMsg}>
+                          {" "}
+                          Please enter firstname & lastname
                         </span>
                       )}
                     </div>
@@ -595,14 +601,20 @@ async function clearForm(data = null){
                         type="text"
                         placeholder="Contact Relationship"
                         {...register("EmergencyContactRelationship1", {
-                          required: true,
+                          required: true,pattern: /^[A-Za-z]+$/ 
                         })}
                         className="form-control "
                       ></input>
-                      {errors.EmergencyContactRelationship1 && (
+                      {errors.EmergencyContactRelationship1?.type==='required' && (
                         <span style={customStyles.errorMsg}>
                           {" "}
                           Please enter conatct relatioship
+                        </span>
+                      )}
+                           {errors.EmergencyContactRelationship1?.type==='pattern' && (
+                        <span style={customStyles.errorMsg}>
+                          {" "}
+                         characters only
                         </span>
                       )}
                     </div>
@@ -616,16 +628,22 @@ async function clearForm(data = null){
                     <div>
                       <input
                         type="text"
-                        placeholder="+63 9xx xxx xxxxx "
+                        placeholder="+63 9xx xxx xxxxx " maxLength={13}
                         {...register("EmergencyContactMobileNumber1", {
-                          required: true,
+                          required: true,pattern:/^[+]{1}[0-9]{12}$/
                         })}
                         className="form-control "
                       ></input>
-                      {errors.EmergencyContactMobileNumber1 && (
+                      {errors.EmergencyContactMobileNumber1?.type==='required' && (
                         <span style={customStyles.errorMsg}>
                           {" "}
                           Please enter contact mobile number
+                        </span>
+                      )}
+                          {errors.EmergencyContactMobileNumber1?.type==='pattern' && (
+                        <span style={customStyles.errorMsg}>
+                          {" "}
+                          Please enter correct(eg.+9xxxxxxxxxx )
                         </span>
                       )}
                     </div>
@@ -662,14 +680,20 @@ async function clearForm(data = null){
                         type="text"
                         placeholder="Email Address "
                         {...register("EmergencyContactEmailID1", {
-                          required: true,
+                          required: true,pattern:/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/
                         })}
                         className="form-control "
                       ></input>
-                      {errors.EmergencyContactEmailID1 && (
+                      {errors.EmergencyContactEmailID1?.type==='required' && (
                         <span style={customStyles.errorMsg}>
                           {" "}
                           Please enter contact email ID
+                        </span>
+                      )}
+                      {errors.EmergencyContactEmailID1?.type==='pattern' && (
+                        <span style={customStyles.errorMsg}>
+                          {" "}
+                          Please enter correct email ID (eg. abc@yahoo.in)
                         </span>
                       )}
                     </div>
@@ -682,16 +706,22 @@ async function clearForm(data = null){
                     <div>
                       <input
                         type="text"
-                        placeholder="Landline "
+                        placeholder="Landline "maxLength={11}
                         {...register("EmergencyContactLandLineNumber1", {
-                          required: true,
+                          required: true,pattern:/^[0-9]{11}$/
                         })}
                         className="form-control "
                       ></input>
-                      {errors.EmergencyContactLandLineNumber1 && (
+                      {errors.EmergencyContactLandLineNumber1?.type==='required' && (
                         <span style={customStyles.errorMsg}>
                           {" "}
                           Please enter landline number
+                        </span>
+                      )}
+                      {errors.EmergencyContactLandLineNumber1?.type==='pattern' && (
+                        <span style={customStyles.errorMsg}>
+                          {" "}
+                          Please enter correct number
                         </span>
                       )}
                     </div>
@@ -718,14 +748,20 @@ async function clearForm(data = null){
                         type="text"
                         placeholder="First Name, Middle Initial and Last Name"
                         {...register("EmergencyContactName2", {
-                          required: true,
+                          required: true,pattern: /^[a-zA-Z]+ [a-zA-Z]+$/
                         })}
                         className="form-control "
                       ></input>
-                      {errors.EmergencyContactName2 && (
+                      {errors.EmergencyContactName2?.type==='required' && (
                         <span style={customStyles.errorMsg}>
                           {" "}
-                          Please enter emergency contact name 2
+                          Please enter emergency contact name 2  
+                        </span>
+                      )}
+                        {errors.EmergencyContactName2?.type==='pattern' && (
+                        <span style={customStyles.errorMsg}>
+                          {" "}
+                          Please enter emergency contact name 2 firstname & lastname
                         </span>
                       )}
                     </div>
@@ -740,14 +776,20 @@ async function clearForm(data = null){
                         type="text"
                         placeholder="Contact Relationship"
                         {...register("EmergencyContactRelationship2", {
-                          required: true,
+                          required: true,pattern:/^[A-Za-z]+$/ 
                         })}
                         className="form-control "
                       ></input>
-                      {errors.EmergencyContactRelationship2 && (
+                      {errors.EmergencyContactRelationship2?.type==='required' && (
                         <span style={customStyles.errorMsg}>
                           {" "}
                           Please enter contact relatioship
+                        </span>
+                      )}
+                       {errors.EmergencyContactRelationship2?.type==='pattern' && (
+                        <span style={customStyles.errorMsg}>
+                          {" "}
+                          characters only
                         </span>
                       )}
                     </div>
@@ -761,16 +803,22 @@ async function clearForm(data = null){
                     <div>
                       <input
                         type="text"
-                        placeholder="+63 9xx xxx xxxxx "
+                        placeholder="+63 9xx xxx xxxxx "maxLength={13}
                         {...register("EmergencyContactMobileNumber2", {
-                          required: true,
+                          required: true,pattern:/^[+]{1}[0-9]{12}$/
                         })}
                         className="form-control "
                       ></input>
-                      {errors.EmergencyContactMobileNumber2 && (
+                      {errors.EmergencyContactMobileNumber2?.type==='required' && (
                         <span style={customStyles.errorMsg}>
                           {" "}
                           Please enter contact mobile number
+                        </span>
+                      )}
+                       {errors.EmergencyContactMobileNumber2?.type==='pattern' && (
+                        <span style={customStyles.errorMsg}>
+                          {" "}
+                          Please enter correct(eg.+9xxxxxxxxxx )
                         </span>
                       )}
                     </div>
@@ -807,14 +855,20 @@ async function clearForm(data = null){
                         type="text"
                         placeholder="Contact Email ID"
                         {...register("EmergencyContactEmailID2", {
-                          required: true,
+                          required: true,pattern:/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/
                         })}
                         className="form-control "
                       ></input>
-                      {errors.EmergencyContactEmailID2 && (
+                      {errors.EmergencyContactEmailID2?.type==='required' && (
                         <span style={customStyles.errorMsg}>
                           {" "}
                           Please enter contact email ID
+                        </span>
+                      )}
+                      {errors.EmergencyContactEmailID2?.type==='pattern' && (
+                        <span style={customStyles.errorMsg}>
+                          {" "}
+                          Please enter correct email ID (eg. abc@yahoo.in)
                         </span>
                       )}
                     </div>
