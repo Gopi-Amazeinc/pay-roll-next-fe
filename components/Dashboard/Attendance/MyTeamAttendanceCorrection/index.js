@@ -10,6 +10,8 @@ import { DownloadTableExcel } from 'react-export-table-to-excel';
 import { Modal, ModalBody, ModalFooter } from "reactstrap";
 import { useForm } from 'react-hook-form';
 import ReactPaginate from "react-paginate";
+import * as XLSX from "xlsx";
+
 
 
 const MyTeamAttendancecorrectiondashboard = () => {
@@ -22,9 +24,9 @@ const MyTeamAttendancecorrectiondashboard = () => {
     const [approved, setApproved] = useState(false);
     const [rejected, setRejected] = useState(false);
 
-    const [pendingDashboardData, setpendingDashboardData] = useState([]);
-    const [approvedDashboardData, setapprovedDashboardData] = useState([]);
-    const [rejectedDashboardData, setrejectedDashboardData] = useState([]);
+    // const [pendingDashboardData, setpendingDashboardData] = useState([]);
+    // const [approvedDashboardData, setapprovedDashboardData] = useState([]);
+    // const [rejectedDashboardData, setrejectedDashboardData] = useState([]);
 
     const [managerPending, setManagerPendingData] = useState([]);
     const [managerApproved, setManagerApprovedData] = useState([]);
@@ -216,6 +218,33 @@ const MyTeamAttendancecorrectiondashboard = () => {
     };
 
 
+     const exportToExcel = () => {
+    let element;
+    if (pending == true) {
+      element = document.getElementById("pendingid");
+    }
+    else if (approved == true) {
+      element = document.getElementById("approvedid");
+    }
+    else {
+      element = document.getElementById("rejectid");
+    }
+    if (element) {
+      const ws = XLSX.utils.table_to_sheet(element);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+      if(pending == true) {
+        XLSX.writeFile(wb, "Attendancepending.xlsx");
+      }
+      else if (approved == true) {
+        XLSX.writeFile(wb, "Attendanceapprooved.xlsx");
+      }
+      else {
+        XLSX.writeFile(wb, "Attendancerejected.xlsx");
+      }
+    }
+  };
+
 
     // const deleteAttendanceCorrection = (id) => {
     //     Swal.fire({
@@ -298,7 +327,7 @@ const MyTeamAttendancecorrectiondashboard = () => {
                             <>
                                 <div className="row">
                                     <div className="col-lg-5">
-                                        <button className="button">Download</button>
+                                        <button className="button" onClick={exportToExcel} >Download</button>
                                     </div>
                                 </div>
                             </>
@@ -395,7 +424,7 @@ const MyTeamAttendancecorrectiondashboard = () => {
                 {(pending && roleID == "3") && (
                     <>
                         <h6 style={{ color: "#3247d5" }}>Showing {pendingcount} Results</h6>
-                        <table className="table table-hover" ref={tableRef}>
+                        <table className="table table-hover"  id="pendingid">
                             <thead className="bg-info text-white">
                                 <tr>
                                     <th>Employee Name</th>
@@ -544,7 +573,7 @@ const MyTeamAttendancecorrectiondashboard = () => {
                 {approved && roleID == "3" && (
                     <>
                         <h6 style={{ color: "#3247d5" }}>Showing {approvedcount} Results</h6>
-                        <table className="table table-hover" ref={tableRef}>
+                        <table className="table table-hover" id="approvedid">
                             <thead className="bg-info text-white">
                                 <tr>
                                     <th>Employee Name</th>
@@ -600,7 +629,7 @@ const MyTeamAttendancecorrectiondashboard = () => {
                 {rejected && roleID == "3" && (
                     <>
                         <h6 style={{ color: "#3247d5" }}>Showing {rejectcount} Results</h6>
-                        <table className="table table-hover" ref={tableRef}>
+                        <table className="table table-hover" id="rejectid">
                             <thead className="bg-info text-white">
                                 <tr>
                                     <th>Date</th>
