@@ -113,7 +113,6 @@ const Index = () => {
 
 
     const getDataBySelectedDate = (endDatesss) => {
-        debugger;
         return getPendingDetails(startDate, endDatesss);
     };
     const getPendingDetails = async () => {

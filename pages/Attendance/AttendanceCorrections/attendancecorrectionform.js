@@ -66,10 +66,26 @@ const AttendanceCorrectionform = () => {
 
   const onSubmit = async (data) => {
     await apiService.commonPostCall("Payroll/InsertAttendanceCorrection", data);
-    Swal.fire("Data Inserted successfully");
+    Swal.fire("AttendanceCorrections inserted successfully");
     router.push("/Attendance/AttendanceCorrections");
   };
 
+
+  // const onSubmit = async (data) => {
+  //   try {
+  //     const response = await apiService.commonPostCall("Payroll/InsertAttendanceCorrection", data);
+  //     if (response && response.success) {
+  //       Swal.fire("Data Inserted successfully");
+  //       router.push("/Attendance/AttendanceCorrections");
+  //     } else {
+  //       Swal.fire("Attendance Correction already exists");
+  //     }
+  //   } catch (error) {
+  //     console.error(error);
+  //     Swal.fire("An error occurred while inserting the data");
+  //   }
+  // };
+  
   const clearForm = (existingData = null) => {
     var StafID = sessionStorage.getItem("userID");
 

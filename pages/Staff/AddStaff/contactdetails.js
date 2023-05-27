@@ -881,16 +881,22 @@ async function clearForm(data = null){
                     <div>
                       <input
                         type="text"
-                        placeholder="Landline"
+                        placeholder="Landline"maxLength={11}
                         {...register("EmergencyContactLandLineNumber2", {
-                          required: true,
+                          required: true,pattern:/^[0-9]{11}$/
                         })}
                         className="form-control "
                       ></input>
-                      {errors.EmergencyContactLandLineNumber2 && (
+                      {errors.EmergencyContactLandLineNumber2?.type==='required' && (
                         <span style={customStyles.errorMsg}>
                           {" "}
                           Please enter landline number
+                        </span>
+                      )}
+                       {errors.EmergencyContactLandLineNumber2?.type==='pattern' && (
+                        <span style={customStyles.errorMsg}>
+                          {" "}
+                          Please enter correct landline number
                         </span>
                       )}
                     </div>
