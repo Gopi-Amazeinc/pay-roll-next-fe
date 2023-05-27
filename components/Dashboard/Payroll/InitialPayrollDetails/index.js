@@ -21,7 +21,7 @@ const InitialPayrollDetails = () => {
     const handleRowSelect = (event, id) => {
         debugger
         if (id === 'all') {
-            setCheckedState(event.target.checked ? preliminarySalary.map(data => data.staffID) : []);
+            setCheckedState(event.target.checked ? preliminarySalary :  null);
             setPreliminarySalary(prevPreliminarySalary => {
                 return prevPreliminarySalary.map(item => {
                     return { ...item, isChecked: event.target.checked };
@@ -47,7 +47,7 @@ const InitialPayrollDetails = () => {
 
     };
 
-    console.log(checkedState)
+    console.log("all data",checkedState)
     const [keyword, setKeyword] = useState("");
     const tableRef = useRef(null);
 
@@ -126,26 +126,40 @@ const InitialPayrollDetails = () => {
     // console.log(checkedState);
 
     const handleDelete = async () => {
-        await deleteSalary(checkedState);
-        Swal.fire({
-            icon: "success",
-            title: "Hurray..",
-            text: "Data Deleted Successfully...!",
-        });
+        const deletedIDS=  await deleteSalary(checkedState);
+        if (deletedIDS) {
+            Swal.fire({
+              icon: "success",
+              title: "Hurray..",
+              text: "Data Deleted Successfully...!",
+            });
+          } else {
+            Swal.fire({
+              icon: "error",
+              title: "Oops..",
+              text: "Data Not Deleted...!",
+            });
+          }
         getData();
     };
 
 
 
     const deleteSalary = async (checkedState) => {
+        debugger
         try {
-            await Promise.all(
-                checkedState.map(async (data) => {
-                    await apiService.commonGetCall(
-                        `Payroll/DeletePreliminary?staffID=${data.staffID}&Enddate=${data.endDateformated}`
+            // const deleteddddsalary = await Promise.all(
+                checkedState && checkedState.length > 0
+            //    ? checkedState.map(async () => {
+                const res = await apiService.commonPostCall(
+                        `Payroll/DeletePreliminary`,checkedState
                     );
-                })
-            );
+                    const deletedData = res.data[0] || res.data;
+                // }) 
+                // : []
+            // );
+            return deleteddddsalary;
+           
         } catch (error) {
             Swal.fire({
                 icon: "error",
