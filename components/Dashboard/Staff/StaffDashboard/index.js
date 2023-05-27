@@ -9,12 +9,15 @@ import { DownloadTableExcel } from "react-export-table-to-excel";
 import Modal from "react-modal";
 import * as XLSX from "xlsx";
 import Swal from "sweetalert2";
+import { apiService } from "@/services/api.service";
+
 function StaffDashbaord() {
   const [staff, setStaffData] = useState([]);
   const tableRef = useRef(null);
   const [count, setcount] = useState("");
   const [keyword, setKeyword] = useState("");
-  
+  const [items, setItems] = useState([]);
+
   const [enableDisablestate, setenableDisablestate] = useState(false);
 
   const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
@@ -418,7 +421,7 @@ function StaffDashbaord() {
                         <button
                           // className="mt-4"
                           className="AddButton mt-4"
-                          onClick={() => uploadSalary()}
+                          onClick={() => uploadStaff()}
                           color="primary"
                           type="button"
                         >
