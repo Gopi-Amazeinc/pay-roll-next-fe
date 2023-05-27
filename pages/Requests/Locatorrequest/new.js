@@ -18,6 +18,7 @@ const Locatorrequest = () => {
     const [filePath, setFilePath] = useState();
     const [fileName, setFileName] = useState();
 
+
     useEffect(() => {
         const usrID = sessionStorage.getItem("userID");
         setUserID(usrID);
@@ -25,10 +26,10 @@ const Locatorrequest = () => {
     }, []);
 
     async function onSubmit(data) {
-        let entity = {
-            "Attachment": ""
-        }
-        debugger;
+        // let entity = {
+        //     "Attachment": ""
+        // }
+        // debugger;
         try {
             const formData = { ...data, StaffID, ...entity };
             // console.log("form data", formData);
@@ -39,8 +40,8 @@ const Locatorrequest = () => {
         } catch (error) {
             Swal.fire("Insert is not working");
         }
-
     }
+
     const onDrop = useCallback((acceptedFiles) => {
         debugger;
         console.log(acceptedFiles, "Uploaded file");
@@ -71,6 +72,10 @@ const Locatorrequest = () => {
         // setFilePath(invoiceURL.data);
         setFilePath(Preview);
     };
+
+
+
+
     const customStyles = {
         content: {
             top: "50%",
@@ -128,24 +133,31 @@ const Locatorrequest = () => {
                         </div>
                         <br />
                         <div className="row">
-                            <div className="col-lg-3">
+                            <div className="col-lg-2">
                                 <label className={styles.p}>Attachment</label>
-                                <div style={{ border: '2px dashed black' }}>
+                                <div style={{ border: '2px dashed black', width: "130%" }}>
                                     <div {...getRootProps()}>
                                         <input {...getInputProps()} />
                                         {isDragActive ? (
                                             <p>Drop the files here ...</p>
                                         ) : (
-                                            <>
+                                            <p style={{ padding: "6%" }}>
+                                                {
+                                                    filePath == null && (
+                                                        <p>Drag 'n' drop some files here, or click to select
+                                                            files</p>
+                                                    )
+                                                }
                                                 {
                                                     filePath && (
                                                         <p>{fileName}</p>
                                                     )
-                                                }</>
+                                                }
+                                            </p>
                                         )}
                                     </div>
-
                                 </div>
+                                {/* {errors.Name && <p className="error-message" style={{ color: "red" }}>{errors.Name.message}</label>} */}
                             </div>
                         </div>
                         <br />
