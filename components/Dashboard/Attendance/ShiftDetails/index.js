@@ -53,40 +53,14 @@ const Shiftdetails = () => {
   }, []);
 
 
-  useEffect(() => {
-    if (userid) {
-      const resu = getCurrentMonthDates();
-      if (resu) {
-        getShiftDetails(resu.setStartDate, resu.setEndDate);
-      }
-    }
-  }, [userid]);
-
-
-  const getCurrentMonthDates = () => {
-    let newDate = new Date();
-    let firstDayOfMonth = new Date(newDate.getFullYear(), newDate.getMonth());
-    let fromDate = formateDate(firstDayOfMonth);
-    const year = newDate.getFullYear();
-    const month = newDate.getMonth() + 1;
-    const lastDay = new Date(year, month, 0).getDate();
-    const toDate = `${year}-${month.toString().padStart(2, "0")}-${lastDay
-      .toString()
-      .padStart(2, "0")}`;
-    setStartDate(fromDate);
-    setEndDate(toDate);
-    return {
-      setStartDate: fromDate,
-      setEndDate: toDate,
-    };
-  };
-
-  const formateDate = (datetoformat) => {
-    const day = datetoformat.getDate().toString().padStart(2, "0");
-    const month = (datetoformat.getMonth() + 1).toString().padStart(2, "0");
-    const year = datetoformat.getFullYear().toString();
-    return `${year}-${month}-${day}`;
-  };
+  // useEffect(() => {
+  //   if (userid) {
+  //     const resu = getCurrentMonthDates();
+  //     if (resu) {
+  //       getShiftDetails(resu.setStartDate, resu.setEndDate);
+  //     }
+  //   }
+  // }, [userid]);
 
   const getStartDate = (selectedDate) => {
     setStartDate(selectedDate);
@@ -113,8 +87,8 @@ const Shiftdetails = () => {
 
   const getShiftBySlectedDate = async (Sdate, Edate) => {
     debugger
-    const datesss = shiftDetails.filter((item) => {
-      return item.shiftDate == Sdate && item.endDate == Edate;
+    const datesss = shiftDetails.filter((item) => { 
+      item.shiftDate = Sdate && item.shiftDate == Edate ;
     });
     return datesss
   }
