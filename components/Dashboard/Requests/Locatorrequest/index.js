@@ -182,7 +182,7 @@ const Locatordashboard = () => {
                                     bordertopleftradius: "51px",
                                     bordertoprightradius: "51px",
                                     margintop: "0px",
-                                    width: "70%"
+                                    width: "57%"
                                 }}></div>
                             </div>
                             {

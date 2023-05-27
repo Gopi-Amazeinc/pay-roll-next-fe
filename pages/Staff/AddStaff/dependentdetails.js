@@ -199,7 +199,7 @@ export default function DependentDetails({data}) {
                       <div>
                         <input
                           type="text"
-                          placeholder="Department Name"
+                          placeholder="Department Name"maxLength={25}minLength={5}
                           {...register("DependentName", { required: true })}
                           className="form-control "
                         ></input>

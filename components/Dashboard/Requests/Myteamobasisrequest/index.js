@@ -141,19 +141,13 @@ const MyTeamObasisRequest = () => {
                     icon: "success",
                     titleText: "Approved Successfully"
                 })
-                getPendingData();
+
             }
+            getPendingData();
         })
     }
     let id;
 
-    // const reject = async () => {
-    //     let ID = sessionStorage.getItem("id")
-    //     let reason = watch("reason")
-    //     const res = await apiService.commonPostCall("Payroll/UpdateOtFromManager", reason, id)
-    //     sessionStorage.removeItem('id');
-    //     setModalOpen(!modalOpen)
-    // }
     const reject = () => {
         id = sessionStorage.getItem("id")
         let reason = watch("Reason")
@@ -177,8 +171,9 @@ const MyTeamObasisRequest = () => {
                     icon: "success",
                     titleText: "Rejected Successfully"
                 })
-                getPendingData();
+
             }
+            getPendingData();
         })
     }
     useEffect(() => {
@@ -249,7 +244,7 @@ const MyTeamObasisRequest = () => {
                                     bordertopleftradius: "51px",
                                     bordertoprightradius: "51px",
                                     margintop: "0px",
-                                    width: "70%"
+                                    width: "75%"
                                 }}></div>
                             </div>
                         </div>

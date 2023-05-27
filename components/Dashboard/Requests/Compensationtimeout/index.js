@@ -142,7 +142,7 @@ const Compensationtimeout = () => {
                                 bordertopleftradius: "51px",
                                 bordertoprightradius: "51px",
                                 margintop: "0px",
-                                width: "70%"
+                                width: "74%"
                             }}></div>
                         </div>
                         <div className='col-lg-3'>

@@ -181,7 +181,7 @@ const MyTeamCompensationtimeout = () => {
                                 bordertopleftradius: "51px",
                                 bordertoprightradius: "51px",
                                 margintop: "0px",
-                                width: "70%"
+                                width: "85.5%"
                             }}></div>
                         </div>
                     </div>
