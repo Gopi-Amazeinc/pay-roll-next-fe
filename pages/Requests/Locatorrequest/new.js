@@ -26,10 +26,10 @@ const Locatorrequest = () => {
     }, []);
 
     async function onSubmit(data) {
-        // let entity = {
-        //     "Attachment": ""
-        // }
-        // debugger;
+        let entity = {
+            "Attachment": filePath
+        }
+        debugger;
         try {
             const formData = { ...data, StaffID, ...entity };
             // console.log("form data", formData);

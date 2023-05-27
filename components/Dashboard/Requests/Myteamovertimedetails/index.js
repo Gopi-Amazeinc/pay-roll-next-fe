@@ -7,7 +7,7 @@ import Styles from "@../../../pages/OT/Ot.module.css"
 import { apiService } from "@/services/api.service";
 import { useForm } from 'react-hook-form';
 import ReactPaginate from "react-paginate";
-import { DownloadTableExcel } from "react-export-table-to-excel";
+import * as XLSX from "xlsx";
 const Index = () => {
     const { register, handleSubmit, watch, formState } = useForm();
     const tableRef = useRef(null);
@@ -68,19 +68,18 @@ const Index = () => {
         }
     }
     const getManagerPendingDetails = async () => {
-        const res = await apiService.commonGetCall("Payroll/GetPendingOverTimeDetailsByManagerID?ManagerID=" + userID)
+        const res = await apiService.commonGetCall("Payroll/GetPendingOverTimeDetailsByManagerID?supervisor=" + userID)
         setManagerPendingData(res.data)
         console.log("Manager Pending", res.data);
     }
     const getManagerApprovedData = async () => {
-        const res = await apiService.commonGetCall("Payroll/GetApprovedOverTimeDetailsByManagerID?ManagerID=" + userID)
+        const res = await apiService.commonGetCall("Payroll/GetApprovedOverTimeDetailsByManagerID?supervisor=" + userID)
         setManagerApprovedData(res.data)
         console.log("Manager Approved", res.data);
     }
 
     const getManagerRejectedData = async () => {
-        // debugger;
-        const res = await apiService.commonGetCall("Payroll/GetRejectOverTimeDetailsByManagerID?ManagerID=" + userID)
+        const res = await apiService.commonGetCall("Payroll/GetRejectOverTimeDetailsByManagerID?supervisor=" + userID)
         setManagerRejectedData(res.data)
         console.log("Manager Rejected", res.data);
     }
@@ -109,7 +108,6 @@ const Index = () => {
         return `${year}-${month}-${day}`;
     };
     useEffect(() => {
-        debugger;
         const usrID = sessionStorage.getItem("userID");
         setUserID(usrID);
         const userRoleID = sessionStorage.getItem("roleID");
@@ -135,7 +133,7 @@ const Index = () => {
         return;
 
     }, [userID])
-    
+
     const PER_PAGE = 5;
     const [currentPage, setCurrentPage] = useState(0);
     function handlePageClick({ selected: selectedPage }) {
@@ -145,7 +143,7 @@ const Index = () => {
     const pageCount = Math.ceil(managerRejected.length / PER_PAGE);
 
 
-    
+
 
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
@@ -201,6 +199,33 @@ const Index = () => {
         })
         getManagerPendingDetails();
     }
+
+    const exportToExcel = () => {
+        let element;
+        if (managertogglePending == true) {
+            element = document.getElementById("pendingid");
+        }
+        else if (managerToggleapproved == true) {
+            element = document.getElementById("approvedid");
+        }
+        else {
+            element = document.getElementById("rejectid");
+        }
+        if (element) {
+            const ws = XLSX.utils.table_to_sheet(element);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+            if (managertogglePending == true) {
+                XLSX.writeFile(wb, "Overtimepending.xlsx");
+            }
+            else if (managerToggleapproved == true) {
+                XLSX.writeFile(wb, "Overtimeapprooved.xlsx");
+            }
+            else {
+                XLSX.writeFile(wb, "Overtimerejected.xlsx");
+            }
+        }
+    };
     return (
         <div className='container-fluid'>
             <div className='row'>
@@ -228,9 +253,9 @@ const Index = () => {
                             </div>
                             <div className='col-lg-5'></div>
                             <div className='col-lg-2'>
-                                <DownloadTableExcel filename="users table" sheet="users" currentTableRef={tableRef.current}>
-                                    <button className="button" id="AddButton"> Download</button>
-                                </DownloadTableExcel>
+                                <button className="button" onClick={exportToExcel} >
+                                    Download
+                                </button>
                             </div>
                             <div className='col-lg-1'></div>
                         </div>
@@ -253,7 +278,7 @@ const Index = () => {
                                 managertogglePending && (
                                     <>
                                         <h6 style={{ color: "#3247d5" }}>Showing {managerPending.length} Results</h6>
-                                        <table className='table table-hover'>
+                                        <table className='table table-hover' id="pendingid">
                                             <thead className='bg-info text-white'>
                                                 <tr>
                                                     <td>
@@ -316,7 +341,7 @@ const Index = () => {
                                 managerToggleapproved && (
                                     <>
                                         <h6 style={{ color: "#3247d5" }}>Showing {managerApproved.length} Results</h6>
-                                        <table className='table table-hover'>
+                                        <table className='table table-hover' id="approvedid">
                                             <thead className='bg-info text-white'>
                                                 <tr>
                                                     <th>Controll Number</th>
@@ -365,7 +390,7 @@ const Index = () => {
                                 managertogglerejected && (
                                     <>
                                         <h6 style={{ color: "#3247d5" }}>Showing {managerRejected.length} Results</h6>
-                                        <table className='table table-hover'>
+                                        <table className='table table-hover' id="rejectid">
                                             <thead className='bg-info text-white'>
                                                 <tr>
                                                     <th>Controll Number</th>

@@ -13,6 +13,7 @@ const FinalPayrollDetails = () => {
 
   const [department, setDepartment] = useState([]);
   const [keyword, setKeyword] = useState("");
+  const [departmentFilter, setDepartmentFilter] = useState("")
 
 
   const tableRef = useRef(null);
@@ -112,7 +113,7 @@ const FinalPayrollDetails = () => {
   };
 
   console.log(checkedState);
-  
+
   const handleDelete = async () => {
     const deletedIDS = await deleteSalary(checkedState);
     console.log(deletedIDS);
@@ -190,7 +191,7 @@ const FinalPayrollDetails = () => {
             />
           </div>
           <div className="col-lg-2">
-            <select id="Department" name="Department" className="form-select" >
+            <select id="Department" name="Department" className="form-select" onChange={e => (setDepartmentFilter(e.target.value))}>
               <option value="" disabled="">
                 Select Department
               </option>
@@ -280,7 +281,8 @@ const FinalPayrollDetails = () => {
                 .filter(post => {
                   return Object.values(post).some(value =>
                     value !== null &&
-                    value.toString().toLowerCase().includes(keyword.toLowerCase())
+                    value.toString().toLowerCase().includes(keyword.toLowerCase() || value.toString().toLowerCase().includes(departmentFilter.toLowerCase())
+                    )
                   );
                 }).slice(offset, offset + PER_PAGE)
                 .map((data, index) => {

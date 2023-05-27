@@ -145,7 +145,7 @@ const RunFinalPayroll = () => {
                             <div className="col-lg-2">
                                 <label >Select Position </label>
                                 <div className="dropdown">
-                                    <select id="Year" name="Year" className="form-control form-control-sm ">
+                                    <select id="Year" name="Year" className="form-select form-select-sm ">
                                         {/* <br ></br> */}
                                         <option value="Select" style={{ color: "#0C275A" }} disabled="">Select Position
                                         </option>
@@ -184,7 +184,7 @@ const RunFinalPayroll = () => {
             <div className="row">
                 <div className="col-lg-2">
                 </div>
-                <div className="col-lg-2">
+                <div className="col-lg-3">
                 </div>
                 <div className="col-lg-2">
                     <br ></br>
@@ -228,7 +228,7 @@ const RunFinalPayroll = () => {
                                 dashboard.filter(post => {
                                     return Object.values(post).some(value =>
                                         value !== null &&
-                                        value.toString().toLowerCase().includes(keyword.toLowerCase())
+                                        value.toString().toLowerCase().includes(keyword.toLowerCase()) || value.toString().toLowerCase().includes(keyword.toLowerCase())
                                     );
                                 }).map((data, index) => {
                                     return (
