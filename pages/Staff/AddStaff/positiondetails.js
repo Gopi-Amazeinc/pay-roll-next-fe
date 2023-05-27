@@ -267,9 +267,9 @@ function PositionDetails({ data }) {
                     </p>
                     <div>
                       <input
-                        type="text"
+                        type="number"
                         placeholder="Employee ID"
-                        {...register("EmployeeCode", { required: true,pattern: /[a-zA-z]{3}[-]{1}[0-9]{4}$/ })}
+                        {...register("EmployeeCode", { required: true })}
                         className="form-control "
                       ></input>
                       {errors.EmployeeCode?.type==='required' && (
@@ -278,12 +278,12 @@ function PositionDetails({ data }) {
                           Please enter Employee ID *
                         </span>
                       )}
-                         {errors.EmployeeCode?.type==='pattern' && (
+                         {/* {errors.EmployeeCode?.type==='pattern' && (
                         <span style={customStyles.errorMsg}>
                           {" "}
                           Please enter proper Employee ID * (eg: EMP-1234)
                         </span>
-                      )}
+                      )} */}
                     </div>
                   </div>
                   {
@@ -356,7 +356,7 @@ function PositionDetails({ data }) {
                       {
                         <div>
                           <select
-                            className="form-control "
+                            className="form-select "
                             {...register("Level", { required: true })}
                             style={customStyles.inputLabel}
                           >

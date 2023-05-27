@@ -18,6 +18,9 @@ function StaffDashbaord() {
   const [keyword, setKeyword] = useState("");
   const [items, setItems] = useState([]);
   const [showButtons, setShowButtons] = useState(false);
+  const [department, setDepartment] = useState([]);
+  const [position, setPosition] = useState([]);
+  const [level, setLevel] = useState([]);
 
   const [enableDisablestate, setenableDisablestate] = useState(false);
 
@@ -32,10 +35,16 @@ function StaffDashbaord() {
       hostURL + "Payroll/GetAllStaffNewforstaffdashboard"
     );
     setStaffData(res.data);
-    // if(res.attendanceEnable = 1 ) {
-
-    // }
     setcount(res.data.length);
+
+    let res1 = await axios.get(hostURL + "Master/GetDepartmentMaster");
+    setDepartment(res1.data);
+
+    let res2 = await axios.get(hostURL + "Master/GetPositionMaster");
+    setPosition(res2.data);
+
+    let res3 = await axios.get(hostURL + "Master/GetLevelType");
+    setLevel(res3.data);
   };
   const getData = (data) => {
     sessionStorage.setItem("id", data.id);
@@ -65,15 +74,18 @@ function StaffDashbaord() {
   };
   const handleDelete = async (id) => {
     try {
-      let res = await axios.get(hostURL + ``);
+      let res = await axios.get(hostURL + `Payroll/DeleteStaff?ID=${id}`);
       console.log(res.data);
       Swal.fire("Data deleted successfully");
-      getbarangaymaster();
+      getStaffDetails();
     } catch (error) {
       console.error(error);
       Swal.fire("Failed to delete data");
     }
   };
+  const handleActive = async (id) => {
+
+  }
   const customStyles = {
     content: {
       top: "20%",
@@ -110,7 +122,6 @@ function StaffDashbaord() {
   const closeModal = () => {
     setModalOpen(false);
   };
-
 
   const incomingfile = async (file) => {
     //excel upload
@@ -155,9 +166,9 @@ function StaffDashbaord() {
     debugger;
     const loans = await Promise.all(
       items && items.length > 0
-        ? items.map(async (salary) => {
+        ? items.map(async (staff) => {
             const res = await apiService.commonGetCall(
-              "Payroll/GetStaffByEmployeeID?EmployeID=" + salary.EmployeeID
+              "Payroll/GetStaffByEmployeeID?EmployeID=" + staff.EmployeeID
             );
             let staffData;
             // const staffData = res.data[0];
@@ -191,22 +202,32 @@ function StaffDashbaord() {
               <select
                 className="form-select"
                 aria-label="Default select example"
+                onChange={(e) => setKeyword(e.target.value)}
               >
                 <option>Select Department</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+                {department.map((data, index) => {
+                  return (
+                    <option key={data.id} value={data.id} >
+                      {data.department_name}
+                    </option>
+                  );
+                })}
               </select>
             </div>
             <div className="col-lg-2">
               <select
                 className="form-select"
                 aria-label="Default select example"
+                onChange={(e) => setKeyword(e.target.value)}
               >
                 <option>Select Level</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+                {level.map((data, index) => {
+                  return (
+                    <option key={data.id} value={data.id}>
+                      {data.short}
+                    </option>
+                  );
+                })}
               </select>
             </div>
 
@@ -214,11 +235,16 @@ function StaffDashbaord() {
               <select
                 className="form-select"
                 aria-label="Default select example"
+                onChange={(e) => setKeyword(e.target.value)}
               >
                 <option>Select Position</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
+                {position.map((data, index) => {
+                  return (
+                    <option key={data.id} value={data.id} >
+                      {data.short}
+                    </option>
+                  );
+                })}
               </select>
             </div>
 
@@ -330,29 +356,38 @@ function StaffDashbaord() {
                             </span>
                           </td>
 
-
                           <td className="text-center">
-                            <BiEdit className={Styles.imgBtn}  onClick={()=> setShowButtons(!showButtons)} />
-                           
+                            <BiEdit
+                              className={Styles.imgBtn}
+                              onClick={() => setShowButtons(!showButtons)}
+                            />
+
                             {showButtons && (
                               <>
                                 <div className="card p-2 mt-1">
                                   <div>
-                                  <div className="row">
-                                    <Link
-                                      href={`/Staff/AddStaff/Edit/${data.id}`}
-                                    >
-                                      <button className={Styles.editBtnn}>EDIT</button>
-                                    </Link>
-                                  </div>
-                                  <br></br>
-                                  <div className="row">
-                                    <button className={Styles.deleteBtn}>DELETE</button>
-                                  </div>
-                                  <br></br>
-                                  <div className="row">
-                                    <button className={Styles.activeBtn}>ACTIVE</button>
-                                  </div>
+                                    <div className="row">
+                                      <Link
+                                        href={`/Staff/AddStaff/Edit/${data.id}`}
+                                      >
+                                        <button className={Styles.editBtnn}>
+                                          EDIT
+                                        </button>
+                                      </Link>
+                                    </div>
+                                    <br></br>
+                                    <div className="row">
+                                      <button className={Styles.deleteBtn}
+                                        onClick={handleDelete.bind(this, data.id)}>
+                                        DELETE
+                                      </button>
+                                    </div>
+                                    <br></br>
+                                    <div className="row">
+                                      <button className={Styles.activeBtn}>
+                                        ACTIVE
+                                      </button>
+                                    </div>
                                   </div>
                                 </div>
                               </>

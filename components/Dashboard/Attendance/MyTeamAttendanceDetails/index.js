@@ -46,13 +46,14 @@ const MyTeamAttendence = () => {
     const staffDetails = await apiService.commonGetCall(
       "Payroll/GetStaffBySupervisorID?Supervisor=" + userID
     );
+    const staffFilter = staffDetails.data.filter((item) => item.supervisor = userID)
     //TODO: MUltiselct DROP DOEN 
     // for (let i = 0; i < staffDetails.length; i++) {
     //   getAttendancedata.push(staffDetails[i].fullname)
     // }
     // setStaffData(getAttendancedata);
 
-    setStaffData(staffDetails.data);
+    setStaffData(staffFilter);
     // setcount(res.data.length);
   };
 
@@ -107,6 +108,7 @@ const MyTeamAttendence = () => {
 
   const handleStaffChange = (selectedStaff) => {
     setselctedStaffdata(selectedStaff);
+    
     return getMyTeamAttendenceByID(selectedStaff,startDate, endDate);
   };
 
