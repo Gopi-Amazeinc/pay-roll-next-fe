@@ -27,6 +27,7 @@ export default function ComponentMappingDashboard() {
     }
   };
 
+
   return (
 
     <div className="container-fluid">
@@ -89,7 +90,10 @@ export default function ComponentMappingDashboard() {
                           </Link>
                           &nbsp;
 
-                          <button className="edit-btn" >Delete</button>
+                          <button className="edit-btn"  onClick={handleDelete.bind(
+                                                        this,
+                                                        data.id
+                                                    )}>Delete </button>
                         </td>
                       </tr>
                     )
