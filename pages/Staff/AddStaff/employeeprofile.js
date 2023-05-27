@@ -505,7 +505,7 @@ function EmployeeProfile({ data }) {
                   <input
                     type="text"
                     placeholder="Personal Email"
-                    {...register("PersonalEmail", { required: true, pattern: /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/ })}
+                    {...register("PersonalEmail", { required: true, pattern: /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/ })}
                     className="form-control "
                   ></input>
                   {errors.PersonalEmail?.type === 'required' && (
@@ -528,7 +528,7 @@ function EmployeeProfile({ data }) {
                   <input
                     type="text"
                     placeholder="Mothers Name"
-                    {...register("MothersName", { required: true, pattern: /^[a-zA-Z]+ [a-zA-Z]+$/ })}
+                    {...register("MothersName", { required: true, pattern: /^[A-Za-z]+$/  })}
                     className="form-control "
                   ></input>
                   {errors.MothersName?.type === 'required' && (
@@ -554,7 +554,7 @@ function EmployeeProfile({ data }) {
                   <input
                     type="text"
                     placeholder="Father's Name"
-                    {...register("FathersName", { required: true, pattern: /^[a-zA-Z]+ [a-zA-Z]+$/ })}
+                    {...register("FathersName", { required: true, pattern: /^[A-Za-z]+$/ })}
                     className="form-control "
                   ></input>
                   {errors.FathersName?.type==='required' && (
