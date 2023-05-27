@@ -4,41 +4,78 @@ import { apiService } from "@/services/api.service";
 import { useForm } from "react-hook-form";
 import Link from "next/link";
 import Layout from '@/components/layout/layout.js'
-
-function ComponentMappingForm({ }) {
+import { useRouter } from "next/router";
+import Swal from 'sweetalert2';
+const ComponentMappingForm = ({ editData }) => {
+  const router=useRouter()
 
   const { register, handleSubmit, watch, reset, formState: { errors }, } = useForm();
-  async function onSubmit(data) {
-    debugger
-    console.log(data);
-    try {
-      debugger;
-      await apiService.commonPostCall("Payroll/InsertComponentMapping", data); // this for insrting the data using inserting Api call 
-      alert("data inserted")
+  const [actionType, setActionType] = useState("insert");
+  const onSubmit = async (data) => {
+    if (actionType == "insert") {
+      await apiService.commonPostCall("Payroll/InsertComponentMapping", data) // inserting new division master data [Shashank]
+      router.push('/Settings/componentmapping');
+      Swal.fire({
+        icon: 'success',
+        title: 'Added Successfully',
+      })
+    } else {
+      await apiService.commonPostCall("Payroll/UpdateComponentMapping", data); // this is for updating or Modifiying the data using  Update Api call
+      Swal.fire('Updated successfully')
+      router.push('/Settings/componentmapping');
     }
-
-    catch (error) {
-      alert("data not inserted")
-    }
-  }    const customStyles = {
+  };
+  const customStyles = {
     content: {
-        top: "50%",
-        left: "50%",
-        right: "auto",
-        bottom: "auto",
-        marginRight: "-50%",
-        transform: "translate(-50%, -50%)",
-        width: "60%",
+      top: "50%",
+      left: "50%",
+      right: "auto",
+      bottom: "auto",
+      marginRight: "-50%",
+      transform: "translate(-50%, -50%)",
+      width: "60%",
     },
     errorMsg: {
-        fontSize: "12px",
-        fontWeight: "500",
-        color: "red",
+      fontSize: "12px",
+      fontWeight: "500",
+      color: "red",
     },
     inputLabel: {
-        fontSize: "16px",
+      fontSize: "16px",
     },
-};
+  };
+  function clearForm(ComponentMappingData = null) {
+    let details = {
+      "ID": ComponentMappingData ? ComponentMappingData.id : "",
+      "PayrollComponentType": ComponentMappingData ? ComponentMappingData.payrollComponentType : "",
+      "Code": ComponentMappingData ? ComponentMappingData.code : "",
+      "ComponentName": ComponentMappingData ? ComponentMappingData.componentName : "",
+      "TaxFlag": ComponentMappingData ? ComponentMappingData.taxFlag : "",
+      "NinetyThousandTaxExemption": ComponentMappingData ? ComponentMappingData.ninetyThousandTaxExemption : "",
+      "PayrollPeriod": ComponentMappingData ? ComponentMappingData.payrollPeriod : "",
+      "Effeactivedate": ComponentMappingData ? ComponentMappingData.effeactivedate : "",
+      "Enable": ComponentMappingData ? ComponentMappingData.enable : "",
+      "PrintOnPaySlip": ComponentMappingData ? ComponentMappingData.printOnPaySlip : ""
+    };
+    reset(details);
+    setActionType(ComponentMappingData ? "update" : "insert");
+
+  }
+  useEffect(() => {
+    const { id } = editData || {};
+    if (id) {
+
+      getData(id);
+    } else {
+      clearForm();
+    }
+  }, []);
+  const getData = async (id) => {
+    const res = await apiService.commonGetCall(
+      "Payroll/GetComponentMappingByID?ID=" + id
+    );
+    clearForm(res.data[0]);
+  };
 
   return (
     <Layout>
@@ -106,7 +143,7 @@ function ComponentMappingForm({ }) {
                         Witholding Tax Refund 2021
                       </option>
                     </select>
-                  <div >{errors.ComponentName && <p className="error-message" style={customStyles.errorMsg}>{errors.ComponentName.message}</p>}</div>
+                    <div >{errors.ComponentName && <p className="error-message" style={customStyles.errorMsg}>{errors.ComponentName.message}</p>}</div>
 
                   </div>
                   <div className="col-lg-2">
@@ -114,13 +151,13 @@ function ComponentMappingForm({ }) {
                       Tax Flag<span style={{ color: "red" }}>*</span>
                     </label>
                     <br />
-                    <input {...register('TaxFlag' ,{required:"please select"})}
+                    <input {...register('TaxFlag', { required: "please select" })}
                       type="checkbox"
                       placeholder="Tax Flag"
                       id="TaxFlag"
                       name="TaxFlag"
                     />
-                    {errors.TaxFlag && <p className="error-message"  style={customStyles.errorMsg}>{errors.TaxFlag.message}</p>}
+                    {errors.TaxFlag && <p className="error-message" style={customStyles.errorMsg}>{errors.TaxFlag.message}</p>}
                   </div>
 
                   <div className="col-lg-2">
@@ -128,7 +165,7 @@ function ComponentMappingForm({ }) {
                       NinetyThousandTaxExemption<span style={{ color: "red" }}>*</span>
                     </label>
                     <br />
-                    <input {...register('NinetyThousandTaxExemption',{required:"please select"})}
+                    <input {...register('NinetyThousandTaxExemption', { required: "please select" })}
                       type="checkbox"
                       placeholder="NinetyThousandTaxExemption"
                       id="NinetyThousandTaxExemption"
@@ -175,21 +212,21 @@ function ComponentMappingForm({ }) {
                       Enable<span style={{ color: "red" }}>*</span>
                     </label>
                     <br />
-                    <input {...register('Enable',{required:"please select"})}
+                    <input {...register('Enable', { required: "please select" })}
                       type="checkbox"
                       id="Enable"
                       name="Enable"
                       className=""
                     />&nbsp; Yes
                     {errors.Enable && <p className="error-message" style={customStyles.errorMsg}>{errors.Enable.message}</p>}
-                    
+
                   </div>
                   <div className="col-lg-2">
                     <label>
                       Print On PaySlip<span style={{ color: "red" }}>*</span>
                     </label>
                     <br />
-                    <input {...register('PrintOnPaySlip',{required:"please select"})}
+                    <input {...register('PrintOnPaySlip', { required: "please select" })}
                       type="checkbox"
                       id="PrintOnPaySlip"
                       name="PrintOnPaySlip"
@@ -203,9 +240,16 @@ function ComponentMappingForm({ }) {
                 <div className="row">
                   <div className="col-lg-8"></div>
                   <div className="col-lg-2">
-
-                    <button type="submit" className="AddButton"> Save </button>
-
+                    {
+                      actionType == "insert" && (
+                        <button type='submit' className="AddButton" >Save</button>
+                      )
+                    }
+                    {
+                      actionType == "update" && (
+                        <button type='submit' className="AddButton" >Update</button>
+                      )
+                    }
                   </div>
                   <div className="col-lg-2">
                     <Link href="/Settings/componentmapping">

@@ -42,8 +42,8 @@ function StaffDashbaord() {
 
     let res2 = await axios.get(hostURL + "Master/GetPositionMaster");
     setPosition(res2.data);
-    
-    let res3 = await axios.get(hostURL + "Master/GetLevelMaster");
+
+    let res3 = await axios.get(hostURL + "Master/GetLevelType");
     setLevel(res3.data);
   };
   const getData = (data) => {
@@ -74,15 +74,18 @@ function StaffDashbaord() {
   };
   const handleDelete = async (id) => {
     try {
-      let res = await axios.get(hostURL + ``);
+      let res = await axios.get(hostURL + `Payroll/DeleteStaff?ID=${id}`);
       console.log(res.data);
       Swal.fire("Data deleted successfully");
-      getbarangaymaster();
+      getStaffDetails();
     } catch (error) {
       console.error(error);
       Swal.fire("Failed to delete data");
     }
   };
+  const handleActive = async (id) => {
+
+  }
   const customStyles = {
     content: {
       top: "20%",
@@ -161,11 +164,11 @@ function StaffDashbaord() {
   const transformedStaff = async (items) => {
     console.log(items);
     debugger;
-    const loans = await Promise.all(
+    const staffList = await Promise.all(
       items && items.length > 0
-        ? items.map(async (salary) => {
+        ? items.map(async (staff) => {
             const res = await apiService.commonGetCall(
-              "Payroll/GetStaffByEmployeeID?EmployeID=" + salary.EmployeeID
+              "Payroll/GetStaffByEmployeeID?EmployeID=" + staff.EmployeeID
             );
             let staffData;
             // const staffData = res.data[0];
@@ -183,8 +186,16 @@ function StaffDashbaord() {
           })
         : []
     );
-    return loans;
+    return staffList;
   };
+
+  const handleOnChange = (event)=>{
+    const { checked } = event.target;
+    const data = JSON.parse(event.target.value);
+    if(checked){
+      
+    }
+  }
   return (
     <div>
       <div className="container">
@@ -374,7 +385,8 @@ function StaffDashbaord() {
                                     </div>
                                     <br></br>
                                     <div className="row">
-                                      <button className={Styles.deleteBtn}>
+                                      <button className={Styles.deleteBtn}
+                                        onClick={handleDelete.bind(this, data.id)}>
                                         DELETE
                                       </button>
                                     </div>

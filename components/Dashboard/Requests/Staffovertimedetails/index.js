@@ -8,7 +8,7 @@ import { apiService } from "@/services/api.service";
 import { useForm } from 'react-hook-form';
 import ReactPaginate from "react-paginate";
 import { Router, useRouter } from 'next/router';
-import { DownloadTableExcel } from "react-export-table-to-excel";
+import * as XLSX from "xlsx";
 const Index = () => {
     const router = useRouter()
     const { register, handleSubmit, watch, formState } = useForm();
@@ -186,6 +186,33 @@ const Index = () => {
 
     }, [userID])
 
+    const exportToExcel = () => {
+        let element;
+        if (pending == true) {
+            element = document.getElementById("pendingid");
+        }
+        else if (approved == true) {
+            element = document.getElementById("approvedid");
+        }
+        else {
+            element = document.getElementById("rejectid");
+        }
+        if (element) {
+            const ws = XLSX.utils.table_to_sheet(element);
+            const wb = XLSX.utils.book_new();
+            XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+            if (pending == true) {
+                XLSX.writeFile(wb, "StaffOvertimepending.xlsx");
+            }
+            else if (approved == true) {
+                XLSX.writeFile(wb, "StaffOvertimeapprooved.xlsx");
+            }
+            else {
+                XLSX.writeFile(wb, "StaffOvertimerejected.xlsx");
+            }
+        }
+    };
+
     return (
         <div className='container-fluid'>
             <div className='row'>
@@ -196,7 +223,7 @@ const Index = () => {
                                 roleID == 2 && (
                                     <Link style={{ textDecoration: "none" }} href="/Requests/OverTimeDetails">
                                         <label className='mainheader' >My Overtime Details</label>
-                                    </Link>                                    
+                                    </Link>
                                 )
                             }
                         </div>
@@ -215,9 +242,12 @@ const Index = () => {
                             </div>
                             <div className='col-lg-6'></div>
                             <div className='col-lg-2'>
-                                <DownloadTableExcel filename="users table" sheet="users" currentTableRef={tableRef.current}>
+                                {/* <DownloadTableExcel filename="users table" sheet="users" currentTableRef={tableRef.current}>
                                     <button className="button" id="AddButton"> Download</button>
-                                </DownloadTableExcel>
+                                </DownloadTableExcel> */}
+                                <button className="button" onClick={exportToExcel} >
+                                    Download
+                                </button>
                             </div>
                         </div>
                     </div><br />
@@ -239,7 +269,7 @@ const Index = () => {
                                 pending && (
                                     <>
                                         <h6 style={{ color: "#3247d5" }}>Showing {newDashboard.length} Results</h6>
-                                        <table className='table table-hover'>
+                                        <table className='table table-hover' id="pendingid">
                                             <thead className='bg-info text-white'>
                                                 <tr>
                                                     <th>Select All&nbsp;
@@ -298,8 +328,8 @@ const Index = () => {
                                     <>
                                         <h6 style={{ color: "#3247d5" }}>Showing {newApproved.length} Results</h6>
 
-                                        <table className='table table-hover'>
-                                            <thead className='bg-info text-white'>
+                                        <table className='table' id="approvedid">
+                                            <thead className=' text-white'>
                                                 <tr>
                                                     <th>Controll Number</th>
                                                     <th>EmployeID</th>
@@ -343,7 +373,7 @@ const Index = () => {
                                 rejected && (
                                     <>
                                         <h6 style={{ color: "#3247d5" }}>Showing {newApproved.length} Results</h6>
-                                        <table className='table table-hover'>
+                                        <table className='table table-hover' id="rejectid">
                                             <thead className='bg-info text-white'>
                                                 <tr>
                                                     <th>Controll Number</th>
