@@ -14,7 +14,6 @@ const FinalPayrollDetails = () => {
   const [department, setDepartment] = useState([]);
   const [keyword, setKeyword] = useState("");
 
-
   const tableRef = useRef(null);
 
   const getData = async () => {
@@ -29,17 +28,21 @@ const FinalPayrollDetails = () => {
   };
   const [selectedRows, setSelectedRows] = useState([]);
   const [checkedState, setCheckedState] = useState([]);
-
+  const [ischeckedstate,setischeckedstate] = useState(false);
 
   // const [selctedValues, setSelctedValues] = useState([]);
   // const [deleteSalary, setDeleteSalary] = useState();
 
   const handleRowSelect = (event, id) => {
-    debugger
-    if (id === 'all') {
-      setSelectedRows(event.target.checked ? preliminarySalary.map(data => data.id) : []);
+    debugger;
+    if (id === "all") {
+      setCheckedState(event.target.checked ? preliminarySalary : []);
     } else {
-      setSelectedRows(selectedRows.includes(id) ? selectedRows.filter(rowId => rowId !== id) : [...selectedRows, id]);
+      setCheckedState(
+        checkedState.includes(id)
+          ? checkedState.filter((rowId) => rowId !== id)
+          : [...checkedState, id]
+      );
     }
   };
 
@@ -95,11 +98,11 @@ const FinalPayrollDetails = () => {
     // console.log(`${value} is ${checked}`);
     if (checked) {
       preliminarySalary.find((x) => x.id == data.id).isChecked = true;
-      let entity = {
-        staffID: data.staffID,
-        endDateformated: data.endDateFormated,
-      };
-      setCheckedState([...checkedState, entity]);
+      // let entity = {
+      //   staffID: data.staffID,
+      //   endDateformated: data.endDateFormated,
+      // };
+      setCheckedState([...checkedState, data]);
     } else {
       preliminarySalary.find((x) => x.id == data.id).isChecked = false;
       const index = checkedState.indexOf(event.target.value);
@@ -112,7 +115,7 @@ const FinalPayrollDetails = () => {
   };
 
   console.log(checkedState);
-  
+
   const handleDelete = async () => {
     const deletedIDS = await deleteSalary(checkedState);
     console.log(deletedIDS);
@@ -133,17 +136,40 @@ const FinalPayrollDetails = () => {
       //   checkedState[index].isCompleted = true;
       //   setCheckedState(checkedState);
       // }
-      const deleteddddsalary = await Promise.all(
-        checkedState && checkedState.length > 0
-          ? checkedState.map(async (data) => {
-            const res = await apiService.commonGetCall(
-              `Payroll/DeletePreliminary?staffID=${data.staffID}&Enddate=${data.endDateformated}`
-            );
-            const deletedData = res.data[0] || res.data;
-            // console.log(res.data);
-          })
-          : []
+      // const deleteddddsalary = await Promise.all(
+      checkedState && checkedState.length > 0;
+      let entity = {
+        employeID: 202,
+        payrolltype: 1,
+        month: 3,
+        endyear: 2023,
+        endDateFormated: "2023-03-15",
+        name: "madhav",
+        id: 272548,
+        staffID: 38274,
+        componentName: "OT_ON_SPECIAL_HOL_GREATER_THAN_8_hrs",
+        componentValue: 646.71,
+        endDate: "2023-03-15T00:00:00",
+        modified: "2023-04-08T13:29:34.57",
+        modifiedBy: "Admin",
+        hidden: false,
+        ded_type: "Earning",
+        newvalue: 0,
+        department_name: null,
+        modifiedDate: "2023-04-08T13:29:34.57",
+        isChecked: 0,
+      };
+      // ? checkedState.map(async (data) => {
+      const res = await apiService.commonPostCall(
+        // `Payroll/DeletePreliminary?staffID=${data.staffID}&Enddate=${data.endDateformated}`
+        `Payroll/DeletePreliminary`,entity
+        // checkedState
       );
+      const deletedData = res.data[0] || res.data;
+      // console.log(res.data);
+      // })
+      // : []
+      // );
       return deleteddddsalary;
 
       // This API is used to delete the dashboard data based on StaffID,EndDate
@@ -190,7 +216,7 @@ const FinalPayrollDetails = () => {
             />
           </div>
           <div className="col-lg-2">
-            <select id="Department" name="Department" className="form-select" >
+            <select id="Department" name="Department" className="form-select">
               <option value="" disabled="">
                 Select Department
               </option>
@@ -220,16 +246,19 @@ const FinalPayrollDetails = () => {
       <div className="row">
         <div className="col-lg-8"></div>
 
-
-        <div className="col-lg-2" style={{ marginLeft: "95px", color: "#3247d5" }}>Total Amount:</div>
+        <div
+          className="col-lg-2"
+          style={{ marginLeft: "95px", color: "#3247d5" }}
+        >
+          Total Amount:
+        </div>
       </div>
       <br />
       <br />
       <div className="row">
+        <div className="col-lg-4"></div>
         <div className="col-lg-4">
-        </div>
-        <div className="col-lg-4"
-        ><p className="Heading">Employees in selected Period</p>
+          <p className="Heading">Employees in selected Period</p>
         </div>
         <div className="col-lg-2" style={{ marginLeft: "83px" }}>
           <button
@@ -243,19 +272,17 @@ const FinalPayrollDetails = () => {
       </div>
       <div className="row ">
         <div className="col-lg-4"> </div>
-        <div className="col-lg-5">
-
-        </div>
+        <div className="col-lg-5"></div>
 
         <div className="col-lg-12">
-          <span>
+          {/* <span>
             Select All
             <input
               type="checkbox"
               checked={selectedRows.length === preliminarySalary.length}
-              onChange={e => handleRowSelect(e, 'all')}
+              onChange={(e) => handleRowSelect(e, "all")}
             />
-          </span>
+          </span> */}
           <br />
           <table
             style={{ whiteSpace: "nowrap" }}
@@ -264,7 +291,13 @@ const FinalPayrollDetails = () => {
           >
             <thead>
               <tr className="text-white">
-                <th>Select</th>
+                <th>Select
+                <input
+              type="checkbox"
+              checked={ischeckedstate}
+              onChange={(e) => handleRowSelect(e, "all")}
+            />
+                </th>
                 <th>Employee ID</th>
                 <th>Staff ID</th>
                 <th>Employee Name</th>
@@ -277,12 +310,17 @@ const FinalPayrollDetails = () => {
             </thead>
             <tbody>
               {preliminarySalary
-                .filter(post => {
-                  return Object.values(post).some(value =>
-                    value !== null &&
-                    value.toString().toLowerCase().includes(keyword.toLowerCase())
+                .filter((post) => {
+                  return Object.values(post).some(
+                    (value) =>
+                      value !== null &&
+                      value
+                        .toString()
+                        .toLowerCase()
+                        .includes(keyword.toLowerCase())
                   );
-                }).slice(offset, offset + PER_PAGE)
+                })
+                .slice(offset, offset + PER_PAGE)
                 .map((data, index) => {
                   return (
                     <tr className="text-dark" key={index}>
