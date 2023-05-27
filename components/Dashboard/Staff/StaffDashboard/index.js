@@ -28,9 +28,9 @@ function StaffDashbaord() {
       hostURL + "Payroll/GetAllStaffNewforstaffdashboard"
     );
     setStaffData(res.data);
-    if(res.attendanceEnable = 1 ) {
+    // if(res.attendanceEnable = 1 ) {
 
-    }
+    // }
     setcount(res.data.length);
   };
   const getData = (data) => {
@@ -306,21 +306,22 @@ function StaffDashbaord() {
                           <td>{data.manager}</td>
                           <td className="text-center">
                             <span onClick={() => enableDisableStaff(data)}>
-                              {data.attendanceEnablee == false ? (
-                                <button
-                                  onClick={getData.bind(this, data)}
-                                  className="enableDisableBtn"
-                                >
-                                  DISABLE
-                                </button>
-                              ) : (
+                              {data.attendanceEnablee ? (
                                 <button
                                   onClick={getData.bind(this, data)}
                                   className="enableDisableBtn"
                                 >
                                   ENABLE
                                 </button>
-                              )}
+                              ) : (
+                                <button
+                                  onClick={getData.bind(this, data)}
+                                  className="enableDisableBtn"
+                                >
+                                  DISABLE
+                                </button>
+                              )
+                            }
                             </span>
                           </td>
                           <td className="text-center">

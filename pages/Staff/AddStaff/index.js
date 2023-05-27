@@ -1,6 +1,6 @@
 import React, { useState,useEffect } from "react";
 import Layout from "../../../components/layout/layout";
-import Styles from "../../../styles/addStaff.module.css";
+
 import EmployeeProfile from "./employeeprofile";
 import PositionDetails from "@/pages/Staff/AddStaff/positiondetails";
 import ContactDetails from "@/pages/Staff/AddStaff/contactdetails";
