@@ -550,6 +550,10 @@ tr:nth-child(even) {
 
 
 /* new dashboard css */
+.pagination {
+  --bs-pagination-active-bg: #3247d5 !important;
+  --bs-pagination-active-border-color: #3247d5 !important;
+}
 .Top_heading {
   height: 15px;
   font-style: normal;

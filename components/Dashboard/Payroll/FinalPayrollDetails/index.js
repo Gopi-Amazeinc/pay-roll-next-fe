@@ -13,7 +13,7 @@ const FinalPayrollDetails = () => {
   const [keyword, setKeyword] = useState("");
   const [departmentFilter, setDepartmentFilter] = useState("")
 
-  const getData = async () => {
+  const getData = async () => {     
     // This API is used for fetch the Departmnent data for Dashboard and  Dropdown
     let res = await apiService.commonGetCall("Payroll/GetPreliminarySalary");
     debugger;

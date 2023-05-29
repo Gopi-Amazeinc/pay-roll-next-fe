@@ -274,6 +274,13 @@ const Index = () => {
                     <div className="row">
                         <div className="col-lg-3">
                             <label className='mainheader'>My Overtime Details</label>
+                            <div className="line-border" style={{
+                                border: "1px solid #2f87cc",
+                                bordertopleftradius: "51px",
+                                bordertoprightradius: "51px",
+                                margintop: "0px",
+                                width: "62%"
+                            }}></div>
                         </div>
                         <div className='col-lg-3'>
                             {

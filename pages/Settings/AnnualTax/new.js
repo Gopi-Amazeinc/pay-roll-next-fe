@@ -188,8 +188,8 @@ const AnnualTaxForm = ({ editData }) => {
                                                 if (charCode !== 46 && charCode > 31 && (charCode < 48 || charCode > 57)) {
                                                     event.preventDefault();
                                                 }
-                                            }} maxLength={3}
-                                            {...register("Percentage", { required: true,pattern:/^((100)|(\d{1,2}?))$/g })}
+                                            }} maxLength={4}
+                                            {...register("Percentage", { required: true,pattern:/^((100)|(\d{1,2}(\.\d*)?))$/g})}
                                             placeholder="Percentage(%)"
                                         />
                                         <div>

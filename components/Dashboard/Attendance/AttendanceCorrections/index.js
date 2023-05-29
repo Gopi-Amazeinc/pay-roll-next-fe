@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { useRef } from 'react';
+import { useRef } from "react";
 import Link from "next/link";
 import Swal from "sweetalert2";
 import { apiService } from "@/services/api.service";
@@ -11,7 +11,6 @@ import ReactPaginate from "react-paginate";
 import * as XLSX from "xlsx";
 
 const Attendancecorrectiondashboard = () => {
-
   const [roleID, setRoleID] = useState();
   const [userID, setUserID] = useState();
 
@@ -31,8 +30,6 @@ const Attendancecorrectiondashboard = () => {
   const [pendingcount, setpendingcount] = useState();
   const [rejectcount, setrejectcount] = useState();
   const [approvedcount, setapprovedcount] = useState();
-
-
 
   const togglePending = () => {
     setPending(true);
@@ -62,16 +59,13 @@ const Attendancecorrectiondashboard = () => {
     setPending(true);
   }, []);
 
-
-
   const PER_PAGE = 10;
   const [currentPage, setCurrentPage] = useState(0);
   function handlePageClick({ selected: selectedPage }) {
-    setCurrentPage(selectedPage)
+    setCurrentPage(selectedPage);
   }
   const offset = currentPage * PER_PAGE;
   const pageCount = Math.ceil(pendingDashboardData.length / PER_PAGE);
-
 
   useEffect(() => {
     if (userID) {
@@ -115,11 +109,11 @@ const Attendancecorrectiondashboard = () => {
     debugger;
     const res = await apiService.commonGetCall(
       "Payroll/GetPendingAttendanceCorrectionByStaffID?userID=" +
-      userID +
-      "&SDate=" +
-      SDate +
-      "&EDate=" +
-      EDate
+        userID +
+        "&SDate=" +
+        SDate +
+        "&EDate=" +
+        EDate
     );
     setpendingcount(res.data.length);
     console.log(res, "pending");
@@ -129,11 +123,11 @@ const Attendancecorrectiondashboard = () => {
   const getApprovedData = async (SDate, EDate) => {
     const res = await apiService.commonGetCall(
       "Payroll/GetApprovedAttendanceCorrectionByStaffID?userID=" +
-      userID +
-      "&SDate=" +
-      SDate +
-      "&EDate=" +
-      EDate
+        userID +
+        "&SDate=" +
+        SDate +
+        "&EDate=" +
+        EDate
     );
     setapprovedcount(res.data.length);
     console.log(res, "approved");
@@ -143,11 +137,11 @@ const Attendancecorrectiondashboard = () => {
   const getRejectedData = async (SDate, EDate) => {
     const res = await apiService.commonGetCall(
       "Payroll/GetRejectedAttendanceCorrectionByStaffID?userID=" +
-      userID +
-      "&SDate=" +
-      SDate +
-      "&EDate=" +
-      EDate
+        userID +
+        "&SDate=" +
+        SDate +
+        "&EDate=" +
+        EDate
     );
     setrejectcount(res.data.length);
     console.log(res, "rejected");
@@ -178,29 +172,24 @@ const Attendancecorrectiondashboard = () => {
   //   });
   // };
 
-
   const exportToExcel = () => {
     let element;
     if (pending == true) {
       element = document.getElementById("pendingid");
-    }
-    else if (approved == true) {
+    } else if (approved == true) {
       element = document.getElementById("approvedid");
-    }
-    else {
+    } else {
       element = document.getElementById("rejectid");
     }
     if (element) {
       const ws = XLSX.utils.table_to_sheet(element);
       const wb = XLSX.utils.book_new();
       XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
-      if(pending == true) {
+      if (pending == true) {
         XLSX.writeFile(wb, "Attendancepending.xlsx");
-      }
-      else if (approved == true) {
+      } else if (approved == true) {
         XLSX.writeFile(wb, "Attendanceapprooved.xlsx");
-      }
-      else {
+      } else {
         XLSX.writeFile(wb, "Attendancerejected.xlsx");
       }
     }
@@ -214,15 +203,18 @@ const Attendancecorrectiondashboard = () => {
             className={Styles.mainheader}
             href="/Attendance/AttendanceCorrections"
           >
-          My  Attendance Correction
+            My Attendance Correction
           </Link>
-          <div className="line-border" style={{
-            border: "1px solid #2f87cc",
-            bordertopleftradius: "51px",
-            bordertoprightradius: "51px",
-            margintop: "0px",
-            width: "80%"
-          }}></div>
+          <div
+            className="line-border"
+            style={{
+              border: "1px solid #2f87cc",
+              bordertopleftradius: "51px",
+              bordertoprightradius: "51px",
+              margintop: "0px",
+              width: "80%",
+            }}
+          ></div>
         </div>
 
         <div className="col-lg-3" style={{ marginLeft: "-30px" }}>
@@ -233,9 +225,7 @@ const Attendancecorrectiondashboard = () => {
                 href="/Attendance/MyTeamAttendanceCorrection"
               >
                 My Team Attendance Correction
-
               </Link>
-
             </>
           )}
         </div>
@@ -245,7 +235,10 @@ const Attendancecorrectiondashboard = () => {
       <div className="card p-3 border-0 rounded-3">
         <div className="row p-3">
           <div className="col-lg-1">
-            <p> <b>Filter By</b></p>
+            <p>
+              {" "}
+              <b>Filter By</b>
+            </p>
           </div>
 
           <div className="col-lg-3">
@@ -263,26 +256,18 @@ const Attendancecorrectiondashboard = () => {
                 <div className="col-lg-7">
                   <Link href="/Attendance/AttendanceCorrections/attendancecorrectionform">
                     <button className="button">
-                      <IoIosAddCircleOutline size={18} color={"white"} />  Add Attendance Correction
+                      <IoIosAddCircleOutline size={18} color={"white"} /> Add
+                      Attendance Correction
                     </button>
                   </Link>
                 </div>
                 <div className="col-lg-3">
-                 
-        
-                    <button className="button" onClick={exportToExcel} >
-                      Download
-                    </button>
-                
+                  <button className="button" onClick={exportToExcel}>
+                    Download
+                  </button>
                 </div>
-
               </div>
-
-
-
             )}
-
-
           </div>
         </div>
       </div>
@@ -314,17 +299,15 @@ const Attendancecorrectiondashboard = () => {
 
       <div className="row mt-3">
         <div className="col-lg-12">
-
           {pending && roleID != "4" && (
-
             <>
               <div className="col-lg-2 text-primary fs-6 fw-bold">
-
-                <h6 style={{ color: "#3247d5" }}>Showing {pendingcount} Results</h6>
+                <h6 style={{ color: "#3247d5" }}>
+                  Showing {pendingcount} Results
+                </h6>
               </div>
 
-
-              <table className="table" id="pendingid" >
+              <table className="table" id="pendingid">
                 <thead className="bg-info text-white">
                   <tr>
                     <th>Date</th>
@@ -341,9 +324,14 @@ const Attendancecorrectiondashboard = () => {
                     pendingDashboardData.length > 0 && (
                       <>
                         {pendingDashboardData
-                          .filter(post => {
-                            return Object.values(post).some(value =>
-                              value !== null && value.toString().toLowerCase().includes(keyword.toLowerCase())
+                          .filter((post) => {
+                            return Object.values(post).some(
+                              (value) =>
+                                value !== null &&
+                                value
+                                  .toString()
+                                  .toLowerCase()
+                                  .includes(keyword.toLowerCase())
                             );
                           })
                           .map((data, index) => {
@@ -396,11 +384,12 @@ const Attendancecorrectiondashboard = () => {
             </>
           )}
 
-
           {approved && roleID != "4" && (
             <>
               <div className="col-lg-2 text-primary fs-6 fw-bold">
-                <h6 style={{ color: "#3247d5" }}>Showing {approvedcount} Results</h6>
+                <h6 style={{ color: "#3247d5" }}>
+                  Showing {approvedcount} Results
+                </h6>
               </div>
               <table className="table table-hover" id="approvedid">
                 <thead className="bg-info text-white">
@@ -415,22 +404,23 @@ const Attendancecorrectiondashboard = () => {
                 </thead>
 
                 <tbody>
-                  {Array.isArray(approvedDashboardData) && approvedDashboardData.length > 0 && (
-                    <>
-                      {approvedDashboardData.map((data) => {
-                        return (
-                          <tr key={data.id}>
-                            <td>{data.staffID}</td>
-                            <td>{data.staffname}</td>
-                            <td>{data.date}</td>
-                            <td>{data.startTime}</td>
-                            <td>{data.endTime}</td>
-                            <td>{data.status}</td>
-                          </tr>
-                        );
-                      })}
-                    </>
-                  )}
+                  {Array.isArray(approvedDashboardData) &&
+                    approvedDashboardData.length > 0 && (
+                      <>
+                        {approvedDashboardData.map((data) => {
+                          return (
+                            <tr key={data.id}>
+                              <td>{data.staffID}</td>
+                              <td>{data.staffname}</td>
+                              <td>{data.date}</td>
+                              <td>{data.startTime}</td>
+                              <td>{data.endTime}</td>
+                              <td>{data.status}</td>
+                            </tr>
+                          );
+                        })}
+                      </>
+                    )}
                 </tbody>
               </table>
               <div className="mb-4 mt-4 text-center">
@@ -460,7 +450,9 @@ const Attendancecorrectiondashboard = () => {
           {rejected && roleID != "4" && (
             <>
               <div className="col-lg-2 text-primary fs-6 fw-bold">
-                <h6 style={{ color: "#3247d5" }}>Showing {rejectcount} Results</h6>
+                <h6 style={{ color: "#3247d5" }}>
+                  Showing {rejectcount} Results
+                </h6>
               </div>
               <table className="table table-hover" id="rejectid">
                 <thead className="bg-info text-white">
@@ -515,8 +507,6 @@ const Attendancecorrectiondashboard = () => {
               </div>
             </>
           )}
-
-
         </div>
       </div>
     </div>

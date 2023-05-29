@@ -199,7 +199,7 @@ const Dashboard = () => {
       WorkTypeID == 0
     ) {
       Swal.fire("Please Fill Work Type");
-    } else if (WorkTypeID != staffDetailsRef.current[0].WorkType) {
+    } else if (WorkTypeID != staffDetailsRef.current[0].signInTypeID) {
       Swal.fire("please select correct work Type to Punchout!");
     } else {
       let options = { hour12: false };

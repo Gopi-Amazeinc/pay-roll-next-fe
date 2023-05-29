@@ -265,6 +265,13 @@ const Index = () => {
                         </div>
                         <div className="col-md-3">
                             <label className="mainheader">My Team Leave Request</label>
+                            <div className="line-border" style={{
+                                border: "1px solid #2f87cc",
+                                bordertopleftradius: "51px",
+                                bordertoprightradius: "51px",
+                                margintop: "0px",
+                                width: "73%"
+                            }}></div>
                         </div>
                     </div><br />
                     <div className="row">

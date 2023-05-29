@@ -15,6 +15,7 @@ function Announcementform({ editData }) {
 
     const { register, handleSubmit, watch, reset, formState: { errors }, } = useForm();
     const [filePath, setFilePath] = useState();
+    const [fileName, setFileName] = useState();
     const [actionType, setActionType] = useState("insert");
     const router = useRouter();
 
@@ -45,10 +46,9 @@ function Announcementform({ editData }) {
             "DateTime": AnnounceData ? AnnounceData.dateTime : "",
             "Venue": AnnounceData ? AnnounceData.time : "",
             "Time": AnnounceData ? AnnounceData.venue : "",
-            // "Attachment": AnnounceData ? AnnounceData.attachment : "",
-            "BuildingID": AnnounceData ? AnnounceData.buildingID : "",
-            "Attachment": filePath,
-
+            "Attachment": AnnounceData ? AnnounceData.attachment : "",
+            "BuildingID": AnnounceData ? AnnounceData.buildingID : ""
+            
         };
         reset(details);
         setActionType(AnnounceData ? "update" : "insert");
@@ -58,12 +58,17 @@ function Announcementform({ editData }) {
     const submit = async (data) => {
         debugger
         if (actionType == "insert") {
-            await apiService.commonPostCall("Payroll/InsertAnnouncement", data);
+            let entity={
+                "Attachment":filePath
+            }
+            const formData={...data, ...entity}
+            await apiService.commonPostCall("Payroll/InsertAnnouncement", formData);
             Swal.fire("Data Inserted successfully");
             console.log("Insertde data", data)
             router.push("/Announcement");
         } else {
-            await apiService.commonPostCall("Payroll/UpdateAnnouncement", data);
+            const formData={...data, ...entity}
+            await apiService.commonPostCall("Payroll/UpdateAnnouncement", formData);
             Swal.fire("Data Updated successfully");
             router.push("/Announcement");
         }
@@ -76,23 +81,35 @@ function Announcementform({ editData }) {
         debugger;
         console.log(acceptedFiles, "Uploaded file");
         uploadFile(acceptedFiles);
-    }, []);
-    const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
-
-    const uploadFile = async (data) => {
+      }, []);
+      
+      const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+    
+      const uploadFile = async (data) => {
         debugger
         let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
         const formData = new FormData();
         formData.append("file_upload", data[0], data[0].name);
-        let res = await axios.post(
-            hostURL + "Payroll/ProjectAttachments",
-            formData
+        setFileName(data[0].name)
+        console.log(data[0].name)
+        let invoiceURL = await axios.post(
+          hostURL + "Payroll/ProjectAttachments",
+          formData
         );
-        console.log(res, "File Path");
-        Swal.fire("Uploaded successfully");
-
-        setFilePath(res.data);
-    };
+        // console.log(res, "File Path");
+        // Swal.fire("Uploaded successfully");
+        // setFilePath(res.data);
+    
+        // TODO: Gopi's code for validation
+        let environmentVariable = "https://103.12.1.103";
+    
+        let imagePath = invoiceURL.data.split("\\", 1);
+        let Preview = invoiceURL.data.replace(imagePath, environmentVariable);
+        Swal.fire('Uploaded successfully.');
+        // setFilePath(invoiceURL.data);
+        setFilePath(Preview);
+      };
+    
 
 
 
@@ -133,18 +150,18 @@ function Announcementform({ editData }) {
                                 <div className='row'>
                                     <div className='col-lg-2'>
                                         <label className='fw-bold'>Announcement <i className='text-danger'>*</i></label>
-                                        <input className='form-control' placeholder='Announcement Name' {...register("announcement", {
+                                        <input className='form-control' placeholder='Announcement Name' {...register("Name", {
                                             required: true,
                                             maxLength: 100,
                                             pattern: /^[A-Za-z]+$/i
                                         })} /><div  style={customStyles.errorMsg}>
-                                            {errors.announcement?.type === 'required' &&
+                                            {errors.Name?.type === 'required' &&
                                                 " Please enter announcement name"
                                             }
-                                            {errors.announcement?.type === "maxLength" &&
+                                            {errors.Name?.type === "maxLength" &&
                                                 "name cannot exceed 20 characters"
                                             }
-                                            {errors.announcement?.type === "pattern" &&
+                                            {errors.Name?.type === "pattern" &&
                                                 "Alphabetical characters only"
                                             }
                                         </div>
@@ -186,17 +203,27 @@ function Announcementform({ editData }) {
                                         <label className='fw-bold'>Attachment <i className='text-danger'>*</i></label>
                                         <div style={{ border: '2px dashed black' }}>
                                             <div {...getRootProps()}>
-                                                <input {...getInputProps()} {...register("dropzone", { required: true })} />
+                                                <input {...getInputProps()} />
                                                 {isDragActive ? (
                                                     <p>Drop the files here ...</p>
                                                 ) : (
-                                                    <p>
-                                                        Drag 'n' drop some files here, or click to select
-                                                        files
-                                                    </p>
+                                                    <p style={{ padding: "6%" }}>
+                                                    {
+                                                      filePath == null && (
+                                                        <p>Drag 'n' drop some files here, or click to select
+                                                          files</p>
+                                                      )
+                                                    }
+                                                    {
+                                                      filePath && (
+                                                        <p>{fileName}</p>
+                                                      )
+                                                    }
+                                                  </p>
                                                 )}
                                             </div>
-                                        </div>          {errors.venue && (     <p style={customStyles.errorMsg}>Please enter announcement venue</p> )}
+                                        </div>
+                                        {errors.Attachment && (<p style={customStyles.errorMsg}>Please enter announcement Attachment</p> )}
                                     </div>
 
                                     <div className='col-lg-2'>
