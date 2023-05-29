@@ -4,6 +4,7 @@ import Layout from "@/components/layout/layout"
 import { apiService } from "@/services/api.service";
 import Swal from 'sweetalert2';
 import ReactPaginate from "react-paginate";
+import Image from "next/image";
 
 const Locatordashboard = () => {
 
@@ -288,9 +289,8 @@ const Locatordashboard = () => {
                                                             <td>{data.endTime}</td>
                                                             <td>{data.task}</td>
                                                             <td>{data.comments}</td>
-                                                            <td><img onClick={ImagePreview
-                                                            } src={data.attachment} width={50} height={50} /></td>
-                                                            <td>{daSta.approveStatus}</td>
+                                                            <td><Image onClick={ImagePreview} alt={"imagepreive"} src={data.attachment} width={50} height={50} ></Image></td>
+                                                            <td>{data.approveStatus}</td>
                                                             {/* <td>{
                                                 <b>{data.statusID === 0 ? 'Manager Pending' :
                                                     data.statusID === 1 ? 'Manager approved' :
