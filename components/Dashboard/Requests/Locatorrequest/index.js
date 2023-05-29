@@ -289,7 +289,7 @@ const Locatordashboard = () => {
                                                             <td>{data.endTime}</td>
                                                             <td>{data.task}</td>
                                                             <td>{data.comments}</td>
-                                                            <td><Image onClick={ImagePreview} alt={"imagepreive"} src={data.attachment} width={50} height={50} ></Image></td>
+                                                            <td><img onClick={ImagePreview} alt={"imagepreive"} src={data.attachment} width={50} height={50} /></td>
                                                             <td>{data.approveStatus}</td>
                                                             {/* <td>{
                                                 <b>{data.statusID === 0 ? 'Manager Pending' :
