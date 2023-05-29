@@ -184,7 +184,7 @@ const Companydashboard = () => {
                             {Company.map((data, index) => {
                                 return (
                                     <tr key={index}>
-                                        <td>{data.company_Logo}</td>
+                                        <td><img src={data.company_logo} width={50}height={50} ></img></td>
                                         <td>{data.company_Name}</td>
                                         <td>{data.nature_Of_Business}</td>
                                         {/* <td>{data.subsidiaryName}</td> */}
