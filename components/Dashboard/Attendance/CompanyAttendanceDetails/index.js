@@ -303,7 +303,7 @@ const CompanyAttendanceDetails = () => {
             <div className="col-lg-2">
               <button className="button" onClick={openEditModal}>Upload</button>
               <br />
-             
+              <br/>
                 <button className="button" onClick={exportToExcel}>Export To Excel</button>
             </div>
             <div>
@@ -417,20 +417,20 @@ const CompanyAttendanceDetails = () => {
                             return (
                               <tr key={index} value={data.index}>
                                 <td>{data.employeID}</td>
-                                <td>{data.staffname1}</td>
+                                <td>{data.name}</td>
                                 <td>{data.shift}</td>
                                 <td>{data.date}</td>
 
                                 <td>{data.dayType}</td>
-                                <td>{data.etime}</td>
-                                <td>{data.expectedOut}</td>
+                                <td>{data.expectedInTime}</td>
+                                <td>{data.expectedOutTime}</td>
 
                                 <td>{data.punchInTime}</td>
                                 <td>{data.punchOutTime}</td>
-                                <td>{data.hr}</td>
+                                <td>{data.productiveHours}</td>
 
                                 <td>{data.ot}</td>
-                                <td>{data.latepunchin}</td>
+                                <td>{data.lateMins}</td>
                               </tr>
                             );
                           }

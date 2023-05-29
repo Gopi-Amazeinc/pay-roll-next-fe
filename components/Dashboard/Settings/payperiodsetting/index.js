@@ -71,9 +71,10 @@ export default function PayperiodSettingsDash() {
                     <Link href="/Settings/payperiodsetting/new" > <button className='AddButton' >Add New</button> </Link>
                 </div>
             </div>
+            <br/>
             <div className='row'><div className='col-lg-12'>
                 < div className='table-responsive'>
-                    <table className='table mt-4 table-striped text-center ' >
+                <table className='table table-hover '>
                         <thead className='bg-info text-white '>
                             <tr style={{ whiteSpace: "nowrap" }}>
                                 <th>Pay Code</th>

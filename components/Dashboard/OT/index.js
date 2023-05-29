@@ -5,7 +5,6 @@ import Swal from "sweetalert2";
 import * as XLSX from "xlsx";
 import Styles from "@/pages/OT/Ot.module.css";
 import { useRef } from "react";
-import { DownloadTableExcel } from "react-export-table-to-excel";
 import { apiService } from "@/services/api.service";
 
 const Myovertimedetails = () => {
@@ -118,25 +117,15 @@ const Myovertimedetails = () => {
     return loans;
   };
 
-  // TODO: Download excel usinf react-export toexcel
-  // const { onDownload } = useDownloadExcel({
-  //   currentTableRef: tableRef.current,
-  //   filename: "Users table",
-  //   sheet: "Users"
-  // });
-
-  // TODO: Download excel using xlsx method
   const exportToExcel = () => {
     /* table id is passed over here */
-    let element = document.getElementById("lvs");
-    const ws = XLSX.utils.table_to_sheet(element);
-
-    /* generate workbook and add the worksheet */
-    const wb = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
-
-    /* save to file */
-    XLSX.writeFile(wb, "AttendanceUnitsUploadTemplate.xlsx");
+    let element = document.getElementById("myOvertimeDetailslID");
+    if (element) {
+      const ws = XLSX.utils.table_to_sheet(element);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+      XLSX.writeFile(wb, "MyTeamShiftDetails.xlsx");
+    }
   };
 
   /* 
@@ -185,19 +174,14 @@ XLSX.writeFile(workbook, "output.xlsx");
                   </button>
                 </div>
                 <div className="col-lg-3">
-                  <DownloadTableExcel
-                    filename="users table"
-                    sheet="users"
-                    // currentTableRef={tableRef.current}
-                  >
                     <button
                       type="button"
                       id={Styles.UploadLoansButton}
                       className="form-control CancelBTN"
+                      onClick={exportToExcel}
                     >
                       Export To Excel
                     </button>
-                  </DownloadTableExcel>
                 </div>
               </div>
             </div>
@@ -239,7 +223,7 @@ XLSX.writeFile(workbook, "output.xlsx");
                     <span
                       style={{ color: "navy", textDecoration: "underline" }}
                     >
-                      UploadLoanTemplate.XLSX
+                      UploadOvertimeTemplate.XLSX
                     </span>
                   </Link>
                 </div>
@@ -263,7 +247,7 @@ XLSX.writeFile(workbook, "output.xlsx");
             </Modal>
             <div className="row mt-3">
               <div className="container">
-                <table className="table table-hover">
+                <table className="table" id="myOvertimeDetailslID">
                   <thead className="bg-info text-white">
                     <tr>
                       <th>Employee ID </th>

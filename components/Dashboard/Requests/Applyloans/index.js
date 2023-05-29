@@ -93,6 +93,14 @@ const ApplyloansDashboard = () => {
                         <div className="row">
                             <div className="col-lg-2">
                                 <label className="mainheader">My Loans </label>
+                                <div className="line-border" style={{
+                                    border: "1px solid #2f87cc",
+                                    bordertopleftradius: "51px",
+                                    bordertoprightradius: "51px",
+                                    margintop: "0px",
+                                    width: "45%"
+                                }}></div>
+
                             </div>
                             <div className="col-lg-2">
                                 {
