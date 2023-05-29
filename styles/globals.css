@@ -549,7 +549,592 @@ tr:nth-child(even) {
 } */
 
 
+/* new dashboard css */
 .pagination {
   --bs-pagination-active-bg: #3247d5 !important;
   --bs-pagination-active-border-color: #3247d5 !important;
+}
+.Top_heading {
+  height: 15px;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 15px;
+  width: 168px;
+  text-align: center;
+  letter-spacing: .5px;
+  color: #2c507a;
+}
+
+.time {
+  font-style: normal;
+  font-weight: 600;
+  font-size: 32px;
+  color: #2c507a;
+}
+
+.date-text {
+  width: 100%;
+  height: 15px;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 15px;
+  left: 100px;
+  line-height: 15px;
+  text-align: center;
+  letter-spacing: 0.5px;
+  color: #bdbdbd;
+}
+
+.type-text {
+  font-style: normal;
+  font-weight: 600;
+  width: 100%;
+  display: flex;
+  font-size: 14px;
+  line-height: 13px;
+  color: #2c507a;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+
+.Profile-card {
+  transition: transform 1s;
+  transform-style: preserve-3d;
+  cursor: pointer;
+  border-radius: 16px;
+  height: 246px;
+  grid-gap: 20px;
+  gap: 20px;
+  background: #FFFFFF;
+  margin-right: 20px;
+  width: 100% !important;
+
+}
+
+.second-card {
+  transition: transform 1s;
+  transform-style: preserve-3d;
+  cursor: pointer;
+  border-radius: 16px;
+  width: 65%;
+  height: 242px;
+  background: #ffffff;
+  margin-bottom: 16px;
+}
+
+.second-card11 {
+  transition: transform 1s;
+  transform-style: preserve-3d;
+  cursor: pointer;
+  border-radius: 16px;
+  width: 100%;
+  min-height: 270px;
+  background: #3247d5;
+  margin-bottom: 16px;
+  padding: 10px;
+
+}
+
+.dashlogo {
+  position: relative;
+  height: 62px;
+  vertical-align: middle;
+  color: white;
+  font-size: 100px;
+
+}
+
+.myteam-heading {
+
+  font-style: normal;
+  font-weight: bold;
+  font-size: 26px;
+  position: relative;
+  display: flex;
+  text-align: center;
+  letter-spacing: .5px;
+  color: #fff;
+}
+
+.left-part {
+  left: 20px;
+  margin-right: 50px;
+}
+
+.right-part {
+  width: 80%;
+  justify-content: space-evenly;
+}
+
+.card-one1-1 {
+  transition: transform 1s;
+  transform-style: preserve-3d;
+  cursor: pointer;
+  border-radius: 16px;
+  width: 170px;
+  height: 221px;
+  position: relative;
+  left: 20px;
+  margin-right: 50px;
+  margin-top: 24px;
+  grid-gap: 40px;
+  gap: 40px;
+  background: #ffffff;
+  margin-bottom: 20px;
+
+}
+
+.card-head {
+  width: 100%;
+  height: 15px;
+  /* font-family: "Poppins"; */
+  font-style: normal;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 13px;
+  text-align: center;
+  letter-spacing: .5px;
+  color: #2c507a;
+}
+
+.card-day {
+  height: 15px;
+  width: 100%;
+  /* font-family: "Poppins"; */
+  font-style: normal;
+  font-weight: 600;
+  font-size: 21px;
+  line-height: 15px;
+  padding: 30px;
+  align-items: center;
+  text-align: center;
+  letter-spacing: .5px;
+  color: #2c507a;
+  flex-wrap: nowrap;
+  justify-content: center;
+}
+
+.card-paragraph {
+  width: 135px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 15px;
+  letter-spacing: .5px;
+  color: #bdbdbd;
+  margin-left: 8px;
+}
+
+.para {
+  color: #3247d5;
+}
+
+.small-para {
+  width: 83%;
+  font-size: 11px;
+  padding: 0px;
+}
+
+.content1 {
+  position: relative;
+  left: 56%;
+  font-size: 12px;
+  color: #3247d5;
+}
+
+.managersmall-one {
+  transition: transform 1s;
+  transform-style: preserve-3d;
+  cursor: pointer;
+  border-radius: 16px;
+  width: 23%;
+  height: 242px;
+  display: flex;
+  background: #ffffff;
+  margin-bottom: 20px;
+  justify-content: center;
+
+}
+
+.update-info {
+  width: 100% !important;
+  position: relative;
+  top: 80%;
+  padding: 10px;
+}
+
+.content {
+  font-size: 12px;
+}
+
+.card-attendance {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  grid-gap: 10px;
+  gap: 10px;
+  width: 90%;
+  height: 45px;
+  background: #ffffff;
+  border: 1px solid #3247d5 !important;
+  border-radius: 7px;
+  padding-top: -5px;
+  outline: none;
+}
+
+.text-attendance {
+  width: 90%;
+  height: 40px;
+  /* font-family: "Poppins"; */
+  font-style: normal;
+  font-weight: 600;
+  font-size: 13px;
+  display: flex;
+  line-height: 15px;
+  color: #3247d5;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: center;
+
+}
+
+.drp-box {
+  box-sizing: border-box;
+  border: 1px solid #bbbbbb;
+  border-radius: 5px;
+  font-weight: 600;
+  font-size: 15px;
+  padding: 6px;
+  width: 100%;
+  letter-spacing: 0.5px;
+}
+
+.contents {
+  display: contents;
+}
+
+.punch-Out-card {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  padding: 1%;
+  height: 39px;
+  left: 19px;
+  top: 142px;
+  background-color: #3247d5;
+  border-radius: 7px;
+  margin-top: 7px;
+}
+
+.bgred {
+  background: #CDCDCD !important;
+  border: #CDCDCD !important;
+}
+
+.text-punch {
+  width: 88px;
+  height: 15px;
+  color: whitesmoke;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 15px;
+  /* identical to box height, or 107% */
+
+  text-align: center;
+  letter-spacing: 0.5px;
+  margin-top: 13px;
+  /* Blue */
+}
+
+.text-punch-tym1 {
+  width: 112px;
+  height: 15px;
+  font-style: italic;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 15px;
+  text-align: center;
+  letter-spacing: .5px;
+  color: #cdcdcd;
+  margin-top: 12px;
+}
+
+.punch-in-card {
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+  padding: 1%;
+  height: 39px;
+  /* margin-bottom: 20px; */
+  left: 19px;
+  /* margin-top: 20px;
+  margin-bottom: 10px; */
+  top: 142px;
+  background: #ffffff;
+  border: 1px solid #3247d5;
+  border-radius: 7px;
+}
+
+.text-punch1 {
+  width: 100px;
+  height: 15px;
+  color: #3247d5;
+  margin-left: -8px;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 15px;
+  line-height: 17px;
+  letter-spacing: 0.5px;
+  margin-top: 10px;
+}
+
+.text-punch-tym {
+  color: #3247d5;
+  font-size: 10px;
+  height: fit-content;
+}
+
+.punch-time-card,
+.not-punch-card {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  left: 75px;
+  letter-spacing: 0.5px;
+  height: 27px;
+  background: #F2F2F2;
+  border-radius: 7px;
+  margin-top: 13px;
+}
+
+.annoc-card {
+  transition: transform 1s;
+  transform-style: preserve-3d;
+  cursor: pointer;
+  border-radius: 16px;
+  width: 190px;
+  height: 246px;
+  grid-gap: 20px;
+  gap: 20px;
+  background: #FFFFFF;
+  margin-right: 20px;
+  width: 50% !important;
+}
+
+.right {
+  width: 66%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.left {
+  width: 33%;
+}
+
+.card-content {
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+}
+
+.img-annouc {
+  width: 100%;
+  height: 100px;
+  border-radius: 7px;
+  padding: 0;
+}
+
+.fest-name {
+  font-size: 10px;
+  color: 4f4f4f;
+  align-self: flex-start;
+  margin-top: 5px;
+}
+
+.view-textannoubce {
+  display: flex;
+  /* font-family: "Poppins"; */
+  font-style: normal;
+  font-weight: 400;
+  left: 79%;
+  font-size: 11px;
+  /* margin: 63px 0px 2px 0px !important; */
+  padding: 3px;
+  text-decoration: none;
+  line-height: 15px;
+  letter-spacing: .5px;
+  color: #3247d5;
+  flex-direction: row;
+  /* width: 100%; */
+  justify-content: flex-end;
+  /* flex-wrap: nowrap; */
+  align-items: flex-end;
+}
+
+.holiday {
+  width: 412px;
+  height: 243px;
+  background: #ffffff;
+  border-radius: 12px;
+}
+
+.holi-atc {
+  overflow-y: clip;
+  display: flex;
+  flex-direction: column;
+  grid-gap: -12px;
+  gap: -12px;
+  position: relative;
+  grid-gap: 15px;
+  grid-gap: 20px;
+  gap: 20px;
+  top: 36px;
+  height: 164px;
+}
+
+.tphoimg {
+  width: 100%;
+  height: 100px;
+  margin-top: 09px;
+  margin-left: 20px;
+}
+
+.attac-text {
+  font-size: 9px;
+  margin-bottom: 0.2rem;
+  width: 150px;
+  color: #0c275a;
+  font-weight: 600;
+  font-weight: bold;
+  margin-top: 5px;
+}
+
+.attac-day {
+  font-size: 12px;
+  margin-bottom: 0.2rem;
+  width: 150px;
+  color: #737373;
+}
+
+.list-holidays {
+  width: 100%;
+  display: flex;
+  margin-left: 20px;
+  grid-gap: 13px;
+  gap: 13px;
+
+}
+
+.holidaylistattachment {
+  width: 46px;
+}
+
+.view-textannoubce2 {
+  display: flex;
+  /* font-family: "Poppins"; */
+  font-style: normal;
+  font-weight: 400;
+  font-size: 11px;
+  margin: 73px 19px 2px -14px !important;
+  padding: 3px;
+  text-decoration: none;
+  line-height: 15px;
+  letter-spacing: .5px;
+  color: #3247d5;
+  flex-direction: row;
+  width: 100%;
+  justify-content: flex-end;
+  flex-wrap: nowrap;
+  align-items: flex-end;
+}
+
+.img-icon {
+  height: 18px;
+  color: #bdbdbd;
+}
+
+.card-oneleave {
+  border-radius: 16px;
+  width: 242px;
+  background: #ffffff;
+  /* margin-left: -4px; */
+  grid-gap: 40px;
+  gap: 40px;
+  margin-right: 20px;
+}
+
+.card-one {
+  transition: transform 1s;
+  transform-style: preserve-3d;
+  cursor: pointer;
+  border-radius: 16px;
+  width: 225px;
+  height: 236px;
+  background: #ffffff;
+  margin-bottom: 20px;
+  grid-gap: 40px;
+  gap: 40px;
+  margin-right: 20px;
+}
+
+/* .Profile-card {
+  transition: transform 1s;
+  transform-style: preserve-3d;
+  cursor: pointer;
+  border-radius: 16px;
+  width: 150px;
+  height: 246px;
+  grid-gap: 20px;
+  gap: 20px;
+  background: #FFFFFF;
+  margin-right: 20px;
+  width: 98% !important;
+
+} */
+.grey-card {
+  width: 150%;
+  position: absolute;
+  height: 156px;
+  left: 2%;
+  background: #f2f2f2;
+  border-radius: 12px;
+  display: flex;
+  margin-top: 12px;
+}
+
+.manager-requestcard {
+  transition: transform 1s;
+  transform-style: preserve-3d;
+  cursor: pointer;
+  border-radius: 16px;
+  width: 100%;
+  min-height: 270px;
+  background: #FFFFFF;
+  margin-bottom: 16px;
+  padding: 10px;
+
+}
+.managerrquestsmall-card {
+  transition: transform 1s;
+  transform-style: preserve-3d;
+  cursor: pointer;
+  border-radius: 16px;
+  width: 23%;
+  height: 242px;
+  display: flex;
+  background: #F2F2F2;
+  margin-bottom: 20px;
+  justify-content: center;
+
 }

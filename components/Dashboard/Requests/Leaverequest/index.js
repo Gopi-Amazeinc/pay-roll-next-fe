@@ -209,13 +209,23 @@ function LeaveListDashboard() {
                     <br />
                     <div className="row">
                         <div className="col-md-3">
-                            <label className="mainheader">Leave Request </label>
+                            <Link href="/Requests/Leaverequest">
+                                <label className="mainheader">Leave Request</label>
+                                <div className="line-border" style={{
+                                    border: "1px solid #2f87cc",
+                                    bordertopleftradius: "51px",
+                                    bordertoprightradius: "51px",
+                                    margintop: "0px",
+                                    width: "44%"
+                                }}></div>
+                            </Link>
                         </div>
                         <div className="col-lg-3">
                             {
                                 sessionStorage.getItem("roleID") == 3 && (
                                     <Link href="/Requests/Myteamleaverequests">
                                         <label className="mainheader">My Team Leave Request</label>
+
                                     </Link>
                                 )
                             }
@@ -223,6 +233,13 @@ function LeaveListDashboard() {
                                 roleID == 2 && (
                                     <Link href="/Requests/Allstaffleavedetails">
                                         <label className="mainheader">All Staff Leave Details</label>
+                                        <div className="line-border" style={{
+                                            border: "1px solid #2f87cc",
+                                            bordertopleftradius: "51px",
+                                            bordertoprightradius: "51px",
+                                            margintop: "0px",
+                                            width: "57%"
+                                        }}></div>
                                     </Link>
                                 )
                             }

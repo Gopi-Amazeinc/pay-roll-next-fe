@@ -27,6 +27,16 @@ export default function ComponentMappingDashboard() {
     }
   };
 
+  const Enable = async (id) => {
+    let entity = {
+      "ID": id,
+      "Enable": 1
+    }
+    const res = apiService.commonPostCall("Payroll/UpdateComponentMappingEnable_Disable", entity)
+    Swal.fire("Disabled Successfully")
+    getcomponentMapping();
+  }
+
 
   return (
 
@@ -90,10 +100,12 @@ export default function ComponentMappingDashboard() {
                           </Link>
                           &nbsp;
 
-                          <button className="edit-btn"  onClick={handleDelete.bind(
-                                                        this,
-                                                        data.id
-                                                    )}>Delete </button>
+                          <button className="edit-btn" onClick={handleDelete.bind(
+                            this,
+                            data.id
+                          )}>Delete </button>
+                          &nbsp;
+                          <button onClick={Enable.bind(this, data.id)} className="edit-btn">Disable</button>
                         </td>
                       </tr>
                     )

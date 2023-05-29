@@ -150,18 +150,18 @@ function Announcementform({ editData }) {
                                 <div className='row'>
                                     <div className='col-lg-2'>
                                         <label className='fw-bold'>Announcement <i className='text-danger'>*</i></label>
-                                        <input className='form-control' placeholder='Announcement Name' {...register("announcement", {
+                                        <input className='form-control' placeholder='Announcement Name' {...register("Name", {
                                             required: true,
                                             maxLength: 100,
                                             pattern: /^[A-Za-z]+$/i
                                         })} /><div  style={customStyles.errorMsg}>
-                                            {errors.announcement?.type === 'required' &&
+                                            {errors.Name?.type === 'required' &&
                                                 " Please enter announcement name"
                                             }
-                                            {errors.announcement?.type === "maxLength" &&
+                                            {errors.Name?.type === "maxLength" &&
                                                 "name cannot exceed 20 characters"
                                             }
-                                            {errors.announcement?.type === "pattern" &&
+                                            {errors.Name?.type === "pattern" &&
                                                 "Alphabetical characters only"
                                             }
                                         </div>

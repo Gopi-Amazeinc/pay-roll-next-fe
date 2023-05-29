@@ -19,6 +19,8 @@ function MyForm1({ data }) {
   const [actionType, setActionType] = useState("insert");
   const [filePath, setFilePath] = useState();
   const [fileName, setFileName] = useState();
+  const [filePathOne, setFilePathOne] = useState();
+  const [fileNameOne, setFileNameOne] = useState();
 
 
   const router = useRouter();
@@ -77,10 +79,13 @@ function MyForm1({ data }) {
       // "CountryID": CompanyData ? CompanyData.countryID : "",
       // "StateID": CompanyData ? CompanyData.stateID : "",
       // "CityID": CompanyData ? CompanyData.cityID : "",
+      "Country": CompanyData ? CompanyData.country : "",
+      "Province": CompanyData ? CompanyData.province : "",
+      "City": CompanyData ? CompanyData.city : "",
       "Barangay": CompanyData ? CompanyData.barangay : "",
       "CompanyBankAccNo": CompanyData ? CompanyData.companyBankAccNo : "",
-      "CompanyCode": CompanyData ? CompanyData.companyCode : "",
-      "AttachmentEdu": filePath,
+      "CompanyCode": CompanyData ? CompanyData.companyCode : ""
+      // "AttachmentEdu": filePath,
 
     };
     // if (actionType == "insert") {
@@ -105,7 +110,12 @@ function MyForm1({ data }) {
   async function onSubmit(data) {
 
     if (actionType == "insert") {
-      await apiService.commonPostCall("Payroll/InsertCompany_AddressDetails", data);
+      let entity={
+        "Company_logo":filePath,
+        "E_Signatory":filePathOne
+      }
+      const formData = {...data, ...entity}
+      await apiService.commonPostCall("Payroll/InsertCompany_AddressDetails", formData);
       console.log(data);
       Swal.fire("Data Inserted successfully");
       router.push("/Company");
@@ -115,11 +125,23 @@ function MyForm1({ data }) {
     }
     else {
       debugger
-      await apiService.commonPostCall("Payroll/UpdateCompanyAddressDetails", data);
+      let entity={
+        "Company_logo":filePath,
+        "E_Signatory":filePathOne
+      }
+      const formData={...data, ...entity}
+      await apiService.commonPostCall("Payroll/UpdateCompanyAddressDetails", formData);
       Swal.fire("Data Updated successfully");
       router.push("/Company");
     }
   }
+
+
+
+    const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop});
+  // const { getRootProps: getRootProps2, getInputProps: getInputProps2 } = useDropzone({ onDrop: onDropOne });
+  // const { getRootProps: getRootProps1, getInputProps: getInputProps1 } = useDropzone({ onDrop: onDrop1 });
+  // const { getRootProps: getRootProps2, getInputProps: getInputProps2 } = useDropzone({ onDrop: onDrop2 });
 
 
   const onDrop = useCallback((acceptedFiles) => {
@@ -127,14 +149,15 @@ function MyForm1({ data }) {
     console.log(acceptedFiles, "Uploaded file");
     uploadFile(acceptedFiles);
   }, []);
-  const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
+  
 
   const uploadFile = async (data) => {
     debugger
     let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
     const formData = new FormData();
     formData.append("file_upload", data[0], data[0].name);
-    setFileName(data[0].name)
+    setFileName(data[0].name);
+    console.log(data[0].name)
     let invoiceURL = await axios.post(
       hostURL + "Payroll/ProjectAttachments",
       formData
@@ -151,8 +174,45 @@ function MyForm1({ data }) {
     Swal.fire('Uploaded successfully.');
     // setFilePath(invoiceURL.data);
     setFilePath(Preview);
+    
   };
-  console.log("image path name ",filePath)
+
+  
+
+  const onDrop2 = useCallback((acceptedFiles) => {
+    debugger;
+    console.log(acceptedFiles, "uploadFileOne");
+    uploadFileOne(acceptedFiles);
+  }, []);
+  
+  // const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDropOne });
+
+  const uploadFileOne = async (data) => {
+    debugger
+    let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
+    const formData = new FormData();
+    formData.append("file_upload", data[0], data[0].name);
+    setFileNameOne(data[0].name);
+    console.log(data[0].name)
+    let invoiceURL = await axios.post(
+      hostURL + "Payroll/ProjectAttachments",
+      formData
+    );
+    // console.log(res, "File Path");
+    // Swal.fire("Uploaded successfully");
+    // setFilePath(res.data);
+
+    // TODO: Gopi's code for validation
+    let environmentVariable = "https://103.12.1.103";
+
+    let imagePath = invoiceURL.data.split("\\", 1);
+    let Preview = invoiceURL.data.replace(imagePath, environmentVariable);
+    Swal.fire('Uploaded successfully.');
+    // setFilePath(invoiceURL.data);
+    setFilePathOne(Preview);
+    
+    
+  };
 
   return (
     <div className="container-fluid">
@@ -189,17 +249,17 @@ function MyForm1({ data }) {
                 </div>
 
               </div>
-              {/* {errors.Name && <p className="error-message" style={{ color: "red" }}>{errors.Name.message}</label>} */}
+              {errors.Name && <p className="error-message" style={{ color: "red" }}>{errors.Name.message}</p>}
             </div>
             {/* <div>
             
             </div> */}
 
             {/* TODO */}
-            <Image src={filePath} height={10} width={10} alt="Picture"></Image> 
+            {/* <Image src={filePath} height={10} width={10} alt="Picture"></Image>  */}
             <div className="col-lg-2">
               <label className={styles.p}>Company Name<span style={{ color: "red" }}>*</span></label>
-              <input type="text" className="form-control" {...register('Company_Name', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+ $/, message: "Please enter a valid Short Name" } })} />
+              <input type="text" className="form-control" {...register('Company_Name', { required: "Please add a Short Name", pattern: { value: /^[A-Za-z0-9]+$/, message: "Please enter a valid Short Name" } })} />
               {errors.Company_Name && <p className="error-message" style={{ color: "red" }}>{errors.Company_Name.message}</p>}
             </div>
             <div className="col-lg-2">
@@ -368,21 +428,21 @@ function MyForm1({ data }) {
             <div className="col-lg-2">
               <label className={styles.p}>E-Signatory</label>
               <div style={{ border: '2px dashed black' }}>
-                <div {...getRootProps()}>
-                  <input {...getInputProps()} />
+                <div {...getRootProps2()}>
+                  <input {...getInputProps2()} />
                   {isDragActive ? (
                     <p>Drop the files here ...</p>
                   ) : (
                     <p style={{ padding: "6%" }}>
                       {
-                        filePath == null && (
+                        filePathOne == null && (
                           <p>Drag 'n' drop some files here, or click to select
                             files</p>
                         )
                       }
                       {
                         filePath && (
-                          <p>{fileName}</p>
+                          <p>{fileNameOne}</p>
                         )
                       }
                     </p>

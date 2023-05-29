@@ -1110,14 +1110,14 @@ const Sidebar = ({ children, applyPageName }) => {
             )}
           </div>
         )} */}
-          {(userRole == 2 || userRole == 4) && (
+          {(
             <div>
               <hr></hr>
               <button className={styles.sidemenu} onClick={toggleMastersMenu}>
                 <RiUserStarLine style={customStyles.icons} />
                 Masters
               </button>
-              {userRole == 2 && displayMasters && (
+              {(
                 <div>
                   <Link href="/Masters/LeaveType">
                     <button
@@ -1418,7 +1418,7 @@ const Sidebar = ({ children, applyPageName }) => {
               </Link>
             </div>
           )}
-          {userRole == 3 || userRole == 1 && (
+          {userRole == 1 && (
             <>
               <hr></hr>
               <Link href="/Announcement" className={styles.sidemenulink}>
