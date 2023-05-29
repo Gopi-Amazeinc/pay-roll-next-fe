@@ -1418,7 +1418,7 @@ const Sidebar = ({ children, applyPageName }) => {
               </Link>
             </div>
           )}
-          {userRole == 3 && userRole == 1 && (
+          {userRole == 1 && (
             <>
               <hr></hr>
               <Link href="/Announcement" className={styles.sidemenulink}>
