@@ -3,15 +3,14 @@ import Layout from "@/components/layout/layout";
 import Styles from "../../../styles/LeaveReport.module.css";
 import { useEffect, useState } from "react";
 import Id from "@/pages/Requests/Compensationtimeout/[id]";
-import { DownloadTableExcel } from "react-export-table-to-excel";
-import { useRef } from "react";
 import { apiService } from "@/services/api.service";
+import * as XLSX from "xlsx";
 
 function Leavereport() {
   const [userID, setUserID] = useState();
   const [roleID, setRoleID] = useState();
   const [LeaveReport, setLeaveReport] = useState([]);
-  const tableRef = useRef(null);
+
 
   //   const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
 
@@ -45,7 +44,15 @@ function Leavereport() {
     setLeaveReport(res.data);
     console.log(res.data);
   };
-
+  const exportToExcel = () => {
+    let element = document.getElementById("leaveReportID");
+    if (element) {
+      const ws = XLSX.utils.table_to_sheet(element);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+      XLSX.writeFile(wb, "leaveReport.xlsx");
+    }
+  };
   return (
     <>
       <Layout>
@@ -71,21 +78,17 @@ function Leavereport() {
             <br />
             <div className="col-lg-4">
               <br></br>
-              <DownloadTableExcel
-                filename="Leave Report"
-                sheet="users"
-                currentTableRef={tableRef.current}
-              >
-                <button type="button" className="download-btn">
+          
+                <button type="button" onClick={exportToExcel} className="download-btn">
                   Download
                 </button>
-              </DownloadTableExcel>
+            
             </div>
           </div>
         </div>
 
         <div className="row">
-          <table className={Styles.commonTable}>
+          <table className={Styles.commonTable} id='leaveReportID'>
             <thead>
               <tr>
                 <th>From Date</th>

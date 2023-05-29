@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Swal from "sweetalert2";
 import ReactPaginate from "react-paginate";
-import { DownloadTableExcel } from "react-export-table-to-excel";
 import { useRef } from "react";
 import Modal from "react-modal";
 import * as XLSX from "xlsx";
@@ -163,6 +162,17 @@ const Index = () => {
     );
     return loans;
   };
+
+  const exportToExcel = () => {
+    let element = document.getElementById("staffBulkUploadID");
+    if (element) {
+      const ws = XLSX.utils.table_to_sheet(element);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+      XLSX.writeFile(wb, "staffBulkUpload.xlsx");
+    }
+  };
+
   return (
     <div className="container">
       <h5 className="Heading">Upload Payroll Component</h5>
@@ -194,13 +204,7 @@ const Index = () => {
           <div className="col-lg-2">
             {count > 0 ? (
               <>
-                <DownloadTableExcel
-                  filename="users table"
-                  sheet="users"
-                  currentTableRef={tableRef.current}
-                >
-                  <button className="AddButton">Export to Excel</button>
-                </DownloadTableExcel>
+                  <button className="AddButton" onClick={exportToExcel}>Export to Excel</button>
               </>
             ) : null}
           </div>
@@ -218,7 +222,7 @@ const Index = () => {
       </div>
       <br></br>
       <div className="table-responsive">
-        <table className="table" ref={tableRef}>
+        <table className="table" id='staffBulkUploadID' >
           <thead>
             <tr className="bg-info text-white ">
               <th>Employee ID</th>
@@ -341,7 +345,7 @@ const Index = () => {
             <div className="col-lg-5">
               <Link href="https://103.12.1.76/ALIAPI/Images/.xlsx">
                 <span style={{ color: "navy", textDecoration: "underline" }}>
-                  UploadTemplate.XLSX
+                  UploadComponentBulkTemplate.XLSX
                 </span>
               </Link>
             </div>

@@ -115,12 +115,12 @@ function StaffSalaryComponent() {
       setItems(d);
     });
   };
-
+// TODO:PLEASE VERIFY API 
   const uploadSalary = async () => {
     const transformedData = await transformedSalary(items);
     if (transformedData.length > 0) {
       await apiService.commonPostCall(
-        "Payroll/InsertStaffOvetimeOTupload",
+        "Payroll/UpdateDe_minimis_Detailsforstaff",
         transformedData
       );
       Swal.fire("Component Bulk Uploaded Successfully!");
