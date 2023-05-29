@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react'
 import Styles from "@/styles/shiftdetails.module.css";
 import { useRef } from 'react';
 import { apiService } from "@/services/api.service";
-import { DownloadTableExcel } from "react-export-table-to-excel";
+import * as XLSX from "xlsx";
 
 
 
@@ -56,6 +56,18 @@ const Index = () => {
     useEffect(() => {
         getcompanyweeklyPendingData();
     }, []);
+
+    const exportToExcel = () => {
+        let  element = document.getElementById("comanyshiftID");
+        if (element) {
+          const ws = XLSX.utils.table_to_sheet(element);
+          const wb = XLSX.utils.book_new();
+          XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+          if (myattendance == true) {
+            XLSX.writeFile(wb, "CompanyShiftDetails.xlsx");
+          }
+        }
+      };
     return (
         <>
             <div className='row'>
@@ -95,12 +107,9 @@ const Index = () => {
                         {/* <Link href="/Attendance/StaffShiftForm/new" ><button className='button'>Add Shift Details</button></Link> */}
                     </div>
                     <div className="col-lg-1"></div>
-                    <div className="col-lg-2">   <DownloadTableExcel
-                        filename="users table"
-                        sheet="users"
-                        currentTableRef={tableRef.current}
-                    >
-                        <button className='button' style={{ marginTop: "30px", float: "right", marginRight: "0px" }}>Export To excel</button> </DownloadTableExcel>
+                    <div className="col-lg-2">  
+                   
+                        <button className='button' onClick={exportToExcel} style={{ marginTop: "30px", float: "right", marginRight: "0px" }}>Export To excel</button> 
                     </div>
                 </div>
             </div>
@@ -133,8 +142,7 @@ const Index = () => {
 
             <div className="row mt-3">
                 <div className="col-lg-12">
-                    <table className="table"
-                        ref={tableRef}>
+                    <table className="table" id='comanyshiftID'>
                         <thead className="bg-info text-white">
                             <tr>
                                 <th>EMPLOYEID</th>
