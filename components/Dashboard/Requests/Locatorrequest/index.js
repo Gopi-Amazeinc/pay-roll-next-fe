@@ -290,7 +290,7 @@ const Locatordashboard = () => {
                                                             <td>{data.comments}</td>
                                                             <td><img onClick={ImagePreview
                                                             } src={data.attachment} width={50} height={50} /></td>
-                                                            <td>{daSta.approveStatus}</td>
+                                                            <td>{data.approveStatus}</td>
                                                             {/* <td>{
                                                 <b>{data.statusID === 0 ? 'Manager Pending' :
                                                     data.statusID === 1 ? 'Manager approved' :
