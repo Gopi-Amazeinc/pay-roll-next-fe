@@ -4,14 +4,12 @@ import { useEffect, useState, useRef } from "react";
 import { useRouter } from "next/router";
 import { apiService } from "@/services/api.service";
 import Styles from "@/styles/attendancedetails.module.css";
-import { DownloadTableExcel } from "react-export-table-to-excel";
 import ReactPaginate from "react-paginate";
 import Modal from "react-modal";
 import * as XLSX from "xlsx";
 
 
 const CompanyAttendanceDetails = () => {
-  const tableRef = useRef(null);
   const [CompanyAttendence, setCompanyAttendence] = useState([]);
   const [userID, setUserID] = useState();
   const [roleID, setRoleID] = useState();
@@ -209,6 +207,15 @@ const CompanyAttendanceDetails = () => {
     getCompanyAttendance();
   };
 
+  const exportToExcel = () => {
+    let element = document.getElementById("comapnayattendanceDetailID");
+    if (element) {
+      const ws = XLSX.utils.table_to_sheet(element);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+      XLSX.writeFile(wb, "ComapnayAttendanceDetail.xlsx");
+    }
+  };
   return (
     <div>
       <div className="container-fluid">
@@ -296,13 +303,8 @@ const CompanyAttendanceDetails = () => {
             <div className="col-lg-2">
               <button className="button" onClick={openEditModal}>Upload</button>
               <br />
-              <p></p>        <DownloadTableExcel
-                filename="users table"
-                sheet="users"
-                currentTableRef={tableRef.current}
-              >
-                <button className="button">Export To Excel</button>{" "}
-              </DownloadTableExcel>
+             
+                <button className="button" onClick={exportToExcel}>Export To Excel</button>
             </div>
             <div>
 
@@ -379,7 +381,7 @@ const CompanyAttendanceDetails = () => {
         <div className="row">
           <div className="col-lg-12">
             <h6 style={{ color: "#3247d5" }}>Showing {count} Results</h6>
-            <table className="table  mt-2 " ref={tableRef}>
+            <table className="table  mt-2 " id="comapnayattendanceDetailID">
               <thead className="bg-info text-white ">
                 <tr style={{ whiteSpace: "nowrap" }}>
                   <th>EmployeID</th>
