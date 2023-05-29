@@ -72,13 +72,7 @@ const MyTeamAttendence = () => {
   // }
   // }, [userID]);
 
-  const PER_PAGE = 10;
-  const [currentPage, setCurrentPage] = useState(0);
-  function handlePageClick({ selected: selectedPage }) {
-    setCurrentPage(selectedPage);
-  }
-  const offset = currentPage * PER_PAGE;
-  const pageCount = Math.ceil(MyTeamAttendence.length / PER_PAGE);
+
 
   const getStartDate = (selectedDate) => {
     setStartDate(selectedDate);
@@ -108,6 +102,13 @@ const MyTeamAttendence = () => {
       setcount(res.data.length);
     }
   };
+  const PER_PAGE = 10;
+  const [currentPage, setCurrentPage] = useState(0);
+  function handlePageClick({ selected: selectedPage }) {
+    setCurrentPage(selectedPage);
+  }
+  const offset = currentPage * PER_PAGE;
+  const pageCount = Math.ceil(MyTeamAttendence.length / PER_PAGE);
 
   const handleStaffChange = (selectedStaff) => {
     setselctedStaffdata(selectedStaff);
@@ -316,20 +317,20 @@ const MyTeamAttendence = () => {
 
                         <tr value={data.id} key={index}>
                           <td>{data.employeID}</td>
-                          <td>{data.staffname1}</td>
+                          <td>{data.name}</td>
                           <td>{data.shift}</td>
                           <td>{data.date}</td>
 
                           <td>{data.dayType}</td>
-                          <td>{data.etime}</td>
-                          <td>{data.expectedOut}</td>
+                          <td>{data.expectedInTime}</td>
+                          <td>{data.expectedOutTime}</td>
 
                           <td>{data.punchInTime}</td>
                           <td>{data.punchOutTime}</td>
-                          <td>{data.hr}</td>
+                          <td>{data.productiveHours}</td>
 
                           <td>{data.ot}</td>
-                          <td>{data.latepunchin}</td>
+                          <td>{data.lateMins}</td>
 
                           {/* <td>
                               <button className='edit-btn'>Cancel</button>
