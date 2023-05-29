@@ -3,7 +3,7 @@ import { useRef } from "react";
 import Image from "next/image";
 import dashboard from "./dashboard.module.css";
 import leaveIcon from "@/public/Images/leaveIcon.png";
-import profile from "@/public/Images/profileimg.png";
+import Profile from "@/public/Images/Profile.png";
 import images from "@/public/Images/images.png";
 import { AiOutlineGift } from "react-icons/ai";
 import { BiInjection } from "react-icons/bi";
@@ -14,12 +14,12 @@ import { Modal, ModalBody, ModalFooter } from "reactstrap";
 import { BiEdit } from "react-icons/bi";
 import { RiArrowDropDownLine } from "react-icons/ri";
 import Pnchingreen from "@/public/pnchin-green.svg";
+import { AiFillExclamationCircle } from "react-icons/ai";
+import { MdGroups } from "react-icons/md";
 import { apiService } from "@/services/api.service";
-
 // import GaugeChart from 'react-gauge-chart';
 import dynamic from "next/dynamic";
 const GaugeChart = dynamic(() => import("react-gauge-chart"), { ssr: false });
-
 import Swal from "sweetalert2";
 
 const Dashboard = () => {
@@ -32,6 +32,11 @@ const Dashboard = () => {
     hour12: true,
   });
   var Time = time.toString();
+
+  var date = new Date().toISOString().slice(0, 10);
+  var _Date = date.toString();
+  const [CurrentTime, setCurrentTime] = useState(Time);
+  const [CurrentDate, setCurrentDate] = useState(_Date);
 
   const [userName, setUserName] = useState();
   const [userEmail, setUserEmail] = useState();
@@ -56,6 +61,16 @@ const Dashboard = () => {
   const [submitted, setSubmitted] = useState(false);
 
   useEffect(() => {
+    setInterval(() => {
+      var time = new Date().toLocaleString("en-US", {
+        hour: "numeric",
+        minute: "numeric",
+        hour12: true,
+      });
+      var Time = time.toString();
+      setCurrentTime(Time);
+    }, 1000);
+
     const Loginname = sessionStorage.getItem("userName");
     setUserName(Loginname);
     const Loginemail = sessionStorage.getItem("email");
@@ -223,676 +238,554 @@ const Dashboard = () => {
   };
   const staffDetails = staffDetailsRef.current;
 
+  const customStyles = {
+    card: {
+      borderRadius: "16px",
+      width: "100%",
+      height: "497px",
+      boxShadow: "none",
+      border: "none",
+      marginBottom: "12px",
+      backgroundColor: "white",
+      padding: "20px",
+    },
+    holidays: {
+      cursor: "pointer",
+      borderRadius: "16px",
+      width: "48%",
+      height: "242px",
+      background: "#ffffff",
+      marginBottom: "16px",
+    },
+  };
+
   return (
     <Layout>
-      {/* <input
-        type="file"
-        accept=".xlsx"
-        onChange={(e) => {
-          const file = e.target.files[0];
-          readExcel(file);
-        }}
-      /> */}
-      <div className="container-fluid">
-        {" "}
-        <br />
-        <div className="row">
-          <div className={dashboard.card1}>
-            <div className="card p-0" style={{ borderRadius: "20px" }}>
-              <div
-                className="card-header"
-                style={{
-                  backgroundColor: "#02CFFF",
-                  borderTopLeftRadius: "20px",
-                  borderTopRightRadius: "20px",
-                }}
-              >
-                <div
-                  className="d-flex align-items-center"
-                  style={{ height: "10px", padding: "9px" }}
-                >
-                  <AiOutlineGift style={{ color: "white", fontSize: "25px" }} />
-                  <h5
-                    className={dashboard.cardheader}
-                    style={{ color: "white" }}
-                  >
-                    Attendance Tracker
-                  </h5>
+      <div className="container">
+        <div className="row mt-4">
+          <div className="container">
+            <div className="second-card11 d-flex">
+              <div className="d-flex align-items-center">
+                <div className="d-flex flex-column align-items-center left-part">
+                  <MdGroups className="dashlogo" />
+                  <h2 className="myteam-heading">Employee Requests</h2>
                 </div>
-                <p
-                  className="card-subtitle mt-1 mb-0"
-                  style={{ color: "white" }}
-                >
-                  Always Register Your Attendance
-                </p>
-              </div>
-              <div
-                className="card-body"
-                style={{ borderRadius: "0 0 10px 10px" }}
-              >
-                <div className="col-lg-12">
-                  <div className="row">
-                    {!punchedIn ? (
-                      <>
-                        <div className="col-lg-7">
-                          <button
-                            className={dashboard.punchin}
-                            onClick={() => setModalOpen(!modalOpen)}
-                          >
-                            PUNCH IN
-                          </button>
-                        </div>
-                        <div className="col-lg-4 mt-3 ">
-                          <span> PunchIn time </span>
-                        </div>
-                      </>
-                    ) : (
-                      <>
-                        <div className="col-lg-7">
-                          <button
-                            className={dashboard.buttonclick}
-                            // onClick={() => modelopen()}
-                          >
-                            <Image
-                              src={Pnchingreen}
-                              alt="Leave icon"
-                              width={15}
-                              height={19}
-                            />
-                            PUNCH IN
-                          </button>
-                        </div>
-                        <div className="col-lg-4 mt-3 ">
-                          <span>{StartTime}</span>
-                        </div>
-                      </>
-                    )}
-                    {!punchedOut ? (
-                      <>
-                        <div className="col-lg-7">
-                          <button
-                            className={dashboard.punchin}
-                            onClick={() => modelopenForPunch()}
-                          >
-                            PUNCH OUT
-                          </button>
-                        </div>
-                        <div className="col-lg-4 mt-3">
-                          <span className="mt-3"> PunchOut Time </span>
-                        </div>
-                      </>
-                    ) : (
-                      <>
-                        <div className="col-lg-7">
-                          <button
-                            className={dashboard.buttonclick}
-                            // onClick={() => modelopen()}
-                          >
-                            <Image
-                              src={Pnchingreen}
-                              alt="Leave icon"
-                              width={15}
-                              height={19}
-                            />
-                            PUNCH OUT
-                          </button>
-                        </div>
-                        &nbsp;
-                        <div className="col-lg-4 mt-3 ">
-                          <span>{EndTime}</span>
-                        </div>
-                      </>
-                    )}
-                  </div>
-                  <Modal
-                    toggle={() => setModalOpen(!modalOpen)}
-                    isOpen={modalOpen}
-                  >
-                    <div className=" modal-header">
-                      <h5 className=" modal-title">Work Type Details </h5>
+                <div className="d-flex flex-wrap justify-content-evenly right-part">
+                  <div className="card-one1-1" style={{ width: "170px" }}>
+                    <div className="d-flex flex-column align-items-center">
+                      <p className="card-head">Onboarded Staff</p>
+                      <p className="card-day">
+                        {/* {OnboardingData_preJoining.length} */} 20
+                      </p>
+                      <div className="d-flex align-items-center justify-content-center align-center-txt">
+                        <AiFillExclamationCircle className="img-icon" />
+                        <p
+                          className="card-paragraph"
+                          style={{ marginBottom: "0px" }}
+                        >
+                          Monitor the Pre-Employment docs
+                        </p>
+                      </div>
                       <button
-                        aria-label="Close"
-                        className={dashboard.close}
-                        type="button"
-                        onClick={() => setModalOpen(!modalOpen)}
+                        className="card-attendance text-attendance mt-3"
+                        onClick={() =>
+                          router.push(
+                            "/EmployeeManagement/OnboardingInitiationDashboard"
+                          )
+                        }
+                        style={{ marginBottom: "50px" }}
                       >
-                        <span aria-hidden={true}>×</span>
+                        View Onboarding
                       </button>
                     </div>
-                    <ModalBody>
-                      <div className="row">
-                        <div className="col-lg-12">
-                          <select
-                            name=""
-                            id=""
-                            className="form-select"
-                            value={WorkTypeID}
-                            onChange={(event) =>
-                              handleworkType(event.target.value)
-                            }
-                          >
-                            <option value="0">Select One</option>
-                            <option value="1">Work From Home</option>
-                            <option value="2">Office</option>
-                          </select>
-                        </div>
-                        <div className="row">
-                          <div className="col-lg-6">
-                            <ModalFooter>
-                              {!punchedIn ? (
-                                <button
-                                  color="primary"
-                                  type="button"
-                                  className={
-                                    WorkTypeID == 0
-                                      ? "button-disabled"
-                                      : "button"
-                                  }
-                                  onClick={() => handlePunchin()}
-                                >
-                                  Punchin
-                                </button>
-                              ) : (
-                                <button
-                                  color="primary"
-                                  type="button"
-                                  className={
-                                    WorkTypeID == 0
-                                      ? "button-disabled"
-                                      : "button"
-                                  }
-                                  onClick={() => handlePunchout()}
-                                >
-                                  PunchOut
-                                </button>
-                              )}
-                            </ModalFooter>
-                          </div>
-                        </div>
+                  </div>
+                  <div className="card-one1-1" style={{ width: "170px" }}>
+                    <div className="d-flex flex-column align-items-center">
+                      <p className="card-head">Approved Leaves</p>
+                      <p className="card-day">
+                        {/* {Approvedcountforhr} */} 20
+                      </p>
+                      <div className="d-flex align-items-center justify-content-center align-center-txt">
+                        <AiFillExclamationCircle className="img-icon" />
+                        <p
+                          className="card-paragraph"
+                          style={{ marginBottom: "0px" }}
+                        >
+                          Update Leave Balance
+                        </p>
                       </div>
-                    </ModalBody>
-                  </Modal>
-                </div>
-              </div>
-            </div>
-            <div className="row">
-              <div className="col-lg-12">
-                <div
-                  className="card"
-                  style={{ borderRadius: "20px", marginTop: "30px" }}
-                >
-                  <div
-                    className="card-body"
-                    style={{ marginBottom: "46px", height: "160px" }}
-                  >
-                    <h5 className="card-title" style={{ color: "#3247d5" }}>
-                      Announcement Title
-                    </h5>
-                    <p className="card-text">Announcement content goes here.</p>
-                    <Link
-                      className={dashboard.announcement}
-                      href="/Announcement"
-                    >
-                      See All
-                      <RiArrowDropDownLine style={{ fontSize: "30px" }} />
-                    </Link>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className={dashboard.card1}>
-            <div className="card p-0  mb-4" style={{ borderRadius: "20px" }}>
-              <div
-                className="card-body"
-                style={{
-                  backgroundColor: "#B96AE9",
-                  borderTopLeftRadius: "20px",
-                  borderTopRightRadius: "20px",
-                }}
-              >
-                <div
-                  className="d-flex align-items-center"
-                  style={{ height: "10px" }}
-                >
-                  <AiOutlineGift style={{ color: "white", fontSize: "25px" }} />
-                  <h5
-                    className={dashboard.cardheader}
-                    style={{ color: "white" }}
-                  >
-                    Celebrants
-                  </h5>
-                </div>
-                <p
-                  className="card-subtitle mt-1 mb-0"
-                  style={{ color: "white" }}
-                >
-                  Get to know who are the celebrants
-                </p>
-              </div>
-              <div className="col-lg-6 " style={{ marginBottom: "110px" }}>
-                <div className="row">
-                  <br />
-                  <div className="col-lg-12 dashbutton bttn">
-                    <div className="tab-slider--nav">
-                      <ul className="tab-slider--tabs">
-                        <li rel="tab1" onClick={() => setViewMode("tab1")}>
-                          All
-                        </li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* </div> */}
-            </div>
-
-            <div className="row">
-              <div className="col-md-12">
-                <div
-                  className="card  p-0 mb-4"
-                  style={{ borderRadius: "20px" }}
-                >
-                  <div
-                    className="card-body"
-                    style={{
-                      backgroundColor: "#FBB584",
-                      borderTopLeftRadius: "20px",
-                      borderTopRightRadius: "20px",
-                    }}
-                  >
-                    <div
-                      className="d-flex align-items-center"
-                      style={{ height: "10px" }}
-                    >
-                      <Image
-                        src={leaveIcon}
-                        alt="Leave icon"
-                        width={20}
-                        height={20}
-                      />
-                      <h5
-                        className={dashboard.cardheader}
-                        style={{ color: "white" }}
+                      <button
+                        className="card-attendance text-attendance mt-4"
+                        onClick={() =>
+                          router.push("/Requests/StaffLeaveDetailsHR")
+                        }
                       >
-                        Leaves
-                      </h5>
+                        View Leave Details
+                      </button>
                     </div>
-                    <p
-                      className="card-subtitle mt-1 mb-0"
-                      style={{ color: "white" }}
-                    >
-                      Always file your leaves on time
-                    </p>
                   </div>
-                  <div className="card-body">
-                    <div className="row">
-                      <div className="col-md-6">
-                        <button className={dashboard.pendingbtn}>
-                          {count} Pending
-                        </button>
+                  <div className="card-one1-1" style={{ width: "170px" }}>
+                    <div className="d-flex flex-column align-items-center">
+                      <p className="card-head">Update Personal Info</p>
+                      <p className="card-day">
+                        {/* {changeapprovelist.length} */}20
+                      </p>
+                      <div className="d-flex align-items-center justify-content-center align-center-txt">
+                        <AiFillExclamationCircle className="img-icon" />
+                        <p
+                          className="card-paragraph"
+                          style={{ marginBottom: "0px" }}
+                        >
+                          {" "}
+                          You have 1 personal info update request{" "}
+                        </p>
                       </div>
-                      <div className="col-md-6">
-                        <button className={dashboard.pendingbtn}>
-                          {count} Rejected
-                        </button>
+                      <button
+                        className="card-attendance text-attendance mt-3"
+                        onClick={() =>
+                          router.push(
+                            "/Requests/TeamEmployeChangeRequestDetails"
+                          )
+                        }
+                      >
+                        {" "}
+                        View Request{" "}
+                      </button>
+                    </div>
+                  </div>
+                  <div className="card-one1-1" style={{ width: "170px" }}>
+                    <div className="d-flex flex-column align-items-center">
+                      <p className="card-head">Loan Request</p>
+                      <p className="card-day">{/* {LoansCount} */}20</p>
+                      <div className="d-flex align-items-center justify-content-center align-center-txt">
+                        <AiFillExclamationCircle className="img-icon" />
+                        <p
+                          className="card-paragraph"
+                          style={{ marginBottom: "0px" }}
+                        >
+                          You have 0 loan request for approval
+                        </p>
                       </div>
-                    </div>
-
-                    <br></br>
-
-                    <div className="row">
-                      <div className="col-md-6">
-                        <button className={dashboard.pendingbtn}>
-                          {count} Cancelled
-                        </button>
-                      </div>
-                      <div className="col-md-6">
-                        <button className={dashboard.pendingbtn}>
-                          {count} Approved
-                        </button>
-                        <br></br>
-                      </div>
+                      <button
+                        className="card-attendance text-attendance mt-3"
+                        onClick={() =>
+                          router.push("/Requests/LoanRequest/MyLoanDetails")
+                        }
+                      >
+                        View Loan Request
+                      </button>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div className={dashboard.card2}>
-            <div
-              className="card mb-3 "
-              id={dashboard.cardCeneter}
-              style={{ borderRadius: "20px" }}
-            >
-              <div className="card-body mb-1" style={{ marginBottom: "10px" }}>
-                <div className={dashboard.profileimg}>
-                  <Image
-                    src={profile}
-                    alt="Picture of the author"
-                    width={100}
-                    height={80}
-                  />
-                </div>
-                <h4 className={dashboard.profilename}>{userName}</h4>
-                <p className={dashboard.profilemail}>{userEmail}</p>
-                <div>
-                  <GaugeChart
-                    id="gauge-chart6"
-                    nrOfLevels={1}
-                    colors={["#3247D5"]}
-                    // colors={[
-                    //   '#f2efe6', // 0-25%
-                    //   '#f2efe6', // 25-50%
-                    //   '#f29f05', // 50-75%
-                    //   '#f23e3e'  // 75-100%
-                    // ]}
-                    // arcBackgroundColor="#0074D9"
-                    arcWidth={0.1}
-                    percent={0.5}
-                    textColor={"black"}
-                    needleColor={"#afb4bd"}
-                    needleBaseColor={"#afb4bd"}
-                    textOffsetY={-40}
-                    // hideText={true} // If you want to hide the text
-                  />
-                </div>
-                {/* <Image src={images} alt="Picture of the author" width={100} height={80} className={dashboard.profileimg1} /> */}
-
-                <div className={dashboard.profile}>
-                  <Link href="/Staff/AddStaff">
-                    <button className={dashboard.viewmyprofile}>
-                      View My Profile
-                    </button>
-                  </Link>
-                </div>
-              </div>
-            </div>
-          </div>
-          <br /> <br />
-          <div className="row mt-4 ">
-            <div className="col-lg-6 ">
-              <div
-                className="card"
-                style={{ borderRadius: "20px", padding: "15px" }}
-              >
-                <div className="">
-                  <h4
-                    className={dashboard.cardheader}
-                    style={{ color: "#3247d5" }}
-                  >
-                    Holidays
-                  </h4>
-                  <p className="card-subtitle">
-                    These are the upcoming holidays
-                  </p>
-                </div>
-                {/* </div> */}
-                <div className="card-body">
-                  <div className="row">
-                    <div className="col-lg-4">
-                      <Image
-                        src={advertising1}
-                        alt=""
-                        style={{ width: "100%", height: "24vh" }}
-                      />
-                    </div>
-                    <div className="col-lg-8">
-                      <Link className={dashboard.holiday} href="/Holiday">
-                        See All
-                        <RiArrowDropDownLine style={{ fontSize: "30px" }} />
-                      </Link>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="col-md-6 ">
-              <div className="card p-0 mb-4" style={{ borderRadius: "20px" }}>
-                <div
-                  className="card-header text-white "
-                  style={{
-                    backgroundColor: "#18D7C0",
-                    borderTopLeftRadius: "20px",
-                    borderTopRightRadius: "20px",
-                    height: "80px",
-                  }}
-                >
-                  <BiInjection style={{ color: "white", fontSize: "25px" }} />
-                  <span
-                    className={dashboard.cardheader}
-                    style={{ color: "white", fontSize: "24px" }}
-                  >
-                    COVID-19 Vaccination
-                  </span>
-                  <p className="card-subtitle mt-1 mb-1">
-                    update covid vaccination
-                  </p>
-                </div>
-                <div className="card-body">
-                  <div className="row">
-                    <div className="col-md-6">
-                      <h5>1st Dose</h5>
-                    </div>
-                    {/* <p>Date:</p> */}
-                    <div className="col-md-3">
-                      <Link href="/Home/VaccinationForm">
-                        <button className="button">Upload</button>
-                      </Link>
-                    </div>
-                    <div className="col-md-3">
-                      <button className="button" onClick={() => modelopen()}>
-                        <BiEdit style={{ color: "white", fontSize: "25px" }} />
-                      </button>
-                    </div>
-                  </div>
-                  <hr></hr>
-                  <div className="row">
-                    <div className="col-md-6">
-                      <h5>2nd Dose</h5>
-                    </div>
-                    {/* <p>Date:</p> */}
-                    <div className="col-md-3">
-                      <Link href="/Home/VaccinationForm">
-                        <button className="button">Upload</button>
-                      </Link>
-                    </div>
-                    <div className="col-md-3">
-                      <button className="button" onClick={() => modelopen()}>
-                        <BiEdit style={{ color: "white", fontSize: "25px" }} />
-                      </button>
-                    </div>
-                  </div>
-                  <hr></hr>
-                  <div className="row">
-                    <div className="col-md-6">
-                      <h5>3rd Dose</h5>
-                    </div>
-                    {/* <p>Date:</p> */}
-                    <div className="col-md-3">
-                      <Link href="/Home/VaccinationForm">
-                        <button className="button">Upload</button>
-                      </Link>
-                    </div>
-                    <div className="col-md-3">
-                      <button className="button" onClick={() => modelopen()}>
-                        <BiEdit style={{ color: "white", fontSize: "25px" }} />
-                      </button>
-                    </div>
-                  </div>
-                  {/* TODO---------------modal for vaccination--------------------                */}
-                  {/* <Modal toggle={() => modelopen(!modelopen)} isOpen={modelopen}>
-                    <div className="modal-header">
-                      <h5 className="modal-title">
-                        Second Modal Title
-                      </h5>
-                      <button aria-label="Close" className={dashboard.close} type="button" onClick={() => setModalOpen(!modelopen)}>
-                        <span aria-hidden={true}>×</span>
-                      </button>
-                    </div>
-                    <ModalBody>
-                      <div className='row'>
-                        <div className='col-lg-12'>
-                          <input type="text" className="form-control" placeholder="Enter some text" />
-                        </div>
-                        <div className='row'>
-                          <div className="col-lg-6">
-                            <ModalFooter>
-                              <button color="primary" type="button" className="button">
-                                Save Changes
-                              </button>
-                            </ModalFooter>
-                          </div>
-                        </div>
-                      </div>
-                    </ModalBody>
-                  </Modal> */}
-                  {/* ------------------------- */}
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="row">
-            <div className="col-lg-12">
-              <h2
-                style={{
-                  color: "#3247d5",
-                  textAlign: "center",
-                  fontFamily: "poppins",
-                }}
-              >
-                Company Staff Requests
-              </h2>
-            </div>
-            <div className="col-lg-1"></div>
-            <div className="col-lg-5">
-              <div className="card p-0" style={{ borderRadius: "20px" }}>
-                <div
-                  className="card-header bg-primary text-white"
-                  style={{
-                    borderTopLeftRadius: "20px",
-                    borderTopRightRadius: "20px",
-                    height: "70px",
-                  }}
-                >
-                  <span>
-                    <Image
-                      src={leaveIcon}
-                      alt="Leave icon"
-                      width={25}
-                      height={20}
-                    />
-                    <span
-                      style={{ fontSize: "20px" }}
-                      className={dashboard.cardheader}
-                    >
-                      Leaves
-                    </span>
-                  </span>
-                  <div className="col-md-10">
-                    <p style={{ marginRight: "20px" }}>
-                      Always file your leaves on time
-                    </p>
-                  </div>
-                </div>
-                <div className="card-body">
-                  <div className="row">
-                    <div className="col-md-6">
-                      <button className={dashboard.pendingbtn}>
-                        {count} Pending
-                      </button>
-                    </div>
-                    <div className="col-md-6">
-                      <button className={dashboard.pendingbtn}>
-                        {count} Rejected
-                      </button>
-                    </div>
-                  </div>
-                  <br></br>
-                  <div className="row">
-                    <div className="col-md-6">
-                      <button className={dashboard.pendingbtn}>
-                        {count} Cancelled
-                      </button>
-                    </div>
-                    <div className="col-md-6">
-                      <button className={dashboard.pendingbtn}>
-                        {count} Approved
-                      </button>
-                      <br></br>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="col-lg-5">
-              <div className="card p-0" style={{ borderRadius: "20px" }}>
-                <div
-                  className="card-header  text-white"
-                  style={{
-                    backgroundColor: "#70be51",
-                    borderTopLeftRadius: "20px",
-                    borderTopRightRadius: "20px",
-                    height: "70px",
-                  }}
-                >
-                  <span>
-                    <Image
-                      src={leaveIcon}
-                      alt="Leave icon"
-                      width={25}
-                      height={20}
-                    />
-                    <span
-                      style={{ fontSize: "20px" }}
-                      className={dashboard.cardheader}
-                    >
-                      Overtime
-                    </span>
-                  </span>
-                  <div className="col-md-10">
-                    <p style={{ marginRight: "20px" }}>
-                      Always file your Overtime on time
-                    </p>
-                  </div>
-                </div>
-                <div className="card-body">
-                  <div className="row">
-                    <div className="col-md-6">
-                      <button className={dashboard.pendingbtn}>
-                        {count} Pending
-                      </button>
-                    </div>
-                    <div className="col-md-6">
-                      <button className={dashboard.pendingbtn}>
-                        {count} Rejected
-                      </button>
-                    </div>
-                  </div>
-
-                  <br></br>
-
-                  <div className="row">
-                    <div className="col-md-6">
-                      <button className={dashboard.pendingbtn}>
-                        {count} Cancelled
-                      </button>
-                    </div>
-                    <div className="col-md-6">
-                      <button className={dashboard.pendingbtn}>
-                        {count} Approved
-                      </button>
-                      <br></br>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-lg-1"></div>
           </div>
         </div>
+
+        <div className="row mt-2">
+          <div className="col-12 d-flex justify-content-between">
+            <div className="left">
+              <div style={customStyles.card}>
+                <div className="d-flex flex-column align-items-center">
+                  <p className="Top_heading">Attendance Tracker</p>
+                  <div className="d-flex time-alignment">
+                    <p className="time">{CurrentTime}</p>
+                  </div>
+                  <p className="date-text">{CurrentDate}</p>
+                  <p className="type-text ">
+                    Work Type Details<span>*</span>
+                  </p>
+                  <select value={WorkTypeID} className="drp-box select mt-2">
+                    <option value="0" className="punch-text">
+                      Select Type
+                    </option>
+                    <option value="1" className="punch-text">
+                      Work from Home
+                    </option>
+                    <option value="2" className="punch-text">
+                      Work from Office
+                    </option>
+                  </select>
+
+                  {!punchedIn && (
+                    <div className="contents">
+                      <div
+                        className={
+                          WorkTypeID == 0
+                            ? "punch-Out-card bgred d-flex mt-4"
+                            : "punch-Out-card d-flex mt-4"
+                        }
+                      >
+                        <p className="text-punch">Punch In </p>
+                      </div>
+
+                      <div className="not-punch-card mt-4">
+                        <p className="text-punch-tym1">No punch in yet</p>
+                      </div>
+                    </div>
+                  )}
+
+                  {punchedIn && (
+                    <div className="contents">
+                      <div className="punch-in-card  mt-4">
+                        <p className="text-punch1">Punched In</p>
+                      </div>
+                      <p className="text-punch-tym mt-2">
+                        Punched in at {StartTime}{" "}
+                      </p>
+                    </div>
+                  )}
+
+                  {!punchedOut && (
+                    <div className="contents">
+                      <div
+                        className={
+                          punchedIn
+                            ? "punch-Out-card  d-flex mt-4"
+                            : "punch-Out-card bgred d-flex mt-4"
+                        }
+                      >
+                        <p className="text-punch">Punch Out</p>
+                      </div>
+
+                      <div className="not-punch-card mt-4">
+                        <p className="text-punch-tym1">No punch out yet</p>
+                      </div>
+                    </div>
+                  )}
+                  {punchedOut && (
+                    <div className="contents">
+                      <div className="punch-in-card  mt-4">
+                        <p className="text-punch1">Punched Out</p>
+                      </div>
+                      <p className="text-punch-tym mt-2">
+                        Punched out at {EndTime}{" "}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+
+            <div className="right">
+              <div className="d-flex flex-wrap justify-content-between">
+                <div className="annoc-card mb-2">
+                  <div className="card-content">
+                    <div className="d-flex flex-column align-items-center p-2">
+                      <p className="card-head-one">Announcements</p>
+
+                      <div className="acctalign-hold-img1">
+                        <img
+                          className="img-annouc"
+                          src="https://103.12.1.76/ALIAPI\Images\ProjectAttachments\HCX-20230417091640.png"
+                        />
+                        <p className="fest-name">test</p>
+                        <p className="fest-name">21st May</p>
+                        <div className="d-flex justify-content-end w-100">
+                          <p
+                            className="view-textannoubce "
+                            onClick={() =>
+                              router.push("/Announcements/Announcements")
+                            }
+                          >
+                            View All
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div className="holiday mb-2">
+                  <div>
+                    <p className="card-head" style={{ textAlign: "left" }}>
+                      Holidays
+                    </p>
+                  </div>
+                  <div className="row">
+                    <div className="col-6">
+                      <div className="holi-atc">
+                        <div>
+                          <img
+                            className="tphoimg"
+                            src="https://103.12.1.76/ALIAPI\Images\ProjectAttachments\SPECIAL-20230517114109.jpg"
+                          />
+                          <p
+                            className="attac-text"
+                            style={{ marginLeft: "22px" }}
+                          >
+                            SPECIAL HOLIDAY
+                          </p>
+                          <p
+                            className="attac-day"
+                            style={{ marginLeft: "22px" }}
+                          >
+                            May 19, 2023
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="col-6">
+                      <div className="hol-others">
+                        <div className="holi-atc">
+                          <div className="list-holidays">
+                            <div>
+                              <img
+                                className="holidaylistattachment"
+                                src="https://103.12.1.76/ALIAPI\Images\ProjectAttachments\HCX-20230417091640.png"
+                              />
+                            </div>
+                            <div className="holidaylistcol">
+                              <h6 className="attac-text">
+                                {" "}
+                                Test Upcoming Holida...{" "}
+                              </h6>
+                              <h6 className="attac-day">Jun 17, 2023</h6>
+                            </div>
+                          </div>
+                          <div className="list-holidays">
+                            <div>
+                              <img
+                                className="holidaylistattachment"
+                                src="https://103.12.1.76/ALIAPI\Images\ProjectAttachments\HCX-20230417091735.png"
+                              />
+                            </div>
+                            <div className="holidaylistcol">
+                              <h6 className="attac-text">
+                                {" "}
+                                Test Upcoming Holida...{" "}
+                              </h6>
+                              <h6 className="attac-day">Dec 2, 2023</h6>
+                            </div>
+                          </div>
+                          <div className="list-holidays">
+                            <div>
+                              <img className="holidaylistattachment" src="" />
+                            </div>
+                            <div className="holidaylistcol">
+                              <h6 className="attac-text"> </h6>
+                              <h6 className="attac-day"></h6>
+                            </div>
+                          </div>
+                        </div>
+                        <p
+                          className="view-textannoubce2"
+                          onClick={() => router.push("/Holidays/Holidays")}
+                        >
+                          View All
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="d-flex flex-wrap justify-content-between">
+                <div className="card-one mb-2">
+                  <div className="card-content">
+                    <p className="card-head">Attendance Details</p>
+                    <p className="card-day">
+                      {/* {AttendanceCorraection.length} */} 20 Days
+                    </p>
+                    <div className="d-flex align-center-txt">
+                      <AiFillExclamationCircle
+                        className="img-icon"
+                        style={{ marginLeft: "50px" }}
+                      />
+                      <p className="card-paragraph">
+                        You have 20
+                        {/* {ApprovedCount} */}
+                        absents status this month
+                      </p>
+                    </div>
+                    <button
+                      className="card-attendance text-attendance"
+                      style={{ marginLeft: "11px" }}
+                      onClick={() =>
+                        router.push(
+                          "/attendance/AttendanceCorrectionDetails/AttendanceCorrection"
+                        )
+                      }
+                    >
+                      Attendance Correction
+                    </button>
+                  </div>
+                </div>
+                <div className="card-one mb-2" style={{ height: "236px" }}>
+                  <div className="card-content">
+                    <p className="card-head">Leave Details</p>
+                    <p className="card-day">
+                      {/* {PendingLeaveCount}  */} 20 Days
+                    </p>
+                    <div className="d-flex align-center-txt">
+                      <AiFillExclamationCircle
+                        className="img-icon"
+                        style={{ marginLeft: "50px" }}
+                      />
+                      <p className="card-paragraph">Pending Leave</p>
+                    </div>
+                    <button
+                      className="card-attendance text-attendance mt-3"
+                      style={{ marginLeft: "11px" }}
+                      onClick={() =>
+                        router.push("/Requests/StaffLeaveDetailsHR")
+                      }
+                    >
+                      Apply Leave{" "}
+                    </button>
+                    {/* <p className="view-textleave">View Leave</p> */}
+                  </div>
+                </div>
+                <div className="card-one mb-2">
+                  <div className="card-content">
+                    <p className="card-head">Payroll Schedule</p>
+                    <p className="card-day">Nov 10, 2022</p>
+
+                    <div className="card-content">
+                      <div className="d-flex align-center-txt">
+                        <AiFillExclamationCircle
+                          className="img-icon"
+                          style={{ marginLeft: "50px" }}
+                        />
+                        <p className="card-paragraph">
+                          Payroll date: Oct 15 - Oct 30, 2022
+                        </p>
+                      </div>
+                    </div>
+                    <button
+                      className="card-attendance text-attendance"
+                      style={{ marginLeft: "11px" }}
+                    >
+                      View Latest Payslip{" "}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="row">
+          <div className="col-lg-4">
+            <div className="Profile-card mb-2">
+              <div className="second-card d-flex align-items-center flex-column">
+                <div className="grey-card">
+                  <div className="row">
+                    <div className="col-4">
+                      <Image
+                        src={Profile}
+                        style={{
+                          width: "100%",
+                          height: "100px",
+                          marginRight: "18px",
+                        }}
+                      ></Image>
+                    </div>
+                    <div className="col-8">
+                      <div className="d-flex flex-column mt-4 ml-4">
+                        <p className="para">Complete your profile</p>
+                        <p className="small-para">
+                          Keep your basic information up to date. You can add,
+                          edit,or remove information or submit a request through
+                          Personal Info Update.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="update-info d-flex justify-content-between ">
+                  <p className="content">Update your information</p>
+                  <p
+                    className="content1"
+                    onClick={() =>
+                      router.push("/EmployeeManagement/MyProfiletabs")
+                    }
+                  >
+                    Steps to complete
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="managersmall-one col-lg-4">
+            <div className="card-content">
+              <p className="card-head">Overtime Details</p>
+              <p className="card-day">{/* {pendingOTCount} */} 20 </p>
+
+              <div className="card-content">
+                <div className="d-flex align-center-txt">
+                  <AiFillExclamationCircle
+                    className="img-icon"
+                    style={{ marginLeft: "50px" }}
+                  />
+                  <p className="card-paragraph">
+                    You have
+                    {/* {pendingOTCount}  */}
+                    OT request for approval
+                  </p>
+                </div>
+              </div>
+              <button
+                className="card-attendance text-attendance"
+                style={{ marginLeft: "15px" }}
+                onClick={() =>
+                  router.push("/Attendance/OvertimeDetails/MyOvertimeDetail")
+                }
+              >
+                Overtime Details
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div className="manager-requestcard d-flex justify-content-between mt-2">
+                    <div className='col-4 d-flex flex-column'>
+                        <Image style={{ width: '20%', height: '100px', marginLeft: '35%', marginTop: '13%' }}></Image>
+                        <p style={{ marginLeft: '25%', color: '#3eac6c', marginTop: '2%', fontSize: '25px' }} >My Team Requests</p>
+
+                    </div>
+
+
+                    <div className="managerrquestsmall-card">
+                        <div className="card-content">
+                            <p className="card-head">Leave Request</p>
+                            <p className="card-day">
+                              {/* {LevaeCountForSupervisor} */} 20
+                              </p>
+
+
+                            <div className="card-content">
+                                <div className="d-flex align-center-txt"><AiFillExclamationCircle className="img-icon" style={{ marginLeft: "50px" }} />
+                                    <p className="card-paragraph">
+                                        Pending Leave Request for Approval.</p>
+                                </div>
+                            </div>
+                            <button className="card-attendance text-attendance" style={{ marginLeft: "15px" }} onClick={() => router.push('/Requests/LeaveRequest')} >View Leave Request</button>
+
+
+                        </div>
+                    </div>
+                    <div className="managerrquestsmall-card">
+                        <div className="card-content">
+                            <p className="card-head">Overtime Request</p>
+                            <p className="card-day">
+                              {/* {pendingOTCount} */} 20
+                              </p>
+
+
+                            <div className="card-content">
+                                <div className="d-flex align-center-txt"><AiFillExclamationCircle className="img-icon" style={{ marginLeft: "50px" }} />
+                                    <p className="card-paragraph">Pending OT Request for Approval.</p>
+                                </div>
+                            </div>
+                            <button className="card-attendance text-attendance" style={{ marginLeft: "15px" }} onClick={() => router.push('/Attendance/OvertimeDetails/MyOvertimeDetail')} >view OT Request</button>
+
+                        </div>
+                    </div>
+                    <div className='col-2'></div>
+
+
+
+                </div>
       </div>
     </Layout>
   );
