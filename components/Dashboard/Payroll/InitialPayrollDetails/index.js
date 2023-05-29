@@ -6,7 +6,7 @@ import axios from "axios";
 import Styles from "../.././../../styles/finalpayrolldetails.module.css";
 
 import Link from "next/link";
-import { DownloadTableExcel } from "react-export-table-to-excel";
+
 import { IoIosClose } from "react-icons/io";
 import { apiService } from "@/services/api.service";
 
@@ -127,6 +127,17 @@ const InitialPayrollDetails = () => {
       });
     }
   };
+
+  const exportToExcel = () => {
+    let element = document.getElementById("initialpayrollID");
+    if (element) {
+      const ws = XLSX.utils.table_to_sheet(element);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+      XLSX.writeFile(wb, "IntialPayroll.xlsx");
+    }
+  };
+
   return (
     <div className="container-fluid">
       <p className=" Heading">Initial Payroll Details</p>
@@ -169,15 +180,11 @@ const InitialPayrollDetails = () => {
             </select>
           </div>
           <div className="col-lg-3">
-            <DownloadTableExcel
-              filename="users table"
-              sheet="users"
-              currentTableRef={tableRef.current}
-            >
-              <button type="button" className="EditDelteBTN ">
+         
+              <button type="button" onClick={exportToExcel} className="EditDelteBTN ">
                 Export To Excel{" "}
               </button>
-            </DownloadTableExcel>
+        
           </div>
         </div>
       </div>
@@ -202,7 +209,7 @@ const InitialPayrollDetails = () => {
         <div className="col-lg-12">
           {/* <span>Select All <input type="checkbox" checked={checkedState.map((data) => data.length ) === preliminarySalary.length} onChange={e => handleRowSelect(e, 'all')} /></span> */}
           <br />
-          <table className="table text-center" ref={tableRef}>
+          <table className="table text-center"  id='initialpayrollID' >
             <thead>
               <tr className="text-white" style={{ whiteSpace: "nowrap" }}>
                 <th>

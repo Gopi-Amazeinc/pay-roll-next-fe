@@ -79,11 +79,13 @@ function Mpf() {
 
                     </div>
                 </div>
+                <br/>
+                <br/>
                 <div className='row'>
                     <div className='col-lg-12'>
                         < div className='table-responsive'>
-                            <table className='table mt-4 table-striped text-center ' >
-                                <thead className='bg-info text-white '>
+                        <table className='table table-hover '>
+                        <thead className='bg-info text-white '>
                                     <tr style={{ whiteSpace: "nowrap" }}>
                                         <th>Taxable income low limit</th>
                                         <th>Taxable income high limit</th>

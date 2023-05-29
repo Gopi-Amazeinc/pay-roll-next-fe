@@ -115,13 +115,12 @@ const AttendenceDetails = () => {
     debugger
     // if (userID) {
     const res = await apiService.commonGetCall(
-      "HR/GetAttendanceByEmployeeID?userID=" +
+      "Payroll/Get_AttendanceReportForEmployee?EmployeeID=" +
       userID +
-      "&SDate=" +
+      "&startdate=" +
       SDate +
-      "&EDate=" +
-      EDate
-    );
+      "&enddate=" +
+      EDate);
     setAttendence(res.data);
     setcount(res.data.length);
     // }
@@ -280,17 +279,17 @@ const AttendenceDetails = () => {
                       (data, index) => {
                         return (
                           <tr key={index}>
-                            <td>{data.signinDate}</td>
+                            <td>{data.date}</td>
                             <td>{data.shift}</td>
-                            <td>{data.signInWorkType}</td>
-                            <td>{data.expectedIn}</td>
-                            <td>{data.expectedOut}</td>
-                            <td>{data.stime}</td>
-                            <td>{data.etime}</td>
-                            <td>{data.hr}</td>
+                            <td>{data.dayType}</td>
+                            <td>{data.expectedInTime}</td>
+                            <td>{data.expectedOutTime}</td>
+                            <td>{data.punchInTime}</td>
+                            <td>{data.punchOutTime}</td>
+                            <td>{data.productiveHours}</td>
                             <td>{data.ot}</td>
-                            <td>{data.undertime}</td>
-                            <td>{data.latepunchin}</td>
+                            <td>{data.undertimeMins}</td>
+                            <td>{data.lateMins}</td>
                             {/* <td>{data.hr1}</td>
                     <td>{data.underTime}</td>
                     <td>{data.late}</td> */}

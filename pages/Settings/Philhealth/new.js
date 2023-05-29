@@ -17,20 +17,20 @@ const PhilhealthForm = ({ editData }) => {
     function clearForm(PhillhealthData = null) {
         debugger;
         let details = {
-          ID: PhillhealthData ? PhillhealthData.id : "",
-          Taxiableincomelowlimit: PhillhealthData
-            ? PhillhealthData.taxiableincomelowlimit
-            : "",
-          Taxiableincomehighlimit: PhillhealthData
-            ? PhillhealthData.taxiableincomehighlimit
-            : "",
-          Phihealthvalue: PhillhealthData ? PhillhealthData.phihealthvalue : "",
-          Year: PhillhealthData ? PhillhealthData.year : "",
+            ID: PhillhealthData ? PhillhealthData.id : "",
+            Taxiableincomelowlimit: PhillhealthData
+                ? PhillhealthData.taxiableincomelowlimit
+                : "",
+            Taxiableincomehighlimit: PhillhealthData
+                ? PhillhealthData.taxiableincomehighlimit
+                : "",
+            Phihealthvalue: PhillhealthData ? PhillhealthData.phihealthvalue : "",
+            Year: PhillhealthData ? PhillhealthData.year : "",
         };
         reset(details);
         setActionType(PhillhealthData ? "update" : "insert");
-      }
-      useEffect(() => {
+    }
+    useEffect(() => {
         const { id } = editData || {};
         if (id) {
             // This API is used to fetch the data from BarangayMaster ByID table
@@ -46,7 +46,7 @@ const PhilhealthForm = ({ editData }) => {
         );
         clearForm(res.data[0]);
     };
-    
+
     const onSubmit = async (data) => {
         if (actionType == "insert") {
             await apiService.commonPostCall("HR/InsertPhihealthconfogaration", data) // inserting new division master data [Shashank]
@@ -74,7 +74,7 @@ const PhilhealthForm = ({ editData }) => {
     };
 
 
- 
+
     return (
         <Layout>
             <div className='container-fluid'>
@@ -109,12 +109,12 @@ const PhilhealthForm = ({ editData }) => {
                                                 },
                                             })}
                                         />
-                                         {errors.Taxiableincomelowlimit && (
-                                            <span  style={customStyles.errorMsg}>
+                                        {errors.Taxiableincomelowlimit && (
+                                            <span style={customStyles.errorMsg}>
                                                 Please enter a limit
                                             </span>
                                         )}
-                                        <br/>
+                                        <br />
                                     </div>
                                     <div className="col-lg-3">
                                         <label className='fw-bold'>
@@ -123,7 +123,7 @@ const PhilhealthForm = ({ editData }) => {
                                         <input
                                             name="highLimit"
                                             type="text"
-                                            className='form-control'placeholder='Taxiable income high limit'
+                                            className='form-control' placeholder='Taxiable income high limit'
                                             onKeyPress={(event) => {
                                                 const charCode = (event.which) ? event.which : event.keyCode;
                                                 if (charCode !== 46 && charCode > 31 && (charCode < 48 || charCode > 57)) {
@@ -138,8 +138,8 @@ const PhilhealthForm = ({ editData }) => {
                                                 },
                                             })}
                                         />
-                                           {errors.Taxiableincomehighlimit && (
-                                            <span  style={customStyles.errorMsg}>
+                                        {errors.Taxiableincomehighlimit && (
+                                            <span style={customStyles.errorMsg}>
                                                 Please enter a valid Tax Name
                                             </span>
                                         )}
@@ -157,17 +157,11 @@ const PhilhealthForm = ({ editData }) => {
                                                 if (charCode !== 46 && charCode > 31 && (charCode < 48 || charCode > 57)) {
                                                     event.preventDefault();
                                                 }
-                                            }} maxLength={10}
-                                            {...register("Phihealthvalue", {
-                                                required: true,
-                                                pattern: {
-                                                    value: /^[A-Za-z0-9]+$/,
-                                                    message: "Please enter a valid Phihealth value",
-                                                },
-                                            })}
+                                            }}
+                                            {...register("Phihealthvalue", { required: true })}
                                         />
-                                          {errors.Taxiableincomelowlimit && (
-                                            <span  style={customStyles.errorMsg}>
+                                        {errors.Phihealthvalue?.type === 'required' && (
+                                            <span style={customStyles.errorMsg}>
                                                 Please enter a valid Phihealth value
                                             </span>
                                         )}
@@ -196,7 +190,7 @@ const PhilhealthForm = ({ editData }) => {
                                             <option>2028</option>
                                         </select>
                                         {errors.Year && (
-                                            <span  style={customStyles.errorMsg}>
+                                            <span style={customStyles.errorMsg}>
                                                 Please enter Year
                                             </span>
                                         )}
