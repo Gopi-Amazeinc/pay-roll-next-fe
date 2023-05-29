@@ -303,7 +303,7 @@ const CompanyAttendanceDetails = () => {
             <div className="col-lg-2">
               <button className="button" onClick={openEditModal}>Upload</button>
               <br />
-             
+              <br/>
                 <button className="button" onClick={exportToExcel}>Export To Excel</button>
             </div>
             <div>
