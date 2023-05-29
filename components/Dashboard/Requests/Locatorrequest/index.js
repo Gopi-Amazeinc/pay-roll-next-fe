@@ -179,10 +179,10 @@ const Locatordashboard = () => {
 
     const customStyles = {
         content: {
-            top: '5%',
+            top: '3%',
             left: '20%',
             right: '20%',
-            bottom: '15%'
+            bottom: '37%'
         },
     };
 
@@ -263,7 +263,7 @@ const Locatordashboard = () => {
                                 </div>
                                 <div className="row">
                                     <div className="col-lg-12">
-                                        <img src={previewImg} width={800} height={500} />
+                                        <img src={previewImg} width={800} height={400} />
                                     </div>
                                 </div>
                             </div>
