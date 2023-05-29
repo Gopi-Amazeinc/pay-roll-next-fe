@@ -5,6 +5,8 @@ import { apiService } from "@/services/api.service";
 import Swal from 'sweetalert2';
 import ReactPaginate from "react-paginate";
 import Image from "next/image";
+import Modal from 'react-modal';
+import { AiOutlineClose } from 'react-icons/ai'
 
 const Locatordashboard = () => {
 
@@ -167,28 +169,20 @@ const Locatordashboard = () => {
         return getPendingData(startDate, endDatesss);
     };
 
+    const [modal, setModal] = useState(false);
+    const [previewImg, setPreview] = useState()
 
-    const ImagePreview = () => {
-
+    const ImagePreview = (image) => {
+        setModal(!modal)
+        setPreview(image)
     }
 
     const customStyles = {
         content: {
-            top: "50%",
-            left: "50%",
-            right: "auto",
-            bottom: "auto",
-            marginRight: "-50%",
-            transform: "translate(-50%, -50%)",
-            width: "60%",
-        },
-        errorMsg: {
-            fontSize: "12px",
-            fontWeight: "500",
-            color: "red",
-        },
-        inputLabel: {
-            fontSize: "16px",
+            top: '5%',
+            left: '20%',
+            right: '20%',
+            bottom: '15%'
         },
     };
 
@@ -200,7 +194,7 @@ const Locatordashboard = () => {
                         <br />
                         <div className="row">
                             <div className="col-lg-3">
-                                <Link href="/Requests/Locatorrequest">  <label className="mainheader">My OBASIS Details</label> </Link>
+                                <Link href="/Requests/Locatorrequest">  <label className="mainheader">My Obasis Details</label> </Link>
                                 <div className="line-border" style={{
                                     border: "1px solid #2f87cc",
                                     bordertopleftradius: "51px",
@@ -212,7 +206,7 @@ const Locatordashboard = () => {
                             {
                                 roleID != 5 && (
                                     <div className="col-lg-3">
-                                        <Link href="/Requests/Myteamobasisrequest">  <label className="mainheader">My Team OBASIS Details</label> </Link>
+                                        <Link href="/Requests/Myteamobasisrequest">  <label className="mainheader">My Team Obasis Details</label> </Link>
                                     </div>
                                 )
                             }
@@ -256,6 +250,25 @@ const Locatordashboard = () => {
                             </div>
                         </div>
 
+                        <Modal isOpen={modal} style={customStyles}>
+                            <div className='container'>
+                                <div className='row card-header'>
+                                    <div className='col-lg-8 mt-3'>
+                                        <h4>Attachment</h4>
+                                    </div>
+                                    <div className='col-lg-3'></div>
+                                    <div className='col-lg-1 mt-3 mb-3'>
+                                        <button onClick={() => setModal(false)} className='btn-primary'><AiOutlineClose /></button>
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col-lg-12">
+                                        <img src={previewImg} width={800} height={500} />
+                                    </div>
+                                </div>
+                            </div>
+                        </Modal>
+
                         <div className="row">
                             <div className="col-lg-12">
                                 {pending && (
@@ -289,7 +302,7 @@ const Locatordashboard = () => {
                                                             <td>{data.endTime}</td>
                                                             <td>{data.task}</td>
                                                             <td>{data.comments}</td>
-                                                            <td><img onClick={ImagePreview} alt={"imagepreive"} src={data.attachment} width={50} height={50} /></td>
+                                                            <td><img onClick={ImagePreview.bind(this, data.attachment)} alt={"imagepreive"} src={data.attachment} width={50} height={50} /></td>
                                                             <td>{data.approveStatus}</td>
                                                             {/* <td>{
                                                 <b>{data.statusID === 0 ? 'Manager Pending' :
