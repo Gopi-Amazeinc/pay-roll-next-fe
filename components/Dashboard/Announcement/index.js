@@ -110,6 +110,7 @@ const AnnoucementDash = () => {
                       <th>Announcement</th>
                       <th>Announcement Description</th>
                       <th>Venue</th>
+                      {/* <th>Attachment</th> */}
                     </tr>
                   </thead>
 

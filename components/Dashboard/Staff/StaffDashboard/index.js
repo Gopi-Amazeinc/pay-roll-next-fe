@@ -22,7 +22,11 @@ function StaffDashbaord() {
   const [position, setPosition] = useState([]);
   const [level, setLevel] = useState([]);
 
-  const [enableDisablestate, setenableDisablestate] = useState(false);
+  const [enableState, setEnableState] = useState(false);
+  const [disableState, setDisableState] = useState(false);
+
+  const [enableStaffState, setEnableStaffState] = useState(false);
+  const [disableStaffState, setDisableStaffState] = useState(false);
 
   const hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
 
@@ -36,6 +40,21 @@ function StaffDashbaord() {
     );
     setStaffData(res.data);
     setcount(res.data.length);
+    if (res.data.attendanceEnable == 1) {
+      setEnableState(true);
+      // setDisableState(false);
+    } else {
+      setDisableState(true);
+      // setEnableState(false);
+    }
+
+    if (res.data.enableDisable == 1) {
+      setEnableStaffState(true);
+      // setDisableStaffState(false)
+    } else {
+      setDisableStaffState(true);
+      // setEnableStaffState(false)
+    }
 
     let res1 = await axios.get(hostURL + "Master/GetDepartmentMaster");
     setDepartment(res1.data);
@@ -46,13 +65,10 @@ function StaffDashbaord() {
     let res3 = await axios.get(hostURL + "Master/GetLevelType");
     setLevel(res3.data);
   };
-  const getData = (data) => {
-    sessionStorage.setItem("id", data.id);
-  };
-  const clearData = () => {
-    // sessionStorage.setItem("id", "");
-  };
-  const enableDisableStaff = async (data) => {
+ 
+  
+  //enable-disable staff attendance
+  const enableStaffAttendance = async (data) => {
     debugger;
     let entity = {
       StaffID: data.id,
@@ -62,15 +78,81 @@ function StaffDashbaord() {
       hostURL + "Payroll/UpdateAttendanceEnableDisable",
       entity
     );
-
     if (res.status == 200 && res != null) {
-      setenableDisablestate(true);
+      setEnableState(true);
+      setDisableState(false);
       Swal.fire("Attendance enabled");
     } else {
-      setenableDisablestate(false);
+      setDisableState(false);
+      setEnableState(true);
       Swal.fire("Attendance disabled");
     }
-    getData(data);
+    getStaffDetails();
+  };
+  const disableStaffAttendance = async (data) => {
+    debugger;
+    let entity = {
+      StaffID: data.id,
+      AttendanceEnable: 0,
+    };
+    let res = await axios.post(
+      hostURL + "Payroll/UpdateAttendanceEnableDisable",
+      entity
+    );
+    if (res.status == 200 && res != null) {
+      setDisableState(true);
+      setEnableState(false);
+      Swal.fire("Attendance disabled");
+    } else {
+      setEnableState(false);
+      setDisableState(true);
+      Swal.fire("Attendance enabled");
+    }
+    getStaffDetails();
+  };
+
+  //active-inactive staff
+  const enableStaff = async (data) => {
+    debugger
+    let entity = {
+      StaffID: data.id,
+      EnableDisable: 0,
+    };
+    let res = await axios.post(
+      hostURL + "HR/UpdateStaffEnableDisable",
+      entity
+    );
+    if (res.status == 200 && res != null) {
+      setEnableStaffState(true);
+      setDisableStaffState(false)
+      Swal.fire("Staff active");
+    } else {
+      setDisableStaffState(true)
+      setEnableStaffState(false);
+      Swal.fire("Staff in-active");
+    }
+    getStaffDetails();
+  };
+  const disableStaff = async (data) => {
+    debugger
+    let entity = {
+      StaffID: data.id,
+      EnableDisable: 1,
+    };
+    let res = await axios.post(
+      hostURL + "HR/UpdateStaffEnableDisable",
+      entity
+    );
+    if (res.status == 200 && res != null) {
+      setDisableStaffState(true)
+      setEnableStaffState(false);
+      Swal.fire("Staff active");
+    } else {
+      setEnableStaffState(true);
+      setDisableStaffState(false)
+      Swal.fire("Staff in-active");
+    }
+    getStaffDetails();
   };
   const handleDelete = async (id) => {
     try {
@@ -83,9 +165,7 @@ function StaffDashbaord() {
       Swal.fire("Failed to delete data");
     }
   };
-  const handleActive = async (id) => {
-
-  }
+  const handleActive = async (id) => {};
   const customStyles = {
     content: {
       top: "20%",
@@ -164,7 +244,7 @@ function StaffDashbaord() {
   const transformedStaff = async (items) => {
     console.log(items);
     debugger;
-    const loans = await Promise.all(
+    const staffList = await Promise.all(
       items && items.length > 0
         ? items.map(async (staff) => {
             const res = await apiService.commonGetCall(
@@ -186,7 +266,14 @@ function StaffDashbaord() {
           })
         : []
     );
-    return loans;
+    return staffList;
+  };
+
+  const handleOnChange = (event) => {
+    const { checked } = event.target;
+    const data = JSON.parse(event.target.value);
+    if (checked) {
+    }
   };
   return (
     <div>
@@ -207,7 +294,7 @@ function StaffDashbaord() {
                 <option>Select Department</option>
                 {department.map((data, index) => {
                   return (
-                    <option key={data.id} value={data.id} >
+                    <option key={data.id} value={data.id}>
                       {data.department_name}
                     </option>
                   );
@@ -240,7 +327,7 @@ function StaffDashbaord() {
                 <option>Select Position</option>
                 {position.map((data, index) => {
                   return (
-                    <option key={data.id} value={data.id} >
+                    <option key={data.id} value={data.id}>
                       {data.short}
                     </option>
                   );
@@ -337,7 +424,7 @@ function StaffDashbaord() {
                           <td>{data.hiredDate}</td>
                           <td>{data.manager}</td>
                           <td className="text-center">
-                            <span onClick={() => enableDisableStaff(data)}>
+                            {/* <span onClick={() => enableDisableStaff(data)}>
                               {data.attendanceEnablee ? (
                                 <button
                                   onClick={getData.bind(this, data)}
@@ -353,7 +440,24 @@ function StaffDashbaord() {
                                   DISABLE
                                 </button>
                               )}
-                            </span>
+                            </span> */}
+
+                            {enableState == true && (
+                              <button
+                                onClick={() => disableStaffAttendance(data)}
+                                className="enableDisableBtn"
+                              >
+                                Disable
+                              </button>
+                            )}
+                            {disableState == true && (
+                              <button
+                                onClick={() => enableStaffAttendance(data)}
+                                className="enableDisableBtn"
+                              >
+                                Enable
+                              </button>
+                            )}
                           </td>
 
                           <td className="text-center">
@@ -377,16 +481,38 @@ function StaffDashbaord() {
                                     </div>
                                     <br></br>
                                     <div className="row">
-                                      <button className={Styles.deleteBtn}
-                                        onClick={handleDelete.bind(this, data.id)}>
+                                      <button
+                                        className={Styles.deleteBtn}
+                                        onClick={handleDelete.bind(
+                                          this,
+                                          data.id
+                                        )}
+                                      >
                                         DELETE
                                       </button>
                                     </div>
                                     <br></br>
                                     <div className="row">
-                                      <button className={Styles.activeBtn}>
-                                        ACTIVE
-                                      </button>
+                                      {enableStaffState == true && (
+                                        <button
+                                          onClick={() =>
+                                            enableStaff(data)
+                                          }
+                                          className={Styles.activeBtn}
+                                        >
+                                          Active
+                                        </button>
+                                      )}
+                                      {disableStaffState == true && (
+                                        <button
+                                          onClick={() =>
+                                            disableStaff(data)
+                                          }
+                                          className={Styles.activeBtn}
+                                        >
+                                          Inactive
+                                        </button>
+                                      )}
                                     </div>
                                   </div>
                                 </div>

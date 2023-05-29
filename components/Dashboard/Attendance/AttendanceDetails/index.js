@@ -5,13 +5,13 @@ import { useEffect, useState } from "react";
 import { useRef } from "react";
 import Styles from "@/styles/attendancedetails.module.css";
 import ReactPaginate from "react-paginate";
-import { DownloadTableExcel } from "react-export-table-to-excel";
 import { useRouter } from "next/router";
 import Swal from "sweetalert2";
+import * as XLSX from "xlsx";
 
 const AttendenceDetails = () => {
   const router = useRouter();
-  const tableRef = useRef(null);
+
   const [Attendence, setAttendence] = useState([]);
 
   const [userID, setUserID] = useState();
@@ -20,6 +20,8 @@ const AttendenceDetails = () => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [count, setcount] = useState("");
+  const [myattendance, setmyattendance] = useState(false);
+
 
   useEffect(() => {
     const userid = sessionStorage.getItem("userID");
@@ -33,6 +35,7 @@ const AttendenceDetails = () => {
       const resu = getCurrentMonthDates();
       if (resu) {
         getAttendenceByID(resu.setStartDate, resu.setEndDate);
+        setmyattendance(true);
       }
     }
     return;
@@ -112,13 +115,12 @@ const AttendenceDetails = () => {
     debugger
     // if (userID) {
     const res = await apiService.commonGetCall(
-      "HR/GetAttendanceByEmployeeID?userID=" +
+      "Payroll/Get_AttendanceReportForEmployee?EmployeeID=" +
       userID +
-      "&SDate=" +
+      "&startdate=" +
       SDate +
-      "&EDate=" +
-      EDate
-    );
+      "&enddate=" +
+      EDate);
     setAttendence(res.data);
     setcount(res.data.length);
     // }
@@ -131,6 +133,24 @@ const AttendenceDetails = () => {
   };
   const offset = currentPage * PER_PAGE;
   const pageCount = Math.ceil(Attendence.length / PER_PAGE);
+
+
+  const exportToExcel = () => {
+    let element;
+    if (myattendance == true) {
+      element = document.getElementById("attendanceid");
+    }
+
+    if (element) {
+      const ws = XLSX.utils.table_to_sheet(element);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+      if (myattendance == true) {
+        XLSX.writeFile(wb, "Attendetails.xlsx");
+      }
+
+    }
+  };
 
   return (
     <div className="container-fluid">
@@ -209,15 +229,11 @@ const AttendenceDetails = () => {
 
                   {count > 0 ?
                     <>
-                      <DownloadTableExcel
-                        filename="users table"
-                        sheet="users"
-                        currentTableRef={tableRef.current}
-                      >
-                        <button className="button" id="AddButton">
-                          Download
-                        </button>
-                      </DownloadTableExcel>
+
+                      <button className="button" onClick={exportToExcel} id="AddButton">
+                        Download
+                      </button>
+
                     </>
                     : null}
 
@@ -236,7 +252,7 @@ const AttendenceDetails = () => {
             <table
               className="table "
               style={{ marginLeft: "0px", width: "100%" }}
-              ref={tableRef}
+              id="attendanceid"
             >
               <thead className={"bg-info text-white "}>
                 <tr style={{ whiteSpace: "nowrap" }}>
@@ -263,17 +279,17 @@ const AttendenceDetails = () => {
                       (data, index) => {
                         return (
                           <tr key={index}>
-                            <td>{data.signinDate}</td>
+                            <td>{data.date}</td>
                             <td>{data.shift}</td>
-                            <td>{data.signInWorkType}</td>
-                            <td>{data.expectedIn}</td>
-                            <td>{data.expectedOut}</td>
-                            <td>{data.stime}</td>
-                            <td>{data.etime}</td>
-                            <td>{data.hr}</td>
+                            <td>{data.dayType}</td>
+                            <td>{data.expectedInTime}</td>
+                            <td>{data.expectedOutTime}</td>
+                            <td>{data.punchInTime}</td>
+                            <td>{data.punchOutTime}</td>
+                            <td>{data.productiveHours}</td>
                             <td>{data.ot}</td>
-                            <td>{data.undertime}</td>
-                            <td>{data.latepunchin}</td>
+                            <td>{data.undertimeMins}</td>
+                            <td>{data.lateMins}</td>
                             {/* <td>{data.hr1}</td>
                     <td>{data.underTime}</td>
                     <td>{data.late}</td> */}

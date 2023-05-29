@@ -547,3 +547,9 @@ tr:nth-child(even) {
   margin-top: 0px;
   width: 60%;
 } */
+
+
+.pagination {
+  --bs-pagination-active-bg: #3247d5 !important;
+  --bs-pagination-active-border-color: #3247d5 !important;
+}

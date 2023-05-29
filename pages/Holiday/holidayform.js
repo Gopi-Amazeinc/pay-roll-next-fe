@@ -102,6 +102,7 @@ function Holidayform({ editData }) {
     console.log(acceptedFiles, "Uploaded file");
     uploadFile(acceptedFiles);
   }, []);
+  
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
   const uploadFile = async (data) => {

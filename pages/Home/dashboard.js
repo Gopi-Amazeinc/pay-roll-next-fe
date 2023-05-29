@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {useRef} from "react";
+import { useRef } from "react";
 import Image from "next/image";
 import dashboard from "./dashboard.module.css";
 import leaveIcon from "@/public/Images/leaveIcon.png";
@@ -22,12 +22,10 @@ const GaugeChart = dynamic(() => import("react-gauge-chart"), { ssr: false });
 
 import Swal from "sweetalert2";
 
-
-
 const Dashboard = () => {
   const count = 1;
   const staffDetailsRef = useRef(null);
- 
+
   var time = new Date().toLocaleString("en-US", {
     hour: "numeric",
     minute: "numeric",
@@ -80,24 +78,29 @@ const Dashboard = () => {
   useEffect(() => {
     debugger;
     if (userID) {
-      getAttendance()
+      getAttendance();
     }
   }, [userID]);
 
-
-  const getAttendance =( )=> {
+  const getAttendance = () => {
     var todayDate = new Date().toISOString().slice(0, 10);
     apiService.commonGetCall("HR/GetAttendance").then((staffData) => {
       staffDetailsRef.current = staffData.data.filter(
         (x) => x.filterdate == todayDate && x.userID == userID
       );
-      if (staffDetailsRef.current.length && staffDetailsRef.current[0].signinDate != null) {
+      if (
+        staffDetailsRef.current.length &&
+        staffDetailsRef.current[0].signinDate != null
+      ) {
         setPunchedIn(true);
         setWorkTypeID(staffDetailsRef.current[0].signInTypeID);
         setStartTime(staffDetailsRef.current[0].startTime);
       }
 
-      if (staffDetailsRef.current.length && staffDetailsRef.current[0].signoutDate != null) {
+      if (
+        staffDetailsRef.current.length &&
+        staffDetailsRef.current[0].signoutDate != null
+      ) {
         setPunchedOut(true);
         setWorkTypeID(staffDetailsRef.current[0].signOutTypeID);
         setEndTime(staffDetailsRef.current[0].endTime);
@@ -107,7 +110,7 @@ const Dashboard = () => {
       // setPunchintime(currentTime.toLocaleTimeString());
       // setSubmitted(true);
     });
-  }
+  };
 
   const modelopenForPunch = () => {
     if (punchedIn == false) {
@@ -181,12 +184,9 @@ const Dashboard = () => {
       WorkTypeID == 0
     ) {
       Swal.fire("Please Fill Work Type");
-    }
-    else if (WorkTypeID !=  staffDetailsRef.current[0].WorkType ) {
-      
-      Swal.fire("please select correct work Type to Punchout!")
-    }
-    else {
+    } else if (WorkTypeID != staffDetailsRef.current[0].signInTypeID) {
+      Swal.fire("please select correct work Type to Punchout!");
+    } else {
       let options = { hour12: false };
       let date = new Date();
       await apiService.commonGetCall("HR/GetAttendance").then(async (res) => {
@@ -222,7 +222,7 @@ const Dashboard = () => {
     setModalOpen(!modalOpen);
   };
   const staffDetails = staffDetailsRef.current;
-  
+
   return (
     <Layout>
       {/* <input
@@ -233,9 +233,10 @@ const Dashboard = () => {
           readExcel(file);
         }}
       /> */}
-      <div className="container-fluid">          <br/>
+      <div className="container-fluid">
+        {" "}
+        <br />
         <div className="row">
-
           <div className={dashboard.card1}>
             <div className="card p-0" style={{ borderRadius: "20px" }}>
               <div
@@ -612,7 +613,10 @@ const Dashboard = () => {
           <br /> <br />
           <div className="row mt-4 ">
             <div className="col-lg-6 ">
-              <div className="card" style={{ borderRadius: "20px" ,padding:"15px" }}>
+              <div
+                className="card"
+                style={{ borderRadius: "20px", padding: "15px" }}
+              >
                 <div className="">
                   <h4
                     className={dashboard.cardheader}
