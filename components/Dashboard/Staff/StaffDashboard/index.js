@@ -164,7 +164,7 @@ function StaffDashbaord() {
   const transformedStaff = async (items) => {
     console.log(items);
     debugger;
-    const loans = await Promise.all(
+    const staffList = await Promise.all(
       items && items.length > 0
         ? items.map(async (staff) => {
             const res = await apiService.commonGetCall(
@@ -186,8 +186,16 @@ function StaffDashbaord() {
           })
         : []
     );
-    return loans;
+    return staffList;
   };
+
+  const handleOnChange = (event)=>{
+    const { checked } = event.target;
+    const data = JSON.parse(event.target.value);
+    if(checked){
+      
+    }
+  }
   return (
     <div>
       <div className="container">

@@ -1,22 +1,22 @@
-import Layout from "@/components/layout/layout"
+import Layout from "@/components/layout/layout";
 import Link from "next/link";
-import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { useEffect, useState } from "react";
+import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
 import { useRouter } from "next/router";
-import styles from '@/../../styles/Locatorrequest.module.css'
+import styles from "@/../../styles/Locatorrequest.module.css";
 import { apiService } from "@/services/api.service";
 import { useCallback } from "react";
 import { useDropzone } from "react-dropzone";
 import axios from "axios";
 const Locatorrequest = () => {
-    const { register, handleSubmit, reset, formState } = useForm();
-    const router = useRouter();
-    const { errors } = formState;
+  const { register, handleSubmit, reset, formState } = useForm();
+  const router = useRouter();
+  const { errors } = formState;
 
-    const [StaffID, setUserID] = useState()
-    const [filePath, setFilePath] = useState();
-    const [fileName, setFileName] = useState();
+  const [StaffID, setUserID] = useState();
+  const [filePath, setFilePath] = useState();
+  const [fileName, setFileName] = useState();
 
 
     useEffect(() => {

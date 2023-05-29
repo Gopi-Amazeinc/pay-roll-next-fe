@@ -5,13 +5,13 @@ import { useEffect, useState } from "react";
 import { useRef } from "react";
 import Styles from "@/styles/attendancedetails.module.css";
 import ReactPaginate from "react-paginate";
-import { DownloadTableExcel } from "react-export-table-to-excel";
 import { useRouter } from "next/router";
 import Swal from "sweetalert2";
+import * as XLSX from "xlsx";
 
 const AttendenceDetails = () => {
   const router = useRouter();
-  const tableRef = useRef(null);
+
   const [Attendence, setAttendence] = useState([]);
 
   const [userID, setUserID] = useState();
@@ -20,6 +20,8 @@ const AttendenceDetails = () => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [count, setcount] = useState("");
+  const [myattendance, setmyattendance] = useState(false);
+
 
   useEffect(() => {
     const userid = sessionStorage.getItem("userID");
@@ -33,6 +35,7 @@ const AttendenceDetails = () => {
       const resu = getCurrentMonthDates();
       if (resu) {
         getAttendenceByID(resu.setStartDate, resu.setEndDate);
+        setmyattendance(true);
       }
     }
     return;
@@ -132,6 +135,24 @@ const AttendenceDetails = () => {
   const offset = currentPage * PER_PAGE;
   const pageCount = Math.ceil(Attendence.length / PER_PAGE);
 
+
+  const exportToExcel = () => {
+    let element;
+    if (myattendance == true) {
+      element = document.getElementById("attendanceid");
+    }
+
+    if (element) {
+      const ws = XLSX.utils.table_to_sheet(element);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+      if (myattendance == true) {
+        XLSX.writeFile(wb, "Attendetails.xlsx");
+      }
+
+    }
+  };
+
   return (
     <div className="container-fluid">
       <div className="row mt-3">
@@ -209,15 +230,11 @@ const AttendenceDetails = () => {
 
                   {count > 0 ?
                     <>
-                      <DownloadTableExcel
-                        filename="users table"
-                        sheet="users"
-                        currentTableRef={tableRef.current}
-                      >
-                        <button className="button" id="AddButton">
-                          Download
-                        </button>
-                      </DownloadTableExcel>
+
+                      <button className="button" onClick={exportToExcel} id="AddButton">
+                        Download
+                      </button>
+
                     </>
                     : null}
 
@@ -236,7 +253,7 @@ const AttendenceDetails = () => {
             <table
               className="table "
               style={{ marginLeft: "0px", width: "100%" }}
-              ref={tableRef}
+              id="attendanceid"
             >
               <thead className={"bg-info text-white "}>
                 <tr style={{ whiteSpace: "nowrap" }}>

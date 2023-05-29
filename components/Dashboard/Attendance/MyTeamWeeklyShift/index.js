@@ -9,6 +9,7 @@ import { DownloadTableExcel } from "react-export-table-to-excel";
 import { useRef } from "react";
 import ReactPaginate from "react-paginate";
 import Swal from 'sweetalert2';
+import * as XLSX from "xlsx";
 
 const Index = () => {
 
@@ -57,6 +58,7 @@ const Index = () => {
 
     const [startDate, setStartDate] = useState("");
     const [endDate, setEndDate] = useState("");
+    const [myteamshiftdetails, setmyteamshiftdetails] = useState(false);
 
     const [keyword, setKeyword] = useState("");
 
@@ -73,6 +75,7 @@ const Index = () => {
 
         if (userID) {
             getData();
+            setmyteamshiftdetails(true);
         }
     }, [userID])
 
@@ -163,6 +166,24 @@ const Index = () => {
     const pageCount = Math.ceil(weeklyShiftData.length / PER_PAGE);
 
 
+    const exportToExcel = () => {
+        let element;
+        if (myteamshiftdetails == true) {
+          element = document.getElementById("myteamshiftdeatailid");
+        }
+    
+        if (element) {
+          const ws = XLSX.utils.table_to_sheet(element);
+          const wb = XLSX.utils.book_new();
+          XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+          if (myteamshiftdetails == true) {
+            XLSX.writeFile(wb, "MyTeamshiftdetails.xlsx");
+          }
+    
+        }
+      };
+
+
     return (
         <div className='container-fluid'>
             <div className='row'>
@@ -212,12 +233,8 @@ const Index = () => {
                                 <br />
                                 {count > 0 ?
                                     <>
-                                        <DownloadTableExcel
-                                            filename="users table"
-                                            sheet="users"
-                                            currentTableRef={tableRef.current}
-                                        >
-                                            <button className='button' >Export To excel</button>     </DownloadTableExcel>
+                                      
+                                            <button className='button'  onClick={exportToExcel} >Export To excel</button>     
                                     </>
                                     : null}
 
@@ -238,7 +255,7 @@ const Index = () => {
 
                     <div className='row'>
                         <div className='col-lg-12'>
-                            <table>
+                            <table  className="table" id="myteamshiftdeatailid">
                                 <thead>
                                     <tr>
                                         <th>EMPLOYEID</th>

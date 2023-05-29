@@ -5,10 +5,9 @@ import axios from "axios";
 import { apiService } from "@/services/api.service";
 import Styles from "@/styles/shiftdetails.module.css";
 import { IoIosAddCircleOutline } from "react-icons/io";
-import { DownloadTableExcel } from "react-export-table-to-excel";
 import ReactPaginate from "react-paginate";
 import Swal from "sweetalert2";
-
+import * as XLSX from "xlsx";
 
 
 // import Styles from '../../styles/shiftdetails.module.css'
@@ -25,6 +24,8 @@ const Shiftdetails = () => {
   const [shiftDetails, setShiftDetails] = useState([]);
   const [approvedshiftDetails, setapprovedshiftDetails] = useState([]);
   const [rejectedshiftDetails, setrejectedshiftDetails] = useState([]);
+  const [myshiftdetails, setmyshiftdetails] = useState(false);
+
 
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
@@ -33,21 +34,22 @@ const Shiftdetails = () => {
   let hostURL = process.env.NEXT_PUBLIC_API_HOST_URL;
   let staffID;
   const tableRef = useRef(null);
-// Gopi:'s Code 
+  // Gopi:'s Code 
 
-// 
-// setShiftDetails(shifts => {
-//   const updatedshifts = shifts.map(item => {
-//       if (item.staffID === data.staffID) {
-//           return { ...item, isChecked: checked };
-//       }
-//       return item;
-//   });
-//   return updatedshifts;
-// });
+  // 
+  // setShiftDetails(shifts => {
+  //   const updatedshifts = shifts.map(item => {
+  //       if (item.staffID === data.staffID) {
+  //           return { ...item, isChecked: checked };
+  //       }
+  //       return item;
+  //   });
+  //   return updatedshifts;
+  // });
 
   useEffect(() => {
     getShiftDetails();
+    setmyshiftdetails(true);
     // getapprovedshiftDetails();
     // getrejectedshiftDetails();
   }, []);
@@ -87,8 +89,8 @@ const Shiftdetails = () => {
 
   const getShiftBySlectedDate = async (Sdate, Edate) => {
     debugger
-    const datesss = shiftDetails.filter((item) => { 
-      item.shiftDate = Sdate && item.shiftDate == Edate ;
+    const datesss = shiftDetails.filter((item) => {
+      item.shiftDate = Sdate && item.shiftDate == Edate;
     });
     return datesss
   }
@@ -112,6 +114,23 @@ const Shiftdetails = () => {
   const offset = currentPage * PER_PAGE;
   const pageCount = Math.ceil(shiftDetails.length / PER_PAGE);
 
+
+  const exportToExcel = () => {
+    let element;
+    if (myshiftdetails == true) {
+      element = document.getElementById("shiftid");
+    }
+
+    if (element) {
+      const ws = XLSX.utils.table_to_sheet(element);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+      if (myshiftdetails == true) {
+        XLSX.writeFile(wb, "shiftdetails.xlsx");
+      }
+
+    }
+  };
 
 
   //   const getapprovedshiftDetails = async () => {
@@ -221,12 +240,8 @@ const Shiftdetails = () => {
                   <br />
                   {count > 0 ?
                     <>
-                      <DownloadTableExcel
-                        filename="users table"
-                        sheet="users"
-                        currentTableRef={tableRef.current}
-                      > <button className="button" style={{ marginTop: "7px" }} > Download</button></DownloadTableExcel>
 
+                      <button className="button" onClick={exportToExcel} style={{ marginTop: "7px" }} > Download</button>
                     </>
                     : null}
                 </div>
@@ -240,7 +255,7 @@ const Shiftdetails = () => {
       <div className="row mt-3">
         <div className="col-lg-12">
           <h6 style={{ color: "#3247d5" }}>Showing {count} Results</h6>
-          <table className="table" style={{ width: "99%" }} ref={tableRef}>
+          <table className="table" style={{ width: "99%" }} id="shiftid">
             <thead>
               <tr className="bg-info text-white">
                 <th>Start Date</th>

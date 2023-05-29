@@ -7,8 +7,9 @@ import axios from "axios";
 import Styles from "@/styles/attendancedetails.module.css";
 import { apiService } from "@/services/api.service";
 import ReactPaginate from "react-paginate";
-import { DownloadTableExcel } from "react-export-table-to-excel";
 import Multiselect from "multiselect-react-dropdown";
+import * as XLSX from "xlsx";
+
 
 const MyTeamAttendence = () => {
   const staffDetailsRef = useRef(null);
@@ -26,6 +27,7 @@ const MyTeamAttendence = () => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [count, setcount] = useState("");
+  const [myattendance, setmyattendance] = useState(false);
   useEffect(() => {
     const userid = sessionStorage.getItem("userID");
     const roleid = sessionStorage.getItem("roleID");
@@ -39,6 +41,7 @@ const MyTeamAttendence = () => {
     if (userID) {
       debugger;
       getstaffDetails();
+      setmyattendance(true)
     }
   }, [userID]);
   const getstaffDetails = async () => {
@@ -61,12 +64,12 @@ const MyTeamAttendence = () => {
   // Gopi's code end's
 
   // useEffect(() => {
-    // if (userID) {
-      // const resu = getCurrentMonthDates();
-      // if (resu) {
-        // getMyTeamAttendenceByID(userID, resu.setStartDate, resu.setEndDate);
-      // }
-    // }
+  // if (userID) {
+  // const resu = getCurrentMonthDates();
+  // if (resu) {
+  // getMyTeamAttendenceByID(userID, resu.setStartDate, resu.setEndDate);
+  // }
+  // }
   // }, [userID]);
 
   const PER_PAGE = 10;
@@ -108,9 +111,28 @@ const MyTeamAttendence = () => {
 
   const handleStaffChange = (selectedStaff) => {
     setselctedStaffdata(selectedStaff);
-    
-    return getMyTeamAttendenceByID(selectedStaff,startDate, endDate);
+
+    return getMyTeamAttendenceByID(selectedStaff, startDate, endDate);
   };
+
+  
+  const exportToExcel = () => {
+    let element;
+    if (myattendance == true) {
+      element = document.getElementById("attendanceid");
+    }
+
+    if (element) {
+      const ws = XLSX.utils.table_to_sheet(element);
+      const wb = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+      if (myattendance == true) {
+        XLSX.writeFile(wb, "MyteamAttendetails.xlsx");
+      }
+
+    }
+  };
+
 
   // this.state = {
   //  staffoptions : [
@@ -241,13 +263,9 @@ const MyTeamAttendence = () => {
 
               {count > 0 ?
                 <>
-                  <DownloadTableExcel
-                    filename="users table"
-                    sheet="users"
-                    currentTableRef={tableRef.current}
-                  >
-                    <button className="button">Export To Excel</button>
-                  </DownloadTableExcel>
+
+                  <button className="button" onClick={exportToExcel}>Export To Excel</button>
+
                 </>
                 : null}
 
@@ -256,10 +274,10 @@ const MyTeamAttendence = () => {
         </div>
         <br />
         <h6 style={{ color: "#3247d5" }}>Showing {count} Results</h6>
-        <table
+        <table  id="attendanceid"
           className="table "
           style={{ marginLeft: "0px" }}
-          ref={tableRef}
+
         >
           <thead className="bg-info text-white ">
             <tr style={{ whiteSpace: "nowrap" }}>
