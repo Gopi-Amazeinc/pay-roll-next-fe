@@ -4,15 +4,14 @@ import Swal from "sweetalert2";
 import axios from "axios";
 // import ReactPaginate from "react-paginate";
 import Styles from "../.././../../styles/finalpayrolldetails.module.css";
-
 import Link from "next/link";
-
 import { IoIosClose } from "react-icons/io";
 import { apiService } from "@/services/api.service";
+import * as XLSX from "xlsx";
 
 const InitialPayrollDetails = () => {
   const [keyword, setKeyword] = useState("");
-  const tableRef = useRef(null);
+
 
   const [modalIsOpen, setIsOpen] = useState(false);
 
@@ -168,7 +167,7 @@ const InitialPayrollDetails = () => {
               }}
             >
               <option value="" disabled="">
-                Select Department{" "}
+                Select Department
               </option>
               {department.map((data, index) => {
                 return (
@@ -182,7 +181,7 @@ const InitialPayrollDetails = () => {
           <div className="col-lg-3">
          
               <button type="button" onClick={exportToExcel} className="EditDelteBTN ">
-                Export To Excel{" "}
+                Export To Excel
               </button>
         
           </div>

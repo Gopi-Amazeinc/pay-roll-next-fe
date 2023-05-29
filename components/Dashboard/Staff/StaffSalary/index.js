@@ -76,7 +76,7 @@ function StaffSalaryComponent() {
       });
     } else {
       await axios.post(
-        hostURL + "Payroll/UpdateDe_minimis_Detailsforstaff",
+        hostURL + "Payroll/",
         items
       );
       Swal.fire({
@@ -120,7 +120,7 @@ function StaffSalaryComponent() {
     const transformedData = await transformedSalary(items);
     if (transformedData.length > 0) {
       await apiService.commonPostCall(
-        "Payroll/UpdateDe_minimis_Detailsforstaff",
+        "Payroll/",
         transformedData
       );
       Swal.fire("Component Bulk Uploaded Successfully!");
